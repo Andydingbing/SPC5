@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>797</width>
+    <height>554</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>1</horstretch>
+    <verstretch>1</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="5,1">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QTreeWidget" name="m_pMainTree">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>5</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>201</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <column>
+         <property name="text">
+          <string notr="true">1</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTabWidget" name="m_pMainTab">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>1</horstretch>
+          <verstretch>5</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QListView" name="listView">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>1</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QListView" name="listView_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>321</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>797</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuDevice">
+    <property name="title">
+     <string>Device(&amp;D)</string>
+    </property>
+    <addaction name="actionInitialization"/>
+    <addaction name="actionPCIE_Restart_P"/>
+    <addaction name="separator"/>
+    <addaction name="actionTune_OCXO_T"/>
+    <addaction name="separator"/>
+    <addaction name="actionCXU_Restart_R"/>
+    <addaction name="actionCXU_Shutdown_S"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit_X"/>
+   </widget>
+   <widget class="QMenu" name="menuRFU_R">
+    <property name="title">
+     <string>RFU(&amp;R)</string>
+    </property>
+    <addaction name="actionRFU0_0"/>
+    <addaction name="actionRFU1_1"/>
+    <addaction name="actionRFU2_2"/>
+    <addaction name="actionRFU3_3"/>
+    <addaction name="actionRFU4_4"/>
+   </widget>
+   <widget class="QMenu" name="menuFunction_F">
+    <property name="title">
+     <string>Function(&amp;F)</string>
+    </property>
+    <addaction name="actionArb_Viewer_A"/>
+    <addaction name="separator"/>
+    <addaction name="actionStart_All_IQ_Capture_R"/>
+    <addaction name="actionStop_All_IQ_Capture_O"/>
+    <addaction name="separator"/>
+    <addaction name="actionLog_Config_L"/>
+    <addaction name="actionLog_Viewer_V"/>
+    <addaction name="separator"/>
+    <addaction name="actionInstrument_Control_I"/>
+    <addaction name="actionCalculator_C"/>
+    <addaction name="actionNI_IO_Trace_N"/>
+   </widget>
+   <widget class="QMenu" name="menuTest_T">
+    <property name="title">
+     <string>Test(&amp;T)</string>
+    </property>
+    <addaction name="actionProgram_FPGAbit_P"/>
+    <addaction name="actionAlgorithm_5355_A"/>
+    <addaction name="actionFitting_Interpolation_F"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp_H">
+    <property name="title">
+     <string>Help(&amp;H)</string>
+    </property>
+    <addaction name="actionAbout_A"/>
+   </widget>
+   <addaction name="menuDevice"/>
+   <addaction name="menuRFU_R"/>
+   <addaction name="menuFunction_F"/>
+   <addaction name="menuTest_T"/>
+   <addaction name="menuHelp_H"/>
+  </widget>
+  <widget class="QStatusBar" name="m_pStatusBar"/>
+  <action name="actionInitialization">
+   <property name="text">
+    <string>Initialization(&amp;I)</string>
+   </property>
+   <property name="statusTip">
+    <string>Init Device in Menu RFU</string>
+   </property>
+  </action>
+  <action name="actionPCIE_Restart_P">
+   <property name="text">
+    <string>PCIE Restart(&amp;P)</string>
+   </property>
+  </action>
+  <action name="actionTune_OCXO_T">
+   <property name="text">
+    <string>Tune OCXO(&amp;T)</string>
+   </property>
+  </action>
+  <action name="actionCXU_Restart_R">
+   <property name="text">
+    <string>CXU Restart(&amp;R)</string>
+   </property>
+  </action>
+  <action name="actionCXU_Shutdown_S">
+   <property name="text">
+    <string>CXU Shutdown(&amp;S)</string>
+   </property>
+  </action>
+  <action name="actionExit_X">
+   <property name="text">
+    <string>Exit(&amp;X)</string>
+   </property>
+  </action>
+  <action name="actionRFU0_0">
+   <property name="text">
+    <string>RFU0(&amp;0)</string>
+   </property>
+  </action>
+  <action name="actionRFU1_1">
+   <property name="text">
+    <string>RFU1(&amp;1)</string>
+   </property>
+  </action>
+  <action name="actionRFU2_2">
+   <property name="text">
+    <string>RFU2(&amp;2)</string>
+   </property>
+  </action>
+  <action name="actionRFU3_3">
+   <property name="text">
+    <string>RFU3(&amp;3)</string>
+   </property>
+  </action>
+  <action name="actionRFU4_4">
+   <property name="text">
+    <string>RFU4(&amp;4)</string>
+   </property>
+  </action>
+  <action name="actionArb_Viewer_A">
+   <property name="text">
+    <string>Arb Viewer(&amp;A)</string>
+   </property>
+  </action>
+  <action name="actionStart_All_IQ_Capture_R">
+   <property name="text">
+    <string>Start All IQ Capture(&amp;R)</string>
+   </property>
+  </action>
+  <action name="actionStop_All_IQ_Capture_O">
+   <property name="text">
+    <string>Stop All IQ Capture(&amp;O)</string>
+   </property>
+  </action>
+  <action name="actionLog_Config_L">
+   <property name="text">
+    <string>Log Config(&amp;L)</string>
+   </property>
+  </action>
+  <action name="actionLog_Viewer_V">
+   <property name="text">
+    <string>Log Viewer(&amp;V)</string>
+   </property>
+  </action>
+  <action name="actionInstrument_Control_I">
+   <property name="text">
+    <string>Instrument Control(&amp;I)</string>
+   </property>
+  </action>
+  <action name="actionCalculator_C">
+   <property name="text">
+    <string>Calculator(&amp;C)</string>
+   </property>
+  </action>
+  <action name="actionNI_IO_Trace_N">
+   <property name="text">
+    <string>NI IO Trace(&amp;N)</string>
+   </property>
+  </action>
+  <action name="actionProgram_FPGAbit_P">
+   <property name="text">
+    <string>Program FPGA bit(&amp;P)</string>
+   </property>
+  </action>
+  <action name="actionAlgorithm_5355_A">
+   <property name="text">
+    <string>Algorithm 5355(&amp;A)</string>
+   </property>
+  </action>
+  <action name="actionFitting_Interpolation_F">
+   <property name="text">
+    <string>Fitting &amp; Interpolation(&amp;F)</string>
+   </property>
+  </action>
+  <action name="actionAbout_A">
+   <property name="text">
+    <string>About(&amp;A)</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,17 @@
+INPUT(
+./x64\debug\main.o
+./x64\debug\mainwindow.o
+./x64\debug\qrfr1cdlg.o
+./x64\debug\qrfr1cadvdlg.o
+./x64\debug\qwinthread.o
+./x64\debug\qdeviceinitthread.o
+./x64\debug\qcalr1ctxloleakdlg.o
+./x64\debug\qfpgadlg.o
+./x64\debug\moc_mainwindow.o
+./x64\debug\moc_qrfr1cdlg.o
+./x64\debug\moc_qrfr1cadvdlg.o
+./x64\debug\moc_qwinthread.o
+./x64\debug\moc_qdeviceinitthread.o
+./x64\debug\moc_qcalr1ctxloleakdlg.o
+./x64\debug\moc_qfpgadlg.o
+);
