@@ -8,7 +8,16 @@ QT       -= core gui
 
 TARGET = libLog
 TEMPLATE = lib
-CONFIG += console
+CONFIG += shared
+
+INCLUDEPATH += ../include
+
+win32 {
+    LIBS += $$PWD/../lib/libpthreadGC2.a
+
+    DEFINES += _WINDOWS \
+               _WIN64
+}
 
 CONFIG(debug,debug|release) {
     DEFINES += _DEBUG
@@ -31,15 +40,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
-INCLUDEPATH += ../include
-
-win32 {
-    LIBS += $$PWD/../lib/pthreadGC2.dll
-
-    DEFINES += _WINDOWS \
-               _WIN64
-}
 
 SOURCES += \
     Log.cpp

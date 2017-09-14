@@ -11,6 +11,15 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = RFU_Debug_Tool
 TEMPLATE = app
 
+INCLUDEPATH += ../include \
+               ../libLog \
+               ../libBusDriver \
+               ../libInstr \
+               ../libSP1401 \
+               ../libSP2401 \
+               ../libSP3301 \
+               ../libSP3501
+
 CONFIG(debug,debug|release) {
     win32 {
         DEFINES += _DEBUG
@@ -28,13 +37,22 @@ CONFIG(debug,debug|release) {
     DESTDIR = ../x64/release
 }
 
-LIBS += -lBusDriver \
-        -lLog \
-        -lInstr \
-        -lSP1401 \
-        -lSP2401 \
-        -lSP3301 \
-        -lSP3501
+LIBS += -llibSP3301.dll \
+        -llibSP1401.dll \
+        -llibSP2401.dll \
+        -llibSP3501.dll \
+        -llibInstr.dll  \
+        -llibBusDriver.dll \
+        -llibLog.dll
+
+win32 {
+    LIBS += $$PWD/../lib/visa64.lib \
+            $$PWD/../lib/windrvr/amd64/wdapi1020.lib \
+            $$PWD/../lib/libpthreadGC2.a
+    DEFINES += _WINDOWS \
+               _WIN64
+}
+
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
@@ -46,20 +64,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
-INCLUDEPATH += ../include \
-               ../libLog \
-               ../libBusDriver \
-               ../libInstr \
-               ../libSP1401 \
-               ../libSP2401 \
-               ../libSP3301 \
-               ../libSP3501
-
-win32 {
-    DEFINES += _WINDOWS \
-               _WIN64
-}
 
 SOURCES += \
         main.cpp \

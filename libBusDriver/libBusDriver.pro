@@ -8,6 +8,18 @@ QT       -= core gui
 
 TARGET = libBusDriver
 TEMPLATE = lib
+CONFIG += shared
+
+INCLUDEPATH += ../include \
+               ../include/windrvr
+
+win32 {
+    LIBS += $$PWD/../lib/visa64.lib \
+            $$PWD/../lib/windrvr/amd64/wdapi1020.lib
+
+    DEFINES += _WINDOWS \
+               _WIN64
+}
 
 CONFIG(debug,debug|release) {
     OBJECTS_DIR = $$PWD/x64/debug
@@ -29,17 +41,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
-INCLUDEPATH += ../include \
-               ../include/windrvr
-
-win32 {
-    LIBS += $$PWD/../lib/visa64.lib \
-            $$PWD/../lib/windrvr/amd64/wdapi1020.lib
-
-    DEFINES += _WINDOWS \
-               _WIN64
-}
 
 SOURCES += \
     viPCIDev.cpp \

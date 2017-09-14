@@ -8,6 +8,13 @@ QT       -= core gui
 
 TARGET = libSP3301
 TEMPLATE = lib
+CONFIG += shared
+
+INCLUDEPATH += ../include \
+               ../libLog \
+               ../libBusDriver \
+               ../libSP1401 \
+               ../libSP2401
 
 CONFIG(debug,debug|release) {
     win32 {
@@ -18,8 +25,6 @@ CONFIG(debug,debug|release) {
     OBJECTS_DIR = $$PWD/x64/debug
     DESTDIR = ../x64/debug
 } else {
-    DEPENDPATH += ../x64/release
-
     win32 {
         LIBS += -L$$PWD/../x64/release/
     }
@@ -28,10 +33,18 @@ CONFIG(debug,debug|release) {
     DESTDIR = ../x64/release
 }
 
-LIBS += -lBusDriver
-LIBS += -lLog
-LIBS += -lSP1401
-LIBS += -lSP2401
+LIBS += -llibSP1401.dll
+LIBS += -llibSP2401.dll
+LIBS += -llibBusDriver.dll
+LIBS += -llibLog.dll
+
+win32 {
+    LIBS += $$PWD/../lib/visa64.lib \
+            $$PWD/../lib/windrvr/amd64/wdapi1020.lib \
+            $$PWD/../lib/libpthreadGC2.a
+    DEFINES += _WINDOWS \
+               _WIN64
+}
 
 DEFINES += LIBSP3301_LIBRARY
 
@@ -45,17 +58,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
-INCLUDEPATH += ../include \
-               ../libLog \
-               ../libBusDriver \
-               ../libSP1401 \
-               ../libSP2401
-
-win32 {
-    DEFINES += _WINDOWS \
-               _WIN64
-}
 
 SOURCES += \
     SP3301.cpp \

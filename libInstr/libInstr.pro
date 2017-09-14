@@ -8,6 +8,19 @@ QT       -= core gui
 
 TARGET = libInstr
 TEMPLATE = lib
+CONFIG += shared
+
+INCLUDEPATH += ../include \
+               ../libBusDriver
+
+LIBS += -llibBusDriver.dll
+
+win32 {
+    LIBS += $$PWD/../lib/visa64.lib
+    LIBS += $$PWD/../lib/rsnrpz_64.lib
+    DEFINES += _WINDOWS \
+               _WIN64
+}
 
 CONFIG(debug,debug|release) {
     win32 {
@@ -25,8 +38,6 @@ CONFIG(debug,debug|release) {
     DESTDIR = ../x64/release
 }
 
-LIBS += -lBusDriver
-
 DEFINES += LIBINSTR_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
@@ -39,16 +50,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
-INCLUDEPATH += ../include \
-               ../libBusDriver
-
-win32 {
-    LIBS += $$PWD/../lib/visa64.lib
-    LIBS += $$PWD/../lib/rsnrpz_64.lib
-    DEFINES += _WINDOWS \
-               _WIN64
-}
 
 SOURCES += \
     ISA.cpp \

@@ -8,6 +8,11 @@ QT       -= core gui
 
 TARGET = libSP3501
 TEMPLATE = lib
+CONFIG += shared
+
+INCLUDEPATH += ../include \
+               ../libLog \
+               ../libBusDriver
 
 CONFIG(debug,debug|release) {
     win32 {
@@ -26,8 +31,16 @@ CONFIG(debug,debug|release) {
     DESTDIR = ../x64/release
 }
 
-LIBS += -lBusDriver
-LIBS += -lLog
+LIBS += -llibBusDriver.dll
+LIBS += -llibLog.dll
+
+win32 {
+    LIBS += $$PWD/../lib/visa64.lib \
+            $$PWD/../lib/windrvr/amd64/wdapi1020.lib \
+            $$PWD/../lib/libpthreadGC2.a
+    DEFINES += _WINDOWS \
+               _WIN64
+}
 
 DEFINES += LIBSP3501_LIBRARY
 
@@ -41,15 +54,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
-INCLUDEPATH += ../include \
-               ../libLog \
-               ../libBusDriver
-
-win32 {
-    DEFINES += _WINDOWS \
-               _WIN64
-}
 
 SOURCES += \
     SP3501.cpp
