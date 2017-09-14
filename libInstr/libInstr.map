@@ -1,0 +1,994 @@
+ libInstr
+
+ Timestamp is 599562d4 (Thu Aug 17 17:33:08 2017)
+
+ Preferred load address is 0000000180000000
+
+ Start         Length     Name                   Class
+ 0001:00000000 00014071H .text                   CODE
+ 0001:00014080 00001075H .text$00                CODE
+ 0001:00015100 00002586H .text$x                 CODE
+ 0001:00017690 0000101aH .text$yd                CODE
+ 0002:00000000 00000109H .CRT$XCA                DATA
+ 0002:00000110 00000109H .CRT$XCZ                DATA
+ 0002:00000220 00000109H .CRT$XIA                DATA
+ 0002:00000330 00000109H .CRT$XIAA               DATA
+ 0002:00000440 00000109H .CRT$XIZ                DATA
+ 0002:00000550 00003dcfH .rdata                  DATA
+ 0002:00004320 00000149H .rdata$debug            DATA
+ 0002:00004470 00000f70H .rdata$r                DATA
+ 0002:000053e0 00000109H .rtc$IAA                DATA
+ 0002:000054f0 00000109H .rtc$IZZ                DATA
+ 0002:00005600 00000109H .rtc$TAA                DATA
+ 0002:00005710 00000109H .rtc$TZZ                DATA
+ 0002:00005820 000026b9H .xdata                  DATA
+ 0002:00007ee0 0000030dH .xdata$x                DATA
+ 0002:000081f0 00000babH .edata                  DATA
+ 0003:00000000 00000547H .data                   DATA
+ 0003:00000550 000006e8H .bss                    DATA
+ 0004:00000000 00001914H .pdata                  DATA
+ 0005:00000000 00000078H .idata$2                DATA
+ 0005:00000078 00000014H .idata$3                DATA
+ 0005:00000090 00000590H .idata$4                DATA
+ 0005:00000620 00000590H .idata$5                DATA
+ 0005:00000bb0 00000b33H .idata$6                DATA
+
+  Address         Publics by Value              Rva+Base               Lib:Object
+
+ 0000:00000000       ___safe_se_handler_table   0000000000000000     <absolute>
+ 0000:00000000       ___safe_se_handler_count   0000000000000000     <absolute>
+ 0000:00000000       __ImageBase                0000000180000000     <linker-defined>
+ 0001:00001230       ??0E4438C@@QEAA@XZ         0000000180002230 f   E4438C.obj
+ 0001:00001270       ??1E4438C@@UEAA@XZ         0000000180002270 f   E4438C.obj
+ 0001:000012a0       ?GetDes@E4438C@@UEAAPEADXZ 00000001800022a0 f   E4438C.obj
+ 0001:000012d0       ??_EE4438C@@UEAAPEAXI@Z    00000001800022d0 f i E4438C.obj
+ 0001:000012d0       ??_GE4438C@@UEAAPEAXI@Z    00000001800022d0 f i E4438C.obj
+ 0001:00001320       ??0E4440A@@QEAA@XZ         0000000180002320 f   E4440A.obj
+ 0001:00001360       ??1E4440A@@UEAA@XZ         0000000180002360 f   E4440A.obj
+ 0001:00001390       ?GetDes@E4440A@@UEAAPEADXZ 0000000180002390 f   E4440A.obj
+ 0001:000013c0       ??_GE4440A@@UEAAPEAXI@Z    00000001800023c0 f i E4440A.obj
+ 0001:000013c0       ??_EE4440A@@UEAAPEAXI@Z    00000001800023c0 f i E4440A.obj
+ 0001:00001410       ??0E4443A@@QEAA@XZ         0000000180002410 f   E4443A.obj
+ 0001:00001450       ??1E4443A@@UEAA@XZ         0000000180002450 f   E4443A.obj
+ 0001:00001480       ?GetDes@E4443A@@UEAAPEADXZ 0000000180002480 f   E4443A.obj
+ 0001:000014b0       ??_EE4443A@@UEAAPEAXI@Z    00000001800024b0 f i E4443A.obj
+ 0001:000014b0       ??_GE4443A@@UEAAPEAXI@Z    00000001800024b0 f i E4443A.obj
+ 0001:00001500       ??0E4445A@@QEAA@XZ         0000000180002500 f   E4445A.obj
+ 0001:00001540       ??1E4445A@@UEAA@XZ         0000000180002540 f   E4445A.obj
+ 0001:00001570       ?GetDes@E4445A@@UEAAPEADXZ 0000000180002570 f   E4445A.obj
+ 0001:00001590       ?SetEnablePreamp@E4445A@@UEAA_N_N@Z 0000000180002590 f   E4445A.obj
+ 0001:00001630       ??_GE4445A@@UEAAPEAXI@Z    0000000180002630 f i E4445A.obj
+ 0001:00001630       ??_EE4445A@@UEAAPEAXI@Z    0000000180002630 f i E4445A.obj
+ 0001:00001680       ??0E8267D@@QEAA@XZ         0000000180002680 f   E8267D.obj
+ 0001:000016c0       ??1E8267D@@UEAA@XZ         00000001800026c0 f   E8267D.obj
+ 0001:000016f0       ?GetDes@E8267D@@UEAAPEADXZ 00000001800026f0 f   E8267D.obj
+ 0001:00001720       ??_GE8267D@@UEAAPEAXI@Z    0000000180002720 f i E8267D.obj
+ 0001:00001720       ??_EE8267D@@UEAAPEAXI@Z    0000000180002720 f i E8267D.obj
+ 0001:00001770       ??0FSUP@@QEAA@XZ           0000000180002770 f   FSUP.obj
+ 0001:000017b0       ??1FSUP@@UEAA@XZ           00000001800027b0 f   FSUP.obj
+ 0001:000017e0       ?GetDefaultPriAddr@FSUP@@UEAAJXZ 00000001800027e0 f   FSUP.obj
+ 0001:00001800       ?GetDefaultSecAddr@FSUP@@UEAAJXZ 0000000180002800 f   FSUP.obj
+ 0001:00001820       ?GetDes@FSUP@@UEAAPEADXZ   0000000180002820 f   FSUP.obj
+ 0001:00001840       ?Reset@FSUP@@UEAA_NXZ      0000000180002840 f   FSUP.obj
+ 0001:00001870       ?SetCF@FSUP@@UEAA_NN@Z     0000000180002870 f   FSUP.obj
+ 0001:000018b0       ?SetSpan@FSUP@@UEAA_NN@Z   00000001800028b0 f   FSUP.obj
+ 0001:000018f0       ?SetRBW@FSUP@@UEAA_NN_N@Z  00000001800028f0 f   FSUP.obj
+ 0001:00001960       ?SetVBW@FSUP@@UEAA_NN_N@Z  0000000180002960 f   FSUP.obj
+ 0001:000019d0       ?SetDectector@FSUP@@UEAA_NW4DetectorTypes@ISA@@@Z 00000001800029d0 f   FSUP.obj
+ 0001:00001ad0       ?SetPeakSearch@FSUP@@UEAA_NW4PeakSearchTypes@ISA@@@Z 0000000180002ad0 f   FSUP.obj
+ 0001:00001b80       ?SetRefLevel@FSUP@@UEAA_NN@Z 0000000180002b80 f   FSUP.obj
+ 0001:00001bc0       ?GetRefLevel@FSUP@@UEAA_NAEAN@Z 0000000180002bc0 f   FSUP.obj
+ 0001:00001c90       ?SetMarker@FSUP@@UEAA_NW4MarkerTypes@ISA@@@Z 0000000180002c90 f   FSUP.obj
+ 0001:00001d20       ?SetEnablePreamp@FSUP@@UEAA_N_N@Z 0000000180002d20 f   FSUP.obj
+ 0001:00001db0       ?GetMarkerPwr@FSUP@@UEAA_NAEAN@Z 0000000180002db0 f   FSUP.obj
+ 0001:00001ed0       ?GetMarkerFrequency@FSUP@@UEAA_NAEAN@Z 0000000180002ed0 f   FSUP.obj
+ 0001:00001fb0       ?WaitForContinue@FSUP@@UEAA_NXZ 0000000180002fb0 f   FSUP.obj
+ 0001:00001fe0       ?SweepOnce@FSUP@@UEAA_NXZ  0000000180002fe0 f   FSUP.obj
+ 0001:00002040       ?MarkerMove@FSUP@@UEAA_NW4MarkerMoveTypes@ISA@@@Z 0000000180003040 f   FSUP.obj
+ 0001:000020b0       ?MarkerMove@FSUP@@UEAA_NN@Z 00000001800030b0 f   FSUP.obj
+ 0001:000020f0       ?SetCalibration@FSUP@@UEAA_NW4CalibrationTypes@ISA@@@Z 00000001800030f0 f   FSUP.obj
+ 0001:00002120       ?SetAverTrace@FSUP@@UEAA_N_NJ@Z 0000000180003120 f   FSUP.obj
+ 0001:000021c0       ?SetAverTraceAndGetData@FSUP@@UEAA_NJJPEAN@Z 00000001800031c0 f   FSUP.obj
+ 0001:000023c0       ?SetMechAtten@FSUP@@UEAA_N_NJ@Z 00000001800033c0 f   FSUP.obj
+ 0001:000026f0       ??_GFSUP@@UEAAPEAXI@Z      00000001800036f0 f i FSUP.obj
+ 0001:000026f0       ??_EFSUP@@UEAAPEAXI@Z      00000001800036f0 f i FSUP.obj
+ 0001:00002740       ??0CInstrExpt@@QEAA@PEADZZ 0000000180003740 f   Instrument.obj
+ 0001:000027b0       ?GetExpt@CInstrExpt@@QEAAPEADXZ 00000001800037b0 f   Instrument.obj
+ 0001:000027d0       ??0CInstrument@@IEAA@XZ    00000001800037d0 f   Instrument.obj
+ 0001:00002f00       ?Instance@CInstrument@@SAAEAV1@XZ 0000000180003f00 f   Instrument.obj
+ 0001:00002f60       ??1CInstrument@@UEAA@XZ    0000000180003f60 f   Instrument.obj
+ 0001:00003270       ?SetEnableExpt@CInstrument@@QEAAX_N@Z 0000000180004270 f   Instrument.obj
+ 0001:00003290       ?Init@CInstrument@@UEAA_NXZ 0000000180004290 f   Instrument.obj
+ 0001:000037d0       ?InsInstr@CInstrument@@EEAA_NPEAD0@Z 00000001800047d0 f   Instrument.obj
+ 0001:00003bc0       ?Close@CInstrument@@UEAA_NXZ 0000000180004bc0 f   Instrument.obj
+ 0001:00003c80       ?HasSA@CInstrument@@UEAA_NXZ 0000000180004c80 f   Instrument.obj
+ 0001:00003d60       ?HasSG@CInstrument@@UEAA_NXZ 0000000180004d60 f   Instrument.obj
+ 0001:00003e40       ?HasPM@CInstrument@@UEAA_NXZ 0000000180004e40 f   Instrument.obj
+ 0001:00003f20       ?SetSA@CInstrument@@UEAAXPEAD@Z 0000000180004f20 f   Instrument.obj
+ 0001:00003f50       ?SetSG@CInstrument@@UEAAXPEAD@Z 0000000180004f50 f   Instrument.obj
+ 0001:00003f80       ?SetPM@CInstrument@@UEAAXPEAD@Z 0000000180004f80 f   Instrument.obj
+ 0001:00003fb0       ?SA_Reset@CInstrument@@UEAA_NXZ 0000000180004fb0 f   Instrument.obj
+ 0001:00004080       ?SA_SetCF@CInstrument@@UEAA_NN@Z 0000000180005080 f   Instrument.obj
+ 0001:00004160       ?SA_SetSpan@CInstrument@@UEAA_NN@Z 0000000180005160 f   Instrument.obj
+ 0001:00004240       ?SA_SetRBW@CInstrument@@UEAA_NN_N@Z 0000000180005240 f   Instrument.obj
+ 0001:00004330       ?SA_SetVBW@CInstrument@@UEAA_NN_N@Z 0000000180005330 f   Instrument.obj
+ 0001:00004420       ?SA_SetDectector@CInstrument@@UEAA_NW4DetectorTypes@ISA@@@Z 0000000180005420 f   Instrument.obj
+ 0001:00004500       ?SA_SetPeakSearch@CInstrument@@UEAA_NW4PeakSearchTypes@ISA@@@Z 0000000180005500 f   Instrument.obj
+ 0001:000045e0       ?SA_SetRefLevel@CInstrument@@UEAA_NN@Z 00000001800055e0 f   Instrument.obj
+ 0001:000046c0       ?SA_GetRefLevel@CInstrument@@UEAA_NAEAN@Z 00000001800056c0 f   Instrument.obj
+ 0001:000047a0       ?SA_SetRefAuto@CInstrument@@UEAA_NXZ 00000001800057a0 f   Instrument.obj
+ 0001:00004870       ?SA_SetMarker@CInstrument@@UEAA_NW4MarkerTypes@ISA@@@Z 0000000180005870 f   Instrument.obj
+ 0001:00004950       ?SA_GetMarkerPwr@CInstrument@@UEAA_NAEAN@Z 0000000180005950 f   Instrument.obj
+ 0001:00004a30       ?SA_GetMarkerFrequency@CInstrument@@UEAA_NAEAN@Z 0000000180005a30 f   Instrument.obj
+ 0001:00004b10       ?SA_SetEnablePreamp@CInstrument@@UEAA_N_N@Z 0000000180005b10 f   Instrument.obj
+ 0001:00004bf0       ?SA_MarkerMove@CInstrument@@UEAA_NW4MarkerMoveTypes@ISA@@@Z 0000000180005bf0 f   Instrument.obj
+ 0001:00004cd0       ?SA_MarkerMove@CInstrument@@UEAA_NN@Z 0000000180005cd0 f   Instrument.obj
+ 0001:00004db0       ?SA_SweepOnce@CInstrument@@UEAA_NXZ 0000000180005db0 f   Instrument.obj
+ 0001:00004e80       ?SA_SetCalibration@CInstrument@@UEAA_NW4CalibrationTypes@ISA@@@Z 0000000180005e80 f   Instrument.obj
+ 0001:00004f60       ?SA_SetAverTrace@CInstrument@@UEAA_N_NJ@Z 0000000180005f60 f   Instrument.obj
+ 0001:00005050       ?SA_SetAverTraceAndGetData@CInstrument@@UEAA_NJJPEAN@Z 0000000180006050 f   Instrument.obj
+ 0001:00005150       ?SA_SetMechAtten@CInstrument@@UEAA_N_NJ@Z 0000000180006150 f   Instrument.obj
+ 0001:00005240       ?SG_Reset@CInstrument@@UEAA_NXZ 0000000180006240 f   Instrument.obj
+ 0001:00005310       ?SG_SetCW@CInstrument@@UEAA_NN@Z 0000000180006310 f   Instrument.obj
+ 0001:000053f0       ?SG_GetCW@CInstrument@@UEAA_NAEAN@Z 00000001800063f0 f   Instrument.obj
+ 0001:000054d0       ?SG_SetPL@CInstrument@@UEAA_NN@Z 00000001800064d0 f   Instrument.obj
+ 0001:000055b0       ?SG_GetPL@CInstrument@@UEAA_NAEAN@Z 00000001800065b0 f   Instrument.obj
+ 0001:00005690       ?SG_SetOutputEnable@CInstrument@@UEAA_N_N@Z 0000000180006690 f   Instrument.obj
+ 0001:00005770       ?SG_SetModEnable@CInstrument@@UEAA_N_N@Z 0000000180006770 f   Instrument.obj
+ 0001:00005850       ?PM_Reset@CInstrument@@UEAA_NXZ 0000000180006850 f   Instrument.obj
+ 0001:00005920       ?PM_SetFrequency@CInstrument@@UEAA_NN@Z 0000000180006920 f   Instrument.obj
+ 0001:00005a00       ?PM_GetPwr@CInstrument@@UEAA_NAEAN@Z 0000000180006a00 f   Instrument.obj
+ 0001:00005ae0       ?PM_GetPwr@CInstrument@@UEAA_NNAEAN@Z 0000000180006ae0 f   Instrument.obj
+ 0001:000068f0       ??_GCInstrument@@UEAAPEAXI@Z 00000001800078f0 f i Instrument.obj
+ 0001:000068f0       ??_ECInstrument@@UEAAPEAXI@Z 00000001800078f0 f i Instrument.obj
+ 0001:00006940       ?strstr@@YAPEADPEADPEBD@Z  0000000180007940 f i Instrument.obj
+ 0001:00006970       ??0?$vector@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEAA@XZ 0000000180007970 f i Instrument.obj
+ 0001:000069d0       ??1?$vector@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEAA@XZ 00000001800079d0 f i Instrument.obj
+ 0001:00006a10       ?size@?$vector@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEBA_KXZ 0000000180007a10 f i Instrument.obj
+ 0001:00006a40       ?at@?$vector@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEAAAEAPEAVISA@@_K@Z 0000000180007a40 f i Instrument.obj
+ 0001:00006b20       ?push_back@?$vector@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEAAXAEBQEAVISA@@@Z 0000000180007b20 f i Instrument.obj
+ 0001:00006c90       ?clear@?$vector@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEAAXXZ 0000000180007c90 f i Instrument.obj
+ 0001:00006df0       ??0?$vector@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEAA@XZ 0000000180007df0 f i Instrument.obj
+ 0001:00006e50       ??1?$vector@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEAA@XZ 0000000180007e50 f i Instrument.obj
+ 0001:00006e90       ?size@?$vector@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEBA_KXZ 0000000180007e90 f i Instrument.obj
+ 0001:00006ec0       ?at@?$vector@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEAAAEAPEAVISG@@_K@Z 0000000180007ec0 f i Instrument.obj
+ 0001:00006fa0       ?push_back@?$vector@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEAAXAEBQEAVISG@@@Z 0000000180007fa0 f i Instrument.obj
+ 0001:00007110       ?clear@?$vector@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEAAXXZ 0000000180008110 f i Instrument.obj
+ 0001:00007270       ??0?$vector@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEAA@XZ 0000000180008270 f i Instrument.obj
+ 0001:000072d0       ??1?$vector@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEAA@XZ 00000001800082d0 f i Instrument.obj
+ 0001:00007310       ?size@?$vector@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEBA_KXZ 0000000180008310 f i Instrument.obj
+ 0001:00007340       ?at@?$vector@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEAAAEAPEAVIPM@@_K@Z 0000000180008340 f i Instrument.obj
+ 0001:00007420       ?push_back@?$vector@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEAAXAEBQEAVIPM@@@Z 0000000180008420 f i Instrument.obj
+ 0001:00007590       ?clear@?$vector@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEAAXXZ 0000000180008590 f i Instrument.obj
+ 0001:000076f0       ??1?$_Vector_val@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEAA@XZ 00000001800086f0 f i Instrument.obj
+ 0001:00007710       ??1?$_Vector_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEAA@XZ 0000000180008710 f i Instrument.obj
+ 0001:00007730       ??0?$_Vector_const_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEAA@AEBV01@@Z 0000000180008730 f i Instrument.obj
+ 0001:00007780       ??1?$_Vector_const_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEAA@XZ 0000000180008780 f i Instrument.obj
+ 0001:000077a0       ??1?$_Vector_val@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEAA@XZ 00000001800087a0 f i Instrument.obj
+ 0001:000077c0       ??1?$_Vector_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEAA@XZ 00000001800087c0 f i Instrument.obj
+ 0001:000077e0       ??0?$_Vector_const_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEAA@AEBV01@@Z 00000001800087e0 f i Instrument.obj
+ 0001:00007830       ??1?$_Vector_const_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEAA@XZ 0000000180008830 f i Instrument.obj
+ 0001:00007850       ??1?$_Vector_val@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEAA@XZ 0000000180008850 f i Instrument.obj
+ 0001:00007870       ??1?$_Vector_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEAA@XZ 0000000180008870 f i Instrument.obj
+ 0001:00007890       ??0?$_Vector_const_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEAA@AEBV01@@Z 0000000180008890 f i Instrument.obj
+ 0001:000078e0       ??1?$_Vector_const_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEAA@XZ 00000001800088e0 f i Instrument.obj
+ 0001:00007900       ??0?$_Ranit@PEAVISA@@_JPEBQEAV1@AEBQEAV1@@std@@QEAA@AEBU01@@Z 0000000180008900 f i Instrument.obj
+ 0001:00007930       ??1?$_Ranit@PEAVISA@@_JPEBQEAV1@AEBQEAV1@@std@@QEAA@XZ 0000000180008930 f i Instrument.obj
+ 0001:00007950       ??0?$_Ranit@PEAVISG@@_JPEBQEAV1@AEBQEAV1@@std@@QEAA@AEBU01@@Z 0000000180008950 f i Instrument.obj
+ 0001:00007980       ??1?$_Ranit@PEAVISG@@_JPEBQEAV1@AEBQEAV1@@std@@QEAA@XZ 0000000180008980 f i Instrument.obj
+ 0001:000079a0       ??0?$_Ranit@PEAVIPM@@_JPEBQEAV1@AEBQEAV1@@std@@QEAA@AEBU01@@Z 00000001800089a0 f i Instrument.obj
+ 0001:000079d0       ??1?$_Ranit@PEAVIPM@@_JPEBQEAV1@AEBQEAV1@@std@@QEAA@XZ 00000001800089d0 f i Instrument.obj
+ 0001:000079f0       ??0?$_Iterator_with_base@Urandom_access_iterator_tag@std@@PEAVISA@@_JPEBQEAV3@AEBQEAV3@V_Iterator_base@2@@std@@QEAA@AEBU01@@Z 00000001800089f0 f i Instrument.obj
+ 0001:00007a20       ??0_Iterator_base@std@@QEAA@AEBV01@@Z 0000000180008a20 f i Instrument.obj
+ 0001:00007a70       ??4_Iterator_base@std@@QEAAAEAV01@AEBV01@@Z 0000000180008a70 f i Instrument.obj
+ 0001:00007b00       ?_Adopt@_Iterator_base@std@@QEAAXPEBV_Container_base_secure@2@@Z 0000000180008b00 f i Instrument.obj
+ 0001:00007bc0       ?_Orphan_me@_Iterator_base@std@@QEAAXXZ 0000000180008bc0 f i Instrument.obj
+ 0001:00007c90       ??1?$_Iterator_with_base@Urandom_access_iterator_tag@std@@PEAVISA@@_JPEBQEAV3@AEBQEAV3@V_Iterator_base@2@@std@@QEAA@XZ 0000000180008c90 f i Instrument.obj
+ 0001:00007cb0       ??1_Iterator_base@std@@QEAA@XZ 0000000180008cb0 f i Instrument.obj
+ 0001:00007d00       ??0?$_Iterator_with_base@Urandom_access_iterator_tag@std@@PEAVISG@@_JPEBQEAV3@AEBQEAV3@V_Iterator_base@2@@std@@QEAA@AEBU01@@Z 0000000180008d00 f i Instrument.obj
+ 0001:00007d30       ??1?$_Iterator_with_base@Urandom_access_iterator_tag@std@@PEAVISG@@_JPEBQEAV3@AEBQEAV3@V_Iterator_base@2@@std@@QEAA@XZ 0000000180008d30 f i Instrument.obj
+ 0001:00007d50       ??0?$_Iterator_with_base@Urandom_access_iterator_tag@std@@PEAVIPM@@_JPEBQEAV3@AEBQEAV3@V_Iterator_base@2@@std@@QEAA@AEBU01@@Z 0000000180008d50 f i Instrument.obj
+ 0001:00007d80       ??1?$_Iterator_with_base@Urandom_access_iterator_tag@std@@PEAVIPM@@_JPEBQEAV3@AEBQEAV3@V_Iterator_base@2@@std@@QEAA@XZ 0000000180008d80 f i Instrument.obj
+ 0001:00007da0       ?capacity@?$vector@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEBA_KXZ 0000000180008da0 f i Instrument.obj
+ 0001:00007e00       ?begin@?$vector@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEAA?AV?$_Vector_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@2@XZ 0000000180008e00 f i Instrument.obj
+ 0001:00007e60       ?end@?$vector@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEAA?AV?$_Vector_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@2@XZ 0000000180008e60 f i Instrument.obj
+ 0001:00007ec0       ?insert@?$vector@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEAA?AV?$_Vector_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@2@V?$_Vector_const_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@2@AEBQEAVISA@@@Z 0000000180008ec0 f i Instrument.obj
+ 0001:000080b0       ?erase@?$vector@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEAA?AV?$_Vector_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@2@V?$_Vector_const_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@2@0@Z 00000001800090b0 f i Instrument.obj
+ 0001:00008350       ?_Buy@?$vector@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@IEAA_N_K@Z 0000000180009350 f i Instrument.obj
+ 0001:00008430       ?_Tidy@?$vector@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@IEAAXXZ 0000000180009430 f i Instrument.obj
+ 0001:000084f0       ?_Ufill@?$vector@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@IEAAPEAPEAVISA@@PEAPEAV3@_KAEBQEAV3@@Z 00000001800094f0 f i Instrument.obj
+ 0001:00008550       ?_Xran@?$vector@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@KAXXZ 0000000180009550 f i Instrument.obj
+ 0001:000085d0       ??0out_of_range@std@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z 00000001800095d0 f i Instrument.obj
+ 0001:00008620       ??0logic_error@std@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z 0000000180009620 f i Instrument.obj
+ 0001:00008690       ?what@logic_error@std@@UEBAPEBDXZ 0000000180009690 f i Instrument.obj
+ 0001:000086c0       ??_Elogic_error@std@@UEAAPEAXI@Z 00000001800096c0 f i Instrument.obj
+ 0001:000086c0       ??_Glogic_error@std@@UEAAPEAXI@Z 00000001800096c0 f i Instrument.obj
+ 0001:00008710       ??1logic_error@std@@UEAA@XZ 0000000180009710 f i Instrument.obj
+ 0001:00008760       ??1out_of_range@std@@UEAA@XZ 0000000180009760 f i Instrument.obj
+ 0001:00008790       ??_Eout_of_range@std@@UEAAPEAXI@Z 0000000180009790 f i Instrument.obj
+ 0001:00008790       ??_Gout_of_range@std@@UEAAPEAXI@Z 0000000180009790 f i Instrument.obj
+ 0001:000087e0       ??0out_of_range@std@@QEAA@AEBV01@@Z 00000001800097e0 f i Instrument.obj
+ 0001:00008830       ??0logic_error@std@@QEAA@AEBV01@@Z 0000000180009830 f i Instrument.obj
+ 0001:000088a0       ?_Orphan_range@?$vector@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@IEBAXPEAPEAVISA@@0@Z 00000001800098a0 f i Instrument.obj
+ 0001:00008970       ??0?$_Vector_val@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@IEAA@V?$allocator@PEAVISA@@@1@@Z 0000000180009970 f i Instrument.obj
+ 0001:000089e0       ??1?$_Container_base_aux_alloc_empty@V?$allocator@PEAVISA@@@std@@@std@@IEAA@XZ 00000001800099e0 f i Instrument.obj
+ 0001:00008a00       ??0?$allocator@PEAVISA@@@std@@QEAA@XZ 0000000180009a00 f i Instrument.obj
+ 0001:00008a10       ?capacity@?$vector@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEBA_KXZ 0000000180009a10 f i Instrument.obj
+ 0001:00008a70       ?begin@?$vector@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEAA?AV?$_Vector_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@2@XZ 0000000180009a70 f i Instrument.obj
+ 0001:00008ad0       ?end@?$vector@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEAA?AV?$_Vector_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@2@XZ 0000000180009ad0 f i Instrument.obj
+ 0001:00008b30       ?insert@?$vector@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEAA?AV?$_Vector_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@2@V?$_Vector_const_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@2@AEBQEAVISG@@@Z 0000000180009b30 f i Instrument.obj
+ 0001:00008d20       ?erase@?$vector@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEAA?AV?$_Vector_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@2@V?$_Vector_const_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@2@0@Z 0000000180009d20 f i Instrument.obj
+ 0001:00008fc0       ?_Buy@?$vector@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@IEAA_N_K@Z 0000000180009fc0 f i Instrument.obj
+ 0001:000090a0       ?_Tidy@?$vector@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@IEAAXXZ 000000018000a0a0 f i Instrument.obj
+ 0001:00009160       ?_Ufill@?$vector@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@IEAAPEAPEAVISG@@PEAPEAV3@_KAEBQEAV3@@Z 000000018000a160 f i Instrument.obj
+ 0001:000091c0       ?_Xran@?$vector@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@KAXXZ 000000018000a1c0 f i Instrument.obj
+ 0001:00009240       ?_Orphan_range@?$vector@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@IEBAXPEAPEAVISG@@0@Z 000000018000a240 f i Instrument.obj
+ 0001:00009310       ??0?$_Vector_val@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@IEAA@V?$allocator@PEAVISG@@@1@@Z 000000018000a310 f i Instrument.obj
+ 0001:00009380       ??1?$_Container_base_aux_alloc_empty@V?$allocator@PEAVISG@@@std@@@std@@IEAA@XZ 000000018000a380 f i Instrument.obj
+ 0001:000093a0       ??0?$allocator@PEAVISG@@@std@@QEAA@XZ 000000018000a3a0 f i Instrument.obj
+ 0001:000093b0       ?capacity@?$vector@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEBA_KXZ 000000018000a3b0 f i Instrument.obj
+ 0001:00009410       ?begin@?$vector@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEAA?AV?$_Vector_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@2@XZ 000000018000a410 f i Instrument.obj
+ 0001:00009470       ?end@?$vector@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEAA?AV?$_Vector_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@2@XZ 000000018000a470 f i Instrument.obj
+ 0001:000094d0       ?insert@?$vector@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEAA?AV?$_Vector_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@2@V?$_Vector_const_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@2@AEBQEAVIPM@@@Z 000000018000a4d0 f i Instrument.obj
+ 0001:000096c0       ?erase@?$vector@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEAA?AV?$_Vector_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@2@V?$_Vector_const_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@2@0@Z 000000018000a6c0 f i Instrument.obj
+ 0001:00009960       ?_Buy@?$vector@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@IEAA_N_K@Z 000000018000a960 f i Instrument.obj
+ 0001:00009a40       ?_Tidy@?$vector@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@IEAAXXZ 000000018000aa40 f i Instrument.obj
+ 0001:00009b00       ?_Ufill@?$vector@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@IEAAPEAPEAVIPM@@PEAPEAV3@_KAEBQEAV3@@Z 000000018000ab00 f i Instrument.obj
+ 0001:00009b60       ?_Xran@?$vector@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@KAXXZ 000000018000ab60 f i Instrument.obj
+ 0001:00009be0       ?_Orphan_range@?$vector@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@IEBAXPEAPEAVIPM@@0@Z 000000018000abe0 f i Instrument.obj
+ 0001:00009cb0       ??0?$_Vector_val@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@IEAA@V?$allocator@PEAVIPM@@@1@@Z 000000018000acb0 f i Instrument.obj
+ 0001:00009d20       ??1?$_Container_base_aux_alloc_empty@V?$allocator@PEAVIPM@@@std@@@std@@IEAA@XZ 000000018000ad20 f i Instrument.obj
+ 0001:00009d40       ??0?$allocator@PEAVIPM@@@std@@QEAA@XZ 000000018000ad40 f i Instrument.obj
+ 0001:00009d50       ??D?$_Vector_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEBAAEAPEAVISA@@XZ 000000018000ad50 f i Instrument.obj
+ 0001:00009d70       ??H?$_Vector_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEBA?AV01@_J@Z 000000018000ad70 f i Instrument.obj
+ 0001:00009e00       ??D?$_Vector_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEBAAEAPEAVISG@@XZ 000000018000ae00 f i Instrument.obj
+ 0001:00009e20       ??H?$_Vector_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEBA?AV01@_J@Z 000000018000ae20 f i Instrument.obj
+ 0001:00009eb0       ??D?$_Vector_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEBAAEAPEAVIPM@@XZ 000000018000aeb0 f i Instrument.obj
+ 0001:00009ed0       ??H?$_Vector_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEBA?AV01@_J@Z 000000018000aed0 f i Instrument.obj
+ 0001:00009f60       ??0?$_Vector_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEAA@AEBV01@@Z 000000018000af60 f i Instrument.obj
+ 0001:00009f90       ??0?$_Vector_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEAA@AEBV01@@Z 000000018000af90 f i Instrument.obj
+ 0001:00009fc0       ??0?$_Vector_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEAA@AEBV01@@Z 000000018000afc0 f i Instrument.obj
+ 0001:00009ff0       ?_Make_iter@?$vector@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEBA?AV?$_Vector_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@2@V?$_Vector_const_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@2@@Z 000000018000aff0 f i Instrument.obj
+ 0001:0000a070       ?max_size@?$vector@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEBA_KXZ 000000018000b070 f i Instrument.obj
+ 0001:0000a0a0       ?_Destroy@?$vector@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@IEAAXPEAPEAVISA@@0@Z 000000018000b0a0 f i Instrument.obj
+ 0001:0000a0e0       ?_Insert_n@?$vector@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@IEAAXV?$_Vector_const_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@2@_KAEBQEAVISA@@@Z 000000018000b0e0 f i Instrument.obj
+ 0001:0000a7f0       ?_Xlen@?$vector@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@KAXXZ 000000018000b7f0 f i Instrument.obj
+ 0001:0000a870       ??0length_error@std@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z 000000018000b870 f i Instrument.obj
+ 0001:0000a8c0       ??1length_error@std@@UEAA@XZ 000000018000b8c0 f i Instrument.obj
+ 0001:0000a8f0       ??_Glength_error@std@@UEAAPEAXI@Z 000000018000b8f0 f i Instrument.obj
+ 0001:0000a8f0       ??_Elength_error@std@@UEAAPEAXI@Z 000000018000b8f0 f i Instrument.obj
+ 0001:0000a940       ??0?$_Container_base_aux_alloc_empty@V?$allocator@PEAVISA@@@std@@@std@@IEAA@V?$allocator@PEAVISA@@@1@@Z 000000018000b940 f i Instrument.obj
+ 0001:0000a970       ??0?$allocator@PEAVISA@@@std@@QEAA@AEBV01@@Z 000000018000b970 f i Instrument.obj
+ 0001:0000a990       ?deallocate@?$allocator@PEAVISA@@@std@@QEAAXPEAPEAVISA@@_K@Z 000000018000b990 f i Instrument.obj
+ 0001:0000a9c0       ?allocate@?$allocator@PEAVISA@@@std@@QEAAPEAPEAVISA@@_K@Z 000000018000b9c0 f i Instrument.obj
+ 0001:0000a9f0       ?_Make_iter@?$vector@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEBA?AV?$_Vector_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@2@V?$_Vector_const_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@2@@Z 000000018000b9f0 f i Instrument.obj
+ 0001:0000aa70       ?max_size@?$vector@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEBA_KXZ 000000018000ba70 f i Instrument.obj
+ 0001:0000aaa0       ?_Destroy@?$vector@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@IEAAXPEAPEAVISG@@0@Z 000000018000baa0 f i Instrument.obj
+ 0001:0000aae0       ?_Insert_n@?$vector@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@IEAAXV?$_Vector_const_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@2@_KAEBQEAVISG@@@Z 000000018000bae0 f i Instrument.obj
+ 0001:0000b1f0       ?_Xlen@?$vector@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@KAXXZ 000000018000c1f0 f i Instrument.obj
+ 0001:0000b270       ??0?$_Container_base_aux_alloc_empty@V?$allocator@PEAVISG@@@std@@@std@@IEAA@V?$allocator@PEAVISG@@@1@@Z 000000018000c270 f i Instrument.obj
+ 0001:0000b2a0       ??0?$allocator@PEAVISG@@@std@@QEAA@AEBV01@@Z 000000018000c2a0 f i Instrument.obj
+ 0001:0000b2c0       ?deallocate@?$allocator@PEAVISG@@@std@@QEAAXPEAPEAVISG@@_K@Z 000000018000c2c0 f i Instrument.obj
+ 0001:0000b2f0       ?allocate@?$allocator@PEAVISG@@@std@@QEAAPEAPEAVISG@@_K@Z 000000018000c2f0 f i Instrument.obj
+ 0001:0000b320       ?_Make_iter@?$vector@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEBA?AV?$_Vector_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@2@V?$_Vector_const_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@2@@Z 000000018000c320 f i Instrument.obj
+ 0001:0000b3a0       ?max_size@?$vector@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEBA_KXZ 000000018000c3a0 f i Instrument.obj
+ 0001:0000b3d0       ?_Destroy@?$vector@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@IEAAXPEAPEAVIPM@@0@Z 000000018000c3d0 f i Instrument.obj
+ 0001:0000b410       ?_Insert_n@?$vector@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@IEAAXV?$_Vector_const_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@2@_KAEBQEAVIPM@@@Z 000000018000c410 f i Instrument.obj
+ 0001:0000bb20       ?_Xlen@?$vector@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@KAXXZ 000000018000cb20 f i Instrument.obj
+ 0001:0000bba0       ??0?$_Container_base_aux_alloc_empty@V?$allocator@PEAVIPM@@@std@@@std@@IEAA@V?$allocator@PEAVIPM@@@1@@Z 000000018000cba0 f i Instrument.obj
+ 0001:0000bbd0       ??0?$allocator@PEAVIPM@@@std@@QEAA@AEBV01@@Z 000000018000cbd0 f i Instrument.obj
+ 0001:0000bbf0       ?deallocate@?$allocator@PEAVIPM@@@std@@QEAAXPEAPEAVIPM@@_K@Z 000000018000cbf0 f i Instrument.obj
+ 0001:0000bc20       ?allocate@?$allocator@PEAVIPM@@@std@@QEAAPEAPEAVIPM@@_K@Z 000000018000cc20 f i Instrument.obj
+ 0001:0000bc50       ??0?$_Vector_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEAA@PEAPEAVISA@@PEBV_Container_base_secure@1@@Z 000000018000cc50 f i Instrument.obj
+ 0001:0000bc90       ??Y?$_Vector_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEAAAEAV01@_J@Z 000000018000cc90 f i Instrument.obj
+ 0001:0000bcc0       ??D?$_Vector_const_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEBAAEBQEAVISA@@XZ 000000018000ccc0 f i Instrument.obj
+ 0001:0000bdc0       ??G?$_Vector_const_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEBA_JAEBV01@@Z 000000018000cdc0 f i Instrument.obj
+ 0001:0000be10       ??9?$_Vector_const_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEBA_NAEBV01@@Z 000000018000ce10 f i Instrument.obj
+ 0001:0000be60       ??M?$_Vector_const_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEBA_NAEBV01@@Z 000000018000ce60 f i Instrument.obj
+ 0001:0000bec0       ??0?$_Vector_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEAA@PEAPEAVISG@@PEBV_Container_base_secure@1@@Z 000000018000cec0 f i Instrument.obj
+ 0001:0000bf00       ??Y?$_Vector_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEAAAEAV01@_J@Z 000000018000cf00 f i Instrument.obj
+ 0001:0000bf30       ??D?$_Vector_const_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEBAAEBQEAVISG@@XZ 000000018000cf30 f i Instrument.obj
+ 0001:0000c030       ??G?$_Vector_const_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEBA_JAEBV01@@Z 000000018000d030 f i Instrument.obj
+ 0001:0000c080       ??9?$_Vector_const_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEBA_NAEBV01@@Z 000000018000d080 f i Instrument.obj
+ 0001:0000c0d0       ??M?$_Vector_const_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEBA_NAEBV01@@Z 000000018000d0d0 f i Instrument.obj
+ 0001:0000c130       ??0?$_Vector_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEAA@PEAPEAVIPM@@PEBV_Container_base_secure@1@@Z 000000018000d130 f i Instrument.obj
+ 0001:0000c170       ??Y?$_Vector_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEAAAEAV01@_J@Z 000000018000d170 f i Instrument.obj
+ 0001:0000c1a0       ??D?$_Vector_const_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEBAAEBQEAVIPM@@XZ 000000018000d1a0 f i Instrument.obj
+ 0001:0000c2a0       ??G?$_Vector_const_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEBA_JAEBV01@@Z 000000018000d2a0 f i Instrument.obj
+ 0001:0000c2f0       ??9?$_Vector_const_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEBA_NAEBV01@@Z 000000018000d2f0 f i Instrument.obj
+ 0001:0000c340       ??M?$_Vector_const_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEBA_NAEBV01@@Z 000000018000d340 f i Instrument.obj
+ 0001:0000c3a0       ??0length_error@std@@QEAA@AEBV01@@Z 000000018000d3a0 f i Instrument.obj
+ 0001:0000c3f0       ?max_size@?$allocator@PEAVISA@@@std@@QEBA_KXZ 000000018000d3f0 f i Instrument.obj
+ 0001:0000c440       ?max_size@?$allocator@PEAVISG@@@std@@QEBA_KXZ 000000018000d440 f i Instrument.obj
+ 0001:0000c490       ?max_size@?$allocator@PEAVIPM@@@std@@QEBA_KXZ 000000018000d490 f i Instrument.obj
+ 0001:0000c4e0       ??0?$_Vector_const_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEAA@PEAPEAVISA@@PEBV_Container_base_secure@1@@Z 000000018000d4e0 f i Instrument.obj
+ 0001:0000c5f0       ??Y?$_Vector_const_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEAAAEAV01@_J@Z 000000018000d5f0 f i Instrument.obj
+ 0001:0000c790       ?_Getmycont@_Iterator_base@std@@QEBAPEBV_Container_base_secure@2@XZ 000000018000d790 f i Instrument.obj
+ 0001:0000c7b0       ?_Has_container@_Iterator_base@std@@QEBA_NXZ 000000018000d7b0 f i Instrument.obj
+ 0001:0000c7f0       ??8?$_Vector_const_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEBA_NAEBV01@@Z 000000018000d7f0 f i Instrument.obj
+ 0001:0000c850       ?_Compat@?$_Vector_const_iterator@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@QEBAXAEBV12@@Z 000000018000d850 f i Instrument.obj
+ 0001:0000c930       ??0?$_Vector_const_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEAA@PEAPEAVISG@@PEBV_Container_base_secure@1@@Z 000000018000d930 f i Instrument.obj
+ 0001:0000ca40       ??Y?$_Vector_const_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEAAAEAV01@_J@Z 000000018000da40 f i Instrument.obj
+ 0001:0000cbe0       ??8?$_Vector_const_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEBA_NAEBV01@@Z 000000018000dbe0 f i Instrument.obj
+ 0001:0000cc40       ?_Compat@?$_Vector_const_iterator@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@QEBAXAEBV12@@Z 000000018000dc40 f i Instrument.obj
+ 0001:0000cd20       ??0?$_Vector_const_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEAA@PEAPEAVIPM@@PEBV_Container_base_secure@1@@Z 000000018000dd20 f i Instrument.obj
+ 0001:0000ce30       ??Y?$_Vector_const_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEAAAEAV01@_J@Z 000000018000de30 f i Instrument.obj
+ 0001:0000cfd0       ??8?$_Vector_const_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEBA_NAEBV01@@Z 000000018000dfd0 f i Instrument.obj
+ 0001:0000d030       ?_Compat@?$_Vector_const_iterator@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@QEBAXAEBV12@@Z 000000018000e030 f i Instrument.obj
+ 0001:0000d110       ??0?$_Ranit@PEAVISA@@_JPEBQEAV1@AEBQEAV1@@std@@QEAA@XZ 000000018000e110 f i Instrument.obj
+ 0001:0000d140       ??0?$_Ranit@PEAVISG@@_JPEBQEAV1@AEBQEAV1@@std@@QEAA@XZ 000000018000e140 f i Instrument.obj
+ 0001:0000d170       ??0?$_Ranit@PEAVIPM@@_JPEBQEAV1@AEBQEAV1@@std@@QEAA@XZ 000000018000e170 f i Instrument.obj
+ 0001:0000d1a0       ??0?$_Iterator_with_base@Urandom_access_iterator_tag@std@@PEAVISA@@_JPEBQEAV3@AEBQEAV3@V_Iterator_base@2@@std@@QEAA@XZ 000000018000e1a0 f i Instrument.obj
+ 0001:0000d1d0       ??0_Iterator_base@std@@QEAA@XZ 000000018000e1d0 f i Instrument.obj
+ 0001:0000d200       ??0?$_Iterator_with_base@Urandom_access_iterator_tag@std@@PEAVISG@@_JPEBQEAV3@AEBQEAV3@V_Iterator_base@2@@std@@QEAA@XZ 000000018000e200 f i Instrument.obj
+ 0001:0000d230       ??0?$_Iterator_with_base@Urandom_access_iterator_tag@std@@PEAVIPM@@_JPEBQEAV3@AEBQEAV3@V_Iterator_base@2@@std@@QEAA@XZ 000000018000e230 f i Instrument.obj
+ 0001:0000d260       ??$vsprintf_s@$0BAA@@@YAHAEAY0BAA@DPEBDPEAD@Z 000000018000e260 f i Instrument.obj
+ 0001:0000d2a0       ??$strcpy_s@$0BA@@@YAHAEAY0BA@DPEBD@Z 000000018000e2a0 f i Instrument.obj
+ 0001:0000d2e0       ??$unchecked_copy@PEAPEAVISA@@PEAPEAV1@@stdext@@YAPEAPEAVISA@@PEAPEAV1@00@Z 000000018000e2e0 f i Instrument.obj
+ 0001:0000d3a0       ??$unchecked_uninitialized_fill_n@PEAPEAVISA@@_KPEAV1@V?$allocator@PEAVISA@@@std@@@stdext@@YAXPEAPEAVISA@@_KAEBQEAV1@AEAV?$allocator@PEAVISA@@@std@@@Z 000000018000e3a0 f i Instrument.obj
+ 0001:0000d430       ??$unchecked_copy@PEAPEAVISG@@PEAPEAV1@@stdext@@YAPEAPEAVISG@@PEAPEAV1@00@Z 000000018000e430 f i Instrument.obj
+ 0001:0000d4f0       ??$unchecked_uninitialized_fill_n@PEAPEAVISG@@_KPEAV1@V?$allocator@PEAVISG@@@std@@@stdext@@YAXPEAPEAVISG@@_KAEBQEAV1@AEAV?$allocator@PEAVISG@@@std@@@Z 000000018000e4f0 f i Instrument.obj
+ 0001:0000d580       ??$unchecked_copy@PEAPEAVIPM@@PEAPEAV1@@stdext@@YAPEAPEAVIPM@@PEAPEAV1@00@Z 000000018000e580 f i Instrument.obj
+ 0001:0000d640       ??$unchecked_uninitialized_fill_n@PEAPEAVIPM@@_KPEAV1@V?$allocator@PEAVIPM@@@std@@@stdext@@YAXPEAPEAVIPM@@_KAEBQEAV1@AEAV?$allocator@PEAVIPM@@@std@@@Z 000000018000e640 f i Instrument.obj
+ 0001:0000d6d0       ??$_Destroy_range@V?$allocator@PEAVISA@@@std@@@std@@YAXPEAPEAVISA@@0AEAV?$allocator@PEAVISA@@@0@@Z 000000018000e6d0 f i Instrument.obj
+ 0001:0000d730       ??$_Umove@PEAPEAVISA@@@?$vector@PEAVISA@@V?$allocator@PEAVISA@@@std@@@std@@IEAAPEAPEAVISA@@PEAPEAV2@00@Z 000000018000e730 f i Instrument.obj
+ 0001:0000d780       ??$fill@PEAPEAVISA@@PEAV1@@std@@YAXPEAPEAVISA@@0AEBQEAV1@@Z 000000018000e780 f i Instrument.obj
+ 0001:0000d7e0       ??$_Unchecked_move_backward@PEAPEAVISA@@PEAPEAV1@@stdext@@YAPEAPEAVISA@@PEAPEAV1@00@Z 000000018000e7e0 f i Instrument.obj
+ 0001:0000d890       ??$_Allocate@PEAVISA@@@std@@YAPEAPEAVISA@@_KPEAPEAV1@@Z 000000018000e890 f i Instrument.obj
+ 0001:0000d910       ??0bad_alloc@std@@QEAA@PEBD@Z 000000018000e910 f i Instrument.obj
+ 0001:0000d960       ??1bad_alloc@std@@UEAA@XZ  000000018000e960 f i Instrument.obj
+ 0001:0000d9a0       ??_Ebad_alloc@std@@UEAAPEAXI@Z 000000018000e9a0 f i Instrument.obj
+ 0001:0000d9a0       ??_Gbad_alloc@std@@UEAAPEAXI@Z 000000018000e9a0 f i Instrument.obj
+ 0001:0000d9f0       ??0bad_alloc@std@@QEAA@AEBV01@@Z 000000018000e9f0 f i Instrument.obj
+ 0001:0000da40       ??$_Destroy_range@V?$allocator@PEAVISG@@@std@@@std@@YAXPEAPEAVISG@@0AEAV?$allocator@PEAVISG@@@0@@Z 000000018000ea40 f i Instrument.obj
+ 0001:0000daa0       ??$_Umove@PEAPEAVISG@@@?$vector@PEAVISG@@V?$allocator@PEAVISG@@@std@@@std@@IEAAPEAPEAVISG@@PEAPEAV2@00@Z 000000018000eaa0 f i Instrument.obj
+ 0001:0000daf0       ??$fill@PEAPEAVISG@@PEAV1@@std@@YAXPEAPEAVISG@@0AEBQEAV1@@Z 000000018000eaf0 f i Instrument.obj
+ 0001:0000db50       ??$_Unchecked_move_backward@PEAPEAVISG@@PEAPEAV1@@stdext@@YAPEAPEAVISG@@PEAPEAV1@00@Z 000000018000eb50 f i Instrument.obj
+ 0001:0000dc00       ??$_Allocate@PEAVISG@@@std@@YAPEAPEAVISG@@_KPEAPEAV1@@Z 000000018000ec00 f i Instrument.obj
+ 0001:0000dc80       ??$_Destroy_range@V?$allocator@PEAVIPM@@@std@@@std@@YAXPEAPEAVIPM@@0AEAV?$allocator@PEAVIPM@@@0@@Z 000000018000ec80 f i Instrument.obj
+ 0001:0000dce0       ??$_Umove@PEAPEAVIPM@@@?$vector@PEAVIPM@@V?$allocator@PEAVIPM@@@std@@@std@@IEAAPEAPEAVIPM@@PEAPEAV2@00@Z 000000018000ece0 f i Instrument.obj
+ 0001:0000dd30       ??$fill@PEAPEAVIPM@@PEAV1@@std@@YAXPEAPEAVIPM@@0AEBQEAV1@@Z 000000018000ed30 f i Instrument.obj
+ 0001:0000dd90       ??$_Unchecked_move_backward@PEAPEAVIPM@@PEAPEAV1@@stdext@@YAPEAPEAVIPM@@PEAPEAV1@00@Z 000000018000ed90 f i Instrument.obj
+ 0001:0000de40       ??$_Allocate@PEAVIPM@@@std@@YAPEAPEAVIPM@@_KPEAPEAV1@@Z 000000018000ee40 f i Instrument.obj
+ 0001:0000dec0       ??$_Checked_base@PEAPEAVISA@@@std@@YAPEAPEAVISA@@AEAPEAPEAV1@@Z 000000018000eec0 f i Instrument.obj
+ 0001:0000def0       ??$_Iter_random@PEAPEAVISA@@PEAPEAV1@@std@@YA?AUrandom_access_iterator_tag@0@AEBQEAPEAVISA@@0@Z 000000018000eef0 f i Instrument.obj
+ 0001:0000df20       ??$_Ptr_cat@PEAPEAVISA@@PEAPEAV1@@std@@YA?AU_Scalar_ptr_iterator_tag@0@AEAPEAPEAVISA@@0@Z 000000018000ef20 f i Instrument.obj
+ 0001:0000df40       ??$_Copy_opt@PEAPEAVISA@@PEAPEAV1@Urandom_access_iterator_tag@std@@@std@@YAPEAPEAVISA@@PEAPEAV1@00Urandom_access_iterator_tag@0@U_Scalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 000000018000ef40 f i Instrument.obj
+ 0001:0000e030       ??$_Uninit_fill_n@PEAPEAVISA@@_KPEAV1@V?$allocator@PEAVISA@@@std@@@std@@YAXPEAPEAVISA@@_KAEBQEAV1@AEAV?$allocator@PEAVISA@@@0@U_Scalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 000000018000f030 f i Instrument.obj
+ 0001:0000e070       ??$_Checked_base@PEAPEAVISG@@@std@@YAPEAPEAVISG@@AEAPEAPEAV1@@Z 000000018000f070 f i Instrument.obj
+ 0001:0000e0a0       ??$_Iter_random@PEAPEAVISG@@PEAPEAV1@@std@@YA?AUrandom_access_iterator_tag@0@AEBQEAPEAVISG@@0@Z 000000018000f0a0 f i Instrument.obj
+ 0001:0000e0d0       ??$_Ptr_cat@PEAPEAVISG@@PEAPEAV1@@std@@YA?AU_Scalar_ptr_iterator_tag@0@AEAPEAPEAVISG@@0@Z 000000018000f0d0 f i Instrument.obj
+ 0001:0000e0f0       ??$_Copy_opt@PEAPEAVISG@@PEAPEAV1@Urandom_access_iterator_tag@std@@@std@@YAPEAPEAVISG@@PEAPEAV1@00Urandom_access_iterator_tag@0@U_Scalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 000000018000f0f0 f i Instrument.obj
+ 0001:0000e1e0       ??$_Uninit_fill_n@PEAPEAVISG@@_KPEAV1@V?$allocator@PEAVISG@@@std@@@std@@YAXPEAPEAVISG@@_KAEBQEAV1@AEAV?$allocator@PEAVISG@@@0@U_Scalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 000000018000f1e0 f i Instrument.obj
+ 0001:0000e220       ??$_Checked_base@PEAPEAVIPM@@@std@@YAPEAPEAVIPM@@AEAPEAPEAV1@@Z 000000018000f220 f i Instrument.obj
+ 0001:0000e250       ??$_Iter_random@PEAPEAVIPM@@PEAPEAV1@@std@@YA?AUrandom_access_iterator_tag@0@AEBQEAPEAVIPM@@0@Z 000000018000f250 f i Instrument.obj
+ 0001:0000e280       ??$_Ptr_cat@PEAPEAVIPM@@PEAPEAV1@@std@@YA?AU_Scalar_ptr_iterator_tag@0@AEAPEAPEAVIPM@@0@Z 000000018000f280 f i Instrument.obj
+ 0001:0000e2a0       ??$_Copy_opt@PEAPEAVIPM@@PEAPEAV1@Urandom_access_iterator_tag@std@@@std@@YAPEAPEAVIPM@@PEAPEAV1@00Urandom_access_iterator_tag@0@U_Scalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 000000018000f2a0 f i Instrument.obj
+ 0001:0000e390       ??$_Uninit_fill_n@PEAPEAVIPM@@_KPEAV1@V?$allocator@PEAVIPM@@@std@@@std@@YAXPEAPEAVIPM@@_KAEBQEAV1@AEAV?$allocator@PEAVIPM@@@0@U_Scalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 000000018000f390 f i Instrument.obj
+ 0001:0000e3d0       ??$_Destroy_range@V?$allocator@PEAVISA@@@std@@@std@@YAXPEAPEAVISA@@0AEAV?$allocator@PEAVISA@@@0@U_Scalar_ptr_iterator_tag@0@@Z 000000018000f3d0 f i Instrument.obj
+ 0001:0000e3f0       ??$_Unchecked_uninitialized_move@PEAPEAVISA@@PEAPEAV1@V?$allocator@PEAVISA@@@std@@@stdext@@YAPEAPEAVISA@@PEAPEAV1@00AEAV?$allocator@PEAVISA@@@std@@@Z 000000018000f3f0 f i Instrument.obj
+ 0001:0000e490       ??$_Fill@PEAPEAVISA@@PEAV1@@std@@YAXPEAPEAVISA@@0AEBQEAV1@@Z 000000018000f490 f i Instrument.obj
+ 0001:0000e510       ??$_Move_cat@PEAPEAVISA@@@std@@YA?AU_Undefined_move_tag@0@AEBQEAPEAVISA@@@Z 000000018000f510 f i Instrument.obj
+ 0001:0000e530       ??$_Move_backward_opt@PEAPEAVISA@@PEAPEAV1@Urandom_access_iterator_tag@std@@U_Undefined_move_tag@3@@std@@YAPEAPEAVISA@@PEAPEAV1@00Urandom_access_iterator_tag@0@U_Undefined_move_tag@0@U_Range_checked_iterator_tag@0@@Z 000000018000f530 f i Instrument.obj
+ 0001:0000e5c0       ??$_Destroy_range@V?$allocator@PEAVISG@@@std@@@std@@YAXPEAPEAVISG@@0AEAV?$allocator@PEAVISG@@@0@U_Scalar_ptr_iterator_tag@0@@Z 000000018000f5c0 f i Instrument.obj
+ 0001:0000e5e0       ??$_Unchecked_uninitialized_move@PEAPEAVISG@@PEAPEAV1@V?$allocator@PEAVISG@@@std@@@stdext@@YAPEAPEAVISG@@PEAPEAV1@00AEAV?$allocator@PEAVISG@@@std@@@Z 000000018000f5e0 f i Instrument.obj
+ 0001:0000e680       ??$_Fill@PEAPEAVISG@@PEAV1@@std@@YAXPEAPEAVISG@@0AEBQEAV1@@Z 000000018000f680 f i Instrument.obj
+ 0001:0000e700       ??$_Move_cat@PEAPEAVISG@@@std@@YA?AU_Undefined_move_tag@0@AEBQEAPEAVISG@@@Z 000000018000f700 f i Instrument.obj
+ 0001:0000e720       ??$_Move_backward_opt@PEAPEAVISG@@PEAPEAV1@Urandom_access_iterator_tag@std@@U_Undefined_move_tag@3@@std@@YAPEAPEAVISG@@PEAPEAV1@00Urandom_access_iterator_tag@0@U_Undefined_move_tag@0@U_Range_checked_iterator_tag@0@@Z 000000018000f720 f i Instrument.obj
+ 0001:0000e7b0       ??$_Destroy_range@V?$allocator@PEAVIPM@@@std@@@std@@YAXPEAPEAVIPM@@0AEAV?$allocator@PEAVIPM@@@0@U_Scalar_ptr_iterator_tag@0@@Z 000000018000f7b0 f i Instrument.obj
+ 0001:0000e7d0       ??$_Unchecked_uninitialized_move@PEAPEAVIPM@@PEAPEAV1@V?$allocator@PEAVIPM@@@std@@@stdext@@YAPEAPEAVIPM@@PEAPEAV1@00AEAV?$allocator@PEAVIPM@@@std@@@Z 000000018000f7d0 f i Instrument.obj
+ 0001:0000e870       ??$_Fill@PEAPEAVIPM@@PEAV1@@std@@YAXPEAPEAVIPM@@0AEBQEAV1@@Z 000000018000f870 f i Instrument.obj
+ 0001:0000e8f0       ??$_Move_cat@PEAPEAVIPM@@@std@@YA?AU_Undefined_move_tag@0@AEBQEAPEAVIPM@@@Z 000000018000f8f0 f i Instrument.obj
+ 0001:0000e910       ??$_Move_backward_opt@PEAPEAVIPM@@PEAPEAV1@Urandom_access_iterator_tag@std@@U_Undefined_move_tag@3@@std@@YAPEAPEAVIPM@@PEAPEAV1@00Urandom_access_iterator_tag@0@U_Undefined_move_tag@0@U_Range_checked_iterator_tag@0@@Z 000000018000f910 f i Instrument.obj
+ 0001:0000e9a0       ??$_Checked_base@PEAPEAVISA@@@std@@YAPEAPEAVISA@@AEAPEAPEAV1@U_Unchanged_checked_iterator_base_type_tag@0@@Z 000000018000f9a0 f i Instrument.obj
+ 0001:0000e9c0       ??$_Debug_range@PEAPEAVISA@@@std@@YAXPEAPEAVISA@@0PEB_WI@Z 000000018000f9c0 f i Instrument.obj
+ 0001:0000ea20       ??$_Debug_pointer@PEAVISA@@@std@@YAXPEAPEAVISA@@PEB_WI@Z 000000018000fa20 f i Instrument.obj
+ 0001:0000ea70       ??$unchecked_fill_n@PEAPEAVISA@@_KPEAV1@@stdext@@YAXPEAPEAVISA@@_KAEBQEAV1@@Z 000000018000fa70 f i Instrument.obj
+ 0001:0000eaf0       ??$_Checked_base@PEAPEAVISG@@@std@@YAPEAPEAVISG@@AEAPEAPEAV1@U_Unchanged_checked_iterator_base_type_tag@0@@Z 000000018000faf0 f i Instrument.obj
+ 0001:0000eb10       ??$_Debug_range@PEAPEAVISG@@@std@@YAXPEAPEAVISG@@0PEB_WI@Z 000000018000fb10 f i Instrument.obj
+ 0001:0000eb70       ??$_Debug_pointer@PEAVISG@@@std@@YAXPEAPEAVISG@@PEB_WI@Z 000000018000fb70 f i Instrument.obj
+ 0001:0000ebc0       ??$unchecked_fill_n@PEAPEAVISG@@_KPEAV1@@stdext@@YAXPEAPEAVISG@@_KAEBQEAV1@@Z 000000018000fbc0 f i Instrument.obj
+ 0001:0000ec40       ??$_Checked_base@PEAPEAVIPM@@@std@@YAPEAPEAVIPM@@AEAPEAPEAV1@U_Unchanged_checked_iterator_base_type_tag@0@@Z 000000018000fc40 f i Instrument.obj
+ 0001:0000ec60       ??$_Debug_range@PEAPEAVIPM@@@std@@YAXPEAPEAVIPM@@0PEB_WI@Z 000000018000fc60 f i Instrument.obj
+ 0001:0000ecc0       ??$_Debug_pointer@PEAVIPM@@@std@@YAXPEAPEAVIPM@@PEB_WI@Z 000000018000fcc0 f i Instrument.obj
+ 0001:0000ed10       ??$unchecked_fill_n@PEAPEAVIPM@@_KPEAV1@@stdext@@YAXPEAPEAVIPM@@_KAEBQEAV1@@Z 000000018000fd10 f i Instrument.obj
+ 0001:0000ed90       ??$_Uninit_move@PEAPEAVISA@@PEAPEAV1@V?$allocator@PEAVISA@@@std@@U_Undefined_move_tag@3@@std@@YAPEAPEAVISA@@PEAPEAV1@00AEAV?$allocator@PEAVISA@@@0@U_Undefined_move_tag@0@U_Range_checked_iterator_tag@0@@Z 000000018000fd90 f i Instrument.obj
+ 0001:0000ede0       ??$_Copy_backward_opt@PEAPEAVISA@@PEAPEAV1@Urandom_access_iterator_tag@std@@@std@@YAPEAPEAVISA@@PEAPEAV1@00Urandom_access_iterator_tag@0@U_Scalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 000000018000fde0 f i Instrument.obj
+ 0001:0000eed0       ??$_Uninit_move@PEAPEAVISG@@PEAPEAV1@V?$allocator@PEAVISG@@@std@@U_Undefined_move_tag@3@@std@@YAPEAPEAVISG@@PEAPEAV1@00AEAV?$allocator@PEAVISG@@@0@U_Undefined_move_tag@0@U_Range_checked_iterator_tag@0@@Z 000000018000fed0 f i Instrument.obj
+ 0001:0000ef20       ??$_Copy_backward_opt@PEAPEAVISG@@PEAPEAV1@Urandom_access_iterator_tag@std@@@std@@YAPEAPEAVISG@@PEAPEAV1@00Urandom_access_iterator_tag@0@U_Scalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 000000018000ff20 f i Instrument.obj
+ 0001:0000f010       ??$_Uninit_move@PEAPEAVIPM@@PEAPEAV1@V?$allocator@PEAVIPM@@@std@@U_Undefined_move_tag@3@@std@@YAPEAPEAVIPM@@PEAPEAV1@00AEAV?$allocator@PEAVIPM@@@0@U_Undefined_move_tag@0@U_Range_checked_iterator_tag@0@@Z 0000000180010010 f i Instrument.obj
+ 0001:0000f060       ??$_Copy_backward_opt@PEAPEAVIPM@@PEAPEAV1@Urandom_access_iterator_tag@std@@@std@@YAPEAPEAVIPM@@PEAPEAV1@00Urandom_access_iterator_tag@0@U_Scalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 0000000180010060 f i Instrument.obj
+ 0001:0000f150       ??$_Iter_cat@PEAPEAVISA@@@std@@YA?AUrandom_access_iterator_tag@0@AEBQEAPEAVISA@@@Z 0000000180010150 f i Instrument.obj
+ 0001:0000f170       ??$_Debug_range2@PEAPEAVISA@@@std@@YAXPEAPEAVISA@@0PEB_WIUrandom_access_iterator_tag@0@@Z 0000000180010170 f i Instrument.obj
+ 0001:0000f210       ??$_Fill_n@PEAPEAVISA@@_KPEAV1@@std@@YAXPEAPEAVISA@@_KAEBQEAV1@Urandom_access_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 0000000180010210 f i Instrument.obj
+ 0001:0000f290       ??$_Iter_cat@PEAPEAVISG@@@std@@YA?AUrandom_access_iterator_tag@0@AEBQEAPEAVISG@@@Z 0000000180010290 f i Instrument.obj
+ 0001:0000f2b0       ??$_Debug_range2@PEAPEAVISG@@@std@@YAXPEAPEAVISG@@0PEB_WIUrandom_access_iterator_tag@0@@Z 00000001800102b0 f i Instrument.obj
+ 0001:0000f350       ??$_Fill_n@PEAPEAVISG@@_KPEAV1@@std@@YAXPEAPEAVISG@@_KAEBQEAV1@Urandom_access_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 0000000180010350 f i Instrument.obj
+ 0001:0000f3d0       ??$_Iter_cat@PEAPEAVIPM@@@std@@YA?AUrandom_access_iterator_tag@0@AEBQEAPEAVIPM@@@Z 00000001800103d0 f i Instrument.obj
+ 0001:0000f3f0       ??$_Debug_range2@PEAPEAVIPM@@@std@@YAXPEAPEAVIPM@@0PEB_WIUrandom_access_iterator_tag@0@@Z 00000001800103f0 f i Instrument.obj
+ 0001:0000f490       ??$_Fill_n@PEAPEAVIPM@@_KPEAV1@@std@@YAXPEAPEAVIPM@@_KAEBQEAV1@Urandom_access_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 0000000180010490 f i Instrument.obj
+ 0001:0000f510       ??$unchecked_uninitialized_copy@PEAPEAVISA@@PEAPEAV1@V?$allocator@PEAVISA@@@std@@@stdext@@YAPEAPEAVISA@@PEAPEAV1@00AEAV?$allocator@PEAVISA@@@std@@@Z 0000000180010510 f i Instrument.obj
+ 0001:0000f5b0       ??$unchecked_uninitialized_copy@PEAPEAVISG@@PEAPEAV1@V?$allocator@PEAVISG@@@std@@@stdext@@YAPEAPEAVISG@@PEAPEAV1@00AEAV?$allocator@PEAVISG@@@std@@@Z 00000001800105b0 f i Instrument.obj
+ 0001:0000f650       ??$unchecked_uninitialized_copy@PEAPEAVIPM@@PEAPEAV1@V?$allocator@PEAVIPM@@@std@@@stdext@@YAPEAPEAVIPM@@PEAPEAV1@00AEAV?$allocator@PEAVIPM@@@std@@@Z 0000000180010650 f i Instrument.obj
+ 0001:0000f6f0       ??$_Fill_n@PEAPEAVISA@@_KPEAV1@@std@@YAXPEAPEAVISA@@_KAEBQEAV1@U_Range_checked_iterator_tag@0@@Z 00000001800106f0 f i Instrument.obj
+ 0001:0000f760       ??$_Fill_n@PEAPEAVISG@@_KPEAV1@@std@@YAXPEAPEAVISG@@_KAEBQEAV1@U_Range_checked_iterator_tag@0@@Z 0000000180010760 f i Instrument.obj
+ 0001:0000f7d0       ??$_Fill_n@PEAPEAVIPM@@_KPEAV1@@std@@YAXPEAPEAVIPM@@_KAEBQEAV1@U_Range_checked_iterator_tag@0@@Z 00000001800107d0 f i Instrument.obj
+ 0001:0000f840       ??$_Uninit_copy@PEAPEAVISA@@PEAPEAV1@V?$allocator@PEAVISA@@@std@@@std@@YAPEAPEAVISA@@PEAPEAV1@00AEAV?$allocator@PEAVISA@@@0@U_Scalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 0000000180010840 f i Instrument.obj
+ 0001:0000f920       ??$_Uninit_copy@PEAPEAVISG@@PEAPEAV1@V?$allocator@PEAVISG@@@std@@@std@@YAPEAPEAVISG@@PEAPEAV1@00AEAV?$allocator@PEAVISG@@@0@U_Scalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 0000000180010920 f i Instrument.obj
+ 0001:0000fa00       ??$_Uninit_copy@PEAPEAVIPM@@PEAPEAV1@V?$allocator@PEAVIPM@@@std@@@std@@YAPEAPEAVIPM@@PEAPEAV1@00AEAV?$allocator@PEAVIPM@@@0@U_Scalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 0000000180010a00 f i Instrument.obj
+ 0001:0000fae0       ??0ISA@@QEAA@XZ            0000000180010ae0 f   ISA.obj
+ 0001:0000fb20       ??1ISA@@UEAA@XZ            0000000180010b20 f   ISA.obj
+ 0001:0000fb50       ?SetRefAuto@ISA@@UEAA_NXZ  0000000180010b50 f   ISA.obj
+ 0001:0000fd20       ??_GISA@@UEAAPEAXI@Z       0000000180010d20 f i ISA.obj
+ 0001:0000fd20       ??_EISA@@UEAAPEAXI@Z       0000000180010d20 f i ISA.obj
+ 0001:0000fd70       ??0N5182A@@QEAA@XZ         0000000180010d70 f   N5182A.obj
+ 0001:0000fdb0       ??1N5182A@@UEAA@XZ         0000000180010db0 f   N5182A.obj
+ 0001:0000fde0       ?GetDes@N5182A@@UEAAPEADXZ 0000000180010de0 f   N5182A.obj
+ 0001:0000fe10       ??_EN5182A@@UEAAPEAXI@Z    0000000180010e10 f i N5182A.obj
+ 0001:0000fe10       ??_GN5182A@@UEAAPEAXI@Z    0000000180010e10 f i N5182A.obj
+ 0001:0000fe60       ??0N5182B@@QEAA@XZ         0000000180010e60 f   N5182B.obj
+ 0001:0000fea0       ??1N5182B@@UEAA@XZ         0000000180010ea0 f   N5182B.obj
+ 0001:0000fed0       ?GetDefaultPriAddr@N5182B@@UEAAJXZ 0000000180010ed0 f   N5182B.obj
+ 0001:0000fef0       ?GetDefaultSecAddr@N5182B@@UEAAJXZ 0000000180010ef0 f   N5182B.obj
+ 0001:0000ff10       ?GetDes@N5182B@@UEAAPEADXZ 0000000180010f10 f   N5182B.obj
+ 0001:0000ff30       ?Reset@N5182B@@UEAA_NXZ    0000000180010f30 f   N5182B.obj
+ 0001:0000ff60       ?SetCW@N5182B@@UEAA_NN@Z   0000000180010f60 f   N5182B.obj
+ 0001:0000ffd0       ?GetCW@N5182B@@UEAA_NAEAN@Z 0000000180010fd0 f   N5182B.obj
+ 0001:000100b0       ?SetPL@N5182B@@UEAA_NN@Z   00000001800110b0 f   N5182B.obj
+ 0001:00010120       ?GetPL@N5182B@@UEAA_NAEAN@Z 0000000180011120 f   N5182B.obj
+ 0001:00010200       ?SetOutputEnable@N5182B@@UEAA_N_N@Z 0000000180011200 f   N5182B.obj
+ 0001:00010260       ?SetModEnable@N5182B@@UEAA_N_N@Z 0000000180011260 f   N5182B.obj
+ 0001:000103d0       ??0ISG@@QEAA@XZ            00000001800113d0 f i N5182B.obj
+ 0001:00010410       ??_EISG@@UEAAPEAXI@Z       0000000180011410 f i N5182B.obj
+ 0001:00010410       ??_GISG@@UEAAPEAXI@Z       0000000180011410 f i N5182B.obj
+ 0001:00010460       ??1ISG@@UEAA@XZ            0000000180011460 f i N5182B.obj
+ 0001:00010490       ??_EN5182B@@UEAAPEAXI@Z    0000000180011490 f i N5182B.obj
+ 0001:00010490       ??_GN5182B@@UEAAPEAXI@Z    0000000180011490 f i N5182B.obj
+ 0001:000104e0       ??0N9010A@@QEAA@XZ         00000001800114e0 f   N9010A.obj
+ 0001:00010520       ??1N9010A@@UEAA@XZ         0000000180011520 f   N9010A.obj
+ 0001:00010550       ?GetDes@N9010A@@UEAAPEADXZ 0000000180011550 f   N9010A.obj
+ 0001:00010580       ??_GN9010A@@UEAAPEAXI@Z    0000000180011580 f i N9010A.obj
+ 0001:00010580       ??_EN9010A@@UEAAPEAXI@Z    0000000180011580 f i N9010A.obj
+ 0001:000105d0       ??0N9020A@@QEAA@XZ         00000001800115d0 f   N9020A.obj
+ 0001:00010610       ??1N9020A@@UEAA@XZ         0000000180011610 f   N9020A.obj
+ 0001:00010640       ?GetDes@N9020A@@UEAAPEADXZ 0000000180011640 f   N9020A.obj
+ 0001:00010670       ??_GN9020A@@UEAAPEAXI@Z    0000000180011670 f i N9020A.obj
+ 0001:00010670       ??_EN9020A@@UEAAPEAXI@Z    0000000180011670 f i N9020A.obj
+ 0001:000106c0       ??0N9030A@@QEAA@XZ         00000001800116c0 f   N9030A.obj
+ 0001:00010700       ??1N9030A@@UEAA@XZ         0000000180011700 f   N9030A.obj
+ 0001:00010730       ?GetDefaultPriAddr@N9030A@@UEAAJXZ 0000000180011730 f   N9030A.obj
+ 0001:00010750       ?GetDefaultSecAddr@N9030A@@UEAAJXZ 0000000180011750 f   N9030A.obj
+ 0001:00010770       ?GetDes@N9030A@@UEAAPEADXZ 0000000180011770 f   N9030A.obj
+ 0001:00010790       ?Reset@N9030A@@UEAA_NXZ    0000000180011790 f   N9030A.obj
+ 0001:000107c0       ?SetCF@N9030A@@UEAA_NN@Z   00000001800117c0 f   N9030A.obj
+ 0001:00010800       ?SetSpan@N9030A@@UEAA_NN@Z 0000000180011800 f   N9030A.obj
+ 0001:00010840       ?SetRBW@N9030A@@UEAA_NN_N@Z 0000000180011840 f   N9030A.obj
+ 0001:000108b0       ?SetVBW@N9030A@@UEAA_NN_N@Z 00000001800118b0 f   N9030A.obj
+ 0001:00010920       ?SetDectector@N9030A@@UEAA_NW4DetectorTypes@ISA@@@Z 0000000180011920 f   N9030A.obj
+ 0001:00010a20       ?SetPeakSearch@N9030A@@UEAA_NW4PeakSearchTypes@ISA@@@Z 0000000180011a20 f   N9030A.obj
+ 0001:00010ad0       ?SetRefLevel@N9030A@@UEAA_NN@Z 0000000180011ad0 f   N9030A.obj
+ 0001:00010b10       ?GetRefLevel@N9030A@@UEAA_NAEAN@Z 0000000180011b10 f   N9030A.obj
+ 0001:00010bf0       ?SetMarker@N9030A@@UEAA_NW4MarkerTypes@ISA@@@Z 0000000180011bf0 f   N9030A.obj
+ 0001:00010c80       ?SetEnablePreamp@N9030A@@UEAA_N_N@Z 0000000180011c80 f   N9030A.obj
+ 0001:00010cf0       ?GetMarkerPwr@N9030A@@UEAA_NAEAN@Z 0000000180011cf0 f   N9030A.obj
+ 0001:00010e10       ?GetMarkerFrequency@N9030A@@UEAA_NAEAN@Z 0000000180011e10 f   N9030A.obj
+ 0001:00010ef0       ?WaitForContinue@N9030A@@UEAA_NXZ 0000000180011ef0 f   N9030A.obj
+ 0001:00010f20       ?SweepOnce@N9030A@@UEAA_NXZ 0000000180011f20 f   N9030A.obj
+ 0001:00011010       ?MarkerMove@N9030A@@UEAA_NW4MarkerMoveTypes@ISA@@@Z 0000000180012010 f   N9030A.obj
+ 0001:00011080       ?MarkerMove@N9030A@@UEAA_NN@Z 0000000180012080 f   N9030A.obj
+ 0001:000110c0       ?SetCalibration@N9030A@@UEAA_NW4CalibrationTypes@ISA@@@Z 00000001800120c0 f   N9030A.obj
+ 0001:00011150       ?SetAverTrace@N9030A@@UEAA_N_NJ@Z 0000000180012150 f   N9030A.obj
+ 0001:000111f0       ?SetAverTraceAndGetData@N9030A@@UEAA_NJJPEAN@Z 00000001800121f0 f   N9030A.obj
+ 0001:000113f0       ?SetMechAtten@N9030A@@UEAA_N_NJ@Z 00000001800123f0 f   N9030A.obj
+ 0001:000117f0       ??_EN9030A@@UEAAPEAXI@Z    00000001800127f0 f i N9030A.obj
+ 0001:000117f0       ??_GN9030A@@UEAAPEAXI@Z    00000001800127f0 f i N9030A.obj
+ 0001:00011840       ??0RSNRP@@QEAA@XZ          0000000180012840 f   RSNRP.obj
+ 0001:00011880       ??1RSNRP@@UEAA@XZ          0000000180012880 f   RSNRP.obj
+ 0001:000118b0       ?GetDes@RSNRP@@UEAAPEADXZ  00000001800128b0 f   RSNRP.obj
+ 0001:000118d0       ?Init@RSNRP@@UEAA_NPEAD@Z  00000001800128d0 f   RSNRP.obj
+ 0001:00011910       ?Reset@RSNRP@@UEAA_NXZ     0000000180012910 f   RSNRP.obj
+ 0001:000119b0       ?SetFrequency@RSNRP@@UEAA_NN@Z 00000001800129b0 f   RSNRP.obj
+ 0001:000119f0       ?GetPwr@RSNRP@@UEAA_NAEAN@Z 00000001800129f0 f   RSNRP.obj
+ 0001:00011ab0       ?GetPwr@RSNRP@@UEAA_NNAEAN@Z 0000000180012ab0 f   RSNRP.obj
+ 0001:00011b20       ?Close@RSNRP@@UEAA_NXZ     0000000180012b20 f   RSNRP.obj
+ 0001:00011c50       ??0IPM@@QEAA@XZ            0000000180012c50 f i RSNRP.obj
+ 0001:00011c70       ??_EIPM@@UEAAPEAXI@Z       0000000180012c70 f i RSNRP.obj
+ 0001:00011c70       ??_GIPM@@UEAAPEAXI@Z       0000000180012c70 f i RSNRP.obj
+ 0001:00011cc0       ??1IPM@@UEAA@XZ            0000000180012cc0 f i RSNRP.obj
+ 0001:00011ce0       ??_GRSNRP@@UEAAPEAXI@Z     0000000180012ce0 f i RSNRP.obj
+ 0001:00011ce0       ??_ERSNRP@@UEAAPEAXI@Z     0000000180012ce0 f i RSNRP.obj
+ 0001:00011d30       ??0SMF100A@@QEAA@XZ        0000000180012d30 f   SMF100A.obj
+ 0001:00011d70       ??1SMF100A@@UEAA@XZ        0000000180012d70 f   SMF100A.obj
+ 0001:00011da0       ?GetDes@SMF100A@@UEAAPEADXZ 0000000180012da0 f   SMF100A.obj
+ 0001:00011dc0       ?SetModEnable@SMF100A@@UEAA_N_N@Z 0000000180012dc0 f   SMF100A.obj
+ 0001:00011e50       ??_ESMF100A@@UEAAPEAXI@Z   0000000180012e50 f i SMF100A.obj
+ 0001:00011e50       ??_GSMF100A@@UEAAPEAXI@Z   0000000180012e50 f i SMF100A.obj
+ 0001:00011e94       ?Init@IGPIBDev@@UEAA_NPEAD@Z 0000000180012e94 f   libBusDriver:libBusDriver.dll
+ 0001:00011e9a       ?Write@IGPIBDev@@UEAA_NPEBDZZ 0000000180012e9a f   libBusDriver:libBusDriver.dll
+ 0001:00011ea0       ?Read@IGPIBDev@@UEAA_NPEADKK@Z 0000000180012ea0 f   libBusDriver:libBusDriver.dll
+ 0001:00011ea6       ?OpenDefaultRM@viPCIDev@@SAJXZ 0000000180012ea6 f   libBusDriver:libBusDriver.dll
+ 0001:00011eac       ?GetDefaultRM@viPCIDev@@SAKXZ 0000000180012eac f   libBusDriver:libBusDriver.dll
+ 0001:00011eb2       ??0IGPIBDev@@QEAA@XZ       0000000180012eb2 f   libBusDriver:libBusDriver.dll
+ 0001:00011eb8       ??1IGPIBDev@@UEAA@XZ       0000000180012eb8 f   libBusDriver:libBusDriver.dll
+ 0001:00011ec0       ??0type_info@@AEAA@AEBV0@@Z 0000000180012ec0 f   MSVCRTD:ti_inst.obj
+ 0001:00011ee0       ??_Etype_info@@UEAAPEAXI@Z 0000000180012ee0 f i MSVCRTD:ti_inst.obj
+ 0001:00011f70       ??4type_info@@AEAAAEAV0@AEBV0@@Z 0000000180012f70 f   MSVCRTD:ti_inst.obj
+ 0001:00011f80       ??3@YAXPEAX@Z              0000000180012f80 f   MSVCRTD:MSVCR90D.dll
+ 0001:00011f90       __GSHandlerCheck           0000000180012f90 f   MSVCRTD:gshandler.obj
+ 0001:00011fd0       __GSHandlerCheckCommon     0000000180012fd0 f   MSVCRTD:gshandler.obj
+ 0001:000120c4       atof                       00000001800130c4 f   MSVCRTD:MSVCR90D.dll
+ 0001:000120ca       memset                     00000001800130ca f   MSVCRTD:MSVCR90D.dll
+ 0001:000120e0       __security_check_cookie    00000001800130e0 f   MSVCRTD:amdsecgs.obj
+ 0001:00012100       ??2@YAPEAX_K@Z             0000000180013100 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012106       __CxxFrameHandler3         0000000180013106 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012110       _onexit                    0000000180013110 f   MSVCRTD:atonexit.obj
+ 0001:000121d0       atexit                     00000001800131d0 f   MSVCRTD:atonexit.obj
+ 0001:00012210       _CxxThrowException         0000000180013210 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012216       strcmp                     0000000180013216 f   MSVCRTD:MSVCR90D.dll
+ 0001:0001221c       strstr                     000000018001321c f   MSVCRTD:MSVCR90D.dll
+ 0001:00012222       ??0exception@std@@QEAA@AEBV01@@Z 0000000180013222 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012228       ??1exception@std@@UEAA@XZ  0000000180013228 f   MSVCRTD:MSVCR90D.dll
+ 0001:0001222e       ??0exception@std@@QEAA@XZ  000000018001322e f   MSVCRTD:MSVCR90D.dll
+ 0001:00012234       _invalid_parameter         0000000180013234 f   MSVCRTD:MSVCR90D.dll
+ 0001:0001223a       _CrtDbgReportW             000000018001323a f   MSVCRTD:MSVCR90D.dll
+ 0001:00012240       vsprintf_s                 0000000180013240 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012246       strcpy_s                   0000000180013246 f   MSVCRTD:MSVCR90D.dll
+ 0001:0001224c       ??0exception@std@@QEAA@AEBQEBD@Z 000000018001324c f   MSVCRTD:MSVCR90D.dll
+ 0001:00012252       ?what@exception@std@@UEBAPEBDXZ 0000000180013252 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012258       memmove_s                  0000000180013258 f   MSVCRTD:MSVCR90D.dll
+ 0001:0001225e       _purecall                  000000018001325e f   MSVCRTD:MSVCR90D.dll
+ 0001:00012264       log10                      0000000180013264 f   MSVCRTD:MSVCR90D.dll
+ 0001:0001226a       fabs                       000000018001326a f   MSVCRTD:MSVCR90D.dll
+ 0001:00012300       _CRT_INIT                  0000000180013300 f   MSVCRTD:crtdll.obj
+ 0001:000126b0       NtCurrentTeb               00000001800136b0 f i MSVCRTD:crtdll.obj
+ 0001:000126c0       _DllMainCRTStartup         00000001800136c0 f   MSVCRTD:crtdll.obj
+ 0001:00012880       ??_M@YAXPEAX_KHP6AX0@Z@Z   0000000180013880 f   MSVCRTD:ehvecdtr.obj
+ 0001:00012920       ?__ArrayUnwind@@YAXPEAX_KHP6AX0@Z@Z 0000000180013920 f   MSVCRTD:ehvecdtr.obj
+ 0001:000129b0       __report_gsfailure         00000001800139b0 f   MSVCRTD:gs_report.obj
+ 0001:00012afa       __C_specific_handler       0000000180013afa f   MSVCRTD:MSVCR90D.dll
+ 0001:00012b00       _unlock                    0000000180013b00 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012b06       __dllonexit                0000000180013b06 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012b0c       _encode_pointer            0000000180013b0c f   MSVCRTD:MSVCR90D.dll
+ 0001:00012b12       _lock                      0000000180013b12 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012b18       _decode_pointer            0000000180013b18 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012b20       __clean_type_info_names    0000000180013b20 f   MSVCRTD:tncleanup.obj
+ 0001:00012b40       _RTC_Initialize            0000000180013b40 f   MSVCRTD:_initsect_.obj
+ 0001:00012b80       _RTC_Terminate             0000000180013b80 f   MSVCRTD:_initsect_.obj
+ 0001:00012bbe       _malloc_dbg                0000000180013bbe f   MSVCRTD:MSVCR90D.dll
+ 0001:00012bc4       _free_dbg                  0000000180013bc4 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012bca       _encoded_null              0000000180013bca f   MSVCRTD:MSVCR90D.dll
+ 0001:00012bd0       _CrtSetCheckCount          0000000180013bd0 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012be0       _ValidateImageBase         0000000180013be0 f   MSVCRTD:pesect.obj
+ 0001:00012c60       _FindPESection             0000000180013c60 f   MSVCRTD:pesect.obj
+ 0001:00012d10       _IsNonwritableInCurrentImage 0000000180013d10 f   MSVCRTD:pesect.obj
+ 0001:00012d9c       _initterm                  0000000180013d9c f   MSVCRTD:MSVCR90D.dll
+ 0001:00012da2       _initterm_e                0000000180013da2 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012da8       _amsg_exit                 0000000180013da8 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012db0       __security_init_cookie     0000000180013db0 f   MSVCRTD:gs_support.obj
+ 0001:00012eae       __CppXcptFilter            0000000180013eae f   MSVCRTD:MSVCR90D.dll
+ 0001:00012ec0       DllMain                    0000000180013ec0 f   MSVCRTD:dllmain.obj
+ 0001:00012ef8       ?terminate@@YAXXZ          0000000180013ef8 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012efe       ?_type_info_dtor_internal_method@type_info@@QEAAXXZ 0000000180013efe f   MSVCRTD:MSVCR90D.dll
+ 0001:00012efe       ??1type_info@@UEAA@XZ      0000000180013efe f   MSVCRTD:MSVCR90D.dll
+ 0001:00012f04       __crt_debugger_hook        0000000180013f04 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012f0a       __clean_type_info_names_internal 0000000180013f0a f   MSVCRTD:MSVCR90D.dll
+ 0001:00012f10       ??1_Lockit@std@@QEAA@XZ    0000000180013f10 f   msvcprtd:MSVCP90D.dll
+ 0001:00012f16       ??0_Lockit@std@@QEAA@H@Z   0000000180013f16 f   msvcprtd:MSVCP90D.dll
+ 0001:00012f1c       ?_Debug_message@std@@YAXPEB_W0I@Z 0000000180013f1c f   msvcprtd:MSVCP90D.dll
+ 0001:00012f22       ?_Orphan_all@_Container_base_secure@std@@QEBAXXZ 0000000180013f22 f   msvcprtd:MSVCP90D.dll
+ 0001:00012f28       ??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@XZ 0000000180013f28 f   msvcprtd:MSVCP90D.dll
+ 0001:00012f2e       ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@PEBD@Z 0000000180013f2e f   msvcprtd:MSVCP90D.dll
+ 0001:00012f34       ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@AEBV01@@Z 0000000180013f34 f   msvcprtd:MSVCP90D.dll
+ 0001:00012f3a       ?c_str@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBAPEBDXZ 0000000180013f3a f   msvcprtd:MSVCP90D.dll
+ 0001:00012f40       ??1_Container_base_secure@std@@QEAA@XZ 0000000180013f40 f   msvcprtd:MSVCP90D.dll
+ 0001:00012f46       ??0_Container_base_secure@std@@QEAA@XZ 0000000180013f46 f   msvcprtd:MSVCP90D.dll
+ 0001:00012f4c       viRead                     0000000180013f4c f   visa64:visa64.dll
+ 0001:00012f52       viClose                    0000000180013f52 f   visa64:visa64.dll
+ 0001:00012f58       viWrite                    0000000180013f58 f   visa64:visa64.dll
+ 0001:00012f5e       viFindNext                 0000000180013f5e f   visa64:visa64.dll
+ 0001:00012f64       viOpen                     0000000180013f64 f   visa64:visa64.dll
+ 0001:00012f6a       viFindRsrc                 0000000180013f6a f   visa64:visa64.dll
+ 0001:00012f70       rsnrpz_GetSensorInfo       0000000180013f70 f   rsnrpz_64:rsnrpz_64.dll
+ 0001:00012f76       rsnrpz_error_message       0000000180013f76 f   rsnrpz_64:rsnrpz_64.dll
+ 0001:00012f7c       rsnrpz_GetSensorCount      0000000180013f7c f   rsnrpz_64:rsnrpz_64.dll
+ 0001:00012f82       rsnrpz_init                0000000180013f82 f   rsnrpz_64:rsnrpz_64.dll
+ 0001:00012f88       rsnrpz_chans_initiate      0000000180013f88 f   rsnrpz_64:rsnrpz_64.dll
+ 0001:00012f8e       rsnrpz_reset               0000000180013f8e f   rsnrpz_64:rsnrpz_64.dll
+ 0001:00012f94       rsnrpz_trigger_setSource   0000000180013f94 f   rsnrpz_64:rsnrpz_64.dll
+ 0001:00012f9a       rsnrpz_avg_setCount        0000000180013f9a f   rsnrpz_64:rsnrpz_64.dll
+ 0001:00012fa0       rsnrpz_avg_setAutoEnabled  0000000180013fa0 f   rsnrpz_64:rsnrpz_64.dll
+ 0001:00012fa6       rsnrpz_status_preset       0000000180013fa6 f   rsnrpz_64:rsnrpz_64.dll
+ 0001:00012fac       rsnrpz_chan_setCorrectionFrequency 0000000180013fac f   rsnrpz_64:rsnrpz_64.dll
+ 0001:00012fb2       rsnrpz_meass_readMeasurement 0000000180013fb2 f   rsnrpz_64:rsnrpz_64.dll
+ 0001:00012fb8       rsnrpz_chan_isMeasurementComplete 0000000180013fb8 f   rsnrpz_64:rsnrpz_64.dll
+ 0001:00012fbe       rsnrpz_chan_initiate       0000000180013fbe f   rsnrpz_64:rsnrpz_64.dll
+ 0001:00012fc4       rsnrpz_close               0000000180013fc4 f   rsnrpz_64:rsnrpz_64.dll
+ 0001:00012fca       rsnrpz_CloseSensor         0000000180013fca f   rsnrpz_64:rsnrpz_64.dll
+ 0001:00012fd0       Sleep                      0000000180013fd0 f   kernel32:KERNEL32.dll
+ 0001:00012fd6       TerminateProcess           0000000180013fd6 f   kernel32:KERNEL32.dll
+ 0001:00012fdc       GetCurrentProcess          0000000180013fdc f   kernel32:KERNEL32.dll
+ 0001:00012fe2       UnhandledExceptionFilter   0000000180013fe2 f   kernel32:KERNEL32.dll
+ 0001:00012fe8       SetUnhandledExceptionFilter 0000000180013fe8 f   kernel32:KERNEL32.dll
+ 0001:00012fee       IsDebuggerPresent          0000000180013fee f   kernel32:KERNEL32.dll
+ 0001:00012ff4       RtlVirtualUnwind           0000000180013ff4 f   kernel32:KERNEL32.dll
+ 0001:00012ffa       RtlLookupFunctionEntry     0000000180013ffa f   kernel32:KERNEL32.dll
+ 0001:00013000       RtlCaptureContext          0000000180014000 f   kernel32:KERNEL32.dll
+ 0001:00013006       QueryPerformanceCounter    0000000180014006 f   kernel32:KERNEL32.dll
+ 0001:0001300c       GetTickCount               000000018001400c f   kernel32:KERNEL32.dll
+ 0001:00013012       GetCurrentThreadId         0000000180014012 f   kernel32:KERNEL32.dll
+ 0001:00013018       GetCurrentProcessId        0000000180014018 f   kernel32:KERNEL32.dll
+ 0001:0001301e       GetSystemTimeAsFileTime    000000018001401e f   kernel32:KERNEL32.dll
+ 0001:00013024       DisableThreadLibraryCalls  0000000180014024 f   kernel32:KERNEL32.dll
+ 0001:00014090       _alloca_probe              0000000180015090     MSVCRTD:chkstk.obj
+ 0001:00014090       __chkstk                   0000000180015090 f   MSVCRTD:chkstk.obj
+ 0002:00000000       __xc_a                     000000018001a000     MSVCRTD:cinitexe.obj
+ 0002:00000110       __xc_z                     000000018001a110     MSVCRTD:cinitexe.obj
+ 0002:00000220       __xi_a                     000000018001a220     MSVCRTD:cinitexe.obj
+ 0002:00000440       __xi_z                     000000018001a440     MSVCRTD:cinitexe.obj
+ 0002:00000588       ??_7E4438C@@6B@            000000018001a588     E4438C.obj
+ 0002:00000628       ??_7E4440A@@6B@            000000018001a628     E4440A.obj
+ 0002:00000758       ??_7E4443A@@6B@            000000018001a758     E4443A.obj
+ 0002:000008b8       ??_7E4445A@@6B@            000000018001a8b8     E4445A.obj
+ 0002:000009e8       ??_7E8267D@@6B@            000000018001a9e8     E8267D.obj
+ 0002:00000ee8       ??_7FSUP@@6B@              000000018001aee8     FSUP.obj
+ 0002:000015bc       ?_Value@?$_Is_swap_move@U_Swap_move_tag@std@@@std@@2_NB 000000018001b5bc     Instrument.obj
+ 0002:000015c0       ?collate@?$_Locbase@H@std@@2HB 000000018001b5c0     Instrument.obj
+ 0002:000015c4       ?ctype@?$_Locbase@H@std@@2HB 000000018001b5c4     Instrument.obj
+ 0002:000015c8       ?monetary@?$_Locbase@H@std@@2HB 000000018001b5c8     Instrument.obj
+ 0002:000015cc       ?numeric@?$_Locbase@H@std@@2HB 000000018001b5cc     Instrument.obj
+ 0002:000015d0       ?time@?$_Locbase@H@std@@2HB 000000018001b5d0     Instrument.obj
+ 0002:000015d4       ?messages@?$_Locbase@H@std@@2HB 000000018001b5d4     Instrument.obj
+ 0002:000015d8       ?all@?$_Locbase@H@std@@2HB 000000018001b5d8     Instrument.obj
+ 0002:000015dc       ?none@?$_Locbase@H@std@@2HB 000000018001b5dc     Instrument.obj
+ 0002:000015e0       ?skipws@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b5e0     Instrument.obj
+ 0002:000015e4       ?unitbuf@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b5e4     Instrument.obj
+ 0002:000015e8       ?uppercase@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b5e8     Instrument.obj
+ 0002:000015ec       ?showbase@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b5ec     Instrument.obj
+ 0002:000015f0       ?showpoint@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b5f0     Instrument.obj
+ 0002:000015f4       ?showpos@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b5f4     Instrument.obj
+ 0002:000015f8       ?left@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b5f8     Instrument.obj
+ 0002:000015fc       ?right@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b5fc     Instrument.obj
+ 0002:00001600       ?internal@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b600     Instrument.obj
+ 0002:00001604       ?dec@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b604     Instrument.obj
+ 0002:00001608       ?oct@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b608     Instrument.obj
+ 0002:0000160c       ?hex@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b60c     Instrument.obj
+ 0002:00001610       ?scientific@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b610     Instrument.obj
+ 0002:00001614       ?fixed@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b614     Instrument.obj
+ 0002:00001618       ?hexfloat@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b618     Instrument.obj
+ 0002:0000161c       ?boolalpha@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b61c     Instrument.obj
+ 0002:00001620       ?_Stdio@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b620     Instrument.obj
+ 0002:00001624       ?adjustfield@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b624     Instrument.obj
+ 0002:00001628       ?basefield@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b628     Instrument.obj
+ 0002:0000162c       ?floatfield@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b62c     Instrument.obj
+ 0002:00001630       ?goodbit@?$_Iosb@H@std@@2W4_Iostate@12@B 000000018001b630     Instrument.obj
+ 0002:00001634       ?eofbit@?$_Iosb@H@std@@2W4_Iostate@12@B 000000018001b634     Instrument.obj
+ 0002:00001638       ?failbit@?$_Iosb@H@std@@2W4_Iostate@12@B 000000018001b638     Instrument.obj
+ 0002:0000163c       ?badbit@?$_Iosb@H@std@@2W4_Iostate@12@B 000000018001b63c     Instrument.obj
+ 0002:00001640       ?_Hardfail@?$_Iosb@H@std@@2W4_Iostate@12@B 000000018001b640     Instrument.obj
+ 0002:00001644       ?in@?$_Iosb@H@std@@2W4_Openmode@12@B 000000018001b644     Instrument.obj
+ 0002:00001648       ?out@?$_Iosb@H@std@@2W4_Openmode@12@B 000000018001b648     Instrument.obj
+ 0002:0000164c       ?ate@?$_Iosb@H@std@@2W4_Openmode@12@B 000000018001b64c     Instrument.obj
+ 0002:00001650       ?app@?$_Iosb@H@std@@2W4_Openmode@12@B 000000018001b650     Instrument.obj
+ 0002:00001654       ?trunc@?$_Iosb@H@std@@2W4_Openmode@12@B 000000018001b654     Instrument.obj
+ 0002:00001658       ?_Nocreate@?$_Iosb@H@std@@2W4_Openmode@12@B 000000018001b658     Instrument.obj
+ 0002:0000165c       ?_Noreplace@?$_Iosb@H@std@@2W4_Openmode@12@B 000000018001b65c     Instrument.obj
+ 0002:00001660       ?binary@?$_Iosb@H@std@@2W4_Openmode@12@B 000000018001b660     Instrument.obj
+ 0002:00001664       ?beg@?$_Iosb@H@std@@2W4_Seekdir@12@B 000000018001b664     Instrument.obj
+ 0002:00001668       ?cur@?$_Iosb@H@std@@2W4_Seekdir@12@B 000000018001b668     Instrument.obj
+ 0002:0000166c       ?end@?$_Iosb@H@std@@2W4_Seekdir@12@B 000000018001b66c     Instrument.obj
+ 0002:00001678       ??_7CInstrument@@6B@       000000018001b678     Instrument.obj
+ 0002:00001b40       ??_C@_1DC@POOIKBAO@?$AAI?$AAT?$AAE?$AAR?$AAA?$AAT?$AAO?$AAR?$AA?5?$AAL?$AAI?$AAS?$AAT?$AA?5?$AAC?$AAO?$AAR?$AAR?$AAU?$AAP?$AAT?$AAE?$AAD?$AA?$CB?$AA?$AA@ 000000018001bb40     Instrument.obj
+ 0002:00001b80       ??_C@_1IO@BBMNBHMA@?$AAC?$AA?3?$AA?2?$AAP?$AAr?$AAo?$AAg?$AAr?$AAa?$AAm?$AA?5?$AAF?$AAi?$AAl?$AAe?$AAs?$AA?5?$AA?$CI?$AAx?$AA8?$AA6?$AA?$CJ?$AA?2?$AAM?$AAi?$AAc?$AAr?$AAo?$AAs?$AAo?$AAf?$AAt@ 000000018001bb80     Instrument.obj
+ 0002:00001cc0       ??_C@_1EI@HGIDLLCM@?$AAv?$AAe?$AAc?$AAt?$AAo?$AAr?$AA?5?$AAe?$AAr?$AAa?$AAs?$AAe?$AA?5?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AA?5?$AAo?$AAu?$AAt?$AAs?$AAi?$AAd?$AAe?$AA?5?$AAr?$AAa@ 000000018001bcc0     Instrument.obj
+ 0002:00001d20       ??_C@_1IK@PFPAGNAC@?$AAC?$AA?3?$AA?2?$AAP?$AAr?$AAo?$AAg?$AAr?$AAa?$AAm?$AA?5?$AAF?$AAi?$AAl?$AAe?$AAs?$AA?5?$AA?$CI?$AAx?$AA8?$AA6?$AA?$CJ?$AA?2?$AAM?$AAi?$AAc?$AAr?$AAo?$AAs?$AAo?$AAf?$AAt@ 000000018001bd20     Instrument.obj
+ 0002:00001df8       ??_C@_0BM@NMJKDPPO@invalid?5vector?$DMT?$DO?5subscript?$AA@ 000000018001bdf8     Instrument.obj
+ 0002:00001e28       ??_7out_of_range@std@@6B@  000000018001be28     Instrument.obj
+ 0002:00001e78       ??_7logic_error@std@@6B@   000000018001be78     Instrument.obj
+ 0002:000020d0       ??_C@_1EK@EEHFMKDC@?$AAv?$AAe?$AAc?$AAt?$AAo?$AAr?$AA?5?$AAi?$AAn?$AAs?$AAe?$AAr?$AAt?$AA?5?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AA?5?$AAo?$AAu?$AAt?$AAs?$AAi?$AAd?$AAe?$AA?5?$AAr@ 000000018001c0d0     Instrument.obj
+ 0002:00002158       ??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long?$AA@ 000000018001c158     Instrument.obj
+ 0002:00002178       ??_7length_error@std@@6B@  000000018001c178     Instrument.obj
+ 0002:000022b0       ??_C@_1BO@MEPPHOO@?$AA?$CC?$AAo?$AAu?$AAt?$AA?5?$AAo?$AAf?$AA?5?$AAr?$AAa?$AAn?$AAg?$AAe?$AA?$CC?$AA?$AA@ 000000018001c2b0     Instrument.obj
+ 0002:000022e0       ??_C@_1LA@JIDGJPPI@?$AAs?$AAt?$AAd?$AA?3?$AA?3?$AA_?$AAV?$AAe?$AAc?$AAt?$AAo?$AAr?$AA_?$AAc?$AAo?$AAn?$AAs?$AAt?$AA_?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AA?$DM?$AAc?$AAl?$AAa?$AAs@ 000000018001c2e0     Instrument.obj
+ 0002:000023c0       ??_C@_1FG@CMLDHNON@?$AA?$CI?$AA?$CC?$AAS?$AAt?$AAa?$AAn?$AAd?$AAa?$AAr?$AAd?$AA?5?$AAC?$AA?$CL?$AA?$CL?$AA?5?$AAL?$AAi?$AAb?$AAr?$AAa?$AAr?$AAi?$AAe?$AAs?$AA?5?$AAO?$AAu?$AAt?$AA?5?$AAo?$AAf?$AA?5@ 000000018001c3c0     Instrument.obj
+ 0002:00002430       ??_C@_1EG@FOHJJHAC@?$AAv?$AAe?$AAc?$AAt?$AAo?$AAr?$AA?5?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AA?5?$AAn?$AAo?$AAt?$AA?5?$AAd?$AAe?$AAr?$AAe?$AAf?$AAe?$AAr?$AAe?$AAn?$AAc?$AAa?$AAb@ 000000018001c430     Instrument.obj
+ 0002:00002490       ??_C@_1LA@CIGABNFI@?$AAs?$AAt?$AAd?$AA?3?$AA?3?$AA_?$AAV?$AAe?$AAc?$AAt?$AAo?$AAr?$AA_?$AAc?$AAo?$AAn?$AAs?$AAt?$AA_?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AA?$DM?$AAc?$AAl?$AAa?$AAs@ 000000018001c490     Instrument.obj
+ 0002:00002570       ??_C@_1LA@JIIKOIIA@?$AAs?$AAt?$AAd?$AA?3?$AA?3?$AA_?$AAV?$AAe?$AAc?$AAt?$AAo?$AAr?$AA_?$AAc?$AAo?$AAn?$AAs?$AAt?$AA_?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AA?$DM?$AAc?$AAl?$AAa?$AAs@ 000000018001c570     Instrument.obj
+ 0002:00002678       ??_C@_1CG@JNLFBNGN@?$AA?$CC?$AAi?$AAn?$AAv?$AAa?$AAl?$AAi?$AAd?$AA?5?$AAa?$AAr?$AAg?$AAu?$AAm?$AAe?$AAn?$AAt?$AA?$CC?$AA?$AA@ 000000018001c678     Instrument.obj
+ 0002:000026b0       ??_C@_1MI@GOFPIBPO@?$AAs?$AAt?$AAd?$AA?3?$AA?3?$AA_?$AAV?$AAe?$AAc?$AAt?$AAo?$AAr?$AA_?$AAc?$AAo?$AAn?$AAs?$AAt?$AA_?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AA?$DM?$AAc?$AAl?$AAa?$AAs@ 000000018001c6b0     Instrument.obj
+ 0002:000027a0       ??_C@_1NK@JLHOCNGO@?$AA?$CI?$AA?$CC?$AA_?$AAP?$AAv?$AAe?$AAc?$AAt?$AAo?$AAr?$AA?5?$AA?$DN?$AA?$DN?$AA?5?$AAN?$AAU?$AAL?$AAL?$AA?5?$AA?$HM?$AA?$HM?$AA?5?$AA?$CI?$AA?$CI?$AA?$CI?$AA_?$AAM?$AAy?$AAv?$AAe?$AAc?$AA?5@ 000000018001c7a0     Instrument.obj
+ 0002:000028b0       ??_C@_1BAC@KBDNDJPK@?$AA?$CI?$AA?$CC?$AA_?$AAM?$AAy?$AAp?$AAt?$AAr?$AA?5?$AA?$CL?$AA?5?$AA_?$AAO?$AAf?$AAf?$AA?5?$AA?$DM?$AA?$DN?$AA?5?$AA?$CI?$AA?$CI?$AA_?$AAM?$AAy?$AAv?$AAe?$AAc?$AA?5?$AA?$CK?$AA?$CJ?$AA?$CI?$AAt@ 000000018001c8b0     Instrument.obj
+ 0002:000029f0       ??_C@_1LC@HFMIIOIP@?$AAs?$AAt?$AAd?$AA?3?$AA?3?$AA_?$AAV?$AAe?$AAc?$AAt?$AAo?$AAr?$AA_?$AAc?$AAo?$AAn?$AAs?$AAt?$AA_?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AA?$DM?$AAc?$AAl?$AAa?$AAs@ 000000018001c9f0     Instrument.obj
+ 0002:00002ac8       ??_C@_1DM@LBMEEJPP@?$AA?$CI?$AA?$CC?$AAt?$AAh?$AAi?$AAs?$AA?9?$AA?$DO?$AA_?$AAH?$AAa?$AAs?$AA_?$AAc?$AAo?$AAn?$AAt?$AAa?$AAi?$AAn?$AAe?$AAr?$AA?$CI?$AA?$CJ?$AA?$CC?$AA?0?$AA?5?$AA0?$AA?$CJ?$AA?$AA@ 000000018001cac8     Instrument.obj
+ 0002:00002b10       ??_C@_1KK@MCIEFLBN@?$AAs?$AAt?$AAd?$AA?3?$AA?3?$AA_?$AAV?$AAe?$AAc?$AAt?$AAo?$AAr?$AA_?$AAc?$AAo?$AAn?$AAs?$AAt?$AA_?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AA?$DM?$AAc?$AAl?$AAa?$AAs@ 000000018001cb10     Instrument.obj
+ 0002:00002be0       ??_C@_1FO@OCPOOAIA@?$AA?$CI?$AA?$CC?$AAS?$AAt?$AAa?$AAn?$AAd?$AAa?$AAr?$AAd?$AA?5?$AAC?$AA?$CL?$AA?$CL?$AA?5?$AAL?$AAi?$AAb?$AAr?$AAa?$AAr?$AAi?$AAe?$AAs?$AA?5?$AAI?$AAn?$AAv?$AAa?$AAl?$AAi?$AAd@ 000000018001cbe0     Instrument.obj
+ 0002:00002c50       ??_C@_1DM@HINDPMBP@?$AAv?$AAe?$AAc?$AAt?$AAo?$AAr?$AA?5?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AAs?$AA?5?$AAi?$AAn?$AAc?$AAo?$AAm?$AAp?$AAa?$AAt?$AAi?$AAb?$AAl?$AAe?$AA?$AA@ 000000018001cc50     Instrument.obj
+ 0002:00002cd0       ??_C@_1MI@MEOFPCPG@?$AAs?$AAt?$AAd?$AA?3?$AA?3?$AA_?$AAV?$AAe?$AAc?$AAt?$AAo?$AAr?$AA_?$AAc?$AAo?$AAn?$AAs?$AAt?$AA_?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AA?$DM?$AAc?$AAl?$AAa?$AAs@ 000000018001ccd0     Instrument.obj
+ 0002:00002dc0       ??_C@_1LC@NIHJGADM@?$AAs?$AAt?$AAd?$AA?3?$AA?3?$AA_?$AAV?$AAe?$AAc?$AAt?$AAo?$AAr?$AA_?$AAc?$AAo?$AAn?$AAs?$AAt?$AA_?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AA?$DM?$AAc?$AAl?$AAa?$AAs@ 000000018001cdc0     Instrument.obj
+ 0002:00002ea0       ??_C@_1KK@COCHDFJB@?$AAs?$AAt?$AAd?$AA?3?$AA?3?$AA_?$AAV?$AAe?$AAc?$AAt?$AAo?$AAr?$AA_?$AAc?$AAo?$AAn?$AAs?$AAt?$AA_?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AA?$DM?$AAc?$AAl?$AAa?$AAs@ 000000018001cea0     Instrument.obj
+ 0002:00002fa0       ??_C@_1MI@OALAOBLF@?$AAs?$AAt?$AAd?$AA?3?$AA?3?$AA_?$AAV?$AAe?$AAc?$AAt?$AAo?$AAr?$AA_?$AAc?$AAo?$AAn?$AAs?$AAt?$AA_?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AA?$DM?$AAc?$AAl?$AAa?$AAs@ 000000018001cfa0     Instrument.obj
+ 0002:00003090       ??_C@_1LC@FMEPJJFC@?$AAs?$AAt?$AAd?$AA?3?$AA?3?$AA_?$AAV?$AAe?$AAc?$AAt?$AAo?$AAr?$AA_?$AAc?$AAo?$AAn?$AAs?$AAt?$AA_?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AA?$DM?$AAc?$AAl?$AAa?$AAs@ 000000018001d090     Instrument.obj
+ 0002:00003170       ??_C@_1KK@DDJFDILJ@?$AAs?$AAt?$AAd?$AA?3?$AA?3?$AA_?$AAV?$AAe?$AAc?$AAt?$AAo?$AAr?$AA_?$AAc?$AAo?$AAn?$AAs?$AAt?$AA_?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AA?$DM?$AAc?$AAl?$AAa?$AAs@ 000000018001d170     Instrument.obj
+ 0002:00003248       ??_7bad_alloc@std@@6B@     000000018001d248     Instrument.obj
+ 0002:00003260       ??_C@_1CK@EOPGIILJ@?$AAi?$AAn?$AAv?$AAa?$AAl?$AAi?$AAd?$AA?5?$AAn?$AAu?$AAl?$AAl?$AA?5?$AAp?$AAo?$AAi?$AAn?$AAt?$AAe?$AAr?$AA?$AA@ 000000018001d260     Instrument.obj
+ 0002:00003298       ??_C@_1CO@DGLIKNHI@?$AAi?$AAn?$AAv?$AAa?$AAl?$AAi?$AAd?$AA?5?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AA?5?$AAr?$AAa?$AAn?$AAg?$AAe?$AA?$AA@ 000000018001d298     Instrument.obj
+ 0002:000032d0       ??_C@_1IK@ILCLOBAJ@?$AAC?$AA?3?$AA?2?$AAP?$AAr?$AAo?$AAg?$AAr?$AAa?$AAm?$AA?5?$AAF?$AAi?$AAl?$AAe?$AAs?$AA?5?$AA?$CI?$AAx?$AA8?$AA6?$AA?$CJ?$AA?2?$AAM?$AAi?$AAc?$AAr?$AAo?$AAs?$AAo?$AAf?$AAt@ 000000018001d2d0     Instrument.obj
+ 0002:00003388       ??_7ISA@@6B@               000000018001d388     ISA.obj
+ 0002:000034b8       ??_7N5182A@@6B@            000000018001d4b8     N5182A.obj
+ 0002:000035e8       ??_7N5182B@@6B@            000000018001d5e8     N5182B.obj
+ 0002:00003678       ??_7ISG@@6B@               000000018001d678     N5182B.obj
+ 0002:00003718       ??_7N9010A@@6B@            000000018001d718     N9010A.obj
+ 0002:00003848       ??_7N9020A@@6B@            000000018001d848     N9020A.obj
+ 0002:00003e38       ??_7N9030A@@6B@            000000018001de38     N9030A.obj
+ 0002:00003f78       ??_7RSNRP@@6B@             000000018001df78     RSNRP.obj
+ 0002:00003fd8       ??_7IPM@@6B@               000000018001dfd8     RSNRP.obj
+ 0002:00004028       __real@4024000000000000    000000018001e028     RSNRP.obj
+ 0002:00004038       __real@408f400000000000    000000018001e038     RSNRP.obj
+ 0002:00004088       ??_7SMF100A@@6B@           000000018001e088     SMF100A.obj
+ 0002:00004118       ??_7type_info@@6B@         000000018001e118     MSVCRTD:ti_inst.obj
+ 0002:00004120       _pDefaultRawDllMain        000000018001e120     MSVCRTD:crtdll.obj
+ 0002:00004120       _pRawDllMain               000000018001e120     MSVCRTD:crtdll.obj
+ 0002:00004128       ??_C@_0DF@EBFKANAI@f?3?2dd?2vctools?2crt_bld?2self_64_am@ 000000018001e128     MSVCRTD:crtdll.obj
+ 0002:00004170       ?ProcessDetach@NativeDll@<CrtImplementationDetails>@@0IB 000000018001e170     MSVCRTD:tncleanup.obj
+ 0002:00004174       ?ProcessAttach@NativeDll@<CrtImplementationDetails>@@0IB 000000018001e174     MSVCRTD:tncleanup.obj
+ 0002:00004178       ?ThreadAttach@NativeDll@<CrtImplementationDetails>@@0IB 000000018001e178     MSVCRTD:tncleanup.obj
+ 0002:0000417c       ?ThreadDetach@NativeDll@<CrtImplementationDetails>@@0IB 000000018001e17c     MSVCRTD:tncleanup.obj
+ 0002:00004180       ?ProcessVerifier@NativeDll@<CrtImplementationDetails>@@0IB 000000018001e180     MSVCRTD:tncleanup.obj
+ 0002:00004470       ??_R4E4438C@@6B@           000000018001e470     E4438C.obj
+ 0002:000044a0       ??_R3E4438C@@8             000000018001e4a0     E4438C.obj
+ 0002:000044b8       ??_R2E4438C@@8             000000018001e4b8     E4438C.obj
+ 0002:000044e8       ??_R1A@?0A@EA@E4438C@@8    000000018001e4e8     E4438C.obj
+ 0002:00004518       ??_R1A@?0A@EA@N5182B@@8    000000018001e518     E4438C.obj
+ 0002:00004548       ??_R3N5182B@@8             000000018001e548     E4438C.obj
+ 0002:00004560       ??_R2N5182B@@8             000000018001e560     E4438C.obj
+ 0002:00004588       ??_R1A@?0A@EA@ISG@@8       000000018001e588     E4438C.obj
+ 0002:000045b8       ??_R3ISG@@8                000000018001e5b8     E4438C.obj
+ 0002:000045d0       ??_R2ISG@@8                000000018001e5d0     E4438C.obj
+ 0002:000045e8       ??_R1A@?0A@EA@IGPIBDev@@8  000000018001e5e8     E4438C.obj
+ 0002:00004618       ??_R3IGPIBDev@@8           000000018001e618     E4438C.obj
+ 0002:00004630       ??_R2IGPIBDev@@8           000000018001e630     E4438C.obj
+ 0002:00004640       ??_R4E4440A@@6B@           000000018001e640     E4440A.obj
+ 0002:00004670       ??_R3E4440A@@8             000000018001e670     E4440A.obj
+ 0002:00004688       ??_R2E4440A@@8             000000018001e688     E4440A.obj
+ 0002:000046b8       ??_R1A@?0A@EA@E4440A@@8    000000018001e6b8     E4440A.obj
+ 0002:000046e8       ??_R1A@?0A@EA@N9030A@@8    000000018001e6e8     E4440A.obj
+ 0002:00004718       ??_R3N9030A@@8             000000018001e718     E4440A.obj
+ 0002:00004730       ??_R2N9030A@@8             000000018001e730     E4440A.obj
+ 0002:00004758       ??_R1A@?0A@EA@ISA@@8       000000018001e758     E4440A.obj
+ 0002:00004788       ??_R3ISA@@8                000000018001e788     E4440A.obj
+ 0002:000047a0       ??_R2ISA@@8                000000018001e7a0     E4440A.obj
+ 0002:000047b8       ??_R4E4443A@@6B@           000000018001e7b8     E4443A.obj
+ 0002:000047e8       ??_R3E4443A@@8             000000018001e7e8     E4443A.obj
+ 0002:00004800       ??_R2E4443A@@8             000000018001e800     E4443A.obj
+ 0002:00004830       ??_R1A@?0A@EA@E4443A@@8    000000018001e830     E4443A.obj
+ 0002:00004860       ??_R4E4445A@@6B@           000000018001e860     E4445A.obj
+ 0002:00004890       ??_R3E4445A@@8             000000018001e890     E4445A.obj
+ 0002:000048a8       ??_R2E4445A@@8             000000018001e8a8     E4445A.obj
+ 0002:000048d8       ??_R1A@?0A@EA@E4445A@@8    000000018001e8d8     E4445A.obj
+ 0002:00004908       ??_R4E8267D@@6B@           000000018001e908     E8267D.obj
+ 0002:00004938       ??_R3E8267D@@8             000000018001e938     E8267D.obj
+ 0002:00004950       ??_R2E8267D@@8             000000018001e950     E8267D.obj
+ 0002:00004980       ??_R1A@?0A@EA@E8267D@@8    000000018001e980     E8267D.obj
+ 0002:000049b0       ??_R4FSUP@@6B@             000000018001e9b0     FSUP.obj
+ 0002:000049e0       ??_R3FSUP@@8               000000018001e9e0     FSUP.obj
+ 0002:000049f8       ??_R2FSUP@@8               000000018001e9f8     FSUP.obj
+ 0002:00004a20       ??_R1A@?0A@EA@FSUP@@8      000000018001ea20     FSUP.obj
+ 0002:00004a50       ??_R4CInstrument@@6B@      000000018001ea50     Instrument.obj
+ 0002:00004a80       ??_R3CInstrument@@8        000000018001ea80     Instrument.obj
+ 0002:00004a98       ??_R2CInstrument@@8        000000018001ea98     Instrument.obj
+ 0002:00004aa8       ??_R1A@?0A@EA@CInstrument@@8 000000018001eaa8     Instrument.obj
+ 0002:00004ad8       ??_R4out_of_range@std@@6B@ 000000018001ead8     Instrument.obj
+ 0002:00004b08       ??_R3out_of_range@std@@8   000000018001eb08     Instrument.obj
+ 0002:00004b20       ??_R2out_of_range@std@@8   000000018001eb20     Instrument.obj
+ 0002:00004b48       ??_R1A@?0A@EA@out_of_range@std@@8 000000018001eb48     Instrument.obj
+ 0002:00004b78       ??_R1A@?0A@EA@logic_error@std@@8 000000018001eb78     Instrument.obj
+ 0002:00004ba8       ??_R3logic_error@std@@8    000000018001eba8     Instrument.obj
+ 0002:00004bc0       ??_R2logic_error@std@@8    000000018001ebc0     Instrument.obj
+ 0002:00004bd8       ??_R1A@?0A@EA@exception@std@@8 000000018001ebd8     Instrument.obj
+ 0002:00004c08       ??_R3exception@std@@8      000000018001ec08     Instrument.obj
+ 0002:00004c20       ??_R2exception@std@@8      000000018001ec20     Instrument.obj
+ 0002:00004c30       ??_R4logic_error@std@@6B@  000000018001ec30     Instrument.obj
+ 0002:00004c60       ??_R4length_error@std@@6B@ 000000018001ec60     Instrument.obj
+ 0002:00004c90       ??_R3length_error@std@@8   000000018001ec90     Instrument.obj
+ 0002:00004ca8       ??_R2length_error@std@@8   000000018001eca8     Instrument.obj
+ 0002:00004cd0       ??_R1A@?0A@EA@length_error@std@@8 000000018001ecd0     Instrument.obj
+ 0002:00004d00       ??_R4bad_alloc@std@@6B@    000000018001ed00     Instrument.obj
+ 0002:00004d30       ??_R3bad_alloc@std@@8      000000018001ed30     Instrument.obj
+ 0002:00004d48       ??_R2bad_alloc@std@@8      000000018001ed48     Instrument.obj
+ 0002:00004d60       ??_R1A@?0A@EA@bad_alloc@std@@8 000000018001ed60     Instrument.obj
+ 0002:00004d90       ??_R4ISA@@6B@              000000018001ed90     ISA.obj
+ 0002:00004dc0       ??_R4N5182A@@6B@           000000018001edc0     N5182A.obj
+ 0002:00004df0       ??_R3N5182A@@8             000000018001edf0     N5182A.obj
+ 0002:00004e08       ??_R2N5182A@@8             000000018001ee08     N5182A.obj
+ 0002:00004e38       ??_R1A@?0A@EA@N5182A@@8    000000018001ee38     N5182A.obj
+ 0002:00004e68       ??_R4N5182B@@6B@           000000018001ee68     N5182B.obj
+ 0002:00004e98       ??_R4ISG@@6B@              000000018001ee98     N5182B.obj
+ 0002:00004ec8       ??_R4N9010A@@6B@           000000018001eec8     N9010A.obj
+ 0002:00004ef8       ??_R3N9010A@@8             000000018001eef8     N9010A.obj
+ 0002:00004f10       ??_R2N9010A@@8             000000018001ef10     N9010A.obj
+ 0002:00004f40       ??_R1A@?0A@EA@N9010A@@8    000000018001ef40     N9010A.obj
+ 0002:00004f70       ??_R4N9020A@@6B@           000000018001ef70     N9020A.obj
+ 0002:00004fa0       ??_R3N9020A@@8             000000018001efa0     N9020A.obj
+ 0002:00004fb8       ??_R2N9020A@@8             000000018001efb8     N9020A.obj
+ 0002:00004fe8       ??_R1A@?0A@EA@N9020A@@8    000000018001efe8     N9020A.obj
+ 0002:00005018       ??_R4N9030A@@6B@           000000018001f018     N9030A.obj
+ 0002:00005048       ??_R4RSNRP@@6B@            000000018001f048     RSNRP.obj
+ 0002:00005078       ??_R3RSNRP@@8              000000018001f078     RSNRP.obj
+ 0002:00005090       ??_R2RSNRP@@8              000000018001f090     RSNRP.obj
+ 0002:000050a8       ??_R1A@?0A@EA@RSNRP@@8     000000018001f0a8     RSNRP.obj
+ 0002:000050d8       ??_R1A@?0A@EA@IPM@@8       000000018001f0d8     RSNRP.obj
+ 0002:00005108       ??_R3IPM@@8                000000018001f108     RSNRP.obj
+ 0002:00005120       ??_R2IPM@@8                000000018001f120     RSNRP.obj
+ 0002:00005130       ??_R4IPM@@6B@              000000018001f130     RSNRP.obj
+ 0002:00005160       ??_R4SMF100A@@6B@          000000018001f160     SMF100A.obj
+ 0002:00005190       ??_R3SMF100A@@8            000000018001f190     SMF100A.obj
+ 0002:000051a8       ??_R2SMF100A@@8            000000018001f1a8     SMF100A.obj
+ 0002:000051d8       ??_R1A@?0A@EA@SMF100A@@8   000000018001f1d8     SMF100A.obj
+ 0002:00005208       ??_R4type_info@@6B@        000000018001f208     MSVCRTD:ti_inst.obj
+ 0002:00005230       ??_R3type_info@@8          000000018001f230     MSVCRTD:ti_inst.obj
+ 0002:00005248       ??_R2type_info@@8          000000018001f248     MSVCRTD:ti_inst.obj
+ 0002:00005258       ??_R1A@?0A@EA@type_info@@8 000000018001f258     MSVCRTD:ti_inst.obj
+ 0002:000053e0       __rtc_iaa                  000000018001f3e0     MSVCRTD:_initsect_.obj
+ 0002:000054f0       __rtc_izz                  000000018001f4f0     MSVCRTD:_initsect_.obj
+ 0002:00005600       __rtc_taa                  000000018001f600     MSVCRTD:_initsect_.obj
+ 0002:00005710       __rtc_tzz                  000000018001f710     MSVCRTD:_initsect_.obj
+ 0002:00007ee0       _TI1?AVCInstrExpt@@        0000000180021ee0     Instrument.obj
+ 0002:00007f00       _CTA1?AVCInstrExpt@@       0000000180021f00     Instrument.obj
+ 0002:00007f10       _CT??_R0?AVCInstrExpt@@@8256 0000000180021f10     Instrument.obj
+ 0002:00007f38       _TI3?AVout_of_range@std@@  0000000180021f38     Instrument.obj
+ 0002:00007f58       _CTA3?AVout_of_range@std@@ 0000000180021f58     Instrument.obj
+ 0002:00007f78       _CT??_R0?AVout_of_range@std@@@8??0out_of_range@std@@QEAA@AEBV01@@Z72 0000000180021f78     Instrument.obj
+ 0002:00007fa0       _CT??_R0?AVlogic_error@std@@@8??0logic_error@std@@QEAA@AEBV01@@Z72 0000000180021fa0     Instrument.obj
+ 0002:00007fc8       _CT??_R0?AVexception@std@@@8??0exception@std@@QEAA@AEBV01@@Z24 0000000180021fc8     Instrument.obj
+ 0002:00007ff0       _TI3?AVlength_error@std@@  0000000180021ff0     Instrument.obj
+ 0002:00008010       _CTA3?AVlength_error@std@@ 0000000180022010     Instrument.obj
+ 0002:00008030       _CT??_R0?AVlength_error@std@@@8??0length_error@std@@QEAA@AEBV01@@Z72 0000000180022030     Instrument.obj
+ 0002:00008058       _TI2?AVbad_alloc@std@@     0000000180022058     Instrument.obj
+ 0002:00008078       _CTA2?AVbad_alloc@std@@    0000000180022078     Instrument.obj
+ 0002:00008090       _CT??_R0?AVbad_alloc@std@@@8??0bad_alloc@std@@QEAA@AEBV01@@Z24 0000000180022090     Instrument.obj
+ 0003:00000000       ??_R0?AVE4438C@@@8         0000000180023000     E4438C.obj
+ 0003:00000028       ??_R0?AVN5182B@@@8         0000000180023028     E4438C.obj
+ 0003:00000050       ??_R0?AVISG@@@8            0000000180023050     E4438C.obj
+ 0003:00000070       ??_R0?AVIGPIBDev@@@8       0000000180023070     E4438C.obj
+ 0003:00000098       ??_R0?AVE4440A@@@8         0000000180023098     E4440A.obj
+ 0003:000000c0       ??_R0?AVN9030A@@@8         00000001800230c0     E4440A.obj
+ 0003:000000e8       ??_R0?AVISA@@@8            00000001800230e8     E4440A.obj
+ 0003:00000108       ??_R0?AVE4443A@@@8         0000000180023108     E4443A.obj
+ 0003:00000130       ??_R0?AVE4445A@@@8         0000000180023130     E4445A.obj
+ 0003:00000158       ??_R0?AVE8267D@@@8         0000000180023158     E8267D.obj
+ 0003:00000180       ??_R0?AVFSUP@@@8           0000000180023180     FSUP.obj
+ 0003:000001b0       ??_R0?AVCInstrument@@@8    00000001800231b0     Instrument.obj
+ 0003:000001d8       ??_R0?AVCInstrExpt@@@8     00000001800231d8     Instrument.obj
+ 0003:00000200       ??_R0?AVout_of_range@std@@@8 0000000180023200     Instrument.obj
+ 0003:00000230       ??_R0?AVlogic_error@std@@@8 0000000180023230     Instrument.obj
+ 0003:00000260       ??_R0?AVexception@std@@@8  0000000180023260     Instrument.obj
+ 0003:00000290       ??_R0?AVlength_error@std@@@8 0000000180023290     Instrument.obj
+ 0003:000002c0       ??_R0?AVbad_alloc@std@@@8  00000001800232c0     Instrument.obj
+ 0003:000002f0       ??_R0?AVN5182A@@@8         00000001800232f0     N5182A.obj
+ 0003:00000318       ??_R0?AVN9010A@@@8         0000000180023318     N9010A.obj
+ 0003:00000340       ??_R0?AVN9020A@@@8         0000000180023340     N9020A.obj
+ 0003:00000368       ??_R0?AVRSNRP@@@8          0000000180023368     RSNRP.obj
+ 0003:00000390       ??_R0?AVIPM@@@8            0000000180023390     RSNRP.obj
+ 0003:000003b0       ??_R0?AVSMF100A@@@8        00000001800233b0     SMF100A.obj
+ 0003:000003d8       ??_R0?AVtype_info@@@8      00000001800233d8     MSVCRTD:ti_inst.obj
+ 0003:000003f8       _fltused                   00000001800233f8     MSVCRTD:dllsupp.obj
+ 0003:00000400       __security_cookie          0000000180023400     MSVCRTD:gs_cookie.obj
+ 0003:00000408       __security_cookie_complement 0000000180023408     MSVCRTD:gs_cookie.obj
+ 0003:00000410       __native_dllmain_reason    0000000180023410     MSVCRTD:natstart.obj
+ 0003:00000414       __native_vcclrit_reason    0000000180023414     MSVCRTD:natstart.obj
+ 0003:00000bd0       _forceCRTManifestRTM       0000000180023bd0     MSVCRTD:crtmanifestrtm.obj
+ 0003:00000bd8       ?__type_info_root_node@@3U__type_info_node@@A 0000000180023bd8     MSVCRTD:tncleanup.obj
+ 0003:00000be8       __native_startup_state     0000000180023be8     <common>
+ 0003:00000bf8       __native_startup_lock      0000000180023bf8     <common>
+ 0003:00000c00       __dyn_tls_init_callback    0000000180023c00     <common>
+ 0003:00000c18       __onexitend                0000000180023c18     <common>
+ 0003:00000c30       __onexitbegin              0000000180023c30     <common>
+ 0005:00000000       __IMPORT_DESCRIPTOR_libBusDriver 0000000180026000     libBusDriver:libBusDriver.dll
+ 0005:00000014       __IMPORT_DESCRIPTOR_MSVCR90D 0000000180026014     MSVCRTD:MSVCR90D.dll
+ 0005:00000028       __IMPORT_DESCRIPTOR_MSVCP90D 0000000180026028     msvcprtd:MSVCP90D.dll
+ 0005:0000003c       __IMPORT_DESCRIPTOR_visa64 000000018002603c     visa64:visa64.dll
+ 0005:00000050       __IMPORT_DESCRIPTOR_rsnrpz_64 0000000180026050     rsnrpz_64:rsnrpz_64.dll
+ 0005:00000064       __IMPORT_DESCRIPTOR_KERNEL32 0000000180026064     kernel32:KERNEL32.dll
+ 0005:00000078       __NULL_IMPORT_DESCRIPTOR   0000000180026078     libBusDriver:libBusDriver.dll
+ 0005:00000620       __imp_DisableThreadLibraryCalls 0000000180026620     kernel32:KERNEL32.dll
+ 0005:00000628       __imp_GetSystemTimeAsFileTime 0000000180026628     kernel32:KERNEL32.dll
+ 0005:00000630       __imp_GetCurrentProcessId  0000000180026630     kernel32:KERNEL32.dll
+ 0005:00000638       __imp_GetCurrentThreadId   0000000180026638     kernel32:KERNEL32.dll
+ 0005:00000640       __imp_GetTickCount         0000000180026640     kernel32:KERNEL32.dll
+ 0005:00000648       __imp_QueryPerformanceCounter 0000000180026648     kernel32:KERNEL32.dll
+ 0005:00000650       __imp_RtlCaptureContext    0000000180026650     kernel32:KERNEL32.dll
+ 0005:00000658       __imp_RtlLookupFunctionEntry 0000000180026658     kernel32:KERNEL32.dll
+ 0005:00000660       __imp_RtlVirtualUnwind     0000000180026660     kernel32:KERNEL32.dll
+ 0005:00000668       __imp_IsDebuggerPresent    0000000180026668     kernel32:KERNEL32.dll
+ 0005:00000670       __imp_SetUnhandledExceptionFilter 0000000180026670     kernel32:KERNEL32.dll
+ 0005:00000678       __imp_UnhandledExceptionFilter 0000000180026678     kernel32:KERNEL32.dll
+ 0005:00000680       __imp_GetCurrentProcess    0000000180026680     kernel32:KERNEL32.dll
+ 0005:00000688       __imp_TerminateProcess     0000000180026688     kernel32:KERNEL32.dll
+ 0005:00000690       __imp_Sleep                0000000180026690     kernel32:KERNEL32.dll
+ 0005:00000698       \177KERNEL32_NULL_THUNK_DATA 0000000180026698     kernel32:KERNEL32.dll
+ 0005:00000708       __imp_??0_Container_base_secure@std@@QEAA@XZ 0000000180026708     msvcprtd:MSVCP90D.dll
+ 0005:00000710       __imp_??1_Container_base_secure@std@@QEAA@XZ 0000000180026710     msvcprtd:MSVCP90D.dll
+ 0005:00000718       __imp_?c_str@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBAPEBDXZ 0000000180026718     msvcprtd:MSVCP90D.dll
+ 0005:00000720       __imp_??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@AEBV01@@Z 0000000180026720     msvcprtd:MSVCP90D.dll
+ 0005:00000728       __imp_??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@PEBD@Z 0000000180026728     msvcprtd:MSVCP90D.dll
+ 0005:00000730       __imp_??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@XZ 0000000180026730     msvcprtd:MSVCP90D.dll
+ 0005:00000738       __imp_?_Orphan_all@_Container_base_secure@std@@QEBAXXZ 0000000180026738     msvcprtd:MSVCP90D.dll
+ 0005:00000740       __imp_?_Debug_message@std@@YAXPEB_W0I@Z 0000000180026740     msvcprtd:MSVCP90D.dll
+ 0005:00000748       __imp_??0_Lockit@std@@QEAA@H@Z 0000000180026748     msvcprtd:MSVCP90D.dll
+ 0005:00000750       __imp_??1_Lockit@std@@QEAA@XZ 0000000180026750     msvcprtd:MSVCP90D.dll
+ 0005:00000758       \177MSVCP90D_NULL_THUNK_DATA 0000000180026758     msvcprtd:MSVCP90D.dll
+ 0005:000007c0       __imp_log10                00000001800267c0     MSVCRTD:MSVCR90D.dll
+ 0005:000007c8       __imp_fabs                 00000001800267c8     MSVCRTD:MSVCR90D.dll
+ 0005:000007d0       __imp___C_specific_handler 00000001800267d0     MSVCRTD:MSVCR90D.dll
+ 0005:000007d8       __imp__unlock              00000001800267d8     MSVCRTD:MSVCR90D.dll
+ 0005:000007e0       __imp___dllonexit          00000001800267e0     MSVCRTD:MSVCR90D.dll
+ 0005:000007e8       __imp__encode_pointer      00000001800267e8     MSVCRTD:MSVCR90D.dll
+ 0005:000007f0       __imp__lock                00000001800267f0     MSVCRTD:MSVCR90D.dll
+ 0005:000007f8       __imp__onexit              00000001800267f8     MSVCRTD:MSVCR90D.dll
+ 0005:00000800       __imp__decode_pointer      0000000180026800     MSVCRTD:MSVCR90D.dll
+ 0005:00000808       __imp__malloc_dbg          0000000180026808     MSVCRTD:MSVCR90D.dll
+ 0005:00000810       __imp__free_dbg            0000000180026810     MSVCRTD:MSVCR90D.dll
+ 0005:00000818       __imp__encoded_null        0000000180026818     MSVCRTD:MSVCR90D.dll
+ 0005:00000820       __imp__CrtSetCheckCount    0000000180026820     MSVCRTD:MSVCR90D.dll
+ 0005:00000828       __imp__initterm            0000000180026828     MSVCRTD:MSVCR90D.dll
+ 0005:00000830       __imp__initterm_e          0000000180026830     MSVCRTD:MSVCR90D.dll
+ 0005:00000838       __imp__amsg_exit           0000000180026838     MSVCRTD:MSVCR90D.dll
+ 0005:00000840       __imp___CppXcptFilter      0000000180026840     MSVCRTD:MSVCR90D.dll
+ 0005:00000848       __imp_?terminate@@YAXXZ    0000000180026848     MSVCRTD:MSVCR90D.dll
+ 0005:00000850       __imp_?_type_info_dtor_internal_method@type_info@@QEAAXXZ 0000000180026850     MSVCRTD:MSVCR90D.dll
+ 0005:00000858       __imp___crt_debugger_hook  0000000180026858     MSVCRTD:MSVCR90D.dll
+ 0005:00000860       __imp___clean_type_info_names_internal 0000000180026860     MSVCRTD:MSVCR90D.dll
+ 0005:00000868       __imp__purecall            0000000180026868     MSVCRTD:MSVCR90D.dll
+ 0005:00000870       __imp_memmove_s            0000000180026870     MSVCRTD:MSVCR90D.dll
+ 0005:00000878       __imp_?what@exception@std@@UEBAPEBDXZ 0000000180026878     MSVCRTD:MSVCR90D.dll
+ 0005:00000880       __imp_??0exception@std@@QEAA@AEBQEBD@Z 0000000180026880     MSVCRTD:MSVCR90D.dll
+ 0005:00000888       __imp_strcpy_s             0000000180026888     MSVCRTD:MSVCR90D.dll
+ 0005:00000890       __imp_vsprintf_s           0000000180026890     MSVCRTD:MSVCR90D.dll
+ 0005:00000898       __imp__CrtDbgReportW       0000000180026898     MSVCRTD:MSVCR90D.dll
+ 0005:000008a0       __imp__invalid_parameter   00000001800268a0     MSVCRTD:MSVCR90D.dll
+ 0005:000008a8       __imp_??0exception@std@@QEAA@XZ 00000001800268a8     MSVCRTD:MSVCR90D.dll
+ 0005:000008b0       __imp_??1exception@std@@UEAA@XZ 00000001800268b0     MSVCRTD:MSVCR90D.dll
+ 0005:000008b8       __imp_??0exception@std@@QEAA@AEBV01@@Z 00000001800268b8     MSVCRTD:MSVCR90D.dll
+ 0005:000008c0       __imp_strcmp               00000001800268c0     MSVCRTD:MSVCR90D.dll
+ 0005:000008c8       __imp__CxxThrowException   00000001800268c8     MSVCRTD:MSVCR90D.dll
+ 0005:000008d0       __imp___CxxFrameHandler3   00000001800268d0     MSVCRTD:MSVCR90D.dll
+ 0005:000008d8       __imp_??2@YAPEAX_K@Z       00000001800268d8     MSVCRTD:MSVCR90D.dll
+ 0005:000008e0       __imp_memset               00000001800268e0     MSVCRTD:MSVCR90D.dll
+ 0005:000008e8       __imp_atof                 00000001800268e8     MSVCRTD:MSVCR90D.dll
+ 0005:000008f0       __imp_??3@YAXPEAX@Z        00000001800268f0     MSVCRTD:MSVCR90D.dll
+ 0005:000008f8       __imp_strstr               00000001800268f8     MSVCRTD:MSVCR90D.dll
+ 0005:00000900       \177MSVCR90D_NULL_THUNK_DATA 0000000180026900     MSVCRTD:MSVCR90D.dll
+ 0005:00000998       __imp_??1IGPIBDev@@UEAA@XZ 0000000180026998     libBusDriver:libBusDriver.dll
+ 0005:000009a0       __imp_??0IGPIBDev@@QEAA@XZ 00000001800269a0     libBusDriver:libBusDriver.dll
+ 0005:000009a8       __imp_?GetDefaultRM@viPCIDev@@SAKXZ 00000001800269a8     libBusDriver:libBusDriver.dll
+ 0005:000009b0       __imp_?Init@IGPIBDev@@UEAA_NPEAD@Z 00000001800269b0     libBusDriver:libBusDriver.dll
+ 0005:000009b8       __imp_?OpenDefaultRM@viPCIDev@@SAJXZ 00000001800269b8     libBusDriver:libBusDriver.dll
+ 0005:000009c0       __imp_?Read@IGPIBDev@@UEAA_NPEADKK@Z 00000001800269c0     libBusDriver:libBusDriver.dll
+ 0005:000009c8       __imp_?Write@IGPIBDev@@UEAA_NPEBDZZ 00000001800269c8     libBusDriver:libBusDriver.dll
+ 0005:000009d0       \177libBusDriver_NULL_THUNK_DATA 00000001800269d0     libBusDriver:libBusDriver.dll
+ 0005:00000a30       __imp_rsnrpz_status_preset 0000000180026a30     rsnrpz_64:rsnrpz_64.dll
+ 0005:00000a38       __imp_rsnrpz_chan_setCorrectionFrequency 0000000180026a38     rsnrpz_64:rsnrpz_64.dll
+ 0005:00000a40       __imp_rsnrpz_meass_readMeasurement 0000000180026a40     rsnrpz_64:rsnrpz_64.dll
+ 0005:00000a48       __imp_rsnrpz_chan_isMeasurementComplete 0000000180026a48     rsnrpz_64:rsnrpz_64.dll
+ 0005:00000a50       __imp_rsnrpz_chan_initiate 0000000180026a50     rsnrpz_64:rsnrpz_64.dll
+ 0005:00000a58       __imp_rsnrpz_close         0000000180026a58     rsnrpz_64:rsnrpz_64.dll
+ 0005:00000a60       __imp_rsnrpz_CloseSensor   0000000180026a60     rsnrpz_64:rsnrpz_64.dll
+ 0005:00000a68       __imp_rsnrpz_avg_setAutoEnabled 0000000180026a68     rsnrpz_64:rsnrpz_64.dll
+ 0005:00000a70       __imp_rsnrpz_avg_setCount  0000000180026a70     rsnrpz_64:rsnrpz_64.dll
+ 0005:00000a78       __imp_rsnrpz_trigger_setSource 0000000180026a78     rsnrpz_64:rsnrpz_64.dll
+ 0005:00000a80       __imp_rsnrpz_reset         0000000180026a80     rsnrpz_64:rsnrpz_64.dll
+ 0005:00000a88       __imp_rsnrpz_chans_initiate 0000000180026a88     rsnrpz_64:rsnrpz_64.dll
+ 0005:00000a90       __imp_rsnrpz_init          0000000180026a90     rsnrpz_64:rsnrpz_64.dll
+ 0005:00000a98       __imp_rsnrpz_GetSensorCount 0000000180026a98     rsnrpz_64:rsnrpz_64.dll
+ 0005:00000aa0       __imp_rsnrpz_error_message 0000000180026aa0     rsnrpz_64:rsnrpz_64.dll
+ 0005:00000aa8       __imp_rsnrpz_GetSensorInfo 0000000180026aa8     rsnrpz_64:rsnrpz_64.dll
+ 0005:00000ab0       \177rsnrpz_64_NULL_THUNK_DATA 0000000180026ab0     rsnrpz_64:rsnrpz_64.dll
+ 0005:00000b20       __imp_viFindRsrc           0000000180026b20     visa64:visa64.dll
+ 0005:00000b28       __imp_viOpen               0000000180026b28     visa64:visa64.dll
+ 0005:00000b30       __imp_viWrite              0000000180026b30     visa64:visa64.dll
+ 0005:00000b38       __imp_viClose              0000000180026b38     visa64:visa64.dll
+ 0005:00000b40       __imp_viRead               0000000180026b40     visa64:visa64.dll
+ 0005:00000b48       __imp_viFindNext           0000000180026b48     visa64:visa64.dll
+ 0005:00000b50       \177visa64_NULL_THUNK_DATA 0000000180026b50     visa64:visa64.dll
+
+ entry point at        0001:000126c0
+
