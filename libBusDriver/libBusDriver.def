@@ -1,0 +1,63 @@
+LIBRARY		"libBusDriver"
+EXPORTS
+	; viPCIDev
+	??0viPCIDev@@QEAA@XZ
+	??0viPCIDev@@QEAA@PEBD@Z
+	??1viPCIDev@@UEAA@XZ
+	?GetDevices@viPCIDev@@UEAAJAEAV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@@Z
+	?Init@viPCIDev@@UEAAJV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z
+	?Init@viPCIDev@@UEAAJQEAD@Z
+	?Init@viPCIDev@@UEAAJV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@KK@Z
+	?Init@viPCIDev@@UEAAJQEADKK@Z
+	?Close@viPCIDev@@UEAAJXZ
+	?GetDes@viPCIDev@@UEAAPEADXZ
+	?W8@viPCIDev@@UEAAJW4AS@IPCIDev@@KE@Z
+	?W16@viPCIDev@@UEAAJW4AS@IPCIDev@@KG@Z
+	?W32@viPCIDev@@UEAAJW4AS@IPCIDev@@KK@Z
+	?W32@viPCIDev@@UEAAJW4AS@IPCIDev@@KKPEAK@Z
+	?R8@viPCIDev@@UEAAJW4AS@IPCIDev@@KPEAE@Z
+	?R16@viPCIDev@@UEAAJW4AS@IPCIDev@@KPEAG@Z
+	?R32@viPCIDev@@UEAAJW4AS@IPCIDev@@KPEAK@Z
+	?LLAW32@viPCIDev@@UEAAJKK@Z
+	?LLAR32@viPCIDev@@UEAAJKPEAK@Z
+	?OpenDefaultRM@viPCIDev@@SAJXZ
+	?GetDefaultRM@viPCIDev@@SAKXZ
+EXPORTS
+	; viMemIO
+	??0viMemIO@@QEAA@XZ
+	??1viMemIO@@UEAA@XZ
+	??4viMemIO@@QEAAAEAV0@AEAV0@@Z
+	?Alloc@viMemIO@@QEAAJK@Z
+	?Release@viMemIO@@QEAAJXZ
+	?Write8@viMemIO@@UEAAJPEAEK@Z
+	?Write16@viMemIO@@UEAAJPEAGK@Z
+	?Write32@viMemIO@@UEAAJPEAKK@Z
+	?Read8@viMemIO@@UEAAJPEAEK@Z
+	?Read16@viMemIO@@UEAAJPEAGK@Z
+	?Read32@viMemIO@@UEAAJPEAKK@Z
+EXPORTS
+	; wdPCIDev
+	??0wdPCIDev@@QEAA@XZ
+	??0wdPCIDev@@QEAA@PEBD@Z
+	??1wdPCIDev@@UEAA@XZ
+	?GetDevices@wdPCIDev@@UEAAJAEAV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@@Z
+	?Init@wdPCIDev@@UEAAJV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z
+	?Init@wdPCIDev@@UEAAJV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@KK@Z
+	?Close@wdPCIDev@@UEAAJXZ
+	?GetDes@wdPCIDev@@UEAAPEADXZ
+	?W8@wdPCIDev@@UEAAJW4AS@IPCIDev@@KE@Z
+	?W16@wdPCIDev@@UEAAJW4AS@IPCIDev@@KG@Z
+	?W32@wdPCIDev@@UEAAJW4AS@IPCIDev@@KK@Z
+	?W32@wdPCIDev@@UEAAJW4AS@IPCIDev@@KKPEAK@Z
+	?R8@wdPCIDev@@UEAAJW4AS@IPCIDev@@KPEAE@Z
+	?R16@wdPCIDev@@UEAAJW4AS@IPCIDev@@KPEAG@Z
+	?R32@wdPCIDev@@UEAAJW4AS@IPCIDev@@KPEAK@Z
+	?LLAW32@wdPCIDev@@UEAAJKK@Z
+	?LLAR32@wdPCIDev@@UEAAJKPEAK@Z
+EXPORTS
+	; IGPIBDev
+	??0IGPIBDev@@QEAA@XZ
+	??1IGPIBDev@@UEAA@XZ
+	?Init@IGPIBDev@@UEAA_NPEAD@Z
+	?Write@IGPIBDev@@UEAA_NPEBDZZ
+	?Read@IGPIBDev@@UEAA_NPEADKK@Z
