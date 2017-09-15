@@ -440,6 +440,10 @@ void TxPowerOPTableR1C::GetConfigTable(int32_t iPower,DataM DataBase,DataM *pDat
 		dAtt3 += 30.0;
         dDGain -= R1C_TX_BASE_POWER_OP - 85.0 - iPower;
 	}
+    if (dAtt0 > 31.5) {
+        dDGain -= (dAtt0 - 31.5);
+        dAtt0 = 31.5;
+    }
 
 	pData->m_sAtt0 = (short)(dAtt0 * 2);
 	pData->m_sAtt1 = (short)(dAtt1 * 2);
@@ -679,6 +683,10 @@ void TxPowerIOTableR1C::GetConfigTable(int32_t iPower,DataM DataBase,DataM *pDat
 		dAtt3 += 30.0;
         dDGain -= R1C_TX_BASE_POWER_IO - iPower - 85.0;
 	}
+    if (dAtt0 > 31.5) {
+        dDGain -= (dAtt0 - 31.5);
+        dAtt0 = 31.5;
+    }
 
 	pData->m_sAtt0 = (short)(dAtt0 * 2);
 	pData->m_sAtt1 = (short)(dAtt1 * 2);
