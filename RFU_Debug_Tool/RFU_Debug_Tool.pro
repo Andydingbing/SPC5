@@ -73,7 +73,10 @@ SOURCES += \
     qwinthread.cpp \
     qdeviceinitthread.cpp \
     qcalr1ctxloleakdlg.cpp \
-    qfpgadlg.cpp
+    qfpgadlg.cpp \
+    qattachthreaddlg.cpp \
+    qr1ctxloleakmodel.cpp \
+    qcalr1ctxloleakthread.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -82,7 +85,11 @@ HEADERS += \
     qwinthread.h \
     qdeviceinitthread.h \
     qcalr1ctxloleakdlg.h \
-    qfpgadlg.h
+    qfpgadlg.h \
+    qattachthreaddlg.h \
+    qcalr1cbasedlg.h \
+    qr1ctxloleakmodel.h \
+    qcalr1ctxloleakthread.h
 
 FORMS += \
         mainwindow.ui \

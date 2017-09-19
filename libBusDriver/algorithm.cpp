@@ -152,10 +152,10 @@ int32_t byte2str(uint32_t byte, char *str_byte, int32_t digit)
     return 0;
 }
 
-int32_t strsections(char *pin)
+int32_t strsections(const char *pin)
 {
     int32_t sec = 0;
-    char *pin_temp = pin;
+    const char *pin_temp = pin;
     int32_t pos[2] = {0,0};
     while ((pin = strpbrk(pin,";"))) {				//find all ";" and ","
         sec ++;
@@ -177,9 +177,9 @@ int32_t strsections(char *pin)
     return sec;
 }
 
-int32_t split_freq_character(char *pin,char (*pout)[32],int32_t sec)
+int32_t split_freq_character(const char *pin,char (*pout)[32],int32_t sec)
 {
-    char *pin_temp = pin;
+    const char *pin_temp = pin;
     int32_t pos[2] = {0,0};
     for (int i = 0;i < sec;i ++) {					//find the very first ';' or ','
         pos[0] = (int32_t)(((NULL != (pin = strchr(pin,','))) ? pin : pin_temp - 1) - pin_temp);
@@ -208,7 +208,7 @@ int32_t split_freq_character(char *pin,char (*pout)[32],int32_t sec)
     return 0;
 }
 
-int32_t freq2array(char *pin1,char *pin2,int64_t step,int64_t *pout,int64_t *pfreqstar,int64_t *pfreqstop,int64_t *pmax,int64_t *pmin)
+int32_t freq2array(const char *pin1,const char *pin2,int64_t step,int64_t *pout,int64_t *pfreqstar,int64_t *pfreqstop,int64_t *pmax,int64_t *pmin)
 {
     int32_t no1 = strsections(pin1);
     int32_t no2 = strsections(pin2);

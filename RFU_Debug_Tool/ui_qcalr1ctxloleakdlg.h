@@ -74,7 +74,7 @@ public:
     QLineEdit *m_LEDCQ;
     QPushButton *m_PBGetSet;
     QSpacerItem *verticalSpacer_2;
-    QTableView *tableView;
+    QTableView *m_TVData;
 
     void setupUi(QDialog *QCalR1CTxLOLeakDlg)
     {
@@ -139,6 +139,7 @@ public:
         sizePolicy1.setHeightForWidth(m_TEPath->sizePolicy().hasHeightForWidth());
         m_TEPath->setSizePolicy(sizePolicy1);
         m_TEPath->setMaximumSize(QSize(16777215, 49));
+        m_TEPath->setReadOnly(true);
 
         horizontalLayout_3->addWidget(m_TEPath);
 
@@ -177,6 +178,7 @@ public:
         m_LEFreqStep->setObjectName(QStringLiteral("m_LEFreqStep"));
         sizePolicy1.setHeightForWidth(m_LEFreqStep->sizePolicy().hasHeightForWidth());
         m_LEFreqStep->setSizePolicy(sizePolicy1);
+        m_LEFreqStep->setReadOnly(true);
 
         horizontalLayout_4->addWidget(m_LEFreqStep);
 
@@ -207,6 +209,7 @@ public:
         m_RBSpec->setObjectName(QStringLiteral("m_RBSpec"));
         sizePolicy1.setHeightForWidth(m_RBSpec->sizePolicy().hasHeightForWidth());
         m_RBSpec->setSizePolicy(sizePolicy1);
+        m_RBSpec->setChecked(true);
 
         verticalLayout_2->addWidget(m_RBSpec);
 
@@ -355,10 +358,10 @@ public:
 
         horizontalLayout_9->addLayout(verticalLayout_6);
 
-        tableView = new QTableView(QCalR1CTxLOLeakDlg);
-        tableView->setObjectName(QStringLiteral("tableView"));
+        m_TVData = new QTableView(QCalR1CTxLOLeakDlg);
+        m_TVData->setObjectName(QStringLiteral("m_TVData"));
 
-        horizontalLayout_9->addWidget(tableView);
+        horizontalLayout_9->addWidget(m_TVData);
 
         horizontalLayout_9->setStretch(0, 1);
         horizontalLayout_9->setStretch(1, 10);

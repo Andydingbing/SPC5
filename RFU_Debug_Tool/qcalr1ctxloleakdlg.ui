@@ -98,6 +98,9 @@
          <height>49</height>
         </size>
        </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -154,6 +157,9 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
         </layout>
@@ -205,6 +211,9 @@
              </property>
              <property name="text">
               <string>Spectrum</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -482,7 +491,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QTableView" name="tableView"/>
+      <widget class="QTableView" name="m_TVData"/>
      </item>
     </layout>
    </item>

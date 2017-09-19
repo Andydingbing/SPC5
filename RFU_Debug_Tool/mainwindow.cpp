@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMetaType>
+#include <QMessageBox>
 #include "qdeviceinitthread.h"
 
 MainWindow *g_pMainW = NULL;
@@ -141,6 +142,7 @@ MainWindow::MainWindow(QWidget *parent) :
         m_pCalR1CTxLOLeakDlg[i] = new QCalR1CTxLOLeakDlg(ui->m_pMainTab);
         m_pCalR1CTxLOLeakDlg[i]->setSizePolicy(childDlgPolicy);
         childDlgLayout->addWidget(m_pCalR1CTxLOLeakDlg[i]);
+        connect(this,SIGNAL(SP3301Changed()),m_pCalR1CTxLOLeakDlg[i],SLOT(SP3301Change()));
     }
     m_pFPGADlg = new QFPGADlg(ui->m_pMainTab);
     m_pFPGADlg->setSizePolicy(childDlgPolicy);
@@ -166,8 +168,8 @@ void MainWindow::deviceInitialization()
     QDeviceInitThread *pThread = (QDeviceInitThread *)g_pThread;
     connect(pThread,&QDeviceInitThread::swhwVerReady,this,&MainWindow::showSwHwVer);
     connect(pThread,&QDeviceInitThread::finished,pThread,&QObject::deleteLater);
-    connect(pThread,&QDeviceInitThread::InitProg,this,&MainWindow::InitProg);
-    connect(pThread,&QDeviceInitThread::SetProgPos,this,&MainWindow::SetProgPos);
+    connect(pThread,&QDeviceInitThread::initProg,this,&MainWindow::initProg);
+    connect(pThread,&QDeviceInitThread::setProgPos,this,&MainWindow::setProgPos);
     pThread->start();
 }
 
@@ -183,19 +185,25 @@ void MainWindow::updateParamInChildDlg()
 {
     for (int8_t i = 0;i < MAX_RF;i ++) {
         m_pRfR1CDlg[i]->m_pSP1401 = m_pSP3301->m_pSP1401R1C[i];
+        m_pCalR1CTxLOLeakDlg[i]->m_pSP1401 = m_pSP3301->m_pSP1401R1C[i];
+        m_pCalR1CTxLOLeakDlg[i]->m_pSP2401 = m_pSP3301->m_pSP2401[i];
+        m_pCalR1CTxLOLeakDlg[i]->m_pSP3501 = &SP3501;
     }
     m_pFPGADlg->m_pSP2401[0] = m_pSP3301->m_pSP2401[0];
     m_pFPGADlg->m_pSP2401[1] = m_pSP3301->m_pSP2401[2];
+
+    emit SP3301Changed();
 }
 
-void MainWindow::InitProg(const QString strName, int iPts)
+void MainWindow::initProg(const QString strName, int iPts)
 {
+    QWinThread::g_strProc = strName;
     m_pProgName->setText(strName + "%0");
     m_pMainProg->setRange(0,iPts);
     m_pMainProg->setValue(0);
 }
 
-void MainWindow::SetProgPos(int iPos)
+void MainWindow::setProgPos(int iPos)
 {
     int iRange = m_pMainProg->maximum();
     QString strProgName = m_pProgName->text();
@@ -235,4 +243,14 @@ void MainWindow::on_m_pMainTree_itemClicked(QTreeWidgetItem *item, int column)
     else {
         ui->m_pMainTab->clear();
     }
+}
+
+void MainWindow::threadCheckBox(const QString strMsg)
+{
+    ::threadCheckBox(strMsg.toStdString().c_str());
+}
+
+void MainWindow::threadErrorBox(const QString strMsg)
+{
+    ::threadErrorBox(strMsg.toStdString().c_str());
 }

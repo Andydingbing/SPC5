@@ -112,7 +112,7 @@ bool CInstrument::Init()
 	m_pPM = NULL;
 
     if (viFindRsrc(viPCIDev::GetDefaultRM(),szExpr,&FindList,&uiRetCnt,szDes) < VI_SUCCESS) {
-		throw CInstrExpt("viFindRsrc");
+        throw CInstrExpt("viFindRsrc GPIB?*INSTR");
 		return false;
 	}
 	while (uiRetCnt --) {

@@ -85,7 +85,8 @@ HEADERS += \
     N5182A.h \
     N5182B.h \
     RSNRP.h \
-    Instrument.h
+    Instrument.h \
+    libInstr.h
 
 unix {
     target.path = /usr/lib

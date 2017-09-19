@@ -33,7 +33,7 @@ int32_t byte2str(uint32_t byte, char *str_byte, int32_t digit = 0);
 
 //get how much sections does the strings have
 //pin : e.g. "50M;1G,4G" return 3
-int32_t strsections(char *pin);
+int32_t strsections(const char *pin);
 
 //freq range strings to freq array,return total freq points
 //pin1 : e.g. "50M;1G,4G;"
@@ -43,7 +43,7 @@ int32_t strsections(char *pin);
 //pfreqstar : give every begin freq of every section
 //pmax : the maximum freq
 //pmin : the minimum freq
-int32_t freq2array(char *pin1,char *pin2,int64_t step,int64_t *pout = NULL,int64_t *pfreqstar = NULL,int64_t *pfreqstop = NULL,int64_t *pmax = NULL,int64_t *pmin = NULL);
+int32_t freq2array(const char *pin1,const char *pin2,int64_t step,int64_t *pout = NULL,int64_t *pfreqstar = NULL,int64_t *pfreqstop = NULL,int64_t *pmax = NULL,int64_t *pmin = NULL);
 
 //separate freq string to freq array
 int32_t freq2array(char *pin,int64_t *pout);

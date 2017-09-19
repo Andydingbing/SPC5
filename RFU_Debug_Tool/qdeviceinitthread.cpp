@@ -29,7 +29,7 @@ void QDeviceInitThread::run()
     SET_PROG_POS(90);
 
     Info = pSP3301->GetInfo();
-    emit(swhwVerReady(Info,pDriver));
+    emit swhwVerReady(Info,pDriver);
     SET_PROG_POS(100);
     Log->AddMsgList(0,"booted");
 }

@@ -39,11 +39,15 @@ public:
 public slots:
     void deviceInitialization();
     void showSwHwVer(const CSP3301::RFUInfo &Info,const char *pDriver);
+    void initProg(const QString strName, int iPts);
+    void setProgPos(int iPos);
+    void threadCheckBox(const QString strMsg);
+    void threadErrorBox(const QString strMsg);
 public:
     void updateParamInChildDlg();
+signals:
+    void SP3301Changed();
 private slots:
-    void InitProg(const QString strName, int iPts);
-    void SetProgPos(int iPos);
     void on_m_pMainTree_itemClicked(QTreeWidgetItem *item, int column);
 
 private:
