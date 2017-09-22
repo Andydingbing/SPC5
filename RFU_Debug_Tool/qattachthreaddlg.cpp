@@ -8,36 +8,36 @@ QAttachThreadDlg::QAttachThreadDlg(QWidget *parent) : QDialog(parent)
     m_Resumed.clear();
 }
 
-void QAttachThreadDlg::AddRunningWidget(QWidget *pChild)
+void QAttachThreadDlg::addRunningWidget(QWidget *pChild)
 {
     m_Running.push_back(pChild);
 }
 
-void QAttachThreadDlg::AddIdleWidget(QWidget *pChild)
+void QAttachThreadDlg::addIdleWidget(QWidget *pChild)
 {
     m_Idle.push_back(pChild);
 }
 
-void QAttachThreadDlg::AddToPauseWidget(QWidget *pChild)
+void QAttachThreadDlg::addToPauseWidget(QWidget *pChild)
 {
     m_Resumed.push_back(pChild);
 }
 
-void QAttachThreadDlg::AddToRunningWidget(QWidget *pChild)
+void QAttachThreadDlg::addToRunningWidget(QWidget *pChild)
 {
     m_Pausing.push_back(pChild);
 }
 
-void QAttachThreadDlg::WidgetPrepare()
+void QAttachThreadDlg::widgetPrepare()
 {
     for (size_t i = 0;i < m_Running.size();i ++)
         m_Running.at(i)->setEnabled(true);
     for (size_t i = 0;i < m_Idle.size();i ++)
         m_Idle.at(i)->setEnabled(false);
-    return WidgetRunning();
+    return widgetRunning();
 }
 
-void QAttachThreadDlg::WidgetResume()
+void QAttachThreadDlg::widgetResume()
 {
     for (size_t i = 0;i < m_Running.size();i ++)
         m_Running.at(i)->setEnabled(false);
@@ -49,7 +49,7 @@ void QAttachThreadDlg::WidgetResume()
         m_Resumed.at(i)->setEnabled(false);
 }
 
-void QAttachThreadDlg::WidgetPausing()
+void QAttachThreadDlg::widgetPausing()
 {
     for (size_t i = 0;i < m_Pausing.size();i ++)
         m_Pausing.at(i)->setEnabled(true);
@@ -57,7 +57,7 @@ void QAttachThreadDlg::WidgetPausing()
         m_Resumed.at(i)->setEnabled(false);
 }
 
-void QAttachThreadDlg::WidgetRunning()
+void QAttachThreadDlg::widgetRunning()
 {
     for (size_t i = 0;i < m_Pausing.size();i ++)
         m_Pausing.at(i)->setEnabled(false);
@@ -65,10 +65,16 @@ void QAttachThreadDlg::WidgetRunning()
         m_Resumed.at(i)->setEnabled(true);
 }
 
-void QAttachThreadDlg::WidgetDisable()
+void QAttachThreadDlg::widgetDisable()
 {
     for (size_t i = 0;i < m_Running.size();i ++)
         m_Running.at(i)->setEnabled(false);
     for (size_t i = 0;i < m_Idle.size();i ++)
         m_Idle.at(i)->setEnabled(false);
+}
+
+void QAttachThreadDlg::done()
+{
+    QWinThread::g_bStop = true;
+    widgetResume();
 }

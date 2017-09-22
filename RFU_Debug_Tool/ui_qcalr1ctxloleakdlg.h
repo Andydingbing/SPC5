@@ -22,9 +22,9 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QTableView>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QVBoxLayout>
+#include "qrdttableview.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -74,7 +74,7 @@ public:
     QLineEdit *m_LEDCQ;
     QPushButton *m_PBGetSet;
     QSpacerItem *verticalSpacer_2;
-    QTableView *m_TVData;
+    QRDTTableView *m_TVData;
 
     void setupUi(QDialog *QCalR1CTxLOLeakDlg)
     {
@@ -358,7 +358,7 @@ public:
 
         horizontalLayout_9->addLayout(verticalLayout_6);
 
-        m_TVData = new QTableView(QCalR1CTxLOLeakDlg);
+        m_TVData = new QRDTTableView(QCalR1CTxLOLeakDlg);
         m_TVData->setObjectName(QStringLiteral("m_TVData"));
 
         horizontalLayout_9->addWidget(m_TVData);

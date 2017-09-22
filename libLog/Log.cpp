@@ -45,7 +45,12 @@ RegLog::RegLog()
 
 CLog::CLog()
 {
+#ifdef GUI_MFC
 	m_phWnd = NULL;
+#else
+    m_pMsgCallback = NULL;
+    m_pRegCallback = NULL;
+#endif
 	m_pMsgLog = NULL;
 	m_pRegLog = NULL;
     m_pConsole = NULL;
@@ -71,11 +76,13 @@ CLog::~CLog()
 		fclose(m_fpReg);
 		m_fpReg = NULL;
 	}
+#ifdef GUI_MFC
 	if (m_phWnd) {
 		m_phWnd->clear();
 		delete m_phWnd;
 		m_phWnd = NULL;
 	}
+#endif
 	if (m_bOwnData) {
 		if (m_pMsgLog) {
 			m_pMsgLog->clear();
@@ -114,6 +121,14 @@ void CLog::Init()
 	m_pRegLog = new vector<RegLog>;
 }
 
+void CLog::Init(vector<MsgLog> *pMsgLog,vector<RegLog> *pRegLog)
+{
+    m_bOwnData = false;
+    m_pMsgLog = pMsgLog;
+    m_pRegLog = pRegLog;
+}
+
+#ifdef GUI_MFC
 void CLog::Init(HWND hWnd)
 {
 	if (m_phWnd) {
@@ -141,13 +156,6 @@ void CLog::Init(vector<HWND> hWnd)
 	Init();
 }
 
-void CLog::Init(vector<MsgLog> *pMsgLog,vector<RegLog> *pRegLog)
-{
-	m_bOwnData = false;
-	m_pMsgLog = pMsgLog;
-	m_pRegLog = pRegLog;
-}
-
 void CLog::Init(HWND hWnd,vector<MsgLog> *pMsgLog,vector<RegLog> *pRegLog)
 {
 	if (m_phWnd) {
@@ -173,6 +181,22 @@ void CLog::Init(vector<HWND> hWnd,vector<MsgLog> *pMsgLog,vector<RegLog> *pRegLo
 		m_phWnd->push_back(*iter);
 	Init(pMsgLog,pRegLog);
 }
+#else
+void CLog::Init(void (*pMsgCallback)(),void (*pRegCallback)())
+{
+    m_pMsgCallback = pMsgCallback;
+    m_pRegCallback = pRegCallback;
+    Init();
+}
+
+void CLog::Init(void (*pMsgCallback)(),void (*pRegCallback)(),vector<MsgLog> *pMsgLog,vector<RegLog> *pRegLog)
+{
+    m_pMsgCallback = pMsgCallback;
+    m_pRegCallback = pRegCallback;
+    Init(pMsgLog,pRegLog);
+}
+
+#endif
 
 vector<MsgLog> *CLog::GetMsgLog()
 {
@@ -308,11 +332,18 @@ int CLog::AddMsgList(const char *pFormat,...)
 
 	if ((m_uiSw & L_MSG) && (NULL != m_pMsgLog)) {
 		m_pMsgLog->push_back(MsgL);
+
+#if defined GUI_MFC
 		if (m_phWnd) {
 			vector<HWND>::iterator iter;
 			for (iter = m_phWnd->begin();iter != m_phWnd->end();iter ++)
                 ::PostMessage(*iter,WM_CSE_MSG_LOG,0,0);
 		}
+#else
+        if (m_pMsgCallback)
+            m_pMsgCallback();
+#endif
+
 	}
 	pthread_mutex_unlock(&g_LogLock);
 	return 0;
@@ -345,11 +376,18 @@ int CLog::AddMsgList(int iResult,const char *pFormat,...)
 
 	if ((m_uiSw & L_MSG) && (NULL != m_pMsgLog)) {
 		m_pMsgLog->push_back(MsgL);
+
+#if defined GUI_MFC
 		if (m_phWnd) {
 			vector<HWND>::iterator iter;
 			for (iter = m_phWnd->begin();iter != m_phWnd->end();iter ++)
                 ::PostMessage(*iter,WM_CSE_MSG_LOG,0,0);
 		}
+#else
+        if (m_pMsgCallback)
+            m_pMsgCallback();
+#endif
+
 	}
 	pthread_mutex_unlock(&g_LogLock);
     return iResult;
@@ -389,11 +427,18 @@ int CLog::AddRegList(int iResult,char *pFpga,int iAddr,unsigned uiWVvalue,unsign
 
 	if ((m_uiSw & L_REG) && (NULL != m_pRegLog)) {
 		m_pRegLog->push_back(RegL);
+
+#if defined GUI_MFC
 		if (m_phWnd) {
 			vector<HWND>::iterator iter;
 			for (iter = m_phWnd->begin();iter != m_phWnd->end();iter ++)
                 ::PostMessage(*iter,WM_CSE_REG_LOG,0,0);
 		}
+#else
+        if (m_pRegCallback)
+            m_pRegCallback();
+#endif
+
 	}
 	pthread_mutex_unlock(&g_LogLock);
     return iResult;

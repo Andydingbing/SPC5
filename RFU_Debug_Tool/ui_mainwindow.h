@@ -15,7 +15,6 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
-#include <QtWidgets/QListView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -24,6 +23,7 @@
 #include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include "qrdttableview.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -59,8 +59,8 @@ public:
     QTreeWidget *m_pMainTree;
     QTabWidget *m_pMainTab;
     QHBoxLayout *horizontalLayout;
-    QListView *listView;
-    QListView *listView_2;
+    QRDTTableView *m_TVMsg;
+    QRDTTableView *m_TVReg;
     QMenuBar *menuBar;
     QMenu *menuDevice;
     QMenu *menuRFU_R;
@@ -151,6 +151,7 @@ public:
         font.setBold(true);
         font.setWeight(75);
         m_pMainTree->setFont(font);
+        m_pMainTree->setSelectionMode(QAbstractItemView::SingleSelection);
 
         horizontalLayout_2->addWidget(m_pMainTree);
 
@@ -170,25 +171,24 @@ public:
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(0);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        listView = new QListView(centralWidget);
-        listView->setObjectName(QStringLiteral("listView"));
-        sizePolicy.setHeightForWidth(listView->sizePolicy().hasHeightForWidth());
-        listView->setSizePolicy(sizePolicy);
+        m_TVMsg = new QRDTTableView(centralWidget);
+        m_TVMsg->setObjectName(QStringLiteral("m_TVMsg"));
+        sizePolicy.setHeightForWidth(m_TVMsg->sizePolicy().hasHeightForWidth());
+        m_TVMsg->setSizePolicy(sizePolicy);
 
-        horizontalLayout->addWidget(listView);
+        horizontalLayout->addWidget(m_TVMsg);
 
-        listView_2 = new QListView(centralWidget);
-        listView_2->setObjectName(QStringLiteral("listView_2"));
+        m_TVReg = new QRDTTableView(centralWidget);
+        m_TVReg->setObjectName(QStringLiteral("m_TVReg"));
         QSizePolicy sizePolicy3(QSizePolicy::Fixed, QSizePolicy::Expanding);
         sizePolicy3.setHorizontalStretch(0);
         sizePolicy3.setVerticalStretch(1);
-        sizePolicy3.setHeightForWidth(listView_2->sizePolicy().hasHeightForWidth());
-        listView_2->setSizePolicy(sizePolicy3);
-        listView_2->setMinimumSize(QSize(321, 0));
+        sizePolicy3.setHeightForWidth(m_TVReg->sizePolicy().hasHeightForWidth());
+        m_TVReg->setSizePolicy(sizePolicy3);
+        m_TVReg->setMinimumSize(QSize(440, 0));
 
-        horizontalLayout->addWidget(listView_2);
+        horizontalLayout->addWidget(m_TVReg);
 
-        horizontalLayout->setStretch(0, 1);
 
         verticalLayout->addLayout(horizontalLayout);
 

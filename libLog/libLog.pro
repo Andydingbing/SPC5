@@ -14,6 +14,7 @@ INCLUDEPATH += ../include
 
 win32 {
     LIBS += $$PWD/../lib/libpthreadGC2.a
+#    LIBS += $$PWD/../lib/libQt5Cored.dll.a
 
     DEFINES += _WINDOWS \
                _WIN64

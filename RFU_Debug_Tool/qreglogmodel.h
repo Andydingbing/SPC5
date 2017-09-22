@@ -1,21 +1,20 @@
-#ifndef QR1CTXLOLEAKMODEL_H
-#define QR1CTXLOLEAKMODEL_H
+#ifndef QREGLOGMODEL_H
+#define QREGLOGMODEL_H
 
-#include <qcalbasemodel.h>
-#include "define.h"
+#include <QAbstractTableModel>
 
-class QR1CTxLOLeakModel : public QCalBaseModel
+class QRegLogModel : public QAbstractTableModel
 {
     Q_OBJECT
 
 public:
-    explicit QR1CTxLOLeakModel(QObject *parent = Q_NULLPTR);
+    explicit QRegLogModel(QObject *parent = Q_NULLPTR);
     int rowCount(const QModelIndex &parent) const override;
     int columnCount(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex &index, int role) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
-public:
-    vector<TxLOLeakageTableR1C::DataF> *m_pData;
+public slots:
+    void update(int iRow);
 };
 
-#endif // QR1CTXLOLEAKMODEL_H
+#endif // QREGLOGMODEL_H

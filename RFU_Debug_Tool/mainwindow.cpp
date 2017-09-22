@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->m_pMainTree->setRootIsDecorated(true);
     ui->m_pMainTree->clear();
     ui->m_pMainTree->setColumnCount(1);
+    ui->m_pMainTree->setStyleSheet("QTreeWidget{background:rgb(179,217,255)}QTreeWidget::item:selected{background:rgb(0,255,0);color:black}");
 
     QStringList strRoot;
     QStringList strChild;
@@ -154,6 +155,44 @@ MainWindow::MainWindow(QWidget *parent) :
     m_pSP3501 = &SP3501;
     m_pSP3301 = &SP3301_2;
     updateParamInChildDlg();
+
+    m_pMsgModel = new QMsgLogModel;
+    ui->m_TVMsg->setModel(m_pMsgModel);
+    ui->m_TVMsg->setColumnWidth(0,125);
+    ui->m_TVMsg->setColumnWidth(1,350);
+    ui->m_TVMsg->setColumnWidth(2,50);
+    ui->m_TVMsg->setColumnWidth(3,80);
+    ui->m_TVMsg->horizontalHeader()->setFixedHeight(20);
+    ui->m_TVMsg->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
+    ui->m_TVMsg->verticalHeader()->setDefaultSectionSize(18);
+    ui->m_TVMsg->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
+    ui->m_TVMsg->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Stretch);
+    ui->m_TVMsg->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
+    ui->m_TVMsg->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
+
+    m_pRegModel = new QRegLogModel;
+    ui->m_TVReg->setModel(m_pRegModel);
+    ui->m_TVReg->setColumnWidth(0,68);
+    ui->m_TVReg->setColumnWidth(1,68);
+    ui->m_TVReg->setColumnWidth(2,60);
+    ui->m_TVReg->setColumnWidth(3,85);
+    ui->m_TVReg->setColumnWidth(4,85);
+    ui->m_TVReg->setColumnWidth(5,50);
+    ui->m_TVReg->horizontalHeader()->setFixedHeight(20);
+    ui->m_TVReg->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
+    ui->m_TVReg->verticalHeader()->setDefaultSectionSize(18);
+    ui->m_TVReg->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
+    ui->m_TVReg->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
+    ui->m_TVReg->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
+    ui->m_TVReg->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
+    ui->m_TVReg->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Fixed);
+    ui->m_TVReg->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Fixed);
+
+    connect(this,SIGNAL(addMsgList(int)),m_pMsgModel,SLOT(update(int)));
+    connect(this,SIGNAL(addRegList(int)),m_pRegModel,SLOT(update(int)));
+    connect(this,SIGNAL(addMsgList(int)),this,SLOT(updateMsgTable(int)));
+    connect(this,SIGNAL(addRegList(int)),this,SLOT(updateRegTable(int)));
+
     connect(ui->actionInitialization,SIGNAL(triggered(bool)),this,SLOT(deviceInitialization()));
 }
 
@@ -195,6 +234,18 @@ void MainWindow::updateParamInChildDlg()
     emit SP3301Changed();
 }
 
+void MainWindow::addMsgListCallback()
+{
+    int iRow = Log->GetMsgLog()->size();
+    emit addMsgList(iRow);
+}
+
+void MainWindow::addRegListCallback()
+{
+    int iRow = Log->GetRegLog()->size();
+    emit addRegList(iRow);
+}
+
 void MainWindow::initProg(const QString strName, int iPts)
 {
     QWinThread::g_strProc = strName;
@@ -212,6 +263,18 @@ void MainWindow::setProgPos(int iPos)
     strProgName.replace(iPercentPos,4,strPercent);
     m_pProgName->setText(strProgName);
     m_pMainProg->setValue(iPos);
+}
+
+void MainWindow::updateMsgTable(int iRow)
+{
+    ui->m_TVMsg->scrollToBottom();
+    ui->m_TVMsg->selectRow(iRow - 1);
+}
+
+void MainWindow::updateRegTable(int iRow)
+{
+    ui->m_TVReg->scrollToBottom();
+    ui->m_TVReg->selectRow(iRow - 1);
 }
 
 void MainWindow::on_m_pMainTree_itemClicked(QTreeWidgetItem *item, int column)

@@ -76,7 +76,11 @@ SOURCES += \
     qfpgadlg.cpp \
     qattachthreaddlg.cpp \
     qr1ctxloleakmodel.cpp \
-    qcalr1ctxloleakthread.cpp
+    qcalr1ctxloleakthread.cpp \
+    qrdttableview.cpp \
+    qmsglogmodel.cpp \
+    qreglogmodel.cpp \
+    qcalbasemodel.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -89,7 +93,11 @@ HEADERS += \
     qattachthreaddlg.h \
     qcalr1cbasedlg.h \
     qr1ctxloleakmodel.h \
-    qcalr1ctxloleakthread.h
+    qcalr1ctxloleakthread.h \
+    qrdttableview.h \
+    qmsglogmodel.h \
+    qreglogmodel.h \
+    qcalbasemodel.h
 
 FORMS += \
         mainwindow.ui \

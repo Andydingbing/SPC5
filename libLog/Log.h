@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <vector>
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) && defined (GUI_MFC)
 #include <windef.h>
 #include <winuser.h>
 #include <winbase.h>
@@ -97,13 +97,25 @@ public:
 	CLog & operator = (CLog &);
 	~CLog();
     static CLog* Instance();
-
 	void Init();
+    void Init(vector<MsgLog> *pMsgLog,vector<RegLog> *pRegLog);
+
+#ifdef GUI_MFC
 	void Init(HWND hWnd);
 	void Init(vector<HWND> hWnd);
-	void Init(vector<MsgLog> *pMsgLog,vector<RegLog> *pRegLog);
 	void Init(HWND hWnd,vector<MsgLog> *pMsgLog,vector<RegLog> *pRegLog);
 	void Init(vector<HWND> hWnd,vector<MsgLog> *pMsgLog,vector<RegLog> *pRegLog);
+private:
+    vector<HWND> *m_phWnd;
+#else
+    void Init(void (*pMsgCallback)(),void (*pRegCallback)());
+    void Init(void (*pMsgCallback)(),void (*pRegCallback)(),vector<MsgLog> *pMsgLog,vector<RegLog> *pRegLog);
+private:
+    void (*m_pMsgCallback)();
+    void (*m_pRegCallback)();
+#endif
+
+public:
 	vector<MsgLog> *GetMsgLog();
 	vector<RegLog> *GetRegLog();
 	void Set(uint64_t uiLogSw);
@@ -127,7 +139,6 @@ public:
 private:
 	vector<MsgLog> *m_pMsgLog;
 	vector<RegLog> *m_pRegLog;
-	vector<HWND>   *m_phWnd;
 	FILE *m_fpMsg;
 	FILE *m_fpReg;
 	void *m_pConsole;

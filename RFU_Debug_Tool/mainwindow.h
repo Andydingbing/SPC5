@@ -5,9 +5,9 @@
 #include <QtWidgets/QTreeWidgetItem>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QProgressBar>
-#include "libSP3301.h"
-#include "libSP3501.h"
 #include "define.h"
+#include "qmsglogmodel.h"
+#include "qreglogmodel.h"
 #include "qrfr1cdlg.h"
 #include "qrfr1cadvdlg.h"
 #include "qfpgadlg.h"
@@ -23,6 +23,8 @@ class MainWindow : public QMainWindow
 public:
     CSP3301 *m_pSP3301;
     CSP3501 *m_pSP3501;
+    QMsgLogModel *m_pMsgModel;
+    QRegLogModel *m_pRegModel;
     QProgressBar *m_pMainProg;
     QLabel *m_pProgName;
     QLabel *m_pVerK7_0;
@@ -41,12 +43,18 @@ public slots:
     void showSwHwVer(const CSP3301::RFUInfo &Info,const char *pDriver);
     void initProg(const QString strName, int iPts);
     void setProgPos(int iPos);
+    void updateMsgTable(int iRow);
+    void updateRegTable(int iRow);
     void threadCheckBox(const QString strMsg);
     void threadErrorBox(const QString strMsg);
 public:
     void updateParamInChildDlg();
+    void addMsgListCallback();
+    void addRegListCallback();
 signals:
     void SP3301Changed();
+    void addMsgList(int iRow);
+    void addRegList(int iRow);
 private slots:
     void on_m_pMainTree_itemClicked(QTreeWidgetItem *item, int column);
 

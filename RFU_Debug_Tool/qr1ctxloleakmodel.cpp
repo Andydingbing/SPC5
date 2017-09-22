@@ -1,6 +1,6 @@
 #include "qr1ctxloleakmodel.h"
 
-QR1CTxLOLeakModel::QR1CTxLOLeakModel(QObject *parent) : QAbstractTableModel(parent)
+QR1CTxLOLeakModel::QR1CTxLOLeakModel(QObject *parent) : QCalBaseModel(parent)
 {
     m_pData = new vector<TxLOLeakageTableR1C::DataF>;
     m_pData->clear();
@@ -25,6 +25,20 @@ QVariant QR1CTxLOLeakModel::data(const QModelIndex &index, int role) const
             return QString("%1").arg(m_pData->at(index.row()).m_iDCI);
         else if (2 == index.column())
             return QString("%1").arg(m_pData->at(index.row()).m_iDCQ);
+        else if (3 == index.column())
+            return m_pData->at(index.row()).m_bUseSA ? tr("Spectrum") : tr("Loopback");
+        else if (4 == index.column())
+            return QString("%1").arg(m_pData->at(index.row()).m_dPower);
+        else if (5 == index.column())
+            return QString("%1").arg(m_pData->at(index.row()).m_dTemp[0]);
+        else if (6 == index.column())
+            return QString("%1").arg(m_pData->at(index.row()).m_dTemp[1]);
+        else if (7 == index.column())
+            return QString("%1").arg(m_pData->at(index.row()).m_dTemp[2]);
+        else if (8 == index.column())
+            return QString("%1").arg(m_pData->at(index.row()).m_dTemp[3]);
+        else if (9 == index.column())
+            return tm2QString(m_pData->at(index.row()).m_EndTime);
     }
     if (role == Qt::BackgroundColorRole)
         return CLR_PROTECT_EYE;
@@ -47,9 +61,4 @@ QVariant QR1CTxLOLeakModel::headerData(int section, Qt::Orientation orientation,
         return strHeader[section];
     }
     return QVariant();
-}
-
-void QR1CTxLOLeakModel::update(const QModelIndex topleft,const QModelIndex rightbottom)
-{
-    emit layoutChanged();
 }

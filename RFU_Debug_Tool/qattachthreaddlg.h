@@ -20,15 +20,17 @@ class QAttachThreadDlg : public QDialog
 
 public:
     QAttachThreadDlg(QWidget *parent = 0);
-    void AddRunningWidget(QWidget *pChild);
-    void AddIdleWidget(QWidget *pChild);
-    void AddToPauseWidget(QWidget *pChild);
-    void AddToRunningWidget(QWidget *pChild);
-    void WidgetPrepare();
-    void WidgetResume();
-    void WidgetPausing();
-    void WidgetRunning();
-    void WidgetDisable();
+    void addRunningWidget(QWidget *pChild);
+    void addIdleWidget(QWidget *pChild);
+    void addToPauseWidget(QWidget *pChild);
+    void addToRunningWidget(QWidget *pChild);
+    void widgetPrepare();
+    void widgetResume();
+    void widgetPausing();
+    void widgetRunning();
+    void widgetDisable();
+public slots:
+    virtual void done();
 private:
     vector<QWidget *> m_Running;
     vector<QWidget *> m_Idle;

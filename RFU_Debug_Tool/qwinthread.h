@@ -39,6 +39,8 @@
 #define THREAD_ERROR_BOX(msg)       \
     emit threadErrorBox(msg);
 
+class QCalBaseModel;
+
 typedef struct CalParam {
 public:
     enum LOLeak_Method {
@@ -46,7 +48,8 @@ public:
         M_Loopback = 1
     };
 
-    QAbstractItemModel *m_pModel;
+    QDialog *m_pParent;
+    QCalBaseModel *m_pModel;
     ISP1401 *m_pSP1401;
     CSP2401R1A *m_pSP2401;
     CSP3501 *m_pSP3501;
@@ -84,11 +87,23 @@ class QCalBaseThread : public QWinThread
     Q_OBJECT
 
 public:
-    QCalBaseThread(CalParam *pParam,QObject *parent = Q_NULLPTR);
-protected:
-    CalParam m_CalParam;
+    explicit QCalBaseThread(CalParam *pParam,QObject *parent = Q_NULLPTR);
 signals:
     void update(const QModelIndex topleft,const QModelIndex rightbottom);
+protected:
+    CalParam m_CalParam;
+};
+
+class QExportBaseThread : public QWinThread
+{
+    Q_OBJECT
+
+public:
+    explicit QExportBaseThread(CalParam *pParam,QObject *parent = Q_NULLPTR);
+signals:
+    void update(const QModelIndex topleft,const QModelIndex rightbottom);
+protected:
+    CalParam m_CalParam;
 };
 
 void threadCheckBox(const char *format,...);

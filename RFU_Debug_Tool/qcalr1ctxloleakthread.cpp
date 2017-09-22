@@ -26,7 +26,7 @@ void QCalR1CTxLOLeakThread::run()
         int16_t iStep = 0;
 
         TxLOLeakageTableR1C::DataF Data;
-        vector<TxLOLeakageTableR1C::DataF> *pMap = ((QCalR1CTxLOLeakDlg *)(this->parent()))->m_pModel->m_pData;
+        vector<TxLOLeakageTableR1C::DataF> *pMap = ((QR1CTxLOLeakModel *)(m_CalParam.m_pModel))->m_pData;
         Data.m_bUseSA = bUseSA;
 
         if (bCalX9119 || bUseSA) {
@@ -387,4 +387,27 @@ int64_t QCalR1CTxLOLeakThread::GetMinDCOffsetQ_Rx(CSP1401R1C *pSP1401,CSP2401R1A
     *pDC_Q_L = *pDC_Q_M - iStep * iLRCoef;
     *pDC_Q_R = *pDC_Q_M + iStep * iLRCoef;
     return iAD_Min;
+}
+
+
+QExportR1CTxLOLeakThread::QExportR1CTxLOLeakThread(CalParam *pParam, QObject *parent) : QExportBaseThread(pParam,parent)
+{
+
+}
+
+void QExportR1CTxLOLeakThread::run()
+{
+    INIT_PROG("Exporting Tx LO Leakage",100);
+    int32_t i = 0;
+    CSP1401R1C *pSP1401 = (CSP1401R1C *)(m_CalParam.m_pSP1401);
+    QR1CTxLOLeakModel *pModel = (QR1CTxLOLeakModel *)(m_CalParam.m_pModel);
+    vector<TxLOLeakageTableR1C::DataF> *pMap = ((QR1CTxLOLeakModel *)(m_CalParam.m_pModel))->m_pData;
+
+    pSP1401->GetCalFile()->Map2Buf(ICalFile::TxLoLeakage);
+    for (uint64_t uiFreq = RF_TX_FREQ_STAR;uiFreq <= RF_TX_FREQ_STOP;uiFreq += RF_TX_FREQ_STEP_CALLED) {
+        pSP1401->GetCalFile()->m_pTxLOLeak->Get(uiFreq,&(pMap->at(i)));
+        emit update(pModel->index(i,0),pModel->index(i,9));
+        i ++;
+    }
+    SET_PROG_POS(100);
 }

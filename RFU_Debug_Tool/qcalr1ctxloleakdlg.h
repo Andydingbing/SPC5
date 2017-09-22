@@ -16,7 +16,6 @@ class QCalR1CTxLOLeakDlg : public QCalR1CBaseDlg
 
 public:
     CSP3501 *m_pSP3501;
-    QR1CTxLOLeakModel *m_pModel;
 public:
     explicit QCalR1CTxLOLeakDlg(QWidget *parent = 0);
     ~QCalR1CTxLOLeakDlg();

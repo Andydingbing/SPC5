@@ -1,5 +1,6 @@
 #include "ArbReader.h"
 #include "libLog.h"
+#include <string.h>
 
 ArbReader::ArbReader()
 {
