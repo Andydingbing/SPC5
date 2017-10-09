@@ -168,8 +168,8 @@ int32_t CSP3301::Boot()
 
 	CGeneralIniFile IniFile(CONFIG_FILE_PATH);
 
-    INT_CHECK(DDR.RAlloc());
-    INT_CHECK(DDR.WAlloc());
+    INT_CHECK(DDR->RAlloc());
+    INT_CHECK(DDR->WAlloc());
 
 	IniFile.GetConfigStringValue("Product Form","Form",szProductForm);
 	strcpy(szRsrcSection,"RESOURCE");
@@ -208,8 +208,8 @@ int32_t CSP3301::Boot()
 		INS_SP1401(2);
 		INS_SP1401(3);
 
-        INT_CHECK(DDR.RSendPhyAddr(&m_K7_0));
-        INT_CHECK(DDR.WSendPhyAddr(&m_K7_0));
+        INT_CHECK(DDR->RSendPhyAddr(&m_K7_0));
+        INT_CHECK(DDR->WSendPhyAddr(&m_K7_0));
         INT_CHECK(m_pSP1401[2]->GetK7Ver(m_RFUInfo.m_uiK7_0_Ver));
 	}
 
@@ -223,8 +223,8 @@ int32_t CSP3301::Boot()
 		INS_SP1401(0);
 		INS_SP1401(1);
 
-        INT_CHECK(DDR.RSendPhyAddr(&m_K7_1));
-        INT_CHECK(DDR.WSendPhyAddr(&m_K7_1));
+        INT_CHECK(DDR->RSendPhyAddr(&m_K7_1));
+        INT_CHECK(DDR->WSendPhyAddr(&m_K7_1));
         INT_CHECK(m_pSP1401[0]->GetK7Ver(m_RFUInfo.m_uiK7_1_Ver));
 	}
 	
@@ -569,11 +569,11 @@ int32_t CSP3301::ArbLoad(uint32_t uiRfIdx,char *pPath)
         RFU_K7_W(0x0028);
 
 		for (uint32_t i = 0;i < uiSplsTrsing / 2;i ++) {
-			fread(DDR.GetUsrSpc() + i * 2,    sizeof(ArbReader::Data_t),1,fp[0]);
-			fread(DDR.GetUsrSpc() + i * 2 + 1,sizeof(ArbReader::Data_t),1,fp[1]);
+            fread(DDR->GetUsrSpc() + i * 2,    sizeof(ArbReader::Data_t),1,fp[0]);
+            fread(DDR->GetUsrSpc() + i * 2 + 1,sizeof(ArbReader::Data_t),1,fp[1]);
 		}
 
-        INT_CHECK(DDR.FpgaRead(m_pK7,DDR.GetUsrSpc(),uiSplsTrsing,NULL));
+        INT_CHECK(DDR->FpgaRead(m_pK7,DDR->GetUsrSpc(),uiSplsTrsing,NULL));
 		
 		uiSplsTrsed += uiSplsTrsing;
 		uiSplsLeft = uiSplsTotal - uiSplsTrsed;

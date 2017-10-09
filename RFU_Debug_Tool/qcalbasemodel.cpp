@@ -5,7 +5,13 @@ QCalBaseModel::QCalBaseModel(QObject *parent) : QAbstractTableModel(parent)
 
 }
 
-void QCalBaseModel::update(const QModelIndex topleft, const QModelIndex rightbottom)
+void QCalBaseModel::reset(const QModelIndex &tl, const QModelIndex &br)
 {
     emit layoutChanged();
 }
+
+void QCalBaseModel::update(const QModelIndex &tl, const QModelIndex &br)
+{
+    emit dataChanged(tl,br);
+}
+

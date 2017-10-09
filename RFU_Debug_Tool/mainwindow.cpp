@@ -3,6 +3,7 @@
 #include <QMetaType>
 #include <QMessageBox>
 #include "qdeviceinitthread.h"
+#include "qiqcapthread.h"
 
 MainWindow *g_pMainW = NULL;
 
@@ -12,6 +13,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     qRegisterMetaType<CSP3301::RFUInfo>("CSP3301::RFUInfo");
+
+    m_iTabIdxRf = 0;
+    m_iTabIdxDMA = 0;
+    m_iTabIdxRfu = 0;
 
     m_pMainProg = new QProgressBar(ui->m_pStatusBar);
     m_pMainProg->setTextVisible(false);
@@ -33,7 +38,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->m_pMainTree->setRootIsDecorated(true);
     ui->m_pMainTree->clear();
     ui->m_pMainTree->setColumnCount(1);
-    ui->m_pMainTree->setStyleSheet("QTreeWidget{background:rgb(179,217,255)}QTreeWidget::item:selected{background:rgb(0,255,0);color:black}");
+    ui->m_pMainTree->setStyleSheet("QTreeWidget{background:rgb(179,217,255)}"
+                                   "QTreeWidget::item:selected{background:rgb(0,255,0);color:black}");
 
     QStringList strRoot;
     QStringList strChild;
@@ -102,7 +108,7 @@ MainWindow::MainWindow(QWidget *parent) :
     strChild.append(QString("发衰减器误差"));
     strChild.append(QString("发滤波器误差"));
     strChild.append(QString("收补偿滤波器"));
-    strChild.append(QString("收参考点平"));
+    strChild.append(QString("收参考电平"));
     strChild.append(QString("收衰减器误差"));
     strChild.append(QString("收滤波器误差"));
     itemChild_0.clear();
@@ -139,6 +145,13 @@ MainWindow::MainWindow(QWidget *parent) :
         m_pRfR1CAdvDlg[i] = new QRfR1CAdvDlg(ui->m_pMainTab);
         m_pRfR1CAdvDlg[i]->setSizePolicy(childDlgPolicy);
         childDlgLayout->addWidget(m_pRfR1CAdvDlg[i]);
+
+        m_pRfIQCapDlg[i] = new QIQCapDlg(ui->m_pMainTab);
+        m_pBbIQCapDlg[i] = new QIQCapDlg(ui->m_pMainTab);
+        m_pRfIQCapDlg[i]->setSizePolicy(childDlgPolicy);
+        m_pBbIQCapDlg[i]->setSizePolicy(childDlgPolicy);
+        childDlgLayout->addWidget(m_pRfIQCapDlg[i]);
+        childDlgLayout->addWidget(m_pBbIQCapDlg[i]);
 
         m_pCalR1CTxLOLeakDlg[i] = new QCalR1CTxLOLeakDlg(ui->m_pMainTab);
         m_pCalR1CTxLOLeakDlg[i]->setSizePolicy(childDlgPolicy);
@@ -194,6 +207,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this,SIGNAL(addRegList(int)),this,SLOT(updateRegTable(int)));
 
     connect(ui->actionInitialization,SIGNAL(triggered(bool)),this,SLOT(deviceInitialization()));
+    connect(ui->actionStart_All_IQ_Capture_R,SIGNAL(triggered(bool)),this,SLOT(startAllIQCapture()));
 }
 
 MainWindow::~MainWindow()
@@ -206,10 +220,28 @@ void MainWindow::deviceInitialization()
     g_pThread = new QDeviceInitThread(this);
     QDeviceInitThread *pThread = (QDeviceInitThread *)g_pThread;
     connect(pThread,&QDeviceInitThread::swhwVerReady,this,&MainWindow::showSwHwVer);
-    connect(pThread,&QDeviceInitThread::finished,pThread,&QObject::deleteLater);
-    connect(pThread,&QDeviceInitThread::initProg,this,&MainWindow::initProg);
-    connect(pThread,&QDeviceInitThread::setProgPos,this,&MainWindow::setProgPos);
     pThread->start();
+}
+
+void MainWindow::startAllIQCapture()
+{
+    THREAD_EXISTED_CHK();
+    QIQCapThread::Param param;
+    for (int i = 0;i < MAX_RF;i ++) {
+        param.m_pSP1401[i] = m_pSP3301->m_pSP1401.at(i);
+        if (m_pRfIQCapDlg[i]->isVisible() | m_pBbIQCapDlg[i]->isVisible())
+            param.m_bVisible[i] = true;
+        else
+            param.m_bVisible[i] = false;
+    }
+    g_pThread = new QIQCapThread(param,this);
+    QIQCapThread *pThread = (QIQCapThread *)g_pThread;
+    for (int i = 0;i < MAX_RF;i ++) {
+        connect(pThread,&QIQCapThread::updatePlot,m_pRfIQCapDlg[i],&QIQCapDlg::updatePlot);
+        connect(pThread,&QIQCapThread::updatePlot,m_pBbIQCapDlg[i],&QIQCapDlg::updatePlot);
+    }
+    connect(this,&MainWindow::tabIdxChanged,pThread,&QIQCapThread::tabIdxChanged);
+    g_pThread->start();
 }
 
 void MainWindow::showSwHwVer(const CSP3301::RFUInfo &Info,const char *pDriver)
@@ -224,6 +256,10 @@ void MainWindow::updateParamInChildDlg()
 {
     for (int8_t i = 0;i < MAX_RF;i ++) {
         m_pRfR1CDlg[i]->m_pSP1401 = m_pSP3301->m_pSP1401R1C[i];
+        m_pRfIQCapDlg[i]->m_pSP1401 = m_pSP3301->m_pSP1401[i];
+        m_pRfIQCapDlg[i]->m_pSP2401 = m_pSP3301->m_pSP2401[i];
+        m_pBbIQCapDlg[i]->m_pSP1401 = m_pSP3301->m_pSP1401[i];
+        m_pBbIQCapDlg[i]->m_pSP2401 = m_pSP3301->m_pSP2401[i];
         m_pCalR1CTxLOLeakDlg[i]->m_pSP1401 = m_pSP3301->m_pSP1401R1C[i];
         m_pCalR1CTxLOLeakDlg[i]->m_pSP2401 = m_pSP3301->m_pSP2401[i];
         m_pCalR1CTxLOLeakDlg[i]->m_pSP3501 = &SP3501;
@@ -246,6 +282,16 @@ void MainWindow::addRegListCallback()
     emit addRegList(iRow);
 }
 
+QString MainWindow::rfIdx2RfTabName(int iIdx)
+{
+    return QString("RF_%1").arg(iIdx);
+}
+
+QString MainWindow::rfIdx2BbTabName(int iIdx)
+{
+    return QString("k7-%1--->RF%2").arg((MAX_RF - 1 - iIdx)/2).arg(iIdx);
+}
+
 void MainWindow::initProg(const QString strName, int iPts)
 {
     QWinThread::g_strProc = strName;
@@ -257,9 +303,11 @@ void MainWindow::initProg(const QString strName, int iPts)
 void MainWindow::setProgPos(int iPos)
 {
     int iRange = m_pMainProg->maximum();
+    if (iPos > iRange)
+        return;
     QString strProgName = m_pProgName->text();
     QString strPercent = QString(" %%1").arg(double(iPos) / double(iRange) * 100.0);
-    int iPercentPos = strProgName.indexOf("%",0);
+    int iPercentPos = strProgName.indexOf("%",0) - 1;
     strProgName.replace(iPercentPos,4,strPercent);
     m_pProgName->setText(strProgName);
     m_pMainProg->setValue(iPos);
@@ -282,20 +330,34 @@ void MainWindow::on_m_pMainTree_itemClicked(QTreeWidgetItem *item, int column)
     QString strItem = item->text(column);
 
     ui->m_pMainTab->clear();
+    emit tabIdxChanged(-1);
     if (strItem == QString("Overview")) {
         if (item->parent()->text(0) == "R1C/D") {
             for (int8_t i = 0;i < MAX_RF;i ++)
-                ui->m_pMainTab->addTab(m_pRfR1CDlg[i],QString("RF_%1").arg(i));
+                ui->m_pMainTab->addTab(m_pRfR1CDlg[i],rfIdx2RfTabName(i));
         }
     }
     else if (strItem == QString("Advance")) {
         if (item->parent()->text(0) == "R1C/D") {
             for (int8_t i = 0;i < MAX_RF;i ++)
-                ui->m_pMainTab->addTab(m_pRfR1CAdvDlg[i],QString("RF_%1").arg(i));
+                ui->m_pMainTab->addTab(m_pRfR1CAdvDlg[i],rfIdx2RfTabName(i));
         }
     }
-    else if (strItem == QString("FPGA")) {
-        ui->m_pMainTab->addTab(m_pFPGADlg,QString("FPGA"));
+    else if (strItem == QString("IQ Capture")) {
+        if (item->parent()->text(0) == "RF Debug") {
+            for (int8_t i = 0;i < MAX_RF;i ++) {
+                ui->m_pMainTab->addTab(m_pRfIQCapDlg[i],rfIdx2RfTabName(i));
+                m_pRfIQCapDlg[i]->m_pSP2401->SetADSw(CSP2401R1A::FromRf);
+            }
+            on_m_pMainTab_tabBarClicked(int(m_iTabIdxRf));
+        }
+        else if (item->parent()->text(0) == "BB Debug") {
+            for (int8_t i = 0;i < MAX_RF;i ++) {
+                ui->m_pMainTab->addTab(m_pBbIQCapDlg[i],rfIdx2BbTabName(i));
+                m_pBbIQCapDlg[i]->m_pSP2401->SetADSw(CSP2401R1A::FromBb);
+            }
+            on_m_pMainTab_tabBarClicked(int(m_iTabIdxRf));
+        }
     }
     else if (strItem == tr("发本振泄漏")) {
         if (item->parent()->text(0) == "Calibration(R1C/D)") {
@@ -303,8 +365,10 @@ void MainWindow::on_m_pMainTree_itemClicked(QTreeWidgetItem *item, int column)
                 ui->m_pMainTab->addTab(m_pCalR1CTxLOLeakDlg[i],tr("RF_%1").arg(i));
         }
     }
-    else {
-        ui->m_pMainTab->clear();
+    ui->m_pMainTab->setCurrentIndex(int(m_iTabIdxRf));
+
+    if (strItem == QString("FPGA")) {
+        ui->m_pMainTab->addTab(m_pFPGADlg,QString("FPGA"));
     }
 }
 
@@ -316,4 +380,15 @@ void MainWindow::threadCheckBox(const QString strMsg)
 void MainWindow::threadErrorBox(const QString strMsg)
 {
     ::threadErrorBox(strMsg.toStdString().c_str());
+}
+
+void MainWindow::on_m_pMainTab_tabBarClicked(int index)
+{
+    ui->m_pMainTab->setCurrentIndex(index);
+    m_iTabIdxRf = int8_t(index);
+
+    if (m_pRfIQCapDlg[index]->isVisible() | m_pBbIQCapDlg[index]->isVisible())
+        emit tabIdxChanged(index);
+    else
+        emit tabIdxChanged(-1);
 }

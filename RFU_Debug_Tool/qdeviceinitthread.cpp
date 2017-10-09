@@ -32,4 +32,5 @@ void QDeviceInitThread::run()
     emit swhwVerReady(Info,pDriver);
     SET_PROG_POS(100);
     Log->AddMsgList(0,"booted");
+    emit done(true);
 }

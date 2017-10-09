@@ -4,6 +4,16 @@
 #include <QThread>
 #include "define.h"
 
+#define THREAD_TEST_CANCEL()    \
+    if (g_bStop) {              \
+        emit done();            \
+        return;                 \
+    }
+
+#define THREAD_ABORT()  \
+    emit done();        \
+    return;
+
 #define CAL_THREAD_TEST_CANCEL()    \
     if (g_bStop) {                  \
         Instrument.Close();         \
@@ -39,6 +49,7 @@
 #define THREAD_ERROR_BOX(msg)       \
     emit threadErrorBox(msg);
 
+class QCalBaseDlg;
 class QCalBaseModel;
 
 typedef struct CalParam {
@@ -48,7 +59,7 @@ public:
         M_Loopback = 1
     };
 
-    QDialog *m_pParent;
+    QCalBaseDlg *m_pParent;
     QCalBaseModel *m_pModel;
     ISP1401 *m_pSP1401;
     CSP2401R1A *m_pSP2401;
@@ -68,11 +79,11 @@ class QWinThread : public QThread
     Q_OBJECT
 
 public:
-    QWinThread(QObject *parent = Q_NULLPTR);
+    explicit QWinThread(QObject *parent = Q_NULLPTR);
 signals:
     void initProg(const QString strName,int iPts);
     void setProgPos(int iPos);
-    void done();
+    void done(bool bSuccess = true);
     void threadCheckBox(QString strMsg);
     void threadErrorBox(QString strmsg);
 public:
@@ -89,22 +100,12 @@ class QCalBaseThread : public QWinThread
 public:
     explicit QCalBaseThread(CalParam *pParam,QObject *parent = Q_NULLPTR);
 signals:
-    void update(const QModelIndex topleft,const QModelIndex rightbottom);
+    void update(const QModelIndex &tl,const QModelIndex &br);
 protected:
     CalParam m_CalParam;
 };
 
-class QExportBaseThread : public QWinThread
-{
-    Q_OBJECT
-
-public:
-    explicit QExportBaseThread(CalParam *pParam,QObject *parent = Q_NULLPTR);
-signals:
-    void update(const QModelIndex topleft,const QModelIndex rightbottom);
-protected:
-    CalParam m_CalParam;
-};
+typedef class QCalBaseThread QExportBaseThread;
 
 void threadCheckBox(const char *format,...);
 void threadErrorBox(const char *format,...);

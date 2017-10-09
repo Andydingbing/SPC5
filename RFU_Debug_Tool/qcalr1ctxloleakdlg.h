@@ -1,7 +1,7 @@
 #ifndef QCALR1CTXLOLEAKDLG_H
 #define QCALR1CTXLOLEAKDLG_H
 
-#include "qcalr1cbasedlg.h"
+#include "qcalbasedlg.h"
 #include "qr1ctxloleakmodel.h"
 #include "libSP1401.h"
 

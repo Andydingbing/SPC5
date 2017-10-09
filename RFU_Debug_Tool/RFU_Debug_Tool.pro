@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT += core gui
+QT += charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -18,12 +19,14 @@ INCLUDEPATH += ../include \
                ../libSP1401 \
                ../libSP2401 \
                ../libSP3301 \
-               ../libSP3501
+               ../libSP3501 \
+               ../lib/qwt/qwt-6.1.3/src
 
 CONFIG(debug,debug|release) {
     win32 {
         DEFINES += _DEBUG
         LIBS += -L$$PWD/../x64/debug/
+        LIBS += $$PWD/../lib/qwt/qwt-6.1.3/lib/libqwtd.dll.a
     }
 
     OBJECTS_DIR = $$PWD/x64/debug
@@ -31,6 +34,7 @@ CONFIG(debug,debug|release) {
 } else {
     win32 {
         LIBS += -L$$PWD/../x64/release/
+        LIBS += $$PWD/../lib/qwt/qwt-6.1.3/lib/libqwt.dll.a
     }
 
     OBJECTS_DIR = $$PWD/x64/release
@@ -49,6 +53,7 @@ win32 {
     LIBS += $$PWD/../lib/visa64.lib \
             $$PWD/../lib/windrvr/amd64/wdapi1020.lib \
             $$PWD/../lib/libpthreadGC2.a
+
     DEFINES += _WINDOWS \
                _WIN64
 }
@@ -80,7 +85,9 @@ SOURCES += \
     qrdttableview.cpp \
     qmsglogmodel.cpp \
     qreglogmodel.cpp \
-    qcalbasemodel.cpp
+    qcalbasemodel.cpp \
+    qiqcapdlg.cpp \
+    qiqcapthread.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -91,17 +98,20 @@ HEADERS += \
     qcalr1ctxloleakdlg.h \
     qfpgadlg.h \
     qattachthreaddlg.h \
-    qcalr1cbasedlg.h \
     qr1ctxloleakmodel.h \
     qcalr1ctxloleakthread.h \
     qrdttableview.h \
     qmsglogmodel.h \
     qreglogmodel.h \
-    qcalbasemodel.h
+    qcalbasemodel.h \
+    qiqcapdlg.h \
+    qiqcapthread.h \
+    qcalbasedlg.h
 
 FORMS += \
         mainwindow.ui \
     qrfr1cdlg.ui \
     qrfr1cadvdlg.ui \
     qcalr1ctxloleakdlg.ui \
-    qfpgadlg.ui
+    qfpgadlg.ui \
+    qiqcapdlg.ui

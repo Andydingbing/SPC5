@@ -10,7 +10,8 @@ class QCalBaseModel : public QAbstractTableModel
 public:
     QCalBaseModel(QObject *parent = Q_NULLPTR);
 public slots:
-    void update(const QModelIndex topleft,const QModelIndex rightbottom);
+    void reset(const QModelIndex &tl, const QModelIndex &br);
+    void update(const QModelIndex &tl, const QModelIndex &br);
 };
 
 #endif // QCALBASEMODEL_H

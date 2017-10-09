@@ -55,25 +55,22 @@ public:
 		_100MHz,
 		_160MHz
 	};
-	enum IQCaptureSrcs {	
-		IQCapsrcFreeRun = 0x00,
-		IQCapsrcRstMkr  = 0x09,
-		IQCapsrcMkr1	= 0x0a,
-		IQCapsrcMkr2	= 0x0b,
-		IQCapsrcMkr3	= 0x0c,
-		IQCapsrcMkr4	= 0x0d,
-		IQCapsrcUsrMkr	= 0x0e,
-		IQCapsrcETrig	= 0x11,
-		IQCapsrcETrig1	= 0x12,
-		IQCapsrcETrig2	= 0x13,
-		IQCapsrcETrig3	= 0x14,
-		IQCapsrcETrig4	= 0x15,
-		IQCapsrcIFPwr	= 0x21
-	};
-	enum PowerMeasSrcs {
+    enum IQCapSrcs {
 		PowerMeasFreeRun = 0x00,
+        IQCapsrcRstMkr   = 0x09,
+        IQCapsrcMkr1	 = 0x0a,
+        IQCapsrcMkr2	 = 0x0b,
+        IQCapsrcMkr3	 = 0x0c,
+        IQCapsrcMkr4	 = 0x0d,
+        IQCapsrcUsrMkr	 = 0x0e,
+        IQCapsrcETrig	 = 0x11,
+        IQCapsrcETrig1	 = 0x12,
+        IQCapsrcETrig2	 = 0x13,
+        IQCapsrcETrig3	 = 0x14,
+        IQCapsrcETrig4	 = 0x15,
 		PowerMeasIFPower = 0x21,
 	};
+#define PowerMeasSrcs IQCapSrcs
 	enum PowerMeasState {
 		IDLE	= 0x0,
 		WFT		= 0x1,			//waiting for trigger
@@ -147,14 +144,10 @@ public:
 	virtual int32_t  ArbStop();
 
 	virtual int32_t SetNListIQCapTrigOffset(uint32_t uiSamples);
-	virtual int32_t SetNListIQCapCapOffset(uint32_t uiSamples);
-//	virtual int32_t SetIQCapSrc(IQCaptureSrcs Src,bool bPosedge);
-//	virtual int32_t SetIQCapTimeout(uint32_t us);
-//	virtual int32_t GetIQCapTimeout(bool &bTimeout);
+    virtual int32_t SetNListIQCapCapOffset(uint32_t uiSamples);
 	virtual int32_t SetIQCapSamples(uint32_t uiSamples);
 	virtual int32_t GetIQCapSamples(uint32_t &uiSamples);
 	virtual int32_t SetIQCapTrigGap(uint32_t us);
-//	virtual int32_t SetIQCapTrigThreshold(double IFPower);
 //	virtual int32_t GetIQCapState(IQCaptureState &State);
 //	virtual int32_t GetIQCapPeak(double &Power);
 //	virtual int32_t GetIQCapPower(double &Power);
@@ -163,6 +156,11 @@ public:
 	virtual int32_t IQCapAbort();
 	virtual int32_t IQDump2Buf(int16_t *pI,int16_t *pQ,uint32_t uiSamples);
 	virtual int32_t IQDump2File(char *pPath,uint32_t uiSamples);
+
+#define SetIQCapSrc             SetPowerMeasSrc
+#define SetIQCapTimeout         SetPowerMeasTimeout
+#define GetIQCapTimeout         GetPowerMeasTimeout
+#define SetIQCapTrigThreshold   SetPowerMeasTrigThreshold
 
 	virtual int32_t SetPowerMeasSrc(PowerMeasSrcs Src,bool bPosedge);
 	virtual int32_t SetPowerMeasTimeout(uint32_t us);

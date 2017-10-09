@@ -488,10 +488,10 @@ int32_t ISP1401::ArbLoad(char *pPath)
             RFU_K7_REG_2(0x0507,0x0607).adr = uiDDRAddr;
             RFU_K7_W_2(0x0507,0x0607);
 
-            fread(DDR.GetUsrSpc(),sizeof(ArbReader::Data_t),uiSplsTrsing,fp);
+            fread(DDR->GetUsrSpc(),sizeof(ArbReader::Data_t),uiSplsTrsing,fp);
 
             Log->stdprintf("dma%d ready:samples:%d\n",uiCnt,uiSplsTrsing);
-            INT_CHECK(DDR.FpgaRead(m_pK7,DDR.GetUsrSpc(),uiSplsTrsing,NULL));
+            INT_CHECK(DDR->FpgaRead(m_pK7,DDR->GetUsrSpc(),uiSplsTrsing,NULL));
             Log->stdprintf("dma%d done\n",uiCnt);
 
             uiSplsTotalTrsed += uiSplsTrsing;
@@ -596,7 +596,7 @@ int32_t ISP1401::IQCapStart()
 
     RFU_K7_OP(0x10c4);
 
-    INT_CHECK(DDR.WStart(m_pK7));
+    INT_CHECK(DDR->WStart(m_pK7));
     return 0;
 }
 
@@ -673,7 +673,7 @@ int32_t ISP1401::IQCap()
     //Reserved
 
     INT_CHECK(IQCapAbort());
-    INT_CHECK(DDR.Reset(m_pK7));
+    INT_CHECK(DDR->Reset(m_pK7));
     INT_CHECK(IQCapStart());
 
     double dTimeStar = Log->GetTimeStamp();
@@ -864,7 +864,7 @@ int32_t ISP1401::GetADS5474Manual(int64_t &iAD)
 
     INT_CHECK(SetIQCapSamples(4096));
     INT_CHECK(IQCap());
-    INT_CHECK(DDR.IQToBuf(m_pCalFile->GetRfIdx(),I,Q,4096));
+    INT_CHECK(DDR->IQToBuf(m_pCalFile->GetRfIdx(),I,Q,4096));
 
     for (int32_t i = 0;i < 4096;i ++) {
         dSumI += pow((double)I[i],2);

@@ -403,11 +403,17 @@ void QExportR1CTxLOLeakThread::run()
     QR1CTxLOLeakModel *pModel = (QR1CTxLOLeakModel *)(m_CalParam.m_pModel);
     vector<TxLOLeakageTableR1C::DataF> *pMap = ((QR1CTxLOLeakModel *)(m_CalParam.m_pModel))->m_pData;
 
-    pSP1401->GetCalFile()->Map2Buf(ICalFile::TxLoLeakage);
+//    pSP1401->GetCalFile()->Map2Buf(ICalFile::TxLoLeakage);
     for (uint64_t uiFreq = RF_TX_FREQ_STAR;uiFreq <= RF_TX_FREQ_STOP;uiFreq += RF_TX_FREQ_STEP_CALLED) {
-        pSP1401->GetCalFile()->m_pTxLOLeak->Get(uiFreq,&(pMap->at(i)));
+//        pSP1401->GetCalFile()->m_pTxLOLeak->Get(uiFreq,&(pMap->at(i)));
+        pMap->at(i).m_bUseSA = true;
+        pMap->at(i).m_dPower = double(i);
+        pMap->at(i).m_uiFreq = uiFreq;
         emit update(pModel->index(i,0),pModel->index(i,9));
         i ++;
+        msleep(100);
+        SET_PROG_POS(i);
     }
     SET_PROG_POS(100);
+    THREAD_ABORT();
 }

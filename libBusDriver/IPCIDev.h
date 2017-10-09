@@ -4,6 +4,7 @@
 #define INT_CHECK(func) if (int ret = func) {return ret;}
 #define INT_CHECKB(func) if (int ret = func) {return false;}
 #define INT_CHECKV(func) if (int ret = func) {return;}
+#define PTR_CHECKV(ptr) if (!ptr) return;
 
 #include <vector>
 #include <string>

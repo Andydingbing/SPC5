@@ -19,8 +19,8 @@ void RxFilterOffTableR1C::Map2Mem()
 	uint32_t uiIdxF = 0,uiIdxM = 0;
 	uint64_t uiFreq = 0;
     for (uiIdxM = 0;uiIdxM < RF_RX_FREQ_PTS_CALLED_R1C;uiIdxM ++) {
-        uiFreq = (uint64_t)RF_TX_FREQ_STAR + uiIdxM * (uint64_t)RF_TX_FREQ_STEP_CALLED;
-        uiIdxF = (uint32_t)SERIE_INDEX(uiFreq,RF_TX_FREQ_STAR,RF_TX_FREQ_STEP_INFILE);
+        uiFreq = (uint64_t)RF_RX_FREQ_STAR + uiIdxM * (uint64_t)RF_RX_FREQ_STEP_CALLED_R1C;
+        uiIdxF = (uint32_t)SERIE_INDEX(uiFreq,RF_RX_FREQ_STAR,RF_RX_FREQ_STEP_INFILE);
         for (uint32_t i = 0;i < ARRAY_SIZE(m_pDataM[uiIdxM].m_iOffset);i ++)
 			m_pDataM[uiIdxM].m_iOffset[i] = (int32_t)(m_pDataF[uiIdxF].m_iOffset[i]);
 		m_pDataM[uiIdxM].m_fTemp5 = (float)(m_pDataF[uiIdxF].m_dTemp[1]);	//temp4,5(used),6,7

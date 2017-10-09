@@ -31,24 +31,11 @@ QCalBaseThread::QCalBaseThread(CalParam *pParam, QObject *parent) : QWinThread(p
     m_CalParam.m_bCalX9119 = pParam->m_bCalX9119;
     m_CalParam.m_LOLeakMethod = pParam->m_LOLeakMethod;
 
-    QAttachThreadDlg *pParent = (QAttachThreadDlg *)(m_CalParam.m_pParent);
+    QCalBaseDlg *pParent = m_CalParam.m_pParent;
     QCalBaseModel *pModel = m_CalParam.m_pModel;
-    connect(this,&QCalBaseThread::done,pParent,&QAttachThreadDlg::done);
+    connect(this,&QCalBaseThread::update,pParent,&QCalBaseDlg::update);
+    connect(this,&QCalBaseThread::done,pParent,&QCalBaseDlg::done);
     connect(this,&QCalBaseThread::update,pModel,&QCalBaseModel::update);
-}
-
-QExportBaseThread::QExportBaseThread(CalParam *pParam, QObject *parent) : QWinThread(parent)
-{
-    m_CalParam.m_pModel = pParam->m_pModel;
-    m_CalParam.m_pSP1401 = pParam->m_pSP1401;
-    m_CalParam.m_pSP2401 = pParam->m_pSP2401;
-    m_CalParam.m_pSP3501 = pParam->m_pSP3501;
-    m_CalParam.m_strRfFreqStar = pParam->m_strRfFreqStar;
-    m_CalParam.m_strRfFreqStop = pParam->m_strRfFreqStop;
-    m_CalParam.m_strRfFreqStep = pParam->m_strRfFreqStep;
-    m_CalParam.m_strIfFreqStar = pParam->m_strIfFreqStar;
-    m_CalParam.m_strIfFreqStop = pParam->m_strIfFreqStop;
-    m_CalParam.m_strIfFreqStep = pParam->m_strIfFreqStep;
 }
 
 void threadCheckBox(const char *format,...)

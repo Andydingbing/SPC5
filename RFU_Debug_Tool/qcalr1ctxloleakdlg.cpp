@@ -43,7 +43,7 @@ QCalR1CTxLOLeakDlg::QCalR1CTxLOLeakDlg(QWidget *parent) :
     addToPauseWidget(ui->m_PBPaus);
     addToRunningWidget(ui->m_PBCont);
     widgetResume();
-    connect(this,SIGNAL(updateShowWidget(const QModelIndex,const QModelIndex)),m_pModel,SLOT(update(const QModelIndex,const QModelIndex)));
+    connect(this,&QCalR1CTxLOLeakDlg::reset,m_pModel,&QCalBaseModel::reset);
 }
 
 QCalR1CTxLOLeakDlg::~QCalR1CTxLOLeakDlg()
@@ -59,7 +59,7 @@ void QCalR1CTxLOLeakDlg::resetShowWidget(CalParam *pParam)
     int iPts = freq2array(pParam->m_strRfFreqStar,pParam->m_strRfFreqStop,pParam->m_strRfFreqStep);
     for (int32_t i = 0;i < iPts;i ++)
         pModel->m_pData->push_back(Data);
-    emit updateShowWidget(pModel->index(0,0),pModel->index(iPts - 1,9));
+    emit reset(pModel->index(0,0),pModel->index(iPts - 1,9));
     ui->m_TVData->selectRow(0);
 }
 
@@ -79,9 +79,9 @@ CalParam QCalR1CTxLOLeakDlg::ui2CalParam()
     return p;
 }
 
-void QCalR1CTxLOLeakDlg::update(const QModelIndex topleft, const QModelIndex rightbottom)
+void QCalR1CTxLOLeakDlg::update(const QModelIndex &tl,const QModelIndex &br)
 {
-    ui->m_TVData->selectRow(topleft.row());
+    ui->m_TVData->selectRow(tl.row());
 }
 
 void QCalR1CTxLOLeakDlg::on_m_PBStar_clicked()

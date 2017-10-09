@@ -13,6 +13,7 @@
 
 #define CLR_PROTECT_EYE QColor(199,237,204)
 #define CLR_ERROR       QColor(255,150,150)
+#define CLR_SA_BLGD     QColor(63,49,44)
 
 #define STRING_FREQ_TIPS QString("e.g. 2G,2g,2000M,2000000000")
 

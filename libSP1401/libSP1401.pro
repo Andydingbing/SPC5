@@ -12,7 +12,8 @@ CONFIG += shared
 
 INCLUDEPATH += ../include \
                ../libLog \
-               ../libBusDriver
+               ../libBusDriver \
+               ../lib/fftw-3.3.4/fftw-3.3.4-dll64
 
 CONFIG(debug,debug|release) {
     win32 {
@@ -33,6 +34,7 @@ CONFIG(debug,debug|release) {
 
 LIBS += -llibBusDriver.dll
 LIBS += -llibLog.dll
+LIBS += $$PWD/../lib/fftw-3.3.4/fftw-3.3.4-dll64/libfftw3-3.lib
 
 win32 {
     LIBS += $$PWD/../lib/visa64.lib \

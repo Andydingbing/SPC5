@@ -33,10 +33,10 @@ DMAMgr &DMAMgr::operator = (DMAMgr &Mgr)
 	return Mgr;
 }
 
-DMAMgr &DMAMgr::Instance()
+DMAMgr *DMAMgr::Instance()
 {
-	static DMAMgr g_Mgr;
-	return g_Mgr;
+    static DMAMgr *g_pMgr = new DMAMgr;
+    return g_pMgr;
 }
 
 int32_t DMAMgr::FpgaRead(viPCIDev *pK7,uint32_t *pBuf,uint32_t uiLength,float *pTime)
