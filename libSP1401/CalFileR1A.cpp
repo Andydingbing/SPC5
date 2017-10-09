@@ -254,7 +254,7 @@ int32_t CalFileR1A::GetItemSizeV0002(ICalFile::CalItem Item,uint32_t &dwPos,uint
 	int32_t iItem = (int32_t)Item;
 
 	if (ICalFile::X9119 == Item) {
-		uiSize = Info.m_pItemInfo[iItem].m_uiSize * Info.m_pItemInfo[iItem].m_uiPoint;
+        uiSize = sizeof(X9119TableR1A::Data) * 1;
 		dwPos = 0;
 		return 0;
 	}
@@ -277,7 +277,7 @@ int32_t CalFileR1A::GetItemSizeV0004(ICalFile::CalItem Item,uint32_t &dwPos,uint
     INT_CHECK(Load(Info));
 
 	if (ICalFile::X9119 == Item) {
-		uiSize = Info.m_pItemInfo[(int32_t)(ICalFile::X9119)].m_uiSize * Info.m_pItemInfo[(int32_t)(ICalFile::X9119)].m_uiPoint;
+        uiSize = sizeof(X9119TableR1A::Data) * 1;
 		dwPos = 0;
 		return 0;
 	}

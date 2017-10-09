@@ -439,6 +439,7 @@ int32_t CSP3301::RF_SetTxFreq(uint32_t uiRfIdx,uint64_t uiFreq)
     INT_CHECK(pSP2401->SetDUCDDS(dFreqDUC));
 	m_uiTxFreq[uiRfIdx] = uiFreq;
     INT_CHECK(RF_SetTxPower(uiRfIdx,(float)m_dTxPower[uiRfIdx]));
+    INT_CHECK(RF_SetTxBW(uiRfIdx,pSP1401->GetCalFile()->GetBw()));
 	return 0;
 }
 
@@ -672,6 +673,7 @@ int32_t CSP3301::RF_SetRxFreq(uint32_t uiRfIdx,uint64_t uiFreq)
     INT_CHECK(pSP2401->SetDDC(dFreqDDC));
 	m_uiRxFreq[uiRfIdx] = uiFreq;
     INT_CHECK(RF_SetRxLevel(uiRfIdx,m_dReff[uiRfIdx]));
+    INT_CHECK(RF_SetRxBW(uiRfIdx,pSP1401->GetCalFile()->GetBw()));
 	return 0;
 }
 
@@ -826,6 +828,23 @@ int32_t CSP3301::RF_GetTemp(uint32_t uiRfIdx,double &dTxTemp,double &dRxTemp)
 			return 0;
 							}
 		case ISP1401::R1C : {
+            double dTxT[4] = {0.0,0.0,0.0,0.0};
+            double dRxT[4] = {0.0,0.0,0.0,0.0};
+            ((CSP1401R1C *)pSP1401)->GetTemp4TxLO2(&dTxT[0]);
+            ((CSP1401R1C *)pSP1401)->GetTemp5TxLO1(&dTxT[1]);
+            ((CSP1401R1C *)pSP1401)->GetTemp6TxPA4(&dTxT[2]);
+            ((CSP1401R1C *)pSP1401)->GetTemp7TxPA3(&dTxT[3]);
+            ((CSP1401R1C *)pSP1401)->GetTemp0RxLO2(&dRxT[0]);
+            ((CSP1401R1C *)pSP1401)->GetTemp1RxLNA(&dRxT[1]);
+            ((CSP1401R1C *)pSP1401)->GetTemp2RxLO1(&dRxT[2]);
+            ((CSP1401R1C *)pSP1401)->GetTemp3RxPA1(&dRxT[3]);
+
+            for (int32_t i = 0;i < 4;i ++) {
+                dTxTemp += dTxT[i];
+                dRxTemp += dRxT[i];
+            }
+            dTxTemp /= 4.0;
+            dRxTemp /= 4.0;
 			return 0;
 							}
 		default:return 0;
