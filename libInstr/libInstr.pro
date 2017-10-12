@@ -24,18 +24,18 @@ win32 {
 
 CONFIG(debug,debug|release) {
     win32 {
-        LIBS += -L$$PWD/../x64/debug/
+        LIBS += -L$$PWD/../Qt/x64/debug/
     }
 
     OBJECTS_DIR = $$PWD/x64/debug
-    DESTDIR = ../x64/debug
+    DESTDIR = ../Qt/x64/debug
 } else {
     win32 {
-        LIBS += -L$$PWD/../x64/release/
+        LIBS += -L$$PWD/../Qt/x64/release/
     }
 
     OBJECTS_DIR = $$PWD/x64/release
-    DESTDIR = ../x64/release
+    DESTDIR = ../Qt/x64/release
 }
 
 DEFINES += LIBINSTR_LIBRARY

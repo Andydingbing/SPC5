@@ -3,7 +3,7 @@
 
 #define CONFIG_FILE_PATH "config.ini"
 
-#include "stdint.h"
+#include "stdint_common.h"
 
 // 1 address
 // union reg0x....{

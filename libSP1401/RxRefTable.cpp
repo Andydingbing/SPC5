@@ -248,7 +248,15 @@ RxRefOPTableR1C::DataF::DataF()
         for (uint32_t j = 0;j < ARRAY_SIZE(m_State[i].m_dTemp);j ++)
 			m_State[i].m_dTemp[j] = 0.0;
 	}
-    m_EndTime = {0,0,0,0,0,0,0,0,0};
+	m_EndTime.tm_sec = 0;
+	m_EndTime.tm_min = 0;
+	m_EndTime.tm_hour = 0;
+	m_EndTime.tm_mday = 0;
+	m_EndTime.tm_mon = 0;
+	m_EndTime.tm_year = 0;
+	m_EndTime.tm_wday = 0;
+	m_EndTime.tm_yday = 0;
+	m_EndTime.tm_isdst = 0;
 }
 
 void RxRefOPTableR1C::Map2Mem()
@@ -525,7 +533,15 @@ RxRefIOTableR1C::DataF::DataF()
         for (uint32_t j = 0;j < ARRAY_SIZE(m_State[i].m_dTemp);j ++)
 			m_State[i].m_dTemp[j] = 0.0;
 	}
-    m_EndTime = {0,0,0,0,0,0,0,0,0};
+	m_EndTime.tm_sec = 0;
+	m_EndTime.tm_min = 0;
+	m_EndTime.tm_hour = 0;
+	m_EndTime.tm_mday = 0;
+	m_EndTime.tm_mon = 0;
+	m_EndTime.tm_year = 0;
+	m_EndTime.tm_wday = 0;
+	m_EndTime.tm_yday = 0;
+	m_EndTime.tm_isdst = 0;
 }
 
 void RxRefIOTableR1C::Map2Mem()

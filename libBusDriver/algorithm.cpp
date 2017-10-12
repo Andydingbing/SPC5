@@ -115,9 +115,14 @@ int32_t freq2str(uint64_t freq, char *str_freq, int32_t digit)
     return freq2str((double)freq,str_freq,digit);
 }
 
+int32_t freq2str(int32_t freq, char *str_freq, int32_t digit)
+{
+	return freq2str((double)freq,str_freq,digit);
+}
+
 int32_t freq2str(int64_t freq, char *str_freq, int32_t digit)
 {
-    return freq2str(double(freq),str_freq,digit);
+    return freq2str((double)freq,str_freq,digit);
 }
 
 int32_t byte2str(uint32_t byte, char *str_byte, int32_t digit)
@@ -150,6 +155,18 @@ int32_t byte2str(uint32_t byte, char *str_byte, int32_t digit)
     if (0 != unit[0])
         strcat(str_byte,unit);
     return 0;
+}
+
+int32_t coef2str(int16_t *coef,int32_t order,char *buf)
+{
+	char szCoef[32] = {0};
+
+	for (int32_t i = 0;i < order;i ++) {
+		sprintf(szCoef,"%d,",coef[i]);
+		strcat(buf,szCoef);
+	}
+	buf[strlen(buf)] = '\0';
+	return 0;
 }
 
 int32_t strsections(const char *pin)

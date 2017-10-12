@@ -1,6 +1,6 @@
 #ifndef __IQ_BUF_MGR_H__
 #define __IQ_BUF_MGR_H__
-#include "stdint.h"
+#include "stdint_common.h"
 
 #define IQBUF CIQBufMgr::Instance()
 

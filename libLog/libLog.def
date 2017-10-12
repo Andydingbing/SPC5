@@ -1,15 +1,14 @@
-LIBRARY      "libLog"
+LIBRARY		"libLog"
 EXPORTS
-    ; CLog
-    ??0MsgLog@@QEAA@XZ
+	??0MsgLog@@QEAA@XZ
 	??0RegLog@@QEAA@XZ
 	??0CLog@@QEAA@XZ
 	??1CLog@@QEAA@XZ
-	?Instance@CLog@@SAAEAV1@XZ
-	?Init@CLog@@QEAAXXZ
+	?Instance@CLog@@SAPEAV1@XZ
+	?Init@CLog@@QEAAXXZ  
+	?Init@CLog@@QEAAXPEAV?$vector@UMsgLog@@V?$allocator@UMsgLog@@@std@@@std@@PEAV?$vector@URegLog@@V?$allocator@URegLog@@@std@@@3@@Z
 	?Init@CLog@@QEAAXPEAUHWND__@@@Z
 	?Init@CLog@@QEAAXV?$vector@PEAUHWND__@@V?$allocator@PEAUHWND__@@@std@@@std@@@Z
-	?Init@CLog@@QEAAXPEAV?$vector@UMsgLog@@V?$allocator@UMsgLog@@@std@@@std@@PEAV?$vector@URegLog@@V?$allocator@URegLog@@@std@@@3@@Z
 	?Init@CLog@@QEAAXPEAUHWND__@@PEAV?$vector@UMsgLog@@V?$allocator@UMsgLog@@@std@@@std@@PEAV?$vector@URegLog@@V?$allocator@URegLog@@@std@@@4@@Z
 	?Init@CLog@@QEAAXV?$vector@PEAUHWND__@@V?$allocator@PEAUHWND__@@@std@@@std@@PEAV?$vector@UMsgLog@@V?$allocator@UMsgLog@@@std@@@3@PEAV?$vector@URegLog@@V?$allocator@URegLog@@@std@@@3@@Z
 	?GetMsgLog@CLog@@QEAAPEAV?$vector@UMsgLog@@V?$allocator@UMsgLog@@@std@@@std@@XZ
@@ -26,6 +25,6 @@ EXPORTS
 	?AddMsgList@CLog@@UEAAHPEBDZZ
 	?AddMsgList@CLog@@UEAAHHPEBDZZ
 	?AddRegList@CLog@@UEAAHHPEADHII@Z
-	?CseSetLastError@CLog@@QEAAXPEBDZZ
-	?CseSetLastError@CLog@@QEAAXHPEBDZZ
-	?CseGetLastError@CLog@@QEAAPEADXZ
+	?SetLastError@CLog@@QEAAXPEBDZZ
+	?SetLastError@CLog@@QEAAXHPEBDZZ
+	?GetLastError@CLog@@QEAAPEADXZ

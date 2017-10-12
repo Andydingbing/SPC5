@@ -1,7 +1,9 @@
 #include "viMemIO.h"
 #include "viPCIDev.h"
 
-#ifdef __GNUC__
+#ifdef _MSC_VER
+#pragma comment(lib,"visa64.lib")
+#elif defined __GNUC__
 #pragma GCC diagnostic ignored  "-Wunused-parameter"
 #endif
 

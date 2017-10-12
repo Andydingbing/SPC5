@@ -23,10 +23,10 @@ win32 {
 
 CONFIG(debug,debug|release) {
     OBJECTS_DIR = $$PWD/x64/debug
-    DESTDIR = ../x64/debug
+    DESTDIR = ../Qt/x64/debug
 } else {
     OBJECTS_DIR = $$PWD/x64/release
-    DESTDIR = ../x64/release
+    DESTDIR = ../Qt/x64/release
 }
 
 DEFINES += LIBBUSDRIVER_LIBRARY

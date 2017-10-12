@@ -2,7 +2,7 @@
 #define __VI_MEMIO_H__
 
 #include "visa.h"
-#include "stdint.h"
+#include "stdint_common.h"
 
 class viMemIO
 {

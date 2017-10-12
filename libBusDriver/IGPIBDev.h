@@ -9,7 +9,7 @@
 #pragma GCC diagnostic ignored  "-Wunused-variable"
 #endif
 
-#include "stdint.h"
+#include "stdint_common.h"
 #include "visa.h"
 
 class IGPIBDev

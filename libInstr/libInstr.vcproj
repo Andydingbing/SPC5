@@ -133,7 +133,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\lib;..\x64\Debug"
+				AdditionalLibraryDirectories="..\lib;..\MFC\x64\Debug"
 				ModuleDefinitionFile="libInstr.def"
 				GenerateDebugInformation="true"
 				GenerateMapFile="true"
@@ -278,7 +278,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\lib;..\x64\Release"
+				AdditionalLibraryDirectories="..\lib;..\MFC\x64\Release"
 				ModuleDefinitionFile="libInstr.def"
 				GenerateMapFile="true"
 				MapFileName="libInstr.map"

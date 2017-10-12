@@ -1,5 +1,6 @@
 #include "CalFileR1A.h"
 #include <io.h>
+#include <direct.h>
 
 typedef int32_t (CalFileR1A::*GetItemSizeVxxxx)(ICalFile::CalItem,uint32_t &,uint32_t &);
 
@@ -134,7 +135,7 @@ int32_t CalFileR1A::Create()
 
     FILE *fp;
     if (_access("C:\\CSECal",0) == -1) {
-        if (mkdir("C:\\CSECal") == -1) {
+        if (_mkdir("C:\\CSECal") == -1) {
             Log->SetLastError("%s:%s:%d(%d)",__FILE__,__FUNCTION__,__LINE__,errno);
             return -1;
         }

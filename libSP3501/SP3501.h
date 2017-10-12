@@ -3,7 +3,7 @@
 
 #define SP3501 CSP3501::Instance()
 
-#include "stdint.h"
+#include "stdint_common.h"
 #include "libLog.h"
 #include "libBusDriver.h"
 

@@ -308,7 +308,15 @@ TxPowerOPTableR1C::DataF::DataF()
 	m_dAtt3 = 1.0;
     for (uint32_t i = 0;i < ARRAY_SIZE(m_dTemp);i ++)
 		m_dTemp[i] = 0.0;
-    m_EndTime = {0,0,0,0,0,0,0,0,0};
+	m_EndTime.tm_sec = 0;
+	m_EndTime.tm_min = 0;
+	m_EndTime.tm_hour = 0;
+	m_EndTime.tm_mday = 0;
+	m_EndTime.tm_mon = 0;
+	m_EndTime.tm_year = 0;
+	m_EndTime.tm_wday = 0;
+	m_EndTime.tm_yday = 0;
+	m_EndTime.tm_isdst = 0;
 }
 
 void TxPowerOPTableR1C::Map2Mem()
@@ -570,7 +578,15 @@ TxPowerIOTableR1C::DataF::DataF()
 	m_dAtt3 = 1.0;
     for (uint32_t i = 0;i < ARRAY_SIZE(m_dTemp);i ++)
 		m_dTemp[i] = 0.0;
-    m_EndTime = {0,0,0,0,0,0,0,0,0};
+	m_EndTime.tm_sec = 0;
+	m_EndTime.tm_min = 0;
+	m_EndTime.tm_hour = 0;
+	m_EndTime.tm_mday = 0;
+	m_EndTime.tm_mon = 0;
+	m_EndTime.tm_year = 0;
+	m_EndTime.tm_wday = 0;
+	m_EndTime.tm_yday = 0;
+	m_EndTime.tm_isdst = 0;
 }
 
 void TxPowerIOTableR1C::Map2Mem()

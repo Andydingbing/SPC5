@@ -116,11 +116,12 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\include;..\include\WinDriver"
-				RuntimeLibrary="2"
+				AdditionalIncludeDirectories="..\include;..\include\windrvr"
+				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
+				CallingConvention="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -133,7 +134,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\lib;..\lib\WinDriver\amd64"
+				AdditionalLibraryDirectories="..\lib;..\lib\windrvr\amd64"
 				ModuleDefinitionFile="libBusDriver.def"
 				GenerateDebugInformation="true"
 				GenerateMapFile="true"
@@ -263,11 +264,12 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\include;..\include\WinDriver"
+				AdditionalIncludeDirectories="..\include;..\include\windrvr"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
+				CallingConvention="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -280,7 +282,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\lib;..\lib\WinDriver\amd64"
+				AdditionalLibraryDirectories="..\lib;..\lib\windrvr\amd64"
 				ModuleDefinitionFile="libBusDriver.def"
 				GenerateMapFile="true"
 				MapFileName="libBusDriver.map"
@@ -319,6 +321,22 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\algorithm.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FractionFloat.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\GeneralIniFile.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\GeneralInteger.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\IGPIBDev.cpp"
 				>
 			</File>
@@ -344,6 +362,22 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\algorithm.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FractionFloat.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GeneralIniFile.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GeneralInteger.h"
+				>
+			</File>
 			<File
 				RelativePath=".\IGPIBDev.h"
 				>

@@ -8,6 +8,7 @@
 #define MAX_RFU 5
 #define MAX_RF	4
 #define MAX_CEU 2
+#define MAX_BW	160000000LL
 
 #define ADF5355_FREQ_SPACE	6250
 #define RF_FREQ_SPACE		100000

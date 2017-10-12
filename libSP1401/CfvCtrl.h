@@ -1,6 +1,6 @@
 #ifndef __CFVCTRL_R1A_H__
 #define __CFVCTRL_R1A_H__
-#include "stdint.h"
+#include "stdint_common.h"
 /*all function names consist of "ForConv..." means converting the calibration file to the next version
   while all names consist of "BckConv..." means converting the file to the previous version*/
 /*all backward converting functions just return zero at the version right now

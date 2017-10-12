@@ -1,35 +1,49 @@
 #ifndef __LOG_H__
 #define __LOG_H__
 
-#include <stdint.h>
+//#ifndef GUI_MFC
+//#define GUI_MFC
+//#endif
+
+#ifndef _WINDOWS
+#define _WINDOWS
+#endif
+
+#ifndef _WIN64
+#define _WIN64
+#endif
+
+#include "stdint_common.h"
 #include <stdio.h>
 #include <vector>
 
+#ifndef _AMD64_
+#define _AMD64_
+#endif
+
 #if defined(_WINDOWS) && defined (GUI_MFC)
 #include <windef.h>
-#include <winuser.h>
 #include <winbase.h>
+#include <winuser.h>
 
 #define WM_CSE_MSG_LOG (WM_USER + 1000)
 #define WM_CSE_REG_LOG (WM_USER + 1001)
 #endif
 
+#define SAFE_DELETE(ptr) if (ptr) {delete ptr;ptr = NULL;}
+
 #ifdef _MSC_VER
 #define STRUCT_ALIGN_S(struct_name,align_size)  \
-        #pragma pack(align_size)                \
         typedef struct struct_name {
 
 #define STRUCT_ALIGN_E(struct_name,align_size)  \
-        }struct_name;                           \
-        #pragma pack()
+        }struct_name;
 
 #define STRUCT_ALIGN_INHERIT_S(struct_name,align_size,parent)   \
-        #pragma pack(align_size)                                \
-        typedef struct struct_name : public parent {            \
+        typedef struct struct_name : public parent {
 
 #define STRUCT_ALIGN_INHERIT_E(struct_name,align_size)          \
-        }struct_name;                                           \
-        #pragma pack()
+        }struct_name;
 #elif defined __GNUC__
 #define STRUCT_ALIGN_S(struct_name,align_size)  \
         typedef struct struct_name {
@@ -44,6 +58,9 @@
         }__attribute__((aligned(align_size))) struct_name;
 #endif
 
+#ifdef _MSC_VER
+#pragma pack(4)
+#endif
 STRUCT_ALIGN_S(MsgLog,4)
         int  m_iResult : 32;
         char m_szTime[32];
@@ -51,7 +68,13 @@ STRUCT_ALIGN_S(MsgLog,4)
     public:
         MsgLog();
 STRUCT_ALIGN_E(MsgLog,4)
+#ifdef _MSC_VER
+#pragma pack()
+#endif
 
+#ifdef _MSC_VER
+#pragma pack(2)
+#endif
 STRUCT_ALIGN_S(RegLog,2)
         int  m_iResult : 16;
         char m_szFpga[16];
@@ -62,6 +85,9 @@ STRUCT_ALIGN_S(RegLog,2)
     public:
         RegLog();
 STRUCT_ALIGN_E(RegLog,2)
+#ifdef _MSC_VER
+#pragma pack()
+#endif
 
 #ifdef _MSC_VER
 #pragma warning ( disable : 4996 )
@@ -70,11 +96,7 @@ STRUCT_ALIGN_E(RegLog,2)
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 
-#define SAFE_DELETE(ptr) if (ptr) {delete ptr;ptr = NULL;}
-
 #define Log CLog::Instance()
-
-#define _AMD64_
 
 using namespace std;
 

@@ -105,7 +105,15 @@ TxFilter_80M_TableR1C::DataF::DataF()
 		m_iCoefImag[i] = 0;
     for (uint32_t i = 0;i < ARRAY_SIZE(m_dTemp);i ++)
 		m_dTemp[i] = 0.0;
-    m_EndTime = {0,0,0,0,0,0,0,0,0};
+	m_EndTime.tm_sec = 0;
+	m_EndTime.tm_min = 0;
+	m_EndTime.tm_hour = 0;
+	m_EndTime.tm_mday = 0;
+	m_EndTime.tm_mon = 0;
+	m_EndTime.tm_year = 0;
+	m_EndTime.tm_wday = 0;
+	m_EndTime.tm_yday = 0;
+	m_EndTime.tm_isdst = 0;
 }
 
 void TxFilter_80M_TableR1C::DataM::_2Double(double *pReal,double *pImag)
@@ -151,17 +159,6 @@ void TxFilter_80M_TableR1C::Get(uint64_t uiFreq,DataF *pData)
 	pData->m_uiFreq = uiFreq;
 }
 
-void TxFilter_80M_TableR1C::Coef2Str(int16_t *pCoef,int32_t iOrder,char *pBuf)
-{
-    char szCoef[32] = {0};
-
-    for (int32_t i = 0;i < iOrder;i ++) {
-        sprintf(szCoef,"%d,",pCoef[i]);
-        strcat(pBuf,szCoef);
-	}
-    pBuf[strlen(pBuf)] = '\0';
-}
-
 void TxFilter_80M_TableR1C::SaveAs(char *pPath)
 {
 
@@ -179,7 +176,15 @@ TxFilter_160M_TableR1C::DataF::DataF()
 		m_iCoefImag[i] = 0;
     for (uint32_t i = 0;i < ARRAY_SIZE(m_dTemp);i ++)
 		m_dTemp[i] = 0.0;
-    m_EndTime = {0,0,0,0,0,0,0,0,0};
+	m_EndTime.tm_sec = 0;
+	m_EndTime.tm_min = 0;
+	m_EndTime.tm_hour = 0;
+	m_EndTime.tm_mday = 0;
+	m_EndTime.tm_mon = 0;
+	m_EndTime.tm_year = 0;
+	m_EndTime.tm_wday = 0;
+	m_EndTime.tm_yday = 0;
+	m_EndTime.tm_isdst = 0;
 }
 
 void TxFilter_160M_TableR1C::DataM::_2Double(double *pReal,double *pImag)

@@ -122,10 +122,10 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\include;..\libLog;..\libPCIDev"
+				AdditionalIncludeDirectories="..\include;..\libLog;..\libBusDriver;..\libSP1401"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_AFXEXT"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="2"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -141,8 +141,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\x64\Debug"
+				AdditionalLibraryDirectories="..\MFC\x64\Debug"
+				ModuleDefinitionFile="libSP2401.def"
 				GenerateDebugInformation="true"
+				GenerateMapFile="true"
+				MapFileName="libSP2401.map"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -273,10 +276,10 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\include;..\libLog;..\libPCIDev"
+				AdditionalIncludeDirectories="..\include;..\libLog;..\libBusDriver;..\libSP1401"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_AFXEXT"
 				RuntimeLibrary="2"
-				UsePrecompiledHeader="2"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -292,7 +295,10 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\x64\Release"
+				AdditionalLibraryDirectories="..\MFC\x64\Release"
+				ModuleDefinitionFile="libSP2401.def"
+				GenerateMapFile="true"
+				MapFileName="libSP2401.map"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -327,64 +333,12 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\lib\algorithm.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\FractionFloat.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\GeneralInteger.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\libSP2401.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\libSP2401.def"
 				>
 			</File>
 			<File
 				RelativePath=".\SP2401R1A.cpp"
 				>
-			</File>
-			<File
-				RelativePath=".\stdafx.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
@@ -393,56 +347,14 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\include\algorithm.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\FractionFloat.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\GeneralInteger.h"
-				>
-			</File>
-			<File
 				RelativePath=".\libSP2401.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Resource.h"
 				>
 			</File>
 			<File
 				RelativePath=".\SP2401R1A.h"
 				>
 			</File>
-			<File
-				RelativePath=".\stdafx.h"
-				>
-			</File>
-			<File
-				RelativePath=".\targetver.h"
-				>
-			</File>
 		</Filter>
-		<Filter
-			Name="资源文件"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
-			>
-			<File
-				RelativePath=".\libSP2401.rc"
-				>
-			</File>
-			<File
-				RelativePath=".\res\libSP2401.rc2"
-				>
-			</File>
-		</Filter>
-		<File
-			RelativePath=".\ReadMe.txt"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

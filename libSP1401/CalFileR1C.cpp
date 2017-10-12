@@ -1,6 +1,7 @@
 #include "CalFileR1C.h"
 #include "CalFileR1A.h"
 #include <io.h>
+#include <direct.h>
 
 #define R1A_FILE_SIZE 5541296	//file size before adding r1c data,make it easy to arrive to r1c data head directly
 
@@ -365,7 +366,7 @@ int32_t CalFileR1C::Create()
 
     FILE *fp;
     if (_access("C:\\CSECal",0) == -1) {
-        if (mkdir("C:\\CSECal") == -1) {
+        if (_mkdir("C:\\CSECal") == -1) {
             Log->SetLastError("%s:%s:%d(%d)",__FILE__,__FUNCTION__,__LINE__,errno);
             return -1;
         }

@@ -14,19 +14,15 @@ INCLUDEPATH += ../include
 
 win32 {
     LIBS += $$PWD/../lib/libpthreadGC2.a
-#    LIBS += $$PWD/../lib/libQt5Cored.dll.a
-
-    DEFINES += _WINDOWS \
-               _WIN64
 }
 
 CONFIG(debug,debug|release) {
     DEFINES += _DEBUG
     OBJECTS_DIR = $$PWD/x64/debug
-    DESTDIR = ../x64/debug
+    DESTDIR = ../Qt/x64/debug
 } else {
     OBJECTS_DIR = $$PWD/x64/release
-    DESTDIR = ../x64/release
+    DESTDIR = ../Qt/x64/release
 }
 
 DEFINES += LIBLOG_LIBRARY

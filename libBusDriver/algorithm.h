@@ -1,7 +1,7 @@
 #ifndef __ALGORITHM_H__
 #define __ALGORITHM_H__
 
-#include "stdint.h"
+#include "stdint_common.h"
 #include <stdio.h>
 #include <math.h>
 
@@ -26,10 +26,14 @@ int32_t freq2str(double   freq, char *str_freq, int32_t digit = 0);
 int32_t freq2str(float    freq, char *str_freq, int32_t digit = 0);
 int32_t freq2str(uint64_t freq, char *str_freq, int32_t digit = 0);
 int32_t freq2str(int32_t  freq, char *str_freq, int32_t digit = 0);
+int32_t freq2str(int64_t  freq, char *str_freq, int32_t digit = 0);
 
 //exact number to easy to see strings
 //e.g. 1048576--->"1M"
 int32_t byte2str(uint32_t byte, char *str_byte, int32_t digit = 0);
+
+//coefficient to string
+int32_t coef2str(int16_t *coef,int32_t order,char *buf);
 
 //get how much sections does the strings have
 //pin : e.g. "50M;1G,4G" return 3

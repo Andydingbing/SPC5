@@ -80,7 +80,6 @@ public:
 public:
 	void Get(uint64_t uiFreq,DataM *pData);
 	void Get(uint64_t uiFreq,DataF *pData);
-    static void Coef2Str(int16_t *pCoef,int32_t iOrder,char *pBuf);
 };
 
 class TxFilter_160M_TableR1C

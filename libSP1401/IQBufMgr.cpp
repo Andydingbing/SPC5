@@ -8,6 +8,7 @@
 
 #ifdef _MSC_VER
 #pragma comment(lib, "pthreadVC2.lib")
+#pragma comment(lib, "libfftw3-3.lib")
 #endif
 
 pthread_mutex_t g_IQBufLock = PTHREAD_MUTEX_INITIALIZER;

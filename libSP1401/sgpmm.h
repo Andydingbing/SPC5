@@ -5,7 +5,7 @@
 
 #include <vector>
 #include <map>
-#include "stdint.h"
+#include "stdint_common.h"
 
 using namespace std;
 

@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <list>
 #include <vector>
-#include "stdint.h"
+#include "stdint_common.h"
 
 using namespace std;
 

@@ -3,7 +3,7 @@
 
 #define PROGRAM_BIT_ONEBLOCK_SIZE 500   // * 32bit
 
-#include "stdint.h"
+#include "stdint_common.h"
 #include "libLog.h"
 #include "libBusDriver.h"
 

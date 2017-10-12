@@ -1,35 +1,36 @@
  libBusDriver
 
- Timestamp is 59968fec (Fri Aug 18 14:57:48 2017)
+ Timestamp is 59ddf803 (Wed Oct 11 18:52:51 2017)
 
  Preferred load address is 0000000180000000
 
  Start         Length     Name                   Class
- 0001:00000000 000065a6H .text                   CODE
- 0001:000065b0 000015bfH .text$x                 CODE
+ 0001:00000000 00014854H .text                   CODE
+ 0001:00014860 00001075H .text$00                CODE
+ 0001:000158e0 00002b2eH .text$x                 CODE
  0002:00000000 00000109H .CRT$XCA                DATA
  0002:00000110 00000109H .CRT$XCZ                DATA
  0002:00000220 00000109H .CRT$XIA                DATA
  0002:00000330 00000109H .CRT$XIAA               DATA
  0002:00000440 00000109H .CRT$XIZ                DATA
- 0002:00000550 00000932H .rdata                  DATA
- 0002:00000e84 00000151H .rdata$debug            DATA
- 0002:00000fd8 00000674H .rdata$r                DATA
- 0002:00001650 00000109H .rtc$IAA                DATA
- 0002:00001760 00000109H .rtc$IZZ                DATA
- 0002:00001870 00000109H .rtc$TAA                DATA
- 0002:00001980 00000109H .rtc$TZZ                DATA
- 0002:00001a8c 00000d38H .xdata                  DATA
- 0002:000027c8 00000236H .xdata$x                DATA
- 0002:00002a00 00000e26H .edata                  DATA
- 0003:00000000 00000325H .data                   DATA
- 0003:00000330 000005e1H .bss                    DATA
- 0004:00000000 00000768H .pdata                  DATA
+ 0002:00000550 000024a6H .rdata                  DATA
+ 0002:000029f8 0000014bH .rdata$debug            DATA
+ 0002:00002b48 00000674H .rdata$r                DATA
+ 0002:000031c0 00000109H .rtc$IAA                DATA
+ 0002:000032d0 00000109H .rtc$IZZ                DATA
+ 0002:000033e0 00000109H .rtc$TAA                DATA
+ 0002:000034f0 00000109H .rtc$TZZ                DATA
+ 0002:00003600 000024ebH .xdata                  DATA
+ 0002:00005af0 00000236H .xdata$x                DATA
+ 0002:00005d30 00002cbfH .edata                  DATA
+ 0003:00000000 00000337H .data                   DATA
+ 0003:00000340 000005e1H .bss                    DATA
+ 0004:00000000 00001374H .pdata                  DATA
  0005:00000000 00000064H .idata$2                DATA
  0005:00000064 00000014H .idata$3                DATA
- 0005:00000078 000004e8H .idata$4                DATA
- 0005:00000560 000004e8H .idata$5                DATA
- 0005:00000a48 00000ad9H .idata$6                DATA
+ 0005:00000078 00000600H .idata$4                DATA
+ 0005:00000678 00000600H .idata$5                DATA
+ 0005:00000c78 00000c97H .idata$6                DATA
  0006:00000000 00000104H viRsrcMgr               DATA
 
   Address         Publics by Value              Rva+Base               Lib:Object
@@ -37,560 +38,1010 @@
  0000:00000000       ___safe_se_handler_table   0000000000000000     <absolute>
  0000:00000000       ___safe_se_handler_count   0000000000000000     <absolute>
  0000:00000000       __ImageBase                0000000180000000     <linker-defined>
- 0001:000005f0       ??0IGPIBDev@@QEAA@XZ       00000001800015f0 f   IGPIBDev.obj
- 0001:00000630       ??1IGPIBDev@@UEAA@XZ       0000000180001630 f   IGPIBDev.obj
- 0001:00000650       ?Init@IGPIBDev@@UEAA_NPEAD@Z 0000000180001650 f   IGPIBDev.obj
- 0001:000006d0       ?Write@IGPIBDev@@UEAA_NPEBDZZ 00000001800016d0 f   IGPIBDev.obj
- 0001:000007e0       ?Read@IGPIBDev@@UEAA_NPEADKK@Z 00000001800017e0 f   IGPIBDev.obj
- 0001:00000990       ??_EIGPIBDev@@UEAAPEAXI@Z  0000000180001990 f i IGPIBDev.obj
- 0001:00000990       ??_GIGPIBDev@@UEAAPEAXI@Z  0000000180001990 f i IGPIBDev.obj
- 0001:000009e0       ??0viMemIO@@QEAA@XZ        00000001800019e0 f   viMemIO.obj
- 0001:00000a40       ??1viMemIO@@UEAA@XZ        0000000180001a40 f   viMemIO.obj
- 0001:00000a60       ??4viMemIO@@QEAAAEAV0@AEAV0@@Z 0000000180001a60 f   viMemIO.obj
- 0001:00000a80       ?Alloc@viMemIO@@QEAAJK@Z   0000000180001a80 f   viMemIO.obj
- 0001:00000ba0       ?Release@viMemIO@@QEAAJXZ  0000000180001ba0 f   viMemIO.obj
- 0001:00000c10       ?Write8@viMemIO@@UEAAJPEAEK@Z 0000000180001c10 f   viMemIO.obj
- 0001:00000c60       ?Write16@viMemIO@@UEAAJPEAGK@Z 0000000180001c60 f   viMemIO.obj
- 0001:00000cb0       ?Write32@viMemIO@@UEAAJPEAKK@Z 0000000180001cb0 f   viMemIO.obj
- 0001:00000d00       ?Read8@viMemIO@@UEAAJPEAEK@Z 0000000180001d00 f   viMemIO.obj
- 0001:00000d50       ?Read16@viMemIO@@UEAAJPEAGK@Z 0000000180001d50 f   viMemIO.obj
- 0001:00000da0       ?Read32@viMemIO@@UEAAJPEAKK@Z 0000000180001da0 f   viMemIO.obj
- 0001:00000df0       ?pxi_isr@@YAJKKKPEAX@Z     0000000180001df0 f   viMemIO.obj
- 0001:00000f10       ??_EviMemIO@@UEAAPEAXI@Z   0000000180001f10 f i viMemIO.obj
- 0001:00000f10       ??_GviMemIO@@UEAAPEAXI@Z   0000000180001f10 f i viMemIO.obj
- 0001:00000f60       ??0viPCIDev@@QEAA@XZ       0000000180001f60 f   viPCIDev.obj
- 0001:00000fd0       ??0viPCIDev@@QEAA@PEBD@Z   0000000180001fd0 f   viPCIDev.obj
- 0001:00001050       ??1viPCIDev@@UEAA@XZ       0000000180002050 f   viPCIDev.obj
- 0001:00001080       ?GetDevices@viPCIDev@@UEAAJAEAV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@@Z 0000000180002080 f   viPCIDev.obj
- 0001:00001230       ?Init@viPCIDev@@UEAAJV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z 0000000180002230 f   viPCIDev.obj
- 0001:00001310       ?Init@viPCIDev@@UEAAJQEAD@Z 0000000180002310 f   viPCIDev.obj
- 0001:000013b0       ?Init@viPCIDev@@UEAAJV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@KK@Z 00000001800023b0 f   viPCIDev.obj
- 0001:000014a0       ?Init@viPCIDev@@UEAAJQEADKK@Z 00000001800024a0 f   viPCIDev.obj
- 0001:000015e0       ?Close@viPCIDev@@UEAAJXZ   00000001800025e0 f   viPCIDev.obj
- 0001:00001650       ?GetDes@viPCIDev@@UEAAPEADXZ 0000000180002650 f   viPCIDev.obj
- 0001:00001670       ?W8@viPCIDev@@UEAAJW4AS@IPCIDev@@KE@Z 0000000180002670 f   viPCIDev.obj
- 0001:000016b0       ?W16@viPCIDev@@UEAAJW4AS@IPCIDev@@KG@Z 00000001800026b0 f   viPCIDev.obj
- 0001:000016f0       ?W32@viPCIDev@@UEAAJW4AS@IPCIDev@@KK@Z 00000001800026f0 f   viPCIDev.obj
- 0001:00001730       ?W32@viPCIDev@@UEAAJW4AS@IPCIDev@@KKPEAK@Z 0000000180002730 f   viPCIDev.obj
- 0001:00001780       ?R8@viPCIDev@@UEAAJW4AS@IPCIDev@@KPEAE@Z 0000000180002780 f   viPCIDev.obj
- 0001:000017c0       ?R16@viPCIDev@@UEAAJW4AS@IPCIDev@@KPEAG@Z 00000001800027c0 f   viPCIDev.obj
- 0001:00001800       ?R32@viPCIDev@@UEAAJW4AS@IPCIDev@@KPEAK@Z 0000000180002800 f   viPCIDev.obj
- 0001:00001840       ?LLAW32@viPCIDev@@UEAAJKK@Z 0000000180002840 f   viPCIDev.obj
- 0001:00001880       ?LLAR32@viPCIDev@@UEAAJKPEAK@Z 0000000180002880 f   viPCIDev.obj
- 0001:000018c0       ?OpenDefaultRM@viPCIDev@@SAJXZ 00000001800028c0 f   viPCIDev.obj
- 0001:000018f0       ?GetDefaultRM@viPCIDev@@SAKXZ 00000001800028f0 f   viPCIDev.obj
- 0001:00001b60       ??0IPCIDev@@QEAA@XZ        0000000180002b60 f i viPCIDev.obj
- 0001:00001b80       ??1IPCIDev@@UEAA@XZ        0000000180002b80 f i viPCIDev.obj
- 0001:00001ba0       ?GetDevName@IPCIDev@@UEAAPEADXZ 0000000180002ba0 f i viPCIDev.obj
- 0001:00001bc0       ??_EIPCIDev@@UEAAPEAXI@Z   0000000180002bc0 f i viPCIDev.obj
- 0001:00001bc0       ??_GIPCIDev@@UEAAPEAXI@Z   0000000180002bc0 f i viPCIDev.obj
- 0001:00001c10       ??_GviPCIDev@@UEAAPEAXI@Z  0000000180002c10 f i viPCIDev.obj
- 0001:00001c10       ??_EviPCIDev@@UEAAPEAXI@Z  0000000180002c10 f i viPCIDev.obj
- 0001:00001c60       ?push_back@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@Z 0000000180002c60 f i viPCIDev.obj
- 0001:00001d70       ?pop_back@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAAXXZ 0000000180002d70 f i viPCIDev.obj
- 0001:00001de0       ?clear@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAAXXZ 0000000180002de0 f i viPCIDev.obj
- 0001:00001ee0       ?capacity@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEBA_KXZ 0000000180002ee0 f i viPCIDev.obj
- 0001:00001f40       ?begin@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAA?AV?$_Vector_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@XZ 0000000180002f40 f i viPCIDev.obj
- 0001:00001f80       ?end@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAA?AV?$_Vector_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@XZ 0000000180002f80 f i viPCIDev.obj
- 0001:00001fc0       ?size@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEBA_KXZ 0000000180002fc0 f i viPCIDev.obj
- 0001:00001ff0       ?empty@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEBA_NXZ 0000000180002ff0 f i viPCIDev.obj
- 0001:00002030       ?insert@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAA?AV?$_Vector_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@V?$_Vector_const_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@Z 0000000180003030 f i viPCIDev.obj
- 0001:00002140       ?erase@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAA?AV?$_Vector_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@V?$_Vector_const_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@0@Z 0000000180003140 f i viPCIDev.obj
- 0001:00002280       ?_Destroy@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@IEAAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@0@Z 0000000180003280 f i viPCIDev.obj
- 0001:000022c0       ?_Ufill@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@IEAAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@PEAV32@_KAEBV32@@Z 00000001800032c0 f i viPCIDev.obj
- 0001:00002320       ?_Make_iter@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEBA?AV?$_Vector_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@V?$_Vector_const_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@@Z 0000000180003320 f i viPCIDev.obj
- 0001:00002370       ?_Insert_n@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@IEAAXV?$_Vector_const_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@_KAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@Z 0000000180003370 f i viPCIDev.obj
- 0001:00002a20       ??0?$_Vector_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAA@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@PEBV_Container_base_aux@1@@Z 0000000180003a20 f i viPCIDev.obj
- 0001:00002a60       ??H?$_Vector_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEBA?AV01@_J@Z 0000000180003a60 f i viPCIDev.obj
- 0001:00002b00       ??G?$_Vector_const_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEBA_JAEBV01@@Z 0000000180003b00 f i viPCIDev.obj
- 0001:00002b80       ?_Same_container@_Iterator_base_aux@std@@QEBA_NAEBV12@@Z 0000000180003b80 f i viPCIDev.obj
- 0001:00002bd0       ?_Has_container@_Iterator_base_aux@std@@QEBA_NXZ 0000000180003bd0 f i viPCIDev.obj
- 0001:00002c10       ??9?$_Vector_const_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEBA_NAEBV01@@Z 0000000180003c10 f i viPCIDev.obj
- 0001:00002c60       ?max_size@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEBA_KXZ 0000000180003c60 f i viPCIDev.obj
- 0001:00002c90       ?_Xlen@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@KAXXZ 0000000180003c90 f i viPCIDev.obj
- 0001:00002d10       ??0length_error@std@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z 0000000180003d10 f i viPCIDev.obj
- 0001:00002d60       ??0logic_error@std@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z 0000000180003d60 f i viPCIDev.obj
- 0001:00002dd0       ?what@logic_error@std@@UEBAPEBDXZ 0000000180003dd0 f i viPCIDev.obj
- 0001:00002e00       ??_Elogic_error@std@@UEAAPEAXI@Z 0000000180003e00 f i viPCIDev.obj
- 0001:00002e00       ??_Glogic_error@std@@UEAAPEAXI@Z 0000000180003e00 f i viPCIDev.obj
- 0001:00002e50       ??1logic_error@std@@UEAA@XZ 0000000180003e50 f i viPCIDev.obj
- 0001:00002ea0       ??1length_error@std@@UEAA@XZ 0000000180003ea0 f i viPCIDev.obj
- 0001:00002ed0       ??_Glength_error@std@@UEAAPEAXI@Z 0000000180003ed0 f i viPCIDev.obj
- 0001:00002ed0       ??_Elength_error@std@@UEAAPEAXI@Z 0000000180003ed0 f i viPCIDev.obj
- 0001:00002f20       ??0logic_error@std@@QEAA@AEBV01@@Z 0000000180003f20 f i viPCIDev.obj
- 0001:00002f90       ?deallocate@?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QEAAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_K@Z 0000000180003f90 f i viPCIDev.obj
- 0001:00002fc0       ?allocate@?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QEAAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_K@Z 0000000180003fc0 f i viPCIDev.obj
- 0001:00002ff0       ??Y?$_Vector_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAAAEAV01@_J@Z 0000000180003ff0 f i viPCIDev.obj
- 0001:00003020       ??0?$_Vector_const_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAA@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@PEBV_Container_base_aux@1@@Z 0000000180004020 f i viPCIDev.obj
- 0001:000030b0       ?_Set_container@_Iterator_base_aux@std@@QEAAXQEBV_Container_base_aux@2@@Z 00000001800040b0 f i viPCIDev.obj
- 0001:000030e0       ??8?$_Vector_const_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEBA_NAEBV01@@Z 00000001800040e0 f i viPCIDev.obj
- 0001:00003170       ??0length_error@std@@QEAA@AEBV01@@Z 0000000180004170 f i viPCIDev.obj
- 0001:000031c0       ??0?$_Ranit@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_JPEBV12@AEBV12@@std@@QEAA@XZ 00000001800041c0 f i viPCIDev.obj
- 0001:000031f0       ??0?$_Iterator_with_base@Urandom_access_iterator_tag@std@@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_JPEBV32@AEBV32@V_Iterator_base_aux@2@@std@@QEAA@XZ 00000001800041f0 f i viPCIDev.obj
- 0001:00003220       ??0_Iterator_base_aux@std@@QEAA@XZ 0000000180004220 f i viPCIDev.obj
- 0001:00003240       ?max_size@?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QEBA_KXZ 0000000180004240 f i viPCIDev.obj
- 0001:00003290       ??Y?$_Vector_const_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAAAEAV01@_J@Z 0000000180004290 f i viPCIDev.obj
- 0001:00003350       ?_Getmycont@_Iterator_base_aux@std@@QEBAPEBV_Container_base_aux@2@XZ 0000000180004350 f i viPCIDev.obj
- 0001:000033a0       ?_Getcont@_Aux_cont@std@@QEBAPEBV_Container_base_aux@2@XZ 00000001800043a0 f i viPCIDev.obj
- 0001:000033c0       ??$unchecked_copy@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@@stdext@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@00@Z 00000001800043c0 f i viPCIDev.obj
- 0001:00003480       ??$_Destroy_range@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@@std@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0AEAV?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@0@@Z 0000000180004480 f i viPCIDev.obj
- 0001:000034e0       ??$unchecked_uninitialized_fill_n@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_KV12@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@stdext@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_KAEBV12@AEAV?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@Z 00000001800044e0 f i viPCIDev.obj
- 0001:00003570       ??$_Umove@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@IEAAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@PEAV21@00@Z 0000000180004570 f i viPCIDev.obj
- 0001:000035c0       ??$fill@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0AEBV10@@Z 00000001800045c0 f i viPCIDev.obj
- 0001:00003620       ??$_Unchecked_move_backward@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@@stdext@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@00@Z 0000000180004620 f i viPCIDev.obj
- 0001:000036d0       ??$_Allocate@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@_KPEAV10@@Z 00000001800046d0 f i viPCIDev.obj
- 0001:00003750       ??0bad_alloc@std@@QEAA@PEBD@Z 0000000180004750 f i viPCIDev.obj
- 0001:000037a0       ??1bad_alloc@std@@UEAA@XZ  00000001800047a0 f i viPCIDev.obj
- 0001:000037e0       ??_Gbad_alloc@std@@UEAAPEAXI@Z 00000001800047e0 f i viPCIDev.obj
- 0001:000037e0       ??_Ebad_alloc@std@@UEAAPEAXI@Z 00000001800047e0 f i viPCIDev.obj
- 0001:00003830       ??0bad_alloc@std@@QEAA@AEBV01@@Z 0000000180004830 f i viPCIDev.obj
- 0001:00003880       ??$_Checked_base@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@AEAPEAV10@@Z 0000000180004880 f i viPCIDev.obj
- 0001:000038b0       ??$_Iter_random@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@@std@@YA?AUrandom_access_iterator_tag@0@AEBQEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0@Z 00000001800048b0 f i viPCIDev.obj
- 0001:000038e0       ??$_Ptr_cat@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@@std@@YA?AU_Nonscalar_ptr_iterator_tag@0@AEAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0@Z 00000001800048e0 f i viPCIDev.obj
- 0001:00003900       ??$_Copy_opt@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@@std@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PEAV10@00Urandom_access_iterator_tag@0@U_Nonscalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 0000000180004900 f i viPCIDev.obj
- 0001:000039d0       ??$_Destroy_range@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@@std@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0AEAV?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z 00000001800049d0 f i viPCIDev.obj
- 0001:00003a30       ??$_Uninit_fill_n@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_KV12@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@_KAEBV10@AEAV?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 0000000180004a30 f i viPCIDev.obj
- 0001:00003ac0       ??$_Unchecked_uninitialized_move@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@stdext@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@00AEAV?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@Z 0000000180004ac0 f i viPCIDev.obj
- 0001:00003b60       ??$_Fill@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0AEBV10@@Z 0000000180004b60 f i viPCIDev.obj
- 0001:00003bc0       ??$_Move_cat@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YA?AU_Swap_move_tag@0@AEBQEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@@Z 0000000180004bc0 f i viPCIDev.obj
- 0001:00003be0       ??$_Move_backward_opt@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@@std@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PEAV10@00Urandom_access_iterator_tag@0@U_Swap_move_tag@0@U_Range_checked_iterator_tag@0@@Z 0000000180004be0 f i viPCIDev.obj
- 0001:00003ca0       ?construct@?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QEAAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@AEBV32@@Z 0000000180004ca0 f i viPCIDev.obj
- 0001:00003cd0       ?destroy@?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QEAAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@Z 0000000180004cd0 f i viPCIDev.obj
- 0001:00003d00       ??$_Checked_base@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@AEAPEAV10@U_Unchanged_checked_iterator_base_type_tag@0@@Z 0000000180004d00 f i viPCIDev.obj
- 0001:00003d20       ??$_Copy_opt@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@Uforward_iterator_tag@2@@std@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PEAV10@00Uforward_iterator_tag@0@U_Nonscalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 0000000180004d20 f i viPCIDev.obj
- 0001:00003da0       ??$_Uninit_move@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PEAV10@00AEAV?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@0@U_Swap_move_tag@0@U_Range_checked_iterator_tag@0@@Z 0000000180004da0 f i viPCIDev.obj
- 0001:00003ec0       ??$_Move_backward_opt@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@Uforward_iterator_tag@2@@std@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PEAV10@00Uforward_iterator_tag@0@U_Swap_move_tag@0@U_Range_checked_iterator_tag@0@@Z 0000000180004ec0 f i viPCIDev.obj
- 0001:00003f40       ??$_Construct@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@AEBV10@@Z 0000000180004f40 f i viPCIDev.obj
- 0001:00003fd0       ??2@YAPEAX_KPEAX@Z         0000000180004fd0 f i viPCIDev.obj
- 0001:00003ff0       ??3@YAXPEAX0@Z             0000000180004ff0 f i viPCIDev.obj
- 0001:00004000       ??$_Destroy@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@@Z 0000000180005000 f i viPCIDev.obj
- 0001:00004020       ??_G?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAPEAXI@Z 0000000180005020 f i viPCIDev.obj
- 0001:00004070       ??$_Swap_adl@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YAXAEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0@Z 0000000180005070 f i viPCIDev.obj
- 0001:000040a0       ??$swap@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@YAXAEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0@Z 00000001800050a0 f i viPCIDev.obj
- 0001:000040d0       ??0wdPCIDev@@QEAA@XZ       00000001800050d0 f   wdPCIDev.obj
- 0001:00004120       ??0wdPCIDev@@QEAA@PEBD@Z   0000000180005120 f   wdPCIDev.obj
- 0001:000041a0       ??1wdPCIDev@@UEAA@XZ       00000001800051a0 f   wdPCIDev.obj
- 0001:000041d0       ?GetDevices@wdPCIDev@@UEAAJAEAV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@@Z 00000001800051d0 f   wdPCIDev.obj
- 0001:00004360       ?Init@wdPCIDev@@UEAAJV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z 0000000180005360 f   wdPCIDev.obj
- 0001:00004390       ?Init@wdPCIDev@@UEAAJV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@KK@Z 0000000180005390 f   wdPCIDev.obj
- 0001:000043d0       ?Close@wdPCIDev@@UEAAJXZ   00000001800053d0 f   wdPCIDev.obj
- 0001:000043e0       ?GetDes@wdPCIDev@@UEAAPEADXZ 00000001800053e0 f   wdPCIDev.obj
- 0001:000043f0       ?W8@wdPCIDev@@UEAAJW4AS@IPCIDev@@KE@Z 00000001800053f0 f   wdPCIDev.obj
- 0001:00004410       ?W16@wdPCIDev@@UEAAJW4AS@IPCIDev@@KG@Z 0000000180005410 f   wdPCIDev.obj
- 0001:00004430       ?W32@wdPCIDev@@UEAAJW4AS@IPCIDev@@KK@Z 0000000180005430 f   wdPCIDev.obj
- 0001:00004450       ?W32@wdPCIDev@@UEAAJW4AS@IPCIDev@@KKPEAK@Z 0000000180005450 f   wdPCIDev.obj
- 0001:00004470       ?R8@wdPCIDev@@UEAAJW4AS@IPCIDev@@KPEAE@Z 0000000180005470 f   wdPCIDev.obj
- 0001:00004490       ?R16@wdPCIDev@@UEAAJW4AS@IPCIDev@@KPEAG@Z 0000000180005490 f   wdPCIDev.obj
- 0001:000044b0       ?R32@wdPCIDev@@UEAAJW4AS@IPCIDev@@KPEAK@Z 00000001800054b0 f   wdPCIDev.obj
- 0001:000044d0       ?LLAW32@wdPCIDev@@UEAAJKK@Z 00000001800054d0 f   wdPCIDev.obj
- 0001:000044f0       ?LLAR32@wdPCIDev@@UEAAJKPEAK@Z 00000001800054f0 f   wdPCIDev.obj
- 0001:00004610       ??_GwdPCIDev@@UEAAPEAXI@Z  0000000180005610 f i wdPCIDev.obj
- 0001:00004610       ??_EwdPCIDev@@UEAAPEAXI@Z  0000000180005610 f i wdPCIDev.obj
- 0001:00004660       ??$sprintf_s@$0BAA@@@YAHAEAY0BAA@DPEBDZZ 0000000180005660 f i wdPCIDev.obj
- 0001:000046b2       ??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@XZ 00000001800056b2 f   msvcprt:MSVCP90.dll
- 0001:000046b8       ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@PEBD@Z 00000001800056b8 f   msvcprt:MSVCP90.dll
- 0001:000046be       ?copy@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBA_KPEAD_K1@Z 00000001800056be f   msvcprt:MSVCP90.dll
- 0001:000046c4       ?length@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBA_KXZ 00000001800056c4 f   msvcprt:MSVCP90.dll
- 0001:000046ca       ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@AEBV01@@Z 00000001800056ca f   msvcprt:MSVCP90.dll
- 0001:000046d0       ?c_str@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBAPEBDXZ 00000001800056d0 f   msvcprt:MSVCP90.dll
- 0001:000046d6       ??4?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV01@AEBV01@@Z 00000001800056d6 f   msvcprt:MSVCP90.dll
- 0001:000046dc       ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@XZ 00000001800056dc f   msvcprt:MSVCP90.dll
- 0001:000046e2       ?swap@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAXAEAV12@@Z 00000001800056e2 f   msvcprt:MSVCP90.dll
- 0001:000046e8       ??4?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV01@PEBD@Z 00000001800056e8 f   msvcprt:MSVCP90.dll
- 0001:000046ee       ?clear@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAXXZ 00000001800056ee f   msvcprt:MSVCP90.dll
- 0001:000046f4       ??0type_info@@AEAA@AEBV0@@Z 00000001800056f4 f   MSVCRT:ti_inst.obj
- 0001:00004704       ??_Etype_info@@UEAAPEAXI@Z 0000000180005704 f i MSVCRT:ti_inst.obj
- 0001:00004770       ??4type_info@@AEAAAEAV0@AEBV0@@Z 0000000180005770 f   MSVCRT:ti_inst.obj
- 0001:00004774       _purecall                  0000000180005774 f   MSVCRT:MSVCR90.dll
- 0001:0000477a       ??3@YAXPEAX@Z              000000018000577a f   MSVCRT:MSVCR90.dll
- 0001:00004780       __GSHandlerCheckCommon     0000000180005780 f   MSVCRT:gshandler.obj
- 0001:000047e4       __GSHandlerCheck           00000001800057e4 f   MSVCRT:gshandler.obj
- 0001:00004802       strlen                     0000000180005802 f   MSVCRT:MSVCR90.dll
- 0001:00004808       vsprintf_s                 0000000180005808 f   MSVCRT:MSVCR90.dll
- 0001:0000480e       memset                     000000018000580e f   MSVCRT:MSVCR90.dll
- 0001:00004830       __security_check_cookie    0000000180005830 f   MSVCRT:amdsecgs.obj
- 0001:00004850       __CxxFrameHandler3         0000000180005850 f   MSVCRT:MSVCR90.dll
- 0001:00004856       strcpy                     0000000180005856 f   MSVCRT:MSVCR90.dll
- 0001:0000485c       __GSHandlerCheck_EH        000000018000585c f   MSVCRT:gshandlereh.obj
- 0001:000048ec       _CxxThrowException         00000001800058ec f   MSVCRT:MSVCR90.dll
- 0001:000048f2       _invalid_parameter_noinfo  00000001800058f2 f   MSVCRT:MSVCR90.dll
- 0001:000048f8       ??0exception@std@@QEAA@AEBV01@@Z 00000001800058f8 f   MSVCRT:MSVCR90.dll
- 0001:000048fe       ??1exception@std@@UEAA@XZ  00000001800058fe f   MSVCRT:MSVCR90.dll
- 0001:00004904       ??0exception@std@@QEAA@XZ  0000000180005904 f   MSVCRT:MSVCR90.dll
- 0001:0000490a       ??2@YAPEAX_K@Z             000000018000590a f   MSVCRT:MSVCR90.dll
- 0001:00004910       ??0exception@std@@QEAA@AEBQEBD@Z 0000000180005910 f   MSVCRT:MSVCR90.dll
- 0001:00004916       ?what@exception@std@@UEBAPEBDXZ 0000000180005916 f   MSVCRT:MSVCR90.dll
- 0001:0000491c       NtCurrentTeb               000000018000591c f i MSVCRT:crtdll.obj
- 0001:00004988       _CRT_INIT                  0000000180005988 f   MSVCRT:crtdll.obj
- 0001:00004d1c       _DllMainCRTStartup         0000000180005d1c f   MSVCRT:crtdll.obj
- 0001:00004d78       ?__ArrayUnwind@@YAXPEAX_KHP6AX0@Z@Z 0000000180005d78 f   MSVCRT:ehvecdtr.obj
- 0001:00004dc4       ??_M@YAXPEAX_KHP6AX0@Z@Z   0000000180005dc4 f   MSVCRT:ehvecdtr.obj
- 0001:00004e24       __report_gsfailure         0000000180005e24 f   MSVCRT:gs_report.obj
- 0001:00004f70       __clean_type_info_names    0000000180005f70 f   MSVCRT:tncleanup.obj
- 0001:00004f7c       _onexit                    0000000180005f7c f   MSVCRT:atonexit.obj
- 0001:0000502c       atexit                     000000018000602c f   MSVCRT:atonexit.obj
- 0001:00005044       _RTC_Initialize            0000000180006044 f   MSVCRT:_initsect_.obj
- 0001:0000507c       _RTC_Terminate             000000018000607c f   MSVCRT:_initsect_.obj
- 0001:000050b4       _encode_pointer            00000001800060b4 f   MSVCRT:MSVCR90.dll
- 0001:000050ba       _malloc_crt                00000001800060ba f   MSVCRT:MSVCR90.dll
- 0001:000050c0       _ValidateImageBase         00000001800060c0 f   MSVCRT:pesect.obj
- 0001:000050f0       _FindPESection             00000001800060f0 f   MSVCRT:pesect.obj
- 0001:00005140       _IsNonwritableInCurrentImage 0000000180006140 f   MSVCRT:pesect.obj
- 0001:00005182       _initterm                  0000000180006182 f   MSVCRT:MSVCR90.dll
- 0001:00005188       _initterm_e                0000000180006188 f   MSVCRT:MSVCR90.dll
- 0001:0000518e       free                       000000018000618e f   MSVCRT:MSVCR90.dll
- 0001:00005194       _encoded_null              0000000180006194 f   MSVCRT:MSVCR90.dll
- 0001:0000519a       _decode_pointer            000000018000619a f   MSVCRT:MSVCR90.dll
- 0001:000051a0       _amsg_exit                 00000001800061a0 f   MSVCRT:MSVCR90.dll
- 0001:000051a6       __C_specific_handler       00000001800061a6 f   MSVCRT:MSVCR90.dll
- 0001:000051ac       __CppXcptFilter            00000001800061ac f   MSVCRT:MSVCR90.dll
- 0001:000051b4       DllMain                    00000001800061b4 f   MSVCRT:dllmain.obj
- 0001:000051d8       __security_init_cookie     00000001800061d8 f   MSVCRT:gs_support.obj
- 0001:0000528c       ?terminate@@YAXXZ          000000018000628c f   MSVCRT:MSVCR90.dll
- 0001:00005292       ?_type_info_dtor_internal_method@type_info@@QEAAXXZ 0000000180006292 f   MSVCRT:MSVCR90.dll
- 0001:00005292       ??1type_info@@UEAA@XZ      0000000180006292 f   MSVCRT:MSVCR90.dll
- 0001:00005298       __crt_debugger_hook        0000000180006298 f   MSVCRT:MSVCR90.dll
- 0001:0000529e       __clean_type_info_names_internal 000000018000629e f   MSVCRT:MSVCR90.dll
- 0001:000052a4       _unlock                    00000001800062a4 f   MSVCRT:MSVCR90.dll
- 0001:000052aa       __dllonexit                00000001800062aa f   MSVCRT:MSVCR90.dll
- 0001:000052b0       _lock                      00000001800062b0 f   MSVCRT:MSVCR90.dll
- 0001:000052b6       viClose                    00000001800062b6 f   visa64:visa64.dll
- 0001:000052bc       viSetAttribute             00000001800062bc f   visa64:visa64.dll
- 0001:000052c2       viOpen                     00000001800062c2 f   visa64:visa64.dll
- 0001:000052c8       viWrite                    00000001800062c8 f   visa64:visa64.dll
- 0001:000052ce       viRead                     00000001800062ce f   visa64:visa64.dll
- 0001:000052d4       viGetAttribute             00000001800062d4 f   visa64:visa64.dll
- 0001:000052da       viMemAlloc                 00000001800062da f   visa64:visa64.dll
- 0001:000052e0       viMemFree                  00000001800062e0 f   visa64:visa64.dll
- 0001:000052e6       viMoveOut8                 00000001800062e6 f   visa64:visa64.dll
- 0001:000052ec       viMoveOut16                00000001800062ec f   visa64:visa64.dll
- 0001:000052f2       viMoveOut32                00000001800062f2 f   visa64:visa64.dll
- 0001:000052f8       viMoveIn8                  00000001800062f8 f   visa64:visa64.dll
- 0001:000052fe       viMoveIn16                 00000001800062fe f   visa64:visa64.dll
- 0001:00005304       viMoveIn32                 0000000180006304 f   visa64:visa64.dll
- 0001:0000530a       viFindNext                 000000018000630a f   visa64:visa64.dll
- 0001:00005310       viFindRsrc                 0000000180006310 f   visa64:visa64.dll
- 0001:00005316       viOut8                     0000000180006316 f   visa64:visa64.dll
- 0001:0000531c       viOut16                    000000018000631c f   visa64:visa64.dll
- 0001:00005322       viOut32                    0000000180006322 f   visa64:visa64.dll
- 0001:00005328       viIn8                      0000000180006328 f   visa64:visa64.dll
- 0001:0000532e       viIn16                     000000018000632e f   visa64:visa64.dll
- 0001:00005334       viIn32                     0000000180006334 f   visa64:visa64.dll
- 0001:0000533a       viPoke32                   000000018000633a f   visa64:visa64.dll
- 0001:00005340       viPeek32                   0000000180006340 f   visa64:visa64.dll
- 0001:00005346       viOpenDefaultRM            0000000180006346 f   visa64:visa64.dll
- 0001:0000534c       WDC_DriverOpen             000000018000634c f   wdapi1020:WDAPI1020.dll
- 0001:00005352       WDC_PciScanDevices         0000000180006352 f   wdapi1020:WDAPI1020.dll
- 0001:00005358       Sleep                      0000000180006358 f   kernel32:KERNEL32.dll
- 0001:0000535e       TerminateProcess           000000018000635e f   kernel32:KERNEL32.dll
- 0001:00005364       GetCurrentProcess          0000000180006364 f   kernel32:KERNEL32.dll
- 0001:0000536a       UnhandledExceptionFilter   000000018000636a f   kernel32:KERNEL32.dll
- 0001:00005370       SetUnhandledExceptionFilter 0000000180006370 f   kernel32:KERNEL32.dll
- 0001:00005376       IsDebuggerPresent          0000000180006376 f   kernel32:KERNEL32.dll
- 0001:0000537c       RtlVirtualUnwind           000000018000637c f   kernel32:KERNEL32.dll
- 0001:00005382       RtlLookupFunctionEntry     0000000180006382 f   kernel32:KERNEL32.dll
- 0001:00005388       RtlCaptureContext          0000000180006388 f   kernel32:KERNEL32.dll
- 0001:0000538e       DisableThreadLibraryCalls  000000018000638e f   kernel32:KERNEL32.dll
- 0001:00005394       QueryPerformanceCounter    0000000180006394 f   kernel32:KERNEL32.dll
- 0001:0000539a       GetTickCount               000000018000639a f   kernel32:KERNEL32.dll
- 0001:000053a0       GetCurrentThreadId         00000001800063a0 f   kernel32:KERNEL32.dll
- 0001:000053a6       GetCurrentProcessId        00000001800063a6 f   kernel32:KERNEL32.dll
- 0001:000053ac       GetSystemTimeAsFileTime    00000001800063ac f   kernel32:KERNEL32.dll
- 0002:00000000       __xc_a                     0000000180009000     MSVCRT:cinitexe.obj
- 0002:00000110       __xc_z                     0000000180009110     MSVCRT:cinitexe.obj
- 0002:00000220       __xi_a                     0000000180009220     MSVCRT:cinitexe.obj
- 0002:00000440       __xi_z                     0000000180009440     MSVCRT:cinitexe.obj
- 0002:00000582       ?_Value@?$_Is_swap_move@U_Swap_move_tag@std@@@std@@2_NB 0000000180009582     IGPIBDev.obj
- 0002:00000584       ?collate@?$_Locbase@H@std@@2HB 0000000180009584     IGPIBDev.obj
- 0002:00000588       ?ctype@?$_Locbase@H@std@@2HB 0000000180009588     IGPIBDev.obj
- 0002:0000058c       ?monetary@?$_Locbase@H@std@@2HB 000000018000958c     IGPIBDev.obj
- 0002:00000590       ?numeric@?$_Locbase@H@std@@2HB 0000000180009590     IGPIBDev.obj
- 0002:00000594       ?time@?$_Locbase@H@std@@2HB 0000000180009594     IGPIBDev.obj
- 0002:00000598       ?messages@?$_Locbase@H@std@@2HB 0000000180009598     IGPIBDev.obj
- 0002:0000059c       ?all@?$_Locbase@H@std@@2HB 000000018000959c     IGPIBDev.obj
- 0002:000005a0       ?none@?$_Locbase@H@std@@2HB 00000001800095a0     IGPIBDev.obj
- 0002:000005a4       ?skipws@?$_Iosb@H@std@@2W4_Fmtflags@12@B 00000001800095a4     IGPIBDev.obj
- 0002:000005a8       ?unitbuf@?$_Iosb@H@std@@2W4_Fmtflags@12@B 00000001800095a8     IGPIBDev.obj
- 0002:000005ac       ?uppercase@?$_Iosb@H@std@@2W4_Fmtflags@12@B 00000001800095ac     IGPIBDev.obj
- 0002:000005b0       ?showbase@?$_Iosb@H@std@@2W4_Fmtflags@12@B 00000001800095b0     IGPIBDev.obj
- 0002:000005b4       ?showpoint@?$_Iosb@H@std@@2W4_Fmtflags@12@B 00000001800095b4     IGPIBDev.obj
- 0002:000005b8       ?showpos@?$_Iosb@H@std@@2W4_Fmtflags@12@B 00000001800095b8     IGPIBDev.obj
- 0002:000005bc       ?left@?$_Iosb@H@std@@2W4_Fmtflags@12@B 00000001800095bc     IGPIBDev.obj
- 0002:000005c0       ?right@?$_Iosb@H@std@@2W4_Fmtflags@12@B 00000001800095c0     IGPIBDev.obj
- 0002:000005c4       ?internal@?$_Iosb@H@std@@2W4_Fmtflags@12@B 00000001800095c4     IGPIBDev.obj
- 0002:000005c8       ?dec@?$_Iosb@H@std@@2W4_Fmtflags@12@B 00000001800095c8     IGPIBDev.obj
- 0002:000005cc       ?oct@?$_Iosb@H@std@@2W4_Fmtflags@12@B 00000001800095cc     IGPIBDev.obj
- 0002:000005d0       ?hex@?$_Iosb@H@std@@2W4_Fmtflags@12@B 00000001800095d0     IGPIBDev.obj
- 0002:000005d4       ?scientific@?$_Iosb@H@std@@2W4_Fmtflags@12@B 00000001800095d4     IGPIBDev.obj
- 0002:000005d8       ?fixed@?$_Iosb@H@std@@2W4_Fmtflags@12@B 00000001800095d8     IGPIBDev.obj
- 0002:000005dc       ?hexfloat@?$_Iosb@H@std@@2W4_Fmtflags@12@B 00000001800095dc     IGPIBDev.obj
- 0002:000005e0       ?boolalpha@?$_Iosb@H@std@@2W4_Fmtflags@12@B 00000001800095e0     IGPIBDev.obj
- 0002:000005e4       ?_Stdio@?$_Iosb@H@std@@2W4_Fmtflags@12@B 00000001800095e4     IGPIBDev.obj
- 0002:000005e8       ?adjustfield@?$_Iosb@H@std@@2W4_Fmtflags@12@B 00000001800095e8     IGPIBDev.obj
- 0002:000005ec       ?basefield@?$_Iosb@H@std@@2W4_Fmtflags@12@B 00000001800095ec     IGPIBDev.obj
- 0002:000005f0       ?floatfield@?$_Iosb@H@std@@2W4_Fmtflags@12@B 00000001800095f0     IGPIBDev.obj
- 0002:000005f4       ?goodbit@?$_Iosb@H@std@@2W4_Iostate@12@B 00000001800095f4     IGPIBDev.obj
- 0002:000005f8       ?eofbit@?$_Iosb@H@std@@2W4_Iostate@12@B 00000001800095f8     IGPIBDev.obj
- 0002:000005fc       ?failbit@?$_Iosb@H@std@@2W4_Iostate@12@B 00000001800095fc     IGPIBDev.obj
- 0002:00000600       ?badbit@?$_Iosb@H@std@@2W4_Iostate@12@B 0000000180009600     IGPIBDev.obj
- 0002:00000604       ?_Hardfail@?$_Iosb@H@std@@2W4_Iostate@12@B 0000000180009604     IGPIBDev.obj
- 0002:00000608       ?in@?$_Iosb@H@std@@2W4_Openmode@12@B 0000000180009608     IGPIBDev.obj
- 0002:0000060c       ?out@?$_Iosb@H@std@@2W4_Openmode@12@B 000000018000960c     IGPIBDev.obj
- 0002:00000610       ?ate@?$_Iosb@H@std@@2W4_Openmode@12@B 0000000180009610     IGPIBDev.obj
- 0002:00000614       ?app@?$_Iosb@H@std@@2W4_Openmode@12@B 0000000180009614     IGPIBDev.obj
- 0002:00000618       ?trunc@?$_Iosb@H@std@@2W4_Openmode@12@B 0000000180009618     IGPIBDev.obj
- 0002:0000061c       ?_Nocreate@?$_Iosb@H@std@@2W4_Openmode@12@B 000000018000961c     IGPIBDev.obj
- 0002:00000620       ?_Noreplace@?$_Iosb@H@std@@2W4_Openmode@12@B 0000000180009620     IGPIBDev.obj
- 0002:00000624       ?binary@?$_Iosb@H@std@@2W4_Openmode@12@B 0000000180009624     IGPIBDev.obj
- 0002:00000628       ?beg@?$_Iosb@H@std@@2W4_Seekdir@12@B 0000000180009628     IGPIBDev.obj
- 0002:0000062c       ?cur@?$_Iosb@H@std@@2W4_Seekdir@12@B 000000018000962c     IGPIBDev.obj
- 0002:00000630       ?end@?$_Iosb@H@std@@2W4_Seekdir@12@B 0000000180009630     IGPIBDev.obj
- 0002:00000648       ??_7IGPIBDev@@6B@          0000000180009648     IGPIBDev.obj
- 0002:000006c8       ??_7viMemIO@@6B@           00000001800096c8     viMemIO.obj
- 0002:00000838       ??_7viPCIDev@@6B@          0000000180009838     viPCIDev.obj
- 0002:000008f8       ??_7IPCIDev@@6B@           00000001800098f8     viPCIDev.obj
- 0002:000009d8       ??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long?$AA@ 00000001800099d8     viPCIDev.obj
- 0002:000009f8       ??_7length_error@std@@6B@  00000001800099f8     viPCIDev.obj
- 0002:00000a48       ??_7logic_error@std@@6B@   0000000180009a48     viPCIDev.obj
- 0002:00000a98       ??_7bad_alloc@std@@6B@     0000000180009a98     viPCIDev.obj
- 0002:00000c58       ??_7wdPCIDev@@6B@          0000000180009c58     wdPCIDev.obj
- 0002:00000d00       ??_7type_info@@6B@         0000000180009d00     MSVCRT:ti_inst.obj
- 0002:00000d08       _pDefaultRawDllMain        0000000180009d08     MSVCRT:crtdll.obj
- 0002:00000d08       _pRawDllMain               0000000180009d08     MSVCRT:crtdll.obj
- 0002:00000d20       ?ProcessDetach@NativeDll@<CrtImplementationDetails>@@0IB 0000000180009d20     MSVCRT:tncleanup.obj
- 0002:00000d24       ?ProcessAttach@NativeDll@<CrtImplementationDetails>@@0IB 0000000180009d24     MSVCRT:tncleanup.obj
- 0002:00000d28       ?ThreadAttach@NativeDll@<CrtImplementationDetails>@@0IB 0000000180009d28     MSVCRT:tncleanup.obj
- 0002:00000d2c       ?ThreadDetach@NativeDll@<CrtImplementationDetails>@@0IB 0000000180009d2c     MSVCRT:tncleanup.obj
- 0002:00000d30       ?ProcessVerifier@NativeDll@<CrtImplementationDetails>@@0IB 0000000180009d30     MSVCRT:tncleanup.obj
- 0002:00000fd8       ??_R4IGPIBDev@@6B@         0000000180009fd8     IGPIBDev.obj
- 0002:00001008       ??_R3IGPIBDev@@8           000000018000a008     IGPIBDev.obj
- 0002:00001020       ??_R2IGPIBDev@@8           000000018000a020     IGPIBDev.obj
- 0002:00001030       ??_R1A@?0A@EA@IGPIBDev@@8  000000018000a030     IGPIBDev.obj
- 0002:00001060       ??_R4viMemIO@@6B@          000000018000a060     viMemIO.obj
- 0002:00001090       ??_R3viMemIO@@8            000000018000a090     viMemIO.obj
- 0002:000010a8       ??_R2viMemIO@@8            000000018000a0a8     viMemIO.obj
- 0002:000010b8       ??_R1A@?0A@EA@viMemIO@@8   000000018000a0b8     viMemIO.obj
- 0002:000010e8       ??_R4viPCIDev@@6B@         000000018000a0e8     viPCIDev.obj
- 0002:00001118       ??_R3viPCIDev@@8           000000018000a118     viPCIDev.obj
- 0002:00001130       ??_R2viPCIDev@@8           000000018000a130     viPCIDev.obj
- 0002:00001148       ??_R1A@?0A@EA@viPCIDev@@8  000000018000a148     viPCIDev.obj
- 0002:00001178       ??_R1A@?0A@EA@IPCIDev@@8   000000018000a178     viPCIDev.obj
- 0002:000011a8       ??_R3IPCIDev@@8            000000018000a1a8     viPCIDev.obj
- 0002:000011c0       ??_R2IPCIDev@@8            000000018000a1c0     viPCIDev.obj
- 0002:000011d0       ??_R4IPCIDev@@6B@          000000018000a1d0     viPCIDev.obj
- 0002:00001200       ??_R4length_error@std@@6B@ 000000018000a200     viPCIDev.obj
- 0002:00001230       ??_R3length_error@std@@8   000000018000a230     viPCIDev.obj
- 0002:00001248       ??_R2length_error@std@@8   000000018000a248     viPCIDev.obj
- 0002:00001270       ??_R1A@?0A@EA@length_error@std@@8 000000018000a270     viPCIDev.obj
- 0002:000012a0       ??_R1A@?0A@EA@logic_error@std@@8 000000018000a2a0     viPCIDev.obj
- 0002:000012d0       ??_R3logic_error@std@@8    000000018000a2d0     viPCIDev.obj
- 0002:000012e8       ??_R2logic_error@std@@8    000000018000a2e8     viPCIDev.obj
- 0002:00001300       ??_R1A@?0A@EA@exception@std@@8 000000018000a300     viPCIDev.obj
- 0002:00001330       ??_R3exception@std@@8      000000018000a330     viPCIDev.obj
- 0002:00001348       ??_R2exception@std@@8      000000018000a348     viPCIDev.obj
- 0002:00001358       ??_R4logic_error@std@@6B@  000000018000a358     viPCIDev.obj
- 0002:00001388       ??_R4bad_alloc@std@@6B@    000000018000a388     viPCIDev.obj
- 0002:000013b8       ??_R3bad_alloc@std@@8      000000018000a3b8     viPCIDev.obj
- 0002:000013d0       ??_R2bad_alloc@std@@8      000000018000a3d0     viPCIDev.obj
- 0002:000013e8       ??_R1A@?0A@EA@bad_alloc@std@@8 000000018000a3e8     viPCIDev.obj
- 0002:00001418       ??_R4wdPCIDev@@6B@         000000018000a418     wdPCIDev.obj
- 0002:00001448       ??_R3wdPCIDev@@8           000000018000a448     wdPCIDev.obj
- 0002:00001460       ??_R2wdPCIDev@@8           000000018000a460     wdPCIDev.obj
- 0002:00001478       ??_R1A@?0A@EA@wdPCIDev@@8  000000018000a478     wdPCIDev.obj
- 0002:000014a8       ??_R4type_info@@6B@        000000018000a4a8     MSVCRT:ti_inst.obj
- 0002:000014d0       ??_R3type_info@@8          000000018000a4d0     MSVCRT:ti_inst.obj
- 0002:000014e8       ??_R2type_info@@8          000000018000a4e8     MSVCRT:ti_inst.obj
- 0002:000014f8       ??_R1A@?0A@EA@type_info@@8 000000018000a4f8     MSVCRT:ti_inst.obj
- 0002:00001650       __rtc_iaa                  000000018000a650     MSVCRT:_initsect_.obj
- 0002:00001760       __rtc_izz                  000000018000a760     MSVCRT:_initsect_.obj
- 0002:00001870       __rtc_taa                  000000018000a870     MSVCRT:_initsect_.obj
- 0002:00001980       __rtc_tzz                  000000018000a980     MSVCRT:_initsect_.obj
- 0002:000027c8       _TI3?AVlength_error@std@@  000000018000b7c8     viPCIDev.obj
- 0002:000027e8       _CTA3?AVlength_error@std@@ 000000018000b7e8     viPCIDev.obj
- 0002:00002808       _CT??_R0?AVlength_error@std@@@8??0length_error@std@@QEAA@AEBV01@@Z64 000000018000b808     viPCIDev.obj
- 0002:00002830       _CT??_R0?AVlogic_error@std@@@8??0logic_error@std@@QEAA@AEBV01@@Z64 000000018000b830     viPCIDev.obj
- 0002:00002858       _CT??_R0?AVexception@std@@@8??0exception@std@@QEAA@AEBV01@@Z24 000000018000b858     viPCIDev.obj
- 0002:00002880       _TI2?AVbad_alloc@std@@     000000018000b880     viPCIDev.obj
- 0002:000028a0       _CTA2?AVbad_alloc@std@@    000000018000b8a0     viPCIDev.obj
- 0002:000028b8       _CT??_R0?AVbad_alloc@std@@@8??0bad_alloc@std@@QEAA@AEBV01@@Z24 000000018000b8b8     viPCIDev.obj
- 0003:00000010       ??_R0?AVIGPIBDev@@@8       000000018000d010     IGPIBDev.obj
- 0003:00000048       ??_R0?AVviMemIO@@@8        000000018000d048     viMemIO.obj
- 0003:00000080       ??_R0?AVviPCIDev@@@8       000000018000d080     viPCIDev.obj
- 0003:000000a8       ??_R0?AVIPCIDev@@@8        000000018000d0a8     viPCIDev.obj
- 0003:000000d0       ??_R0?AVlength_error@std@@@8 000000018000d0d0     viPCIDev.obj
- 0003:00000100       ??_R0?AVlogic_error@std@@@8 000000018000d100     viPCIDev.obj
- 0003:00000130       ??_R0?AVexception@std@@@8  000000018000d130     viPCIDev.obj
- 0003:00000160       ??_R0?AVbad_alloc@std@@@8  000000018000d160     viPCIDev.obj
- 0003:000001a0       ??_R0?AVwdPCIDev@@@8       000000018000d1a0     wdPCIDev.obj
- 0003:000001c8       ??_R0?AVtype_info@@@8      000000018000d1c8     MSVCRT:ti_inst.obj
- 0003:000001e8       __security_cookie          000000018000d1e8     MSVCRT:gs_cookie.obj
- 0003:000001f0       __security_cookie_complement 000000018000d1f0     MSVCRT:gs_cookie.obj
- 0003:00000200       __native_dllmain_reason    000000018000d200     MSVCRT:natstart.obj
- 0003:00000204       __native_vcclrit_reason    000000018000d204     MSVCRT:natstart.obj
- 0003:000008b0       _forceCRTManifestRTM       000000018000d8b0     MSVCRT:crtmanifestrtm.obj
- 0003:000008b8       ?__type_info_root_node@@3U__type_info_node@@A 000000018000d8b8     MSVCRT:tncleanup.obj
- 0003:000008c8       __native_startup_state     000000018000d8c8     <common>
- 0003:000008d8       __native_startup_lock      000000018000d8d8     <common>
- 0003:000008e0       __onexitend                000000018000d8e0     <common>
- 0003:000008f8       __onexitbegin              000000018000d8f8     <common>
- 0003:00000900       __dyn_tls_init_callback    000000018000d900     <common>
- 0005:00000000       __IMPORT_DESCRIPTOR_MSVCP90 000000018000f000     msvcprt:MSVCP90.dll
- 0005:00000014       __IMPORT_DESCRIPTOR_MSVCR90 000000018000f014     MSVCRT:MSVCR90.dll
- 0005:00000028       __IMPORT_DESCRIPTOR_visa64 000000018000f028     visa64:visa64.dll
- 0005:0000003c       __IMPORT_DESCRIPTOR_WDAPI1020 000000018000f03c     wdapi1020:WDAPI1020.dll
- 0005:00000050       __IMPORT_DESCRIPTOR_KERNEL32 000000018000f050     kernel32:KERNEL32.dll
- 0005:00000064       __NULL_IMPORT_DESCRIPTOR   000000018000f064     msvcprt:MSVCP90.dll
- 0005:00000560       __imp_TerminateProcess     000000018000f560     kernel32:KERNEL32.dll
- 0005:00000568       __imp_GetCurrentProcess    000000018000f568     kernel32:KERNEL32.dll
- 0005:00000570       __imp_UnhandledExceptionFilter 000000018000f570     kernel32:KERNEL32.dll
- 0005:00000578       __imp_SetUnhandledExceptionFilter 000000018000f578     kernel32:KERNEL32.dll
- 0005:00000580       __imp_IsDebuggerPresent    000000018000f580     kernel32:KERNEL32.dll
- 0005:00000588       __imp_RtlVirtualUnwind     000000018000f588     kernel32:KERNEL32.dll
- 0005:00000590       __imp_RtlLookupFunctionEntry 000000018000f590     kernel32:KERNEL32.dll
- 0005:00000598       __imp_RtlCaptureContext    000000018000f598     kernel32:KERNEL32.dll
- 0005:000005a0       __imp_DisableThreadLibraryCalls 000000018000f5a0     kernel32:KERNEL32.dll
- 0005:000005a8       __imp_QueryPerformanceCounter 000000018000f5a8     kernel32:KERNEL32.dll
- 0005:000005b0       __imp_GetTickCount         000000018000f5b0     kernel32:KERNEL32.dll
- 0005:000005b8       __imp_GetSystemTimeAsFileTime 000000018000f5b8     kernel32:KERNEL32.dll
- 0005:000005c0       __imp_GetCurrentProcessId  000000018000f5c0     kernel32:KERNEL32.dll
- 0005:000005c8       __imp_GetCurrentThreadId   000000018000f5c8     kernel32:KERNEL32.dll
- 0005:000005d0       __imp_Sleep                000000018000f5d0     kernel32:KERNEL32.dll
- 0005:000005d8       \177KERNEL32_NULL_THUNK_DATA 000000018000f5d8     kernel32:KERNEL32.dll
- 0005:00000648       __imp_?clear@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAXXZ 000000018000f648     msvcprt:MSVCP90.dll
- 0005:00000650       __imp_??4?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV01@PEBD@Z 000000018000f650     msvcprt:MSVCP90.dll
- 0005:00000658       __imp_?swap@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAXAEAV12@@Z 000000018000f658     msvcprt:MSVCP90.dll
- 0005:00000660       __imp_??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@XZ 000000018000f660     msvcprt:MSVCP90.dll
- 0005:00000668       __imp_??4?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV01@AEBV01@@Z 000000018000f668     msvcprt:MSVCP90.dll
- 0005:00000670       __imp_?c_str@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBAPEBDXZ 000000018000f670     msvcprt:MSVCP90.dll
- 0005:00000678       __imp_??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@AEBV01@@Z 000000018000f678     msvcprt:MSVCP90.dll
- 0005:00000680       __imp_?length@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBA_KXZ 000000018000f680     msvcprt:MSVCP90.dll
- 0005:00000688       __imp_?copy@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBA_KPEAD_K1@Z 000000018000f688     msvcprt:MSVCP90.dll
- 0005:00000690       __imp_??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@PEBD@Z 000000018000f690     msvcprt:MSVCP90.dll
- 0005:00000698       __imp_??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@XZ 000000018000f698     msvcprt:MSVCP90.dll
- 0005:000006a0       \177MSVCP90_NULL_THUNK_DATA 000000018000f6a0     msvcprt:MSVCP90.dll
- 0005:00000708       __imp__malloc_crt          000000018000f708     MSVCRT:MSVCR90.dll
- 0005:00000710       __imp__initterm            000000018000f710     MSVCRT:MSVCR90.dll
- 0005:00000718       __imp__initterm_e          000000018000f718     MSVCRT:MSVCR90.dll
- 0005:00000720       __imp_free                 000000018000f720     MSVCRT:MSVCR90.dll
- 0005:00000728       __imp__encoded_null        000000018000f728     MSVCRT:MSVCR90.dll
- 0005:00000730       __imp__decode_pointer      000000018000f730     MSVCRT:MSVCR90.dll
- 0005:00000738       __imp__amsg_exit           000000018000f738     MSVCRT:MSVCR90.dll
- 0005:00000740       __imp___C_specific_handler 000000018000f740     MSVCRT:MSVCR90.dll
- 0005:00000748       __imp___CppXcptFilter      000000018000f748     MSVCRT:MSVCR90.dll
- 0005:00000750       __imp_?terminate@@YAXXZ    000000018000f750     MSVCRT:MSVCR90.dll
- 0005:00000758       __imp_?_type_info_dtor_internal_method@type_info@@QEAAXXZ 000000018000f758     MSVCRT:MSVCR90.dll
- 0005:00000760       __imp___crt_debugger_hook  000000018000f760     MSVCRT:MSVCR90.dll
- 0005:00000768       __imp___clean_type_info_names_internal 000000018000f768     MSVCRT:MSVCR90.dll
- 0005:00000770       __imp__unlock              000000018000f770     MSVCRT:MSVCR90.dll
- 0005:00000778       __imp___dllonexit          000000018000f778     MSVCRT:MSVCR90.dll
- 0005:00000780       __imp__lock                000000018000f780     MSVCRT:MSVCR90.dll
- 0005:00000788       __imp__encode_pointer      000000018000f788     MSVCRT:MSVCR90.dll
- 0005:00000790       __imp__purecall            000000018000f790     MSVCRT:MSVCR90.dll
- 0005:00000798       __imp_??3@YAXPEAX@Z        000000018000f798     MSVCRT:MSVCR90.dll
- 0005:000007a0       __imp_strlen               000000018000f7a0     MSVCRT:MSVCR90.dll
- 0005:000007a8       __imp_vsprintf_s           000000018000f7a8     MSVCRT:MSVCR90.dll
- 0005:000007b0       __imp_memset               000000018000f7b0     MSVCRT:MSVCR90.dll
- 0005:000007b8       __imp___CxxFrameHandler3   000000018000f7b8     MSVCRT:MSVCR90.dll
- 0005:000007c0       __imp_strcpy               000000018000f7c0     MSVCRT:MSVCR90.dll
- 0005:000007c8       __imp__CxxThrowException   000000018000f7c8     MSVCRT:MSVCR90.dll
- 0005:000007d0       __imp__invalid_parameter_noinfo 000000018000f7d0     MSVCRT:MSVCR90.dll
- 0005:000007d8       __imp_??0exception@std@@QEAA@AEBV01@@Z 000000018000f7d8     MSVCRT:MSVCR90.dll
- 0005:000007e0       __imp_??1exception@std@@UEAA@XZ 000000018000f7e0     MSVCRT:MSVCR90.dll
- 0005:000007e8       __imp_??0exception@std@@QEAA@XZ 000000018000f7e8     MSVCRT:MSVCR90.dll
- 0005:000007f0       __imp_??2@YAPEAX_K@Z       000000018000f7f0     MSVCRT:MSVCR90.dll
- 0005:000007f8       __imp__onexit              000000018000f7f8     MSVCRT:MSVCR90.dll
- 0005:00000800       __imp_??0exception@std@@QEAA@AEBQEBD@Z 000000018000f800     MSVCRT:MSVCR90.dll
- 0005:00000808       __imp_?what@exception@std@@UEBAPEBDXZ 000000018000f808     MSVCRT:MSVCR90.dll
- 0005:00000810       \177MSVCR90_NULL_THUNK_DATA 000000018000f810     MSVCRT:MSVCR90.dll
- 0005:00000898       __imp_WDC_DriverOpen       000000018000f898     wdapi1020:WDAPI1020.dll
- 0005:000008a0       __imp_WDC_PciScanDevices   000000018000f8a0     wdapi1020:WDAPI1020.dll
- 0005:000008a8       \177WDAPI1020_NULL_THUNK_DATA 000000018000f8a8     wdapi1020:WDAPI1020.dll
- 0005:00000900       __imp_viIn8                000000018000f900     visa64:visa64.dll
- 0005:00000908       __imp_viIn16               000000018000f908     visa64:visa64.dll
- 0005:00000910       __imp_viIn32               000000018000f910     visa64:visa64.dll
- 0005:00000918       __imp_viOut32              000000018000f918     visa64:visa64.dll
- 0005:00000920       __imp_viPeek32             000000018000f920     visa64:visa64.dll
- 0005:00000928       __imp_viOpenDefaultRM      000000018000f928     visa64:visa64.dll
- 0005:00000930       __imp_viOut16              000000018000f930     visa64:visa64.dll
- 0005:00000938       __imp_viPoke32             000000018000f938     visa64:visa64.dll
- 0005:00000940       __imp_viOut8               000000018000f940     visa64:visa64.dll
- 0005:00000948       __imp_viFindRsrc           000000018000f948     visa64:visa64.dll
- 0005:00000950       __imp_viFindNext           000000018000f950     visa64:visa64.dll
- 0005:00000958       __imp_viMoveIn16           000000018000f958     visa64:visa64.dll
- 0005:00000960       __imp_viMoveIn8            000000018000f960     visa64:visa64.dll
- 0005:00000968       __imp_viMoveOut32          000000018000f968     visa64:visa64.dll
- 0005:00000970       __imp_viMoveOut16          000000018000f970     visa64:visa64.dll
- 0005:00000978       __imp_viMoveOut8           000000018000f978     visa64:visa64.dll
- 0005:00000980       __imp_viMemFree            000000018000f980     visa64:visa64.dll
- 0005:00000988       __imp_viMemAlloc           000000018000f988     visa64:visa64.dll
- 0005:00000990       __imp_viGetAttribute       000000018000f990     visa64:visa64.dll
- 0005:00000998       __imp_viRead               000000018000f998     visa64:visa64.dll
- 0005:000009a0       __imp_viWrite              000000018000f9a0     visa64:visa64.dll
- 0005:000009a8       __imp_viOpen               000000018000f9a8     visa64:visa64.dll
- 0005:000009b0       __imp_viSetAttribute       000000018000f9b0     visa64:visa64.dll
- 0005:000009b8       __imp_viClose              000000018000f9b8     visa64:visa64.dll
- 0005:000009c0       __imp_viMoveIn32           000000018000f9c0     visa64:visa64.dll
- 0005:000009c8       \177visa64_NULL_THUNK_DATA 000000018000f9c8     visa64:visa64.dll
- 0006:00000000       ?g_RsrcMgr@@3KA            0000000180011000     viPCIDev.obj
+ 0001:00000d00       ?str2freq@@YAHPEBDAEAN@Z   0000000180001d00 f   algorithm.obj
+ 0001:00000fc0       ?str2freq@@YAHPEBDAEAM@Z   0000000180001fc0 f   algorithm.obj
+ 0001:00001000       ?str2freq@@YAHPEBDAEA_K@Z  0000000180002000 f   algorithm.obj
+ 0001:00001070       ?str2freq@@YAHPEBDAEA_J@Z  0000000180002070 f   algorithm.obj
+ 0001:000010b0       ?freq2str@@YAHNPEADH@Z     00000001800020b0 f   algorithm.obj
+ 0001:00001200       ?freq2str@@YAHMPEADH@Z     0000000180002200 f   algorithm.obj
+ 0001:00001240       ?freq2str@@YAH_KPEADH@Z    0000000180002240 f   algorithm.obj
+ 0001:00001290       ?freq2str@@YAHHPEADH@Z     0000000180002290 f   algorithm.obj
+ 0001:000012d0       ?freq2str@@YAH_JPEADH@Z    00000001800022d0 f   algorithm.obj
+ 0001:00001310       ?byte2str@@YAHIPEADH@Z     0000000180002310 f   algorithm.obj
+ 0001:00001480       ?coef2str@@YAHPEAFHPEAD@Z  0000000180002480 f   algorithm.obj
+ 0001:00001540       ?strsections@@YAHPEBD@Z    0000000180002540 f   algorithm.obj
+ 0001:000016d0       ?split_freq_character@@YAHPEBDPEAY0CA@DH@Z 00000001800026d0 f   algorithm.obj
+ 0001:000018f0       ?freq2array@@YAHPEBD0_JPEA_J2222@Z 00000001800028f0 f   algorithm.obj
+ 0001:00001cc0       ?freq2array@@YAHPEADPEA_J@Z 0000000180002cc0 f   algorithm.obj
+ 0001:00001dd0       ?freqsection@@YAHPEAD0_J@Z 0000000180002dd0 f   algorithm.obj
+ 0001:00001fe0       ?freqsection@@YAHPEA_J0_J@Z 0000000180002fe0 f   algorithm.obj
+ 0001:00002050       ?freqsection_s@@YAHPEA_J0_JH@Z 0000000180003050 f   algorithm.obj
+ 0001:000020d0       ?iseven@@YA_NH@Z           00000001800030d0 f   algorithm.obj
+ 0001:00002100       ?iseven@@YA_NI@Z           0000000180003100 f   algorithm.obj
+ 0001:00002120       ?isexactdiv@@YA_NHH@Z      0000000180003120 f   algorithm.obj
+ 0001:00002160       ?round@@YANNH@Z            0000000180003160 f   algorithm.obj
+ 0001:00002250       ?gcd@@YAIII@Z              0000000180003250 f   algorithm.obj
+ 0001:00002330       ?gcd@@YA_K_K0@Z            0000000180003330 f   algorithm.obj
+ 0001:00002420       ?invsqrt@@YAMM@Z           0000000180003420 f   algorithm.obj
+ 0001:000024a0       ?ad2dBc@@YAN_J0@Z          00000001800034a0 f   algorithm.obj
+ 0001:000024f0       ?ad2dBc@@YANNN@Z           00000001800034f0 f   algorithm.obj
+ 0001:00002530       ?dBc2ad@@YA_J_JN@Z         0000000180003530 f   algorithm.obj
+ 0001:00002590       ?hmc624@@YAXPEAN@Z         0000000180003590 f   algorithm.obj
+ 0001:000025e0       ?adf5355_freq_formula@@YAH_KI_N1IIAEAI2222@Z 00000001800035e0 f   algorithm.obj
+ 0001:00002820       ?adf5355_freq_formula@@YAHIIIIIIAEAN@Z 0000000180003820 f   algorithm.obj
+ 0001:000028e0       ?adf5355para2reg0@@YAIIII@Z 00000001800038e0 f   algorithm.obj
+ 0001:00002910       ?adf5355para2reg1@@YAII@Z  0000000180003910 f   algorithm.obj
+ 0001:00002930       ?adf5355para2reg2@@YAIII@Z 0000000180003930 f   algorithm.obj
+ 0001:00002960       ?adf5355para2reg3@@YAIIIII@Z 0000000180003960 f   algorithm.obj
+ 0001:000029a0       ?adf5355para2reg4@@YAIIIIIIIIIIIII@Z 00000001800039a0 f   algorithm.obj
+ 0001:00002a30       ?adf5355para2reg5@@YAIXZ   0000000180003a30 f   algorithm.obj
+ 0001:00002a40       ?adf5355para2reg6@@YAIIIIIIIIII@Z 0000000180003a40 f   algorithm.obj
+ 0001:00002ab0       ?adf5355para2reg7@@YAIIIIII@Z 0000000180003ab0 f   algorithm.obj
+ 0001:00002b00       ?adf5355para2reg8@@YAIXZ   0000000180003b00 f   algorithm.obj
+ 0001:00002b10       ?adf5355para2reg9@@YAIIIII@Z 0000000180003b10 f   algorithm.obj
+ 0001:00002b50       ?adf5355para2reg10@@YAIIII@Z 0000000180003b50 f   algorithm.obj
+ 0001:00002bb0       ?adf5355para2reg11@@YAIXZ  0000000180003bb0 f   algorithm.obj
+ 0001:00002bc0       ?adf5355para2reg12@@YAII@Z 0000000180003bc0 f   algorithm.obj
+ 0001:00002c00       ?radixchg@@YAHHPEADH@Z     0000000180003c00 f   algorithm.obj
+ 0001:00002d60       ?ltc2666vol2dac@@YAHN@Z    0000000180003d60 f   algorithm.obj
+ 0001:00002dd0       ?ltc2666dac2vol@@YANH@Z    0000000180003dd0 f   algorithm.obj
+ 0001:00002e30       ?x9119vol2val@@YAFN@Z      0000000180003e30 f   algorithm.obj
+ 0001:00002e90       ?x9119val2vol@@YANF@Z      0000000180003e90 f   algorithm.obj
+ 0001:00002ef0       ?mcp3208ad2vol@@YANI@Z     0000000180003ef0 f   algorithm.obj
+ 0001:00002f20       ?tc1407vol2temp@@YANN@Z    0000000180003f20 f   algorithm.obj
+ 0001:00002f50       ?hmc1197_freq_formula_intmode@@YAH_KIIAEAI@Z 0000000180003f50 f   algorithm.obj
+ 0001:00002fd0       ?hmc1197_freq_formula_intmode@@YAH_KIIAEAIAEAN@Z 0000000180003fd0 f   algorithm.obj
+ 0001:00003090       ?hmc1197_freq_formula_fracmode@@YAH_KIIAEAI1@Z 0000000180004090 f   algorithm.obj
+ 0001:00003160       ?hmc1197_freq_formula_fracmode@@YAH_KIIAEAI1AEAN@Z 0000000180004160 f   algorithm.obj
+ 0001:00003290       ?hmc1197_freq_formula_exactmode@@YAH_KIIAEAI11@Z 0000000180004290 f   algorithm.obj
+ 0001:000033e0       ?hmc1197para2reg00@@YAIII@Z 00000001800043e0 f   algorithm.obj
+ 0001:00003400       ?hmc1197para2reg01@@YAIIIIIIIII@Z 0000000180004400 f   algorithm.obj
+ 0001:00003470       ?hmc1197para2reg02@@YAII@Z 0000000180004470 f   algorithm.obj
+ 0001:00003490       ?hmc1197para2reg03@@YAII@Z 0000000180004490 f   algorithm.obj
+ 0001:000034b0       ?hmc1197para2reg04@@YAII@Z 00000001800044b0 f   algorithm.obj
+ 0001:000034d0       ?hmc1197para2reg05@@YAIXZ  00000001800044d0 f   algorithm.obj
+ 0001:000034e0       ?hmc1197para2reg06@@YAIIIIIII@Z 00000001800044e0 f   algorithm.obj
+ 0001:00003540       ?hmc1197para2reg07@@YAIIIII@Z 0000000180004540 f   algorithm.obj
+ 0001:00003590       ?hmc1197para2reg08@@YAIIIII@Z 0000000180004590 f   algorithm.obj
+ 0001:000035e0       ?hmc1197para2reg09@@YAIIIIIII@Z 00000001800045e0 f   algorithm.obj
+ 0001:00003630       ?hmc1197para2reg0a@@YAIIIII@Z 0000000180004630 f   algorithm.obj
+ 0001:00003680       ?hmc1197para2reg0b@@YAIIIIIII@Z 0000000180004680 f   algorithm.obj
+ 0001:000036e0       ?hmc1197para2reg0c@@YAII@Z 00000001800046e0 f   algorithm.obj
+ 0001:00003700       ?hmc1197para2reg0f@@YAIIIIII@Z 0000000180004700 f   algorithm.obj
+ 0001:00003750       ?hmc1197para2reg14@@YAIIIIIII@Z 0000000180004750 f   algorithm.obj
+ 0001:000037b0       ?hmc1197para2reg15@@YAIIIIII@Z 00000001800047b0 f   algorithm.obj
+ 0001:00003810       ?hmc1197para2reg16@@YAIIIII@Z 0000000180004810 f   algorithm.obj
+ 0001:00003850       ?hmc1197para2reg17@@YAIIIIIIIIIIII@Z 0000000180004850 f   algorithm.obj
+ 0001:000038d0       ?hmc1197para2reg18@@YAII@Z 00000001800048d0 f   algorithm.obj
+ 0001:00003900       ?hmc1197para2reg19@@YAIXZ  0000000180004900 f   algorithm.obj
+ 0001:00003910       ?hmc1197para2reg1a@@YAII@Z 0000000180004910 f   algorithm.obj
+ 0001:00003930       ?hmc1197para2reg21@@YAII@Z 0000000180004930 f   algorithm.obj
+ 0001:00003950       ?sort_bubble@@YAXPEANH@Z   0000000180004950 f   algorithm.obj
+ 0001:00003a40       ?sort_bubble@@YAXPEAN0H@Z  0000000180004a40 f   algorithm.obj
+ 0001:00003c70       ?polynomial@@YAHPEAN0H0@Z  0000000180004c70 f   algorithm.obj
+ 0001:00004170       ?polynomial@@YANPEANNH@Z   0000000180005170 f   algorithm.obj
+ 0001:00004200       ?sumxmul@@YANPEAN0H@Z      0000000180005200 f   algorithm.obj
+ 0001:00004290       ?conv@@YAHPEANH0H0@Z       0000000180005290 f   algorithm.obj
+ 0001:00004460       ?lagrange@@YAHPEAN0H0@Z    0000000180005460 f   algorithm.obj
+ 0001:00004920       ?polyfit@@YAHPEAN0HH0@Z    0000000180005920 f   algorithm.obj
+ 0001:00004b80       ?coef2polynomial@@YAHPEANHPEAD@Z 0000000180005b80 f   algorithm.obj
+ 0001:00004c90       ?sumpow@@YANPEANHH@Z       0000000180005c90 f   algorithm.obj
+ 0001:00004d10       ?interp1@@YAHPEAN0H00W4interp_method@@H@Z 0000000180005d10 f   algorithm.obj
+ 0001:000053f0       ?spline@@YAHPEAN0H0000W4spline_end@@NN@Z 00000001800063f0 f   algorithm.obj
+ 0001:00005cd0       ?sine@@YAHNNNNNPEAN0H@Z    0000000180006cd0 f   algorithm.obj
+ 0001:00005da0       ?cosine@@YAHNNNNNPEAN0H@Z  0000000180006da0 f   algorithm.obj
+ 0001:000072c0       ?abs@@YANN@Z               00000001800082c0 f i algorithm.obj
+ 0001:000072e0       ?pow@@YANNH@Z              00000001800082e0 f i algorithm.obj
+ 0001:00007310       ??$_Pow_int@N@@YANNH@Z     0000000180008310 f i algorithm.obj
+ 0001:000073f0       ??0CFractionFloat@@QEAA@_J0@Z 00000001800083f0 f   FractionFloat.obj
+ 0001:00007470       ??1CFractionFloat@@QEAA@XZ 0000000180008470 f   FractionFloat.obj
+ 0001:00007480       ?Print@CFractionFloat@@QEAAXXZ 0000000180008480 f   FractionFloat.obj
+ 0001:000074e0       ?abs@CFractionFloat@@QEAA?AV1@V1@@Z 00000001800084e0 f   FractionFloat.obj
+ 0001:000075a0       ?abs@CFractionFloat@@QEAA_J_J@Z 00000001800085a0 f   FractionFloat.obj
+ 0001:000075e0       ?gcd@CFractionFloat@@AEAA_K_K0@Z 00000001800085e0 f   FractionFloat.obj
+ 0001:000076d0       ?reduction@CFractionFloat@@AEAAXXZ 00000001800086d0 f   FractionFloat.obj
+ 0001:00007760       ?lcm@CFractionFloat@@AEAA_K_K0AEA_K1@Z 0000000180008760 f   FractionFloat.obj
+ 0001:000078e0       ??HCFractionFloat@@QEAA?AV0@XZ 00000001800088e0 f   FractionFloat.obj
+ 0001:00007940       ??GCFractionFloat@@QEAA?AV0@XZ 0000000180008940 f   FractionFloat.obj
+ 0001:000079d0       ??HCFractionFloat@@QEAA?AV0@V0@@Z 00000001800089d0 f   FractionFloat.obj
+ 0001:00007ae0       ??GCFractionFloat@@QEAA?AV0@V0@@Z 0000000180008ae0 f   FractionFloat.obj
+ 0001:00007ba0       ??DCFractionFloat@@QEAA?AV0@V0@@Z 0000000180008ba0 f   FractionFloat.obj
+ 0001:00007c60       ??4CFractionFloat@@QEAA?AV0@V0@@Z 0000000180008c60 f   FractionFloat.obj
+ 0001:00007d00       ??YCFractionFloat@@QEAA?AV0@V0@@Z 0000000180008d00 f   FractionFloat.obj
+ 0001:00007e10       ??ZCFractionFloat@@QEAA?AV0@V0@@Z 0000000180008e10 f   FractionFloat.obj
+ 0001:00007f20       ??XCFractionFloat@@QEAA?AV0@V0@@Z 0000000180008f20 f   FractionFloat.obj
+ 0001:00008030       ??ECFractionFloat@@QEAA?AV0@XZ 0000000180009030 f   FractionFloat.obj
+ 0001:00008160       ??ECFractionFloat@@QEAA?AV0@H@Z 0000000180009160 f   FractionFloat.obj
+ 0001:00008210       ??FCFractionFloat@@QEAA?AV0@XZ 0000000180009210 f   FractionFloat.obj
+ 0001:00008340       ??FCFractionFloat@@QEAA?AV0@H@Z 0000000180009340 f   FractionFloat.obj
+ 0001:000083f0       ??8CFractionFloat@@QEAA_NV0@@Z 00000001800093f0 f   FractionFloat.obj
+ 0001:00008460       ??OCFractionFloat@@QEAA_NV0@@Z 0000000180009460 f   FractionFloat.obj
+ 0001:000085b0       ??MCFractionFloat@@QEAA_NV0@@Z 00000001800095b0 f   FractionFloat.obj
+ 0001:00008660       ??PCFractionFloat@@QEAA_NV0@@Z 0000000180009660 f   FractionFloat.obj
+ 0001:00008710       ??NCFractionFloat@@QEAA_NV0@@Z 0000000180009710 f   FractionFloat.obj
+ 0001:00008790       ??9CFractionFloat@@QEAA_NV0@@Z 0000000180009790 f   FractionFloat.obj
+ 0001:00008d10       ??0CGeneralIniFile@@QEAA@PEBD@Z 0000000180009d10 f   GeneralIniFile.obj
+ 0001:00008d70       ?GetConfigStringValue@CGeneralIniFile@@QEAAHPEBD0PEAD@Z 0000000180009d70 f   GeneralIniFile.obj
+ 0001:00009060       ?GetConfigIntValue@CGeneralIniFile@@QEAAHPEAD0PEAH@Z 000000018000a060 f   GeneralIniFile.obj
+ 0001:00009180       ?CompareString@CGeneralIniFile@@AEAAHPEBD0@Z 000000018000a180 f   GeneralIniFile.obj
+ 0001:00009220       ?GetKeyValue@CGeneralIniFile@@AEAAHPEAU_iobuf@@PEBDPEAD@Z 000000018000a220 f   GeneralIniFile.obj
+ 0001:00009770       ?strrchr@@YAPEADPEADH@Z    000000018000a770 f i GeneralIniFile.obj
+ 0001:000097a0       ??0CGeneralInteger@@QEAA@PEBD@Z 000000018000a7a0 f   GeneralInteger.obj
+ 0001:000098f0       ??1CGeneralInteger@@QEAA@XZ 000000018000a8f0 f   GeneralInteger.obj
+ 0001:00009900       ?Print@CGeneralInteger@@QEAAXXZ 000000018000a900 f   GeneralInteger.obj
+ 0001:00009990       ?GetDigit@CGeneralInteger@@QEBAFXZ 000000018000a990 f   GeneralInteger.obj
+ 0001:00009a10       ?abs@CGeneralInteger@@QEAA?AV1@V1@@Z 000000018000aa10 f   GeneralInteger.obj
+ 0001:00009b20       ??HCGeneralInteger@@QEAA?AV0@XZ 000000018000ab20 f   GeneralInteger.obj
+ 0001:00009b90       ??GCGeneralInteger@@QEAA?AV0@XZ 000000018000ab90 f   GeneralInteger.obj
+ 0001:00009cc0       ??HCGeneralInteger@@QEAA?AV0@V0@@Z 000000018000acc0 f   GeneralInteger.obj
+ 0001:0000a1b0       ??GCGeneralInteger@@QEAA?AV0@V0@@Z 000000018000b1b0 f   GeneralInteger.obj
+ 0001:0000a2d0       ??DCGeneralInteger@@QEAA?AV0@V0@@Z 000000018000b2d0 f   GeneralInteger.obj
+ 0001:0000a580       ??KCGeneralInteger@@QEAA?AV0@_J@Z 000000018000b580 f   GeneralInteger.obj
+ 0001:0000aa00       ??LCGeneralInteger@@QEAA_J_J@Z 000000018000ba00 f   GeneralInteger.obj
+ 0001:0000add0       ??4CGeneralInteger@@QEAA?AV0@V0@@Z 000000018000bdd0 f   GeneralInteger.obj
+ 0001:0000aec0       ??YCGeneralInteger@@QEAA?AV0@V0@@Z 000000018000bec0 f   GeneralInteger.obj
+ 0001:0000aff0       ??ZCGeneralInteger@@QEAA?AV0@V0@@Z 000000018000bff0 f   GeneralInteger.obj
+ 0001:0000b120       ??XCGeneralInteger@@QEAA?AV0@V0@@Z 000000018000c120 f   GeneralInteger.obj
+ 0001:0000b250       ??_0CGeneralInteger@@QEAA?AV0@_J@Z 000000018000c250 f   GeneralInteger.obj
+ 0001:0000b360       ??ECGeneralInteger@@QEAA?AV0@XZ 000000018000c360 f   GeneralInteger.obj
+ 0001:0000b4b0       ??ECGeneralInteger@@QEAA?AV0@H@Z 000000018000c4b0 f   GeneralInteger.obj
+ 0001:0000b5a0       ??FCGeneralInteger@@QEAA?AV0@XZ 000000018000c5a0 f   GeneralInteger.obj
+ 0001:0000b6f0       ??FCGeneralInteger@@QEAA?AV0@H@Z 000000018000c6f0 f   GeneralInteger.obj
+ 0001:0000b7e0       ??8CGeneralInteger@@QEAA_NV0@@Z 000000018000c7e0 f   GeneralInteger.obj
+ 0001:0000b8b0       ??OCGeneralInteger@@QEAA_NV0@@Z 000000018000c8b0 f   GeneralInteger.obj
+ 0001:0000ba60       ??MCGeneralInteger@@QEAA_NV0@@Z 000000018000ca60 f   GeneralInteger.obj
+ 0001:0000bb30       ??PCGeneralInteger@@QEAA_NV0@@Z 000000018000cb30 f   GeneralInteger.obj
+ 0001:0000bc00       ??NCGeneralInteger@@QEAA_NV0@@Z 000000018000cc00 f   GeneralInteger.obj
+ 0001:0000bca0       ??9CGeneralInteger@@QEAA_NV0@@Z 000000018000cca0 f   GeneralInteger.obj
+ 0001:0000bd40       ??6CGeneralInteger@@QEAA?AV0@F@Z 000000018000cd40 f   GeneralInteger.obj
+ 0001:0000bea0       ??5CGeneralInteger@@QEAA?AV0@F@Z 000000018000cea0 f   GeneralInteger.obj
+ 0001:0000c000       ??DCGeneralInteger@@QEAA?AV0@F@Z 000000018000d000 f   GeneralInteger.obj
+ 0001:0000c1e0       ?dtoull@CGeneralInteger@@QEAA_KFF@Z 000000018000d1e0 f   GeneralInteger.obj
+ 0001:0000c2c0       ?oddpart@CGeneralInteger@@QEAAFXZ 000000018000d2c0 f   GeneralInteger.obj
+ 0001:0000c2e0       ?tobin_s@CGeneralInteger@@QEAAXPEAFF@Z 000000018000d2e0 f   GeneralInteger.obj
+ 0001:0000c800       ?toui64@CGeneralInteger@@QEAAXAEAI0@Z 000000018000d800 f   GeneralInteger.obj
+ 0001:0000c920       ?GetDigit@CGeneralInteger@@QEAAF_K@Z 000000018000d920 f   GeneralInteger.obj
+ 0001:0000d5f0       ??0IGPIBDev@@QEAA@XZ       000000018000e5f0 f   IGPIBDev.obj
+ 0001:0000d630       ??1IGPIBDev@@UEAA@XZ       000000018000e630 f   IGPIBDev.obj
+ 0001:0000d650       ?Init@IGPIBDev@@UEAA_NPEAD@Z 000000018000e650 f   IGPIBDev.obj
+ 0001:0000d6d0       ?Write@IGPIBDev@@UEAA_NPEBDZZ 000000018000e6d0 f   IGPIBDev.obj
+ 0001:0000d7e0       ?Read@IGPIBDev@@UEAA_NPEADII@Z 000000018000e7e0 f   IGPIBDev.obj
+ 0001:0000d990       ??_GIGPIBDev@@UEAAPEAXI@Z  000000018000e990 f i IGPIBDev.obj
+ 0001:0000d990       ??_EIGPIBDev@@UEAAPEAXI@Z  000000018000e990 f i IGPIBDev.obj
+ 0001:0000d9e0       ??0viMemIO@@QEAA@XZ        000000018000e9e0 f   viMemIO.obj
+ 0001:0000da40       ??1viMemIO@@UEAA@XZ        000000018000ea40 f   viMemIO.obj
+ 0001:0000da60       ??4viMemIO@@QEAAAEAV0@AEAV0@@Z 000000018000ea60 f   viMemIO.obj
+ 0001:0000da80       ?Alloc@viMemIO@@QEAAHI@Z   000000018000ea80 f   viMemIO.obj
+ 0001:0000dba0       ?Release@viMemIO@@QEAAHXZ  000000018000eba0 f   viMemIO.obj
+ 0001:0000dc10       ?Write8@viMemIO@@UEAAHPEAEI@Z 000000018000ec10 f   viMemIO.obj
+ 0001:0000dc60       ?Write16@viMemIO@@UEAAHPEAGI@Z 000000018000ec60 f   viMemIO.obj
+ 0001:0000dcb0       ?Write32@viMemIO@@UEAAHPEAII@Z 000000018000ecb0 f   viMemIO.obj
+ 0001:0000dd00       ?Read8@viMemIO@@UEAAHPEAEI@Z 000000018000ed00 f   viMemIO.obj
+ 0001:0000dd50       ?Read16@viMemIO@@UEAAHPEAGI@Z 000000018000ed50 f   viMemIO.obj
+ 0001:0000dda0       ?Read32@viMemIO@@UEAAHPEAII@Z 000000018000eda0 f   viMemIO.obj
+ 0001:0000ddf0       ?pxi_isr@@YAHKKKPEAX@Z     000000018000edf0 f   viMemIO.obj
+ 0001:0000df10       ??_EviMemIO@@UEAAPEAXI@Z   000000018000ef10 f i viMemIO.obj
+ 0001:0000df10       ??_GviMemIO@@UEAAPEAXI@Z   000000018000ef10 f i viMemIO.obj
+ 0001:0000df60       ??0viPCIDev@@QEAA@XZ       000000018000ef60 f   viPCIDev.obj
+ 0001:0000dfd0       ??0viPCIDev@@QEAA@PEBD@Z   000000018000efd0 f   viPCIDev.obj
+ 0001:0000e050       ??1viPCIDev@@UEAA@XZ       000000018000f050 f   viPCIDev.obj
+ 0001:0000e080       ?GetDevices@viPCIDev@@UEAAHAEAV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@@Z 000000018000f080 f   viPCIDev.obj
+ 0001:0000e260       ?Init@viPCIDev@@UEAAHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z 000000018000f260 f   viPCIDev.obj
+ 0001:0000e340       ?Init@viPCIDev@@UEAAHQEAD@Z 000000018000f340 f   viPCIDev.obj
+ 0001:0000e3e0       ?Init@viPCIDev@@UEAAHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@II@Z 000000018000f3e0 f   viPCIDev.obj
+ 0001:0000e4d0       ?Init@viPCIDev@@UEAAHQEADII@Z 000000018000f4d0 f   viPCIDev.obj
+ 0001:0000e610       ?Close@viPCIDev@@UEAAHXZ   000000018000f610 f   viPCIDev.obj
+ 0001:0000e680       ?GetDes@viPCIDev@@UEAAPEADXZ 000000018000f680 f   viPCIDev.obj
+ 0001:0000e6a0       ?W8@viPCIDev@@UEAAHW4AS@IPCIDev@@IE@Z 000000018000f6a0 f   viPCIDev.obj
+ 0001:0000e6e0       ?W16@viPCIDev@@UEAAHW4AS@IPCIDev@@IG@Z 000000018000f6e0 f   viPCIDev.obj
+ 0001:0000e720       ?W32@viPCIDev@@UEAAHW4AS@IPCIDev@@II@Z 000000018000f720 f   viPCIDev.obj
+ 0001:0000e760       ?W32@viPCIDev@@UEAAHW4AS@IPCIDev@@IIPEAI@Z 000000018000f760 f   viPCIDev.obj
+ 0001:0000e7b0       ?R8@viPCIDev@@UEAAHW4AS@IPCIDev@@IPEAE@Z 000000018000f7b0 f   viPCIDev.obj
+ 0001:0000e7f0       ?R16@viPCIDev@@UEAAHW4AS@IPCIDev@@IPEAG@Z 000000018000f7f0 f   viPCIDev.obj
+ 0001:0000e830       ?R32@viPCIDev@@UEAAHW4AS@IPCIDev@@IPEAI@Z 000000018000f830 f   viPCIDev.obj
+ 0001:0000e870       ?LLAW32@viPCIDev@@UEAAHII@Z 000000018000f870 f   viPCIDev.obj
+ 0001:0000e8b0       ?LLAR32@viPCIDev@@UEAAHIPEAI@Z 000000018000f8b0 f   viPCIDev.obj
+ 0001:0000e8f0       ?OpenDefaultRM@viPCIDev@@SAHXZ 000000018000f8f0 f   viPCIDev.obj
+ 0001:0000e920       ?GetDefaultRM@viPCIDev@@SAKXZ 000000018000f920 f   viPCIDev.obj
+ 0001:0000eba0       ??0IPCIDev@@QEAA@XZ        000000018000fba0 f i viPCIDev.obj
+ 0001:0000ebc0       ??1IPCIDev@@UEAA@XZ        000000018000fbc0 f i viPCIDev.obj
+ 0001:0000ebe0       ?GetDevName@IPCIDev@@UEAAPEADXZ 000000018000fbe0 f i viPCIDev.obj
+ 0001:0000ec00       ??_GIPCIDev@@UEAAPEAXI@Z   000000018000fc00 f i viPCIDev.obj
+ 0001:0000ec00       ??_EIPCIDev@@UEAAPEAXI@Z   000000018000fc00 f i viPCIDev.obj
+ 0001:0000ec50       ??_GviPCIDev@@UEAAPEAXI@Z  000000018000fc50 f i viPCIDev.obj
+ 0001:0000ec50       ??_EviPCIDev@@UEAAPEAXI@Z  000000018000fc50 f i viPCIDev.obj
+ 0001:0000eca0       ?push_back@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@Z 000000018000fca0 f i viPCIDev.obj
+ 0001:0000ee10       ?pop_back@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAAXXZ 000000018000fe10 f i viPCIDev.obj
+ 0001:0000eed0       ?clear@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAAXXZ 000000018000fed0 f i viPCIDev.obj
+ 0001:0000f030       ??1?$_Vector_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAA@XZ 0000000180010030 f i viPCIDev.obj
+ 0001:0000f050       ??0?$_Vector_const_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAA@AEBV01@@Z 0000000180010050 f i viPCIDev.obj
+ 0001:0000f0a0       ??1?$_Vector_const_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAA@XZ 00000001800100a0 f i viPCIDev.obj
+ 0001:0000f0c0       ??0?$_Ranit@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_JPEBV12@AEBV12@@std@@QEAA@AEBU01@@Z 00000001800100c0 f i viPCIDev.obj
+ 0001:0000f0f0       ??1?$_Ranit@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_JPEBV12@AEBV12@@std@@QEAA@XZ 00000001800100f0 f i viPCIDev.obj
+ 0001:0000f110       ??0?$_Iterator_with_base@Urandom_access_iterator_tag@std@@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_JPEBV32@AEBV32@V_Iterator_base@2@@std@@QEAA@AEBU01@@Z 0000000180010110 f i viPCIDev.obj
+ 0001:0000f140       ??0_Iterator_base@std@@QEAA@AEBV01@@Z 0000000180010140 f i viPCIDev.obj
+ 0001:0000f190       ??4_Iterator_base@std@@QEAAAEAV01@AEBV01@@Z 0000000180010190 f i viPCIDev.obj
+ 0001:0000f220       ?_Adopt@_Iterator_base@std@@QEAAXPEBV_Container_base_secure@2@@Z 0000000180010220 f i viPCIDev.obj
+ 0001:0000f2e0       ?_Orphan_me@_Iterator_base@std@@QEAAXXZ 00000001800102e0 f i viPCIDev.obj
+ 0001:0000f3b0       ??1?$_Iterator_with_base@Urandom_access_iterator_tag@std@@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_JPEBV32@AEBV32@V_Iterator_base@2@@std@@QEAA@XZ 00000001800103b0 f i viPCIDev.obj
+ 0001:0000f3d0       ??1_Iterator_base@std@@QEAA@XZ 00000001800103d0 f i viPCIDev.obj
+ 0001:0000f420       ?capacity@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEBA_KXZ 0000000180010420 f i viPCIDev.obj
+ 0001:0000f480       ?begin@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAA?AV?$_Vector_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@XZ 0000000180010480 f i viPCIDev.obj
+ 0001:0000f4e0       ?end@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAA?AV?$_Vector_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@XZ 00000001800104e0 f i viPCIDev.obj
+ 0001:0000f540       ?size@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEBA_KXZ 0000000180010540 f i viPCIDev.obj
+ 0001:0000f570       ?empty@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEBA_NXZ 0000000180010570 f i viPCIDev.obj
+ 0001:0000f5b0       ?insert@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAA?AV?$_Vector_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@V?$_Vector_const_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@Z 00000001800105b0 f i viPCIDev.obj
+ 0001:0000f7a0       ?erase@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAA?AV?$_Vector_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@V?$_Vector_const_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@0@Z 00000001800107a0 f i viPCIDev.obj
+ 0001:0000fa40       ?_Destroy@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@IEAAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@0@Z 0000000180010a40 f i viPCIDev.obj
+ 0001:0000fa80       ?_Ufill@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@IEAAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@PEAV32@_KAEBV32@@Z 0000000180010a80 f i viPCIDev.obj
+ 0001:0000fae0       ?_Orphan_range@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@IEBAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@0@Z 0000000180010ae0 f i viPCIDev.obj
+ 0001:0000fbb0       ?_Make_iter@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEBA?AV?$_Vector_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@V?$_Vector_const_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@@Z 0000000180010bb0 f i viPCIDev.obj
+ 0001:0000fc30       ?_Insert_n@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@IEAAXV?$_Vector_const_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@_KAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@Z 0000000180010c30 f i viPCIDev.obj
+ 0001:000103e0       ??0?$_Vector_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAA@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@PEBV_Container_base_secure@1@@Z 00000001800113e0 f i viPCIDev.obj
+ 0001:00010420       ??H?$_Vector_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEBA?AV01@_J@Z 0000000180011420 f i viPCIDev.obj
+ 0001:000104b0       ??G?$_Vector_const_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEBA_JAEBV01@@Z 00000001800114b0 f i viPCIDev.obj
+ 0001:00010510       ??9?$_Vector_const_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEBA_NAEBV01@@Z 0000000180011510 f i viPCIDev.obj
+ 0001:00010560       ??M?$_Vector_const_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEBA_NAEBV01@@Z 0000000180011560 f i viPCIDev.obj
+ 0001:000105c0       ??0?$_Vector_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAA@AEBV01@@Z 00000001800115c0 f i viPCIDev.obj
+ 0001:000105f0       ?max_size@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEBA_KXZ 00000001800115f0 f i viPCIDev.obj
+ 0001:00010620       ?_Xlen@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@KAXXZ 0000000180011620 f i viPCIDev.obj
+ 0001:000106a0       ??0length_error@std@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z 00000001800116a0 f i viPCIDev.obj
+ 0001:000106f0       ??0logic_error@std@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z 00000001800116f0 f i viPCIDev.obj
+ 0001:00010760       ?what@logic_error@std@@UEBAPEBDXZ 0000000180011760 f i viPCIDev.obj
+ 0001:00010790       ??_Glogic_error@std@@UEAAPEAXI@Z 0000000180011790 f i viPCIDev.obj
+ 0001:00010790       ??_Elogic_error@std@@UEAAPEAXI@Z 0000000180011790 f i viPCIDev.obj
+ 0001:000107e0       ??1logic_error@std@@UEAA@XZ 00000001800117e0 f i viPCIDev.obj
+ 0001:00010830       ??1length_error@std@@UEAA@XZ 0000000180011830 f i viPCIDev.obj
+ 0001:00010860       ??_Glength_error@std@@UEAAPEAXI@Z 0000000180011860 f i viPCIDev.obj
+ 0001:00010860       ??_Elength_error@std@@UEAAPEAXI@Z 0000000180011860 f i viPCIDev.obj
+ 0001:000108b0       ??0logic_error@std@@QEAA@AEBV01@@Z 00000001800118b0 f i viPCIDev.obj
+ 0001:00010920       ?deallocate@?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QEAAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_K@Z 0000000180011920 f i viPCIDev.obj
+ 0001:00010950       ?allocate@?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QEAAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_K@Z 0000000180011950 f i viPCIDev.obj
+ 0001:00010980       ??Y?$_Vector_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAAAEAV01@_J@Z 0000000180011980 f i viPCIDev.obj
+ 0001:000109b0       ??0?$_Vector_const_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAA@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@PEBV_Container_base_secure@1@@Z 00000001800119b0 f i viPCIDev.obj
+ 0001:00010ac0       ??8?$_Vector_const_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEBA_NAEBV01@@Z 0000000180011ac0 f i viPCIDev.obj
+ 0001:00010b20       ?_Compat@?$_Vector_const_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEBAXAEBV12@@Z 0000000180011b20 f i viPCIDev.obj
+ 0001:00010c00       ??0length_error@std@@QEAA@AEBV01@@Z 0000000180011c00 f i viPCIDev.obj
+ 0001:00010c50       ??0?$_Ranit@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_JPEBV12@AEBV12@@std@@QEAA@XZ 0000000180011c50 f i viPCIDev.obj
+ 0001:00010c80       ??0?$_Iterator_with_base@Urandom_access_iterator_tag@std@@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_JPEBV32@AEBV32@V_Iterator_base@2@@std@@QEAA@XZ 0000000180011c80 f i viPCIDev.obj
+ 0001:00010cb0       ??0_Iterator_base@std@@QEAA@XZ 0000000180011cb0 f i viPCIDev.obj
+ 0001:00010ce0       ?max_size@?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QEBA_KXZ 0000000180011ce0 f i viPCIDev.obj
+ 0001:00010d30       ??Y?$_Vector_const_iterator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAAAEAV01@_J@Z 0000000180011d30 f i viPCIDev.obj
+ 0001:00010ed0       ?_Getmycont@_Iterator_base@std@@QEBAPEBV_Container_base_secure@2@XZ 0000000180011ed0 f i viPCIDev.obj
+ 0001:00010ef0       ?_Has_container@_Iterator_base@std@@QEBA_NXZ 0000000180011ef0 f i viPCIDev.obj
+ 0001:00010f30       ??$unchecked_copy@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@@stdext@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@00@Z 0000000180011f30 f i viPCIDev.obj
+ 0001:00010ff0       ??$_Destroy_range@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@@std@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0AEAV?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@0@@Z 0000000180011ff0 f i viPCIDev.obj
+ 0001:00011050       ??$unchecked_uninitialized_fill_n@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_KV12@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@stdext@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_KAEBV12@AEAV?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@Z 0000000180012050 f i viPCIDev.obj
+ 0001:000110e0       ??$_Umove@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@IEAAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@PEAV21@00@Z 00000001800120e0 f i viPCIDev.obj
+ 0001:00011130       ??$fill@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0AEBV10@@Z 0000000180012130 f i viPCIDev.obj
+ 0001:00011190       ??$_Unchecked_move_backward@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@@stdext@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@00@Z 0000000180012190 f i viPCIDev.obj
+ 0001:00011240       ??$_Allocate@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@_KPEAV10@@Z 0000000180012240 f i viPCIDev.obj
+ 0001:000112c0       ??0bad_alloc@std@@QEAA@PEBD@Z 00000001800122c0 f i viPCIDev.obj
+ 0001:00011310       ??1bad_alloc@std@@UEAA@XZ  0000000180012310 f i viPCIDev.obj
+ 0001:00011350       ??_Ebad_alloc@std@@UEAAPEAXI@Z 0000000180012350 f i viPCIDev.obj
+ 0001:00011350       ??_Gbad_alloc@std@@UEAAPEAXI@Z 0000000180012350 f i viPCIDev.obj
+ 0001:000113a0       ??0bad_alloc@std@@QEAA@AEBV01@@Z 00000001800123a0 f i viPCIDev.obj
+ 0001:000113f0       ??$_Checked_base@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@AEAPEAV10@@Z 00000001800123f0 f i viPCIDev.obj
+ 0001:00011420       ??$_Iter_random@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@@std@@YA?AUrandom_access_iterator_tag@0@AEBQEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0@Z 0000000180012420 f i viPCIDev.obj
+ 0001:00011450       ??$_Ptr_cat@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@@std@@YA?AU_Nonscalar_ptr_iterator_tag@0@AEAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0@Z 0000000180012450 f i viPCIDev.obj
+ 0001:00011470       ??$_Copy_opt@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@@std@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PEAV10@00Urandom_access_iterator_tag@0@U_Nonscalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 0000000180012470 f i viPCIDev.obj
+ 0001:00011540       ??$_Destroy_range@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@@std@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0AEAV?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@@Z 0000000180012540 f i viPCIDev.obj
+ 0001:000115a0       ??$_Uninit_fill_n@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_KV12@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@_KAEBV10@AEAV?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@0@U_Nonscalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 00000001800125a0 f i viPCIDev.obj
+ 0001:00011630       ??$_Unchecked_uninitialized_move@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@stdext@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@00AEAV?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@Z 0000000180012630 f i viPCIDev.obj
+ 0001:000116d0       ??$_Fill@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0AEBV10@@Z 00000001800126d0 f i viPCIDev.obj
+ 0001:00011750       ??$_Move_cat@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YA?AU_Swap_move_tag@0@AEBQEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@@Z 0000000180012750 f i viPCIDev.obj
+ 0001:00011770       ??$_Move_backward_opt@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@@std@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PEAV10@00Urandom_access_iterator_tag@0@U_Swap_move_tag@0@U_Range_checked_iterator_tag@0@@Z 0000000180012770 f i viPCIDev.obj
+ 0001:00011830       ?construct@?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QEAAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@AEBV32@@Z 0000000180012830 f i viPCIDev.obj
+ 0001:00011860       ?destroy@?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QEAAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@Z 0000000180012860 f i viPCIDev.obj
+ 0001:00011890       ??$_Checked_base@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@AEAPEAV10@U_Unchanged_checked_iterator_base_type_tag@0@@Z 0000000180012890 f i viPCIDev.obj
+ 0001:000118b0       ??$_Copy_opt@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@Uforward_iterator_tag@2@@std@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PEAV10@00Uforward_iterator_tag@0@U_Nonscalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 00000001800128b0 f i viPCIDev.obj
+ 0001:00011950       ??$_Uninit_move@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PEAV10@00AEAV?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@0@U_Swap_move_tag@0@U_Range_checked_iterator_tag@0@@Z 0000000180012950 f i viPCIDev.obj
+ 0001:00011ae0       ??0_Has_debug_it@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@_N@Z 0000000180012ae0 f i viPCIDev.obj
+ 0001:00011b10       ??$_Debug_range@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0PEB_WI@Z 0000000180012b10 f i viPCIDev.obj
+ 0001:00011b70       ??$_Move_backward_opt@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@Uforward_iterator_tag@2@@std@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PEAV10@00Uforward_iterator_tag@0@U_Swap_move_tag@0@U_Range_checked_iterator_tag@0@@Z 0000000180012b70 f i viPCIDev.obj
+ 0001:00011c10       ??$_Construct@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@AEBV10@@Z 0000000180012c10 f i viPCIDev.obj
+ 0001:00011ca0       ??2@YAPEAX_KPEAX@Z         0000000180012ca0 f i viPCIDev.obj
+ 0001:00011cc0       ??3@YAXPEAX0@Z             0000000180012cc0 f i viPCIDev.obj
+ 0001:00011cd0       ??$_Destroy@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@@Z 0000000180012cd0 f i viPCIDev.obj
+ 0001:00011cf0       ??_G?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAPEAXI@Z 0000000180012cf0 f i viPCIDev.obj
+ 0001:00011d40       ??$_Debug_pointer@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PEB_WI@Z 0000000180012d40 f i viPCIDev.obj
+ 0001:00011d90       ??$_Swap_adl@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YAXAEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0@Z 0000000180012d90 f i viPCIDev.obj
+ 0001:00011dc0       ??$_Iter_cat@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YA?AUrandom_access_iterator_tag@0@AEBQEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@@Z 0000000180012dc0 f i viPCIDev.obj
+ 0001:00011de0       ??$_Debug_range2@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0PEB_WIUrandom_access_iterator_tag@0@@Z 0000000180012de0 f i viPCIDev.obj
+ 0001:00011e80       ??$swap@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@YAXAEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0@Z 0000000180012e80 f i viPCIDev.obj
+ 0001:00011eb0       ??0wdPCIDev@@QEAA@XZ       0000000180012eb0 f   wdPCIDev.obj
+ 0001:00011f00       ??0wdPCIDev@@QEAA@PEBD@Z   0000000180012f00 f   wdPCIDev.obj
+ 0001:00011f80       ??1wdPCIDev@@UEAA@XZ       0000000180012f80 f   wdPCIDev.obj
+ 0001:00011fb0       ?GetDevices@wdPCIDev@@UEAAHAEAV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@@Z 0000000180012fb0 f   wdPCIDev.obj
+ 0001:00012140       ?Init@wdPCIDev@@UEAAHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z 0000000180013140 f   wdPCIDev.obj
+ 0001:00012170       ?Init@wdPCIDev@@UEAAHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@II@Z 0000000180013170 f   wdPCIDev.obj
+ 0001:000121b0       ?Close@wdPCIDev@@UEAAHXZ   00000001800131b0 f   wdPCIDev.obj
+ 0001:000121c0       ?GetDes@wdPCIDev@@UEAAPEADXZ 00000001800131c0 f   wdPCIDev.obj
+ 0001:000121d0       ?W8@wdPCIDev@@UEAAHW4AS@IPCIDev@@IE@Z 00000001800131d0 f   wdPCIDev.obj
+ 0001:000121f0       ?W16@wdPCIDev@@UEAAHW4AS@IPCIDev@@IG@Z 00000001800131f0 f   wdPCIDev.obj
+ 0001:00012210       ?W32@wdPCIDev@@UEAAHW4AS@IPCIDev@@II@Z 0000000180013210 f   wdPCIDev.obj
+ 0001:00012230       ?W32@wdPCIDev@@UEAAHW4AS@IPCIDev@@IIPEAI@Z 0000000180013230 f   wdPCIDev.obj
+ 0001:00012250       ?R8@wdPCIDev@@UEAAHW4AS@IPCIDev@@IPEAE@Z 0000000180013250 f   wdPCIDev.obj
+ 0001:00012270       ?R16@wdPCIDev@@UEAAHW4AS@IPCIDev@@IPEAG@Z 0000000180013270 f   wdPCIDev.obj
+ 0001:00012290       ?R32@wdPCIDev@@UEAAHW4AS@IPCIDev@@IPEAI@Z 0000000180013290 f   wdPCIDev.obj
+ 0001:000122b0       ?LLAW32@wdPCIDev@@UEAAHII@Z 00000001800132b0 f   wdPCIDev.obj
+ 0001:000122d0       ?LLAR32@wdPCIDev@@UEAAHIPEAI@Z 00000001800132d0 f   wdPCIDev.obj
+ 0001:000123f0       ??_GwdPCIDev@@UEAAPEAXI@Z  00000001800133f0 f i wdPCIDev.obj
+ 0001:000123f0       ??_EwdPCIDev@@UEAAPEAXI@Z  00000001800133f0 f i wdPCIDev.obj
+ 0001:00012440       ??$sprintf_s@$0BAA@@@YAHAEAY0BAA@DPEBDZZ 0000000180013440 f i wdPCIDev.obj
+ 0001:000124a0       __GSHandlerCheck           00000001800134a0 f   MSVCRTD:gshandler.obj
+ 0001:000124e0       __GSHandlerCheckCommon     00000001800134e0 f   MSVCRTD:gshandler.obj
+ 0001:000125d4       strtod                     00000001800135d4 f   MSVCRTD:MSVCR90D.dll
+ 0001:000125da       atof                       00000001800135da f   MSVCRTD:MSVCR90D.dll
+ 0001:000125e0       strcmp                     00000001800135e0 f   MSVCRTD:MSVCR90D.dll
+ 0001:000125e6       strlen                     00000001800135e6 f   MSVCRTD:MSVCR90D.dll
+ 0001:000125ec       strcpy                     00000001800135ec f   MSVCRTD:MSVCR90D.dll
+ 0001:000125f2       memset                     00000001800135f2 f   MSVCRTD:MSVCR90D.dll
+ 0001:000125f8       sscanf                     00000001800135f8 f   MSVCRTD:MSVCR90D.dll
+ 0001:000125fe       strstr                     00000001800135fe f   MSVCRTD:MSVCR90D.dll
+ 0001:00012620       __security_check_cookie    0000000180013620 f   MSVCRTD:amdsecgs.obj
+ 0001:00012640       strcat                     0000000180013640 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012646       sprintf                    0000000180013646 f   MSVCRTD:MSVCR90D.dll
+ 0001:0001264c       fabs                       000000018001364c f   MSVCRTD:MSVCR90D.dll
+ 0001:00012652       strrchr                    0000000180013652 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012658       strpbrk                    0000000180013658 f   MSVCRTD:MSVCR90D.dll
+ 0001:0001265e       strchr                     000000018001365e f   MSVCRTD:MSVCR90D.dll
+ 0001:00012664       ??3@YAXPEAX@Z              0000000180013664 f   MSVCRTD:MSVCR90D.dll
+ 0001:0001266a       ??2@YAPEAX_K@Z             000000018001366a f   MSVCRTD:MSVCR90D.dll
+ 0001:00012670       log10                      0000000180013670 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012676       pow                        0000000180013676 f   MSVCRTD:MSVCR90D.dll
+ 0001:0001267c       strtol                     000000018001367c f   MSVCRTD:MSVCR90D.dll
+ 0001:00012682       memcpy                     0000000180013682 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012688       sin                        0000000180013688 f   MSVCRTD:MSVCR90D.dll
+ 0001:0001268e       cos                        000000018001368e f   MSVCRTD:MSVCR90D.dll
+ 0001:00012694       printf                     0000000180013694 f   MSVCRTD:MSVCR90D.dll
+ 0001:0001269a       __CxxFrameHandler3         000000018001369a f   MSVCRTD:MSVCR90D.dll
+ 0001:000126a0       _getcwd                    00000001800136a0 f   MSVCRTD:MSVCR90D.dll
+ 0001:000126a6       fclose                     00000001800136a6 f   MSVCRTD:MSVCR90D.dll
+ 0001:000126ac       fgets                      00000001800136ac f   MSVCRTD:MSVCR90D.dll
+ 0001:000126b2       feof                       00000001800136b2 f   MSVCRTD:MSVCR90D.dll
+ 0001:000126b8       fopen                      00000001800136b8 f   MSVCRTD:MSVCR90D.dll
+ 0001:000126c0       __GSHandlerCheck_EH        00000001800136c0 f   MSVCRTD:gshandlereh.obj
+ 0001:00012770       ??0type_info@@AEAA@AEBV0@@Z 0000000180013770 f   MSVCRTD:ti_inst.obj
+ 0001:00012790       ??_Etype_info@@UEAAPEAXI@Z 0000000180013790 f i MSVCRTD:ti_inst.obj
+ 0001:00012820       ??4type_info@@AEAAAEAV0@AEBV0@@Z 0000000180013820 f   MSVCRTD:ti_inst.obj
+ 0001:00012830       _purecall                  0000000180013830 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012836       vsprintf_s                 0000000180013836 f   MSVCRTD:MSVCR90D.dll
+ 0001:0001283c       _CxxThrowException         000000018001383c f   MSVCRTD:MSVCR90D.dll
+ 0001:00012842       ??0exception@std@@QEAA@AEBV01@@Z 0000000180013842 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012848       ??1exception@std@@UEAA@XZ  0000000180013848 f   MSVCRTD:MSVCR90D.dll
+ 0001:0001284e       ??0exception@std@@QEAA@XZ  000000018001384e f   MSVCRTD:MSVCR90D.dll
+ 0001:00012854       _invalid_parameter         0000000180013854 f   MSVCRTD:MSVCR90D.dll
+ 0001:0001285a       _CrtDbgReportW             000000018001385a f   MSVCRTD:MSVCR90D.dll
+ 0001:00012860       ??0exception@std@@QEAA@AEBQEBD@Z 0000000180013860 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012866       ?what@exception@std@@UEBAPEBDXZ 0000000180013866 f   MSVCRTD:MSVCR90D.dll
+ 0001:00012900       _CRT_INIT                  0000000180013900 f   MSVCRTD:crtdll.obj
+ 0001:00012cb0       NtCurrentTeb               0000000180013cb0 f i MSVCRTD:crtdll.obj
+ 0001:00012cc0       _DllMainCRTStartup         0000000180013cc0 f   MSVCRTD:crtdll.obj
+ 0001:00012e80       __report_gsfailure         0000000180013e80 f   MSVCRTD:gs_report.obj
+ 0001:00012fd0       ??_M@YAXPEAX_KHP6AX0@Z@Z   0000000180013fd0 f   MSVCRTD:ehvecdtr.obj
+ 0001:00013070       ?__ArrayUnwind@@YAXPEAX_KHP6AX0@Z@Z 0000000180014070 f   MSVCRTD:ehvecdtr.obj
+ 0001:00013100       __clean_type_info_names    0000000180014100 f   MSVCRTD:tncleanup.obj
+ 0001:00013120       _onexit                    0000000180014120 f   MSVCRTD:atonexit.obj
+ 0001:000131e0       atexit                     00000001800141e0 f   MSVCRTD:atonexit.obj
+ 0001:00013220       _RTC_Initialize            0000000180014220 f   MSVCRTD:_initsect_.obj
+ 0001:00013260       _RTC_Terminate             0000000180014260 f   MSVCRTD:_initsect_.obj
+ 0001:0001329e       _encode_pointer            000000018001429e f   MSVCRTD:MSVCR90D.dll
+ 0001:000132a4       _malloc_dbg                00000001800142a4 f   MSVCRTD:MSVCR90D.dll
+ 0001:000132aa       _free_dbg                  00000001800142aa f   MSVCRTD:MSVCR90D.dll
+ 0001:000132b0       _encoded_null              00000001800142b0 f   MSVCRTD:MSVCR90D.dll
+ 0001:000132b6       _decode_pointer            00000001800142b6 f   MSVCRTD:MSVCR90D.dll
+ 0001:000132bc       _CrtSetCheckCount          00000001800142bc f   MSVCRTD:MSVCR90D.dll
+ 0001:000132d0       _ValidateImageBase         00000001800142d0 f   MSVCRTD:pesect.obj
+ 0001:00013350       _FindPESection             0000000180014350 f   MSVCRTD:pesect.obj
+ 0001:00013400       _IsNonwritableInCurrentImage 0000000180014400 f   MSVCRTD:pesect.obj
+ 0001:0001348c       _initterm                  000000018001448c f   MSVCRTD:MSVCR90D.dll
+ 0001:00013492       _initterm_e                0000000180014492 f   MSVCRTD:MSVCR90D.dll
+ 0001:00013498       _amsg_exit                 0000000180014498 f   MSVCRTD:MSVCR90D.dll
+ 0001:000134a0       __security_init_cookie     00000001800144a0 f   MSVCRTD:gs_support.obj
+ 0001:0001359e       __C_specific_handler       000000018001459e f   MSVCRTD:MSVCR90D.dll
+ 0001:000135a4       __CppXcptFilter            00000001800145a4 f   MSVCRTD:MSVCR90D.dll
+ 0001:000135b0       DllMain                    00000001800145b0 f   MSVCRTD:dllmain.obj
+ 0001:000135e8       __crt_debugger_hook        00000001800145e8 f   MSVCRTD:MSVCR90D.dll
+ 0001:000135ee       ?terminate@@YAXXZ          00000001800145ee f   MSVCRTD:MSVCR90D.dll
+ 0001:000135f4       ??1type_info@@UEAA@XZ      00000001800145f4 f   MSVCRTD:MSVCR90D.dll
+ 0001:000135f4       ?_type_info_dtor_internal_method@type_info@@QEAAXXZ 00000001800145f4 f   MSVCRTD:MSVCR90D.dll
+ 0001:000135fa       __clean_type_info_names_internal 00000001800145fa f   MSVCRTD:MSVCR90D.dll
+ 0001:00013600       _unlock                    0000000180014600 f   MSVCRTD:MSVCR90D.dll
+ 0001:00013606       __dllonexit                0000000180014606 f   MSVCRTD:MSVCR90D.dll
+ 0001:0001360c       _lock                      000000018001460c f   MSVCRTD:MSVCR90D.dll
+ 0001:00013612       ??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@XZ 0000000180014612 f   msvcprtd:MSVCP90D.dll
+ 0001:00013618       ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@PEBD@Z 0000000180014618 f   msvcprtd:MSVCP90D.dll
+ 0001:0001361e       ?copy@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBA_KPEAD_K1@Z 000000018001461e f   msvcprtd:MSVCP90D.dll
+ 0001:00013624       ?length@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBA_KXZ 0000000180014624 f   msvcprtd:MSVCP90D.dll
+ 0001:0001362a       ?_Debug_message@std@@YAXPEB_W0I@Z 000000018001462a f   msvcprtd:MSVCP90D.dll
+ 0001:00013630       ??1_Lockit@std@@QEAA@XZ    0000000180014630 f   msvcprtd:MSVCP90D.dll
+ 0001:00013636       ??0_Lockit@std@@QEAA@H@Z   0000000180014636 f   msvcprtd:MSVCP90D.dll
+ 0001:0001363c       ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@AEBV01@@Z 000000018001463c f   msvcprtd:MSVCP90D.dll
+ 0001:00013642       ?_Orphan_all@_Container_base_secure@std@@QEBAXXZ 0000000180014642 f   msvcprtd:MSVCP90D.dll
+ 0001:00013648       ?c_str@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBAPEBDXZ 0000000180014648 f   msvcprtd:MSVCP90D.dll
+ 0001:0001364e       ??4?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV01@AEBV01@@Z 000000018001464e f   msvcprtd:MSVCP90D.dll
+ 0001:00013654       ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@U_Has_debug_it@01@@Z 0000000180014654 f   msvcprtd:MSVCP90D.dll
+ 0001:0001365a       ?swap@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAXAEAV12@@Z 000000018001465a f   msvcprtd:MSVCP90D.dll
+ 0001:00013660       ??4?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV01@PEBD@Z 0000000180014660 f   msvcprtd:MSVCP90D.dll
+ 0001:00013666       ?clear@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAXXZ 0000000180014666 f   msvcprtd:MSVCP90D.dll
+ 0001:0001366c       viClose                    000000018001466c f   visa64:visa64.dll
+ 0001:00013672       viSetAttribute             0000000180014672 f   visa64:visa64.dll
+ 0001:00013678       viOpen                     0000000180014678 f   visa64:visa64.dll
+ 0001:0001367e       viWrite                    000000018001467e f   visa64:visa64.dll
+ 0001:00013684       viRead                     0000000180014684 f   visa64:visa64.dll
+ 0001:0001368a       viGetAttribute             000000018001468a f   visa64:visa64.dll
+ 0001:00013690       viMemAlloc                 0000000180014690 f   visa64:visa64.dll
+ 0001:00013696       viMemFree                  0000000180014696 f   visa64:visa64.dll
+ 0001:0001369c       viMoveOut8                 000000018001469c f   visa64:visa64.dll
+ 0001:000136a2       viMoveOut16                00000001800146a2 f   visa64:visa64.dll
+ 0001:000136a8       viMoveOut32                00000001800146a8 f   visa64:visa64.dll
+ 0001:000136ae       viMoveIn8                  00000001800146ae f   visa64:visa64.dll
+ 0001:000136b4       viMoveIn16                 00000001800146b4 f   visa64:visa64.dll
+ 0001:000136ba       viMoveIn32                 00000001800146ba f   visa64:visa64.dll
+ 0001:000136c0       viFindNext                 00000001800146c0 f   visa64:visa64.dll
+ 0001:000136c6       viFindRsrc                 00000001800146c6 f   visa64:visa64.dll
+ 0001:000136cc       viOut8                     00000001800146cc f   visa64:visa64.dll
+ 0001:000136d2       viOut16                    00000001800146d2 f   visa64:visa64.dll
+ 0001:000136d8       viOut32                    00000001800146d8 f   visa64:visa64.dll
+ 0001:000136de       viIn8                      00000001800146de f   visa64:visa64.dll
+ 0001:000136e4       viIn16                     00000001800146e4 f   visa64:visa64.dll
+ 0001:000136ea       viIn32                     00000001800146ea f   visa64:visa64.dll
+ 0001:000136f0       viPoke32                   00000001800146f0 f   visa64:visa64.dll
+ 0001:000136f6       viPeek32                   00000001800146f6 f   visa64:visa64.dll
+ 0001:000136fc       viOpenDefaultRM            00000001800146fc f   visa64:visa64.dll
+ 0001:00013702       WDC_DriverOpen             0000000180014702 f   wdapi1020:WDAPI1020.dll
+ 0001:00013708       WDC_PciScanDevices         0000000180014708 f   wdapi1020:WDAPI1020.dll
+ 0001:0001370e       Sleep                      000000018001470e f   kernel32:KERNEL32.dll
+ 0001:00013714       TerminateProcess           0000000180014714 f   kernel32:KERNEL32.dll
+ 0001:0001371a       GetCurrentProcess          000000018001471a f   kernel32:KERNEL32.dll
+ 0001:00013720       UnhandledExceptionFilter   0000000180014720 f   kernel32:KERNEL32.dll
+ 0001:00013726       SetUnhandledExceptionFilter 0000000180014726 f   kernel32:KERNEL32.dll
+ 0001:0001372c       IsDebuggerPresent          000000018001472c f   kernel32:KERNEL32.dll
+ 0001:00013732       RtlVirtualUnwind           0000000180014732 f   kernel32:KERNEL32.dll
+ 0001:00013738       RtlLookupFunctionEntry     0000000180014738 f   kernel32:KERNEL32.dll
+ 0001:0001373e       RtlCaptureContext          000000018001473e f   kernel32:KERNEL32.dll
+ 0001:00013744       QueryPerformanceCounter    0000000180014744 f   kernel32:KERNEL32.dll
+ 0001:0001374a       GetTickCount               000000018001474a f   kernel32:KERNEL32.dll
+ 0001:00013750       GetCurrentThreadId         0000000180014750 f   kernel32:KERNEL32.dll
+ 0001:00013756       GetCurrentProcessId        0000000180014756 f   kernel32:KERNEL32.dll
+ 0001:0001375c       GetSystemTimeAsFileTime    000000018001475c f   kernel32:KERNEL32.dll
+ 0001:00013762       DisableThreadLibraryCalls  0000000180014762 f   kernel32:KERNEL32.dll
+ 0001:00014870       __chkstk                   0000000180015870 f   MSVCRTD:chkstk.obj
+ 0001:00014870       _alloca_probe              0000000180015870     MSVCRTD:chkstk.obj
+ 0002:00000000       __xc_a                     000000018001a000     MSVCRTD:cinitexe.obj
+ 0002:00000110       __xc_z                     000000018001a110     MSVCRTD:cinitexe.obj
+ 0002:00000220       __xi_a                     000000018001a220     MSVCRTD:cinitexe.obj
+ 0002:00000440       __xi_z                     000000018001a440     MSVCRTD:cinitexe.obj
+ 0002:00000640       __real@41cdcd6500000000    000000018001a640     algorithm.obj
+ 0002:00000650       __real@412e848000000000    000000018001a650     algorithm.obj
+ 0002:00000660       __real@408f400000000000    000000018001a660     algorithm.obj
+ 0002:00000670       __real@43e0000000000000    000000018001a670     algorithm.obj
+ 0002:00000680       __real@43f0000000000000    000000018001a680     algorithm.obj
+ 0002:00000690       __real@3ff0000000000000    000000018001a690     algorithm.obj
+ 0002:000006a0       __real@4090000000000000    000000018001a6a0     algorithm.obj
+ 0002:000006b0       __real@4130000000000000    000000018001a6b0     algorithm.obj
+ 0002:000006c0       __real@41d0000000000000    000000018001a6c0     algorithm.obj
+ 0002:000006d0       __real@bfe0000000000000    000000018001a6d0     algorithm.obj
+ 0002:000006e0       __real@3fe0000000000000    000000018001a6e0     algorithm.obj
+ 0002:000006f0       __real@0000000000000000    000000018001a6f0     algorithm.obj
+ 0002:000006fc       __real@3fc00000            000000018001a6fc     algorithm.obj
+ 0002:00000700       __real@3f000000            000000018001a700     algorithm.obj
+ 0002:00000708       __real@4024000000000000    000000018001a708     algorithm.obj
+ 0002:00000718       __real@bff0000000000000    000000018001a718     algorithm.obj
+ 0002:00000728       __real@40affe0000000000    000000018001a728     algorithm.obj
+ 0002:00000738       __real@4014000000000000    000000018001a738     algorithm.obj
+ 0002:00000748       __real@c014000000000000    000000018001a748     algorithm.obj
+ 0002:00000758       __real@408ff80000000000    000000018001a758     algorithm.obj
+ 0002:00000768       __real@40b0000000000000    000000018001a768     algorithm.obj
+ 0002:00000778       __real@40b3880000000000    000000018001a778     algorithm.obj
+ 0002:00000788       __real@407f400000000000    000000018001a788     algorithm.obj
+ 0002:00000798       __real@4170000000000000    000000018001a798     algorithm.obj
+ 0002:000007a8       __real@4018000000000000    000000018001a7a8     algorithm.obj
+ 0002:000007b8       __real@4000000000000000    000000018001a7b8     algorithm.obj
+ 0002:000007c8       __real@401921fb54442d18    000000018001a7c8     algorithm.obj
+ 0002:00001031       ?_Value@?$_Is_swap_move@U_Swap_move_tag@std@@@std@@2_NB 000000018001b031     GeneralInteger.obj
+ 0002:00001034       ?collate@?$_Locbase@H@std@@2HB 000000018001b034     GeneralInteger.obj
+ 0002:00001038       ?ctype@?$_Locbase@H@std@@2HB 000000018001b038     GeneralInteger.obj
+ 0002:0000103c       ?monetary@?$_Locbase@H@std@@2HB 000000018001b03c     GeneralInteger.obj
+ 0002:00001040       ?numeric@?$_Locbase@H@std@@2HB 000000018001b040     GeneralInteger.obj
+ 0002:00001044       ?time@?$_Locbase@H@std@@2HB 000000018001b044     GeneralInteger.obj
+ 0002:00001048       ?messages@?$_Locbase@H@std@@2HB 000000018001b048     GeneralInteger.obj
+ 0002:0000104c       ?all@?$_Locbase@H@std@@2HB 000000018001b04c     GeneralInteger.obj
+ 0002:00001050       ?none@?$_Locbase@H@std@@2HB 000000018001b050     GeneralInteger.obj
+ 0002:00001054       ?skipws@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b054     GeneralInteger.obj
+ 0002:00001058       ?unitbuf@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b058     GeneralInteger.obj
+ 0002:0000105c       ?uppercase@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b05c     GeneralInteger.obj
+ 0002:00001060       ?showbase@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b060     GeneralInteger.obj
+ 0002:00001064       ?showpoint@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b064     GeneralInteger.obj
+ 0002:00001068       ?showpos@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b068     GeneralInteger.obj
+ 0002:0000106c       ?left@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b06c     GeneralInteger.obj
+ 0002:00001070       ?right@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b070     GeneralInteger.obj
+ 0002:00001074       ?internal@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b074     GeneralInteger.obj
+ 0002:00001078       ?dec@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b078     GeneralInteger.obj
+ 0002:0000107c       ?oct@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b07c     GeneralInteger.obj
+ 0002:00001080       ?hex@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b080     GeneralInteger.obj
+ 0002:00001084       ?scientific@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b084     GeneralInteger.obj
+ 0002:00001088       ?fixed@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b088     GeneralInteger.obj
+ 0002:0000108c       ?hexfloat@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b08c     GeneralInteger.obj
+ 0002:00001090       ?boolalpha@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b090     GeneralInteger.obj
+ 0002:00001094       ?_Stdio@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b094     GeneralInteger.obj
+ 0002:00001098       ?adjustfield@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b098     GeneralInteger.obj
+ 0002:0000109c       ?basefield@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b09c     GeneralInteger.obj
+ 0002:000010a0       ?floatfield@?$_Iosb@H@std@@2W4_Fmtflags@12@B 000000018001b0a0     GeneralInteger.obj
+ 0002:000010a4       ?goodbit@?$_Iosb@H@std@@2W4_Iostate@12@B 000000018001b0a4     GeneralInteger.obj
+ 0002:000010a8       ?eofbit@?$_Iosb@H@std@@2W4_Iostate@12@B 000000018001b0a8     GeneralInteger.obj
+ 0002:000010ac       ?failbit@?$_Iosb@H@std@@2W4_Iostate@12@B 000000018001b0ac     GeneralInteger.obj
+ 0002:000010b0       ?badbit@?$_Iosb@H@std@@2W4_Iostate@12@B 000000018001b0b0     GeneralInteger.obj
+ 0002:000010b4       ?_Hardfail@?$_Iosb@H@std@@2W4_Iostate@12@B 000000018001b0b4     GeneralInteger.obj
+ 0002:000010b8       ?in@?$_Iosb@H@std@@2W4_Openmode@12@B 000000018001b0b8     GeneralInteger.obj
+ 0002:000010bc       ?out@?$_Iosb@H@std@@2W4_Openmode@12@B 000000018001b0bc     GeneralInteger.obj
+ 0002:000010c0       ?ate@?$_Iosb@H@std@@2W4_Openmode@12@B 000000018001b0c0     GeneralInteger.obj
+ 0002:000010c4       ?app@?$_Iosb@H@std@@2W4_Openmode@12@B 000000018001b0c4     GeneralInteger.obj
+ 0002:000010c8       ?trunc@?$_Iosb@H@std@@2W4_Openmode@12@B 000000018001b0c8     GeneralInteger.obj
+ 0002:000010cc       ?_Nocreate@?$_Iosb@H@std@@2W4_Openmode@12@B 000000018001b0cc     GeneralInteger.obj
+ 0002:000010d0       ?_Noreplace@?$_Iosb@H@std@@2W4_Openmode@12@B 000000018001b0d0     GeneralInteger.obj
+ 0002:000010d4       ?binary@?$_Iosb@H@std@@2W4_Openmode@12@B 000000018001b0d4     GeneralInteger.obj
+ 0002:000010d8       ?beg@?$_Iosb@H@std@@2W4_Seekdir@12@B 000000018001b0d8     GeneralInteger.obj
+ 0002:000010dc       ?cur@?$_Iosb@H@std@@2W4_Seekdir@12@B 000000018001b0dc     GeneralInteger.obj
+ 0002:000010e0       ?end@?$_Iosb@H@std@@2W4_Seekdir@12@B 000000018001b0e0     GeneralInteger.obj
+ 0002:00001108       ??_7IGPIBDev@@6B@          000000018001b108     IGPIBDev.obj
+ 0002:00001188       ??_7viMemIO@@6B@           000000018001b188     viMemIO.obj
+ 0002:000012f8       ??_7viPCIDev@@6B@          000000018001b2f8     viPCIDev.obj
+ 0002:000013b8       ??_7IPCIDev@@6B@           000000018001b3b8     viPCIDev.obj
+ 0002:00001468       ??_C@_1DA@JIKEAPDO@?$AAv?$AAe?$AAc?$AAt?$AAo?$AAr?$AA?5?$AAe?$AAm?$AAp?$AAt?$AAy?$AA?5?$AAb?$AAe?$AAf?$AAo?$AAr?$AAe?$AA?5?$AAp?$AAo?$AAp?$AA?$AA@ 000000018001b468     viPCIDev.obj
+ 0002:000014b0       ??_C@_1IK@PFPAGNAC@?$AAC?$AA?3?$AA?2?$AAP?$AAr?$AAo?$AAg?$AAr?$AAa?$AAm?$AA?5?$AAF?$AAi?$AAl?$AAe?$AAs?$AA?5?$AA?$CI?$AAx?$AA8?$AA6?$AA?$CJ?$AA?2?$AAM?$AAi?$AAc?$AAr?$AAo?$AAs?$AAo?$AAf?$AAt@ 000000018001b4b0     viPCIDev.obj
+ 0002:000015e8       ??_C@_1DC@POOIKBAO@?$AAI?$AAT?$AAE?$AAR?$AAA?$AAT?$AAO?$AAR?$AA?5?$AAL?$AAI?$AAS?$AAT?$AA?5?$AAC?$AAO?$AAR?$AAR?$AAU?$AAP?$AAT?$AAE?$AAD?$AA?$CB?$AA?$AA@ 000000018001b5e8     viPCIDev.obj
+ 0002:00001630       ??_C@_1IO@BBMNBHMA@?$AAC?$AA?3?$AA?2?$AAP?$AAr?$AAo?$AAg?$AAr?$AAa?$AAm?$AA?5?$AAF?$AAi?$AAl?$AAe?$AAs?$AA?5?$AA?$CI?$AAx?$AA8?$AA6?$AA?$CJ?$AA?2?$AAM?$AAi?$AAc?$AAr?$AAo?$AAs?$AAo?$AAf?$AAt@ 000000018001b630     viPCIDev.obj
+ 0002:00001770       ??_C@_1EI@HGIDLLCM@?$AAv?$AAe?$AAc?$AAt?$AAo?$AAr?$AA?5?$AAe?$AAr?$AAa?$AAs?$AAe?$AA?5?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AA?5?$AAo?$AAu?$AAt?$AAs?$AAi?$AAd?$AAe?$AA?5?$AAr?$AAa@ 000000018001b770     viPCIDev.obj
+ 0002:00001830       ??_C@_1EK@EEHFMKDC@?$AAv?$AAe?$AAc?$AAt?$AAo?$AAr?$AA?5?$AAi?$AAn?$AAs?$AAe?$AAr?$AAt?$AA?5?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AA?5?$AAo?$AAu?$AAt?$AAs?$AAi?$AAd?$AAe?$AA?5?$AAr@ 000000018001b830     viPCIDev.obj
+ 0002:000018e8       ??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long?$AA@ 000000018001b8e8     viPCIDev.obj
+ 0002:00001908       ??_7length_error@std@@6B@  000000018001b908     viPCIDev.obj
+ 0002:00001958       ??_7logic_error@std@@6B@   000000018001b958     viPCIDev.obj
+ 0002:000019d0       ??_C@_1CG@JNLFBNGN@?$AA?$CC?$AAi?$AAn?$AAv?$AAa?$AAl?$AAi?$AAd?$AA?5?$AAa?$AAr?$AAg?$AAu?$AAm?$AAe?$AAn?$AAt?$AA?$CC?$AA?$AA@ 000000018001b9d0     viPCIDev.obj
+ 0002:00001a00       ??_C@_1BPK@MNCDPEOO@?$AAs?$AAt?$AAd?$AA?3?$AA?3?$AA_?$AAV?$AAe?$AAc?$AAt?$AAo?$AAr?$AA_?$AAc?$AAo?$AAn?$AAs?$AAt?$AA_?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AA?$DM?$AAc?$AAl?$AAa?$AAs@ 000000018001ba00     viPCIDev.obj
+ 0002:00001c60       ??_C@_1NK@JLHOCNGO@?$AA?$CI?$AA?$CC?$AA_?$AAP?$AAv?$AAe?$AAc?$AAt?$AAo?$AAr?$AA?5?$AA?$DN?$AA?$DN?$AA?5?$AAN?$AAU?$AAL?$AAL?$AA?5?$AA?$HM?$AA?$HM?$AA?5?$AA?$CI?$AA?$CI?$AA?$CI?$AA_?$AAM?$AAy?$AAv?$AAe?$AAc?$AA?5@ 000000018001bc60     viPCIDev.obj
+ 0002:00001d70       ??_C@_1BNM@BEDNJHNI@?$AAs?$AAt?$AAd?$AA?3?$AA?3?$AA_?$AAV?$AAe?$AAc?$AAt?$AAo?$AAr?$AA_?$AAc?$AAo?$AAn?$AAs?$AAt?$AA_?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AA?$DM?$AAc?$AAl?$AAa?$AAs@ 000000018001bd70     viPCIDev.obj
+ 0002:00001fb0       ??_C@_1FO@OCPOOAIA@?$AA?$CI?$AA?$CC?$AAS?$AAt?$AAa?$AAn?$AAd?$AAa?$AAr?$AAd?$AA?5?$AAC?$AA?$CL?$AA?$CL?$AA?5?$AAL?$AAi?$AAb?$AAr?$AAa?$AAr?$AAi?$AAe?$AAs?$AA?5?$AAI?$AAn?$AAv?$AAa?$AAl?$AAi?$AAd@ 000000018001bfb0     viPCIDev.obj
+ 0002:00002020       ??_C@_1DM@HINDPMBP@?$AAv?$AAe?$AAc?$AAt?$AAo?$AAr?$AA?5?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AAs?$AA?5?$AAi?$AAn?$AAc?$AAo?$AAm?$AAp?$AAa?$AAt?$AAi?$AAb?$AAl?$AAe?$AA?$AA@ 000000018001c020     viPCIDev.obj
+ 0002:00002068       ??_C@_1BO@MEPPHOO@?$AA?$CC?$AAo?$AAu?$AAt?$AA?5?$AAo?$AAf?$AA?5?$AAr?$AAa?$AAn?$AAg?$AAe?$AA?$CC?$AA?$AA@ 000000018001c068     viPCIDev.obj
+ 0002:00002090       ??_C@_1BAC@KBDNDJPK@?$AA?$CI?$AA?$CC?$AA_?$AAM?$AAy?$AAp?$AAt?$AAr?$AA?5?$AA?$CL?$AA?5?$AA_?$AAO?$AAf?$AAf?$AA?5?$AA?$DM?$AA?$DN?$AA?5?$AA?$CI?$AA?$CI?$AA_?$AAM?$AAy?$AAv?$AAe?$AAc?$AA?5?$AA?$CK?$AA?$CJ?$AA?$CI?$AAt@ 000000018001c090     viPCIDev.obj
+ 0002:000021d0       ??_C@_1BOE@HHEDPKGH@?$AAs?$AAt?$AAd?$AA?3?$AA?3?$AA_?$AAV?$AAe?$AAc?$AAt?$AAo?$AAr?$AA_?$AAc?$AAo?$AAn?$AAs?$AAt?$AA_?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AA?$DM?$AAc?$AAl?$AAa?$AAs@ 000000018001c1d0     viPCIDev.obj
+ 0002:00002418       ??_C@_1DM@LBMEEJPP@?$AA?$CI?$AA?$CC?$AAt?$AAh?$AAi?$AAs?$AA?9?$AA?$DO?$AA_?$AAH?$AAa?$AAs?$AA_?$AAc?$AAo?$AAn?$AAt?$AAa?$AAi?$AAn?$AAe?$AAr?$AA?$CI?$AA?$CJ?$AA?$CC?$AA?0?$AA?5?$AA0?$AA?$CJ?$AA?$AA@ 000000018001c418     viPCIDev.obj
+ 0002:00002468       ??_7bad_alloc@std@@6B@     000000018001c468     viPCIDev.obj
+ 0002:000024e0       ??_C@_1IK@ILCLOBAJ@?$AAC?$AA?3?$AA?2?$AAP?$AAr?$AAo?$AAg?$AAr?$AAa?$AAm?$AA?5?$AAF?$AAi?$AAl?$AAe?$AAs?$AA?5?$AA?$CI?$AAx?$AA8?$AA6?$AA?$CJ?$AA?2?$AAM?$AAi?$AAc?$AAr?$AAo?$AAs?$AAo?$AAf?$AAt@ 000000018001c4e0     viPCIDev.obj
+ 0002:000025b8       ??_C@_1CK@EOPGIILJ@?$AAi?$AAn?$AAv?$AAa?$AAl?$AAi?$AAd?$AA?5?$AAn?$AAu?$AAl?$AAl?$AA?5?$AAp?$AAo?$AAi?$AAn?$AAt?$AAe?$AAr?$AA?$AA@ 000000018001c5b8     viPCIDev.obj
+ 0002:000025f0       ??_C@_1CO@DGLIKNHI@?$AAi?$AAn?$AAv?$AAa?$AAl?$AAi?$AAd?$AA?5?$AAi?$AAt?$AAe?$AAr?$AAa?$AAt?$AAo?$AAr?$AA?5?$AAr?$AAa?$AAn?$AAg?$AAe?$AA?$AA@ 000000018001c5f0     viPCIDev.obj
+ 0002:00002738       ??_7wdPCIDev@@6B@          000000018001c738     wdPCIDev.obj
+ 0002:000027e0       ??_7type_info@@6B@         000000018001c7e0     MSVCRTD:ti_inst.obj
+ 0002:000027e8       _pRawDllMain               000000018001c7e8     MSVCRTD:crtdll.obj
+ 0002:000027e8       _pDefaultRawDllMain        000000018001c7e8     MSVCRTD:crtdll.obj
+ 0002:000027f0       ??_C@_0DF@EBFKANAI@f?3?2dd?2vctools?2crt_bld?2self_64_am@ 000000018001c7f0     MSVCRTD:crtdll.obj
+ 0002:00002838       ?ProcessDetach@NativeDll@<CrtImplementationDetails>@@0IB 000000018001c838     MSVCRTD:tncleanup.obj
+ 0002:0000283c       ?ProcessAttach@NativeDll@<CrtImplementationDetails>@@0IB 000000018001c83c     MSVCRTD:tncleanup.obj
+ 0002:00002840       ?ThreadAttach@NativeDll@<CrtImplementationDetails>@@0IB 000000018001c840     MSVCRTD:tncleanup.obj
+ 0002:00002844       ?ThreadDetach@NativeDll@<CrtImplementationDetails>@@0IB 000000018001c844     MSVCRTD:tncleanup.obj
+ 0002:00002848       ?ProcessVerifier@NativeDll@<CrtImplementationDetails>@@0IB 000000018001c848     MSVCRTD:tncleanup.obj
+ 0002:00002b48       ??_R4IGPIBDev@@6B@         000000018001cb48     IGPIBDev.obj
+ 0002:00002b78       ??_R3IGPIBDev@@8           000000018001cb78     IGPIBDev.obj
+ 0002:00002b90       ??_R2IGPIBDev@@8           000000018001cb90     IGPIBDev.obj
+ 0002:00002ba0       ??_R1A@?0A@EA@IGPIBDev@@8  000000018001cba0     IGPIBDev.obj
+ 0002:00002bd0       ??_R4viMemIO@@6B@          000000018001cbd0     viMemIO.obj
+ 0002:00002c00       ??_R3viMemIO@@8            000000018001cc00     viMemIO.obj
+ 0002:00002c18       ??_R2viMemIO@@8            000000018001cc18     viMemIO.obj
+ 0002:00002c28       ??_R1A@?0A@EA@viMemIO@@8   000000018001cc28     viMemIO.obj
+ 0002:00002c58       ??_R4viPCIDev@@6B@         000000018001cc58     viPCIDev.obj
+ 0002:00002c88       ??_R3viPCIDev@@8           000000018001cc88     viPCIDev.obj
+ 0002:00002ca0       ??_R2viPCIDev@@8           000000018001cca0     viPCIDev.obj
+ 0002:00002cb8       ??_R1A@?0A@EA@viPCIDev@@8  000000018001ccb8     viPCIDev.obj
+ 0002:00002ce8       ??_R1A@?0A@EA@IPCIDev@@8   000000018001cce8     viPCIDev.obj
+ 0002:00002d18       ??_R3IPCIDev@@8            000000018001cd18     viPCIDev.obj
+ 0002:00002d30       ??_R2IPCIDev@@8            000000018001cd30     viPCIDev.obj
+ 0002:00002d40       ??_R4IPCIDev@@6B@          000000018001cd40     viPCIDev.obj
+ 0002:00002d70       ??_R4length_error@std@@6B@ 000000018001cd70     viPCIDev.obj
+ 0002:00002da0       ??_R3length_error@std@@8   000000018001cda0     viPCIDev.obj
+ 0002:00002db8       ??_R2length_error@std@@8   000000018001cdb8     viPCIDev.obj
+ 0002:00002de0       ??_R1A@?0A@EA@length_error@std@@8 000000018001cde0     viPCIDev.obj
+ 0002:00002e10       ??_R1A@?0A@EA@logic_error@std@@8 000000018001ce10     viPCIDev.obj
+ 0002:00002e40       ??_R3logic_error@std@@8    000000018001ce40     viPCIDev.obj
+ 0002:00002e58       ??_R2logic_error@std@@8    000000018001ce58     viPCIDev.obj
+ 0002:00002e70       ??_R1A@?0A@EA@exception@std@@8 000000018001ce70     viPCIDev.obj
+ 0002:00002ea0       ??_R3exception@std@@8      000000018001cea0     viPCIDev.obj
+ 0002:00002eb8       ??_R2exception@std@@8      000000018001ceb8     viPCIDev.obj
+ 0002:00002ec8       ??_R4logic_error@std@@6B@  000000018001cec8     viPCIDev.obj
+ 0002:00002ef8       ??_R4bad_alloc@std@@6B@    000000018001cef8     viPCIDev.obj
+ 0002:00002f28       ??_R3bad_alloc@std@@8      000000018001cf28     viPCIDev.obj
+ 0002:00002f40       ??_R2bad_alloc@std@@8      000000018001cf40     viPCIDev.obj
+ 0002:00002f58       ??_R1A@?0A@EA@bad_alloc@std@@8 000000018001cf58     viPCIDev.obj
+ 0002:00002f88       ??_R4wdPCIDev@@6B@         000000018001cf88     wdPCIDev.obj
+ 0002:00002fb8       ??_R3wdPCIDev@@8           000000018001cfb8     wdPCIDev.obj
+ 0002:00002fd0       ??_R2wdPCIDev@@8           000000018001cfd0     wdPCIDev.obj
+ 0002:00002fe8       ??_R1A@?0A@EA@wdPCIDev@@8  000000018001cfe8     wdPCIDev.obj
+ 0002:00003018       ??_R4type_info@@6B@        000000018001d018     MSVCRTD:ti_inst.obj
+ 0002:00003040       ??_R3type_info@@8          000000018001d040     MSVCRTD:ti_inst.obj
+ 0002:00003058       ??_R2type_info@@8          000000018001d058     MSVCRTD:ti_inst.obj
+ 0002:00003068       ??_R1A@?0A@EA@type_info@@8 000000018001d068     MSVCRTD:ti_inst.obj
+ 0002:000031c0       __rtc_iaa                  000000018001d1c0     MSVCRTD:_initsect_.obj
+ 0002:000032d0       __rtc_izz                  000000018001d2d0     MSVCRTD:_initsect_.obj
+ 0002:000033e0       __rtc_taa                  000000018001d3e0     MSVCRTD:_initsect_.obj
+ 0002:000034f0       __rtc_tzz                  000000018001d4f0     MSVCRTD:_initsect_.obj
+ 0002:00005af0       _TI3?AVlength_error@std@@  000000018001faf0     viPCIDev.obj
+ 0002:00005b10       _CTA3?AVlength_error@std@@ 000000018001fb10     viPCIDev.obj
+ 0002:00005b30       _CT??_R0?AVlength_error@std@@@8??0length_error@std@@QEAA@AEBV01@@Z72 000000018001fb30     viPCIDev.obj
+ 0002:00005b58       _CT??_R0?AVlogic_error@std@@@8??0logic_error@std@@QEAA@AEBV01@@Z72 000000018001fb58     viPCIDev.obj
+ 0002:00005b80       _CT??_R0?AVexception@std@@@8??0exception@std@@QEAA@AEBV01@@Z24 000000018001fb80     viPCIDev.obj
+ 0002:00005ba8       _TI2?AVbad_alloc@std@@     000000018001fba8     viPCIDev.obj
+ 0002:00005bc8       _CTA2?AVbad_alloc@std@@    000000018001fbc8     viPCIDev.obj
+ 0002:00005be0       _CT??_R0?AVbad_alloc@std@@@8??0bad_alloc@std@@QEAA@AEBV01@@Z24 000000018001fbe0     viPCIDev.obj
+ 0003:00000020       ??_R0?AVIGPIBDev@@@8       0000000180023020     IGPIBDev.obj
+ 0003:00000058       ??_R0?AVviMemIO@@@8        0000000180023058     viMemIO.obj
+ 0003:00000090       ??_R0?AVviPCIDev@@@8       0000000180023090     viPCIDev.obj
+ 0003:000000b8       ??_R0?AVIPCIDev@@@8        00000001800230b8     viPCIDev.obj
+ 0003:000000e0       ??_R0?AVlength_error@std@@@8 00000001800230e0     viPCIDev.obj
+ 0003:00000110       ??_R0?AVlogic_error@std@@@8 0000000180023110     viPCIDev.obj
+ 0003:00000140       ??_R0?AVexception@std@@@8  0000000180023140     viPCIDev.obj
+ 0003:00000170       ??_R0?AVbad_alloc@std@@@8  0000000180023170     viPCIDev.obj
+ 0003:000001b0       ??_R0?AVwdPCIDev@@@8       00000001800231b0     wdPCIDev.obj
+ 0003:000001d8       __security_cookie          00000001800231d8     MSVCRTD:gs_cookie.obj
+ 0003:000001e0       __security_cookie_complement 00000001800231e0     MSVCRTD:gs_cookie.obj
+ 0003:000001e8       _fltused                   00000001800231e8     MSVCRTD:dllsupp.obj
+ 0003:000001f0       ??_R0?AVtype_info@@@8      00000001800231f0     MSVCRTD:ti_inst.obj
+ 0003:00000210       __native_dllmain_reason    0000000180023210     MSVCRTD:natstart.obj
+ 0003:00000214       __native_vcclrit_reason    0000000180023214     MSVCRTD:natstart.obj
+ 0003:000008c0       _forceCRTManifestRTM       00000001800238c0     MSVCRTD:crtmanifestrtm.obj
+ 0003:000008c8       ?__type_info_root_node@@3U__type_info_node@@A 00000001800238c8     MSVCRTD:tncleanup.obj
+ 0003:000008d8       __native_startup_state     00000001800238d8     <common>
+ 0003:000008e8       __native_startup_lock      00000001800238e8     <common>
+ 0003:000008f0       __onexitend                00000001800238f0     <common>
+ 0003:00000908       __onexitbegin              0000000180023908     <common>
+ 0003:00000910       __dyn_tls_init_callback    0000000180023910     <common>
+ 0005:00000000       __IMPORT_DESCRIPTOR_MSVCR90D 0000000180026000     MSVCRTD:MSVCR90D.dll
+ 0005:00000014       __IMPORT_DESCRIPTOR_MSVCP90D 0000000180026014     msvcprtd:MSVCP90D.dll
+ 0005:00000028       __IMPORT_DESCRIPTOR_visa64 0000000180026028     visa64:visa64.dll
+ 0005:0000003c       __IMPORT_DESCRIPTOR_WDAPI1020 000000018002603c     wdapi1020:WDAPI1020.dll
+ 0005:00000050       __IMPORT_DESCRIPTOR_KERNEL32 0000000180026050     kernel32:KERNEL32.dll
+ 0005:00000064       __NULL_IMPORT_DESCRIPTOR   0000000180026064     MSVCRTD:MSVCR90D.dll
+ 0005:00000678       __imp_DisableThreadLibraryCalls 0000000180026678     kernel32:KERNEL32.dll
+ 0005:00000680       __imp_GetSystemTimeAsFileTime 0000000180026680     kernel32:KERNEL32.dll
+ 0005:00000688       __imp_GetCurrentProcessId  0000000180026688     kernel32:KERNEL32.dll
+ 0005:00000690       __imp_GetCurrentThreadId   0000000180026690     kernel32:KERNEL32.dll
+ 0005:00000698       __imp_GetTickCount         0000000180026698     kernel32:KERNEL32.dll
+ 0005:000006a0       __imp_QueryPerformanceCounter 00000001800266a0     kernel32:KERNEL32.dll
+ 0005:000006a8       __imp_RtlCaptureContext    00000001800266a8     kernel32:KERNEL32.dll
+ 0005:000006b0       __imp_RtlLookupFunctionEntry 00000001800266b0     kernel32:KERNEL32.dll
+ 0005:000006b8       __imp_RtlVirtualUnwind     00000001800266b8     kernel32:KERNEL32.dll
+ 0005:000006c0       __imp_IsDebuggerPresent    00000001800266c0     kernel32:KERNEL32.dll
+ 0005:000006c8       __imp_SetUnhandledExceptionFilter 00000001800266c8     kernel32:KERNEL32.dll
+ 0005:000006d0       __imp_UnhandledExceptionFilter 00000001800266d0     kernel32:KERNEL32.dll
+ 0005:000006d8       __imp_GetCurrentProcess    00000001800266d8     kernel32:KERNEL32.dll
+ 0005:000006e0       __imp_TerminateProcess     00000001800266e0     kernel32:KERNEL32.dll
+ 0005:000006e8       __imp_Sleep                00000001800266e8     kernel32:KERNEL32.dll
+ 0005:000006f0       \177KERNEL32_NULL_THUNK_DATA 00000001800266f0     kernel32:KERNEL32.dll
+ 0005:00000760       __imp_?clear@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAXXZ 0000000180026760     msvcprtd:MSVCP90D.dll
+ 0005:00000768       __imp_??4?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV01@PEBD@Z 0000000180026768     msvcprtd:MSVCP90D.dll
+ 0005:00000770       __imp_?swap@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAXAEAV12@@Z 0000000180026770     msvcprtd:MSVCP90D.dll
+ 0005:00000778       __imp_??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@U_Has_debug_it@01@@Z 0000000180026778     msvcprtd:MSVCP90D.dll
+ 0005:00000780       __imp_??4?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV01@AEBV01@@Z 0000000180026780     msvcprtd:MSVCP90D.dll
+ 0005:00000788       __imp_?c_str@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBAPEBDXZ 0000000180026788     msvcprtd:MSVCP90D.dll
+ 0005:00000790       __imp_?_Orphan_all@_Container_base_secure@std@@QEBAXXZ 0000000180026790     msvcprtd:MSVCP90D.dll
+ 0005:00000798       __imp_??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@AEBV01@@Z 0000000180026798     msvcprtd:MSVCP90D.dll
+ 0005:000007a0       __imp_??0_Lockit@std@@QEAA@H@Z 00000001800267a0     msvcprtd:MSVCP90D.dll
+ 0005:000007a8       __imp_??1_Lockit@std@@QEAA@XZ 00000001800267a8     msvcprtd:MSVCP90D.dll
+ 0005:000007b0       __imp_?_Debug_message@std@@YAXPEB_W0I@Z 00000001800267b0     msvcprtd:MSVCP90D.dll
+ 0005:000007b8       __imp_?length@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBA_KXZ 00000001800267b8     msvcprtd:MSVCP90D.dll
+ 0005:000007c0       __imp_?copy@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBA_KPEAD_K1@Z 00000001800267c0     msvcprtd:MSVCP90D.dll
+ 0005:000007c8       __imp_??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@PEBD@Z 00000001800267c8     msvcprtd:MSVCP90D.dll
+ 0005:000007d0       __imp_??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@XZ 00000001800267d0     msvcprtd:MSVCP90D.dll
+ 0005:000007d8       \177MSVCP90D_NULL_THUNK_DATA 00000001800267d8     msvcprtd:MSVCP90D.dll
+ 0005:00000848       __imp_??0exception@std@@QEAA@AEBV01@@Z 0000000180026848     MSVCRTD:MSVCR90D.dll
+ 0005:00000850       __imp_??1exception@std@@UEAA@XZ 0000000180026850     MSVCRTD:MSVCR90D.dll
+ 0005:00000858       __imp_??0exception@std@@QEAA@XZ 0000000180026858     MSVCRTD:MSVCR90D.dll
+ 0005:00000860       __imp__invalid_parameter   0000000180026860     MSVCRTD:MSVCR90D.dll
+ 0005:00000868       __imp__CrtDbgReportW       0000000180026868     MSVCRTD:MSVCR90D.dll
+ 0005:00000870       __imp_??0exception@std@@QEAA@AEBQEBD@Z 0000000180026870     MSVCRTD:MSVCR90D.dll
+ 0005:00000878       __imp_?what@exception@std@@UEBAPEBDXZ 0000000180026878     MSVCRTD:MSVCR90D.dll
+ 0005:00000880       __imp__encode_pointer      0000000180026880     MSVCRTD:MSVCR90D.dll
+ 0005:00000888       __imp__malloc_dbg          0000000180026888     MSVCRTD:MSVCR90D.dll
+ 0005:00000890       __imp__free_dbg            0000000180026890     MSVCRTD:MSVCR90D.dll
+ 0005:00000898       __imp__encoded_null        0000000180026898     MSVCRTD:MSVCR90D.dll
+ 0005:000008a0       __imp__decode_pointer      00000001800268a0     MSVCRTD:MSVCR90D.dll
+ 0005:000008a8       __imp__CrtSetCheckCount    00000001800268a8     MSVCRTD:MSVCR90D.dll
+ 0005:000008b0       __imp__initterm            00000001800268b0     MSVCRTD:MSVCR90D.dll
+ 0005:000008b8       __imp__initterm_e          00000001800268b8     MSVCRTD:MSVCR90D.dll
+ 0005:000008c0       __imp__amsg_exit           00000001800268c0     MSVCRTD:MSVCR90D.dll
+ 0005:000008c8       __imp___C_specific_handler 00000001800268c8     MSVCRTD:MSVCR90D.dll
+ 0005:000008d0       __imp___CppXcptFilter      00000001800268d0     MSVCRTD:MSVCR90D.dll
+ 0005:000008d8       __imp___crt_debugger_hook  00000001800268d8     MSVCRTD:MSVCR90D.dll
+ 0005:000008e0       __imp_?terminate@@YAXXZ    00000001800268e0     MSVCRTD:MSVCR90D.dll
+ 0005:000008e8       __imp_?_type_info_dtor_internal_method@type_info@@QEAAXXZ 00000001800268e8     MSVCRTD:MSVCR90D.dll
+ 0005:000008f0       __imp___clean_type_info_names_internal 00000001800268f0     MSVCRTD:MSVCR90D.dll
+ 0005:000008f8       __imp__unlock              00000001800268f8     MSVCRTD:MSVCR90D.dll
+ 0005:00000900       __imp___dllonexit          0000000180026900     MSVCRTD:MSVCR90D.dll
+ 0005:00000908       __imp__lock                0000000180026908     MSVCRTD:MSVCR90D.dll
+ 0005:00000910       __imp__onexit              0000000180026910     MSVCRTD:MSVCR90D.dll
+ 0005:00000918       __imp__CxxThrowException   0000000180026918     MSVCRTD:MSVCR90D.dll
+ 0005:00000920       __imp_vsprintf_s           0000000180026920     MSVCRTD:MSVCR90D.dll
+ 0005:00000928       __imp__purecall            0000000180026928     MSVCRTD:MSVCR90D.dll
+ 0005:00000930       __imp_fopen                0000000180026930     MSVCRTD:MSVCR90D.dll
+ 0005:00000938       __imp_feof                 0000000180026938     MSVCRTD:MSVCR90D.dll
+ 0005:00000940       __imp_fgets                0000000180026940     MSVCRTD:MSVCR90D.dll
+ 0005:00000948       __imp_fclose               0000000180026948     MSVCRTD:MSVCR90D.dll
+ 0005:00000950       __imp__getcwd              0000000180026950     MSVCRTD:MSVCR90D.dll
+ 0005:00000958       __imp___CxxFrameHandler3   0000000180026958     MSVCRTD:MSVCR90D.dll
+ 0005:00000960       __imp_printf               0000000180026960     MSVCRTD:MSVCR90D.dll
+ 0005:00000968       __imp_cos                  0000000180026968     MSVCRTD:MSVCR90D.dll
+ 0005:00000970       __imp_sin                  0000000180026970     MSVCRTD:MSVCR90D.dll
+ 0005:00000978       __imp_memcpy               0000000180026978     MSVCRTD:MSVCR90D.dll
+ 0005:00000980       __imp_strtol               0000000180026980     MSVCRTD:MSVCR90D.dll
+ 0005:00000988       __imp_pow                  0000000180026988     MSVCRTD:MSVCR90D.dll
+ 0005:00000990       __imp_log10                0000000180026990     MSVCRTD:MSVCR90D.dll
+ 0005:00000998       __imp_atof                 0000000180026998     MSVCRTD:MSVCR90D.dll
+ 0005:000009a0       __imp_strtod               00000001800269a0     MSVCRTD:MSVCR90D.dll
+ 0005:000009a8       __imp_strcmp               00000001800269a8     MSVCRTD:MSVCR90D.dll
+ 0005:000009b0       __imp_strlen               00000001800269b0     MSVCRTD:MSVCR90D.dll
+ 0005:000009b8       __imp_strcpy               00000001800269b8     MSVCRTD:MSVCR90D.dll
+ 0005:000009c0       __imp_memset               00000001800269c0     MSVCRTD:MSVCR90D.dll
+ 0005:000009c8       __imp_sscanf               00000001800269c8     MSVCRTD:MSVCR90D.dll
+ 0005:000009d0       __imp_strstr               00000001800269d0     MSVCRTD:MSVCR90D.dll
+ 0005:000009d8       __imp_strcat               00000001800269d8     MSVCRTD:MSVCR90D.dll
+ 0005:000009e0       __imp_sprintf              00000001800269e0     MSVCRTD:MSVCR90D.dll
+ 0005:000009e8       __imp_fabs                 00000001800269e8     MSVCRTD:MSVCR90D.dll
+ 0005:000009f0       __imp_strrchr              00000001800269f0     MSVCRTD:MSVCR90D.dll
+ 0005:000009f8       __imp_strpbrk              00000001800269f8     MSVCRTD:MSVCR90D.dll
+ 0005:00000a00       __imp_strchr               0000000180026a00     MSVCRTD:MSVCR90D.dll
+ 0005:00000a08       __imp_??3@YAXPEAX@Z        0000000180026a08     MSVCRTD:MSVCR90D.dll
+ 0005:00000a10       __imp_??2@YAPEAX_K@Z       0000000180026a10     MSVCRTD:MSVCR90D.dll
+ 0005:00000a18       \177MSVCR90D_NULL_THUNK_DATA 0000000180026a18     MSVCRTD:MSVCR90D.dll
+ 0005:00000ac8       __imp_WDC_DriverOpen       0000000180026ac8     wdapi1020:WDAPI1020.dll
+ 0005:00000ad0       __imp_WDC_PciScanDevices   0000000180026ad0     wdapi1020:WDAPI1020.dll
+ 0005:00000ad8       \177WDAPI1020_NULL_THUNK_DATA 0000000180026ad8     wdapi1020:WDAPI1020.dll
+ 0005:00000b30       __imp_viIn8                0000000180026b30     visa64:visa64.dll
+ 0005:00000b38       __imp_viIn16               0000000180026b38     visa64:visa64.dll
+ 0005:00000b40       __imp_viIn32               0000000180026b40     visa64:visa64.dll
+ 0005:00000b48       __imp_viOut32              0000000180026b48     visa64:visa64.dll
+ 0005:00000b50       __imp_viPeek32             0000000180026b50     visa64:visa64.dll
+ 0005:00000b58       __imp_viOpenDefaultRM      0000000180026b58     visa64:visa64.dll
+ 0005:00000b60       __imp_viOut16              0000000180026b60     visa64:visa64.dll
+ 0005:00000b68       __imp_viPoke32             0000000180026b68     visa64:visa64.dll
+ 0005:00000b70       __imp_viOut8               0000000180026b70     visa64:visa64.dll
+ 0005:00000b78       __imp_viFindRsrc           0000000180026b78     visa64:visa64.dll
+ 0005:00000b80       __imp_viFindNext           0000000180026b80     visa64:visa64.dll
+ 0005:00000b88       __imp_viMoveIn32           0000000180026b88     visa64:visa64.dll
+ 0005:00000b90       __imp_viMoveIn16           0000000180026b90     visa64:visa64.dll
+ 0005:00000b98       __imp_viMoveIn8            0000000180026b98     visa64:visa64.dll
+ 0005:00000ba0       __imp_viMoveOut32          0000000180026ba0     visa64:visa64.dll
+ 0005:00000ba8       __imp_viMoveOut16          0000000180026ba8     visa64:visa64.dll
+ 0005:00000bb0       __imp_viMoveOut8           0000000180026bb0     visa64:visa64.dll
+ 0005:00000bb8       __imp_viMemFree            0000000180026bb8     visa64:visa64.dll
+ 0005:00000bc0       __imp_viMemAlloc           0000000180026bc0     visa64:visa64.dll
+ 0005:00000bc8       __imp_viGetAttribute       0000000180026bc8     visa64:visa64.dll
+ 0005:00000bd0       __imp_viRead               0000000180026bd0     visa64:visa64.dll
+ 0005:00000bd8       __imp_viWrite              0000000180026bd8     visa64:visa64.dll
+ 0005:00000be0       __imp_viOpen               0000000180026be0     visa64:visa64.dll
+ 0005:00000be8       __imp_viClose              0000000180026be8     visa64:visa64.dll
+ 0005:00000bf0       __imp_viSetAttribute       0000000180026bf0     visa64:visa64.dll
+ 0005:00000bf8       \177visa64_NULL_THUNK_DATA 0000000180026bf8     visa64:visa64.dll
+ 0006:00000000       ?g_RsrcMgr@@3KA            0000000180028000     viPCIDev.obj
 
- entry point at        0001:00004d1c
+ entry point at        0001:00012cc0
 
 
  Exports
 
   ordinal    name
 
-        1    ??0IGPIBDev@@QEAA@XZ (public: __cdecl IGPIBDev::IGPIBDev(void))
-        2    ??0viMemIO@@QEAA@XZ (public: __cdecl viMemIO::viMemIO(void))
-        3    ??0viPCIDev@@QEAA@PEBD@Z (public: __cdecl viPCIDev::viPCIDev(char const *))
-        4    ??0viPCIDev@@QEAA@XZ (public: __cdecl viPCIDev::viPCIDev(void))
-        5    ??0wdPCIDev@@QEAA@PEBD@Z (public: __cdecl wdPCIDev::wdPCIDev(char const *))
-        6    ??0wdPCIDev@@QEAA@XZ (public: __cdecl wdPCIDev::wdPCIDev(void))
-        7    ??1IGPIBDev@@UEAA@XZ (public: virtual __cdecl IGPIBDev::~IGPIBDev(void))
-        8    ??1viMemIO@@UEAA@XZ (public: virtual __cdecl viMemIO::~viMemIO(void))
-        9    ??1viPCIDev@@UEAA@XZ (public: virtual __cdecl viPCIDev::~viPCIDev(void))
-       10    ??1wdPCIDev@@UEAA@XZ (public: virtual __cdecl wdPCIDev::~wdPCIDev(void))
-       11    ??4viMemIO@@QEAAAEAV0@AEAV0@@Z (public: class viMemIO & __cdecl viMemIO::operator=(class viMemIO &))
-       12    ?Alloc@viMemIO@@QEAAJK@Z (public: long __cdecl viMemIO::Alloc(unsigned long))
-       13    ?Close@viPCIDev@@UEAAJXZ (public: virtual long __cdecl viPCIDev::Close(void))
-       14    ?Close@wdPCIDev@@UEAAJXZ (public: virtual long __cdecl wdPCIDev::Close(void))
-       15    ?GetDefaultRM@viPCIDev@@SAKXZ (public: static unsigned long __cdecl viPCIDev::GetDefaultRM(void))
-       16    ?GetDes@viPCIDev@@UEAAPEADXZ (public: virtual char * __cdecl viPCIDev::GetDes(void))
-       17    ?GetDes@wdPCIDev@@UEAAPEADXZ (public: virtual char * __cdecl wdPCIDev::GetDes(void))
-       18    ?GetDevices@viPCIDev@@UEAAJAEAV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@@Z (public: virtual long __cdecl viPCIDev::GetDevices(class std::vector<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::allocator<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > > > &))
-       19    ?GetDevices@wdPCIDev@@UEAAJAEAV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@@Z (public: virtual long __cdecl wdPCIDev::GetDevices(class std::vector<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::allocator<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > > > &))
-       20    ?Init@IGPIBDev@@UEAA_NPEAD@Z (public: virtual bool __cdecl IGPIBDev::Init(char *))
-       21    ?Init@viPCIDev@@UEAAJQEAD@Z (public: virtual long __cdecl viPCIDev::Init(char * const))
-       22    ?Init@viPCIDev@@UEAAJQEADKK@Z (public: virtual long __cdecl viPCIDev::Init(char * const,unsigned long,unsigned long))
-       23    ?Init@viPCIDev@@UEAAJV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z (public: virtual long __cdecl viPCIDev::Init(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >))
-       24    ?Init@viPCIDev@@UEAAJV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@KK@Z (public: virtual long __cdecl viPCIDev::Init(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,unsigned long,unsigned long))
-       25    ?Init@wdPCIDev@@UEAAJV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z (public: virtual long __cdecl wdPCIDev::Init(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >))
-       26    ?Init@wdPCIDev@@UEAAJV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@KK@Z (public: virtual long __cdecl wdPCIDev::Init(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,unsigned long,unsigned long))
-       27    ?LLAR32@viPCIDev@@UEAAJKPEAK@Z (public: virtual long __cdecl viPCIDev::LLAR32(unsigned long,unsigned long *))
-       28    ?LLAR32@wdPCIDev@@UEAAJKPEAK@Z (public: virtual long __cdecl wdPCIDev::LLAR32(unsigned long,unsigned long *))
-       29    ?LLAW32@viPCIDev@@UEAAJKK@Z (public: virtual long __cdecl viPCIDev::LLAW32(unsigned long,unsigned long))
-       30    ?LLAW32@wdPCIDev@@UEAAJKK@Z (public: virtual long __cdecl wdPCIDev::LLAW32(unsigned long,unsigned long))
-       31    ?OpenDefaultRM@viPCIDev@@SAJXZ (public: static long __cdecl viPCIDev::OpenDefaultRM(void))
-       32    ?R16@viPCIDev@@UEAAJW4AS@IPCIDev@@KPEAG@Z (public: virtual long __cdecl viPCIDev::R16(enum IPCIDev::AS,unsigned long,unsigned short *))
-       33    ?R16@wdPCIDev@@UEAAJW4AS@IPCIDev@@KPEAG@Z (public: virtual long __cdecl wdPCIDev::R16(enum IPCIDev::AS,unsigned long,unsigned short *))
-       34    ?R32@viPCIDev@@UEAAJW4AS@IPCIDev@@KPEAK@Z (public: virtual long __cdecl viPCIDev::R32(enum IPCIDev::AS,unsigned long,unsigned long *))
-       35    ?R32@wdPCIDev@@UEAAJW4AS@IPCIDev@@KPEAK@Z (public: virtual long __cdecl wdPCIDev::R32(enum IPCIDev::AS,unsigned long,unsigned long *))
-       36    ?R8@viPCIDev@@UEAAJW4AS@IPCIDev@@KPEAE@Z (public: virtual long __cdecl viPCIDev::R8(enum IPCIDev::AS,unsigned long,unsigned char *))
-       37    ?R8@wdPCIDev@@UEAAJW4AS@IPCIDev@@KPEAE@Z (public: virtual long __cdecl wdPCIDev::R8(enum IPCIDev::AS,unsigned long,unsigned char *))
-       38    ?Read16@viMemIO@@UEAAJPEAGK@Z (public: virtual long __cdecl viMemIO::Read16(unsigned short *,unsigned long))
-       39    ?Read32@viMemIO@@UEAAJPEAKK@Z (public: virtual long __cdecl viMemIO::Read32(unsigned long *,unsigned long))
-       40    ?Read8@viMemIO@@UEAAJPEAEK@Z (public: virtual long __cdecl viMemIO::Read8(unsigned char *,unsigned long))
-       41    ?Read@IGPIBDev@@UEAA_NPEADKK@Z (public: virtual bool __cdecl IGPIBDev::Read(char *,unsigned long,unsigned long))
-       42    ?Release@viMemIO@@QEAAJXZ (public: long __cdecl viMemIO::Release(void))
-       43    ?W16@viPCIDev@@UEAAJW4AS@IPCIDev@@KG@Z (public: virtual long __cdecl viPCIDev::W16(enum IPCIDev::AS,unsigned long,unsigned short))
-       44    ?W16@wdPCIDev@@UEAAJW4AS@IPCIDev@@KG@Z (public: virtual long __cdecl wdPCIDev::W16(enum IPCIDev::AS,unsigned long,unsigned short))
-       45    ?W32@viPCIDev@@UEAAJW4AS@IPCIDev@@KK@Z (public: virtual long __cdecl viPCIDev::W32(enum IPCIDev::AS,unsigned long,unsigned long))
-       46    ?W32@viPCIDev@@UEAAJW4AS@IPCIDev@@KKPEAK@Z (public: virtual long __cdecl viPCIDev::W32(enum IPCIDev::AS,unsigned long,unsigned long,unsigned long *))
-       47    ?W32@wdPCIDev@@UEAAJW4AS@IPCIDev@@KK@Z (public: virtual long __cdecl wdPCIDev::W32(enum IPCIDev::AS,unsigned long,unsigned long))
-       48    ?W32@wdPCIDev@@UEAAJW4AS@IPCIDev@@KKPEAK@Z (public: virtual long __cdecl wdPCIDev::W32(enum IPCIDev::AS,unsigned long,unsigned long,unsigned long *))
-       49    ?W8@viPCIDev@@UEAAJW4AS@IPCIDev@@KE@Z (public: virtual long __cdecl viPCIDev::W8(enum IPCIDev::AS,unsigned long,unsigned char))
-       50    ?W8@wdPCIDev@@UEAAJW4AS@IPCIDev@@KE@Z (public: virtual long __cdecl wdPCIDev::W8(enum IPCIDev::AS,unsigned long,unsigned char))
-       51    ?Write16@viMemIO@@UEAAJPEAGK@Z (public: virtual long __cdecl viMemIO::Write16(unsigned short *,unsigned long))
-       52    ?Write32@viMemIO@@UEAAJPEAKK@Z (public: virtual long __cdecl viMemIO::Write32(unsigned long *,unsigned long))
-       53    ?Write8@viMemIO@@UEAAJPEAEK@Z (public: virtual long __cdecl viMemIO::Write8(unsigned char *,unsigned long))
-       54    ?Write@IGPIBDev@@UEAA_NPEBDZZ (public: virtual bool __cdecl IGPIBDev::Write(char const *,...))
+        1    ??0CFractionFloat@@QEAA@_J0@Z (public: __cdecl CFractionFloat::CFractionFloat(__int64,__int64))
+        2    ??0CGeneralIniFile@@QEAA@PEBD@Z (public: __cdecl CGeneralIniFile::CGeneralIniFile(char const *))
+        3    ??0CGeneralInteger@@QEAA@PEBD@Z (public: __cdecl CGeneralInteger::CGeneralInteger(char const *))
+        4    ??0IGPIBDev@@QEAA@XZ (public: __cdecl IGPIBDev::IGPIBDev(void))
+        5    ??0viMemIO@@QEAA@XZ (public: __cdecl viMemIO::viMemIO(void))
+        6    ??0viPCIDev@@QEAA@PEBD@Z (public: __cdecl viPCIDev::viPCIDev(char const *))
+        7    ??0viPCIDev@@QEAA@XZ (public: __cdecl viPCIDev::viPCIDev(void))
+        8    ??0wdPCIDev@@QEAA@PEBD@Z (public: __cdecl wdPCIDev::wdPCIDev(char const *))
+        9    ??0wdPCIDev@@QEAA@XZ (public: __cdecl wdPCIDev::wdPCIDev(void))
+       10    ??1CFractionFloat@@QEAA@XZ (public: __cdecl CFractionFloat::~CFractionFloat(void))
+       11    ??1CGeneralInteger@@QEAA@XZ (public: __cdecl CGeneralInteger::~CGeneralInteger(void))
+       12    ??1IGPIBDev@@UEAA@XZ (public: virtual __cdecl IGPIBDev::~IGPIBDev(void))
+       13    ??1viMemIO@@UEAA@XZ (public: virtual __cdecl viMemIO::~viMemIO(void))
+       14    ??1viPCIDev@@UEAA@XZ (public: virtual __cdecl viPCIDev::~viPCIDev(void))
+       15    ??1wdPCIDev@@UEAA@XZ (public: virtual __cdecl wdPCIDev::~wdPCIDev(void))
+       16    ??4CFractionFloat@@QEAA?AV0@V0@@Z (public: class CFractionFloat __cdecl CFractionFloat::operator=(class CFractionFloat))
+       17    ??4CGeneralInteger@@QEAA?AV0@V0@@Z (public: class CGeneralInteger __cdecl CGeneralInteger::operator=(class CGeneralInteger))
+       18    ??4viMemIO@@QEAAAEAV0@AEAV0@@Z (public: class viMemIO & __cdecl viMemIO::operator=(class viMemIO &))
+       19    ??5CGeneralInteger@@QEAA?AV0@F@Z (public: class CGeneralInteger __cdecl CGeneralInteger::operator>>(short))
+       20    ??6CGeneralInteger@@QEAA?AV0@F@Z (public: class CGeneralInteger __cdecl CGeneralInteger::operator<<(short))
+       21    ??8CFractionFloat@@QEAA_NV0@@Z (public: bool __cdecl CFractionFloat::operator==(class CFractionFloat))
+       22    ??8CGeneralInteger@@QEAA_NV0@@Z (public: bool __cdecl CGeneralInteger::operator==(class CGeneralInteger))
+       23    ??9CFractionFloat@@QEAA_NV0@@Z (public: bool __cdecl CFractionFloat::operator!=(class CFractionFloat))
+       24    ??9CGeneralInteger@@QEAA_NV0@@Z (public: bool __cdecl CGeneralInteger::operator!=(class CGeneralInteger))
+       25    ??DCFractionFloat@@QEAA?AV0@V0@@Z (public: class CFractionFloat __cdecl CFractionFloat::operator*(class CFractionFloat))
+       26    ??DCGeneralInteger@@QEAA?AV0@F@Z (public: class CGeneralInteger __cdecl CGeneralInteger::operator*(short))
+       27    ??DCGeneralInteger@@QEAA?AV0@V0@@Z (public: class CGeneralInteger __cdecl CGeneralInteger::operator*(class CGeneralInteger))
+       28    ??ECFractionFloat@@QEAA?AV0@H@Z (public: class CFractionFloat __cdecl CFractionFloat::operator++(int))
+       29    ??ECFractionFloat@@QEAA?AV0@XZ (public: class CFractionFloat __cdecl CFractionFloat::operator++(void))
+       30    ??ECGeneralInteger@@QEAA?AV0@H@Z (public: class CGeneralInteger __cdecl CGeneralInteger::operator++(int))
+       31    ??ECGeneralInteger@@QEAA?AV0@XZ (public: class CGeneralInteger __cdecl CGeneralInteger::operator++(void))
+       32    ??FCFractionFloat@@QEAA?AV0@H@Z (public: class CFractionFloat __cdecl CFractionFloat::operator--(int))
+       33    ??FCFractionFloat@@QEAA?AV0@XZ (public: class CFractionFloat __cdecl CFractionFloat::operator--(void))
+       34    ??FCGeneralInteger@@QEAA?AV0@H@Z (public: class CGeneralInteger __cdecl CGeneralInteger::operator--(int))
+       35    ??FCGeneralInteger@@QEAA?AV0@XZ (public: class CGeneralInteger __cdecl CGeneralInteger::operator--(void))
+       36    ??GCFractionFloat@@QEAA?AV0@V0@@Z (public: class CFractionFloat __cdecl CFractionFloat::operator-(class CFractionFloat))
+       37    ??GCFractionFloat@@QEAA?AV0@XZ (public: class CFractionFloat __cdecl CFractionFloat::operator-(void))
+       38    ??GCGeneralInteger@@QEAA?AV0@V0@@Z (public: class CGeneralInteger __cdecl CGeneralInteger::operator-(class CGeneralInteger))
+       39    ??GCGeneralInteger@@QEAA?AV0@XZ (public: class CGeneralInteger __cdecl CGeneralInteger::operator-(void))
+       40    ??HCFractionFloat@@QEAA?AV0@V0@@Z (public: class CFractionFloat __cdecl CFractionFloat::operator+(class CFractionFloat))
+       41    ??HCFractionFloat@@QEAA?AV0@XZ (public: class CFractionFloat __cdecl CFractionFloat::operator+(void))
+       42    ??HCGeneralInteger@@QEAA?AV0@V0@@Z (public: class CGeneralInteger __cdecl CGeneralInteger::operator+(class CGeneralInteger))
+       43    ??HCGeneralInteger@@QEAA?AV0@XZ (public: class CGeneralInteger __cdecl CGeneralInteger::operator+(void))
+       44    ??KCGeneralInteger@@QEAA?AV0@_J@Z (public: class CGeneralInteger __cdecl CGeneralInteger::operator/(__int64))
+       45    ??LCGeneralInteger@@QEAA_J_J@Z (public: __int64 __cdecl CGeneralInteger::operator%(__int64))
+       46    ??MCFractionFloat@@QEAA_NV0@@Z (public: bool __cdecl CFractionFloat::operator<(class CFractionFloat))
+       47    ??MCGeneralInteger@@QEAA_NV0@@Z (public: bool __cdecl CGeneralInteger::operator<(class CGeneralInteger))
+       48    ??NCFractionFloat@@QEAA_NV0@@Z (public: bool __cdecl CFractionFloat::operator<=(class CFractionFloat))
+       49    ??NCGeneralInteger@@QEAA_NV0@@Z (public: bool __cdecl CGeneralInteger::operator<=(class CGeneralInteger))
+       50    ??OCFractionFloat@@QEAA_NV0@@Z (public: bool __cdecl CFractionFloat::operator>(class CFractionFloat))
+       51    ??OCGeneralInteger@@QEAA_NV0@@Z (public: bool __cdecl CGeneralInteger::operator>(class CGeneralInteger))
+       52    ??PCFractionFloat@@QEAA_NV0@@Z (public: bool __cdecl CFractionFloat::operator>=(class CFractionFloat))
+       53    ??PCGeneralInteger@@QEAA_NV0@@Z (public: bool __cdecl CGeneralInteger::operator>=(class CGeneralInteger))
+       54    ??XCFractionFloat@@QEAA?AV0@V0@@Z (public: class CFractionFloat __cdecl CFractionFloat::operator*=(class CFractionFloat))
+       55    ??XCGeneralInteger@@QEAA?AV0@V0@@Z (public: class CGeneralInteger __cdecl CGeneralInteger::operator*=(class CGeneralInteger))
+       56    ??YCFractionFloat@@QEAA?AV0@V0@@Z (public: class CFractionFloat __cdecl CFractionFloat::operator+=(class CFractionFloat))
+       57    ??YCGeneralInteger@@QEAA?AV0@V0@@Z (public: class CGeneralInteger __cdecl CGeneralInteger::operator+=(class CGeneralInteger))
+       58    ??ZCFractionFloat@@QEAA?AV0@V0@@Z (public: class CFractionFloat __cdecl CFractionFloat::operator-=(class CFractionFloat))
+       59    ??ZCGeneralInteger@@QEAA?AV0@V0@@Z (public: class CGeneralInteger __cdecl CGeneralInteger::operator-=(class CGeneralInteger))
+       60    ??_0CGeneralInteger@@QEAA?AV0@_J@Z (public: class CGeneralInteger __cdecl CGeneralInteger::operator/=(__int64))
+       61    ?Alloc@viMemIO@@QEAAHI@Z (public: int __cdecl viMemIO::Alloc(unsigned int))
+       62    ?Close@viPCIDev@@UEAAHXZ (public: virtual int __cdecl viPCIDev::Close(void))
+       63    ?Close@wdPCIDev@@UEAAHXZ (public: virtual int __cdecl wdPCIDev::Close(void))
+       64    ?CompareString@CGeneralIniFile@@AEAAHPEBD0@Z (private: int __cdecl CGeneralIniFile::CompareString(char const *,char const *))
+       65    ?GetConfigIntValue@CGeneralIniFile@@QEAAHPEAD0PEAH@Z (public: int __cdecl CGeneralIniFile::GetConfigIntValue(char *,char *,int *))
+       66    ?GetConfigStringValue@CGeneralIniFile@@QEAAHPEBD0PEAD@Z (public: int __cdecl CGeneralIniFile::GetConfigStringValue(char const *,char const *,char *))
+       67    ?GetDefaultRM@viPCIDev@@SAKXZ (public: static unsigned long __cdecl viPCIDev::GetDefaultRM(void))
+       68    ?GetDes@viPCIDev@@UEAAPEADXZ (public: virtual char * __cdecl viPCIDev::GetDes(void))
+       69    ?GetDes@wdPCIDev@@UEAAPEADXZ (public: virtual char * __cdecl wdPCIDev::GetDes(void))
+       70    ?GetDevName@IPCIDev@@UEAAPEADXZ (public: virtual char * __cdecl IPCIDev::GetDevName(void))
+       71    ?GetDevices@viPCIDev@@UEAAHAEAV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@@Z (public: virtual int __cdecl viPCIDev::GetDevices(class std::vector<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::allocator<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > > > &))
+       72    ?GetDevices@wdPCIDev@@UEAAHAEAV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@@Z (public: virtual int __cdecl wdPCIDev::GetDevices(class std::vector<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::allocator<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > > > &))
+       73    ?GetDigit@CGeneralInteger@@QEAAF_K@Z (public: short __cdecl CGeneralInteger::GetDigit(unsigned __int64))
+       74    ?GetDigit@CGeneralInteger@@QEBAFXZ (public: short __cdecl CGeneralInteger::GetDigit(void)const )
+       75    ?GetKeyValue@CGeneralIniFile@@AEAAHPEAU_iobuf@@PEBDPEAD@Z (private: int __cdecl CGeneralIniFile::GetKeyValue(struct _iobuf *,char const *,char *))
+       76    ?Init@IGPIBDev@@UEAA_NPEAD@Z (public: virtual bool __cdecl IGPIBDev::Init(char *))
+       77    ?Init@viPCIDev@@UEAAHQEAD@Z (public: virtual int __cdecl viPCIDev::Init(char * const))
+       78    ?Init@viPCIDev@@UEAAHQEADII@Z (public: virtual int __cdecl viPCIDev::Init(char * const,unsigned int,unsigned int))
+       79    ?Init@viPCIDev@@UEAAHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z (public: virtual int __cdecl viPCIDev::Init(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >))
+       80    ?Init@viPCIDev@@UEAAHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@II@Z (public: virtual int __cdecl viPCIDev::Init(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,unsigned int,unsigned int))
+       81    ?Init@wdPCIDev@@UEAAHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z (public: virtual int __cdecl wdPCIDev::Init(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >))
+       82    ?Init@wdPCIDev@@UEAAHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@II@Z (public: virtual int __cdecl wdPCIDev::Init(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,unsigned int,unsigned int))
+       83    ?LLAR32@viPCIDev@@UEAAHIPEAI@Z (public: virtual int __cdecl viPCIDev::LLAR32(unsigned int,unsigned int *))
+       84    ?LLAR32@wdPCIDev@@UEAAHIPEAI@Z (public: virtual int __cdecl wdPCIDev::LLAR32(unsigned int,unsigned int *))
+       85    ?LLAW32@viPCIDev@@UEAAHII@Z (public: virtual int __cdecl viPCIDev::LLAW32(unsigned int,unsigned int))
+       86    ?LLAW32@wdPCIDev@@UEAAHII@Z (public: virtual int __cdecl wdPCIDev::LLAW32(unsigned int,unsigned int))
+       87    ?OpenDefaultRM@viPCIDev@@SAHXZ (public: static int __cdecl viPCIDev::OpenDefaultRM(void))
+       88    ?Print@CFractionFloat@@QEAAXXZ (public: void __cdecl CFractionFloat::Print(void))
+       89    ?Print@CGeneralInteger@@QEAAXXZ (public: void __cdecl CGeneralInteger::Print(void))
+       90    ?R16@viPCIDev@@UEAAHW4AS@IPCIDev@@IPEAG@Z (public: virtual int __cdecl viPCIDev::R16(enum IPCIDev::AS,unsigned int,unsigned short *))
+       91    ?R16@wdPCIDev@@UEAAHW4AS@IPCIDev@@IPEAG@Z (public: virtual int __cdecl wdPCIDev::R16(enum IPCIDev::AS,unsigned int,unsigned short *))
+       92    ?R32@viPCIDev@@UEAAHW4AS@IPCIDev@@IPEAI@Z (public: virtual int __cdecl viPCIDev::R32(enum IPCIDev::AS,unsigned int,unsigned int *))
+       93    ?R32@wdPCIDev@@UEAAHW4AS@IPCIDev@@IPEAI@Z (public: virtual int __cdecl wdPCIDev::R32(enum IPCIDev::AS,unsigned int,unsigned int *))
+       94    ?R8@viPCIDev@@UEAAHW4AS@IPCIDev@@IPEAE@Z (public: virtual int __cdecl viPCIDev::R8(enum IPCIDev::AS,unsigned int,unsigned char *))
+       95    ?R8@wdPCIDev@@UEAAHW4AS@IPCIDev@@IPEAE@Z (public: virtual int __cdecl wdPCIDev::R8(enum IPCIDev::AS,unsigned int,unsigned char *))
+       96    ?Read16@viMemIO@@UEAAHPEAGI@Z (public: virtual int __cdecl viMemIO::Read16(unsigned short *,unsigned int))
+       97    ?Read32@viMemIO@@UEAAHPEAII@Z (public: virtual int __cdecl viMemIO::Read32(unsigned int *,unsigned int))
+       98    ?Read8@viMemIO@@UEAAHPEAEI@Z (public: virtual int __cdecl viMemIO::Read8(unsigned char *,unsigned int))
+       99    ?Read@IGPIBDev@@UEAA_NPEADII@Z (public: virtual bool __cdecl IGPIBDev::Read(char *,unsigned int,unsigned int))
+      100    ?Release@viMemIO@@QEAAHXZ (public: int __cdecl viMemIO::Release(void))
+      101    ?W16@viPCIDev@@UEAAHW4AS@IPCIDev@@IG@Z (public: virtual int __cdecl viPCIDev::W16(enum IPCIDev::AS,unsigned int,unsigned short))
+      102    ?W16@wdPCIDev@@UEAAHW4AS@IPCIDev@@IG@Z (public: virtual int __cdecl wdPCIDev::W16(enum IPCIDev::AS,unsigned int,unsigned short))
+      103    ?W32@viPCIDev@@UEAAHW4AS@IPCIDev@@II@Z (public: virtual int __cdecl viPCIDev::W32(enum IPCIDev::AS,unsigned int,unsigned int))
+      104    ?W32@viPCIDev@@UEAAHW4AS@IPCIDev@@IIPEAI@Z (public: virtual int __cdecl viPCIDev::W32(enum IPCIDev::AS,unsigned int,unsigned int,unsigned int *))
+      105    ?W32@wdPCIDev@@UEAAHW4AS@IPCIDev@@II@Z (public: virtual int __cdecl wdPCIDev::W32(enum IPCIDev::AS,unsigned int,unsigned int))
+      106    ?W32@wdPCIDev@@UEAAHW4AS@IPCIDev@@IIPEAI@Z (public: virtual int __cdecl wdPCIDev::W32(enum IPCIDev::AS,unsigned int,unsigned int,unsigned int *))
+      107    ?W8@viPCIDev@@UEAAHW4AS@IPCIDev@@IE@Z (public: virtual int __cdecl viPCIDev::W8(enum IPCIDev::AS,unsigned int,unsigned char))
+      108    ?W8@wdPCIDev@@UEAAHW4AS@IPCIDev@@IE@Z (public: virtual int __cdecl wdPCIDev::W8(enum IPCIDev::AS,unsigned int,unsigned char))
+      109    ?Write16@viMemIO@@UEAAHPEAGI@Z (public: virtual int __cdecl viMemIO::Write16(unsigned short *,unsigned int))
+      110    ?Write32@viMemIO@@UEAAHPEAII@Z (public: virtual int __cdecl viMemIO::Write32(unsigned int *,unsigned int))
+      111    ?Write8@viMemIO@@UEAAHPEAEI@Z (public: virtual int __cdecl viMemIO::Write8(unsigned char *,unsigned int))
+      112    ?Write@IGPIBDev@@UEAA_NPEBDZZ (public: virtual bool __cdecl IGPIBDev::Write(char const *,...))
+      113    ?abs@CFractionFloat@@QEAA?AV1@V1@@Z (public: class CFractionFloat __cdecl CFractionFloat::abs(class CFractionFloat))
+      114    ?abs@CFractionFloat@@QEAA_J_J@Z (public: __int64 __cdecl CFractionFloat::abs(__int64))
+      115    ?abs@CGeneralInteger@@QEAA?AV1@V1@@Z (public: class CGeneralInteger __cdecl CGeneralInteger::abs(class CGeneralInteger))
+      116    ?ad2dBc@@YANNN@Z (double __cdecl ad2dBc(double,double))
+      117    ?ad2dBc@@YAN_J0@Z (double __cdecl ad2dBc(__int64,__int64))
+      118    ?adf5355_freq_formula@@YAHIIIIIIAEAN@Z (int __cdecl adf5355_freq_formula(unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,double &))
+      119    ?adf5355_freq_formula@@YAH_KI_N1IIAEAI2222@Z (int __cdecl adf5355_freq_formula(unsigned __int64,unsigned int,bool,bool,unsigned int,unsigned int,unsigned int &,unsigned int &,unsigned int &,unsigned int &,unsigned int &))
+      120    ?adf5355para2reg0@@YAIIII@Z (unsigned int __cdecl adf5355para2reg0(unsigned int,unsigned int,unsigned int))
+      121    ?adf5355para2reg10@@YAIIII@Z (unsigned int __cdecl adf5355para2reg10(unsigned int,unsigned int,unsigned int))
+      122    ?adf5355para2reg11@@YAIXZ (unsigned int __cdecl adf5355para2reg11(void))
+      123    ?adf5355para2reg12@@YAII@Z (unsigned int __cdecl adf5355para2reg12(unsigned int))
+      124    ?adf5355para2reg1@@YAII@Z (unsigned int __cdecl adf5355para2reg1(unsigned int))
+      125    ?adf5355para2reg2@@YAIII@Z (unsigned int __cdecl adf5355para2reg2(unsigned int,unsigned int))
+      126    ?adf5355para2reg3@@YAIIIII@Z (unsigned int __cdecl adf5355para2reg3(unsigned int,unsigned int,unsigned int,unsigned int))
+      127    ?adf5355para2reg4@@YAIIIIIIIIIIIII@Z (unsigned int __cdecl adf5355para2reg4(unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int))
+      128    ?adf5355para2reg5@@YAIXZ (unsigned int __cdecl adf5355para2reg5(void))
+      129    ?adf5355para2reg6@@YAIIIIIIIIII@Z (unsigned int __cdecl adf5355para2reg6(unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int))
+      130    ?adf5355para2reg7@@YAIIIIII@Z (unsigned int __cdecl adf5355para2reg7(unsigned int,unsigned int,unsigned int,unsigned int,unsigned int))
+      131    ?adf5355para2reg8@@YAIXZ (unsigned int __cdecl adf5355para2reg8(void))
+      132    ?adf5355para2reg9@@YAIIIII@Z (unsigned int __cdecl adf5355para2reg9(unsigned int,unsigned int,unsigned int,unsigned int))
+      133    ?byte2str@@YAHIPEADH@Z (int __cdecl byte2str(unsigned int,char *,int))
+      134    ?coef2polynomial@@YAHPEANHPEAD@Z (int __cdecl coef2polynomial(double *,int,char *))
+      135    ?coef2str@@YAHPEAFHPEAD@Z (int __cdecl coef2str(short *,int,char *))
+      136    ?conv@@YAHPEANH0H0@Z (int __cdecl conv(double *,int,double *,int,double *))
+      137    ?cosine@@YAHNNNNNPEAN0H@Z (int __cdecl cosine(double,double,double,double,double,double *,double *,int))
+      138    ?dBc2ad@@YA_J_JN@Z (__int64 __cdecl dBc2ad(__int64,double))
+      139    ?dtoull@CGeneralInteger@@QEAA_KFF@Z (public: unsigned __int64 __cdecl CGeneralInteger::dtoull(short,short))
+      140    ?freq2array@@YAHPEADPEA_J@Z (int __cdecl freq2array(char *,__int64 *))
+      141    ?freq2array@@YAHPEBD0_JPEA_J2222@Z (int __cdecl freq2array(char const *,char const *,__int64,__int64 *,__int64 *,__int64 *,__int64 *,__int64 *))
+      142    ?freq2str@@YAHHPEADH@Z (int __cdecl freq2str(int,char *,int))
+      143    ?freq2str@@YAHMPEADH@Z (int __cdecl freq2str(float,char *,int))
+      144    ?freq2str@@YAHNPEADH@Z (int __cdecl freq2str(double,char *,int))
+      145    ?freq2str@@YAH_JPEADH@Z (int __cdecl freq2str(__int64,char *,int))
+      146    ?freq2str@@YAH_KPEADH@Z (int __cdecl freq2str(unsigned __int64,char *,int))
+      147    ?freqsection@@YAHPEAD0_J@Z (int __cdecl freqsection(char *,char *,__int64))
+      148    ?freqsection@@YAHPEA_J0_J@Z (int __cdecl freqsection(__int64 *,__int64 *,__int64))
+      149    ?freqsection_s@@YAHPEA_J0_JH@Z (int __cdecl freqsection_s(__int64 *,__int64 *,__int64,int))
+      150    ?gcd@@YAIII@Z (unsigned int __cdecl gcd(unsigned int,unsigned int))
+      151    ?gcd@@YA_K_K0@Z (unsigned __int64 __cdecl gcd(unsigned __int64,unsigned __int64))
+      152    ?gcd@CFractionFloat@@AEAA_K_K0@Z (private: unsigned __int64 __cdecl CFractionFloat::gcd(unsigned __int64,unsigned __int64))
+      153    ?hmc1197_freq_formula_exactmode@@YAH_KIIAEAI11@Z (int __cdecl hmc1197_freq_formula_exactmode(unsigned __int64,unsigned int,unsigned int,unsigned int &,unsigned int &,unsigned int &))
+      154    ?hmc1197_freq_formula_fracmode@@YAH_KIIAEAI1@Z (int __cdecl hmc1197_freq_formula_fracmode(unsigned __int64,unsigned int,unsigned int,unsigned int &,unsigned int &))
+      155    ?hmc1197_freq_formula_fracmode@@YAH_KIIAEAI1AEAN@Z (int __cdecl hmc1197_freq_formula_fracmode(unsigned __int64,unsigned int,unsigned int,unsigned int &,unsigned int &,double &))
+      156    ?hmc1197_freq_formula_intmode@@YAH_KIIAEAI@Z (int __cdecl hmc1197_freq_formula_intmode(unsigned __int64,unsigned int,unsigned int,unsigned int &))
+      157    ?hmc1197_freq_formula_intmode@@YAH_KIIAEAIAEAN@Z (int __cdecl hmc1197_freq_formula_intmode(unsigned __int64,unsigned int,unsigned int,unsigned int &,double &))
+      158    ?hmc1197para2reg00@@YAIII@Z (unsigned int __cdecl hmc1197para2reg00(unsigned int,unsigned int))
+      159    ?hmc1197para2reg01@@YAIIIIIIIII@Z (unsigned int __cdecl hmc1197para2reg01(unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int))
+      160    ?hmc1197para2reg02@@YAII@Z (unsigned int __cdecl hmc1197para2reg02(unsigned int))
+      161    ?hmc1197para2reg03@@YAII@Z (unsigned int __cdecl hmc1197para2reg03(unsigned int))
+      162    ?hmc1197para2reg04@@YAII@Z (unsigned int __cdecl hmc1197para2reg04(unsigned int))
+      163    ?hmc1197para2reg05@@YAIXZ (unsigned int __cdecl hmc1197para2reg05(void))
+      164    ?hmc1197para2reg06@@YAIIIIIII@Z (unsigned int __cdecl hmc1197para2reg06(unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int))
+      165    ?hmc1197para2reg07@@YAIIIII@Z (unsigned int __cdecl hmc1197para2reg07(unsigned int,unsigned int,unsigned int,unsigned int))
+      166    ?hmc1197para2reg08@@YAIIIII@Z (unsigned int __cdecl hmc1197para2reg08(unsigned int,unsigned int,unsigned int,unsigned int))
+      167    ?hmc1197para2reg09@@YAIIIIIII@Z (unsigned int __cdecl hmc1197para2reg09(unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int))
+      168    ?hmc1197para2reg0a@@YAIIIII@Z (unsigned int __cdecl hmc1197para2reg0a(unsigned int,unsigned int,unsigned int,unsigned int))
+      169    ?hmc1197para2reg0b@@YAIIIIIII@Z (unsigned int __cdecl hmc1197para2reg0b(unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int))
+      170    ?hmc1197para2reg0c@@YAII@Z (unsigned int __cdecl hmc1197para2reg0c(unsigned int))
+      171    ?hmc1197para2reg0f@@YAIIIIII@Z (unsigned int __cdecl hmc1197para2reg0f(unsigned int,unsigned int,unsigned int,unsigned int,unsigned int))
+      172    ?hmc1197para2reg14@@YAIIIIIII@Z (unsigned int __cdecl hmc1197para2reg14(unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int))
+      173    ?hmc1197para2reg15@@YAIIIIII@Z (unsigned int __cdecl hmc1197para2reg15(unsigned int,unsigned int,unsigned int,unsigned int,unsigned int))
+      174    ?hmc1197para2reg16@@YAIIIII@Z (unsigned int __cdecl hmc1197para2reg16(unsigned int,unsigned int,unsigned int,unsigned int))
+      175    ?hmc1197para2reg17@@YAIIIIIIIIIIII@Z (unsigned int __cdecl hmc1197para2reg17(unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int,unsigned int))
+      176    ?hmc1197para2reg18@@YAII@Z (unsigned int __cdecl hmc1197para2reg18(unsigned int))
+      177    ?hmc1197para2reg19@@YAIXZ (unsigned int __cdecl hmc1197para2reg19(void))
+      178    ?hmc1197para2reg1a@@YAII@Z (unsigned int __cdecl hmc1197para2reg1a(unsigned int))
+      179    ?hmc1197para2reg21@@YAII@Z (unsigned int __cdecl hmc1197para2reg21(unsigned int))
+      180    ?hmc624@@YAXPEAN@Z (void __cdecl hmc624(double *))
+      181    ?interp1@@YAHPEAN0H00W4interp_method@@H@Z (int __cdecl interp1(double *,double *,int,double *,double *,enum interp_method,int))
+      182    ?invsqrt@@YAMM@Z (float __cdecl invsqrt(float))
+      183    ?iseven@@YA_NH@Z (bool __cdecl iseven(int))
+      184    ?iseven@@YA_NI@Z (bool __cdecl iseven(unsigned int))
+      185    ?isexactdiv@@YA_NHH@Z (bool __cdecl isexactdiv(int,int))
+      186    ?lagrange@@YAHPEAN0H0@Z (int __cdecl lagrange(double *,double *,int,double *))
+      187    ?lcm@CFractionFloat@@AEAA_K_K0AEA_K1@Z (private: unsigned __int64 __cdecl CFractionFloat::lcm(unsigned __int64,unsigned __int64,unsigned __int64 &,unsigned __int64 &))
+      188    ?ltc2666dac2vol@@YANH@Z (double __cdecl ltc2666dac2vol(int))
+      189    ?ltc2666vol2dac@@YAHN@Z (int __cdecl ltc2666vol2dac(double))
+      190    ?mcp3208ad2vol@@YANI@Z (double __cdecl mcp3208ad2vol(unsigned int))
+      191    ?oddpart@CGeneralInteger@@QEAAFXZ (public: short __cdecl CGeneralInteger::oddpart(void))
+      192    ?polyfit@@YAHPEAN0HH0@Z (int __cdecl polyfit(double *,double *,int,int,double *))
+      193    ?polynomial@@YAHPEAN0H0@Z (int __cdecl polynomial(double *,double *,int,double *))
+      194    ?polynomial@@YANPEANNH@Z (double __cdecl polynomial(double *,double,int))
+      195    ?radixchg@@YAHHPEADH@Z (int __cdecl radixchg(int,char *,int))
+      196    ?reduction@CFractionFloat@@AEAAXXZ (private: void __cdecl CFractionFloat::reduction(void))
+      197    ?round@@YANNH@Z (double __cdecl round(double,int))
+      198    ?sine@@YAHNNNNNPEAN0H@Z (int __cdecl sine(double,double,double,double,double,double *,double *,int))
+      199    ?sort_bubble@@YAXPEAN0H@Z (void __cdecl sort_bubble(double *,double *,int))
+      200    ?sort_bubble@@YAXPEANH@Z (void __cdecl sort_bubble(double *,int))
+      201    ?spline@@YAHPEAN0H0000W4spline_end@@NN@Z (int __cdecl spline(double *,double *,int,double *,double *,double *,double *,enum spline_end,double,double))
+      202    ?split_freq_character@@YAHPEBDPEAY0CA@DH@Z (int __cdecl split_freq_character(char const *,char (*)[32],int))
+      203    ?str2freq@@YAHPEBDAEAM@Z (int __cdecl str2freq(char const *,float &))
+      204    ?str2freq@@YAHPEBDAEAN@Z (int __cdecl str2freq(char const *,double &))
+      205    ?str2freq@@YAHPEBDAEA_J@Z (int __cdecl str2freq(char const *,__int64 &))
+      206    ?str2freq@@YAHPEBDAEA_K@Z (int __cdecl str2freq(char const *,unsigned __int64 &))
+      207    ?strrchr@@YAPEADPEADH@Z (char * __cdecl strrchr(char *,int))
+      208    ?strsections@@YAHPEBD@Z (int __cdecl strsections(char const *))
+      209    ?sumpow@@YANPEANHH@Z (double __cdecl sumpow(double *,int,int))
+      210    ?sumxmul@@YANPEAN0H@Z (double __cdecl sumxmul(double *,double *,int))
+      211    ?tc1407vol2temp@@YANN@Z (double __cdecl tc1407vol2temp(double))
+      212    ?tobin_s@CGeneralInteger@@QEAAXPEAFF@Z (public: void __cdecl CGeneralInteger::tobin_s(short *,short))
+      213    ?toui64@CGeneralInteger@@QEAAXAEAI0@Z (public: void __cdecl CGeneralInteger::toui64(unsigned int &,unsigned int &))
+      214    ?x9119val2vol@@YANF@Z (double __cdecl x9119val2vol(short))
+      215    ?x9119vol2val@@YAFN@Z (short __cdecl x9119vol2val(double))
