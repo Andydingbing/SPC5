@@ -1,4 +1,10 @@
 #include "GeneralIniFile.h"
+
+#ifdef _MSC_VER
+#include <WinDef.h>
+#include <WinBase.h>
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,7 +12,12 @@
 
 CGeneralIniFile::CGeneralIniFile(const char *pFileName)
 {
+	memset(m_szBasePath,0,sizeof(m_szBasePath));
+#ifdef _MSC_VER
+	::GetModuleFileName(NULL,m_szBasePath,256);
+#elif defined __GNUC__
     _getcwd(m_szBasePath,256);
+#endif
     *strrchr(m_szBasePath,'\\') = 0;
 	strcpy(m_szFileName,pFileName);
 }
@@ -28,7 +39,6 @@ int CGeneralIniFile::GetConfigStringValue(const char *pInSectionName,const char 
     strcpy(szExactPath,m_szBasePath);
     strcat(szExactPath,"\\");
     strcat(szExactPath,m_szFileName);
-    strcpy(szExactPath,m_szFileName);
 	if (NULL == (fpConfig = fopen(szExactPath,"r")))
 		return FILENAME_NOTEXIST;
 
