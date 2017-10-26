@@ -123,7 +123,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="..\include;..\libLog;..\libBusDriver;..\libSP1401"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_AFXEXT"
+				PreprocessorDefinitions="_DEBUG"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -277,7 +277,6 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="..\include;..\libLog;..\libBusDriver;..\libSP1401"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_AFXEXT"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -294,7 +293,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				LinkIncremental="2"
+				LinkIncremental="0"
 				AdditionalLibraryDirectories="..\MFC\x64\Release"
 				ModuleDefinitionFile="libSP2401.def"
 				GenerateMapFile="true"

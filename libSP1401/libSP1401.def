@@ -29,7 +29,7 @@ EXPORTS
 	??1RxRefTableR1A@@UEAA@XZ
 	?MapBuf@TxSidebandTableR1A@@QEAAXPEAUDataF@1@@Z
 	?MapBuf@TxLOLeakageTableR1A@@QEAAXPEAUDataF@1@@Z
-	?MapBuf@X9119TableR1A@@QEAAXPEAUData@1@@Z
+	?MapBuf@X9119Table@@QEAAXPEAUData@1@@Z
 	?MapBuf@TxAttTableR1A@@QEAAXPEAUDataF@1@@Z
 	?MapBuf@TxPowerTableR1A@@QEAAXPEAUDataF@1@@Z
 	?MapBuf@RxRefTableR1A@@QEAAXPEAUDataF@1@@Z
@@ -89,7 +89,6 @@ EXPORTS
  	??1RxFilterOffTableR1C@@UEAA@XZ
  	?MapBuf@TxSidebandTableR1C@@QEAAXPEAUDataF@1@@Z
  	?MapBuf@TxLOLeakageTableR1C@@QEAAXPEAUDataF@1@@Z
- 	?MapBuf@X9119TableR1C@@QEAAXPEAUDataF@1@@Z
  	?MapBuf@TxAttOPTableR1C@@QEAAXPEAUDataF@1@@Z
  	?MapBuf@TxAttIOTableR1C@@QEAAXPEAUDataF@1@@Z
  	?MapBuf@TxPowerOPTableR1C@@QEAAXPEAUDataF@1@@Z
@@ -126,7 +125,7 @@ EXPORTS
 	??0DMAMgr@@AEAA@XZ
 	??1DMAMgr@@AEAA@XZ
 	??4DMAMgr@@AEAAAEAV0@AEAV0@@Z
-	?Instance@DMAMgr@@SAPEAV1@XZ
+	?Instance@DMAMgr@@SAAEAV1@XZ
 	?FpgaRead@DMAMgr@@QEAAHPEAVviPCIDev@@PEAIIPEAM@Z
 	?FpgaReadAll@DMAMgr@@QEAAHPEAVviPCIDev@@PEAII@Z
 	?WDumpToBuf@DMAMgr@@QEAAHPEAHI@Z
@@ -161,6 +160,7 @@ EXPORTS
 	?GetFixItemTableR1C@ICalFile@@SAIPEAUItemInfo@1@AEAI@Z
 	?GetMaxItemByte@ICalFile@@SAIPEAUItemInfo@1@I@Z
 	?GetMaxItemByte@ICalFile@@SAIXZ
+	?GetX9119@ICalFile@@SAPEAVX9119Table@@XZ
 	?Open@ICalFile@@UEAAHXZ
 	?IsFileValid@ICalFile@@UEAA_NXZ
 	?WriteFromPos@ICalFile@@UEAAHPEADIIPEAX@Z
@@ -175,7 +175,7 @@ EXPORTS
 	??0CIQBufMgr@@AEAA@XZ
 	??1CIQBufMgr@@AEAA@XZ
 	??4CIQBufMgr@@AEAAAEAV0@AEAV0@@Z
-	?Instance@CIQBufMgr@@SAPEAV1@XZ
+	?Instance@CIQBufMgr@@SAAEAV1@XZ
 	?New@CIQBufMgr@@QEAAXI@Z
 	?SetSr@CIQBufMgr@@QEAAXI@Z
 	?GetSr@CIQBufMgr@@QEAAIXZ
@@ -562,15 +562,10 @@ EXPORTS
 	?Get@TxLOLeakageTableR1C@@QEAAX_KPEAUDataM@1@@Z
 	?Get@TxLOLeakageTableR1C@@QEAAX_KPEAUDataF@1@@Z
 	?SaveAs@TxLOLeakageTableR1C@@QEAAXPEAD@Z
-	?Map2Mem@X9119TableR1A@@QEAAXXZ
-	?Add@X9119TableR1A@@QEAAXPEAUData@1@@Z
-	?Get@X9119TableR1A@@QEAAXAEAF@Z
-	?SaveAs@X9119TableR1A@@QEAAXPEAD@Z
-	?Map2Mem@X9119TableR1C@@QEAAXXZ
-	?Add@X9119TableR1C@@QEAAXPEAUDataF@1@@Z
-	?Get@X9119TableR1C@@QEAAXAEAFAEAM@Z
-	?Get@X9119TableR1C@@QEAAXAEAFPEAM@Z
-	?SaveAs@X9119TableR1C@@QEAAXPEAD@Z
+	?Map2Mem@X9119Table@@QEAAXXZ
+	?Add@X9119Table@@QEAAXPEAUData@1@@Z
+	?Get@X9119Table@@QEAAXAEAF@Z
+	?SaveAs@X9119Table@@QEAAXPEAD@Z
 EXPORTS
 	; TxPowerTable
 	?Add@TxPowerTableR1A@@UEAAXPEAUDataF@1@@Z

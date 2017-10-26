@@ -116,6 +116,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="..\include;..\libLog;..\libBusDriver;&quot;..\lib\fftw-3.3.4\fftw-3.3.4-dll64&quot;"
+				PreprocessorDefinitions="_DEBUG"
 				RuntimeLibrary="3"
 				WarningLevel="3"
 				DebugInformationFormat="3"

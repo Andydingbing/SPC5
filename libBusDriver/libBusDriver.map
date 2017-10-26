@@ -1,11 +1,11 @@
  libBusDriver
 
- Timestamp is 59ddf803 (Wed Oct 11 18:52:51 2017)
+ Timestamp is 59e71c3a (Wed Oct 18 17:17:46 2017)
 
  Preferred load address is 0000000180000000
 
  Start         Length     Name                   Class
- 0001:00000000 00014854H .text                   CODE
+ 0001:00000000 0001485bH .text                   CODE
  0001:00014860 00001075H .text$00                CODE
  0001:000158e0 00002b2eH .text$x                 CODE
  0002:00000000 00000109H .CRT$XCA                DATA
@@ -30,13 +30,13 @@
  0005:00000064 00000014H .idata$3                DATA
  0005:00000078 00000600H .idata$4                DATA
  0005:00000678 00000600H .idata$5                DATA
- 0005:00000c78 00000c97H .idata$6                DATA
+ 0005:00000c78 00000ca5H .idata$6                DATA
  0006:00000000 00000104H viRsrcMgr               DATA
 
   Address         Publics by Value              Rva+Base               Lib:Object
 
- 0000:00000000       ___safe_se_handler_table   0000000000000000     <absolute>
  0000:00000000       ___safe_se_handler_count   0000000000000000     <absolute>
+ 0000:00000000       ___safe_se_handler_table   0000000000000000     <absolute>
  0000:00000000       __ImageBase                0000000180000000     <linker-defined>
  0001:00000d00       ?str2freq@@YAHPEBDAEAN@Z   0000000180001d00 f   algorithm.obj
  0001:00000fc0       ?str2freq@@YAHPEBDAEAM@Z   0000000180001fc0 f   algorithm.obj
@@ -161,7 +161,7 @@
  0001:00008710       ??NCFractionFloat@@QEAA_NV0@@Z 0000000180009710 f   FractionFloat.obj
  0001:00008790       ??9CFractionFloat@@QEAA_NV0@@Z 0000000180009790 f   FractionFloat.obj
  0001:00008d10       ??0CGeneralIniFile@@QEAA@PEBD@Z 0000000180009d10 f   GeneralIniFile.obj
- 0001:00008d70       ?GetConfigStringValue@CGeneralIniFile@@QEAAHPEBD0PEAD@Z 0000000180009d70 f   GeneralIniFile.obj
+ 0001:00008d80       ?GetConfigStringValue@CGeneralIniFile@@QEAAHPEBD0PEAD@Z 0000000180009d80 f   GeneralIniFile.obj
  0001:00009060       ?GetConfigIntValue@CGeneralIniFile@@QEAAHPEAD0PEAH@Z 000000018000a060 f   GeneralIniFile.obj
  0001:00009180       ?CompareString@CGeneralIniFile@@AEAAHPEBD0@Z 000000018000a180 f   GeneralIniFile.obj
  0001:00009220       ?GetKeyValue@CGeneralIniFile@@AEAAHPEAU_iobuf@@PEBDPEAD@Z 000000018000a220 f   GeneralIniFile.obj
@@ -206,8 +206,8 @@
  0001:0000d650       ?Init@IGPIBDev@@UEAA_NPEAD@Z 000000018000e650 f   IGPIBDev.obj
  0001:0000d6d0       ?Write@IGPIBDev@@UEAA_NPEBDZZ 000000018000e6d0 f   IGPIBDev.obj
  0001:0000d7e0       ?Read@IGPIBDev@@UEAA_NPEADII@Z 000000018000e7e0 f   IGPIBDev.obj
- 0001:0000d990       ??_GIGPIBDev@@UEAAPEAXI@Z  000000018000e990 f i IGPIBDev.obj
  0001:0000d990       ??_EIGPIBDev@@UEAAPEAXI@Z  000000018000e990 f i IGPIBDev.obj
+ 0001:0000d990       ??_GIGPIBDev@@UEAAPEAXI@Z  000000018000e990 f i IGPIBDev.obj
  0001:0000d9e0       ??0viMemIO@@QEAA@XZ        000000018000e9e0 f   viMemIO.obj
  0001:0000da40       ??1viMemIO@@UEAA@XZ        000000018000ea40 f   viMemIO.obj
  0001:0000da60       ??4viMemIO@@QEAAAEAV0@AEAV0@@Z 000000018000ea60 f   viMemIO.obj
@@ -246,10 +246,10 @@
  0001:0000eba0       ??0IPCIDev@@QEAA@XZ        000000018000fba0 f i viPCIDev.obj
  0001:0000ebc0       ??1IPCIDev@@UEAA@XZ        000000018000fbc0 f i viPCIDev.obj
  0001:0000ebe0       ?GetDevName@IPCIDev@@UEAAPEADXZ 000000018000fbe0 f i viPCIDev.obj
- 0001:0000ec00       ??_GIPCIDev@@UEAAPEAXI@Z   000000018000fc00 f i viPCIDev.obj
  0001:0000ec00       ??_EIPCIDev@@UEAAPEAXI@Z   000000018000fc00 f i viPCIDev.obj
- 0001:0000ec50       ??_GviPCIDev@@UEAAPEAXI@Z  000000018000fc50 f i viPCIDev.obj
+ 0001:0000ec00       ??_GIPCIDev@@UEAAPEAXI@Z   000000018000fc00 f i viPCIDev.obj
  0001:0000ec50       ??_EviPCIDev@@UEAAPEAXI@Z  000000018000fc50 f i viPCIDev.obj
+ 0001:0000ec50       ??_GviPCIDev@@UEAAPEAXI@Z  000000018000fc50 f i viPCIDev.obj
  0001:0000eca0       ?push_back@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@Z 000000018000fca0 f i viPCIDev.obj
  0001:0000ee10       ?pop_back@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAAXXZ 000000018000fe10 f i viPCIDev.obj
  0001:0000eed0       ?clear@?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QEAAXXZ 000000018000fed0 f i viPCIDev.obj
@@ -292,8 +292,8 @@
  0001:00010790       ??_Elogic_error@std@@UEAAPEAXI@Z 0000000180011790 f i viPCIDev.obj
  0001:000107e0       ??1logic_error@std@@UEAA@XZ 00000001800117e0 f i viPCIDev.obj
  0001:00010830       ??1length_error@std@@UEAA@XZ 0000000180011830 f i viPCIDev.obj
- 0001:00010860       ??_Glength_error@std@@UEAAPEAXI@Z 0000000180011860 f i viPCIDev.obj
  0001:00010860       ??_Elength_error@std@@UEAAPEAXI@Z 0000000180011860 f i viPCIDev.obj
+ 0001:00010860       ??_Glength_error@std@@UEAAPEAXI@Z 0000000180011860 f i viPCIDev.obj
  0001:000108b0       ??0logic_error@std@@QEAA@AEBV01@@Z 00000001800118b0 f i viPCIDev.obj
  0001:00010920       ?deallocate@?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QEAAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_K@Z 0000000180011920 f i viPCIDev.obj
  0001:00010950       ?allocate@?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QEAAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_K@Z 0000000180011950 f i viPCIDev.obj
@@ -318,8 +318,8 @@
  0001:00011240       ??$_Allocate@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@_KPEAV10@@Z 0000000180012240 f i viPCIDev.obj
  0001:000112c0       ??0bad_alloc@std@@QEAA@PEBD@Z 00000001800122c0 f i viPCIDev.obj
  0001:00011310       ??1bad_alloc@std@@UEAA@XZ  0000000180012310 f i viPCIDev.obj
- 0001:00011350       ??_Ebad_alloc@std@@UEAAPEAXI@Z 0000000180012350 f i viPCIDev.obj
  0001:00011350       ??_Gbad_alloc@std@@UEAAPEAXI@Z 0000000180012350 f i viPCIDev.obj
+ 0001:00011350       ??_Ebad_alloc@std@@UEAAPEAXI@Z 0000000180012350 f i viPCIDev.obj
  0001:000113a0       ??0bad_alloc@std@@QEAA@AEBV01@@Z 00000001800123a0 f i viPCIDev.obj
  0001:000113f0       ??$_Checked_base@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YAPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@AEAPEAV10@@Z 00000001800123f0 f i viPCIDev.obj
  0001:00011420       ??$_Iter_random@PEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV12@@std@@YA?AUrandom_access_iterator_tag@0@AEBQEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0@Z 0000000180012420 f i viPCIDev.obj
@@ -396,11 +396,10 @@
  0001:0001268e       cos                        000000018001368e f   MSVCRTD:MSVCR90D.dll
  0001:00012694       printf                     0000000180013694 f   MSVCRTD:MSVCR90D.dll
  0001:0001269a       __CxxFrameHandler3         000000018001369a f   MSVCRTD:MSVCR90D.dll
- 0001:000126a0       _getcwd                    00000001800136a0 f   MSVCRTD:MSVCR90D.dll
- 0001:000126a6       fclose                     00000001800136a6 f   MSVCRTD:MSVCR90D.dll
- 0001:000126ac       fgets                      00000001800136ac f   MSVCRTD:MSVCR90D.dll
- 0001:000126b2       feof                       00000001800136b2 f   MSVCRTD:MSVCR90D.dll
- 0001:000126b8       fopen                      00000001800136b8 f   MSVCRTD:MSVCR90D.dll
+ 0001:000126a0       fclose                     00000001800136a0 f   MSVCRTD:MSVCR90D.dll
+ 0001:000126a6       fgets                      00000001800136a6 f   MSVCRTD:MSVCR90D.dll
+ 0001:000126ac       feof                       00000001800136ac f   MSVCRTD:MSVCR90D.dll
+ 0001:000126b2       fopen                      00000001800136b2 f   MSVCRTD:MSVCR90D.dll
  0001:000126c0       __GSHandlerCheck_EH        00000001800136c0 f   MSVCRTD:gshandlereh.obj
  0001:00012770       ??0type_info@@AEAA@AEBV0@@Z 0000000180013770 f   MSVCRTD:ti_inst.obj
  0001:00012790       ??_Etype_info@@UEAAPEAXI@Z 0000000180013790 f i MSVCRTD:ti_inst.obj
@@ -444,8 +443,8 @@
  0001:000135b0       DllMain                    00000001800145b0 f   MSVCRTD:dllmain.obj
  0001:000135e8       __crt_debugger_hook        00000001800145e8 f   MSVCRTD:MSVCR90D.dll
  0001:000135ee       ?terminate@@YAXXZ          00000001800145ee f   MSVCRTD:MSVCR90D.dll
- 0001:000135f4       ??1type_info@@UEAA@XZ      00000001800145f4 f   MSVCRTD:MSVCR90D.dll
  0001:000135f4       ?_type_info_dtor_internal_method@type_info@@QEAAXXZ 00000001800145f4 f   MSVCRTD:MSVCR90D.dll
+ 0001:000135f4       ??1type_info@@UEAA@XZ      00000001800145f4 f   MSVCRTD:MSVCR90D.dll
  0001:000135fa       __clean_type_info_names_internal 00000001800145fa f   MSVCRTD:MSVCR90D.dll
  0001:00013600       _unlock                    0000000180014600 f   MSVCRTD:MSVCR90D.dll
  0001:00013606       __dllonexit                0000000180014606 f   MSVCRTD:MSVCR90D.dll
@@ -492,23 +491,24 @@
  0001:000136fc       viOpenDefaultRM            00000001800146fc f   visa64:visa64.dll
  0001:00013702       WDC_DriverOpen             0000000180014702 f   wdapi1020:WDAPI1020.dll
  0001:00013708       WDC_PciScanDevices         0000000180014708 f   wdapi1020:WDAPI1020.dll
- 0001:0001370e       Sleep                      000000018001470e f   kernel32:KERNEL32.dll
- 0001:00013714       TerminateProcess           0000000180014714 f   kernel32:KERNEL32.dll
- 0001:0001371a       GetCurrentProcess          000000018001471a f   kernel32:KERNEL32.dll
- 0001:00013720       UnhandledExceptionFilter   0000000180014720 f   kernel32:KERNEL32.dll
- 0001:00013726       SetUnhandledExceptionFilter 0000000180014726 f   kernel32:KERNEL32.dll
- 0001:0001372c       IsDebuggerPresent          000000018001472c f   kernel32:KERNEL32.dll
- 0001:00013732       RtlVirtualUnwind           0000000180014732 f   kernel32:KERNEL32.dll
- 0001:00013738       RtlLookupFunctionEntry     0000000180014738 f   kernel32:KERNEL32.dll
- 0001:0001373e       RtlCaptureContext          000000018001473e f   kernel32:KERNEL32.dll
- 0001:00013744       QueryPerformanceCounter    0000000180014744 f   kernel32:KERNEL32.dll
- 0001:0001374a       GetTickCount               000000018001474a f   kernel32:KERNEL32.dll
- 0001:00013750       GetCurrentThreadId         0000000180014750 f   kernel32:KERNEL32.dll
- 0001:00013756       GetCurrentProcessId        0000000180014756 f   kernel32:KERNEL32.dll
- 0001:0001375c       GetSystemTimeAsFileTime    000000018001475c f   kernel32:KERNEL32.dll
- 0001:00013762       DisableThreadLibraryCalls  0000000180014762 f   kernel32:KERNEL32.dll
- 0001:00014870       __chkstk                   0000000180015870 f   MSVCRTD:chkstk.obj
+ 0001:0001370e       GetModuleFileNameA         000000018001470e f   kernel32:KERNEL32.dll
+ 0001:00013714       Sleep                      0000000180014714 f   kernel32:KERNEL32.dll
+ 0001:0001371a       TerminateProcess           000000018001471a f   kernel32:KERNEL32.dll
+ 0001:00013720       GetCurrentProcess          0000000180014720 f   kernel32:KERNEL32.dll
+ 0001:00013726       UnhandledExceptionFilter   0000000180014726 f   kernel32:KERNEL32.dll
+ 0001:0001372c       SetUnhandledExceptionFilter 000000018001472c f   kernel32:KERNEL32.dll
+ 0001:00013732       IsDebuggerPresent          0000000180014732 f   kernel32:KERNEL32.dll
+ 0001:00013738       RtlVirtualUnwind           0000000180014738 f   kernel32:KERNEL32.dll
+ 0001:0001373e       RtlLookupFunctionEntry     000000018001473e f   kernel32:KERNEL32.dll
+ 0001:00013744       RtlCaptureContext          0000000180014744 f   kernel32:KERNEL32.dll
+ 0001:0001374a       QueryPerformanceCounter    000000018001474a f   kernel32:KERNEL32.dll
+ 0001:00013750       GetTickCount               0000000180014750 f   kernel32:KERNEL32.dll
+ 0001:00013756       GetCurrentThreadId         0000000180014756 f   kernel32:KERNEL32.dll
+ 0001:0001375c       GetCurrentProcessId        000000018001475c f   kernel32:KERNEL32.dll
+ 0001:00013762       GetSystemTimeAsFileTime    0000000180014762 f   kernel32:KERNEL32.dll
+ 0001:00013768       DisableThreadLibraryCalls  0000000180014768 f   kernel32:KERNEL32.dll
  0001:00014870       _alloca_probe              0000000180015870     MSVCRTD:chkstk.obj
+ 0001:00014870       __chkstk                   0000000180015870 f   MSVCRTD:chkstk.obj
  0002:00000000       __xc_a                     000000018001a000     MSVCRTD:cinitexe.obj
  0002:00000110       __xc_z                     000000018001a110     MSVCRTD:cinitexe.obj
  0002:00000220       __xi_a                     000000018001a220     MSVCRTD:cinitexe.obj
@@ -716,57 +716,57 @@
  0005:000006d8       __imp_GetCurrentProcess    00000001800266d8     kernel32:KERNEL32.dll
  0005:000006e0       __imp_TerminateProcess     00000001800266e0     kernel32:KERNEL32.dll
  0005:000006e8       __imp_Sleep                00000001800266e8     kernel32:KERNEL32.dll
- 0005:000006f0       \177KERNEL32_NULL_THUNK_DATA 00000001800266f0     kernel32:KERNEL32.dll
- 0005:00000760       __imp_?clear@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAXXZ 0000000180026760     msvcprtd:MSVCP90D.dll
- 0005:00000768       __imp_??4?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV01@PEBD@Z 0000000180026768     msvcprtd:MSVCP90D.dll
- 0005:00000770       __imp_?swap@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAXAEAV12@@Z 0000000180026770     msvcprtd:MSVCP90D.dll
- 0005:00000778       __imp_??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@U_Has_debug_it@01@@Z 0000000180026778     msvcprtd:MSVCP90D.dll
- 0005:00000780       __imp_??4?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV01@AEBV01@@Z 0000000180026780     msvcprtd:MSVCP90D.dll
- 0005:00000788       __imp_?c_str@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBAPEBDXZ 0000000180026788     msvcprtd:MSVCP90D.dll
- 0005:00000790       __imp_?_Orphan_all@_Container_base_secure@std@@QEBAXXZ 0000000180026790     msvcprtd:MSVCP90D.dll
- 0005:00000798       __imp_??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@AEBV01@@Z 0000000180026798     msvcprtd:MSVCP90D.dll
- 0005:000007a0       __imp_??0_Lockit@std@@QEAA@H@Z 00000001800267a0     msvcprtd:MSVCP90D.dll
- 0005:000007a8       __imp_??1_Lockit@std@@QEAA@XZ 00000001800267a8     msvcprtd:MSVCP90D.dll
- 0005:000007b0       __imp_?_Debug_message@std@@YAXPEB_W0I@Z 00000001800267b0     msvcprtd:MSVCP90D.dll
- 0005:000007b8       __imp_?length@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBA_KXZ 00000001800267b8     msvcprtd:MSVCP90D.dll
- 0005:000007c0       __imp_?copy@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBA_KPEAD_K1@Z 00000001800267c0     msvcprtd:MSVCP90D.dll
- 0005:000007c8       __imp_??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@PEBD@Z 00000001800267c8     msvcprtd:MSVCP90D.dll
- 0005:000007d0       __imp_??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@XZ 00000001800267d0     msvcprtd:MSVCP90D.dll
- 0005:000007d8       \177MSVCP90D_NULL_THUNK_DATA 00000001800267d8     msvcprtd:MSVCP90D.dll
- 0005:00000848       __imp_??0exception@std@@QEAA@AEBV01@@Z 0000000180026848     MSVCRTD:MSVCR90D.dll
- 0005:00000850       __imp_??1exception@std@@UEAA@XZ 0000000180026850     MSVCRTD:MSVCR90D.dll
- 0005:00000858       __imp_??0exception@std@@QEAA@XZ 0000000180026858     MSVCRTD:MSVCR90D.dll
- 0005:00000860       __imp__invalid_parameter   0000000180026860     MSVCRTD:MSVCR90D.dll
- 0005:00000868       __imp__CrtDbgReportW       0000000180026868     MSVCRTD:MSVCR90D.dll
- 0005:00000870       __imp_??0exception@std@@QEAA@AEBQEBD@Z 0000000180026870     MSVCRTD:MSVCR90D.dll
- 0005:00000878       __imp_?what@exception@std@@UEBAPEBDXZ 0000000180026878     MSVCRTD:MSVCR90D.dll
- 0005:00000880       __imp__encode_pointer      0000000180026880     MSVCRTD:MSVCR90D.dll
- 0005:00000888       __imp__malloc_dbg          0000000180026888     MSVCRTD:MSVCR90D.dll
- 0005:00000890       __imp__free_dbg            0000000180026890     MSVCRTD:MSVCR90D.dll
- 0005:00000898       __imp__encoded_null        0000000180026898     MSVCRTD:MSVCR90D.dll
- 0005:000008a0       __imp__decode_pointer      00000001800268a0     MSVCRTD:MSVCR90D.dll
- 0005:000008a8       __imp__CrtSetCheckCount    00000001800268a8     MSVCRTD:MSVCR90D.dll
- 0005:000008b0       __imp__initterm            00000001800268b0     MSVCRTD:MSVCR90D.dll
- 0005:000008b8       __imp__initterm_e          00000001800268b8     MSVCRTD:MSVCR90D.dll
- 0005:000008c0       __imp__amsg_exit           00000001800268c0     MSVCRTD:MSVCR90D.dll
- 0005:000008c8       __imp___C_specific_handler 00000001800268c8     MSVCRTD:MSVCR90D.dll
- 0005:000008d0       __imp___CppXcptFilter      00000001800268d0     MSVCRTD:MSVCR90D.dll
- 0005:000008d8       __imp___crt_debugger_hook  00000001800268d8     MSVCRTD:MSVCR90D.dll
- 0005:000008e0       __imp_?terminate@@YAXXZ    00000001800268e0     MSVCRTD:MSVCR90D.dll
- 0005:000008e8       __imp_?_type_info_dtor_internal_method@type_info@@QEAAXXZ 00000001800268e8     MSVCRTD:MSVCR90D.dll
- 0005:000008f0       __imp___clean_type_info_names_internal 00000001800268f0     MSVCRTD:MSVCR90D.dll
- 0005:000008f8       __imp__unlock              00000001800268f8     MSVCRTD:MSVCR90D.dll
- 0005:00000900       __imp___dllonexit          0000000180026900     MSVCRTD:MSVCR90D.dll
- 0005:00000908       __imp__lock                0000000180026908     MSVCRTD:MSVCR90D.dll
- 0005:00000910       __imp__onexit              0000000180026910     MSVCRTD:MSVCR90D.dll
- 0005:00000918       __imp__CxxThrowException   0000000180026918     MSVCRTD:MSVCR90D.dll
- 0005:00000920       __imp_vsprintf_s           0000000180026920     MSVCRTD:MSVCR90D.dll
- 0005:00000928       __imp__purecall            0000000180026928     MSVCRTD:MSVCR90D.dll
- 0005:00000930       __imp_fopen                0000000180026930     MSVCRTD:MSVCR90D.dll
- 0005:00000938       __imp_feof                 0000000180026938     MSVCRTD:MSVCR90D.dll
- 0005:00000940       __imp_fgets                0000000180026940     MSVCRTD:MSVCR90D.dll
- 0005:00000948       __imp_fclose               0000000180026948     MSVCRTD:MSVCR90D.dll
- 0005:00000950       __imp__getcwd              0000000180026950     MSVCRTD:MSVCR90D.dll
+ 0005:000006f0       __imp_GetModuleFileNameA   00000001800266f0     kernel32:KERNEL32.dll
+ 0005:000006f8       \177KERNEL32_NULL_THUNK_DATA 00000001800266f8     kernel32:KERNEL32.dll
+ 0005:00000768       __imp_?clear@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAXXZ 0000000180026768     msvcprtd:MSVCP90D.dll
+ 0005:00000770       __imp_??4?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV01@PEBD@Z 0000000180026770     msvcprtd:MSVCP90D.dll
+ 0005:00000778       __imp_?swap@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAXAEAV12@@Z 0000000180026778     msvcprtd:MSVCP90D.dll
+ 0005:00000780       __imp_??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@U_Has_debug_it@01@@Z 0000000180026780     msvcprtd:MSVCP90D.dll
+ 0005:00000788       __imp_??4?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV01@AEBV01@@Z 0000000180026788     msvcprtd:MSVCP90D.dll
+ 0005:00000790       __imp_?c_str@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBAPEBDXZ 0000000180026790     msvcprtd:MSVCP90D.dll
+ 0005:00000798       __imp_?_Orphan_all@_Container_base_secure@std@@QEBAXXZ 0000000180026798     msvcprtd:MSVCP90D.dll
+ 0005:000007a0       __imp_??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@AEBV01@@Z 00000001800267a0     msvcprtd:MSVCP90D.dll
+ 0005:000007a8       __imp_??0_Lockit@std@@QEAA@H@Z 00000001800267a8     msvcprtd:MSVCP90D.dll
+ 0005:000007b0       __imp_??1_Lockit@std@@QEAA@XZ 00000001800267b0     msvcprtd:MSVCP90D.dll
+ 0005:000007b8       __imp_?_Debug_message@std@@YAXPEB_W0I@Z 00000001800267b8     msvcprtd:MSVCP90D.dll
+ 0005:000007c0       __imp_?length@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBA_KXZ 00000001800267c0     msvcprtd:MSVCP90D.dll
+ 0005:000007c8       __imp_?copy@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBA_KPEAD_K1@Z 00000001800267c8     msvcprtd:MSVCP90D.dll
+ 0005:000007d0       __imp_??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@PEBD@Z 00000001800267d0     msvcprtd:MSVCP90D.dll
+ 0005:000007d8       __imp_??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@XZ 00000001800267d8     msvcprtd:MSVCP90D.dll
+ 0005:000007e0       \177MSVCP90D_NULL_THUNK_DATA 00000001800267e0     msvcprtd:MSVCP90D.dll
+ 0005:00000850       __imp_??0exception@std@@QEAA@XZ 0000000180026850     MSVCRTD:MSVCR90D.dll
+ 0005:00000858       __imp__invalid_parameter   0000000180026858     MSVCRTD:MSVCR90D.dll
+ 0005:00000860       __imp__CrtDbgReportW       0000000180026860     MSVCRTD:MSVCR90D.dll
+ 0005:00000868       __imp_??0exception@std@@QEAA@AEBQEBD@Z 0000000180026868     MSVCRTD:MSVCR90D.dll
+ 0005:00000870       __imp_?what@exception@std@@UEBAPEBDXZ 0000000180026870     MSVCRTD:MSVCR90D.dll
+ 0005:00000878       __imp__encode_pointer      0000000180026878     MSVCRTD:MSVCR90D.dll
+ 0005:00000880       __imp__malloc_dbg          0000000180026880     MSVCRTD:MSVCR90D.dll
+ 0005:00000888       __imp__free_dbg            0000000180026888     MSVCRTD:MSVCR90D.dll
+ 0005:00000890       __imp__encoded_null        0000000180026890     MSVCRTD:MSVCR90D.dll
+ 0005:00000898       __imp__decode_pointer      0000000180026898     MSVCRTD:MSVCR90D.dll
+ 0005:000008a0       __imp__CrtSetCheckCount    00000001800268a0     MSVCRTD:MSVCR90D.dll
+ 0005:000008a8       __imp__initterm            00000001800268a8     MSVCRTD:MSVCR90D.dll
+ 0005:000008b0       __imp__initterm_e          00000001800268b0     MSVCRTD:MSVCR90D.dll
+ 0005:000008b8       __imp__amsg_exit           00000001800268b8     MSVCRTD:MSVCR90D.dll
+ 0005:000008c0       __imp___C_specific_handler 00000001800268c0     MSVCRTD:MSVCR90D.dll
+ 0005:000008c8       __imp___CppXcptFilter      00000001800268c8     MSVCRTD:MSVCR90D.dll
+ 0005:000008d0       __imp___crt_debugger_hook  00000001800268d0     MSVCRTD:MSVCR90D.dll
+ 0005:000008d8       __imp_?terminate@@YAXXZ    00000001800268d8     MSVCRTD:MSVCR90D.dll
+ 0005:000008e0       __imp_?_type_info_dtor_internal_method@type_info@@QEAAXXZ 00000001800268e0     MSVCRTD:MSVCR90D.dll
+ 0005:000008e8       __imp___clean_type_info_names_internal 00000001800268e8     MSVCRTD:MSVCR90D.dll
+ 0005:000008f0       __imp__unlock              00000001800268f0     MSVCRTD:MSVCR90D.dll
+ 0005:000008f8       __imp___dllonexit          00000001800268f8     MSVCRTD:MSVCR90D.dll
+ 0005:00000900       __imp__lock                0000000180026900     MSVCRTD:MSVCR90D.dll
+ 0005:00000908       __imp__onexit              0000000180026908     MSVCRTD:MSVCR90D.dll
+ 0005:00000910       __imp_??1exception@std@@UEAA@XZ 0000000180026910     MSVCRTD:MSVCR90D.dll
+ 0005:00000918       __imp_??0exception@std@@QEAA@AEBV01@@Z 0000000180026918     MSVCRTD:MSVCR90D.dll
+ 0005:00000920       __imp__CxxThrowException   0000000180026920     MSVCRTD:MSVCR90D.dll
+ 0005:00000928       __imp_vsprintf_s           0000000180026928     MSVCRTD:MSVCR90D.dll
+ 0005:00000930       __imp__purecall            0000000180026930     MSVCRTD:MSVCR90D.dll
+ 0005:00000938       __imp_fopen                0000000180026938     MSVCRTD:MSVCR90D.dll
+ 0005:00000940       __imp_feof                 0000000180026940     MSVCRTD:MSVCR90D.dll
+ 0005:00000948       __imp_fgets                0000000180026948     MSVCRTD:MSVCR90D.dll
+ 0005:00000950       __imp_fclose               0000000180026950     MSVCRTD:MSVCR90D.dll
  0005:00000958       __imp___CxxFrameHandler3   0000000180026958     MSVCRTD:MSVCR90D.dll
  0005:00000960       __imp_printf               0000000180026960     MSVCRTD:MSVCR90D.dll
  0005:00000968       __imp_cos                  0000000180026968     MSVCRTD:MSVCR90D.dll
@@ -774,35 +774,35 @@
  0005:00000978       __imp_memcpy               0000000180026978     MSVCRTD:MSVCR90D.dll
  0005:00000980       __imp_strtol               0000000180026980     MSVCRTD:MSVCR90D.dll
  0005:00000988       __imp_pow                  0000000180026988     MSVCRTD:MSVCR90D.dll
- 0005:00000990       __imp_log10                0000000180026990     MSVCRTD:MSVCR90D.dll
- 0005:00000998       __imp_atof                 0000000180026998     MSVCRTD:MSVCR90D.dll
+ 0005:00000990       __imp_atof                 0000000180026990     MSVCRTD:MSVCR90D.dll
+ 0005:00000998       __imp_strcmp               0000000180026998     MSVCRTD:MSVCR90D.dll
  0005:000009a0       __imp_strtod               00000001800269a0     MSVCRTD:MSVCR90D.dll
- 0005:000009a8       __imp_strcmp               00000001800269a8     MSVCRTD:MSVCR90D.dll
- 0005:000009b0       __imp_strlen               00000001800269b0     MSVCRTD:MSVCR90D.dll
- 0005:000009b8       __imp_strcpy               00000001800269b8     MSVCRTD:MSVCR90D.dll
- 0005:000009c0       __imp_memset               00000001800269c0     MSVCRTD:MSVCR90D.dll
- 0005:000009c8       __imp_sscanf               00000001800269c8     MSVCRTD:MSVCR90D.dll
- 0005:000009d0       __imp_strstr               00000001800269d0     MSVCRTD:MSVCR90D.dll
- 0005:000009d8       __imp_strcat               00000001800269d8     MSVCRTD:MSVCR90D.dll
- 0005:000009e0       __imp_sprintf              00000001800269e0     MSVCRTD:MSVCR90D.dll
- 0005:000009e8       __imp_fabs                 00000001800269e8     MSVCRTD:MSVCR90D.dll
- 0005:000009f0       __imp_strrchr              00000001800269f0     MSVCRTD:MSVCR90D.dll
- 0005:000009f8       __imp_strpbrk              00000001800269f8     MSVCRTD:MSVCR90D.dll
- 0005:00000a00       __imp_strchr               0000000180026a00     MSVCRTD:MSVCR90D.dll
- 0005:00000a08       __imp_??3@YAXPEAX@Z        0000000180026a08     MSVCRTD:MSVCR90D.dll
- 0005:00000a10       __imp_??2@YAPEAX_K@Z       0000000180026a10     MSVCRTD:MSVCR90D.dll
+ 0005:000009a8       __imp_strlen               00000001800269a8     MSVCRTD:MSVCR90D.dll
+ 0005:000009b0       __imp_strcpy               00000001800269b0     MSVCRTD:MSVCR90D.dll
+ 0005:000009b8       __imp_memset               00000001800269b8     MSVCRTD:MSVCR90D.dll
+ 0005:000009c0       __imp_sscanf               00000001800269c0     MSVCRTD:MSVCR90D.dll
+ 0005:000009c8       __imp_strstr               00000001800269c8     MSVCRTD:MSVCR90D.dll
+ 0005:000009d0       __imp_strcat               00000001800269d0     MSVCRTD:MSVCR90D.dll
+ 0005:000009d8       __imp_sprintf              00000001800269d8     MSVCRTD:MSVCR90D.dll
+ 0005:000009e0       __imp_fabs                 00000001800269e0     MSVCRTD:MSVCR90D.dll
+ 0005:000009e8       __imp_strrchr              00000001800269e8     MSVCRTD:MSVCR90D.dll
+ 0005:000009f0       __imp_strpbrk              00000001800269f0     MSVCRTD:MSVCR90D.dll
+ 0005:000009f8       __imp_strchr               00000001800269f8     MSVCRTD:MSVCR90D.dll
+ 0005:00000a00       __imp_??3@YAXPEAX@Z        0000000180026a00     MSVCRTD:MSVCR90D.dll
+ 0005:00000a08       __imp_??2@YAPEAX_K@Z       0000000180026a08     MSVCRTD:MSVCR90D.dll
+ 0005:00000a10       __imp_log10                0000000180026a10     MSVCRTD:MSVCR90D.dll
  0005:00000a18       \177MSVCR90D_NULL_THUNK_DATA 0000000180026a18     MSVCRTD:MSVCR90D.dll
  0005:00000ac8       __imp_WDC_DriverOpen       0000000180026ac8     wdapi1020:WDAPI1020.dll
  0005:00000ad0       __imp_WDC_PciScanDevices   0000000180026ad0     wdapi1020:WDAPI1020.dll
  0005:00000ad8       \177WDAPI1020_NULL_THUNK_DATA 0000000180026ad8     wdapi1020:WDAPI1020.dll
- 0005:00000b30       __imp_viIn8                0000000180026b30     visa64:visa64.dll
- 0005:00000b38       __imp_viIn16               0000000180026b38     visa64:visa64.dll
- 0005:00000b40       __imp_viIn32               0000000180026b40     visa64:visa64.dll
- 0005:00000b48       __imp_viOut32              0000000180026b48     visa64:visa64.dll
- 0005:00000b50       __imp_viPeek32             0000000180026b50     visa64:visa64.dll
- 0005:00000b58       __imp_viOpenDefaultRM      0000000180026b58     visa64:visa64.dll
- 0005:00000b60       __imp_viOut16              0000000180026b60     visa64:visa64.dll
- 0005:00000b68       __imp_viPoke32             0000000180026b68     visa64:visa64.dll
+ 0005:00000b30       __imp_viIn32               0000000180026b30     visa64:visa64.dll
+ 0005:00000b38       __imp_viIn8                0000000180026b38     visa64:visa64.dll
+ 0005:00000b40       __imp_viPeek32             0000000180026b40     visa64:visa64.dll
+ 0005:00000b48       __imp_viOpenDefaultRM      0000000180026b48     visa64:visa64.dll
+ 0005:00000b50       __imp_viOut32              0000000180026b50     visa64:visa64.dll
+ 0005:00000b58       __imp_viPoke32             0000000180026b58     visa64:visa64.dll
+ 0005:00000b60       __imp_viIn16               0000000180026b60     visa64:visa64.dll
+ 0005:00000b68       __imp_viOut16              0000000180026b68     visa64:visa64.dll
  0005:00000b70       __imp_viOut8               0000000180026b70     visa64:visa64.dll
  0005:00000b78       __imp_viFindRsrc           0000000180026b78     visa64:visa64.dll
  0005:00000b80       __imp_viFindNext           0000000180026b80     visa64:visa64.dll
@@ -817,9 +817,9 @@
  0005:00000bc8       __imp_viGetAttribute       0000000180026bc8     visa64:visa64.dll
  0005:00000bd0       __imp_viRead               0000000180026bd0     visa64:visa64.dll
  0005:00000bd8       __imp_viWrite              0000000180026bd8     visa64:visa64.dll
- 0005:00000be0       __imp_viOpen               0000000180026be0     visa64:visa64.dll
+ 0005:00000be0       __imp_viSetAttribute       0000000180026be0     visa64:visa64.dll
  0005:00000be8       __imp_viClose              0000000180026be8     visa64:visa64.dll
- 0005:00000bf0       __imp_viSetAttribute       0000000180026bf0     visa64:visa64.dll
+ 0005:00000bf0       __imp_viOpen               0000000180026bf0     visa64:visa64.dll
  0005:00000bf8       \177visa64_NULL_THUNK_DATA 0000000180026bf8     visa64:visa64.dll
  0006:00000000       ?g_RsrcMgr@@3KA            0000000180028000     viPCIDev.obj
 
