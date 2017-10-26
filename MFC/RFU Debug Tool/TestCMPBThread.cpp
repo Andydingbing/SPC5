@@ -239,7 +239,7 @@ int32_t CTestCMPBThread::ProgramCeuK7(int32_t iK7Index,CString strS6Rsrc,CString
 
 	FILE *fp = fopen((LPSTR)(LPCTSTR)strPath,"rb");
 	if (fp == NULL) {
-		Log->SetLastError("file : %s missing",strPath);
+		Log.SetLastError("file : %s missing",strPath);
 		return -1;
 	}
 	fseek(fp,0,SEEK_END);
@@ -267,7 +267,7 @@ int32_t CTestCMPBThread::ProgramCeuK7(int32_t iK7Index,CString strS6Rsrc,CString
 			break;
 	}
 	//wait fifo empty
-	Log->stdprintf("preparing programming ceu k7_%d,waiting fifo empty...\n",iK7Index);
+	Log.stdprintf("preparing programming ceu k7_%d,waiting fifo empty...\n",iK7Index);
 	iInitFlag = 0;
 	S6.R32(viPCIDev::AS_BAR0,(LOAD_STATE_REG+(iK7Index/2)*16+(iK7Index%2)*4) << 2,&state);
 	while(((state>>2) & 1) == 0) {
@@ -276,7 +276,7 @@ int32_t CTestCMPBThread::ProgramCeuK7(int32_t iK7Index,CString strS6Rsrc,CString
 			break;
 	}
 	//downloading
-	Log->stdprintf("downloading...\n");
+	Log.stdprintf("downloading...\n");
 	for (int i=0;i<iDownCnt;i++)
 	{
 		if (i == (iDownCnt-1))
@@ -297,10 +297,10 @@ int32_t CTestCMPBThread::ProgramCeuK7(int32_t iK7Index,CString strS6Rsrc,CString
 			int j = 0;
 			j ++;
 		}
-		Log->stdprintf("%-5d done\r",i);
+		Log.stdprintf("%-5d done\r",i);
 	}
 	S6.R32(viPCIDev::AS_BAR0,(LOAD_STATE_REG+(iK7Index/2)*16+(iK7Index%2)*4) << 2,&state);
-	Log->stdprintf("\n");
+	Log.stdprintf("\n");
 	//check cfg done
 	if (((state>>1) & 1) == 0)
 		goto FAIL;
@@ -310,14 +310,14 @@ int32_t CTestCMPBThread::ProgramCeuK7(int32_t iK7Index,CString strS6Rsrc,CString
 SUCCESS:
 	delete []pBuf;
 	fclose(fp);
-	Log->stdprintf("restarting...\n");
+	Log.stdprintf("restarting...\n");
 	system("devcon_x64.exe restart \"PCI\\VEN_10EE&DEV_7022\"");
 	Sleep(1000);
-	Log->stdprintf("restarted\n");
+	Log.stdprintf("restarted\n");
 	S6.Close();
 	return 0;
 FAIL:
-	Log->SetLastError("download complete,but device restart fail!!!");
+	Log.SetLastError("download complete,but device restart fail!!!");
 	delete []pBuf;
 	fclose(fp);
 	S6.Close();
@@ -333,7 +333,7 @@ int32_t CTestCMPBThread::ProgramCxuV7(CString strS6Rsrc,CString strPath)
 
 	FILE *fp = fopen(strPath,"rb");
 	if (NULL == fp) {
-		Log->SetLastError("file : %s missing",strPath);
+		Log.SetLastError("file : %s missing",strPath);
 		return -1;
 	}
 	fseek(fp,0,SEEK_END);
@@ -361,7 +361,7 @@ int32_t CTestCMPBThread::ProgramCxuV7(CString strS6Rsrc,CString strPath)
 			break;
 	}
 	//wait fifo empty
-	Log->stdprintf("preparing programming cxu v7,waiting fifo empty...\n");
+	Log.stdprintf("preparing programming cxu v7,waiting fifo empty...\n");
 	iInitFlag = 0;
 	S6.R32(viPCIDev::AS_BAR0,(LOAD_STATE_REG+16) << 2,&state);
 	while(((state>>2) & 1) == 0) {
@@ -370,7 +370,7 @@ int32_t CTestCMPBThread::ProgramCxuV7(CString strS6Rsrc,CString strPath)
 			break;
 	}
 	//downloading
-	Log->stdprintf("downloading...\n");
+	Log.stdprintf("downloading...\n");
 	for (int i=0;i<iDownCnt;i++)
 	{
 		if (i == (iDownCnt-1))
@@ -391,10 +391,10 @@ int32_t CTestCMPBThread::ProgramCxuV7(CString strS6Rsrc,CString strPath)
 			int j = 0;
 			j ++;
 		}
-		Log->stdprintf("%-5d done\r",i);
+		Log.stdprintf("%-5d done\r",i);
 	}
 	S6.R32(viPCIDev::AS_BAR0,(LOAD_STATE_REG+16) << 2,&state);
-	Log->stdprintf("\n");
+	Log.stdprintf("\n");
 	//check cfg done
 	if (((state>>1) & 1) == 0)
 		goto FAIL;
@@ -404,14 +404,14 @@ int32_t CTestCMPBThread::ProgramCxuV7(CString strS6Rsrc,CString strPath)
 SUCCESS:
 	delete []pBuf;
 	fclose(fp);
-	Log->stdprintf("restarting...\n");
+	Log.stdprintf("restarting...\n");
 	system("devcon_x64.exe restart \"PCI\\VEN_10EE&DEV_7024\"");
 	Sleep(1000);
-	Log->stdprintf("restarted\n");
+	Log.stdprintf("restarted\n");
 	S6.Close();
 	return 0;
 FAIL:
-	Log->SetLastError("download complete,but device restart fail");
+	Log.SetLastError("download complete,but device restart fail");
 	delete []pBuf;
 	fclose(fp);
 	S6.Close();

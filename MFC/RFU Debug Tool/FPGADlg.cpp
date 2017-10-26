@@ -143,7 +143,7 @@ void CFPGADlg::OnBnClickedWriteK7_0()
 	uint32_t uiOffset = strtol(m_strK7_0_Offset,NULL,16);
 	uint32_t uiData = strtoul(m_strK7_0_Data,NULL,16);
 	iStatus = m_K7_0->W32(viPCIDev::AS_BAR0,uiOffset << 2,uiData);
-	Log->AddRegList(iStatus,m_K7_0->GetDevName(),uiOffset,uiData);
+	Log.AddRegList(iStatus,m_K7_0->GetDevName(),uiOffset,uiData);
 	if (iStatus)
 		m_strK7_0_Status.Format("%#010X",iStatus);
 	else
@@ -159,7 +159,7 @@ void CFPGADlg::OnBnClickedReadK7_0()
 	uint32_t uiData = 0;
 	iStatus = m_K7_0->R32(viPCIDev::AS_BAR0,uiOffset << 2,&uiData);
 	m_strK7_0_Data.Format("%08X",uiData);
-	Log->AddRegList(iStatus,m_K7_0->GetDevName(),uiOffset,-1,uiData);
+	Log.AddRegList(iStatus,m_K7_0->GetDevName(),uiOffset,-1,uiData);
 	if (iStatus)
 		m_strK7_0_Status.Format("%#010X",iStatus);
 	else
@@ -174,7 +174,7 @@ void CFPGADlg::OnBnClickedWriteK7_1()
 	uint32_t uiOffset = strtol(m_strK7_1_Offset,NULL,16);
 	uint32_t uiData = strtoul(m_strK7_1_Data,NULL,16);
 	iStatus = m_K7_1->W32(viPCIDev::AS_BAR0,uiOffset << 2,uiData);
-	Log->AddRegList(iStatus,m_K7_1->GetDevName(),uiOffset,uiData);
+	Log.AddRegList(iStatus,m_K7_1->GetDevName(),uiOffset,uiData);
 	if (iStatus)
 		m_strK7_1_Status.Format("%#010X",iStatus);
 	else
@@ -190,7 +190,7 @@ void CFPGADlg::OnBnClickedReadK7_1()
 	uint32_t uiData = 0;
 	iStatus = m_K7_1->R32(viPCIDev::AS_BAR0,uiOffset << 2,&uiData);
 	m_strK7_1_Data.Format("%08X",uiData);
-	Log->AddRegList(iStatus,m_K7_1->GetDevName(),uiOffset,-1,uiData);
+	Log.AddRegList(iStatus,m_K7_1->GetDevName(),uiOffset,-1,uiData);
 	if (iStatus)
 		m_strK7_1_Status.Format("%#010X",iStatus);
 	else
@@ -205,7 +205,7 @@ void CFPGADlg::OnBnClickedWriteS6_BAR0()
 	uint32_t uiOffset = strtol(m_strS6_BAR0_Offset,NULL,16);
 	uint32_t uiData = strtoul(m_strS6_BAR0_Data,NULL,16);
 	iStatus = m_S6->W32(viPCIDev::AS_BAR0,uiOffset << 2,uiData);
-	Log->AddRegList(iStatus,m_S6->GetDevName(),uiOffset,uiData);
+	Log.AddRegList(iStatus,m_S6->GetDevName(),uiOffset,uiData);
 	if (iStatus)
 		m_strS6Status.Format("%#010X",iStatus);
 	else
@@ -221,7 +221,7 @@ void CFPGADlg::OnBnClickedReadS6_BAR0()
 	uint32_t uiData = 0;
 	iStatus = m_S6->R32(viPCIDev::AS_BAR0,uiOffset << 2,&uiData);
 	m_strS6_BAR0_Data.Format("%08X",uiData);
-	Log->AddRegList(iStatus,m_S6->GetDevName(),uiOffset,-1,uiData);
+	Log.AddRegList(iStatus,m_S6->GetDevName(),uiOffset,-1,uiData);
 	if (iStatus)
 		m_strS6Status.Format("%#010X",iStatus);
 	else
@@ -236,7 +236,7 @@ void CFPGADlg::OnBnClickedWriteS6_BAR1()
 	uint32_t uiOffset = strtol(m_strS6_BAR1_Offset,NULL,16);
 	uint32_t uiData = strtoul(m_strS6_BAR1_Data,NULL,16);
 	iStatus = m_S6->W32(viPCIDev::AS_BAR0,uiOffset << 2,uiData);
-	Log->AddRegList(iStatus,m_S6->GetDevName(),uiOffset,uiData);
+	Log.AddRegList(iStatus,m_S6->GetDevName(),uiOffset,uiData);
 	if (iStatus)
 		m_strS6Status.Format("%#010X",iStatus);
 	else
@@ -252,7 +252,7 @@ void CFPGADlg::OnBnClickedReadS6_BAR1()
 	uint32_t uiData = 0;
 	iStatus = m_S6->R32(viPCIDev::AS_BAR0,uiOffset << 2,&uiData);
 	m_strS6_BAR1_Data.Format("%08X",uiData);
-	Log->AddRegList(iStatus,m_S6->GetDevName(),uiOffset,-1,uiData);
+	Log.AddRegList(iStatus,m_S6->GetDevName(),uiOffset,-1,uiData);
 	if (iStatus)
 		m_strS6Status.Format("%#010X",iStatus);
 	else
@@ -282,7 +282,7 @@ void CFPGADlg::OnBnClickedLoadBitK7_0()
 	CString strPath;
 	m_BitFileK7_0.GetWindowText(strPath);
 	if (m_pSP2401_2->SetFpgaBit((LPSTR)(LPCTSTR)strPath))
-		m_strFPGABitStatus.Format("%s",Log->GetLastError());
+		m_strFPGABitStatus.Format("%s",Log.GetLastError());
 	UpdateData(FALSE);
 }
 
@@ -292,7 +292,7 @@ void CFPGADlg::OnBnClickedLoadBitK7_1()
 	CString strPath;
 	m_BitFileK7_1.GetWindowText(strPath);
 	if (m_pSP2401_0->SetFpgaBit((LPSTR)(LPCTSTR)strPath) < 0)
-		m_strFPGABitStatus.Format("%s",Log->GetLastError());
+		m_strFPGABitStatus.Format("%s",Log.GetLastError());
 	UpdateData(FALSE);
 }
 
@@ -371,7 +371,7 @@ void CFPGADlg::OnBnClickedExecuteWriteFromFile()
 		uiData = strtoul(szDataBuf,NULL,16);
 		if ((iStatus = pFPGA->W32(viPCIDev::AS_BAR0,uiOffset << 2,uiData)) < 0)
 			return;
-		Log->AddRegList(iStatus,pFPGA->GetDevName(),uiOffset,uiData);
+		Log.AddRegList(iStatus,pFPGA->GetDevName(),uiOffset,uiData);
 	}
 	fclose(fp);
 }

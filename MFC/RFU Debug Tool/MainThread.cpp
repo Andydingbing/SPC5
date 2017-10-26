@@ -73,7 +73,7 @@ int CMainThread::InitDevice()
 	pSP3301->SetLoadBit(false,false);
 	pSP3301->LoadBit();
 	if (pSP3301->Boot()) {
-		Log->AddMsgList(-1,"boot fail");
+		Log.AddMsgList(-1,"boot fail");
 		CAL_THREAD_ABOART();
 	}
 	SetPos(90,m_nThreadID);
@@ -86,7 +86,7 @@ int CMainThread::InitDevice()
 	(CMainFrame*)AfxGetMainWnd()->SendMessage(WM_CSE_SWHW_VERSION,(WPARAM)pDriVer,(LPARAM)(&Ver));
 
 	SetPos(100,m_nThreadID);
-	Log->AddMsgList(0,"booted");
+	Log.AddMsgList(0,"booted");
 	
 	::SendMessage(m_pParent->GetSafeHwnd(),WM_CSE_SINGLE_THREAD_DONE,NULL,NULL);
 	return 0;

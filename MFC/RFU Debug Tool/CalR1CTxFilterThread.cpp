@@ -96,9 +96,9 @@ int CCalR1CTxFilterThread::CalTxFilter()
 				uiTxFreq = DataRFFr.m_uiFreq < RF_TX_FREQ_STAR ? RF_TX_FREQ_STAR : DataRFFr.m_uiFreq;
 				pSP1401->SetTxFreq(uiTxFreq);
 				pSP1401->SetTxFilterSw(CSP1401R1C::LPF,CSP1401R1C::LPF);
-				Instrument.PM_SetFrequency((double)(uiTxFreq));
-				Sleep(10);
-				Instrument.PM_GetPwr(DataRFFr.m_dPower);
+ 				Instrument.PM_SetFrequency((double)(uiTxFreq));
+ 				Sleep(10);
+ 				Instrument.PM_GetPwr(DataRFFr.m_dPower);
 				((CalFileR1C *)(pSP1401->GetCalFile()))->Add(ICalFile::TxRFFr_0,(TxRFFrTable::DataF *)&DataRFFr);
 				::SendMessage(pParent->GetSafeHwnd(),WM_CSE_CAL_TX_FILTER_RFFR_0_SHOW,NULL,(LPARAM)&DataRFFr);
 				SetPos(i + 1,m_nThreadID);
@@ -257,7 +257,7 @@ int CCalR1CTxFilterThread::CalTxFilter()
 		strcat(szFirExePaht,"\\tx_filter.exe");
 		if (ExeFirProcess(szFirExePaht)) {
 			DeleteFile(szPathFr);
-			CseMessageBox("%s",Log->GetLastError());
+			CseMessageBox("%s",Log.GetLastError());
 			CAL_THREAD_ABOART();
 		}
 
@@ -267,13 +267,13 @@ int CCalR1CTxFilterThread::CalTxFilter()
 		fp_real = fopen(szPathReal,"r");
 		fp_imag = fopen(szPathImag,"r");
 		if (NULL == fp_real) {
-			Log->SetLastError("could not open %s",szPathReal);
-			CseMessageBox("%s",Log->GetLastError());
+			Log.SetLastError("could not open %s",szPathReal);
+			CseMessageBox("%s",Log.GetLastError());
 			CAL_THREAD_ABOART();
 		}
 		if (NULL == fp_imag) {
-			Log->SetLastError("could not open %s",szPathImag);
-			CseMessageBox("%s",Log->GetLastError());
+			Log.SetLastError("could not open %s",szPathImag);
+			CseMessageBox("%s",Log.GetLastError());
 			CAL_THREAD_ABOART();
 		}
 		iIdx = 0;
@@ -312,13 +312,13 @@ int CCalR1CTxFilterThread::CalTxFilter()
 		fp_real = fopen(szPathReal,"r");
 		fp_imag = fopen(szPathImag,"r");
 		if (NULL == fp_real) {
-			Log->SetLastError("could not open %s",szPathReal);
-			CseMessageBox("%s",Log->GetLastError());
+			Log.SetLastError("could not open %s",szPathReal);
+			CseMessageBox("%s",Log.GetLastError());
 			CAL_THREAD_ABOART();
 		}
 		if (NULL == fp_imag) {
-			Log->SetLastError("could not open %s",szPathImag);
-			CseMessageBox("%s",Log->GetLastError());
+			Log.SetLastError("could not open %s",szPathImag);
+			CseMessageBox("%s",Log.GetLastError());
 			CAL_THREAD_ABOART();
 		}
 		iIdx = 0;

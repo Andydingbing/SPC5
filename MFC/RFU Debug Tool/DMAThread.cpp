@@ -26,7 +26,7 @@ CDMAThread::~CDMAThread()
 
 BOOL CDMAThread::InitInstance()
 {
-	Log->SetEnable(L_REG,false);
+	Log.SetEnable(L_REG,false);
 	return TRUE;
 }
 
@@ -65,7 +65,7 @@ int32_t CDMAThread::TestWR()
 		pBuf[i] = i;
 
 	pSP1401->SetIQCapSamples(uiSamples);
-	DDR->FpgaReadAll(pSP1401->GetK7(),pBuf,uiSamples);
+	DDR.FpgaReadAll(pSP1401->GetK7(),pBuf,uiSamples);
 
 	InitSinglePos("DMA W/R Test",(int32_t)uiTimes);
 	for (uint32_t i = 0;i < uiTimes;i ++) {
@@ -73,16 +73,16 @@ int32_t CDMAThread::TestWR()
 		pParent->m_uiTestCurTimes = i;
 		::PostMessage(pParent->GetSafeHwnd(),WM_CSE_UPDATE_DATA_FALSE,NULL,NULL);
 		if (bTestR)
-			DDR->FpgaReadAll(pSP1401->GetK7(),pBuf,uiSamples);
+			DDR.FpgaReadAll(pSP1401->GetK7(),pBuf,uiSamples);
 		if (bTestW) {
 			pSP1401->IQCap();
 			memset(pBuf,0,sizeof(uint32_t) * uiSamples);
-			DDR->WDumpToBuf((int32_t *)pBuf,uiSamples);
+			DDR.WDumpToBuf((int32_t *)pBuf,uiSamples);
 			for (uint32_t j = 0;j < uiSamples;j ++) {
 				TEST_THREAD_TEST_CANCEL_S(POST_CLR);
 				if (pBuf[j] != j) {
 					iErrCnt ++;
-					Log->AddMsgList(-1,"error%4d:send:%#10x receive:%#10x",iErrCnt,j,pBuf[j]);
+					Log.AddMsgList(-1,"error%4d:send:%#10x receive:%#10x",iErrCnt,j,pBuf[j]);
 				}
 			}
 		}

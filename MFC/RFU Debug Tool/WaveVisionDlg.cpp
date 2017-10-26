@@ -131,7 +131,7 @@ void CWaveVisionDlg::OnBnClickedStartwvTrans()
 	m_WaveVision_IQDataPath.GetWindowText(iqdatapath);
 	fp_iq = fopen((LPSTR)(LPCTSTR)iqdatapath,"r");
 	if (fp_iq == NULL) {
-		Log->AddMsgList(-1,"文件不存在");
+		Log.AddMsgList(-1,"文件不存在");
 		return;
 	}
 	for (uint32_t i = 0;i < samples;i ++) {
@@ -150,7 +150,7 @@ void CWaveVisionDlg::OnBnClickedStartwvTrans()
 	m_WaveVision_wvPath.GetWindowText(wvpath);
 	fp_wv = fopen((LPSTR)(LPCTSTR)wvpath,"w");
 	if (fp_wv == NULL) {
-		Log->AddMsgList(-1,"文件打开错误");
+		Log.AddMsgList(-1,"文件打开错误");
 		return;
 	}
 	fprintf(fp_wv,"%s",wv);

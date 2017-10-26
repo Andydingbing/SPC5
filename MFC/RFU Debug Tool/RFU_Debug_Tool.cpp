@@ -113,7 +113,7 @@ int32_t TimeDomain(ISP1401 *pSP1401,uint32_t uiSamples,double *pX,int16_t *pI,in
 {
 	for (uint32_t i = 0;i < uiSamples;i ++)
 		pX[i] = double(i);
-	STACHK(DDR->IQToBuf(pSP1401->GetRfIdx(),pI,pQ,uiSamples));
+	STACHK(DDR.IQToBuf(pSP1401->GetRfIdx(),pI,pQ,uiSamples));
 	return 0;
 }
 
@@ -127,7 +127,7 @@ int32_t TimeDomain(ISP1401 *pSP1401,uint32_t uiSamples,CChartXYSerie *pILineSeri
 	for (uint32_t i = 0;i < uiSamples;i ++)
 		pX[i] = double(i);
 
-	STACHK(DDR->IQToBuf(pSP1401->GetRfIdx(),pI,pQ,uiSamples));
+	STACHK(DDR.IQToBuf(pSP1401->GetRfIdx(),pI,pQ,uiSamples));
 	
 	pILineSerie->ClearSerie();
 	pQLineSerie->ClearSerie();
@@ -172,7 +172,7 @@ int32_t DFT(ISP1401 *pSP1401,int32_t iSampleRate,uint32_t uiSamples,int32_t *pPt
 	memset(pI,0,sizeof(int16_t) * uiSamples);
 	memset(pQ,0,sizeof(int16_t) * uiSamples);
 
-	STACHK(DDR->IQToBuf(pSP1401->GetRfIdx(),pI,pQ,uiSamples));
+	STACHK(DDR.IQToBuf(pSP1401->GetRfIdx(),pI,pQ,uiSamples));
 
 	fftw_complex *in, *out;
 	fftw_plan plan;
@@ -214,7 +214,7 @@ int32_t DFT(ISP1401 *pSP1401,int32_t iSampleRate,uint32_t uiSamples,CChartXYSeri
 	memset(pX,0,sizeof(double) * iSampleRate);
 	memset(pOut,0,sizeof(double) * iPts);
 
-	STACHK(DDR->IQToBuf(pSP1401->GetRfIdx(),pI,pQ,uiSamples));
+	STACHK(DDR.IQToBuf(pSP1401->GetRfIdx(),pI,pQ,uiSamples));
 
 	fftw_complex *in, *out;
 	fftw_plan plan;
@@ -307,13 +307,13 @@ int32_t ExeFirProcess(char *pPath)
 	ZeroMemory(&pinfo,sizeof(pinfo) );
 
 	if(!CreateProcess( NULL,(LPSTR)pPath,NULL,NULL,FALSE,NORMAL_PRIORITY_CLASS,NULL,NULL,&sinfo,&pinfo)) {
-		Log->SetLastError(-1,"cannot execute \"%s\"(%d)",pPath,GetLastError());
+		Log.SetLastError(-1,"cannot execute \"%s\"(%d)",pPath,GetLastError());
 		return -1;
 	}
 
 	DWORD dwRet = WaitForSingleObject(pinfo.hProcess,5 * 60 * 1000);
 	if (WAIT_TIMEOUT == dwRet) {
-		Log->SetLastError(-1,"process %s timeout");
+		Log.SetLastError(-1,"process %s timeout");
 		return -1;
 	}
 

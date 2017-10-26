@@ -74,7 +74,7 @@ void CDMADlg::OnBnClickedRStart()
 	uint32_t *pData = new uint32_t[uiSamples];
 	for (uint32_t i = 0;i < uiSamples;i ++)
 		pData[i] = i;
-	DDR->FpgaReadAll(m_pSP1401->GetK7(),pData,uiSamples);
+	DDR.FpgaReadAll(m_pSP1401->GetK7(),pData,uiSamples);
 	delete []pData;
 }
 
@@ -87,7 +87,7 @@ void CDMADlg::OnBnClickedWStart()
 	STACHKV(m_pSP1401->SetIQCapSamples(uiSamples));
 //	STACHKV(m_pSP1401->SetIQCapSrc(CSP1401::IQCapsrcFreeRun,false));
 	STACHKV(m_pSP1401->IQCap());
-	STACHKV(DDR->WDumpToFileCh(m_pSP1401->GetRfIdx(),(LPSTR)(LPCTSTR)strPath,uiSamples));
+	STACHKV(DDR.WDumpToFileCh(m_pSP1401->GetRfIdx(),(LPSTR)(LPCTSTR)strPath,uiSamples));
 }
 
 void CDMADlg::OnBnClickedSetWPath()
@@ -103,7 +103,7 @@ void CDMADlg::OnBnClickedOpenDataFile()
 	CString strPath;
 	m_WPath.GetWindowText(strPath);
 	if (strPath == "") {
-		Log->AddMsgList(-1,"Invalid Path!");
+		Log.AddMsgList(-1,"Invalid Path!");
 		return;
 	}
 	char szCmd[128] = "start /b ";
@@ -154,7 +154,7 @@ void CDMADlg::OnBnClickedShowWV()
 		pX[i] = (double)i;
 
 	int32_t *pData = new int32_t[m_uiWSamples];
-	STACHKV(DDR->WDumpToBuf(pData,(uint32_t)m_uiWSamples));
+	STACHKV(DDR.WDumpToBuf(pData,(uint32_t)m_uiWSamples));
 
 	m_pLineSerie->ClearSerie();
 	m_pLineSerie->AddPoints(pX,pData,m_uiWSamples);

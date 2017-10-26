@@ -130,7 +130,7 @@ void CBBIQCaptureDlg::OnBnClickedStartCapture()
 	CString strFilePath;
 	m_FilePath.GetWindowText(strFilePath);
 	if (strFilePath != "") {
-		STACHKV(DDR->IQToFile(m_pSP1401->GetRfIdx(),(LPSTR)(LPCTSTR)strFilePath,uint32_t(m_uiCapSamples),"c:\\iq_interch.txt"));
+		STACHKV(DDR.IQToFile(m_pSP1401->GetRfIdx(),(LPSTR)(LPCTSTR)strFilePath,uint32_t(m_uiCapSamples),"c:\\iq_interch.txt"));
 	}
 }
 

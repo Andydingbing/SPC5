@@ -172,7 +172,7 @@ int CPowMeasThread::Run()
 				break;
 		}
 		STACHK(RF->GetPowerMeasPower(power));
-		Log->stdprintf("%*f\n",(RF->GetRfIdx() + 1) * 10,power);
+		Log.stdprintf("%*f\n",(RF->GetRfIdx() + 1) * 10,power);
 		Sleep(100);
 	}
 	

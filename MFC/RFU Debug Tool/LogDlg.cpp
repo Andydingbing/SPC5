@@ -126,13 +126,13 @@ void CLogDlg::OnLvnGetdispinfoMessageList(NMHDR *pNMHDR, LRESULT *pResult)
 		CString strText;
 
 		if (0 == pItem.iSubItem)
-			strText.Format("%s",Log->GetMsgLog()->at(iItemIdx).m_szTime);
+			strText.Format("%s",Log.GetMsgLog()->at(iItemIdx).m_szTime);
 		else if (1 == pItem.iSubItem)
-			strText.Format("%s",Log->GetMsgLog()->at(iItemIdx).m_szMsg);
+			strText.Format("%s",Log.GetMsgLog()->at(iItemIdx).m_szMsg);
 		else if (2 == pItem.iSubItem)
-			strText = Log->GetMsgLog()->at(iItemIdx).m_iResult ? _T("¨w") : _T("¡Ì");
+			strText = Log.GetMsgLog()->at(iItemIdx).m_iResult ? _T("¨w") : _T("¡Ì");
 		else if (3 == pItem.iSubItem)
-			strText.Format("0x%08X",Log->GetMsgLog()->at(iItemIdx).m_iResult);
+			strText.Format("0x%08X",Log.GetMsgLog()->at(iItemIdx).m_iResult);
 
 		lstrcpyn(pItem.pszText, strText, pItem.cchTextMax);
 	}
@@ -149,17 +149,17 @@ void CLogDlg::OnLvnGetdispinfoRegList(NMHDR *pNMHDR, LRESULT *pResult)
 		CString strText;
 
 		if (0 == pItem.iSubItem)
-			strText.Format("%s",Log->GetRegLog()->at(iItemIdx).m_szTime);
+			strText.Format("%s",Log.GetRegLog()->at(iItemIdx).m_szTime);
 		else if (1 == pItem.iSubItem)
-			strText.Format("%s",Log->GetRegLog()->at(iItemIdx).m_szFpga);
-		else if (2 == pItem.iSubItem && 0xffff != Log->GetRegLog()->at(iItemIdx).m_iAddr)
-			strText.Format("0x%04X",Log->GetRegLog()->at(iItemIdx).m_iAddr);
-		else if (3 == pItem.iSubItem && 0xffffffff != Log->GetRegLog()->at(iItemIdx).m_uiWValue)
-			strText.Format("0x%08X",Log->GetRegLog()->at(iItemIdx).m_uiWValue);
-		else if (4 == pItem.iSubItem && 0xffffffff != Log->GetRegLog()->at(iItemIdx).m_uiRValue)
-			strText.Format("0x%08X",Log->GetRegLog()->at(iItemIdx).m_uiRValue);
-		else if (5 == pItem.iSubItem && 0xffff != Log->GetRegLog()->at(iItemIdx).m_iAddr)
-			strText = Log->GetRegLog()->at(iItemIdx).m_iResult ? _T("¨w") : _T("¡Ì");
+			strText.Format("%s",Log.GetRegLog()->at(iItemIdx).m_szFpga);
+		else if (2 == pItem.iSubItem && 0xffff != Log.GetRegLog()->at(iItemIdx).m_iAddr)
+			strText.Format("0x%04X",Log.GetRegLog()->at(iItemIdx).m_iAddr);
+		else if (3 == pItem.iSubItem && 0xffffffff != Log.GetRegLog()->at(iItemIdx).m_uiWValue)
+			strText.Format("0x%08X",Log.GetRegLog()->at(iItemIdx).m_uiWValue);
+		else if (4 == pItem.iSubItem && 0xffffffff != Log.GetRegLog()->at(iItemIdx).m_uiRValue)
+			strText.Format("0x%08X",Log.GetRegLog()->at(iItemIdx).m_uiRValue);
+		else if (5 == pItem.iSubItem && 0xffff != Log.GetRegLog()->at(iItemIdx).m_iAddr)
+			strText = Log.GetRegLog()->at(iItemIdx).m_iResult ? _T("¨w") : _T("¡Ì");
 
 		lstrcpyn(pItem.pszText, strText, pItem.cchTextMax);
 	}
@@ -168,7 +168,7 @@ void CLogDlg::OnLvnGetdispinfoRegList(NMHDR *pNMHDR, LRESULT *pResult)
 
 LPARAM CLogDlg::AddMsgList(WPARAM wParam,LPARAM lParam)
 {
-	int iMsgCnt = (int)(Log->GetMsgLog()->size());
+	int iMsgCnt = (int)(Log.GetMsgLog()->size());
 	m_MsgList.SetItemCount(iMsgCnt);
 	m_MsgList.EnsureVisible(iMsgCnt - 1,FALSE);
 	m_MsgList.SetItemState(iMsgCnt - 1,LVIS_SELECTED,LVIS_SELECTED);
@@ -177,7 +177,7 @@ LPARAM CLogDlg::AddMsgList(WPARAM wParam,LPARAM lParam)
 
 LPARAM CLogDlg::AddRegList(WPARAM wParam,LPARAM lParam)
 {
-	int iRegCnt = (int)(Log->GetRegLog()->size());
+	int iRegCnt = (int)(Log.GetRegLog()->size());
 	m_RegList.SetItemCount(iRegCnt);
 	m_RegList.EnsureVisible(iRegCnt - 1,FALSE);
 	m_RegList.SetItemState(iRegCnt - 1,LVIS_SELECTED,LVIS_SELECTED);

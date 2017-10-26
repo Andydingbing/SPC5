@@ -162,7 +162,7 @@ void CCSEView::OnInitialUpdate()
 	vector<HWND> hWnd;
 	hWnd.push_back(g_pLogDlg->GetSafeHwnd());
 	hWnd.push_back(g_pLogViewerDlg->GetSafeHwnd());
-	Log->Init(hWnd);
+	Log.Init(hWnd);
 }
 
 void CCSEView::OnSize(UINT nType, int cx, int cy)

@@ -222,7 +222,7 @@ int CCalR1CRxFilterThread::CalRxFilter()
 		strcat(szFirExePaht,"\\rx_filter.exe");
 		if (ExeFirProcess(szFirExePaht)) {
 			DeleteFile(szPathFr);
-			CseMessageBox("%s",Log->GetLastError());
+			CseMessageBox("%s",Log.GetLastError());
 			CAL_THREAD_ABOART();
 		}
 
@@ -232,13 +232,13 @@ int CCalR1CRxFilterThread::CalRxFilter()
 		fp_real = fopen(szPathReal,"r");
 		fp_imag = fopen(szPathImag,"r");
 		if (NULL == fp_real) {
-			Log->SetLastError("could not open %s",szPathReal);
-			CseMessageBox("%s",Log->GetLastError());
+			Log.SetLastError("could not open %s",szPathReal);
+			CseMessageBox("%s",Log.GetLastError());
 			CAL_THREAD_ABOART();
 		}
 		if (NULL == fp_imag) {
-			Log->SetLastError("could not open %s",szPathImag);
-			CseMessageBox("%s",Log->GetLastError());
+			Log.SetLastError("could not open %s",szPathImag);
+			CseMessageBox("%s",Log.GetLastError());
 			CAL_THREAD_ABOART();
 		}
 		iIdx = 0;
@@ -276,13 +276,13 @@ int CCalR1CRxFilterThread::CalRxFilter()
 		fp_real = fopen(szPathReal,"r");
 		fp_imag = fopen(szPathImag,"r");
 		if (NULL == fp_real) {
-			Log->SetLastError("could not open %s",szPathReal);
-			CseMessageBox("%s",Log->GetLastError());
+			Log.SetLastError("could not open %s",szPathReal);
+			CseMessageBox("%s",Log.GetLastError());
 			CAL_THREAD_ABOART();
 		}
 		if (NULL == fp_imag) {
-			Log->SetLastError("could not open %s",szPathImag);
-			CseMessageBox("%s",Log->GetLastError());
+			Log.SetLastError("could not open %s",szPathImag);
+			CseMessageBox("%s",Log.GetLastError());
 			CAL_THREAD_ABOART();
 		}
 		iIdx = 0;

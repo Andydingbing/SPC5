@@ -55,12 +55,12 @@ END_MESSAGE_MAP()
 void CLogConfigDlg::OnBnClickedOk()
 {
 	UpdateData(TRUE);
-	Log->SetEnable(L_PROMPT,m_bPrompt);
-	Log->SetEnable(L_TRACE,m_bTrace);
-	Log->SetEnable(L_MSG,m_bMsgList);
-	Log->SetEnable(L_MSG_F,m_bMsgListToFile);
-	Log->SetEnable(L_REG,m_bRegList);
-	Log->SetEnable(L_REG_F,m_bRegListToFile);
+	Log.SetEnable(L_PROMPT,m_bPrompt);
+	Log.SetEnable(L_TRACE,m_bTrace);
+	Log.SetEnable(L_MSG,m_bMsgList);
+	Log.SetEnable(L_MSG_F,m_bMsgListToFile);
+	Log.SetEnable(L_REG,m_bRegList);
+	Log.SetEnable(L_REG_F,m_bRegListToFile);
 	OnOK();
 }
 
@@ -74,13 +74,13 @@ BOOL CLogConfigDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
-	m_bAll = Log->IsEnabled(L_ALL_ON);
-	m_bPrompt = Log->IsEnabled(L_PROMPT);
-	m_bTrace = Log->IsEnabled(L_TRACE);
-	m_bMsgList = Log->IsEnabled(L_MSG);
-	m_bMsgListToFile = Log->IsEnabled(L_MSG_F);
-	m_bRegList = Log->IsEnabled(L_REG);
-	m_bRegListToFile = Log->IsEnabled(L_REG_F);
+	m_bAll = Log.IsEnabled(L_ALL_ON);
+	m_bPrompt = Log.IsEnabled(L_PROMPT);
+	m_bTrace = Log.IsEnabled(L_TRACE);
+	m_bMsgList = Log.IsEnabled(L_MSG);
+	m_bMsgListToFile = Log.IsEnabled(L_MSG_F);
+	m_bRegList = Log.IsEnabled(L_REG);
+	m_bRegListToFile = Log.IsEnabled(L_REG_F);
 	UpdateData(FALSE);
 	return TRUE;
 }
@@ -112,13 +112,13 @@ void CLogConfigDlg::OnShowWindow(BOOL bShow, UINT nStatus)
 	CDialog::OnShowWindow(bShow, nStatus);
 
 	if (bShow == TRUE || bShow == SW_NORMAL || bShow == SW_SHOW || bShow == SW_SHOWNORMAL) {
-		m_bAll = Log->IsEnabled(L_ALL_ON);
-		m_bPrompt = Log->IsEnabled(L_PROMPT);
-		m_bTrace = Log->IsEnabled(L_TRACE);
-		m_bMsgList = Log->IsEnabled(L_MSG);
-		m_bMsgListToFile = Log->IsEnabled(L_MSG_F);
-		m_bRegList = Log->IsEnabled(L_REG);
-		m_bRegListToFile = Log->IsEnabled(L_REG_F);
+		m_bAll = Log.IsEnabled(L_ALL_ON);
+		m_bPrompt = Log.IsEnabled(L_PROMPT);
+		m_bTrace = Log.IsEnabled(L_TRACE);
+		m_bMsgList = Log.IsEnabled(L_MSG);
+		m_bMsgListToFile = Log.IsEnabled(L_MSG_F);
+		m_bRegList = Log.IsEnabled(L_REG);
+		m_bRegListToFile = Log.IsEnabled(L_REG_F);
 	}
 	UpdateData(FALSE);
 }

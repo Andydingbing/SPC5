@@ -398,6 +398,6 @@ LRESULT CMainDlg::SP3301Change(WPARAM wParam,LPARAM lParam)
 		default:break;
 	}
 	m_pTabCtrl->UpdateParamInChildDlg();
-	Log->AddMsgList(0,"working on rfu%d",wParam);
+	Log.AddMsgList(0,"working on rfu%d",wParam);
 	return 0;
 }
