@@ -27,8 +27,9 @@
 #define CFO_ASSERT(stream,func)    /*calibration file operation assert*/            \
     do {                                                                            \
         if (func) {                                                                 \
-            Log->SetLastError("%s:%s:%d(%d)",__FILE__,__FUNCTION__,__LINE__,errno); \
-            fclose(stream);                                                         \
+            Log.SetLastError("%s:%s:%d(%s)",__FILE__,__FUNCTION__,__LINE__,strerror(errno)); \
+			if (stream)																\
+				fclose(stream);                                                     \
             return -1;                                                              \
         }                                                                           \
     } while(0)
@@ -37,8 +38,9 @@
 #define CFO_ASSERT_S(stream,func,post) /*safe calibration file operation assert*/   \
     do {																			\
         if (func) {																	\
-            Log->SetLastError("%s:%s:%d(%d)",__FILE__,__FUNCTION__,__LINE__,errno);	\
-            fclose(stream);															\
+            Log.SetLastError("%s:%s:%d(%s)",__FILE__,__FUNCTION__,__LINE__,strerror(errno));	\
+			if (stream)																\
+				fclose(stream);														\
             post;																	\
             return -1;																\
         }																			\
@@ -63,31 +65,31 @@ public:
 #define CAL_TOTAL_ITEMS 25
 
     enum CalItem {              //list all the calibration items,the value is only allowed to accumulate
-		TxSideband		= 0,	//r1a/b/c/d
-		TxLoLeakage		= 1,	//r1a/b/c/d
-		TxAttOP			= 2,	//r1a/b/c/d
-		TxPowerOP		= 3,	//r1a/b/c/d		//default bw 160M
-		TxPowerIO		= 4,	//r1a/b/c/d		//default bw 160M
-		RxRef			= 5,	//r1a/b
-		X9119			= 6,	//r1a/b/c/d
-		TxAttIO			= 7,	//r1a/b/c/d
-		RxRefOP			= 8,	//r1c/d			//default bw 160M
-		RxRefIO			= 9,	//r1c/d			//default bw 160M
-		RxAttOP			= 10,	//r1c/d
-		RxAttIO			= 11,	//r1c/d
-		TxFil_80		= 12,	//r1c/d
-		TxFil_160		= 13,	//r1c/d
-		TxRFFr_0		= 14,	//r1c/d
-		TxRFFr_1		= 15,	//r1c/d
-		TxIFFr			= 16,	//r1c/d
-		RxFil_80		= 17,	//r1c/d
-		RxFil_160		= 18,	//r1c/d
-		RxRFFr			= 19,	//r1c/d
-		RxIFFr			= 20,	//r1c/d
-		TxFilOffOP_80	= 21,	//r1c/d
-		TxFilOffIO_80	= 22,	//r1c/d
-		RxFilOffOP_80	= 23,	//r1c/d
-		RxFilOffIO_80	= 24	//r1c/d
+		TxSideband		= 0x00000000,	//r1a/b/c/d
+		TxLoLeakage		= 0x00000001,	//r1a/b/c/d
+		TxAttOP			= 0x00000002,	//r1a/b/c/d
+		TxPowerOP		= 0x00000003,	//r1a/b/c/d		//default bw 160M
+		TxPowerIO		= 0x00000004,	//r1a/b/c/d		//default bw 160M
+		RxRef			= 0x00000005,	//r1a/b
+		X9119			= 0x00000006,	//r1a/b/c/d
+		TxAttIO			= 0x00000007,	//r1a/b/c/d
+		RxRefOP			= 0x00000008,	//r1c/d			//default bw 160M
+		RxRefIO			= 0x00000009,	//r1c/d			//default bw 160M
+		RxAttOP			= 0x00000019,	//r1c/d
+		RxAttIO			= 0x0000000b,	//r1c/d
+		TxFil_80		= 0x0000000c,	//r1c/d
+		TxFil_160		= 0x0000000d,	//r1c/d
+		TxRFFr_0		= 0x0000000e,	//r1c/d
+		TxRFFr_1		= 0x0000000f,	//r1c/d
+		TxIFFr			= 0x00000010,	//r1c/d
+		RxFil_80		= 0x00000011,	//r1c/d
+		RxFil_160		= 0x00000012,	//r1c/d
+		RxRFFr			= 0x00000013,	//r1c/d
+		RxIFFr			= 0x00000014,	//r1c/d
+		TxFilOffOP_80	= 0x00000015,	//r1c/d
+		TxFilOffIO_80	= 0x00000016,	//r1c/d
+		RxFilOffOP_80	= 0x00000017,	//r1c/d
+		RxFilOffIO_80	= 0x00000018	//r1c/d
 	};
 
 	typedef struct FileVer {
@@ -109,11 +111,11 @@ public:
 	}FileInfo; 
 
 	typedef struct ItemInfo {
-		uint32_t m_uiHead;
-		CalItem  m_Item;
-		uint32_t m_uiSize;			//each frequency's data type(byte)
-		uint32_t m_uiPoint;			//points
-		uint32_t m_uiTail;
+		uint32_t m_uiHead : 32;
+		CalItem  m_Item : 32;
+		uint32_t m_uiSize : 32;			//each frequency's data type(byte)
+		uint32_t m_uiPoint : 32;			//points
+		uint32_t m_uiTail : 32;
 	}ItemInfo;
 
 	typedef struct ItemBuf {
@@ -158,6 +160,7 @@ public:
 	static uint32_t GetFixItemTableR1C(ItemInfo *pInfo,uint32_t &uiItems);
 	static uint32_t GetMaxItemByte(ItemInfo *pInfo,uint32_t uiItems);
 	static uint32_t GetMaxItemByte();
+	static X9119Table *GetX9119();
 	virtual int32_t Open();
 	virtual bool IsFileValid();
     virtual int32_t WriteFromPos(char *pPath,uint32_t uiPos,uint32_t uiSize,void *pData);
@@ -169,6 +172,8 @@ public:
 	virtual void ShowFileVer(FileVer *pVer);
 	virtual void ShowFileInfo(FileInfo *pInfo);
 	virtual void ShowItemInfo(ItemInfo *pInfo);
+public:
+	static X9119Table *g_pX9119;
 protected:
 	static ItemBuf g_ItemBuf;
 	uint32_t m_uiRfuIdx;

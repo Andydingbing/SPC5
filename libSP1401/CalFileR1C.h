@@ -17,7 +17,6 @@ public:
 	virtual int32_t Open();
 	virtual int32_t SetBW(BW bw);
 public:
-	X9119TableR1C		*m_pX9119;
 	TxLOLeakageTableR1C *m_pTxLOLeak;
 	TxSidebandTableR1C	*m_pTxSideband;
 	TxPowerOPTableR1C	*m_pTxPowerOP;

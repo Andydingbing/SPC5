@@ -7,7 +7,6 @@
 
 CalFileR1C::CalFileR1C(uint32_t uiRfIdx, uint32_t uiRfuIdx) : ICalFile(uiRfIdx,uiRfuIdx)
 {
-	m_pX9119 = NULL;
 	m_pTxLOLeak = NULL;
 	m_pTxSideband = NULL;
 	m_pTxPowerOP = NULL;
@@ -36,7 +35,7 @@ CalFileR1C::CalFileR1C(uint32_t uiRfIdx, uint32_t uiRfuIdx) : ICalFile(uiRfIdx,u
 
 CalFileR1C::~CalFileR1C()
 {
-	SAFE_DELETE(m_pX9119);
+	SAFE_DELETE(g_pX9119);
 	SAFE_DELETE(m_pTxLOLeak);
 	SAFE_DELETE(m_pTxSideband);
 	SAFE_DELETE(m_pTxPowerOP);
@@ -65,7 +64,7 @@ CalFileR1C::~CalFileR1C()
 
 int32_t CalFileR1C::Open()
 {
-	if (!m_pX9119)		m_pX9119 = new X9119TableR1C;
+	if (!g_pX9119)		g_pX9119 = new X9119Table;
 	if (!m_pTxLOLeak)	m_pTxLOLeak = new TxLOLeakageTableR1C;
 	if (!m_pTxSideband)	m_pTxSideband = new TxSidebandTableR1C;
 	if (!m_pTxPowerOP)	m_pTxPowerOP = new TxPowerOPTableR1C;
@@ -156,7 +155,7 @@ int32_t CalFileR1C::Add(CalItem Item,void *pData)
 {
     Map2Buf(Item);
 	switch (Item) {
-		case ICalFile::X9119		: {m_pX9119->Add((X9119TableR1C::DataF *)pData);return 0;}
+		case ICalFile::X9119		: {g_pX9119->Add((X9119Table::Data *)pData);return 0;}
 		case ICalFile::TxLoLeakage	: {m_pTxLOLeak->Add((TxLOLeakageTableR1C::DataF *)pData);return 0;}
 		case ICalFile::TxSideband	: {m_pTxSideband->Add((TxSidebandTableR1C::DataF *)pData);return 0;}
 		case ICalFile::TxPowerOP	: {m_pTxPowerOP->Add((TxPowerOPTableR1C::DataF *)pData);return 0;}
@@ -194,7 +193,7 @@ int32_t CalFileR1C::Map2Buf(CalItem Item)
 
 		g_ItemBuf.m_pBuf = new char[uiMaxByte / sizeof(char)];
 		if (NULL == g_ItemBuf.m_pBuf) {
-            Log->SetLastError("%s:%s:%d",__FILE__,__FUNCTION__,__LINE__);
+            Log.SetLastError("%s:%s:%d",__FILE__,__FUNCTION__,__LINE__);
 			return -1;
 		}
 		memset(g_ItemBuf.m_pBuf,0,uiMaxByte);
@@ -206,7 +205,7 @@ int32_t CalFileR1C::Map2Buf(CalItem Item)
 		g_ItemBuf.m_uiRfIdx = this->m_uiRfIdx;
 		g_ItemBuf.m_uiRfuIdx = this->m_uiRfuIdx;
 		switch (Item) {
-			case ICalFile::X9119		: {m_pX9119->MapBuf((X9119TableR1C::DataF *)(g_ItemBuf.m_pBuf));return 0;}
+			case ICalFile::X9119		: {g_pX9119->MapBuf((X9119Table::Data *)(g_ItemBuf.m_pBuf));return 0;}
 			case ICalFile::TxLoLeakage	: {m_pTxLOLeak->MapBuf((TxLOLeakageTableR1C::DataF *)(g_ItemBuf.m_pBuf));return 0;}
 			case ICalFile::TxSideband	: {m_pTxSideband->MapBuf((TxSidebandTableR1C::DataF *)(g_ItemBuf.m_pBuf));return 0;}
 			case ICalFile::TxPowerOP	: {m_pTxPowerOP->MapBuf((TxPowerOPTableR1C::DataF *)(g_ItemBuf.m_pBuf));return 0;}
@@ -304,7 +303,7 @@ int32_t CalFileR1C::Map2Buf(CalItem Item)
 
 int32_t CalFileR1C::Map2Mem()
 {
-    Map2Buf(ICalFile::X9119);		m_pX9119->Map2Mem();
+    Map2Buf(ICalFile::X9119);		g_pX9119->Map2Mem();
     Map2Buf(ICalFile::TxLoLeakage);	m_pTxLOLeak->Map2Mem();
     Map2Buf(ICalFile::TxSideband);	m_pTxSideband->Map2Mem();
     Map2Buf(ICalFile::TxPowerOP);	m_pTxPowerOP->Map2Mem();
@@ -367,18 +366,18 @@ int32_t CalFileR1C::Create()
     FILE *fp;
     if (_access("C:\\CSECal",0) == -1) {
         if (_mkdir("C:\\CSECal") == -1) {
-            Log->SetLastError("%s:%s:%d(%d)",__FILE__,__FUNCTION__,__LINE__,errno);
+            Log.SetLastError("%s:%s:%d(%d)",__FILE__,__FUNCTION__,__LINE__,errno);
             return -1;
         }
     }
     if (_access("C:\\CSECal\\cxu.cal",0) == -1) {
-        X9119TableR1A::Data Data;
+        X9119Table::Data Data;
         Data.m_iValue = 0;
 
         fp = fopen("C:\\CSECal\\cxu.cal","w+");
         CFO_ASSERT(fp,NULL == fp);
         CFO_ASSERT(fp,fseek(fp,0,SEEK_SET));
-        CFO_ASSERT(fp,fwrite(&Data,sizeof(X9119TableR1A::Data),1,fp) == 0);
+        CFO_ASSERT(fp,fwrite(&Data,sizeof(X9119Table::Data),1,fp) == 0);
         CFO_ASSERT(fp,fseek(fp,0,SEEK_SET));
         fclose(fp);
     }
@@ -413,7 +412,7 @@ int32_t CalFileR1C::Create()
 	}
 	
     CFO_ASSERT(fp,fwrite(&R1CInfo,sizeof(ICalFile::FileInfo),1,fp) == 0);
-    for (uint32_t i = 0;i < R1CInfo.m_uiItems;i ++)
+	for (uint32_t i = 0;i < R1CInfo.m_uiItems;i ++)
         CFO_ASSERT(fp,fwrite(&(R1CInfo.m_pItemInfo[i]),sizeof(ICalFile::ItemInfo),1,fp) == 0);
 
 	for (uint32_t i = 0;i < R1CInfo.m_uiItems;i ++) {
@@ -435,7 +434,7 @@ int32_t CalFileR1C::Load(FileInfo &Info)
 	char szPath[64] = {0};
 	sprintf(szPath,"C:\\CSECal\\rfu%drf%d.cal",m_uiRfuIdx,m_uiRfIdx);
 
-    FILE *fp = fopen(szPath,"r+");
+    FILE *fp = fopen(szPath,"rb");
     CFO_ASSERT(fp,NULL == fp);
     CFO_ASSERT(fp,fseek(fp,0,SEEK_SET));
     CFO_ASSERT(fp,fread(&Ver,sizeof(FileVer),1,fp) == 0);
@@ -474,7 +473,7 @@ int32_t CalFileR1C::GetItemSize(CalItem Item,uint32_t &dwPos,uint32_t &uiSize)
 
 	if (ICalFile::X9119 == Item) {
 		dwPos = 0;
-        uiSize = sizeof(X9119TableR1C::DataF);
+        uiSize = sizeof(X9119Table::Data);
 		return 0;
 	}
 

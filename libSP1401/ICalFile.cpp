@@ -1,6 +1,8 @@
 #include "ICalFile.h"
 #include "CfvCtrl.h"
+#include <fcntl.h>
 
+X9119Table *ICalFile::g_pX9119 = NULL;
 ICalFile::ItemBuf ICalFile::g_ItemBuf = ICalFile::ItemBuf();
 
 ICalFile::FileInfo::FileInfo()
@@ -43,6 +45,9 @@ ICalFile::ICalFile(uint32_t uiRfIdx, uint32_t uiRfuIdx)
     m_uiRfuIdx = uiRfuIdx;
     m_uiOrdinal = 0;
 	m_BW = _160M;
+#ifdef _MSC_VER
+	_set_fmode(_O_BINARY);
+#endif
 }
 
 ICalFile::~ICalFile()
@@ -82,11 +87,12 @@ int32_t ICalFile::GetFileVer()
     char szPath[64] = {0};
     sprintf(szPath,"C:\\CSECal\\rfu%drf%d.cal",m_uiRfuIdx,m_uiRfIdx);
 
-    FILE *fp = fopen(szPath,"r");
+    FILE *fp = fopen(szPath,"rb");
     CFO_ASSERT(fp,NULL == fp);
     CFO_ASSERT(fp,fseek(fp,0,SEEK_SET));
     CFO_ASSERT(fp,fread(&Ver,sizeof(FileVer),1,fp) == 0);
     CFO_ASSERT(fp,fseek(fp,0,SEEK_SET));
+	fclose(fp);
 
 	if ((0x04ABCDEF == Ver.m_uiHead && 0x05ABCDEF == Ver.m_uiTail) || (CAL_FILEVER_HEAD == Ver.m_uiHead && CAL_FILEVER_TAIL == Ver.m_uiTail))
 		return Ver.m_uiVer;
@@ -103,7 +109,7 @@ uint32_t ICalFile::GetFixItemTableR1A(ItemInfo *pInfo,uint32_t &uiItems)
         {0xaa,ICalFile::TxPowerOP,	sizeof(TxPowerTableR1A::DataF)		,uint32_t(RF_TX_FREQ_PTS_INFILE),0xff},
         {0xaa,ICalFile::TxPowerIO,	sizeof(TxPowerTableR1A::DataF)		,uint32_t(RF_TX_FREQ_PTS_INFILE),0xff},
         {0xaa,ICalFile::RxRef,		sizeof(RxRefTableR1A::DataF)		,uint32_t(RF_RX_FREQ_PTS_INFILE),0xff},
-        {0xaa,ICalFile::X9119,	    sizeof(X9119TableR1A::Data)			,1                              ,0xff},
+        {0xaa,ICalFile::X9119,	    sizeof(X9119Table::Data)			,1                              ,0xff},
         {0xaa,ICalFile::TxAttIO,	sizeof(TxAttTableR1A::DataF)		,uint32_t(RF_TX_FREQ_PTS_INFILE),0xff}
 	};
 	uiItems = sizeof(ItemInfoR1A) / sizeof(ItemInfoR1A[0]);
@@ -116,7 +122,7 @@ uint32_t ICalFile::GetFixItemTableR1A(ItemInfo *pInfo,uint32_t &uiItems)
 uint32_t ICalFile::GetFixItemTableR1C(ItemInfo *pInfo,uint32_t &uiItems)
 {
 	ItemInfo ItemInfoR1C[] = {
-        {0xaa,ICalFile::X9119,			sizeof(X9119TableR1C::DataF),			1,									0xff},
+        {0xaa,ICalFile::X9119,			sizeof(X9119Table::Data),				1,									0xff},
         {0xaa,ICalFile::TxLoLeakage,	sizeof(TxLOLeakageTableR1C::DataF),		1,									0xff},
         {0xaa,ICalFile::TxSideband,		sizeof(TxSidebandTableR1C::DataF),		1,									0xff},
         {0xaa,ICalFile::TxPowerOP,		sizeof(TxPowerOPTableR1C::DataF),		uint32_t(RF_TX_FREQ_PTS_INFILE),	0xff},
@@ -166,6 +172,11 @@ uint32_t ICalFile::GetMaxItemByte()
 	return uiMaxByteR1A >= uiMaxByteR1C ? uiMaxByteR1A : uiMaxByteR1C;
 }
 
+X9119Table *ICalFile::GetX9119()
+{
+	return g_pX9119;
+}
+
 int32_t ICalFile::Open()
 {
 	if (!IsFileValid()) {
@@ -193,7 +204,7 @@ bool ICalFile::IsFileValid()
 		return false;
 	for (uint32_t i = 0;i < Info.m_uiItems;i ++) {
 		if ((Info.m_pItemInfo[i]).m_uiHead != 0xaa || (Info.m_pItemInfo[i]).m_uiTail != 0xff) {
-            Log->SetLastError("invalid data format");
+            Log.SetLastError("invalid data format");
 			return false;
 		}
 	}
@@ -204,21 +215,24 @@ int32_t ICalFile::WriteFromPos(char *pPath, uint32_t uiPos, uint32_t uiSize, voi
 {
     FILE *fp = fopen(pPath,"r+");
     CFO_ASSERT(fp,NULL == fp);
-    CFO_ASSERT(fp,fseek(fp,0,SEEK_SET));
     CFO_ASSERT(fp,fseek(fp,uiPos,SEEK_SET));
     CFO_ASSERT(fp,fwrite(pData,uiSize,1,fp) == 0);
     CFO_ASSERT(fp,fseek(fp,0,SEEK_SET));
+	fclose(fp);
 	return 0;
 }
 
 int32_t ICalFile::ReadFromPos(char *pPath, uint32_t uiPos, uint32_t uiSize, void *pData)
 {
-    FILE *fp = fopen(pPath,"r");
+//in non posix env,the mode "b" of "rb" is must for EOF = 16,and the ASCII in file maybe happen to "EOF",
+//then fread can return 0 for the os think the file has reach the EndOfFile;
+//in posix env such as linux,the mode "b" can be ignored
+    FILE *fp = fopen(pPath,"rb");
     CFO_ASSERT(fp,NULL == fp);
-    CFO_ASSERT(fp,fseek(fp,0,SEEK_SET));
     CFO_ASSERT(fp,fseek(fp,uiPos,SEEK_SET));
     CFO_ASSERT(fp,fread(pData,uiSize,1,fp) == 0);
     CFO_ASSERT(fp,fseek(fp,0,SEEK_SET));
+	fclose(fp);
     return 0;
 }
 

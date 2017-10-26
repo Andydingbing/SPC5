@@ -58,7 +58,7 @@ private:
 };
 
 //x9119 r1a/b
-class X9119TableR1A
+class X9119Table
 {
 public:
 	typedef struct Data {
@@ -73,29 +73,6 @@ public:
 private:
 	Data *m_pData;
 	Data m_DataM[1];
-};
-
-//x9119 r1c
-class X9119TableR1C
-{
-public:
-	typedef struct DataF : public X9119TableR1A::Data {
-		float m_fTemp[8];
-	}DataF;
-
-	typedef struct DataM : public X9119TableR1A::Data {
-		float m_fTemp;
-	}DataM;
-public:
-	void Add(DataF *pData);
-	void MapBuf(DataF *pBuf){m_pDataF = pBuf;}
-	void Map2Mem();
-	void Get(int16_t &iValue,float &fTemp);
-	void Get(int16_t &iValue,float *pTemp);
-	void SaveAs(char *pPath);
-private:
-	DataF *m_pDataF;
-	DataM m_DataM[1];
 };
 
 #endif

@@ -30,7 +30,6 @@ public:
 	TxPowerTableR1A     *m_pTxPowerOP;
 	TxPowerTableR1A		*m_pTxPowerIO;
 	RxRefTableR1A		*m_pRxRef;
-	X9119TableR1A		*m_pX9119;
 	TxAttTableR1A		*m_pTxAttIO;
 };
 

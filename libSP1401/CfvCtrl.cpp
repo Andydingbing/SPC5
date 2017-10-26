@@ -97,8 +97,8 @@ int32_t CfvCtrl::ForConv_0000_0001()
     remove(szPath);
     rename(szPathNew,szPath);
 	delete []FileInfoV0000.m_pItemInfo;
-    Log->stdprintf("file \"%s\" version 0x0000 ---> 0x0001\n",szPath);
-    Log->AddMsgList(0,"file \"%s\" version 0x0000 ---> 0x0001",szPath);
+    Log.stdprintf("file \"%s\" version 0x0000 ---> 0x0001\n",szPath);
+    Log.AddMsgList(0,"file \"%s\" version 0x0000 ---> 0x0001",szPath);
 	return 0;
 }
 
@@ -198,7 +198,7 @@ int32_t CfvCtrl::ForConv_0001_0002()
 		X9119Data Data;
 		Data.m_iValue = 0;
         CFO_ASSERT(fp_new,fseek(fp_new,0,SEEK_SET));
-        CFO_ASSERT(fp_new,fwrite(&Data,sizeof(X9119TableR1A::Data),1,fp_new) == 0);
+        CFO_ASSERT(fp_new,fwrite(&Data,sizeof(X9119Table::Data),1,fp_new) == 0);
         CFO_ASSERT(fp_new,fseek(fp_new,0,SEEK_SET));
         fclose(fp_new);
 	}
@@ -206,13 +206,13 @@ int32_t CfvCtrl::ForConv_0001_0002()
         fp_new = fopen(szPathNew,"w");
         CFO_ASSERT(fp_new,NULL == fp_new);
         CFO_ASSERT(fp_new,fseek(fp_new,0,SEEK_SET));
-        CFO_ASSERT(fp_new,fwrite(&Data,sizeof(X9119TableR1A::Data),1,fp_new) == 0);
+        CFO_ASSERT(fp_new,fwrite(&Data,sizeof(X9119Table::Data),1,fp_new) == 0);
         CFO_ASSERT(fp_new,fseek(fp_new,0,SEEK_SET));
         fclose(fp_new);
 	}
 	delete []FileInfoV0001.m_pItemInfo;
-    Log->stdprintf("file \"%s\" version 0x0001 ---> 0x0002\n",szPath);
-    Log->AddMsgList(0,"file \"%s\" version 0x0001 ---> 0x0002",szPath);
+    Log.stdprintf("file \"%s\" version 0x0001 ---> 0x0002\n",szPath);
+    Log.AddMsgList(0,"file \"%s\" version 0x0001 ---> 0x0002",szPath);
 	return 0;
 }
 
@@ -342,8 +342,8 @@ int32_t CfvCtrl::ForConv_0002_0003()
 
 	delete []pBuf;
     delete []FileInfo.m_pItemInfo;
-    Log->stdprintf("file \"%s\" version 0x0002 ---> 0x0003\n",szPath);
-    Log->AddMsgList(0,"file \"%s\" version 0x0002 ---> 0x0003",szPath);
+    Log.stdprintf("file \"%s\" version 0x0002 ---> 0x0003\n",szPath);
+    Log.AddMsgList(0,"file \"%s\" version 0x0002 ---> 0x0003",szPath);
 	return 0;
 }
 
@@ -464,8 +464,8 @@ int32_t CfvCtrl::ForConv_0003_0004()
     CFO_ASSERT(fp,fseek(fp,0,SEEK_SET));
     fclose(fp);
 
-    Log->stdprintf("file \"%s\" version 0x0003 ---> 0x0004\n",szPath);
-    Log->AddMsgList(0,"file \"%s\" version 0x0003 ---> 0x0004",szPath);
+    Log.stdprintf("file \"%s\" version 0x0003 ---> 0x0004\n",szPath);
+    Log.AddMsgList(0,"file \"%s\" version 0x0003 ---> 0x0004",szPath);
 	return 0;
 }
 
@@ -539,29 +539,29 @@ int32_t CfvCtrl::ForConv_0004_0005()
     CFO_ASSERT(fp,fseek(fp,0,SEEK_END));
 
 	CalItemInfoV0005 ItemInfoR1C[23] = {
-		{0xaa,ICalFile::TxLoLeakage,	80,	1,	 0xff},
-		{0xaa,ICalFile::TxSideband,		88,	1,	 0xff},
-		{0xaa,ICalFile::TxPowerOP,		96,	1191,0xff},
-		{0xaa,ICalFile::TxPowerIO,		96,	1191,0xff},
-		{0xaa,ICalFile::TxAttOP,		456,1191,0xff},
-		{0xaa,ICalFile::TxAttIO,		448,1191,0xff},
-		{0xaa,ICalFile::RxRefOP,		192,1181,0xff},
-		{0xaa,ICalFile::RxRefIO,		192,1181,0xff},
-		{0xaa,ICalFile::RxAttOP,		608,1181,0xff},
-		{0xaa,ICalFile::RxAttIO,		528,1181,0xff},
-		{0xaa,ICalFile::TxFil_80,		224,1191,0xff},
-		{0xaa,ICalFile::TxFil_160,		224,1191,0xff},
-		{0xaa,ICalFile::TxRFFr_0,		16,	1584,0xff},
-		{0xaa,ICalFile::TxRFFr_1,		16,	1534,0xff},
-		{0xaa,ICalFile::TxIFFr,			16,	84,	 0xff},
-		{0xaa,ICalFile::RxFil_80,		440,1181,0xff},
-		{0xaa,ICalFile::RxFil_160,		632,1181,0xff},
-		{0xaa,ICalFile::RxRFFr,			16,	3034,0xff},
-		{0xaa,ICalFile::RxIFFr,			16,	84,	 0xff},
-		{0xaa,ICalFile::TxFilOffOP_80,	64,	1191,0xff},
-		{0xaa,ICalFile::TxFilOffIO_80,	64,	1191,0xff},
-		{0xaa,ICalFile::RxFilOffOP_80,	80,	1181,0xff},
-		{0xaa,ICalFile::RxFilOffIO_80,	80,	1181,0xff}
+		{0xaa,ICalFile::TxLoLeakage,	104,	1,	 0xff},
+		{0xaa,ICalFile::TxSideband,		112,	1,	 0xff},
+		{0xaa,ICalFile::TxPowerOP,		120,	1191,0xff},
+		{0xaa,ICalFile::TxPowerIO,		120,	1191,0xff},
+		{0xaa,ICalFile::TxAttOP,		480,	1191,0xff},
+		{0xaa,ICalFile::TxAttIO,		472,	1191,0xff},
+		{0xaa,ICalFile::RxRefOP,		216,	1181,0xff},
+		{0xaa,ICalFile::RxRefIO,		216,	1181,0xff},
+		{0xaa,ICalFile::RxAttOP,		632,	1181,0xff},
+		{0xaa,ICalFile::RxAttIO,		552,	1181,0xff},
+		{0xaa,ICalFile::TxFil_80,		248,	1191,0xff},
+		{0xaa,ICalFile::TxFil_160,		248,	1191,0xff},
+		{0xaa,ICalFile::TxRFFr_0,		16,		1584,0xff},
+		{0xaa,ICalFile::TxRFFr_1,		16,		1534,0xff},
+		{0xaa,ICalFile::TxIFFr,			16,		84,	 0xff},
+		{0xaa,ICalFile::RxFil_80,		464,	1181,0xff},
+		{0xaa,ICalFile::RxFil_160,		656,	1181,0xff},
+		{0xaa,ICalFile::RxRFFr,			16,		3034,0xff},
+		{0xaa,ICalFile::RxIFFr,			16,		84,	 0xff},
+		{0xaa,ICalFile::TxFilOffOP_80,	88,		1191,0xff},
+		{0xaa,ICalFile::TxFilOffIO_80,	88,		1191,0xff},
+		{0xaa,ICalFile::RxFilOffOP_80,	104,	1181,0xff},
+		{0xaa,ICalFile::RxFilOffIO_80,	104,	1181,0xff}
 	};
 	FileInfo.m_uiItems = 23;
 	FileInfo.m_szSN[8] = 'C';
@@ -583,8 +583,8 @@ int32_t CfvCtrl::ForConv_0004_0005()
     CFO_ASSERT(fp,fseek(fp,0,SEEK_SET));
     fclose(fp);
 
-    Log->stdprintf("file \"%s\" version 0x0004 ---> 0x0005\n",szPath);
-    Log->AddMsgList(0,"file \"%s\" version 0x0004 ---> 0x0005",szPath);
+    Log.stdprintf("file \"%s\" version 0x0004 ---> 0x0005\n",szPath);
+    Log.AddMsgList(0,"file \"%s\" version 0x0004 ---> 0x0005",szPath);
 	return 0;
 }
 

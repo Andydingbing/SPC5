@@ -135,23 +135,23 @@ void TxLOLeakageTableR1C::SaveAs(char *pPath)
 	fclose(fp);
 }
 
-//x9119 r1a/b
-void X9119TableR1A::Map2Mem()
+//x9119 r1a/b/c/d
+void X9119Table::Map2Mem()
 {
 	m_DataM[0].m_iValue	= m_pData[0].m_iValue;
 }
 
-void X9119TableR1A::Add(Data *pData)
+void X9119Table::Add(Data *pData)
 {
 	m_pData[0] = *pData;
 }
 
-void X9119TableR1A::Get(int16_t &iValue)
+void X9119Table::Get(int16_t &iValue)
 {
 	iValue = m_DataM[0].m_iValue;
 }
 
-void X9119TableR1A::SaveAs(char *pPath)
+void X9119Table::SaveAs(char *pPath)
 {
 	FILE *fp = fopen(pPath,"w");
 	if (fp == NULL)
@@ -160,43 +160,4 @@ void X9119TableR1A::SaveAs(char *pPath)
 	Get(iValue);
 	fprintf(fp,"x9119 : %d",iValue);
 	fclose(fp);
-}
-
-//x9119 r1c
-void X9119TableR1C::Map2Mem()
-{
-	m_DataM[0].m_iValue = m_pDataF[0].m_iValue;
-	m_DataM[0].m_fTemp = m_pDataF[0].m_fTemp[1];
-}
-
-void X9119TableR1C::Add(DataF *pData)
-{
-	m_pDataF[0] = *pData;
-}
-
-void X9119TableR1C::Get(int16_t &iValue,float &fTemp)
-{
-	iValue = m_DataM[0].m_iValue;
-	fTemp = m_DataM[0].m_iValue;
-}
-
-void X9119TableR1C::Get(int16_t &iValue,float *pTemp)
-{
-	iValue = m_pDataF[0].m_iValue;
-    for (uint32_t i = 0;i < ARRAY_SIZE(m_pDataF[0].m_fTemp);i ++)
-		pTemp[i] = m_pDataF[0].m_fTemp[i];
-}
-
-void X9119TableR1C::SaveAs(char *pPath)
-{
-	FILE *fp = fopen(pPath,"w");
-	if (NULL == fp)
-		return;
-	int16_t iValue = 0;
-	float fTemp[8] = {0.0};
-	Get(iValue,fTemp);
-	fprintf(fp,"x9119 : %d \t",iValue);
-    for (uint32_t i = 0;i < ARRAY_SIZE(fTemp);i ++)
-		fprintf(fp,"temp%d : %5.3f \t ",i,fTemp[i]);
-	fprintf(fp,"\n");
 }
