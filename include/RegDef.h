@@ -37,13 +37,13 @@
 #ifdef _DEBUG
 #define K7_ASSERT()                                 \
     if (NULL == m_pK7) {                            \
-        Log->SetLastError("device:k7 disconnect");  \
+        Log.SetLastError("device:k7 disconnect");  \
         return -1;                                  \
     }
 
 #define S6_ASSERT()                                 \
     if (NULL == m_pS6) {                            \
-        Log->SetLastError("device:s6 disconnect");  \
+        Log.SetLastError("device:s6 disconnect");  \
         return -1;                                  \
     }
 #else
@@ -56,11 +56,11 @@
         K7_ASSERT();                                                                        \
         int32_t iRes = 0;                                                                   \
         if ((iRes = m_pK7->W32(IPCIDev::AS_BAR0,uint16_t(addr<<2),REG_U32(ns,addr)))) {     \
-            Log->SetLastError("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__);               \
-            Log->trace("%s w %#06x:%#010x ¨w\n",m_pK7->GetDevName(),addr,REG_U32(ns,addr)); \
+            Log.SetLastError("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__);               \
+            Log.trace("%s w %#06x:%#010x ¨w\n",m_pK7->GetDevName(),addr,REG_U32(ns,addr)); \
             return -1;                                                                      \
         }                                                                                   \
-        Log->AddRegList(iRes,m_pK7->GetDevName(),addr,REG_U32(ns,addr));                    \
+        Log.AddRegList(iRes,m_pK7->GetDevName(),addr,REG_U32(ns,addr));                    \
     }while (0);
 
 #define K7_R(ns,addr)																						\
@@ -68,11 +68,11 @@
         K7_ASSERT();											\
         int32_t iRes = 0;										\
         if ((iRes = m_pK7->R32(IPCIDev::AS_BAR0,uint16_t(addr<<2),&REG_U32(ns,addr)))) {           	\
-            Log->SetLastError("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__);				\
-            Log->trace("%s r  %#06x:\t\t\t\t%#010x ¨w\n",m_pK7->GetDevName(),addr,REG_U32(ns,addr));	\
+            Log.SetLastError("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__);				\
+            Log.trace("%s r  %#06x:\t\t\t\t%#010x ¨w\n",m_pK7->GetDevName(),addr,REG_U32(ns,addr));	\
             return -1;											\
         }												\
-        Log->AddRegList(iRes,m_pK7->GetDevName(),addr,-1,REG_U32(ns,addr));                             \
+        Log.AddRegList(iRes,m_pK7->GetDevName(),addr,-1,REG_U32(ns,addr));                             \
     }while (0);
 
 #define K7OP(ns,addr,bit)	\
@@ -117,7 +117,7 @@
             K7_R(ns,addr);						\
         }                                                               \
         if (!idle) {							\
-            Log->SetLastError("reg%#06x wait idle timeout",addr);	\
+            Log.SetLastError("reg%#06x wait idle timeout",addr);	\
             return -1;							\
         }								\
     } while (0);
@@ -133,7 +133,7 @@
             }								\
         }								\
         if (full) {							\
-            Log->SetLastError("reg%#06x wait fifo empty timeout",addr);	\
+            Log.SetLastError("reg%#06x wait fifo empty timeout",addr);	\
             return -1;							\
         }								\
     } while (0);
@@ -160,11 +160,11 @@
         S6_ASSERT();                                                                        \
         int32_t iRes = 0;                                                                   \
         if ((iRes = m_pS6->W32(IPCIDev::AS_BAR0,uint16_t(addr <<2),REG_U32(ns,addr)))) {    \
-            Log->SetLastError("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__);               \
-            Log->trace("%s w %#06x:%#010x ¨w\n",m_pS6->GetDevName(),addr,REG_U32(ns,addr)); \
+            Log.SetLastError("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__);               \
+            Log.trace("%s w %#06x:%#010x ¨w\n",m_pS6->GetDevName(),addr,REG_U32(ns,addr)); \
             return -1;                                                                      \
         }                                                                                   \
-        Log->AddRegList(iRes,m_pS6->GetDevName(),addr,REG_U32(ns,addr));                    \
+        Log.AddRegList(iRes,m_pS6->GetDevName(),addr,REG_U32(ns,addr));                    \
     }while (0);
 
 #define S6_R(ns,addr)											\
@@ -172,11 +172,11 @@
         S6_ASSERT();											\
         int32_t iRes = 0;										\
         if ((iRes = m_pS6->R32(IPCIDev::AS_BAR0,uint16_t(addr <<2),&REG_U32(ns,addr)))) {               \
-            Log->SetLastError("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__);				\
-            Log->trace("%s r  %#06x:\t\t\t\t%#010x ¨w\n",m_pS6->GetDevName(),addr,REG_U32(ns,addr));    \
+            Log.SetLastError("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__);				\
+            Log.trace("%s r  %#06x:\t\t\t\t%#010x ¨w\n",m_pS6->GetDevName(),addr,REG_U32(ns,addr));    \
             return -1;											\
         }												\
-        Log->AddRegList(iRes,m_pS6->GetDevName(),addr,-1,REG_U32(ns,addr));				\
+        Log.AddRegList(iRes,m_pS6->GetDevName(),addr,-1,REG_U32(ns,addr));				\
     }while (0);
 
 #define RFU_K7_REG_DECLARE(addr) REG_DECLARE(ns_reg_rfu_k7,addr)
@@ -248,11 +248,11 @@
         int32_t iRes = 0;										\
         uint32_t uiAddr = ns##r##addr0##addr1.addr[GetRfIdx()];						\
         if ((iRes = m_pK7->W32(IPCIDev::AS_BAR0,uiAddr<<2,REG_U32_2(ns,addr0,addr1)))) {		\
-            Log->SetLastError("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__);				\
-            Log->trace("%s w %#06x:%#010x ¨w\n",m_pK7->GetDevName(),uiAddr,REG_U32_2(ns,addr0,addr1));  \
+            Log.SetLastError("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__);				\
+            Log.trace("%s w %#06x:%#010x ¨w\n",m_pK7->GetDevName(),uiAddr,REG_U32_2(ns,addr0,addr1));  \
             return -1;											\
         }												\
-        Log->AddRegList(iRes,m_pK7->GetDevName(),uiAddr,REG_U32_2(ns,addr0,addr1));			\
+        Log.AddRegList(iRes,m_pK7->GetDevName(),uiAddr,REG_U32_2(ns,addr0,addr1));			\
     }while (0);
 
 #define K7_R_2(ns,addr0,addr1)											\
@@ -261,11 +261,11 @@
         int32_t iRes = 0;											\
         uint32_t uiAddr = ns##r##addr0##addr1.addr[GetRfIdx()];							\
         if ((iRes = m_pK7->R32(IPCIDev::AS_BAR0,uiAddr<<2,&REG_U32_2(ns,addr0,addr1)))) {			\
-            Log->SetLastError("error in %s: func:%s line%d",__FILE__,__FUNCTION__,__LINE__);			\
-            Log->trace("%s r  %#06x:\t\t\t\t%#010x ¨w\n",m_pK7->GetDevName(),uiAddr,REG_U32_2(ns,addr0,addr1)); \
+            Log.SetLastError("error in %s: func:%s line%d",__FILE__,__FUNCTION__,__LINE__);			\
+            Log.trace("%s r  %#06x:\t\t\t\t%#010x ¨w\n",m_pK7->GetDevName(),uiAddr,REG_U32_2(ns,addr0,addr1)); \
             return -1;												\
         }													\
-        Log->AddRegList(iRes,m_pK7->GetDevName(),uiAddr,-1,REG_U32_2(ns,addr0,addr1));				\
+        Log.AddRegList(iRes,m_pK7->GetDevName(),uiAddr,-1,REG_U32_2(ns,addr0,addr1));				\
     }while (0);
 
 #define K7OP_2(ns,addr0,addr1,bit)	\
@@ -311,7 +311,7 @@
             K7_R_2(ns,addr0,addr1);                                 \
         }                                                           \
         if (!idle) {                                                \
-            Log->SetLastError("reg%#06x wait idle timeout",uiAddr); \
+            Log.SetLastError("reg%#06x wait idle timeout",uiAddr); \
             return -1;                                              \
         }                                                           \
     } while (0);
@@ -328,7 +328,7 @@
             }                                                               \
         }                                                                   \
         if (full) {                                                         \
-            Log->SetLastError("reg %#06x wait fifo empty timeout",uiAddr);  \
+            Log.SetLastError("reg %#06x wait fifo empty timeout",uiAddr);  \
             return -1;                                                      \
         }                                                                   \
     } while (0);
@@ -339,11 +339,11 @@
         int32_t iRes = 0;                                                                               \
         uint32_t uiAddr = ns##r##addr0##addr1.addr[GetRfIdx()/2];                                       \
         if ((iRes = m_pS6->W32(IPCIDev::AS_BAR0,uiAddr<<2,REG_U32_2(ns,addr0,addr1)))) {                \
-            Log->SetLastError("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__);                           \
-            Log->trace("%s w %#06x:%#010x ¨w\n",m_pS6->GetDevName(),uiAddr,REG_U32_2(ns,addr0,addr1));  \
+            Log.SetLastError("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__);                           \
+            Log.trace("%s w %#06x:%#010x ¨w\n",m_pS6->GetDevName(),uiAddr,REG_U32_2(ns,addr0,addr1));  \
             return -1;											\
         }                                                                                               \
-        Log->AddRegList(iRes,m_pS6->GetDevName(),uiAddr,REG_U32_2(ns,addr0,addr1));			\
+        Log.AddRegList(iRes,m_pS6->GetDevName(),uiAddr,REG_U32_2(ns,addr0,addr1));			\
     }while (0);
 
 #define S6_R_2(ns,addr0,addr1)                                                                                 	\
@@ -352,11 +352,11 @@
         int32_t iRes = 0;                                                                                       \
         uint32_t uiAddr = ns##r##addr0##addr1.addr[GetRfIdx()/2];						\
         if ((iRes = m_pS6->R32(IPCIDev::AS_BAR0,uiAddr<<2,&REG_U32_2(ns,addr0,addr1)))) {                       \
-            Log->SetLastError("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__);                                   \
-            Log->trace("%s r  %#06x:\t\t\t\t%#010x ¨w\n",m_pS6->GetDevName(),uiAddr,REG_U32_2(ns,addr0,addr1)); \
+            Log.SetLastError("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__);                                   \
+            Log.trace("%s r  %#06x:\t\t\t\t%#010x ¨w\n",m_pS6->GetDevName(),uiAddr,REG_U32_2(ns,addr0,addr1)); \
             return -1;                                                                                          \
         }													\
-        Log->AddRegList(iRes,m_pS6->GetDevName(),uiAddr,-1,REG_U32_2(ns,addr0,addr1));                          \
+        Log.AddRegList(iRes,m_pS6->GetDevName(),uiAddr,-1,REG_U32_2(ns,addr0,addr1));                          \
     }while (0);
 
 #define RFU_K7_REG_DECLARE_2(addr0,addr1) REG_DECLARE_2(ns_reg_rfu_k7,addr0,addr1)
