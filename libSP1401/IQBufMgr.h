@@ -11,7 +11,7 @@ private:
 	~CIQBufMgr();
 	CIQBufMgr & operator = (CIQBufMgr &);
 public:
-    static CIQBufMgr* Instance();
+    static CIQBufMgr& Instance();
 	void New(uint32_t uiSamples);
     void SetSr(uint32_t uiSr);
     uint32_t GetSr();

@@ -33,10 +33,10 @@ DMAMgr &DMAMgr::operator = (DMAMgr &Mgr)
 	return Mgr;
 }
 
-DMAMgr *DMAMgr::Instance()
+DMAMgr &DMAMgr::Instance()
 {
-    static DMAMgr *g_pMgr = new DMAMgr;
-    return g_pMgr;
+    static DMAMgr g_DMAMgr = DMAMgr();
+    return g_DMAMgr;
 }
 
 int32_t DMAMgr::FpgaRead(viPCIDev *pK7,uint32_t *pBuf,uint32_t uiLength,float *pTime)
@@ -49,7 +49,7 @@ int32_t DMAMgr::FpgaRead(viPCIDev *pK7,uint32_t *pBuf,uint32_t uiLength,float *p
 
     viPCIDev *m_pK7 = pK7;
 	bool bComp = false;
-    double dTimeStar = Log->GetTimeStamp();
+    double dTimeStar = Log.GetTimeStamp();
 	double dTimeStop = 0.0;
 
     INT_CHECK(m_DMAR->Write32(pBuf,uiLength));
@@ -89,13 +89,13 @@ int32_t DMAMgr::FpgaRead(viPCIDev *pK7,uint32_t *pBuf,uint32_t uiLength,float *p
 		if (bComp)
 			break;
 		else if (uiBytesCnt[4] == uiBytesCnt[3]) {
-            Log->SetLastError("stop@sample:%d",uiBytesCnt[4]);
-            Log->stdprintf("\n%s\n",Log->GetLastError());
+            Log.SetLastError("stop@sample:%d",uiBytesCnt[4]);
+            Log.stdprintf("\n%s\n",Log.GetLastError());
 			return -1;
 		}
 	}
 
-    dTimeStop = Log->GetTimeStamp();
+    dTimeStop = Log.GetTimeStamp();
 	if (pTime)
 		*pTime = (float)(dTimeStop - dTimeStar);
 
@@ -123,14 +123,14 @@ int32_t DMAMgr::FpgaReadAll(viPCIDev *pK7,uint32_t *pBuf,uint32_t uiLength)
 		uiCnt ++;
 		uiSplsTransing = uiSplsLeft > T_BLOCK_SAMPLES ? T_BLOCK_SAMPLES : uiSplsLeft;
 
-        Log->stdprintf("dma%d ready:samples:%d\n",uiCnt,uiSplsTransing);
+        Log.stdprintf("dma%d ready:samples:%d\n",uiCnt,uiSplsTransing);
         INT_CHECK(FpgaRead(pK7,&pBuf[uiSplsTransed],uiSplsTransing,NULL));
-        Log->stdprintf("dma%d done\n",uiCnt);
+        Log.stdprintf("dma%d done\n",uiCnt);
 
 		uiSplsTransed += uiSplsTransing;
 		uiSplsLeft = uiSplsTotal - uiSplsTransed;
 	}
-    Log->stdprintf("all done\n");
+    Log.stdprintf("all done\n");
 	return 0;
 }
 
@@ -210,14 +210,14 @@ int32_t DMAMgr::WDumpToFileCh(uint32_t uiRfIdx,char *pPath,uint32_t uiSamples,ch
 
 	FILE *fp = fopen(pPath,"w");
 	if (NULL == fp) {
-        Log->SetLastError("can't open %s",pPath);
+        Log.SetLastError("can't open %s",pPath);
 		return -1;
 	}
 	FILE *fp_interch = NULL;
 	if (pPathInterCh) {
 		fp_interch = fopen(pPathInterCh,"w");
 		if (NULL == fp_interch) {
-            Log->SetLastError("can't open %s",pPathInterCh);
+            Log.SetLastError("can't open %s",pPathInterCh);
 			return -1;
 		}
 	}
@@ -305,14 +305,14 @@ int32_t	DMAMgr::IQToFile(uint32_t uiRfIdx,char *pPath,uint32_t uiSamples,char *p
 
 	FILE *fp = fopen(pPath,"w");
 	if (NULL == fp) {
-        Log->SetLastError("can't open %s",pPath);
+        Log.SetLastError("can't open %s",pPath);
 		return -1;
 	}
 	FILE *fp_interch = NULL;
 	if (pPathInterCh) {
 		fp_interch = fopen(pPathInterCh,"w");
 		if (NULL == fp_interch) {
-            Log->SetLastError("can't open %s",pPathInterCh);
+            Log.SetLastError("can't open %s",pPathInterCh);
 			return -1;
 		}
 	}
@@ -356,12 +356,12 @@ int32_t DMAMgr::RAlloc()
 		m_pUsrSpc[i] = 0xffffffff;
 
 	if (m_DMAR->Alloc(T_BLOCK_SAMPLES * 4)) {
-        Log->SetLastError("dma read memory alloc 4M error");
+        Log.SetLastError("dma read memory alloc 4M error");
 	}
-    Log->AddMsgList("dmar physical address:%#x",m_DMAR->m_PhyAddr);
+    Log.AddMsgList("dmar physical address:%#x",m_DMAR->m_PhyAddr);
 
 	if (m_DMAR->Write32(m_pUsrSpc,T_BLOCK_SAMPLES)) {
-        Log->SetLastError("dma read memory write default value error");
+        Log.SetLastError("dma read memory write default value error");
 		return -1;
 	}
 	return 0;
@@ -392,11 +392,11 @@ int32_t DMAMgr::WAlloc()
 
     for (uint32_t i = 0;i < R_BLOCKS;i ++) {
 		if(m_DMAW[i]->Alloc(R_BLOCK_SAMPLES * 4) < 0){
-            Log->SetLastError("dma write memory alloc @block%d error",i);
+            Log.SetLastError("dma write memory alloc @block%d error",i);
 			return -1;
 		}
 		if(m_DMAW[i]->Write32(m_pUsrSpc, R_BLOCK_SAMPLES)) {
-            Log->SetLastError("dma write memory write default valued @block%d error",i);
+            Log.SetLastError("dma write memory write default valued @block%d error",i);
 			return -1;
 		}
 	}

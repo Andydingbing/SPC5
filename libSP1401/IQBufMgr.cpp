@@ -34,10 +34,10 @@ CIQBufMgr & CIQBufMgr::operator = (CIQBufMgr &Mgr)
 	return Mgr;
 }
 
-CIQBufMgr *CIQBufMgr::Instance()
+CIQBufMgr &CIQBufMgr::Instance()
 {
-    static CIQBufMgr *g_pIQBufMgr = new CIQBufMgr;
-    return g_pIQBufMgr;
+    static CIQBufMgr g_IQBufMgr = CIQBufMgr();
+    return g_IQBufMgr;
 }
 
 void CIQBufMgr::New(uint32_t uiSamples)

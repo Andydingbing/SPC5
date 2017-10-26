@@ -16,7 +16,7 @@ private:
 	~DMAMgr();
 	DMAMgr & operator = (DMAMgr &);
 public:
-    static DMAMgr* Instance();
+    static DMAMgr& Instance();
 public:
 	typedef struct WData {
 		short m_I : 16;

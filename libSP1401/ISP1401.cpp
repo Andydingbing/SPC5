@@ -128,7 +128,7 @@ int32_t ISP1401::IsValidSN(const char *pSN)
     memset(szSNSlotTemp,0,sizeof(szSNSlotTemp));
 
     if (!strstr(szSNHwVer,"SP1401R1")) {
-        Log->SetLastError("sn err:%24s",pSN);
+        Log.SetLastError("sn err:%24s",pSN);
         return SN_WRONG;
     }
     for (int i = 0;i < MAX_RFU;i ++) {
@@ -143,7 +143,7 @@ int32_t ISP1401::IsValidSN(const char *pSN)
             break;
     }
     if (bValid == false) {
-        Log->SetLastError("sn err:%24s",pSN);
+        Log.SetLastError("sn err:%24s",pSN);
         return SN_WRONG;
     }
     return SN_RIGHT;
@@ -488,11 +488,11 @@ int32_t ISP1401::ArbLoad(char *pPath)
             RFU_K7_REG_2(0x0507,0x0607).adr = uiDDRAddr;
             RFU_K7_W_2(0x0507,0x0607);
 
-            fread(DDR->GetUsrSpc(),sizeof(ArbReader::Data_t),uiSplsTrsing,fp);
+            fread(DDR.GetUsrSpc(),sizeof(ArbReader::Data_t),uiSplsTrsing,fp);
 
-            Log->stdprintf("dma%d ready:samples:%d\n",uiCnt,uiSplsTrsing);
-            INT_CHECK(DDR->FpgaRead(m_pK7,DDR->GetUsrSpc(),uiSplsTrsing,NULL));
-            Log->stdprintf("dma%d done\n",uiCnt);
+            Log.stdprintf("dma%d ready:samples:%d\n",uiCnt,uiSplsTrsing);
+            INT_CHECK(DDR.FpgaRead(m_pK7,DDR.GetUsrSpc(),uiSplsTrsing,NULL));
+            Log.stdprintf("dma%d done\n",uiCnt);
 
             uiSplsTotalTrsed += uiSplsTrsing;
             uiSplsSegTrsed   += uiSplsTrsing;
@@ -501,7 +501,7 @@ int32_t ISP1401::ArbLoad(char *pPath)
 
         iterArbSeg ++;
     }
-    Log->stdprintf("all done\n");
+    Log.stdprintf("all done\n");
     return 0;
 }
 
@@ -574,7 +574,7 @@ int32_t ISP1401::SetNListIQCapCapOffset(uint32_t uiSamples)
 {
     RFU_K7_REG_DECLARE_2(0x10c1,0x10f1);
     if (uiSamples % 16 != 0) {
-        Log->SetLastError("cap offset invalid");
+        Log.SetLastError("cap offset invalid");
         return -1;
     }
     RFU_K7_REG_2(0x10c1,0x10f1).iqcap_cap_offset = uiSamples;
@@ -596,7 +596,7 @@ int32_t ISP1401::IQCapStart()
 
     RFU_K7_OP(0x10c4);
 
-    INT_CHECK(DDR->WStart(m_pK7));
+    INT_CHECK(DDR.WStart(m_pK7));
     return 0;
 }
 
@@ -673,10 +673,10 @@ int32_t ISP1401::IQCap()
     //Reserved
 
     INT_CHECK(IQCapAbort());
-    INT_CHECK(DDR->Reset(m_pK7));
+    INT_CHECK(DDR.Reset(m_pK7));
     INT_CHECK(IQCapStart());
 
-    double dTimeStar = Log->GetTimeStamp();
+    double dTimeStar = Log.GetTimeStamp();
     double dTime = 0.0;
     bool bTimeout = false;
 
@@ -685,7 +685,7 @@ int32_t ISP1401::IQCap()
     GetIQCapSamples(uiSamples);
 
     while (1) {
-        dTime = Log->GetTimeStamp() - dTimeStar;
+        dTime = Log.GetTimeStamp() - dTimeStar;
         bTimeout = dTime > 6 ? true : false;
 //		STACHK(GetIQCapTimeout(timeout));
 
@@ -697,11 +697,11 @@ int32_t ISP1401::IQCap()
             if (uiCurSamples[4] == (uiSamples * 2))	//success
                 break;
             if (uiCurSamples[4] == uiCurSamples[3] && uiCurSamples[4] < (uiSamples * 2)) {
-                Log->SetLastError("stop at samples:%d(need samples:%d)",uiCurSamples[4],uiSamples * 2);
+                Log.SetLastError("stop at samples:%d(need samples:%d)",uiCurSamples[4],uiSamples * 2);
                 return -1;
             }
             if (uiCurSamples[4] == uiCurSamples[3] && uiCurSamples[4] > (uiSamples * 2)) {
-                Log->SetLastError("exceed,samples:%d(need samples%d)",uiCurSamples[4],uiSamples * 2);
+                Log.SetLastError("exceed,samples:%d(need samples%d)",uiCurSamples[4],uiSamples * 2);
                 return -1;
             }
         }
@@ -711,11 +711,11 @@ int32_t ISP1401::IQCap()
             if (uiCurSamples[4] == (uiSamples * 2))	//also success
                 break;
             if (uiCurSamples[4] == uiCurSamples[3] && uiCurSamples[4] < (uiSamples * 2)) {
-                Log->SetLastError("stop at samples:%d(need samples:%d)",uiCurSamples[4],uiSamples * 2);
+                Log.SetLastError("stop at samples:%d(need samples:%d)",uiCurSamples[4],uiSamples * 2);
                 return -1;
             }
             if (uiCurSamples[4] == uiCurSamples[3] && uiCurSamples[4] > (uiSamples * 2)) {
-                Log->SetLastError("exceed,samples:%d(need samples%d)",uiCurSamples[4],uiSamples * 2);
+                Log.SetLastError("exceed,samples:%d(need samples%d)",uiCurSamples[4],uiSamples * 2);
                 return -1;
             }
         }
@@ -864,7 +864,7 @@ int32_t ISP1401::GetADS5474Manual(int64_t &iAD)
 
     INT_CHECK(SetIQCapSamples(4096));
     INT_CHECK(IQCap());
-    INT_CHECK(DDR->IQToBuf(m_pCalFile->GetRfIdx(),I,Q,4096));
+    INT_CHECK(DDR.IQToBuf(m_pCalFile->GetRfIdx(),I,Q,4096));
 
     for (int32_t i = 0;i < 4096;i ++) {
         dSumI += pow((double)I[i],2);

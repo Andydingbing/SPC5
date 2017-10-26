@@ -23,7 +23,7 @@ int ArbReader::Load(const char *pPath)
 	m_pFile = fopen(pPath,"rb");
 	if (NULL == m_pFile) {
 		fclose(m_pFile);
-        Log->SetLastError("can't open %s",pPath);
+        Log.SetLastError("can't open %s",pPath);
 		return -1;
 	}
 	return 0;
@@ -171,7 +171,7 @@ void ArbReader::Show(MarkerList &markerList) {
 
 void ArbReader::Show(const Data_t *p)
 {
-    Log->stdprintf("data.i = %d, data.q = %d\n", p->i, p->q);
+    Log.stdprintf("data.i = %d, data.q = %d\n", p->i, p->q);
 }
 
 int ArbReader::GetFileInfo(char *pBuf)

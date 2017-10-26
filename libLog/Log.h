@@ -1,9 +1,9 @@
 #ifndef __LOG_H__
 #define __LOG_H__
 
-//#ifndef GUI_MFC
-//#define GUI_MFC
-//#endif
+#ifndef GUI_MFC
+#define GUI_MFC
+#endif
 
 #ifndef _WINDOWS
 #define _WINDOWS
@@ -22,9 +22,9 @@
 #endif
 
 #if defined(_WINDOWS) && defined (GUI_MFC)
-#include <windef.h>
-#include <winbase.h>
-#include <winuser.h>
+#include <WinDef.h>
+#include <WinBase.h>
+#include <WinUser.h>
 
 #define WM_CSE_MSG_LOG (WM_USER + 1000)
 #define WM_CSE_REG_LOG (WM_USER + 1001)
@@ -64,7 +64,7 @@
 STRUCT_ALIGN_S(MsgLog,4)
         int  m_iResult : 32;
         char m_szTime[32];
-        char m_szMsg[64];
+        char m_szMsg[512];
     public:
         MsgLog();
 STRUCT_ALIGN_E(MsgLog,4)
@@ -118,7 +118,7 @@ public:
 	CLog(CLog &);
 	CLog & operator = (CLog &);
 	~CLog();
-    static CLog* Instance();
+    static CLog &Instance();
 	void Init();
     void Init(vector<MsgLog> *pMsgLog,vector<RegLog> *pRegLog);
 

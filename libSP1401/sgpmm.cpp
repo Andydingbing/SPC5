@@ -14,7 +14,7 @@
 
 #define LOW_LEVEL_IO_ASSERT(handle,func,error)											\
 	if (error == func) {																\
-        Log->SetLastError("%s:%s:%d(errno:%d)",__FILE__,__FUNCTION__,__LINE__,errno);	\
+        Log.SetLastError("%s:%s:%d(errno:%d)",__FILE__,__FUNCTION__,__LINE__,errno);	\
 		_close(handle);																	\
 		return errno;																	\
 	}

@@ -13,12 +13,12 @@
 #include <afx.h>
 #pragma comment(lib,"pthreadVC2.lib")
 #pragma data_seg("LogShareData")
-    CLog *g_pLog = new CLog();
+    CLog g_Log = CLog();
 #pragma data_seg()
 #pragma comment(linker,"/section:LogShareData,rws")
 #elif defined __GNUC__
 #define TRACE(arg)
-    CLog *g_pLog __attribute__((section("LogShareData"))) = new CLog();
+    CLog g_Log __attribute__((section("LogShareData"))) = CLog();
 #endif
 
 pthread_mutex_t g_LogLock = PTHREAD_MUTEX_INITIALIZER;
@@ -99,9 +99,9 @@ CLog::~CLog()
 		FreeConsole();
 }
 
-CLog *CLog::Instance()
+CLog &CLog::Instance()
 {
-    return g_pLog;
+    return g_Log;
 }
 
 void CLog::Init()

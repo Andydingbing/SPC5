@@ -136,20 +136,7 @@ CSP3301::RFUInfo CSP3301::GetInfo()
 
 int32_t CSP3301::GetOCXO(int16_t &iValue)
 {
-	switch (m_HwVer[0]) {
-		case ISP1401::R1A : 
-		case ISP1401::R1B : {
-            m_pSP1401R1A[0]->GetCalFile()->m_pX9119->Get(iValue);
-			return 0;
-							}
-		case ISP1401::R1C : 
-		case ISP1401::R1D : {
-			float fTemp = 0.0;
-            m_pSP1401R1C[0]->GetCalFile()->m_pX9119->Get(iValue,fTemp);
-			return 0;
-							}
-		default:return 0;
-	}
+	ICalFile::GetX9119()->Get(iValue);
 	return 0;
 }
 
@@ -168,8 +155,8 @@ int32_t CSP3301::Boot()
 
 	CGeneralIniFile IniFile(CONFIG_FILE_PATH);
 
-    INT_CHECK(DDR->RAlloc());
-    INT_CHECK(DDR->WAlloc());
+    INT_CHECK(DDR.RAlloc());
+    INT_CHECK(DDR.WAlloc());
 
 	IniFile.GetConfigStringValue("Product Form","Form",szProductForm);
 	strcpy(szRsrcSection,"RESOURCE");
@@ -194,7 +181,7 @@ int32_t CSP3301::Boot()
 	}
 
 	if (false == m_Active.m_bK7_0 && false == m_Active.m_bK7_1 && false == m_Active.m_bS6) {
-        Log->SetLastError("missing rfu%d",m_uiRFUIndex);
+        Log.SetLastError("missing rfu%d",m_uiRFUIndex);
 		return -1;
 	}
 
@@ -208,8 +195,8 @@ int32_t CSP3301::Boot()
 		INS_SP1401(2);
 		INS_SP1401(3);
 
-        INT_CHECK(DDR->RSendPhyAddr(&m_K7_0));
-        INT_CHECK(DDR->WSendPhyAddr(&m_K7_0));
+        INT_CHECK(DDR.RSendPhyAddr(&m_K7_0));
+        INT_CHECK(DDR.WSendPhyAddr(&m_K7_0));
         INT_CHECK(m_pSP1401[2]->GetK7Ver(m_RFUInfo.m_uiK7_0_Ver));
 	}
 
@@ -223,8 +210,8 @@ int32_t CSP3301::Boot()
 		INS_SP1401(0);
 		INS_SP1401(1);
 
-        INT_CHECK(DDR->RSendPhyAddr(&m_K7_1));
-        INT_CHECK(DDR->WSendPhyAddr(&m_K7_1));
+        INT_CHECK(DDR.RSendPhyAddr(&m_K7_1));
+        INT_CHECK(DDR.WSendPhyAddr(&m_K7_1));
         INT_CHECK(m_pSP1401[0]->GetK7Ver(m_RFUInfo.m_uiK7_1_Ver));
 	}
 	
@@ -534,7 +521,7 @@ int32_t CSP3301::ArbLoad(uint32_t uiRfIdx,char *pPath)
 		return -1;
 
 	if (Param[0].TotalSamples != Param[1].TotalSamples) {
-        Log->SetLastError("samples file0:%d != file1:%d",Param[0].TotalSamples,Param[1].TotalSamples);
+        Log.SetLastError("samples file0:%d != file1:%d",Param[0].TotalSamples,Param[1].TotalSamples);
 		return -1;
 	}
 
@@ -557,7 +544,7 @@ int32_t CSP3301::ArbLoad(uint32_t uiRfIdx,char *pPath)
 
 	uiSplsTotal = Param[0].TotalSamples + Param[1].TotalSamples;
 	uiSplsLeft = uiSplsTotal;
-    Log->stdprintf("prepare fpga dma read,total samples(*2ed):%d\n",uiSplsTotal);
+    Log.stdprintf("prepare fpga dma read,total samples(*2ed):%d\n",uiSplsTotal);
 	while(uiSplsLeft > 0)
 	{
 		uiCnt ++;
@@ -570,18 +557,18 @@ int32_t CSP3301::ArbLoad(uint32_t uiRfIdx,char *pPath)
         RFU_K7_W(0x0028);
 
 		for (uint32_t i = 0;i < uiSplsTrsing / 2;i ++) {
-            fread(DDR->GetUsrSpc() + i * 2,    sizeof(ArbReader::Data_t),1,fp[0]);
-            fread(DDR->GetUsrSpc() + i * 2 + 1,sizeof(ArbReader::Data_t),1,fp[1]);
+            fread(DDR.GetUsrSpc() + i * 2,    sizeof(ArbReader::Data_t),1,fp[0]);
+            fread(DDR.GetUsrSpc() + i * 2 + 1,sizeof(ArbReader::Data_t),1,fp[1]);
 		}
 
-        INT_CHECK(DDR->FpgaRead(m_pK7,DDR->GetUsrSpc(),uiSplsTrsing,NULL));
+        INT_CHECK(DDR.FpgaRead(m_pK7,DDR.GetUsrSpc(),uiSplsTrsing,NULL));
 		
 		uiSplsTrsed += uiSplsTrsing;
 		uiSplsLeft = uiSplsTotal - uiSplsTrsed;
-        Log->stdprintf("dma%-4d done,samples(*2ed):%-8d total(*2ed):%-10d\r",uiCnt,uiSplsTrsing,uiSplsTrsed);
+        Log.stdprintf("dma%-4d done,samples(*2ed):%-8d total(*2ed):%-10d\r",uiCnt,uiSplsTrsing,uiSplsTrsed);
 	}
-    Log->stdprintf("\n");
-    Log->stdprintf("all done\n");
+    Log.stdprintf("\n");
+    Log.stdprintf("all done\n");
 	return 0;
 }
 

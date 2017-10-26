@@ -31,6 +31,7 @@ int32_t CSP2401R1A::OpenBoard(viPCIDev *pK7, viPCIDev *pS6)
     INT_CHECK(SetDDSPowerComp());
     INT_CHECK(SetDUCDDS(0.0));
     INT_CHECK(SetTxFilterTruncation(12));
+    INT_CHECK(SetTxFilterSw(true));
     INT_CHECK(SetTxPowerComp(0.0));
 
     INT_CHECK(SetDDC(-92.64e6));
@@ -435,16 +436,16 @@ int32_t CSP2401R1A::SetFpgaBit(const char *pFilePath,int32_t iBlockSize)
 
 	FILE *fp = fopen(pFilePath,"rb");
 	if (NULL == fp) {
-        Log->SetLastError("can't open %s",pFilePath);
+        Log.SetLastError("can't open %s",pFilePath);
 		return -1;
 	}
 
 	fseek(fp,0,SEEK_END);
 	iFileSize = ftell(fp);											//byte
-    Log->stdprintf("file size before align = %d\n",iFileSize);
+    Log.stdprintf("file size before align = %d\n",iFileSize);
 	iFileSize = (iFileSize / 4 + ((iFileSize % 4) ? 1 : 0)) * 4;	//4 bytes align
 	iCnt = (iFileSize / 4 / iBlockSize) + 1;						//4 bytes once
-    Log->stdprintf("file size after  align = %d\n",iFileSize);
+    Log.stdprintf("file size after  align = %d\n",iFileSize);
 	fseek(fp,0,SEEK_SET);
 
 	uint32_t *pBuf = new uint32_t[iFileSize / 4];
@@ -470,9 +471,9 @@ int32_t CSP2401R1A::SetFpgaBit(const char *pFilePath,int32_t iBlockSize)
 			break;
 	}
 
-    Log->stdprintf("prepare programming %s,waiting fifo empty...\n",1 == iFpgaIdx ? "k7_1" : "k7_0" );
+    Log.stdprintf("prepare programming %s,waiting fifo empty...\n",1 == iFpgaIdx ? "k7_1" : "k7_0" );
     RFU_S6_WAIT_FIFO_EMPTY_2(0x0003,0x0007,0,1000);
-    Log->stdprintf("downloading...\n");
+    Log.stdprintf("downloading...\n");
 
 	for (int32_t i = 0;i < iCnt;i ++) {
 		if (i == iCnt - 1)
@@ -486,24 +487,24 @@ int32_t CSP2401R1A::SetFpgaBit(const char *pFilePath,int32_t iBlockSize)
 			j ++;
 		}
 
-        Log->stdprintf("%-5d done		\r",i);
+        Log.stdprintf("%-5d done		\r",i);
 	}
     RFU_S6_R_2(0x0003,0x0007);
-    Log->stdprintf("\n");
+    Log.stdprintf("\n");
 	delete []pBuf;
 	fclose(fp);
 
     if (1 == RFU_S6_REG_2(0x0003,0x0007).c_cfg_done) {
 		Sleep(10);
-        Log->stdprintf("restarting...\n");
+        Log.stdprintf("restarting...\n");
 		system("devcon_x64.exe restart \"PCI\\VEN_10EE&DEV_7021\"");
 		Sleep(1000);
-        Log->stdprintf("restarted\n");
+        Log.stdprintf("restarted\n");
 		return 0;
 	}
 	else {
-        Log->SetLastError("download complete,but device start fail");
-        Log->stdprintf("download fail\n");
+        Log.SetLastError("download complete,but device start fail");
+        Log.stdprintf("download fail\n");
 		return -1;
 	}
 	return 0;

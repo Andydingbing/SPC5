@@ -106,7 +106,7 @@ bool CSP1401R1A::GetConnect()
 		double dRxTemp = 0.0;
         INT_CHECKB(GetRxTemp(dRxTemp));
         if (dRxTemp <= 0) {
-            Log->SetLastError(-2,"missing rfu%u--->rf%u",m_pCalFile->GetRfuIdx(),m_pCalFile->GetRfIdx());
+            Log.SetLastError(-2,"missing rfu%u--->rf%u",m_pCalFile->GetRfuIdx(),m_pCalFile->GetRfIdx());
 			return false;
 		}
 	}
