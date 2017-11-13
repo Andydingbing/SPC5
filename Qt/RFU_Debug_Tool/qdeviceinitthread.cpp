@@ -23,7 +23,7 @@ void QDeviceInitThread::run()
     INT_CHECKV(pSP3301->SetLoadBit(false,false));
     INT_CHECKV(pSP3301->LoadBit());
     if (pSP3301->Boot()) {
-        Log->AddMsgList(-1,"boot fail");
+        Log.AddMsgList(-1,"boot fail");
         return;
     }
     SET_PROG_POS(90);
@@ -31,6 +31,6 @@ void QDeviceInitThread::run()
     Info = pSP3301->GetInfo();
     emit swhwVerReady(Info,pDriver);
     SET_PROG_POS(100);
-    Log->AddMsgList(0,"booted");
+    Log.AddMsgList(0,"booted");
     emit done(true);
 }

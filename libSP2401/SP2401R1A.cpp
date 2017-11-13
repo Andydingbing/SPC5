@@ -13,8 +13,8 @@
 
 CSP2401R1A::CSP2401R1A(uint32_t uiRfIdx)
 {
-    m_pK7 = NULL;
-    m_pS6 = NULL;
+	m_pK7 = NULL;
+	m_pS6 = NULL;
 	m_uiRfIdx = uiRfIdx;
 }
 

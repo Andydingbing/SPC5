@@ -10,7 +10,8 @@
 								//									   "in/out mode : "+30~-20dBm"--->"+30~-30dBm"
 //#define CAL_FILE_VER 0x0004	// add an item:attenuation deviation in in/out mode
 								// note that the driver has changed the meaning of the data,each 9 float data represents a status of the attenuation from 0dB to 90dB,step 10dB,so it's necessary to calibrate tx att and tx power again
-#define CAL_FILE_VER 0x0005		// r1c first version
+//#define CAL_FILE_VER 0x0005	// r1c first version
+#define CAL_FILE_VER 0x0006		// change all r1c/d's table's data member "m_EndTime" from struct "COleDateTime" to struct "tm"
 
 /*define all info's head and tail,which are used to locate the related structure*/
 /*GUID_1 = {44A4AE51-6470-4C83-A568-34EDDA974411}*/
@@ -75,7 +76,7 @@ public:
 		TxAttIO			= 0x00000007,	//r1a/b/c/d
 		RxRefOP			= 0x00000008,	//r1c/d			//default bw 160M
 		RxRefIO			= 0x00000009,	//r1c/d			//default bw 160M
-		RxAttOP			= 0x00000019,	//r1c/d
+		RxAttOP			= 0x0000000a,	//r1c/d
 		RxAttIO			= 0x0000000b,	//r1c/d
 		TxFil_80		= 0x0000000c,	//r1c/d
 		TxFil_160		= 0x0000000d,	//r1c/d
@@ -110,13 +111,19 @@ public:
 		~FileInfo();
 	}FileInfo; 
 
-	typedef struct ItemInfo {
+#ifdef _MSC_VER
+#pragma pack(4)
+#endif
+	STRUCT_ALIGN_S(ItemInfo,4)
 		uint32_t m_uiHead : 32;
 		CalItem  m_Item : 32;
 		uint32_t m_uiSize : 32;			//each frequency's data type(byte)
 		uint32_t m_uiPoint : 32;			//points
 		uint32_t m_uiTail : 32;
-	}ItemInfo;
+	STRUCT_ALIGN_E(ItemInfo,4)
+#ifdef _MSC_VER
+#pragma pack()
+#endif
 
 	typedef struct ItemBuf {
 		uint32_t m_uiRfIdx;

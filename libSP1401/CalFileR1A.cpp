@@ -205,6 +205,7 @@ int32_t CalFileR1A::GetItemSize(ICalFile::CalItem Item,uint32_t &dwPos,uint32_t 
 										&CalFileR1A::GetItemSizeV0002,
 										&CalFileR1A::GetItemSizeV0002,
 										&CalFileR1A::GetItemSizeV0004,
+										&CalFileR1A::GetItemSizeV0004,
 										&CalFileR1A::GetItemSizeV0004};
 
 	return (this->*t_GetItemSize[CAL_FILE_VER])(Item,dwPos,uiSize);

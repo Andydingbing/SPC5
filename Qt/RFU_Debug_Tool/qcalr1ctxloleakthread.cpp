@@ -45,7 +45,7 @@ void QCalR1CTxLOLeakThread::run()
             CAL_THREAD_TEST_CANCEL();
             double dMkrFreq = 0.0;
             double dMkrPow  = -100;
-            X9119TableR1A::Data Xdata;
+            X9119Table::Data Xdata;
             pSP1401->SetIOMode(OutPut);
             pSP1401->SetTxFreq(2400000000);
             Instrument.Init();
@@ -65,7 +65,7 @@ void QCalR1CTxLOLeakThread::run()
                 Instrument.SA_GetMarkerPwr(dMkrPow);
                 if (abs(dMkrFreq - 2400000000.0) < 1.0 && dMkrPow >= -70.0) {
                     Xdata.m_iValue = iValue;
-                    pSP1401->GetCalFile()->Add(ICalFile::X9119,(X9119TableR1A::Data *)(&Xdata));
+                    pSP1401->GetCalFile()->Add(ICalFile::X9119,(X9119Table::Data *)(&Xdata));
                     pSP1401->GetCalFile()->Write(ICalFile::X9119);
                     break;
                 }

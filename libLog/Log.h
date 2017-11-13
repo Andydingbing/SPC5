@@ -39,11 +39,23 @@
 #define STRUCT_ALIGN_E(struct_name,align_size)  \
         }struct_name;
 
+#define CLASS_ALIGN_S(class_name,align_size)	\
+		class class_name {
+
+#define CLASS_ALIGN_E(class_name,align_size)	\
+		};
+
 #define STRUCT_ALIGN_INHERIT_S(struct_name,align_size,parent)   \
         typedef struct struct_name : public parent {
 
 #define STRUCT_ALIGN_INHERIT_E(struct_name,align_size)          \
         }struct_name;
+
+#define CLASS_ALIGN_INHERIT_S(class_name,align_size,parent)		\
+		class class_name : public parent {
+
+#define CLASS_ALIGN_INHERIT_E(class_name,align_size)			\
+		};
 #elif defined __GNUC__
 #define STRUCT_ALIGN_S(struct_name,align_size)  \
         typedef struct struct_name {
@@ -51,11 +63,23 @@
 #define STRUCT_ALIGN_E(struct_name,align_size)  \
         }__attribute__((aligned(align_size))) struct_name;
 
+#define CLASS_ALIGN_S(class_name,align_size)	\
+		class class_name {
+
+#define CLASS_ALIGN_E(class_name,align_size)	\
+		}__attribute__((aligned(align_size)));
+
 #define STRUCT_ALIGN_INHERIT_S(struct_name,align_size,parent)   \
         typedef struct struct_name : public parent {
 
 #define STRUCT_ALIGN_INHERIT_E(struct_name,align_size)          \
         }__attribute__((aligned(align_size))) struct_name;
+
+#define CLASS_ALIGN_INHERIT_S(class_name,align_size,parent)		\
+		class class_name : public parent {
+
+#define CLASS_ALIGN_INHERIT_E(class_name,align_size)			\
+		}__attribute((aligned(align_size)));
 #endif
 
 #ifdef _MSC_VER

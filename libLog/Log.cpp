@@ -18,7 +18,7 @@
 #pragma comment(linker,"/section:LogShareData,rws")
 #elif defined __GNUC__
 #define TRACE(arg)
-    CLog g_Log __attribute__((section("LogShareData"))) = CLog();
+    CLog g_Log __attribute__((section("LogShareData"))) /*= CLog()*/;
 #endif
 
 pthread_mutex_t g_LogLock = PTHREAD_MUTEX_INITIALIZER;

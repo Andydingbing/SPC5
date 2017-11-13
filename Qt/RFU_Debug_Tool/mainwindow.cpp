@@ -272,13 +272,13 @@ void MainWindow::updateParamInChildDlg()
 
 void MainWindow::addMsgListCallback()
 {
-    int iRow = Log->GetMsgLog()->size();
+    int iRow = Log.GetMsgLog()->size();
     emit addMsgList(iRow);
 }
 
 void MainWindow::addRegListCallback()
 {
-    int iRow = Log->GetRegLog()->size();
+    int iRow = Log.GetRegLog()->size();
     emit addRegList(iRow);
 }
 

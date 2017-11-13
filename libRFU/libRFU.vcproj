@@ -123,7 +123,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="0"
+				Optimization="2"
 				AdditionalIncludeDirectories="..\include;..\libSP3301;..\libSP1401;..\libSP2401;..\libLog;..\libSP3501;..\libBusDriver"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				BasicRuntimeChecks="0"
@@ -282,7 +282,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="0"
+				Optimization="2"
 				AdditionalIncludeDirectories="..\include;..\libSP3301;..\libSP1401;..\libSP2401;..\libLog;..\libSP3501;..\libBusDriver"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				BasicRuntimeChecks="0"

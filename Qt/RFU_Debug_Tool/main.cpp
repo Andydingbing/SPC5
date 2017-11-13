@@ -8,8 +8,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    Log->Init(addMsgListCallback,addRegListCallback);
-    IQBUF->New(4096);
+    Log.Init(addMsgListCallback,addRegListCallback);
+    IQBUF.New(4096);
     g_pMainW = new MainWindow;
     g_pMainW->setWindowTitle(QString("SPC5 RFU Debug Tool"));
     g_pMainW->show();

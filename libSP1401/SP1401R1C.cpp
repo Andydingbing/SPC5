@@ -32,7 +32,7 @@ CSP1401R1C::GPIOB::GPIOB()
 
 CSP1401R1C::CSP1401R1C(uint32_t uiRfIdx,uint32_t uiRfuIdx)
 {
-    m_pCalFile = new CalFileR1C(uiRfIdx,uiRfuIdx);
+	m_pCalFile = new CalFileR1C(uiRfIdx,uiRfuIdx);
 }
 
 CSP1401R1C::~CSP1401R1C()

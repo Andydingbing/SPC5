@@ -23,7 +23,7 @@ void QIQCapThread::run()
         }
         if (bCapture) {
             INT_CHECKV(pSP1401->IQCap());
-            INT_CHECKV(DDR->IQToBuf(pSP1401->GetRfIdx(),IQBUF->GetI(),IQBUF->GetQ(),IQBUF->TDGetSamples()));
+            INT_CHECKV(DDR.IQToBuf(pSP1401->GetRfIdx(),IQBUF.GetI(),IQBUF.GetQ(),IQBUF.TDGetSamples()));
             emit updatePlot();
         }
     }

@@ -1,5 +1,5 @@
-#ifndef __CFVCTRL_R1A_H__
-#define __CFVCTRL_R1A_H__
+#ifndef __CFVCTRL_H__
+#define __CFVCTRL_H__
 #include "stdint_common.h"
 /*all function names consist of "ForConv..." means converting the calibration file to the next version
   while all names consist of "BckConv..." means converting the file to the previous version*/
@@ -22,6 +22,7 @@ public:
 	int32_t ForConv_0002_0003();
 	int32_t ForConv_0003_0004();
 	int32_t ForConv_0004_0005();
+	int32_t ForConv_0005_0006();
 	int32_t ForwardConvert(int32_t iCurVer);
 private:
 	ICalFile *m_pFile;

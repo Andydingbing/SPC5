@@ -84,30 +84,30 @@ QIQCapDlg::~QIQCapDlg()
 
 void QIQCapDlg::changePlot2TD()
 {
-    m_pCurveI->setSamples(IQBUF->GetI(),IQBUF->TDGetSamples());
-    m_pCurveQ->setSamples(IQBUF->GetQ(),IQBUF->TDGetSamples());
+    m_pCurveI->setSamples(IQBUF.GetI(),IQBUF.TDGetSamples());
+    m_pCurveQ->setSamples(IQBUF.GetQ(),IQBUF.TDGetSamples());
     ui->m_Plot->setTitle("I Q");
-    ui->m_Plot->setAxisScale(QwtPlot::xBottom,0.0,double(IQBUF->TDGetSamples()));
+    ui->m_Plot->setAxisScale(QwtPlot::xBottom,0.0,double(IQBUF.TDGetSamples()));
     ui->m_Plot->setAxisScale(QwtPlot::yLeft,-15000.0,15000.0);
 }
 
 void QIQCapDlg::changePlot2DFT()
 {
-    m_pCurveDFT->setSamples(IQBUF->GetNormFreq(),IQBUF->GetPower(),IQBUF->DFTGetPts());
+    m_pCurveDFT->setSamples(IQBUF.GetNormFreq(),IQBUF.GetPower(),IQBUF.DFTGetPts());
     ui->m_Plot->setTitle("DFT");
-    ui->m_Plot->setAxisScale(QwtPlot::xBottom,IQBUF->GetSr() / 1e6 / -2.0,IQBUF->GetSr() / 1e6 / 2.0);
+    ui->m_Plot->setAxisScale(QwtPlot::xBottom,IQBUF.GetSr() / 1e6 / -2.0,IQBUF.GetSr() / 1e6 / 2.0);
     ui->m_Plot->setAxisScale(QwtPlot::yLeft,-180.0,10.0);
 }
 
 void QIQCapDlg::updatePlotFromBuf()
 {
     if (m_bShowingDFT) {
-        IQBUF->DFT();
-        m_pCurveDFT->setSamples(IQBUF->GetNormFreq(),IQBUF->GetPower(),IQBUF->DFTGetPts());
+        IQBUF.DFT();
+        m_pCurveDFT->setSamples(IQBUF.GetNormFreq(),IQBUF.GetPower(),IQBUF.DFTGetPts());
     }
     else {
-        m_pCurveI->setSamples(IQBUF->GetI(),IQBUF->TDGetSamples());
-        m_pCurveQ->setSamples(IQBUF->GetQ(),IQBUF->TDGetSamples());
+        m_pCurveI->setSamples(IQBUF.GetI(),IQBUF.TDGetSamples());
+        m_pCurveQ->setSamples(IQBUF.GetQ(),IQBUF.TDGetSamples());
     }
     ui->m_Plot->replot();
 }
@@ -123,17 +123,17 @@ void QIQCapDlg::on_m_PBCap_clicked()
 {
     PTR_CHECKV(m_pSP1401);
     uint32_t uiSamples = ui->m_LESamples->text().toLong();
-    IQBUF->New(uiSamples);
+    IQBUF.New(uiSamples);
     INT_CHECKV(m_pSP1401->SetIQCapSamples(uiSamples));
     INT_CHECKV(m_pSP1401->IQCap());
-    INT_CHECKV(DDR->IQToBuf(m_pSP1401->GetRfIdx(),IQBUF->GetI(),IQBUF->GetQ(),uiSamples));
+    INT_CHECKV(DDR.IQToBuf(m_pSP1401->GetRfIdx(),IQBUF.GetI(),IQBUF.GetQ(),uiSamples));
     if (m_bShowingDFT) {
-        IQBUF->DFT();
-        m_pCurveDFT->setSamples(IQBUF->GetNormFreq(),IQBUF->GetPower(),uiSamples);
+        IQBUF.DFT();
+        m_pCurveDFT->setSamples(IQBUF.GetNormFreq(),IQBUF.GetPower(),uiSamples);
     }
     else {
-        m_pCurveI->setSamples(IQBUF->GetI(),uiSamples);
-        m_pCurveQ->setSamples(IQBUF->GetQ(),uiSamples);
+        m_pCurveI->setSamples(IQBUF.GetI(),uiSamples);
+        m_pCurveQ->setSamples(IQBUF.GetQ(),uiSamples);
     }
     ui->m_Plot->replot();
 }
@@ -177,7 +177,7 @@ void QIQCapDlg::on_m_LESamples_textChanged(const QString &arg1)
     PTR_CHECKV(m_pSP1401);
     uint32_t uiSamples = arg1.toULong();
     INT_CHECKV(m_pSP1401->SetIQCapSamples(uiSamples));
-    IQBUF->New(uiSamples);
+    IQBUF.New(uiSamples);
     if (m_bShowingDFT)
         changePlot2DFT();
     else
