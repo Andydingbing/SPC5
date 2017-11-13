@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by CSE.rc
+// Used by RFU_Debug_Tool.rc
 //
 #define IDD_ABOUTBOX                    100
 #define IDR_HTML_CSEFPGADLG             103

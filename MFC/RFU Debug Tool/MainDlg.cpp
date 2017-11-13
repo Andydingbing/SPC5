@@ -132,40 +132,40 @@ BOOL CMainDlg::OnInitDialog()
 	m_pTreeCtrl->Expand(hRoot,TVE_EXPAND);
 
 	hRoot = m_pTreeCtrl->InsertItem(_T("Calibration[R1A/B]"),TVI_ROOT);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"发本振泄漏%25sR1A/B",""),hRoot);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"发边带抑制%25sR1A/B",""),hRoot);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"发衰减器误差%25sR1A/B",""),hRoot);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"发基准功率%25sR1A/B",""),hRoot);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"收SGPMM建表%25sR1A/B",""),hRoot);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"收参考电平%25sR1A/B",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"TxLOLeakage%25sR1A/B",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"TxSideband%25sR1A/B",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"TxAttenuation%25sR1A/B",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"TxBasePower%25sR1A/B",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"RxSGPMMTable%25sR1A/B",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"RxReference%25sR1A/B",""),hRoot);
 	m_pTreeCtrl->Expand(hRoot,TVE_EXPAND);
 
 	hRoot = m_pTreeCtrl->InsertItem(_T("Calibration[R1C/D]"),TVI_ROOT);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"发本振泄漏%25sR1C/D",""),hRoot);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"发边带抑制%25sR1C/D",""),hRoot);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"发补偿滤波器%25sR1C/D",""),hRoot);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"发基准功率%25sR1C/D",""),hRoot);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"发衰减器误差%25sR1C/D",""),hRoot);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"发滤波器误差%25sR1C/D",""),hRoot);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"收补偿滤波器%25sR1C/D",""),hRoot);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"收参考电平%25sR1C/D",""),hRoot);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"收衰减器误差%25sR1C/D",""),hRoot);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"收滤波器误差%25sR1C/D",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"TxLOLeakage%25sR1C/D",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"TxSideband%25sR1C/D",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"TxCompensateFilter%25sR1C/D",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"TxBasePower%25sR1C/D",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"TxAttenuation%25sR1C/D",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"TxFilterOffset%25sR1C/D",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"RxCompensateFilter%25sR1C/D",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"RxReference%25sR1C/D",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"RxAttenuation%25sR1C/D",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"RxFilterOffset%25sR1C/D",""),hRoot);
 	m_pTreeCtrl->Expand(hRoot,TVE_EXPAND);
 
 	hRoot = m_pTreeCtrl->InsertItem(_T("Test[R1A/B]"),TVI_ROOT);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"单板稳定性%25sR1A/B",""),hRoot);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"发频率响应%25sR1A/B",""),hRoot);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"收频率响应%25sR1A/B",""),hRoot);	
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"OCXO电压曲线%35sR1A/B",""),hRoot);	
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"温度特性%35sR1A/B",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"BoardStability%25sR1A/B",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"TxFreqResponse%25sR1A/B",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"RxFreqResponse%25sR1A/B",""),hRoot);	
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"OCXO V-Freq Curve%35sR1A/B",""),hRoot);	
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"TempStability%35sR1A/B",""),hRoot);
 	m_pTreeCtrl->Expand(hRoot,TVE_EXPAND);
 
 	hRoot = m_pTreeCtrl->InsertItem(_T("Test[R1C/D]"),TVI_ROOT);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"发频率响应%25sR1C/D",""),hRoot);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"收频率响应%25sR1C/D",""),hRoot);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"风扇转速vs整机温度%25sR1C/D",""),hRoot);
-	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"发基准功率vs射频温度%25sR1C/D",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"TxFreqResponse%25sR1C/D",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"RxFreqResponse%25sR1C/D",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"Blower-MachineTemp%25sR1C/D",""),hRoot);
+	hChild = m_pTreeCtrl->InsertItem(EnsureWidth(iWidth,"RFTemp-TxPower%25sR1C/D",""),hRoot);
 	m_pTreeCtrl->Expand(hRoot,TVE_EXPAND);
 
 	m_pTreeCtrl->PostMessage(WM_VSCROLL,SB_TOP,0);
@@ -195,32 +195,32 @@ void CMainDlg::ModifyTabCtrl()
 	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"ARB%40sR1A/B","")
 	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"IQ Capture%35sR1A/B","")
 	 || strTreeCurItem == _T("Calibration[R1A/B]")
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"发本振泄漏%25sR1A/B","")
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"发边带抑制%25sR1A/B","")
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"发衰减器误差%25sR1A/B","")
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"发基准功率%25sR1A/B","")
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"收参考电平%25sR1A/B","")
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"TxLOLeakage%25sR1A/B","")
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"TxSideband%25sR1A/B","")
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"TxAttenuation%25sR1A/B","")
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"TxBasePower%25sR1A/B","")
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"RxReference%25sR1A/B","")
 	 || strTreeCurItem == _T("Calibration[R1C/D]")
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"发本振泄漏%25sR1C/D","")
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"发边带抑制%25sR1C/D","")
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"发补偿滤波器%25sR1C/D","")
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"发基准功率%25sR1C/D","")
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"发衰减器误差%25sR1C/D","")
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"发滤波器误差%25sR1C/D","")
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"收补偿滤波器%25sR1C/D","")
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"收参考电平%25sR1C/D","")
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"收衰减器误差%25sR1C/D","")
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"收滤波器误差%25sR1C/D","")
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"TxLOLeakage%25sR1C/D","")
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"TxSideband%25sR1C/D","")
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"TxCompensateFilter%25sR1C/D","")
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"TxBasePower%25sR1C/D","")
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"TxAttenuation%25sR1C/D","")
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"TxFilterOffset%25sR1C/D","")
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"RxCompensateFilter%25sR1C/D","")
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"RxReference%25sR1C/D","")
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"RxAttenuation%25sR1C/D","")
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"RxFilterOffset%25sR1C/D","")
 
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"单板稳定性%25sR1A/B","")
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"发频率响应%25sR1A/B","")
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"收频率响应%25sR1A/B","")
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"OCXO电压曲线%35sR1A/B","")
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"温度特性%35sR1A/B","")
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"BoardStability%25sR1A/B","")
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"TxFreqResponse%25sR1A/B","")
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"RxFreqResponse%25sR1A/B","")
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"OCXO V-Freq Curve%35sR1A/B","")
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"TempStability%35sR1A/B","")
 
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"发频率响应%25sR1C/D","")
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"收频率响应%25sR1C/D","")
-	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"发基准功率vs射频温度%25sR1C/D","")) {
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"TxFreqResponse%25sR1C/D","")
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"RxFreqResponse%25sR1C/D","")
+	 || strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"RFTemp-TxPower%25sR1C/D","")) {
 		 m_pTabCtrl->DeleteAllItems();
 		 m_pTabCtrl->InsertItem(0,_T("RF_0"));
 		 m_pTabCtrl->InsertItem(1,_T("RF_1"));
@@ -249,12 +249,12 @@ void CMainDlg::ModifyTabCtrl()
 			m_pTabCtrl->InsertItem(0,_T("FPGA"));
 			m_pTabCtrl->SetCurSel(0);
 	}
-	else if (strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"收SGPMM建表%25sR1A/B","")) {
+	else if (strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"RxSGPMMTable%25sR1A/B","")) {
 			m_pTabCtrl->DeleteAllItems();
 			m_pTabCtrl->InsertItem(0,_T("SGPMM"));
 			m_pTabCtrl->SetCurSel(0);
 	}
-	else if (strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"风扇转速vs整机温度%25sR1C/D","")) {
+	else if (strTreeCurItem == EnsureWidth(TREE_ITEM_WIDTH,"Blower-MachineTemp%25sR1C/D","")) {
 			m_pTabCtrl->DeleteAllItems();
 			m_pTabCtrl->InsertItem(0,_T("RFU_0"));
 			m_pTabCtrl->InsertItem(1,_T("RFU_1"));
@@ -305,35 +305,35 @@ void CMainDlg::ShowDesiredDlg()
 	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"DMA"),m_pDMADlg,m_iTabIdxDMA);
 	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"FPGA"),m_pFPGADlg,iTabIdx);
 	
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"发本振泄漏%25sR1A/B",""),m_pCalR1ATxLOLeakageDlg,m_iTabIdxRF);
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"发边带抑制%25sR1A/B",""),m_pCalR1ATxSidebandDlg,m_iTabIdxRF);
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"发衰减器误差%25sR1A/B",""),m_pCalR1ATxAttDlg,m_iTabIdxRF);
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"发基准功率%25sR1A/B",""),m_pCalR1ATxPowerDlg,m_iTabIdxRF);
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"收SGPMM建表%25sR1A/B",""),m_pCalR1ARxSgpmmDlg,iTabIdx);
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"收参考电平%25sR1A/B",""),m_pCalR1ARxRefDlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"TxLOLeakage%25sR1A/B",""),m_pCalR1ATxLOLeakageDlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"TxSideband%25sR1A/B",""),m_pCalR1ATxSidebandDlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"TxAttenuation%25sR1A/B",""),m_pCalR1ATxAttDlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"TxBasePower%25sR1A/B",""),m_pCalR1ATxPowerDlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"RxSGPMMTable%25sR1A/B",""),m_pCalR1ARxSgpmmDlg,iTabIdx);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"RxReference%25sR1A/B",""),m_pCalR1ARxRefDlg,m_iTabIdxRF);
 
 	SHOW_MAPPED_DLG(_T("Calibration[R1C/D]"),m_pCalR1CDlg,m_iTabIdxRF);
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"发本振泄漏%25sR1C/D",""),m_pCalR1CTxLOLeakageDlg,m_iTabIdxRF);
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"发边带抑制%25sR1C/D",""),m_pCalR1CTxSidebandDlg,m_iTabIdxRF);
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"发补偿滤波器%25sR1C/D",""),m_pCalR1CTxFilterDlg,m_iTabIdxRF);
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"发基准功率%25sR1C/D",""),m_pCalR1CTxPowerDlg,m_iTabIdxRF);
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"发衰减器误差%25sR1C/D",""),m_pCalR1CTxAttDlg,m_iTabIdxRF);
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"发滤波器误差%25sR1C/D",""),m_pCalR1CTxFilOffDlg,m_iTabIdxRF);
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"收补偿滤波器%25sR1C/D",""),m_pCalR1CRxFilterDlg,m_iTabIdxRF);
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"收参考电平%25sR1C/D",""),m_pCalR1CRxRefDlg,m_iTabIdxRF);
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"收衰减器误差%25sR1C/D",""),m_pCalR1CRxAttDlg,m_iTabIdxRF);
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"收滤波器误差%25sR1C/D",""),m_pCalR1CRxFilOffDlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"TxLOLeakage%25sR1C/D",""),m_pCalR1CTxLOLeakageDlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"TxSideband%25sR1C/D",""),m_pCalR1CTxSidebandDlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"TxCompensateFilter%25sR1C/D",""),m_pCalR1CTxFilterDlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"TxBasePower%25sR1C/D",""),m_pCalR1CTxPowerDlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"TxAttenuation%25sR1C/D",""),m_pCalR1CTxAttDlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"TxFilterOffset%25sR1C/D",""),m_pCalR1CTxFilOffDlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"RxCompensateFilter%25sR1C/D",""),m_pCalR1CRxFilterDlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"RxReference%25sR1C/D",""),m_pCalR1CRxRefDlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"RxAttenuation%25sR1C/D",""),m_pCalR1CRxAttDlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"RxFilterOffset%25sR1C/D",""),m_pCalR1CRxFilOffDlg,m_iTabIdxRF);
 
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"单板稳定性%25sR1A/B",""),m_pTestR1ASBFSDlg,m_iTabIdxRF);
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"发频率响应%25sR1A/B",""),m_pTestR1ATxFRDlg,m_iTabIdxRF);
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"收频率响应%25sR1A/B",""),m_pTestR1ARxFRDlg,m_iTabIdxRF);
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"OCXO电压曲线%35sR1A/B",""),m_pTestR1AX9119Dlg,m_iTabIdxRF);
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"温度特性%35sR1A/B",""),m_pTestR1ATSDlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"BoardStability%25sR1A/B",""),m_pTestR1ASBFSDlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"TxFreqResponse%25sR1A/B",""),m_pTestR1ATxFRDlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"RxFreqResponse%25sR1A/B",""),m_pTestR1ARxFRDlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"OCXO V-Freq Curve%35sR1A/B",""),m_pTestR1AX9119Dlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"TempStability%35sR1A/B",""),m_pTestR1ATSDlg,m_iTabIdxRF);
 
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"发频率响应%25sR1C/D",""),m_pTestR1CTxFRDlg,m_iTabIdxRF);
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"收频率响应%25sR1C/D",""),m_pTestR1CRxFRDlg,m_iTabIdxRF);
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"风扇转速vs整机温度%25sR1C/D",""),m_pTestR1CBTRDlg,m_iTabIdxRFU);
-	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"发基准功率vs射频温度%25sR1C/D",""),m_pTestR1CTTBDlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"TxFreqResponse%25sR1C/D",""),m_pTestR1CTxFRDlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"RxFreqResponse%25sR1C/D",""),m_pTestR1CRxFRDlg,m_iTabIdxRF);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"Blower-MachineTemp%25sR1C/D",""),m_pTestR1CBTRDlg,m_iTabIdxRFU);
+	SHOW_MAPPED_DLG(EnsureWidth(TREE_ITEM_WIDTH,"RFTemp-TxPower%25sR1C/D",""),m_pTestR1CTTBDlg,m_iTabIdxRF);
 }
 
 void CMainDlg::OnTcnSelchangeCardSelTab(NMHDR *pNMHDR, LRESULT *pResult)

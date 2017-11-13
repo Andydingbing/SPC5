@@ -123,11 +123,11 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="0"
+				Optimization="2"
 				AdditionalIncludeDirectories="..\..\include;..\..\lib\ChartCtrl;&quot;..\..\lib\fftw-3.3.4\fftw-3.3.4-dll64&quot;;..\..\libLog;..\..\libSP1401;..\..\libSP2401;..\..\libSP3301;..\..\libSP3501;..\..\libInstr;..\..\libBusDriver"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				MinimalRebuild="true"
-				BasicRuntimeChecks="3"
+				BasicRuntimeChecks="0"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
@@ -285,7 +285,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="0"
+				Optimization="2"
 				AdditionalIncludeDirectories="..\..\include;..\..\lib\ChartCtrl;&quot;..\..\lib\fftw-3.3.4\fftw-3.3.4-dll64&quot;;..\..\libLog;..\..\libSP1401;..\..\libSP2401;..\..\libSP3301;..\..\libSP3501;..\..\libInstr;..\..\libBusDriver"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				MinimalRebuild="true"
