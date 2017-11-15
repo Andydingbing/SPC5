@@ -90,45 +90,44 @@ MainWindow::MainWindow(QWidget *parent) :
         itemChild_0.append(new QTreeWidgetItem(itemRoot.at(1),QStringList(*constIter)));
 
     strChild.clear();
-    strChild.append(QString("发本振泄漏"));
-    strChild.append(QString("发边带抑制"));
-    strChild.append(QString("发衰减器误差"));
-    strChild.append(QString("发基准功率"));
-    strChild.append(QString("收SGPMM建表"));
-    strChild.append(QString("收参考电平"));
+    strChild.append(QString("TxLOLeakage"));
+    strChild.append(QString("TxSideband"));
+    strChild.append(QString("TxAttenuation"));
+    strChild.append(QString("TxBasePower"));
+    strChild.append(QString("RxSGPMMTable"));
+    strChild.append(QString("RxReference"));
     itemChild_0.clear();
     for (constIter = strChild.constBegin();constIter != strChild.constEnd();constIter ++)
         itemChild_0.append(new QTreeWidgetItem(itemRoot.at(2),QStringList(*constIter)));
 
     strChild.clear();
-    strChild.append(QString("发本振泄漏"));
-    strChild.append(QString("发边带抑制"));
-    strChild.append(QString("发补偿滤波器"));
-    strChild.append(QString("发基准功率"));
-    strChild.append(QString("发衰减器误差"));
-    strChild.append(QString("发滤波器误差"));
-    strChild.append(QString("收补偿滤波器"));
-    strChild.append(QString("收参考电平"));
-    strChild.append(QString("收衰减器误差"));
-    strChild.append(QString("收滤波器误差"));
+    strChild.append(QString("TxLOLeakage"));
+    strChild.append(QString("TxSideband"));
+    strChild.append(QString("TxCompensateFilter"));
+    strChild.append(QString("TxBasePower"));
+    strChild.append(QString("TxAttenuation"));
+    strChild.append(QString("TxFilterOffset"));
+    strChild.append(QString("RxCompensateFilter"));
+    strChild.append(QString("RxReference"));
+    strChild.append(QString("RxAttenuation"));
+    strChild.append(QString("RxFilterOffset"));
     itemChild_0.clear();
     for (constIter = strChild.constBegin();constIter != strChild.constEnd();constIter ++)
         itemChild_0.append(new QTreeWidgetItem(itemRoot.at(3),QStringList(*constIter)));
 
     strChild.clear();
-    strChild.append(QString("单板稳定性"));
-    strChild.append(QString("发频率响应"));
-    strChild.append(QString("收频率响应"));
+    strChild.append(QString("BoardStability"));
+    strChild.append(QString("TxFreqResponse"));
+    strChild.append(QString("RxFreqResponse"));
     itemChild_0.clear();
     for (constIter = strChild.constBegin();constIter != strChild.constEnd();constIter ++)
         itemChild_0.append(new QTreeWidgetItem(itemRoot.at(4),QStringList(*constIter)));
 
     strChild.clear();
-    strChild.append(QString("单板稳定性"));
-    strChild.append(QString("发频率响应"));
-    strChild.append(QString("收频率响应"));
-    strChild.append(QString("风扇转速与温度的关系"));
-    strChild.append(QString("温度变化与发功率的关系"));
+    strChild.append(QString("TxFreqResponse"));
+    strChild.append(QString("RxFreqResponse"));
+    strChild.append(QString("Blower-MachineTemp"));
+    strChild.append(QString("RFTemp-TxPower"));
     itemChild_0.clear();
     for (constIter = strChild.constBegin();constIter != strChild.constEnd();constIter ++)
         itemChild_0.append(new QTreeWidgetItem(itemRoot.at(5),QStringList(*constIter)));
@@ -359,7 +358,7 @@ void MainWindow::on_m_pMainTree_itemClicked(QTreeWidgetItem *item, int column)
             on_m_pMainTab_tabBarClicked(int(m_iTabIdxRf));
         }
     }
-    else if (strItem == tr("发本振泄漏")) {
+    else if (strItem == tr("TxLOLeakage")) {
         if (item->parent()->text(0) == "Calibration(R1C/D)") {
             for (int8_t i = 0;i < MAX_RF;i ++)
                 ui->m_pMainTab->addTab(m_pCalR1CTxLOLeakDlg[i],tr("RF_%1").arg(i));

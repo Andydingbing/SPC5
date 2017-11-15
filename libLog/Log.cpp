@@ -1,9 +1,19 @@
 #include "Log.h"
-#include <time.h>
-#include "pthread.h"
+#include <string.h>
+#include <stdarg.h>
 
 #ifdef _WIN64
+#include <time.h>
+#include "pthread.h"
 #include <wincon.h>
+
+LARGE_INTEGER g_TSFreq;
+LARGE_INTEGER g_TSFirstCount;
+#elif defined(__unix__) || defined(__linux__)
+#include <sys/time.h>
+#include <pthread.h>
+
+timeval g_TVBegin;
 #endif
 
 #define MSG_LOG_PATH "C://logmsg.log"
@@ -22,9 +32,6 @@
 #endif
 
 pthread_mutex_t g_LogLock = PTHREAD_MUTEX_INITIALIZER;
-
-LARGE_INTEGER g_TSFreq;
-LARGE_INTEGER g_TSFirstCount;
 
 MsgLog::MsgLog()
 {
@@ -45,6 +52,14 @@ RegLog::RegLog()
 
 CLog::CLog()
 {
+#ifdef _WIN64
+    QueryPerformanceFrequency(&g_TSFreq);
+    QueryPerformanceCounter(&g_TSFirstCount);
+    m_pConsole = NULL;
+#elif defined(__unix__) || defined(__linux__)
+    gettimeofday(&g_TVBegin,NULL);
+#endif
+
 #ifdef GUI_MFC
 	m_phWnd = NULL;
 #else
@@ -53,12 +68,10 @@ CLog::CLog()
 #endif
 	m_pMsgLog = NULL;
 	m_pRegLog = NULL;
-    m_pConsole = NULL;
 	m_fpMsg = fopen(MSG_LOG_PATH,"a");
 	m_fpReg = fopen(REG_LOG_PATH,"a");
 	m_bOwnData = false;
-	QueryPerformanceFrequency(&g_TSFreq);
-	QueryPerformanceCounter(&g_TSFirstCount);
+
 #ifdef _DEBUG
 	m_uiSw = L_MSG | L_PROMPT | L_TRACE;
 #else
@@ -95,8 +108,10 @@ CLog::~CLog()
 			m_pRegLog = NULL;
 		}
 	}
+#ifdef _WIN64
 	if (m_pConsole)
 		FreeConsole();
+#endif
 }
 
 CLog &CLog::Instance()
@@ -246,9 +261,15 @@ void CLog::SetDefault()
 
 double CLog::GetTimeStamp() 
 {
+#ifdef _WIN64
 	LARGE_INTEGER ll;
 	QueryPerformanceCounter(&ll);
 	return ((double)ll.QuadPart - (double)g_TSFirstCount.QuadPart) / (double)g_TSFreq.QuadPart;
+#elif defined(__unix__) || defined(__linux__)
+    timeval tv;
+    gettimeofday(&tv,NULL);
+    return double(tv.tv_sec - g_TVBegin.tv_sec + (tv.tv_usec - g_TVBegin.tv_usec)/1000000.0);
+#endif
 }
 
 void CLog::stdprintf(const char *format,...)
@@ -267,24 +288,15 @@ void CLog::stdprintf(const char *format,...)
     vsprintf(&szBuf[strlen(szBuf)],format,ap);
 	va_end(ap);
 
+#ifdef _WIN64
 	if (!m_pConsole) {
 		AllocConsole();
 		m_pConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	}
 	WriteConsole(m_pConsole,szBuf,(DWORD)strlen(szBuf),NULL,NULL);
-}
-
-void CLog::printf(const char *format,...)
-{
-	char szBuf[512];
-	memset(szBuf,0,512);
-
-	va_list ap;
-    va_start(ap,format);
-    vsprintf(szBuf,format,ap);
-	va_end(ap);
-
-	stdprintf(szBuf);
+#elif defined(__unix__) || defined(__linux__)
+    printf("%s",szBuf);
+#endif
 }
 
 void CLog::trace(const char *format,...)

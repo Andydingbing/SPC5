@@ -2,7 +2,12 @@
 #include "RegDef.h"
 #include "CalFileR1A.h"
 #include <math.h>
+#include <stdlib.h>
+#ifdef _WIN64
 #include <windows.h>
+#elif defined(__unix__) || defined(__linux__)
+#include <unistd.h>
+#endif
 
 CSP1401R1A::CSP1401R1A(uint32_t uiRfIdx,uint32_t uiRfuIdx)
 {
@@ -309,7 +314,11 @@ int32_t CSP1401R1A::SetLO(LO Lo,uint64_t uiFreq)
 	(this->*Set_R1A_LO_Reg[Lo])(reg[0]);
 	reg[4] = reg[4] & (~(1 << 4));
 	(this->*Set_R1A_LO_Reg[Lo])(reg[4]);
+#ifdef _WIN64
 	Sleep(100);
+#else
+    usleep(100 * 1000);
+#endif
 	reg[0] = reg[0] | (1 << 21);
 	(this->*Set_R1A_LO_Reg[Lo])(reg[0]);
 	return 0;
@@ -317,7 +326,11 @@ int32_t CSP1401R1A::SetLO(LO Lo,uint64_t uiFreq)
 
 int32_t CSP1401R1A::DetLO(LO Lo,bool &bLock)
 {
+#ifdef _WIN64
 	Sleep(100);
+#else
+    usleep(100 * 1000);
+#endif
 	DetR1ALOLock Det_LO_Lock[4] = {&CSP1401R1A::DetTxLO1Lock,
 								   &CSP1401R1A::DetTxLO2Lock,
 								   &CSP1401R1A::DetRxLO1Lock,

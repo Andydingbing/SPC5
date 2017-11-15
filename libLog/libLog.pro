@@ -13,7 +13,13 @@ CONFIG += shared
 INCLUDEPATH += ../include
 
 win32 {
+    INCLUDEPATH += ../include/pthread
     LIBS += $$PWD/../lib/libpthreadGC2.a
+}
+
+unix {
+    target.path = /usr/lib
+    INSTALLS += target
 }
 
 CONFIG(debug,debug|release) {
@@ -44,8 +50,3 @@ SOURCES += \
 HEADERS += \
     Log.h \
     libLog.h
-
-unix {
-    target.path = /usr/lib
-    INSTALLS += target
-}

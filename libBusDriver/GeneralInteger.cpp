@@ -1,5 +1,6 @@
 #include "GeneralInteger.h"
-#include <string>
+#include <stdio.h>
+#include <string.h>
 #include <math.h>
 
 CGeneralInteger::CGeneralInteger(const char *pInt)

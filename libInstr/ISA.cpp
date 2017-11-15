@@ -1,5 +1,9 @@
 #include "ISA.h"
+#ifdef _WIN64
 #include <Windows.h>
+#elif defined(__unix__) || defined(__linux__)
+#include <unistd.h>
+#endif
 
 ISA::ISA(void)
 {
@@ -23,6 +27,10 @@ bool ISA::SetRefAuto()
 		BOOL_CHECK(SetPeakSearch(PeakHighest));
 		BOOL_CHECK(GetMarkerPwr(dPeakPwr));
 	} while(dPeakPwr > dRefLevel);
+#ifdef _WIN64
 	Sleep(200);
+#else
+    usleep(200 * 1000);
+#endif
 	return true;
 }

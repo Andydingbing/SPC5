@@ -1,7 +1,8 @@
 #include "CfvCtrl.h"
-#include "Shlwapi.h"
 #include "CalFileR1A.h"
 #include "CalFileR1C.h"
+#include <string.h>
+#include <errno.h>
 
 typedef int32_t (CfvCtrl::*ForConv)();
 typedef int32_t (CfvCtrl::*BckConv)();

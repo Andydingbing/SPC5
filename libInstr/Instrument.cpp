@@ -1,5 +1,8 @@
 #include "viPCIDev.h"
 #include "Instrument.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdarg.h>
 
 #define INSTR_CHECK(func)					\
 	if (!(func)) {							\
@@ -19,7 +22,7 @@ CInstrExpt::CInstrExpt(const char *format,...)
 	memset(m_szBuf,0,sizeof(m_szBuf));
 	va_list ap;
 	va_start(ap,format);
-	vsprintf_s(m_szBuf,format,ap);
+    vsprintf(m_szBuf,format,ap);
 	va_end(ap);
 }
 
@@ -254,17 +257,17 @@ bool CInstrument::HasPM()
 
 void CInstrument::SetSA(char* pDes)
 {
-	strcpy_s(m_szSA,pDes);
+    strcpy(m_szSA,pDes);
 }
 
 void CInstrument::SetSG(char* pDes)
 {
-	strcpy_s(m_szSG,pDes);
+    strcpy(m_szSG,pDes);
 }
 
 void CInstrument::SetPM(char* pDes)
 {
-	strcpy_s(m_szPM,pDes);
+    strcpy(m_szPM,pDes);
 }
 
 bool CInstrument::SA_Reset()

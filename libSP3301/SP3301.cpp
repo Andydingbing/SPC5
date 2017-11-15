@@ -1,5 +1,6 @@
 #include "SP3301.h"
 #include "RegDef.h"
+#include <string.h>
 
 #define INS_SP1401(index)												\
 	do {																\
@@ -511,7 +512,7 @@ int32_t CSP3301::ArbLoad(uint32_t uiRfIdx,char *pPath)
 	list<ArbSeg_t>::iterator iterArbSeg;
 
     INT_CHECK(pSP1401[0]->GetArbReader()->Load(pPath));
-	if (FALSE == pSP1401[1]->GetArbReader()->IsLoaded()) {
+    if (false == pSP1401[1]->GetArbReader()->IsLoaded()) {
         INT_CHECK(pSP1401[1]->GetArbReader()->Load(pPath));
 	}
 

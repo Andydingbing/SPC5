@@ -129,7 +129,6 @@ EXPORTS
 	?GetConfigIntValue@CGeneralIniFile@@QEAAHPEAD0PEAH@Z
 	?CompareString@CGeneralIniFile@@AEAAHPEBD0@Z
 	?GetKeyValue@CGeneralIniFile@@AEAAHPEAU_iobuf@@PEBDPEAD@Z
-	?strrchr@@YAPEADPEADH@Z
 EXPORTS
 	; CGeneralInteger
 	??0CGeneralInteger@@QEAA@PEBD@Z

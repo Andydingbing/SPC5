@@ -1,5 +1,9 @@
 #include "RSNRP.h"
+#ifdef _WIN64
 #include <windows.h>
+#elif defined(__unix__) || defined(__linux)
+#include <unistd.h>
+#endif
 
 #ifdef NRP_DEBUG
 #define NRP_CHECK(func)										\
@@ -40,7 +44,11 @@ char* RSNRP::GetDes()
 bool RSNRP::Init(ViRsrc strDev)
 {
 	NRP_CHECK(rsnrpz_init(strDev,false,false,&m_viSession));
+#ifdef _WIN64
 	Sleep(100);
+#else
+    usleep(100 * 1000);
+#endif
 	return true;
 }
 
@@ -54,7 +62,11 @@ bool RSNRP::Reset()
 	NRP_CHECK(rsnrpz_trigger_setSource(m_viSession, 1, RSNRPZ_TRIGGER_SOURCE_IMMEDIATE));
 	NRP_CHECK(rsnrpz_reset(m_viSession));
 	NRP_CHECK(rsnrpz_chans_initiate(m_viSession));
+#ifdef _WIN64
 	Sleep(100);
+#else
+    usleep(100 * 1000);
+#endif
 	return true;
 }
 
@@ -71,7 +83,11 @@ bool RSNRP::GetPwr(double &dPwr)
 
 	NRP_CHECK(rsnrpz_chan_initiate(m_viSession, 1));
 	do {
+#ifdef _WIN64
 		Sleep (50);
+#else
+        usleep(50 * 1000);
+#endif
 		NRP_CHECK(rsnrpz_chan_isMeasurementComplete(m_viSession, 1, &bMeasComplete));
 	} while ((bMeasComplete == VI_FALSE));
 

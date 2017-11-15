@@ -115,7 +115,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\include"
+				AdditionalIncludeDirectories="..\include;..\include\pthread"
 				PreprocessorDefinitions="_DEBUG"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
@@ -261,7 +261,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\include"
+				AdditionalIncludeDirectories="..\include;..\include\pthread"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"

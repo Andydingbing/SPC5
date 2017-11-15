@@ -1,4 +1,7 @@
 #include "TxAttTable.h"
+#include <stdlib.h>
+#include <math.h>
+#include <string.h>
 
 IMPLEMENT_TX_CAL_ITEM_TABLE(TxAttTableR1A)
 

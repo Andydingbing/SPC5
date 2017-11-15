@@ -20,7 +20,6 @@ EXPORTS
 	?SetDefault@CLog@@QEAAXXZ
 	?GetTimeStamp@CLog@@UEAANXZ
 	?stdprintf@CLog@@UEAAXPEBDZZ
-	?printf@CLog@@UEAAXPEBDZZ
 	?trace@CLog@@UEAAXPEBDZZ
 	?AddMsgList@CLog@@UEAAHPEBDZZ
 	?AddMsgList@CLog@@UEAAHHPEBDZZ

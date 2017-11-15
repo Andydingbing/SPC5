@@ -8,7 +8,9 @@
 #endif
 
 #include "windrvr.h"
+#if defined(_WIN64) || defined(_WIN32)
 #include <WTypes.h>
+#endif
         
 const char * DLLCALLCONV Stat2Str(DWORD dwStatus);
 #if defined(WIN32) && !defined(__KERNEL__)

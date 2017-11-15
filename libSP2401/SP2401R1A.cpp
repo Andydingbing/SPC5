@@ -1,6 +1,12 @@
 #include "SP2401R1A.h"
 #include "RegDef.h"
 #include "CalTable.h"
+#include <string.h>
+#ifdef _WIN64
+#include <windows.h>
+#elif defined(__unix__) || defined(__linux__)
+#include <unistd.h>
+#endif
 
 #define NCO_DDS_32 0
 #define NCO_DDS_64 1
@@ -111,7 +117,11 @@ int32_t CSP2401R1A::DAReset()
     RFU_S6_R(0x000b);
     RFU_S6_REG(0x000b).rst = 1;
     RFU_S6_W(0x000b);
+#ifdef _WIN64
 	Sleep(10);
+#else
+    usleep(10 * 1000);
+#endif
     RFU_S6_REG(0x000b).rst = 0;
     RFU_S6_W(0x000b);
 	return 0;
@@ -495,11 +505,15 @@ int32_t CSP2401R1A::SetFpgaBit(const char *pFilePath,int32_t iBlockSize)
 	fclose(fp);
 
     if (1 == RFU_S6_REG_2(0x0003,0x0007).c_cfg_done) {
-		Sleep(10);
+#ifdef _WIN64
+        Sleep(10);
         Log.stdprintf("restarting...\n");
 		system("devcon_x64.exe restart \"PCI\\VEN_10EE&DEV_7021\"");
 		Sleep(1000);
         Log.stdprintf("restarted\n");
+#elif defined(__unix__) || defined(__linux__)
+        Log.stdprintf("download success\n");
+#endif
 		return 0;
 	}
 	else {

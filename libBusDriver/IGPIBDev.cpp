@@ -1,4 +1,5 @@
 #include "IGPIBDev.h"
+#include <stdio.h>
 #include <string.h>
 #include "viPCIDev.h"
 
@@ -31,7 +32,7 @@ bool IGPIBDev::Write(const char *format,...)
 	memset(szBuf,0,sizeof(szBuf));
 	va_list ap;
 	va_start(ap, format);
-	vsprintf_s(szBuf,256,format,ap);
+    vsprintf(szBuf,format,ap);
 	va_end(ap);
 
 	Status = viWrite(m_viSession,(ViBuf)szBuf,(ViUInt32)(strlen(szBuf)),&retCnt);

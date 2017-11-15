@@ -285,6 +285,7 @@
         K7_W_2(ns,addr0,addr1);		\
     } while (0);
 
+#ifdef _WIN64
 #define K7OP_DELAY_2(ns,addr0,addr1,bit,time)   \
     do {                                        \
         if (time) Sleep(time);                  \
@@ -297,6 +298,20 @@
         REG_2(ns,addr0,addr1).bit = 0;          \
         K7_W_2(ns,addr0,addr1);                 \
     } while (0);
+#else
+#define K7OP_DELAY_2(ns,addr0,addr1,bit,time)   \
+    do {                                        \
+        if (time) usleep(time * 1000);          \
+        REG_2(ns,addr0,addr1).bit = 0;          \
+        K7_W_2(ns,addr0,addr1);                 \
+        if (time) usleep(time * 1000);          \
+        REG_2(ns,addr0,addr1).bit = 1;          \
+        K7_W_2(ns,addr0,addr1);                 \
+        if (time) usleep(time * 1000);          \
+        REG_2(ns,addr0,addr1).bit = 0;          \
+        K7_W_2(ns,addr0,addr1);                 \
+    } while (0);
+#endif
 
 #define K7WAIT_IDLE_2(ns,addr0,addr1,bit,flag,times)                \
     do {                                                            \

@@ -1,13 +1,9 @@
 #ifndef __INIFILE_H__
 #define __INIFILE_H__
 
-#ifndef _WINDOWS
-#define _WINDOWS
-#endif
-
-#ifndef _WIN64
-#define _WIN64
-#endif
+// #ifndef _IA64_
+// #define _IA64_
+// #endif
 
 #ifndef _AMD64_
 #define _AMD64_

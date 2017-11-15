@@ -1,7 +1,11 @@
 #include "SP1401R1C.h"
 #include "RegDef.h"
 #include <math.h>
+#ifdef _WIN64
 #include <windows.h>
+#elif defined(__unix__) || defined(__linux__)
+#include <unistd.h>
+#endif
 
 typedef int32_t (CSP1401R1C::*SetLOReg)(uint32_t);
 typedef int32_t (CSP1401R1C::*DetLOLock)(bool &);
@@ -407,7 +411,11 @@ int32_t CSP1401R1C::SetADF5355(LO Lo,uint64_t uiFreq)
 	(this->*Set_R1C_LO_Reg[Lo])(reg[0]);
 	reg[4] = reg[4] & (~(1 << 4));
 	(this->*Set_R1C_LO_Reg[Lo])(reg[4]);
+#ifdef _WIN64
 	Sleep(100);
+#else
+    usleep(100 * 1000);
+#endif
 	reg[0] = reg[0] | (1 << 21);
 	(this->*Set_R1C_LO_Reg[Lo])(reg[0]);
 	return 0;
@@ -420,7 +428,11 @@ int32_t CSP1401R1C::SetHMC1197(uint64_t uiFreq)
 
 int32_t CSP1401R1C::DetLO(LO Lo,bool &bLock)
 {
+#ifdef _WIN64
 	Sleep(100);
+#else
+    usleep(100 * 1000);
+#endif
 	DetLOLock Det_LO_Lock[4] = {&CSP1401R1C::DetTxLO1Lock,
 								&CSP1401R1C::DetTxLO2Lock,
 								&CSP1401R1C::DetTxLO3Lock,

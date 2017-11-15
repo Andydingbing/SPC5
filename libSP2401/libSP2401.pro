@@ -15,32 +15,28 @@ INCLUDEPATH += ../include \
                ../libBusDriver \
                ../libSP1401
 
-CONFIG(debug,debug|release) {
-    win32 {
-        DEFINES += _DEBUG
-        LIBS += -L$$PWD/../Qt/x64/debug/
-    }
-
-    OBJECTS_DIR = $$PWD/x64/debug
-    DESTDIR = ../Qt/x64/debug
-} else {
-    win32 {
-        LIBS += -L$$PWD/../Qt/x64/release/
-    }
-
-    OBJECTS_DIR = $$PWD/x64/release
-    DESTDIR = ../Qt/x64/release
-}
-
-LIBS += -llibBusDriver.dll
-LIBS += -llibLog.dll
-
 win32 {
     LIBS += $$PWD/../lib/visa64.lib \
             $$PWD/../lib/windrvr/amd64/wdapi1020.lib \
             $$PWD/../lib/libpthreadGC2.a
-    DEFINES += _WINDOWS \
-               _WIN64
+    LIBS += -llibBusDriver.dll
+    LIBS += -llibLog.dll
+}
+
+unix {
+    target.path = /usr/lib
+    INSTALLS += target
+}
+
+CONFIG(debug,debug|release) {
+    DEFINES += _DEBUG
+    LIBS += -L$$PWD/../Qt/x64/debug/
+    OBJECTS_DIR = $$PWD/x64/debug
+    DESTDIR = ../Qt/x64/debug
+} else {
+    LIBS += -L$$PWD/../Qt/x64/release/
+    OBJECTS_DIR = $$PWD/x64/release
+    DESTDIR = ../Qt/x64/release
 }
 
 DEFINES += LIBSP2401_LIBRARY
@@ -62,8 +58,3 @@ SOURCES += \
 HEADERS += \
     SP2401R1A.h \
     libSP2401.h
-
-unix {
-    target.path = /usr/lib
-    INSTALLS += target
-}

@@ -6,6 +6,7 @@
 
 QT += core gui
 QT += charts
+QMAKE_CXXFLAGS += -std=c++11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -23,39 +24,53 @@ INCLUDEPATH += ../../include \
                ../../lib/qwt/qwt-6.1.3/src
 
 CONFIG(debug,debug|release) {
-    win32 {
-        DEFINES += _DEBUG
-        LIBS += -L$$PWD/../x64/debug/
-        LIBS += $$PWD/../../lib/qwt/qwt-6.1.3/lib/libqwtd.dll.a
-    }
-
+    DEFINES += _DEBUG
+    LIBS += -L$$PWD/../x64/debug/
     OBJECTS_DIR = $$PWD/x64/debug
     DESTDIR = ../x64/debug
-} else {
     win32 {
-        LIBS += -L$$PWD/../x64/release/
-        LIBS += $$PWD/../../lib/qwt/qwt-6.1.3/lib/libqwt.dll.a
+        LIBS += $$PWD/../../lib/qwt/qwt-6.1.3/lib/libqwtd.dll.a
     }
+    unix {
+        LIBS += $$PWD/../../lib/qwt/qwt-6.1.3/lib/libqwt.so
+    }
+} else {
+    LIBS += -L$$PWD/../x64/release/
 
     OBJECTS_DIR = $$PWD/x64/release
     DESTDIR = ../x64/release
+    win32 {
+        LIBS += $$PWD/../../lib/qwt/qwt-6.1.3/lib/libqwt.dll.a
+    }
+    unix {
+        LIBS += $$PWD/../../lib/qwt/qwt-6.1.3/lib/libqwt.so
+    }
 }
-
-LIBS += -llibSP3301.dll \
-        -llibSP1401.dll \
-        -llibSP2401.dll \
-        -llibSP3501.dll \
-        -llibInstr.dll  \
-        -llibBusDriver.dll \
-        -llibLog.dll
 
 win32 {
     LIBS += $$PWD/../../lib/visa64.lib \
             $$PWD/../../lib/windrvr/amd64/wdapi1020.lib \
             $$PWD/../../lib/libpthreadGC2.a
+    LIBS += -llibSP3301.dll \
+            -llibSP1401.dll \
+            -llibSP2401.dll \
+            -llibSP3501.dll \
+            -llibInstr.dll  \
+            -llibBusDriver.dll \
+            -llibLog.dll
+}
 
-    DEFINES += _WINDOWS \
-               _WIN64
+unix {
+    LIBS += /usr/local/lib64/libvisa.so
+    LIBS += -lrsnrpz
+    LIBS += -llibSP3301 \
+            -llibSP1401 \
+            -llibSP2401 \
+            -llibSP3501 \
+            -llibInstr  \
+            -llibBusDriver  \
+            -llibLog    \
+            -lfftw3
 }
 
 

@@ -16,9 +16,15 @@ INCLUDEPATH += ../include \
 win32 {
     LIBS += $$PWD/../lib/visa64.lib \
             $$PWD/../lib/windrvr/amd64/wdapi1020.lib
+}
 
-    DEFINES += _WINDOWS \
-               _WIN64
+unix {
+    target.path = /usr/lib
+    INSTALLS += target
+
+    DEFINES += UNIX
+    DEFINES += LINUX
+    DEFINES += KERNEL_64BIT
 }
 
 CONFIG(debug,debug|release) {
@@ -63,8 +69,3 @@ HEADERS += \
     FractionFloat.h \
     GeneralIniFile.h \
     GeneralInteger.h
-
-unix {
-    target.path = /usr/lib
-    INSTALLS += target
-}

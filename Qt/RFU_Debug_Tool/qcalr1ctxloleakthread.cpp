@@ -255,7 +255,7 @@ void QCalR1CTxLOLeakThread::run()
             pSP1401->SetRxAtt3(0.0);
             pSP1401->SetTxFreq(uiFreq);
             pSP2401->SetTxDCOffset(iDC_I_M,iDC_Q_M);
-            Sleep(50);
+            msleep(50);
 
             CAL_THREAD_TEST_CANCEL();
             iStep = 200;

@@ -1,5 +1,11 @@
 #include "ISP1401.h"
 #include "RegDef.h"
+#include <string.h>
+#ifdef _WIN64
+#include <windows.h>
+#elif defined(__unix__) || defined(__linux__)
+#include <unistd.h>
+#endif
 
 ISP1401::ISP1401()
 {
@@ -531,16 +537,37 @@ int32_t ISP1401::WriteEEPROM(uint16_t uiAddr,uint32_t uiLength,char *pBuf)
     RFU_K7_REG_DECLARE_2(0x161f,0x169f);
     RFU_K7_REG_2(0x161d,0x169d).mode = 0;	//write mode
     RFU_K7_W_2(0x161d,0x169d);
+#ifdef _WIN64
     Sleep(10);
+#else
+    usleep(10 * 1000);
+#endif
     for (uint32_t i = 0;i < uiLength * sizeof(char);i ++) {
         RFU_K7_REG_2(0x161e,0x169e).addr = uiAddr + i;
         RFU_K7_W_2(0x161e,0x169e);
+
+#ifdef _WIN64
         Sleep(10);
+#else
+        usleep(10 * 1000);
+#endif
+
         RFU_K7_REG_2(0x161f,0x169f).wr_data = unsigned(*(pBuf + i));
         RFU_K7_W_2(0x161f,0x169f);
+
+#ifdef _WIN64
         Sleep(10);
+#else
+        usleep(10 * 1000);
+#endif
+
         RFU_K7_OP_2(0x161d,0x169d);
+
+#ifdef _WIN64
         Sleep(10);
+#else
+        usleep(10 * 1000);
+#endif
     }
     return 0;
 }
@@ -660,7 +687,11 @@ int32_t ISP1401::IQCap()
     RFU_K7_W(0x1670);
     RFU_K7_REG(0x1670).data = 1;
     RFU_K7_W(0x1670);
+#ifdef _WIN64
     Sleep(100);
+#else
+    usleep(100 * 1000);
+#endif
     RFU_K7_REG(0x1670).data = 0;
     RFU_K7_W(0x1670);
 

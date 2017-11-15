@@ -1,7 +1,14 @@
 #include "CalFileR1C.h"
 #include "CalFileR1A.h"
+#include <string.h>
+#include <errno.h>
+#ifdef _WIN64
 #include <io.h>
 #include <direct.h>
+#elif defined(__unix__) || defined(__linux__)
+#include <sys/stat.h>
+#include <unistd.h>
+#endif
 
 #define R1A_FILE_SIZE 5541296	//file size before adding r1c data,make it easy to arrive to r1c data head directly
 
@@ -364,13 +371,17 @@ int32_t CalFileR1C::Create()
 	}
 
     FILE *fp;
-    if (_access("C:\\CSECal",0) == -1) {
-        if (_mkdir("C:\\CSECal") == -1) {
-            Log.SetLastError("%s:%s:%d(%d)",__FILE__,__FUNCTION__,__LINE__,errno);
+    if (access("C:\\CSECal",0) == -1) {
+#ifdef _WIN64
+        if (mkdir("C:\\CSECal") == -1) {
+#elif defined(__unix__) || defined(__linux__)
+        if (mkdir("/var/lib/CSECal",0777) == -1) {
+#endif
+            Log.SetLastError("%s:%s:%d(%s)",__FILE__,__FUNCTION__,__LINE__,strerror(errno));
             return -1;
         }
     }
-    if (_access("C:\\CSECal\\cxu.cal",0) == -1) {
+    if (access("C:\\CSECal\\cxu.cal",0) == -1) {
         X9119Table::Data Data;
         Data.m_iValue = 0;
 

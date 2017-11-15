@@ -1,4 +1,5 @@
 #include "wdPCIDev.h"
+#include <stdio.h>
 #include "windrvr.h"
 #include "wdc_lib.h"
 #include "status_strings.h"
@@ -14,23 +15,23 @@
 
 wdPCIDev::wdPCIDev(void)
 {
-	WDC_DriverOpen(WDC_DRV_OPEN_DEFAULT,LICENSE);
+//	WDC_DriverOpen(WDC_DRV_OPEN_DEFAULT,LICENSE);
 }
 
 wdPCIDev::wdPCIDev(const char* pDes)
 {
-	memset(m_szDes,0,sizeof(m_szDes));
+//	memset(m_szDes,0,sizeof(m_szDes));
 
-#ifdef _MSC_VER
-#pragma warning (push)
-#pragma warning (disable : 4996)
-	strcpy(m_szDes,pDes);
-#pragma warning (pop)
-#elif defined __GNUC__
-    strcpy(m_szDes,pDes);
-#endif
+//#ifdef _MSC_VER
+//#pragma warning (push)
+//#pragma warning (disable : 4996)
+//	strcpy(m_szDes,pDes);
+//#pragma warning (pop)
+//#elif defined __GNUC__
+//    strcpy(m_szDes,pDes);
+//#endif
 
-	WDC_DriverOpen(WDC_DRV_OPEN_DEFAULT,LICENSE);
+//	WDC_DriverOpen(WDC_DRV_OPEN_DEFAULT,LICENSE);
 }
 
 wdPCIDev::~wdPCIDev(void)
@@ -44,15 +45,15 @@ int32_t wdPCIDev::GetDevices(vector<string> &Devs)
 	char szDev[256] = {0};
 	string strDev = "";
 
-	if ((uiStatus = WDC_PciScanDevices(0,0,&scanResult)) != WD_STATUS_SUCCESS)
-		return uiStatus;
-	for (uint32_t i = 0;i < scanResult.dwNumDevices;i ++) {
-		memset(szDev,0,sizeof(szDev));
-		strDev.clear();
-		sprintf_s(szDev,"device:%#x,VID:%6#x,DID:%6#x",i,scanResult.deviceId[i].dwVendorId,scanResult.deviceId[i].dwDeviceId);
-		strDev = szDev;
-		Devs.push_back(strDev);
-	}
+//	if ((uiStatus = WDC_PciScanDevices(0,0,&scanResult)) != WD_STATUS_SUCCESS)
+//		return uiStatus;
+//	for (uint32_t i = 0;i < scanResult.dwNumDevices;i ++) {
+//		memset(szDev,0,sizeof(szDev));
+//		strDev.clear();
+//        sprintf(szDev,"device:%#x,VID:%6#x,DID:%6#x",i,scanResult.deviceId[i].dwVendorId,scanResult.deviceId[i].dwDeviceId);
+//		strDev = szDev;
+//		Devs.push_back(strDev);
+//	}
 	return uiStatus;
 }
 

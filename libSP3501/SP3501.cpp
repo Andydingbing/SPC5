@@ -1,5 +1,6 @@
 #include "SP3501.h"
 #include "RegDef.h"
+#include <string.h>
 
 CSP3501::CSP3501()
 {

@@ -1,24 +1,25 @@
 #include "GeneralIniFile.h"
 
-#ifdef _MSC_VER
+#ifdef _WIN64
 #include <WinDef.h>
 #include <WinBase.h>
+#elif defined(__unix__) || defined(__linux__)
+#include <unistd.h>
 #endif
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <direct.h>
 
 CGeneralIniFile::CGeneralIniFile(const char *pFileName)
 {
 	memset(m_szBasePath,0,sizeof(m_szBasePath));
 #ifdef _MSC_VER
 	::GetModuleFileName(NULL,m_szBasePath,256);
+	*strrchr(m_szBasePath,'\\') = 0;
 #elif defined __GNUC__
-    _getcwd(m_szBasePath,256);
+    strcpy(m_szBasePath,"/etc/cse/");
 #endif
-    *strrchr(m_szBasePath,'\\') = 0;
 	strcpy(m_szFileName,pFileName);
 }
 
@@ -37,7 +38,11 @@ int CGeneralIniFile::GetConfigStringValue(const char *pInSectionName,const char 
 	memset(szBuffer,0,sizeof(szBuffer));
 	memset(szExactPath,0,sizeof(szExactPath));
     strcpy(szExactPath,m_szBasePath);
+#ifdef _WIN64
     strcat(szExactPath,"\\");
+#elif defined(__unix__) || defined(__linux__)
+    strcat(szExactPath,"/");
+#endif
     strcat(szExactPath,m_szFileName);
 	if (NULL == (fpConfig = fopen(szExactPath,"r")))
 		return FILENAME_NOTEXIST;

@@ -1,6 +1,8 @@
 #include "ICalFile.h"
 #include "CfvCtrl.h"
 #include <fcntl.h>
+#include <string.h>
+#include <errno.h>
 
 X9119Table *ICalFile::g_pX9119 = NULL;
 ICalFile::ItemBuf ICalFile::g_ItemBuf = ICalFile::ItemBuf();

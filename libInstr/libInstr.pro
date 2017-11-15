@@ -13,27 +13,23 @@ CONFIG += shared
 INCLUDEPATH += ../include \
                ../libBusDriver
 
-LIBS += -llibBusDriver.dll
-
 win32 {
+    LIBS += -llibBusDriver.dll
     LIBS += $$PWD/../lib/visa64.lib
     LIBS += $$PWD/../lib/rsnrpz_64.lib
-    DEFINES += _WINDOWS \
-               _WIN64
+}
+
+unix {
+    target.path = /usr/lib
+    INSTALLS += target
 }
 
 CONFIG(debug,debug|release) {
-    win32 {
-        LIBS += -L$$PWD/../Qt/x64/debug/
-    }
-
+    LIBS += -L$$PWD/../Qt/x64/debug/
     OBJECTS_DIR = $$PWD/x64/debug
     DESTDIR = ../Qt/x64/debug
 } else {
-    win32 {
-        LIBS += -L$$PWD/../Qt/x64/release/
-    }
-
+    LIBS += -L$$PWD/../Qt/x64/release/
     OBJECTS_DIR = $$PWD/x64/release
     DESTDIR = ../Qt/x64/release
 }
@@ -87,8 +83,3 @@ HEADERS += \
     RSNRP.h \
     Instrument.h \
     libInstr.h
-
-unix {
-    target.path = /usr/lib
-    INSTALLS += target
-}

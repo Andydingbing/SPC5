@@ -1,27 +1,23 @@
 #ifndef __LOG_H__
 #define __LOG_H__
 
-#ifndef GUI_MFC
-#define GUI_MFC
-#endif
-
-#ifndef _WINDOWS
-#define _WINDOWS
-#endif
-
-#ifndef _WIN64
-#define _WIN64
-#endif
+//#ifndef GUI_MFC
+//#define GUI_MFC
+//#endif
 
 #include "stdint_common.h"
 #include <stdio.h>
 #include <vector>
 
+// #ifndef _IA64_
+// #define _IA64_
+// #endif
+
 #ifndef _AMD64_
 #define _AMD64_
 #endif
 
-#if defined(_WINDOWS) && defined (GUI_MFC)
+#if defined(_WIN64) && defined (GUI_MFC)
 #include <WinDef.h>
 #include <WinBase.h>
 #include <WinUser.h>
@@ -173,8 +169,7 @@ public:
     void SetLastError(int iResult,const char *pFormat, ...);
     char *GetLastError();
 
-	virtual void stdprintf(const char *format, ...);
-	virtual void printf(const char *format, ...);
+    virtual void stdprintf(const char *format, ...);
 	virtual void trace(const char *format, ...);
 
     virtual int AddMsgList(const char *pFormat, ...);
@@ -187,7 +182,9 @@ private:
 	vector<RegLog> *m_pRegLog;
 	FILE *m_fpMsg;
 	FILE *m_fpReg;
-	void *m_pConsole;
+#ifdef _WIN64
+    void *m_pConsole;
+#endif
 	
 	bool m_bOwnData;
 	char m_szLastError[512];
