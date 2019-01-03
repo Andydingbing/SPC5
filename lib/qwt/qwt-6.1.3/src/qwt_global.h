@@ -11,6 +11,7 @@
 #define QWT_GLOBAL_H
 
 #include <qglobal.h>
+#include "stdint_common.h"
 
 // QWT_VERSION is (major << 16) + (minor << 8) + patch.
 
@@ -22,6 +23,12 @@
 #pragma warning(disable: 4660)
 /* inherits via dominance */
 #pragma warning(disable: 4250)
+
+// modified by andy(starpoint)
+// size_t <===> int size_t <===> uint
+#pragma warning(disable: 4267)
+// modified by andy(starpoint)
+
 #endif // _MSC_VER
 
 #ifdef QWT_DLL

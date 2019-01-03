@@ -8,6 +8,11 @@
 ################################################################
 
 
+
+# modified by andy(starpoint)
+INCLUDEPATH += ../../../../include
+# modified by andy(starpoint)
+
 HEADERS += \
     qwt.h \
     qwt_abstract_scale_draw.h \

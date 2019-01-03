@@ -21,7 +21,7 @@ class QWT_EXPORT QwtPointArrayData: public QwtSeriesData<QPointF>
 public:
     QwtPointArrayData( const QVector<double> &x, const QVector<double> &y );
     QwtPointArrayData( const double *x, const double *y, size_t size );
-    //added by dingbin,2017/9/26
+    //added by andy(starpoint),2017/9/26
     QwtPointArrayData( const int16_t *x, const int16_t *y, size_t size );
     QwtPointArrayData( const int16_t *y, size_t size );
 

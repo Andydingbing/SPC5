@@ -210,7 +210,7 @@ public:
     //! Paint attributes
     typedef QFlags<PaintAttribute> PaintAttributes;
 
-    explicit QwtPlotCurve( const QString &title = QString::null );
+    explicit QwtPlotCurve( const QString &title = QString() );
     explicit QwtPlotCurve( const QwtText &title );
 
     virtual ~QwtPlotCurve();
@@ -226,7 +226,7 @@ public:
 #ifndef QWT_NO_COMPAT
     void setRawSamples( const double *xData, const double *yData, int size );
     void setSamples( const double *xData, const double *yData, int size );
-    //added by dingbin,2017/9/26
+    //added by andy(starpoint),2017/9/26
     void setSamples( const int16_t *xData, const int16_t *yData, int size );
     void setSamples( const int16_t *yData, int size );
 
