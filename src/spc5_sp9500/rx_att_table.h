@@ -1,0 +1,59 @@
+#ifndef RX_ATT_TABLE_H
+#define RX_ATT_TABLE_H
+#include "cal_table.h"
+
+namespace sp_rd {
+
+class RD_API rx_att_op_table_r1cd
+{
+public:
+    typedef struct RD_API data_f_t {
+        uint64_t freq;
+        int64_t  offset[R1C_RX_REF_OP_PTS - 3 + 1];
+        double   temp[4];
+        tm       time;
+        int32_t  rsv_0;
+	public:
+        data_f_t();
+    }data_f_t;
+
+    STRUCT_ALIGN_S(data_m_t,4)
+        int32_t offset[R1C_RX_REF_OP_PTS - 3 + 1];
+        float   temp;
+    STRUCT_ALIGN_E(data_m_t,4)
+
+    DECLARE_CAL_ITEM_TABLE(rx_att_op_table_r1cd,RF_RX_FREQ_PTS_CALLED_R1C)
+public:
+    int32_t get(sp1401::hw_ver_t ver,uint64_t freq,double ref);
+    void get(uint64_t freq,data_m_t *data);
+    void get(uint64_t freq,data_f_t *data);
+};
+
+class RD_API rx_att_io_table_r1cd
+{
+public:
+    typedef struct RD_API data_f_t {
+        uint64_t freq;
+        int64_t  offset[R1C_RX_REF_IO_PTS - 3 + 1];
+        double   temp[4];
+        tm       time;
+        int32_t  rsv_0;
+	public:
+        data_f_t();
+    }data_f_t;
+
+    STRUCT_ALIGN_S(data_m_t,4)
+        int32_t offset[R1C_RX_REF_IO_PTS - 3 + 1];
+        float   temp;
+    STRUCT_ALIGN_E(data_m_t,4)
+
+    DECLARE_CAL_ITEM_TABLE(rx_att_io_table_r1cd,RF_RX_FREQ_PTS_CALLED_R1C)
+public:
+    int32_t get(sp1401::hw_ver_t ver,uint64_t freq,double ref);
+    void get(uint64_t freq,data_m_t *data);
+    void get(uint64_t freq,data_f_t *data);
+};
+
+} //namespace sp_rd
+
+#endif // RX_ATT_TABLE_H

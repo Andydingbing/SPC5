@@ -339,13 +339,23 @@
     <string>About(&amp;A)</string>
    </property>
   </action>
+  <action name="actionR1D">
+   <property name="text">
+    <string>R1D(&amp;C)</string>
+   </property>
+  </action>
+  <action name="actionR1E">
+   <property name="text">
+    <string>R1E(&amp;B)</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
    <class>QRDTTableView</class>
    <extends>QTableView</extends>
-   <header>qrdttableview.h</header>
+   <header>q_rdt_tableview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

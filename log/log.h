@@ -32,8 +32,8 @@ public:
     };
 
     struct RD_API reg_log_t {
-        int32_t  addr;
-        int16_t  result;
+        int32_t  result;
+        uint32_t addr;
         uint32_t w;
         uint32_t r;
         std::string fpga;
@@ -52,19 +52,19 @@ public:
     typedef boost::shared_ptr<reg_log_vector> reg_log_vector_sptr;
 
     enum log_sw_t {
-        l_all_off	= 0x0000000000000000,
-        l_prompt	= 0x0000000000000001,
-        l_msg		= 0x0000000000000004,
-        l_msg_f     = 0x0000000000000008,
-        l_reg		= 0x0000000000000010,
-        l_reg_f     = 0x0000000000000020,
-        l_trace     = 0x0000000000000040,
-        l_all_on	= 0x00000000ffffffff
+        RD_LOG_ALL_OFF      = 0x00000000,
+        RD_LOG_PROMPT       = 0x00000001,
+        RD_LOG_MESSAGE      = 0x00000004,
+        RD_LOG_MESSAGE_F    = 0x00000008,
+        RD_LOG_REG          = 0x00000010,
+        RD_LOG_REG_F        = 0x00000020,
+        RD_LOG_TRACE        = 0x00000040,
+        RD_LOG_ALL_ON       = 0x7FFFFFFF
     };
 
 public:
     log_t();
-    ~log_t();
+    virtual ~log_t();
     static log_t &instance();
     void init();
 
@@ -81,23 +81,20 @@ private:
 #endif
 
 public:
-    msg_log_vector *get_msg_log();
-    reg_log_vector *get_reg_log();
-    void set(uint64_t);
-    uint64_t get();
-    bool is_enabled(log_sw_t);
-    void set_enalbe(log_sw_t,bool);
+    msg_log_vector *msgs();
+    reg_log_vector *regs();
+    bool is_en(log_sw_t);
+    void en(log_sw_t,bool);
     void set_default();
     void set_last_err(const char *format,...);
     void set_last_err(int, const char *format,...);
-    char *get_last_err();
+    char *last_err();
 
     virtual void stdprintf(const char *fmt,...);
 
-    virtual int add_msg_list(const char *fmt,...);
-//    virtual int add_msg_list(const string &str);
-    virtual int add_msg_list(int result,const char *fmt,...);
-    virtual int add_reg_list(int result,char *fpga,int addr,unsigned w = 0xffffffff,unsigned r = 0xffffffff);
+    virtual int add_msg(const char *fmt,...);
+    virtual int add_msg(int32_t result,const char *fmt,...);
+    virtual int add_reg(int32_t result,const std::string &fpga,uint32_t addr,uint32_t w = 0xFFFFFFFF,uint32_t r = 0xFFFFFFFF);
 public:
     boost::posix_time::time_duration time_elapsed();
 private:

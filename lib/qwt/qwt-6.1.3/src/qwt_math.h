@@ -21,6 +21,7 @@
   since these commonly-defined names are not part of the C/C++ standards.
 */
 #define _USE_MATH_DEFINES 1
+#define _MATH_DEFINES_DEFINED 1
 #endif
 
 #include <qmath.h>

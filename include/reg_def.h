@@ -14,13 +14,13 @@
 // 	} r;
 // };
 
-#define REG_DEF_S(addr)	\
-    union reg##addr {	\
-        uint32_t u32;	\
+#define REG_DEF_S(addr) \
+    union reg##addr { \
+        uint32_t u32; \
         struct reg_t {
 
-#define REG_DEF_E       \
-        } r;            \
+#define REG_DEF_E \
+        } r; \
     };
 
 #define REG_DECLARE(ns,addr) union ns::reg##addr ns##r##addr = { 0 };
@@ -37,152 +37,142 @@
 #define S6_WAIT_FIFO_EMPTY(ns,addr,flag,times) S6WAIT_FIFO_EMPTY(ns,addr,fifo_prog_full,flag,times)
 
 #ifdef _DEBUG
-#define K7_ASSERT()                                 \
-    if (NULL == m_k7) {                             \
-        Log.set_last_err("device:k7 disconnect");   \
-        return -1;                                  \
+#define K7_ASSERT() \
+    if (NULL == m_k7) { \
+        Log.set_last_err("device:k7 disconnect"); \
+        return -1; \
     }
 
-#define S6_ASSERT()                                 \
-    if (NULL == m_s6) {                             \
-        Log.set_last_err("device:s6 disconnect");   \
-        return -1;                                  \
+#define S6_ASSERT() \
+    if (NULL == m_s6) { \
+        Log.set_last_err("device:s6 disconnect"); \
+        return -1; \
     }
 #else
 #define K7_ASSERT()
 #define S6_ASSERT()
 #endif
 
-#define K7_W(ns,addr)																			\
-    do {                                                                                \
-        K7_ASSERT();                                                                    \
-        int32_t ret = 0;                                                                \
-        if ((ret = m_k7->w32(pci_dev::AS_BAR0,uint16_t(addr<<2),REG_U32(ns,addr)))) {   \
-            Log.set_last_err("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__);            \
-            return -1;                                                                  \
-        }                                                                               \
-        Log.add_reg_list(ret,m_k7->get_des(),addr,REG_U32(ns,addr));                    \
+#define K7_W(ns,addr) \
+    do {K7_ASSERT(); \
+        int32_t ret = 0; \
+        if ((ret = m_k7->w32(pci_dev::AS_BAR0,uint16_t(addr<<2),REG_U32(ns,addr)))) { \
+            Log.set_last_err("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__); \
+            return -1; \
+        } \
+        Log.add_reg(ret,m_k7->descriptor(),addr,REG_U32(ns,addr)); \
     }while (0);
 
-#define K7_R(ns,addr)																						\
-    do {											\
-        K7_ASSERT();										\
-        int32_t ret = 0;									\
-        if ((ret = m_k7->r32(pci_dev::AS_BAR0,uint16_t(addr<<2),&REG_U32(ns,addr)))) {          \
-            Log.set_last_err("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__);                    \
-            return -1;										\
-        }											\
-        Log.add_reg_list(ret,m_k7->get_des(),addr,-1,REG_U32(ns,addr));                         \
+#define K7_R(ns,addr) \
+    do {K7_ASSERT(); \
+        int32_t ret = 0; \
+        if ((ret = m_k7->r32(pci_dev::AS_BAR0,uint16_t(addr<<2),&REG_U32(ns,addr)))) { \
+            Log.set_last_err("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__); \
+            return -1; \
+        } \
+        Log.add_reg(ret,m_k7->descriptor(),addr,0xffffffff,REG_U32(ns,addr)); \
     }while (0);
 
-#define K7OP(ns,addr,bit)	\
-    do {                        \
-        REG(ns,addr).bit = 0;	\
-        K7_W(ns,addr);		\
-        REG(ns,addr).bit = 1;	\
-        K7_W(ns,addr);		\
-        K7_W(ns,addr);		\
-        K7_W(ns,addr);		\
-        K7_W(ns,addr);		\
-        K7_W(ns,addr);		\
-        K7_W(ns,addr);		\
-        K7_W(ns,addr);		\
-        K7_W(ns,addr);		\
-        REG(ns,addr).bit = 0;	\
-        K7_W(ns,addr);		\
+#define K7OP(ns,addr,bit) \
+    do {REG(ns,addr).bit = 0; \
+        K7_W(ns,addr); \
+        REG(ns,addr).bit = 1; \
+        K7_W(ns,addr); \
+        K7_W(ns,addr); \
+        K7_W(ns,addr); \
+        K7_W(ns,addr); \
+        K7_W(ns,addr); \
+        K7_W(ns,addr); \
+        K7_W(ns,addr); \
+        K7_W(ns,addr); \
+        REG(ns,addr).bit = 0; \
+        K7_W(ns,addr); \
     }while (0);
 
-#define K7RE(ns,addr,bit)       \
-    do {                        \
-        REG(ns,addr).bit = 0;   \
-        K7_W(ns,addr);          \
-        REG(ns,addr).bit = 1;   \
-        K7_W(ns,addr);          \
+#define K7RE(ns,addr,bit) \
+    do {REG(ns,addr).bit = 0; \
+        K7_W(ns,addr); \
+        REG(ns,addr).bit = 1; \
+        K7_W(ns,addr); \
     }while (0);
 
-#define K7OP_DELAY(ns,addr,bit,time)    \
-    do {                                \
-        if (time)   sleep_ms(time);     \
-        REG(ns,addr).bit = 0;           \
-        K7_W(ns,addr);                  \
-        if (time)   sleep_ms(time);     \
-        REG(ns,addr).bit = 1;           \
-        K7_W(ns,addr);                  \
-        if (time)   sleep_ms(time);     \
-        REG(ns,addr).bit = 0;           \
-        K7_W(ns,addr);                  \
+#define K7OP_DELAY(ns,addr,bit,time) \
+    do {if (time) { sleep_ms(time); } \
+        REG(ns,addr).bit = 0; \
+        K7_W(ns,addr); \
+        if (time) { sleep_ms(time); } \
+        REG(ns,addr).bit = 1; \
+        K7_W(ns,addr); \
+        if (time) { sleep_ms(time); } \
+        REG(ns,addr).bit = 0; \
+        K7_W(ns,addr); \
     }while (0);
 
-#define K7WAIT_IDLE(ns,addr,bit,flag,times)				\
-    do {								\
-        bool idle = false;						\
-        K7_R(ns,addr);							\
-        for (int32_t i = 0;i < times;i ++) {				\
-            if (flag == REG(ns,addr).bit) {				\
-                idle = true;						\
-                break;							\
-            }								\
-            K7_R(ns,addr);						\
-        }                                                               \
-        if (!idle) {							\
-            Log.set_last_err("reg%#06x wait idle timeout",addr);	\
-            return -1;							\
-        }								\
+#define K7WAIT_IDLE(ns,addr,bit,flag,times) \
+    do {bool idle = false; \
+        K7_R(ns,addr); \
+        for (int32_t i = 0;i < times;i ++) { \
+            if (flag == REG(ns,addr).bit) { \
+                idle = true; \
+                break; \
+            } \
+            K7_R(ns,addr); \
+        } \
+        if (!idle) { \
+            Log.set_last_err("reg%#06x wait idle timeout",addr); \
+            return -1; \
+        } \
     } while (0);
 
-#define S6WAIT_FIFO_EMPTY(ns,addr,bit,flag,times)			\
-    do {                        					\
-        bool full = true;						\
-        RFU_S6_R(addr);							\
-        for (int32_t i = 0;i < times;i ++) {				\
-            if (flag != REG(ns,addr).bit) {				\
-                full = false;						\
-                break;							\
-            }								\
-        }								\
-        if (full) {							\
-            Log.set_last_err("reg%#06x wait fifo empty timeout",addr);	\
-            return -1;							\
-        }								\
+#define S6WAIT_FIFO_EMPTY(ns,addr,bit,flag,times) \
+    do {bool full = true; \
+        RFU_S6_R(addr);	\
+        for (int32_t i = 0;i < times;i ++) { \
+            if (flag != REG(ns,addr).bit) { \
+                full = false; \
+                break; \
+            } \
+        } \
+        if (full) { \
+            Log.set_last_err("reg%#06x wait fifo empty timeout",addr); \
+            return -1; \
+        } \
     } while (0);
 
-#define S6OP(ns,addr,bit)       \
-    do {			\
-        REG(ns,addr).bit = 0;	\
-        S6_W(ns,addr);          \
-        REG(ns,addr).bit = 1;	\
-        S6_W(ns,addr);		\
-        S6_W(ns,addr);		\
-        S6_W(ns,addr);		\
-        S6_W(ns,addr);		\
-        S6_W(ns,addr);		\
-        S6_W(ns,addr);		\
-        S6_W(ns,addr);		\
-        S6_W(ns,addr);		\
-        REG(ns,addr).bit = 0;	\
-        S6_W(ns,addr);		\
+#define S6OP(ns,addr,bit) \
+    do {REG(ns,addr).bit = 0; \
+        S6_W(ns,addr); \
+        REG(ns,addr).bit = 1; \
+        S6_W(ns,addr); \
+        S6_W(ns,addr); \
+        S6_W(ns,addr); \
+        S6_W(ns,addr); \
+        S6_W(ns,addr); \
+        S6_W(ns,addr); \
+        S6_W(ns,addr); \
+        S6_W(ns,addr); \
+        REG(ns,addr).bit = 0; \
+        S6_W(ns,addr); \
     }while (0);
 
-#define S6_W(ns,addr)                                                                   \
-    do {                                                                                \
-        S6_ASSERT();                                                                    \
-        int32_t ret = 0;                                                                \
-        if ((ret = m_s6->w32(pci_dev::AS_BAR0,uint16_t(addr <<2),REG_U32(ns,addr)))) {  \
-            Log.set_last_err("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__);            \
-            return -1;                                                                  \
-        }                                                                               \
-        Log.add_reg_list(ret,m_s6->get_des(),addr,REG_U32(ns,addr));                    \
+#define S6_W(ns,addr) \
+    do {S6_ASSERT(); \
+        int32_t ret = 0; \
+        if ((ret = m_s6->w32(pci_dev::AS_BAR0,uint16_t(addr <<2),REG_U32(ns,addr)))) { \
+            Log.set_last_err("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__); \
+            return -1; \
+        } \
+        Log.add_reg(ret,m_s6->descriptor(),addr,REG_U32(ns,addr)); \
     }while (0);
 
-#define S6_R(ns,addr)                                                                               \
-    do {                                                                                            \
-        S6_ASSERT();                                                                                \
-        int32_t ret = 0;                                                                            \
-        if ((ret = m_s6->r32(pci_dev::AS_BAR0,uint16_t(addr <<2),&REG_U32(ns,addr)))) {             \
-            Log.set_last_err("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__);                        \
-            return -1;                                                                              \
-        }                                                                                           \
-        Log.add_reg_list(ret,m_s6->get_des(),addr,-1,REG_U32(ns,addr));                             \
+#define S6_R(ns,addr) \
+    do {S6_ASSERT(); \
+        int32_t ret = 0; \
+        if ((ret = m_s6->r32(pci_dev::AS_BAR0,uint16_t(addr <<2),&REG_U32(ns,addr)))) { \
+            Log.set_last_err("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__); \
+            return -1; \
+        } \
+        Log.add_reg(ret,m_s6->descriptor(),addr,-1,REG_U32(ns,addr)); \
     }while (0);
 
 #define RFU_K7_REG_DECLARE(addr) REG_DECLARE(ns_reg_rfu_k7,addr)
@@ -227,20 +217,21 @@
 //      union reg data;
 // };
 
-#define REG_DEF_S_2(addr0,addr1)    \
-    struct reg##addr0##addr1##_t {  \
-        uint32_t addr[4];           \
-        union reg {                 \
-            uint32_t u32;           \
+#define REG_DEF_S_2(addr0,addr1) \
+    struct reg##addr0##addr1##_t { \
+        uint32_t addr[4]; \
+        union reg { \
+            uint32_t u32; \
             struct r_t {
 
-#define REG_DEF_E_2                 \
-            } r;                    \
-        };                          \
-        union reg data;             \
+#define REG_DEF_E_2 \
+            } r; \
+        }; \
+        union reg data; \
     };
 
-#define REG_DECLARE_2(ns,addr0,addr1) struct ns::reg##addr0##addr1##_t ns##r##addr0##addr1 = {{addr1,addr0,addr1,addr0},0};
+#define REG_DECLARE_2(ns,addr0,addr1) \
+    struct ns::reg##addr0##addr1##_t ns##r##addr0##addr1 = {{addr1,addr0,addr1,addr0},{0}};
 #define REG_2(ns,addr0,addr1) ns##r##addr0##addr1.data.r
 #define REG_U32_2(ns,addr0,addr1) ns##r##addr0##addr1.data.u32
 #define REG_CLEAR_2(ns,addr0,addr1) ns##r##addr0##addr1.data.u32 = 0;
@@ -250,132 +241,110 @@
 #define K7_WAIT_IDLE_2(ns,addr0,addr1,flag,times) K7WAIT_IDLE_2(ns,addr0,addr1,busy,flag,times)
 #define S6_WAIT_FIFO_EMPTY_2(ns,addr0,addr1,flag,times) S6WAIT_FIFO_EMPTY_2(ns,addr0,addr1,fifo_prog_full,flag,times)
 
-#define K7_W_2(ns,addr0,addr1)									\
-    do {                                                                                        \
-        K7_ASSERT();										\
-        int32_t ret = 0;									\
-        uint32_t addr = ns##r##addr0##addr1.addr[get_rf_idx()];					\
-        if ((ret = m_k7->w32(pci_dev::AS_BAR0,addr<<2,REG_U32_2(ns,addr0,addr1)))) {            \
-            Log.set_last_err("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__);                    \
-            return -1;										\
-        }											\
-        Log.add_reg_list(ret,m_k7->get_des(),addr,REG_U32_2(ns,addr0,addr1));			\
+#define K7_W_2(ns,addr0,addr1) \
+    do {K7_ASSERT(); \
+        int32_t ret = 0; \
+        uint32_t addr = ns##r##addr0##addr1.addr[get_rf_idx()]; \
+        if ((ret = m_k7->w32(pci_dev::AS_BAR0,addr<<2,REG_U32_2(ns,addr0,addr1)))) { \
+            Log.set_last_err("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__); \
+            return -1; \
+        } \
+        Log.add_reg(ret,m_k7->descriptor(),addr,REG_U32_2(ns,addr0,addr1)); \
     }while (0);
 
-#define K7_R_2(ns,addr0,addr1)                                                                              \
-    do {                                                                                                    \
-        K7_ASSERT();                                                                                        \
-        int32_t ret = 0;                                                                                    \
-        uint32_t addr = ns##r##addr0##addr1.addr[get_rf_idx()];                                             \
-        if ((ret = m_k7->r32(pci_dev::AS_BAR0,addr<<2,&REG_U32_2(ns,addr0,addr1)))) {                       \
-            Log.set_last_err("error in %s: func:%s line%d",__FILE__,__FUNCTION__,__LINE__);                 \
-            return -1;                                                                                      \
-        }                                                                                                   \
-        Log.add_reg_list(ret,m_k7->get_des(),addr,-1,REG_U32_2(ns,addr0,addr1));                            \
+#define K7_R_2(ns,addr0,addr1) \
+    do {K7_ASSERT(); \
+        int32_t ret = 0; \
+        uint32_t addr = ns##r##addr0##addr1.addr[get_rf_idx()]; \
+        if ((ret = m_k7->r32(pci_dev::AS_BAR0,addr<<2,&REG_U32_2(ns,addr0,addr1)))) { \
+            Log.set_last_err("error in %s: func:%s line%d",__FILE__,__FUNCTION__,__LINE__); \
+            return -1; \
+        } \
+        Log.add_reg(ret,m_k7->descriptor(),addr,0xffffffff,REG_U32_2(ns,addr0,addr1)); \
     }while (0);
 
-#define K7OP_2(ns,addr0,addr1,bit)	\
-    do {				\
-        REG_2(ns,addr0,addr1).bit = 0;	\
-        K7_W_2(ns,addr0,addr1);		\
-        REG_2(ns,addr0,addr1).bit = 1;	\
-        K7_W_2(ns,addr0,addr1);		\
-        K7_W_2(ns,addr0,addr1);		\
-        K7_W_2(ns,addr0,addr1);		\
-        K7_W_2(ns,addr0,addr1);		\
-        K7_W_2(ns,addr0,addr1);		\
-        K7_W_2(ns,addr0,addr1);		\
-        K7_W_2(ns,addr0,addr1);		\
-        K7_W_2(ns,addr0,addr1);		\
-        REG_2(ns,addr0,addr1).bit = 0;	\
-        K7_W_2(ns,addr0,addr1);		\
+#define K7OP_2(ns,addr0,addr1,bit) \
+    do {REG_2(ns,addr0,addr1).bit = 0; \
+        K7_W_2(ns,addr0,addr1); \
+        REG_2(ns,addr0,addr1).bit = 1; \
+        K7_W_2(ns,addr0,addr1); \
+        K7_W_2(ns,addr0,addr1); \
+        K7_W_2(ns,addr0,addr1); \
+        K7_W_2(ns,addr0,addr1); \
+        K7_W_2(ns,addr0,addr1); \
+        K7_W_2(ns,addr0,addr1); \
+        K7_W_2(ns,addr0,addr1); \
+        K7_W_2(ns,addr0,addr1); \
+        REG_2(ns,addr0,addr1).bit = 0; \
+        K7_W_2(ns,addr0,addr1); \
     } while (0);
 
-#ifdef _WIN64
-#define K7OP_DELAY_2(ns,addr0,addr1,bit,time)   \
-    do {                                        \
-        if (time) Sleep(time);                  \
-        REG_2(ns,addr0,addr1).bit = 0;          \
-        K7_W_2(ns,addr0,addr1);                 \
-        if (time) Sleep(time);                  \
-        REG_2(ns,addr0,addr1).bit = 1;          \
-        K7_W_2(ns,addr0,addr1);                 \
-        if (time) Sleep(time);                  \
-        REG_2(ns,addr0,addr1).bit = 0;          \
-        K7_W_2(ns,addr0,addr1);                 \
-    } while (0);
-#else
-#define K7OP_DELAY_2(ns,addr0,addr1,bit,time)   \
-    do {                                        \
-        if (time) usleep(time * 1000);          \
-        REG_2(ns,addr0,addr1).bit = 0;          \
-        K7_W_2(ns,addr0,addr1);                 \
-        if (time) usleep(time * 1000);          \
-        REG_2(ns,addr0,addr1).bit = 1;          \
-        K7_W_2(ns,addr0,addr1);                 \
-        if (time) usleep(time * 1000);          \
-        REG_2(ns,addr0,addr1).bit = 0;          \
-        K7_W_2(ns,addr0,addr1);                 \
-    } while (0);
-#endif
-
-#define K7WAIT_IDLE_2(ns,addr0,addr1,bit,flag,times)                \
-    do {                                                            \
-        bool idle = false;                                          \
-        uint32_t addr = ns##r##addr0##addr1.addr[get_rf_idx()];     \
-        K7_R_2(ns,addr0,addr1);                                     \
-        for (int32_t i = 0;i < times;i ++) {                        \
-            if (flag == REG_2(ns,addr0,addr1).bit) {                \
-                idle = true;                                        \
-                break;                                              \
-            }                                                       \
-            K7_R_2(ns,addr0,addr1);                                 \
-        }                                                           \
-        if (!idle) {                                                \
-            Log.set_last_err("reg%#06x wait idle timeout",addr);    \
-            return -1;                                              \
-        }                                                           \
+#define K7OP_DELAY_2(ns,addr0,addr1,bit,time) \
+    do { \
+        if (time) { sleep_ms(time); } \
+        REG_2(ns,addr0,addr1).bit = 0; \
+        K7_W_2(ns,addr0,addr1); \
+        if (time) { sleep_ms(time); } \
+        REG_2(ns,addr0,addr1).bit = 1; \
+        K7_W_2(ns,addr0,addr1); \
+        if (time) { sleep_ms(time); } \
+        REG_2(ns,addr0,addr1).bit = 0; \
+        K7_W_2(ns,addr0,addr1); \
     } while (0);
 
-#define S6WAIT_FIFO_EMPTY_2(ns,addr0,addr1,bit,flag,times)                  \
-    do  {                                                                   \
-        bool full = true;                                                   \
-        uint32_t addr = ns##r##addr0##addr1.addr[get_rf_idx()/2];           \
-        RFU_S6_R_2(addr0,addr1);                                            \
-        for (int32_t i = 0;i < times;i ++) {                                \
-            if (flag != REG_2(ns,addr0,addr1).bit) {                        \
-                full = false;                                               \
-                break;                                                      \
-            }                                                               \
-        }                                                                   \
-        if (full) {                                                         \
-            Log.set_last_err("reg %#06x wait fifo empty timeout",addr);     \
-            return -1;                                                      \
-        }                                                                   \
+#define K7WAIT_IDLE_2(ns,addr0,addr1,bit,flag,times) \
+    do {bool idle = false; \
+        uint32_t addr = ns##r##addr0##addr1.addr[get_rf_idx()]; \
+        K7_R_2(ns,addr0,addr1); \
+        for (int32_t i = 0;i < times;i ++) { \
+            if (flag == REG_2(ns,addr0,addr1).bit) { \
+                idle = true; \
+                break; \
+            } \
+            K7_R_2(ns,addr0,addr1); \
+        } \
+        if (!idle) { \
+            Log.set_last_err("reg%#06x wait idle timeout",addr); \
+            return -1; \
+        } \
     } while (0);
 
-#define S6_W_2(ns,addr0,addr1)                                                                      \
-    do {                                                                                            \
-        S6_ASSERT();                                                                                \
-        int32_t ret = 0;                                                                            \
-        uint32_t addr = ns##r##addr0##addr1.addr[get_rf_idx()/2];                                   \
-        if ((ret = m_s6->w32(pci_dev::AS_BAR0,addr<<2,REG_U32_2(ns,addr0,addr1)))) {                \
-            Log.set_last_err("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__);                        \
-            return -1;                                                                              \
-        }                                                                                           \
-        Log.add_reg_list(ret,m_s6->get_des(),addr,REG_U32_2(ns,addr0,addr1));                       \
+#define S6WAIT_FIFO_EMPTY_2(ns,addr0,addr1,bit,flag,times) \
+    do {bool full = true; \
+        uint32_t addr = ns##r##addr0##addr1.addr[get_rf_idx()/2]; \
+        RFU_S6_R_2(addr0,addr1); \
+        for (int32_t i = 0;i < times;i ++) { \
+            if (flag != REG_2(ns,addr0,addr1).bit) { \
+                full = false; \
+                break; \
+            } \
+        } \
+        if (full) { \
+            Log.set_last_err("reg %#06x wait fifo empty timeout",addr); \
+            return -1; \
+        } \
+    } while (0);
+
+#define S6_W_2(ns,addr0,addr1) \
+    do {S6_ASSERT(); \
+        int32_t ret = 0; \
+        uint32_t addr = ns##r##addr0##addr1.addr[get_rf_idx()/2]; \
+        if ((ret = m_s6->w32(pci_dev::AS_BAR0,addr<<2,REG_U32_2(ns,addr0,addr1)))) { \
+            Log.set_last_err("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__); \
+            return -1; \
+        } \
+        Log.add_reg(ret,m_s6->descriptor(),addr,REG_U32_2(ns,addr0,addr1)); \
     }while (0);
 
-#define S6_R_2(ns,addr0,addr1)                                                                      \
-    do {                                                                                            \
-        S6_ASSERT();                                                                                \
-        int32_t ret = 0;                                                                            \
-        uint32_t addr = ns##r##addr0##addr1.addr[get_rf_idx()/2];                                   \
-        if ((ret = m_s6->r32(pci_dev::AS_BAR0,addr<<2,&REG_U32_2(ns,addr0,addr1)))) {               \
-            Log.set_last_err("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__);                        \
-            return -1;                                                                              \
-        }                                                                                           \
-        Log.add_reg_list(ret,m_s6->get_des(),addr,-1,REG_U32_2(ns,addr0,addr1));                    \
+#define S6_R_2(ns,addr0,addr1) \
+    do {S6_ASSERT(); \
+        int32_t ret = 0; \
+        uint32_t addr = ns##r##addr0##addr1.addr[get_rf_idx()/2]; \
+        if ((ret = m_s6->r32(pci_dev::AS_BAR0,addr<<2,&REG_U32_2(ns,addr0,addr1)))) { \
+            Log.set_last_err("%s:%s line%d",__FILE__,__FUNCTION__,__LINE__); \
+            return -1; \
+        } \
+        Log.add_reg(ret,m_s6->descriptor(),addr,-1,REG_U32_2(ns,addr0,addr1)); \
     }while (0);
 
 #define RFU_K7_REG_DECLARE_2(addr0,addr1) REG_DECLARE_2(ns_reg_rfu_k7,addr0,addr1)
@@ -458,7 +427,10 @@ REG_DEF_S(0x0021)
 REG_DEF_E
 
 REG_DEF_S(0x0025)
-    unsigned data : 32;			//! reserved
+    unsigned rsv0 : 23;
+    unsigned op_0 : 1; // Meas capture start,freerun/waiting for trigger.
+    unsigned op_1 : 1; // FPGA write start.
+    unsigned rsv1 : 7;
 REG_DEF_E
 
 REG_DEF_S(0x0027)                       //! ddr status
@@ -473,6 +445,14 @@ REG_DEF_S(0x0028)
     unsigned addr : 29;			//! fpga dma read/write begin address
     unsigned rsv  : 1;
     unsigned flag : 2;			//! fpga dma read/write flag,//b00:fpga read	//b01:fpga write
+REG_DEF_E
+
+REG_DEF_S(0x0030)
+     unsigned busy : 1; // FPGA write trans ready signal.
+REG_DEF_E
+
+REG_DEF_S(0x0031)
+     unsigned ddr_addr : 32;            //!by byf
 REG_DEF_E
 
 REG_DEF_S(0x002f)
@@ -893,6 +873,10 @@ REG_DEF_S(0x0548)
     unsigned rsv                    : 8;
 REG_DEF_E
 
+REG_DEF_S(0x0549)
+    unsigned en : 1;                    //! arb en
+REG_DEF_E
+
 REG_DEF_S(0x054a)
     /*!
      * hyper_frame_trig_in_offset :
@@ -940,7 +924,7 @@ REG_DEF_S(0x0551)
 REG_DEF_E
 
 REG_DEF_S(0x0552)
-    /*!
+    /*
      * DL/UL trigger slot in a radio frame(default range : 0 --- 19)
      */
     unsigned slot   : 8;
@@ -948,30 +932,17 @@ REG_DEF_S(0x0552)
 REG_DEF_E
 
 REG_DEF_S(0x0553)
-    /*!
-     * op :
-     * in 5G trigger mode,DL(arb)/UL(iq capture) enable signal
-     * rising edge : 0->1->0
-     *
-     * trig_src :
-     * DL/UL trigger source select signal
-     * 2'b10 : next 10ms
-     * 2'b00 / 2'b01 / 2'b11 : \see 0551.frame & \see 0552.slot
-     *
-     * link :
-     * DL/UL select signal
-     * 0 : UL(iq capture)
-     * 1 : DL(arb)
+    /*
+     * trig_src : IQ capture trigger source.
+     *    [1:0] : 00 : Next 10ms.
+     *            01 : Specified radio frame.
+     *            10 : mod(frame(x)) = y.
      */
-    unsigned op         : 1;
-    unsigned rsv        : 1;
-    unsigned trig_src   : 2;
-    unsigned link       : 1;
-    unsigned rsv2       : 27;
+    unsigned trig_src : 2;
 REG_DEF_E
 
 REG_DEF_S(0x0554)
-    /*!
+    /*
      * frame :
      * current radio frame counter,read only
      */
@@ -979,12 +950,17 @@ REG_DEF_S(0x0554)
 REG_DEF_E
 
 REG_DEF_S(0x0555)
-    /*!
+    /*
      * slot :
      * current slot in a radio frame counter,read only
      */
     unsigned slot   : 8;
     unsigned rsv    : 24;
+REG_DEF_E
+
+REG_DEF_S(0x0556)
+    unsigned y : 16;
+    unsigned x : 16;
 REG_DEF_E
 
 REG_DEF_S_2(0x1062,0x1092)
@@ -1086,8 +1062,20 @@ REG_DEF_S_2(0x10c7,0x10f7)
 REG_DEF_E_2
 
 REG_DEF_S_2(0x10c8,0x10f8)
-    unsigned threshold : 32;		//!
+    unsigned threshold : 32;		//!by byf
 REG_DEF_E_2
+
+REG_DEF_S(0x10c9)
+     unsigned data : 32;                //!
+REG_DEF_E
+
+REG_DEF_S(0x10ca)
+     unsigned trigg_offset : 32;        //!
+REG_DEF_E
+
+REG_DEF_S(0x10cb)
+     unsigned data : 32;                //!
+REG_DEF_E
 
 REG_DEF_S(0x10cf)
     unsigned cap_tlp_count : 16;	//! iq cap tlp count
@@ -1289,7 +1277,7 @@ REG_DEF_S_2(0x1810,0x2810)
 REG_DEF_E_2
 
 REG_DEF_S_2(0x1811,0x2811)
-    unsigned data_word : 6;		//! r1c/d tx att0 spi write data
+    unsigned data_word : 8;		//! r1c/d tx att0 spi write data
 REG_DEF_E_2
 
 REG_DEF_S_2(0x1814,0x2814)
@@ -1298,7 +1286,7 @@ REG_DEF_S_2(0x1814,0x2814)
 REG_DEF_E_2
 
 REG_DEF_S_2(0x1815,0x2815)
-    unsigned data_word : 6;		//! r1c/d tx att1 spi write data
+    unsigned data_word : 8;		//! r1c/d tx att1 spi write data
 REG_DEF_E_2
 
 REG_DEF_S_2(0x1818,0x2818)
@@ -1307,7 +1295,7 @@ REG_DEF_S_2(0x1818,0x2818)
 REG_DEF_E_2
 
 REG_DEF_S_2(0x1819,0x2819)
-    unsigned data_word : 6;		//! r1c/d tx att2 spi write data
+    unsigned data_word : 8;		//! r1c/d tx att2 spi write data
 REG_DEF_E_2
 
 REG_DEF_S_2(0x181c,0x281c)
@@ -1316,7 +1304,7 @@ REG_DEF_S_2(0x181c,0x281c)
 REG_DEF_E_2
 
 REG_DEF_S_2(0x181d,0x281d)
-    unsigned data_word : 6;		//! r1c/d tx att3 spi write data
+    unsigned data_word : 8;		//! r1c/d tx att3 spi write data
 REG_DEF_E_2
 
 REG_DEF_S_2(0x1820,0x2820)
@@ -1325,7 +1313,7 @@ REG_DEF_S_2(0x1820,0x2820)
 REG_DEF_E_2
 
 REG_DEF_S_2(0x1821,0x2821)
-    unsigned data_word : 6;		//! r1c/d rx att1 spi write data
+    unsigned data_word : 8;		//! r1c/d rx att1 spi write data
 REG_DEF_E_2
 
 REG_DEF_S_2(0x1824,0x2824)
@@ -1334,7 +1322,7 @@ REG_DEF_S_2(0x1824,0x2824)
 REG_DEF_E_2
 
 REG_DEF_S_2(0x1825,0x2825)
-    unsigned data_word : 6;		//! r1c/d rx att2 spi write data
+    unsigned data_word : 8;		//! r1c/d rx att2 spi write data
 REG_DEF_E_2
 
 REG_DEF_S_2(0x1827,0x2827)
@@ -1401,6 +1389,25 @@ REG_DEF_E_2
 
 REG_DEF_S_2(0x1838,0x2838)
     unsigned data : 24;			//! r1c/d hmc1197 spi hmc mode read data
+REG_DEF_E_2
+
+REG_DEF_S_2(0x1839,0x2839)
+    unsigned busy : 1;
+    unsigned rsv0 : 1;
+    unsigned rb   : 1;  // Read back the CFG register
+    unsigned seq  : 2;  // Channel sequencer
+    unsigned ref  : 3;  // Reference/buffer selection
+    unsigned bw   : 1;  // Select bandwidth for low-pass filter
+    unsigned in   : 3;  // Input channel selection in binary fashion
+    unsigned incc : 3;  // Input channel configuration
+    unsigned cfg  : 1;  // Configuration update
+    unsigned rsv1 : 15;
+    unsigned op   : 1;
+REG_DEF_E_2
+
+REG_DEF_S_2(0x1840,0x2840)
+    unsigned ad   : 14;
+    unsigned rsv  : 18;
 REG_DEF_E_2
 
 }

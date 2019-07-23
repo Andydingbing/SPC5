@@ -1,13 +1,10 @@
-#ifndef SG_H
-#define SG_H
+#ifndef INSTR_SG_H
+#define INSTR_SG_H
 
 #include "gpib_dev.h"
 
 class sg : public sp_rd::gpib_dev
 {
-public:
-    sg(void){}
-    virtual ~sg(void){}
 public:
     virtual bool reset() = 0;
     virtual bool set_cw(double freq) = 0;
@@ -18,4 +15,4 @@ public:
     virtual bool set_en_mod(bool en) = 0;
 };
 
-#endif // SG_H
+#endif // INSTR_SG_H

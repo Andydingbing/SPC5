@@ -1,251 +1,228 @@
-#
-# Copyright 2018 StarPoint Inc.,Ltd
-#
-
-#
-# Qt project file of "SPC5_RFU_Debug_Tool".
-#
-
 include( ../../include/boost.pri )
 
-QT += core gui
-
+QT += core gui network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+DEFINES += RD_EXCEPTION
+DEFINES += QWT_DLL
+DEFINES += QT_DEPRECATED_WARNINGS
+
+UTILITIES_DIR = ../../utilities
+
+# Set stable.h as the PCH
+PRECOMPILED_HEADER = stable.h
+
+# Multi-Processor
+QMAKE_CXXFLAGS += /MP
 
 TARGET = SPC5_RFU_Debug_Tool
 TEMPLATE = app
+RC_ICONS = RFU_Debug_Tool.ico
 
-INCLUDEPATH += ./                   \
-               Cal                  \
-               ../../include/win    \
-               ../../include        \
-               ../../log            \
-               ../../bd             \
-               ../../instr          \
-               ../../sp1401         \
-               ../../sp2401         \
-               ../../sp3301         \
-               ../../sp3501         \
-               ../../lib/qwt/qwt-6.1.3/src
-
-DEFINES += QWT_DLL
+INCLUDEPATH += \
+    Cal \
+    Test \
+    ../../include/win \
+    ../../include \
+    ../../log \
+    ../../bd \
+    ../../instr \
+    ../../utilities \
+    ../../src/spc5_sp9500 \
+    ../../lib/qwt/qwt-6.1.3/src
 
 CONFIG(debug,debug|release) {
     DEFINES += _DEBUG
-    LIBS += -L$$PWD/../x64/debug/
-    OBJECTS_DIR = $$PWD/x64/debug
-    UI_DIR = $$PWD/x64/ui
-    MOC_DIR = $$PWD/x64/debug
+    LIBS += -L../x64/debug/
+    UI_DIR = ./ui
     DESTDIR = ../x64/debug
-
-    unix {
-        LIBS += $$PWD/../../lib/qwt/qwt-6.1.3/lib/libqwt.so
-    }
 } else {
-    LIBS += -L$$PWD/../x64/release/
-    OBJECTS_DIR = $$PWD/x64/release
-    UI_DIR = $$PWD/x64/ui
-    MOC_DIR = $$PWD/x64/release
+    LIBS += -L../x64/release/
+    UI_DIR = ./ui
     DESTDIR = ../x64/release
-
-    unix {
-        LIBS += $$PWD/../../lib/qwt/qwt-6.1.3/lib/libqwt.so
-    }
 }
 
 win32 {
-    LIBS += -L$$PWD/../../lib/qwt/qwt-6.1.3/lib/
-    LIBS += $$PWD/../../lib/visa64.lib \
-            $$PWD/../../lib/windrvr/amd64/wdapi1020.lib \
-            $$PWD/../../lib/pthread/libpthreadGC2.a
-    LIBS += -lsp3301    \
-            -lsp1401    \
-            -lsp2401    \
-            -lsp3501    \
-            -linstr     \
-            -lbd        \
-            -llog
+    LIBS += -L../../lib/qwt/qwt-6.1.3/lib/
+    LIBS += \
+        ../../lib/visa64.lib \
+        ../../lib/windrvr/amd64/wdapi1020.lib \
+        ../../lib/pthread/pthreadVC2.lib
+
+    LIBS += -linstr -lbd -llog -lrd_rfu_sp9500
 }
 
 unix {
-    LIBS += /usr/local/lib64/libvisa.so
-    LIBS += -lrsnrpz
-    LIBS += -llibSP3301 \
-            -llibSP1401 \
-            -llibSP2401 \
-            -llibSP3501 \
-            -llibInstr  \
-            -llibBusDriver  \
-            -llibLog    \
-            -lfftw3
+    LIBS += \
+        /usr/local/lib64/libvisa.so
+        ../../lib/qwt/qwt-6.1.3/lib/libqwt.so
+
+    LIBS += -lrsnrpz -linstr -lbd -llog -lfftw3
 }
-
-
-# The following define makes your compiler emit warnings if you use
-# any feature of Qt which as been marked as deprecated (the exact warnings
-# depend on your compiler). Please consult the documentation of the
-# deprecated API in order to know how to port your code away from it.
-DEFINES += QT_DEPRECATED_WARNINGS
-
-# You can also make your code fail to compile if you use deprecated APIs.
-# In order to do so, uncomment the following line.
-# You can also select to disable deprecated APIs only up to a certain version of Qt.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    qrfr1cdlg.cpp \
-    qrfr1cadvdlg.cpp \
-    qwinthread.cpp \
-    qdeviceinitthread.cpp \
-    qfpgadlg.cpp \
-    qattachthreaddlg.cpp \
-    qrdttableview.cpp \
-    qmsglogmodel.cpp \
-    qreglogmodel.cpp \
-    qiqcapdlg.cpp \
-    qiqcapthread.cpp \
-    qtempctrldlg.cpp \
-    qrfr1adlg.cpp \
-    qrfr1acontainerdlg.cpp \
-    qrfr1ccontainerdlg.cpp \
-    qrfr1aadvdlg.cpp \
-    qadf5355dlg.cpp \
-    qarbdlg.cpp \
-    qbbdlg.cpp \
-    qiqphasescrolledit.cpp \
-    qiqampscrolledit.cpp \
-    qdcoffsetscrolledit.cpp \
-    Cal/qcalbasemodel.cpp \
-    Cal/qr1ctxloleakmodel.cpp \
-    Cal/qcalr1ctxloleakdlg.cpp \
-    Cal/qcalr1ctxloleakthread.cpp \
-    Cal/qcalr1ctxsbdlg.cpp \
-    Cal/qr1ctxsbmodel.cpp \
-    Cal/qcalr1ctxsbthread.cpp \
-    Cal/qcalr1ctxfilterdlg.cpp \
-    Cal/qcalr1ctxfilterthread.cpp \
-    qcalplot.cpp \
-    qcalr1ctxfiltertabwidget.cpp \
-    Cal/qr1ctxfiltermodel.cpp \
-    Cal/qcalr1ctxpwrdlg.cpp \
-    Cal/qr1ctxpwrmodel.cpp \
-    Cal/qcalr1ctxpwrthread.cpp \
-    Cal/qcalbasedlg.cpp \
-    Cal/qcalr1ctxattdlg.cpp \
-    Cal/qcalr1ctxattthread.cpp \
-    Cal/qr1ctxattmodel.cpp \
-    qcalr1ctxatttabwidget.cpp \
-    qrfdlg.cpp \
-    qframeslottrigwidget.cpp \
-    Cal/qcalr1ctxfilteroffsetdlg.cpp \
-    qcalr1ctxfilteroffsettabwidget.cpp \
-    Cal/qr1ctxfilteroffsetmodel.cpp \
-    Cal/qcalr1ctxfilteroffsetthread.cpp \
-    Cal/qcalr1crxfilterdlg.cpp \
-    Cal/qr1crxfiltermodel.cpp \
-    qcalr1crxfiltertabwidget.cpp \
-    Cal/qcalr1crxfilterthread.cpp \
-    Cal/qr1crxrefmodel.cpp \
-    Cal/qcalr1crxrefdlg.cpp \
-    Cal/qcalr1crxrefthread.cpp \
-    Cal/qr1crxattmodel.cpp \
-    qcalr1crxatttabwidget.cpp \
-    Cal/qcalr1crxattdlg.cpp \
-    Cal/qcalr1crxattthread.cpp \
-    Cal/qr1crxfilteroffsetmodel.cpp \
-    qcalr1crxfilteroffsettabwidget.cpp \
-    Cal/qcalr1crxfilteroffsetthread.cpp \
-    Cal/qcalr1crxfilteroffsetdlg.cpp
+    q_temp_ctrl_dlg.cpp \
+    q_rf_r1a_dlg.cpp \
+    q_rf_r1a_adv_dlg.cpp \
+    q_rf_r1c_dlg.cpp \
+    q_rf_r1c_adv_dlg.cpp \
+    q_rf_r1f_dlg.cpp \
+    q_rf_r1f_adv_dlg.cpp \
+    q_adf5355_dlg.cpp \
+    q_bb_dlg.cpp \
+    q_arb_dlg.cpp \
+    q_iq_cap_dlg.cpp \
+    q_iq_cap_thread.cpp \
+    q_fpga_dlg.cpp \
+    q_attach_thread_dlg.cpp \
+    q_device_init_thread.cpp \
+    q_frame_slot_trig_widget.cpp \
+    q_msg_log_model.cpp \
+    q_reg_log_model.cpp \
+    q_r1c_temp_ctrl_model.cpp \
+    q_r1c_temp_ctrl_thread.cpp \
+    q_rdt_tableview.cpp \
+    q_winthread.cpp \
+    q_led.cpp \
+    q_cal_tx_filter_offset_tabwidget.cpp \
+    q_cal_rx_filter_offset_tabwidget.cpp \
+    $$UTILITIES_DIR/freq_string.cpp \
+    Test/q_test_freq_res_widget.cpp \
+    q_plot.cpp
+
+SOURCES += \
+    Cal/q_cal_dlg.cpp \
+    Cal/q_cal_r1c_dlg.cpp \
+    Cal/q_cal_r1c_thread.cpp \
+    Cal/q_cal_r1c_tx_loleak_thread.cpp \
+    Cal/q_cal_r1c_tx_sb_thread.cpp \
+    Cal/q_cal_r1c_tx_filter_thread.cpp \
+    Cal/q_cal_r1c_tx_pwr_thread.cpp \
+    Cal/q_cal_r1c_tx_att_thread.cpp \
+    Cal/q_cal_r1c_tx_filter_offset_thread.cpp \
+    Cal/q_cal_r1c_rx_filter_thread.cpp \
+    Cal/q_cal_r1c_rx_ref_thread.cpp \
+    Cal/q_cal_r1c_rx_att_thread.cpp \
+    Cal/q_cal_r1c_rx_filter_offset_thread.cpp \
+    Cal/q_cal_tx_filter_tabwidget.cpp \
+    Cal/q_cal_tx_pwr_widget.cpp \
+    Cal/q_cal_tx_att_tabwidget.cpp \
+    Cal/q_cal_rx_filter_tabwidget.cpp \
+    Cal/q_cal_rx_ref_widget.cpp \
+    Cal/q_cal_rx_att_tabwidget.cpp \
+    Cal/q_model_tx_loleak.cpp \
+    Cal/q_model_tx_sb.cpp \
+    Cal/q_model_tx_filter.cpp \
+    Cal/q_model_tx_att.cpp \
+    Cal/q_model_rx_ref.cpp \
+    Cal/q_model_rx_att.cpp \
+    Cal/q_model_rx_filter_offset.cpp \
+    Test/q_test_dlg.cpp \
+    Test/q_test_freq_res_thread.cpp \
+    Test/q_test_rf_thread.cpp
+
+HEADERS += \
+    $$UTILITIES_DIR/exception.hpp \
+    $$UTILITIES_DIR/freq_string.hpp \
+    Cal/q_cal_dlg.h \
+    Cal/q_model_filter_offset.h \
+    Cal/q_model_tx_filter.h \
+    Cal/q_model_tx_loleak.h \
+    Cal/q_model_tx_pwr.h \
+    Cal/q_model_tx_sb.h \
+    q_cal_tx_filter_offset_tabwidget.h \
+    Cal/q_model_rx_filter_offset.h \
+    q_cal_rx_filter_offset_tabwidget.h \
+    Cal/q_cal_base_dlg.h \
+    q_rf_r1f_adv_dlg.h \
+    Cal/q_model_rx_filter.h \
+    Cal/q_model_tx_att.h \
+    Cal/q_cal_tx_att_tabwidget.h \
+    Cal/q_cal_rx_att_tabwidget.h \
+    Cal/q_model_rx_att.h \
+    Cal/q_cal_tx_pwr_widget.h \
+    Cal/q_cal_rx_ref_widget.h \
+    Cal/q_model_rx_ref.h \
+    Cal/q_base_model.h \
+    Test/q_test_freq_res_thread.h \
+    Test/q_model_freq_res.h \
+    Test/q_test_freq_res_widget.h \
+    Test/q_test_rf_thread.h \
+    q_plot.h
 
 HEADERS += \
         mainwindow.h \
-    qrfr1cdlg.h \
-    qrfr1cadvdlg.h \
-    qwinthread.h \
-    qdeviceinitthread.h \
-    qfpgadlg.h \
-    qattachthreaddlg.h \
-    qrdttableview.h \
-    qmsglogmodel.h \
-    qreglogmodel.h \
-    qiqcapdlg.h \
-    qiqcapthread.h \
     define.h \
-    qtempctrldlg.h \
-    qrfr1adlg.h \
-    qrfr1acontainerdlg.h \
-    qrfr1ccontainerdlg.h \
-    qrfr1aadvdlg.h \
-    qadf5355dlg.h \
-    qbbdlg.h \
-    qiqphasescrolledit.h \
-    qarbdlg.h \
-    qiqampscrolledit.h \
-    qdcoffsetscrolledit.h \
-    Cal/qcalbasemodel.h \
-    Cal/qcalbasedlg.h \
-    Cal/qr1ctxloleakmodel.h \
-    Cal/qcalr1ctxloleakdlg.h \
-    Cal/qcalr1ctxloleakthread.h \
-    Cal/qcalr1ctxsbdlg.h \
-    Cal/qr1ctxsbmodel.h \
-    Cal/qcalr1ctxsbthread.h \
-    Cal/qcalr1ctxfilterdlg.h \
-    Cal/qcalr1ctxfilterthread.h \
-    qcalplot.h \
-    qcalr1ctxfiltertabwidget.h \
-    Cal/qr1ctxfiltermodel.h \
-    Cal/qcalr1ctxpwrdlg.h \
-    Cal/qr1ctxpwrmodel.h \
-    Cal/qcalr1ctxpwrthread.h \
-    Cal/qcalr1ctxattdlg.h \
-    Cal/qcalr1ctxattthread.h \
-    Cal/qr1ctxattmodel.h \
-    qcalr1ctxatttabwidget.h \
-    qrfdlg.h \
-    qframeslottrigwidget.h \
-    Cal/qcalr1ctxfilteroffsetdlg.h \
-    qcalr1ctxfilteroffsettabwidget.h \
-    Cal/qr1ctxfilteroffsetmodel.h \
-    Cal/qcalr1ctxfilteroffsetthread.h \
-    Cal/qcalr1crxfilterdlg.h \
-    Cal/qr1crxfiltermodel.h \
-    qcalr1crxfiltertabwidget.h \
-    Cal/qcalr1crxfilterthread.h \
-    Cal/qr1crxrefmodel.h \
-    Cal/qcalr1crxrefdlg.h \
-    Cal/qcalr1crxrefthread.h \
-    Cal/qr1crxattmodel.h \
-    qcalr1crxatttabwidget.h \
-    Cal/qcalr1crxattdlg.h \
-    Cal/qcalr1crxattthread.h \
-    Cal/qr1crxfilteroffsetmodel.h \
-    qcalr1crxfilteroffsettabwidget.h \
-    Cal/qcalr1crxfilteroffsetthread.h \
-    Cal/qcalr1crxfilteroffsetdlg.h
+    q_adf5355_dlg.h \
+    q_arb_dlg.h \
+    q_attach_thread_dlg.h \
+    q_bb_dlg.h \
+    q_device_init_thread.h \
+    q_fpga_dlg.h \
+    q_frame_slot_trig_widget.h \
+    q_iq_cap_dlg.h \
+    q_iq_cap_thread.h \
+    q_msg_log_model.h \
+    q_r1c_temp_ctrl_model.h \
+    q_r1c_temp_ctrl_thread.h \
+    q_rdt_tableview.h \
+    q_reg_log_model.h \
+    q_rf_dlg.h \
+    q_rf_r1a_adv_dlg.h \
+    q_rf_r1a_dlg.h \
+    q_rf_r1c_adv_dlg.h \
+    q_rf_r1c_dlg.h \
+    q_rf_r1f_dlg.h \
+    q_temp_ctrl_dlg.h \
+    q_winthread.h \
+    Cal/q_cal_tx_filter_tabwidget.h \
+    Cal/q_cal_rx_filter_tabwidget.h \
+    Cal/q_cal_r1c_rx_att_thread.h \
+    Cal/q_cal_r1c_rx_filter_offset_thread.h \
+    Cal/q_cal_r1c_rx_filter_thread.h \
+    Cal/q_cal_r1c_rx_ref_thread.h \
+    Cal/q_cal_r1c_tx_att_thread.h \
+    Cal/q_cal_r1c_tx_filter_offset_thread.h \
+    Cal/q_cal_r1c_tx_filter_thread.h \
+    Cal/q_cal_r1c_tx_loleak_thread.h \
+    Cal/q_cal_r1c_tx_pwr_thread.h \
+    Cal/q_cal_r1c_tx_sb_thread.h \
+    Cal/q_cal_r1c_dlg.h \
+    Cal/q_cal_r1c_thread.h \
+    q_led.h \
+    Cal/q_trouble_shoot_model.hpp \
+    q_rf_container_dlg.h \
+    q_scrolledit.h
 
 FORMS += \
         mainwindow.ui \
-    qrfr1cdlg.ui \
-    qrfr1cadvdlg.ui \
-    qfpgadlg.ui \
-    qiqcapdlg.ui \
-    qtempctrldlg.ui \
-    qrfr1adlg.ui \
-    qrfr1aadvdlg.ui \
-    qadf5355dlg.ui \
-    qarbdlg.ui \
-    qbbdlg.ui \
-    Cal/qcalr1ctxloleakdlg.ui \
-    Cal/qcalr1ctxsbdlg.ui \
-    Cal/qcalr1ctxfilterdlg.ui \
-    Cal/qcalr1ctxpwrdlg.ui \
-    Cal/qcalr1ctxattdlg.ui \
-    qframeslottrigwidget.ui \
-    Cal/qcalr1ctxfilteroffsetdlg.ui \
-    Cal/qcalr1crxfilterdlg.ui \
-    Cal/qcalr1crxrefdlg.ui \
-    Cal/qcalr1crxattdlg.ui \
-    Cal/qcalr1crxfilteroffsetdlg.ui
+    q_temp_ctrl_dlg.ui \
+    q_rf_r1a_dlg.ui \
+    q_rf_r1a_adv_dlg.ui \
+    q_rf_r1c_dlg.ui \
+    q_rf_r1c_adv_dlg.ui \
+    q_rf_r1f_dlg.ui \
+    q_rf_r1f_adv_dlg.ui \
+    q_adf5355_dlg.ui \
+    q_arb_dlg.ui \
+    q_bb_dlg.ui \
+    q_fpga_dlg.ui \
+    q_iq_cap_dlg.ui \
+    q_frame_slot_trig_widget.ui \
+    Test/q_test_rf_dlg.ui
+
+FORMS += \
+    Cal/q_cal_r1c_dlg.ui \
+    Cal/q_cal_tx_loleak_dlg.ui \
+    Cal/q_cal_tx_sb_dlg.ui \
+    Cal/q_cal_tx_filter_dlg.ui \
+    Cal/q_cal_tx_pwr_dlg.ui \
+    Cal/q_cal_tx_att_dlg.ui \
+    Cal/q_cal_tx_filter_offset_dlg.ui \
+    Cal/q_cal_rx_filter_dlg.ui \
+    Cal/q_cal_rx_ref_dlg.ui \
+    Cal/q_cal_rx_att_dlg.ui \
+    Cal/q_cal_rx_filter_offset_dlg.ui \
+    Test/q_test_freq_res_dlg.ui

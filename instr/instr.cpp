@@ -1,50 +1,26 @@
 #include "libbd.h"
 #include "instr.h"
-#include <string>
-
-#include "ks_n9010a.h"
-#include "ks_n9020a.h"
-#include "ks_n9030a.h"
-#include "ks_e4440a.h"
-#include "ks_e4443a.h"
-#include "ks_e4445a.h"
+#include "ks_sa.h"
+#include "ks_sg.h"
 #include "rs_fsup.h"
-#include "ks_n5182a.h"
-#include "ks_n5182b.h"
-#include "ks_e4438c.h"
-#include "ks_e8267d.h"
 #include "rs_smf100a.h"
 #include "rs_nrp.h"
 #include "rsnrpz.h"
-
+#include "exception.hpp"
+#include <string>
 #include <boost/assign.hpp>
+#include <boost/format.hpp>
 
-#define INSTR_CHECK(func)					\
-{                                           \
-	if (!(func)) {							\
-        if (m_en_expt) {					\
-            throw instr_expt(__FUNCTION__);	\
-			return false;					\
-		}									\
-		return false;						\
-    }                                       \
-}
-
-instr_expt::instr_expt(const char *format,...)
-{
-    memset(m_buf,0,sizeof(m_buf));
-	va_list ap;
-	va_start(ap,format);
-    vsprintf(m_buf,format,ap);
-	va_end(ap);
-}
-
-char* instr_expt::get_expt()
-{
-    return m_buf;
-}
-
+using namespace std;
 using namespace sp_rd;
+
+#define INSTR_CHECK(func) \
+{   if (!(func)) { \
+        if (m_en_expt) { throw sp_rd::runtime_error(__FUNCTION__); } \
+        else { return false; } \
+    } \
+}
+
 
 instr::instr(void) :
     m_des_sa("\0"),
@@ -66,7 +42,7 @@ instr::instr(void) :
             (boost::make_shared<ks_n5182a>())
             (boost::make_shared<ks_n5182b>())
             (boost::make_shared<ks_e4438c>())
-            (boost::make_shared<ks_e8257d>())
+            (boost::make_shared<ks_e8267d>())
             (boost::make_shared<rs_smf100a>());
 
     m_all_pm = boost::make_shared<std::vector<pm_sptr>>();
@@ -74,9 +50,9 @@ instr::instr(void) :
             (boost::make_shared<rs_nrp>());
 
     m_en_expt = true;
-    m_sa = NULL;
-    m_sg = NULL;
-    m_pm = NULL;
+    m_sa = nullptr;
+    m_sg = nullptr;
+    m_pm = nullptr;
 
     vi_pci_dev::open_default_rm();
 }
@@ -102,31 +78,34 @@ bool instr::init()
     ViSession session = 0;
     ViChar expr[32] = "GPIB?*INSTR";
 
-    m_sa = NULL;
-    m_sg = NULL;
-    m_pm = NULL;
+    m_sa = nullptr;
+    m_sg = nullptr;
+    m_pm = nullptr;
 
     if (viFindRsrc(vi_pci_dev::get_default_rm(),expr,&find_list,&ret_cnt,des) < VI_SUCCESS) {
-        throw instr_expt("vi find rsrc GPIB?*INSTR");
-		return false;
+        if (m_en_expt) {
+            throw sp_rd::runtime_error("vi find rsrc GPIB?*INSTR");
+        } else {
+            return false;
+        }
 	}
     while (ret_cnt --) {
         if (viOpen(vi_pci_dev::get_default_rm(),des,VI_NULL,VI_NULL,&session) < VI_SUCCESS) {
             viFindNext(find_list,des);
 			continue;
 		}
-        if (viWrite(session,(ViBuf)"*IDN?",5,&ret) < VI_SUCCESS) {
+        if (viWrite(session,ViBuf("*IDN?"),5,&ret) < VI_SUCCESS) {
             viClose(session);
             viFindNext(find_list,des);
 			continue;
 		}
-        if (viRead(session,(ViPBuf)idn,256,&ret) < VI_SUCCESS) {
+        if (viRead(session,ViPBuf(idn),256,&ret) < VI_SUCCESS) {
             viClose(session);
             viFindNext(find_list,des);
 			continue;
 		}
         viClose(session);
-        ins_instr(idn,des);
+        ins_instr(string(idn),des);
         viFindNext(find_list,des);
 	}
     viClose(find_list);
@@ -137,86 +116,102 @@ bool instr::init()
     char sensor_type[256] = {0};
     char sensor_sn[256] = {0};
 
-    for (int32_t retry = 0;retry < 2;retry ++) {
-        if ((status = rsnrpz_GetSensorCount(0, &num_sensors)) != VI_SUCCESS) {
-            ViChar msg[256] = {0};
-            rsnrpz_error_message(VI_NULL,status,msg);
-            throw instr_expt("%s",msg);
-			return false;
+    for (uint32_t retry = 0;retry < 2;retry ++) {
+        if ((status = rsnrpz_GetSensorCount(0,&num_sensors)) != VI_SUCCESS) {
+            if (m_en_expt) {
+                ViChar msg[256] = {0};
+                rsnrpz_error_message(VI_NULL,status,msg);
+                throw sp_rd::runtime_error(msg);
+            } else {
+                return false;
+            }
 		}
-        if (num_sensors > 0)
+        if (num_sensors > 0) {
 			break;
+        }
 	}
-    if (num_sensors < 1)
+
+    if (num_sensors < 1) {
 		return true;
+    }
 
     for (ViInt32 i = 1;i <= num_sensors;i ++) {
-//        ViBoolean meas_complete = VI_FALSE;
         if ((status = rsnrpz_GetSensorInfo(0,i,sensor_name,sensor_type,sensor_sn)) != VI_SUCCESS) {
-            ViChar msg[256] = {0};
-            rsnrpz_error_message(VI_NULL,status,msg);
-            throw instr_expt("%s",msg);
-			return false;
+            if (m_en_expt) {
+                ViChar msg[256] = {0};
+                rsnrpz_error_message(VI_NULL,status,msg);
+                throw sp_rd::runtime_error(msg);
+            } else {
+                return false;
+            }
 		}
-        ins_instr(const_cast<char *>("ROHDE&SCHWARZ,NRP"),sensor_name);
+        ins_instr(string("ROHDE&SCHWARZ,NRP"),sensor_name);
 	}
+
 	return true;
 }
 
-bool instr::ins_instr(char *idn,ViRsrc des)
+bool instr::ins_instr(const std::string &idn, ViRsrc des)
 {
     bool specified_sa = !m_des_sa.empty();
     bool specified_sg = !m_des_sg.empty();
     bool specified_pm = !m_des_pm.empty();
+    string descriptor;
 
-    for (int32_t i = 0;i < (int32_t)(m_all_sa->size());i ++) {
-        if (strstr(idn,specified_sa ? m_des_sa.c_str() : m_all_sa->at(i)->get_des())) {
-            if (!m_all_sa->at(i)->init(des))
+    for (size_t i = 0;i < m_all_sa->size();i ++) {
+        descriptor = (specified_sa ? m_des_sa : m_all_sa->at(i)->get_descriptor());
+        if (idn.find(descriptor) != string::npos) {
+            if (!m_all_sa->at(i)->init(des)) {
 				continue;
-			else {
-                m_sa = m_all_sa.get()->at(i).get();
+            } else {
+                m_sa = m_all_sa->at(i).get();
 				return true;
 			}
 		}
 	}
 
-    for (int32_t i = 0;i < (int32_t)(m_all_sg->size());i ++) {
-        if (strstr(idn,specified_sg ? m_des_sg.c_str() : m_all_sg->at(i)->get_des())) {
-            if (!m_all_sg->at(i)->init(des))
+    for (size_t i = 0;i < m_all_sg->size();i ++) {
+        descriptor = (specified_sg ? m_des_sg : m_all_sg->at(i)->get_descriptor());
+        if (idn.find(descriptor) != string::npos) {
+            if (!m_all_sg->at(i)->init(des)) {
 				continue;
-			else {
-                m_sg = m_all_sg.get()->at(i).get();
+            } else {
+                m_sg = m_all_sg->at(i).get();
 				return true;
 			}
 		}
 	}
 
-    for (int32_t i = 0;i < (int32_t)(m_all_pm->size());i ++) {
-        if (strstr(idn,specified_pm ? m_des_pm.c_str() : m_all_pm->at(i)->get_des())) {
-            if (!m_all_pm->at(i)->init(des))
+    for (size_t i = 0;i < m_all_pm->size();i ++) {
+        descriptor = (specified_pm ? m_des_pm : m_all_pm->at(i)->get_descriptor());
+        if (idn.find(descriptor) != string::npos) {
+            if (!m_all_pm->at(i)->init(des)) {
 				continue;
-			else {
-                m_pm = m_all_pm.get()->at(i).get();
+            } else {
+                m_pm = m_all_pm->at(i).get();
 				return true;
 			}
 		}
 	}
+
 	return true;
 }
 
 bool instr::close()
 {
-    if (m_pm)
+    if (m_pm) {
         INSTR_CHECK(m_pm->close());
+    }
 
 	return true;
 }
 
 bool instr::has_sa()
 {
-    if (!m_sa) {
+    if (m_sa == nullptr) {
         if (m_en_expt) {
-            throw instr_expt("%s disconnect",strcmp(m_des_sa.c_str(),"") ? m_des_sa : "sa");
+            throw sp_rd::runtime_error((m_des_sa.empty() ? "sa" : m_des_sa) + " disconnect");
+        } else {
 			return false;
 		}
 	}
@@ -225,9 +220,10 @@ bool instr::has_sa()
 
 bool instr::has_sg()
 {
-    if (!m_sg) {
+    if (m_sg == nullptr) {
         if (m_en_expt) {
-            throw instr_expt("%s disconnect",strcmp(m_des_sg.c_str(),"") ? m_des_sg : "sg");
+            throw sp_rd::runtime_error((m_des_sg.empty() ? "sg" : m_des_sg) + " disconnect");
+        } else {
 			return false;
 		}
 	}
@@ -236,9 +232,10 @@ bool instr::has_sg()
 
 bool instr::has_pm()
 {
-    if (!m_pm) {
+    if (m_pm == nullptr) {
         if (m_en_expt) {
-            throw instr_expt("%s disconnect",strcmp(m_des_pm.c_str(),"") ? m_des_pm : "pm");
+            throw sp_rd::runtime_error((m_des_pm.empty() ? "pm" : m_des_pm) + " disconnect");
+        } else {
 			return false;
 		}
 	}
@@ -264,6 +261,7 @@ bool instr::sa_reset()
 {
     BOOL_CHECK(has_sa());
     INSTR_CHECK(m_sa->reset());
+    INSTR_CHECK(m_sa->set_cal(sa::AUTO_OFF));
 	return true;
 }
 
@@ -386,14 +384,14 @@ bool instr::sa_set_cal(sa::cal_type_t type)
 	return true;
 }
 
-bool instr::sa_set_avg_trace(bool en,int32_t cnt)
+bool instr::sa_set_avg_trace(bool en, uint32_t cnt)
 {
     BOOL_CHECK(has_sa());
     INSTR_CHECK(m_sa->set_avg_trace(en,cnt));
 	return true;
 }
 
-bool instr::sa_set_avg_trace_get_data(int32_t avg_cnt,int32_t pt_cnt,double *data)
+bool instr::sa_set_avg_trace_get_data(uint32_t avg_cnt, uint32_t pt_cnt, double *data)
 {
     BOOL_CHECK(has_sa());
     INSTR_CHECK(m_sa->set_avg_trace_get_data(avg_cnt,pt_cnt,data));

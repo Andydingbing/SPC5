@@ -1,80 +1,117 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef MAIN_WINDOW_H
+#define MAIN_WINDOW_H
 
 #include <QMainWindow>
-#include <QVBoxLayout>
-#include <QTreeWidgetItem>
-#include <QLabel>
-#include <QProgressBar>
 #include "define.h"
-#include "qmsglogmodel.h"
-#include "qreglogmodel.h"
-#include "qrfr1acontainerdlg.h"
-#include "qrfr1aadvdlg.h"
-#include "qrfr1ccontainerdlg.h"
-#include "qrfr1cadvdlg.h"
-#include "qarbdlg.h"
-#include "qiqcapdlg.h"
-#include "qbbdlg.h"
-#include "qfpgadlg.h"
-#include "qcalr1ctxloleakdlg.h"
-#include "qcalr1ctxsbdlg.h"
-#include "qcalr1ctxfilterdlg.h"
-#include "qcalr1ctxpwrdlg.h"
-#include "qcalr1ctxattdlg.h"
-#include "qcalr1ctxfilteroffsetdlg.h"
-#include "qcalr1crxfilterdlg.h"
-#include "qcalr1crxrefdlg.h"
-#include "qcalr1crxattdlg.h"
-#include "qcalr1crxfilteroffsetdlg.h"
+#include "q_rf_container_dlg.h"
+#include "q_arb_dlg.h"
+#include "q_iq_cap_dlg.h"
+#include "q_bb_dlg.h"
+#include "q_fpga_dlg.h"
+#include "q_cal_dlg.h"
+#include "q_cal_r1c_dlg.h"
+#include "q_test_dlg.h"
+
+//#include "qtestr1ctxfreqresponsedlg.h"
+//#include "qtestr1crxfreqresponsedlg.h"
+//#include "qtestr1ctestpowdlg.h"
+//#include "qtestr1ctxfreqdlg.h"
+//#include "qtestr1crxattdlg.h"
+//#include "qtestr1crxfreqdlg.h"
 
 namespace Ui {
 class MainWindow;
 }
 
+class QLabel;
+class QTreeWidgetItem;
+class QProgressBar;
+class QHBoxLayout;
+
+class QMsgLogModel;
+class QRegLogModel;
+
+class QRfR1AAdvDlg;
+class QRFR1CAdvDlg;
+class QRFR1FAdvDlg;
+
+//class QCalR1CDlg;
+//class QCalR1CTXLOLeakDlg;
+//class QCalR1FTXLOLeakDlg;
+//class QCalR1CTXSBDlg;
+//class QCalR1FTXSBDlg;
+//class QCalR1CTXFilterDlg;
+//class QCalR1FTXFilterDlg;
+//class QCalR1CTXPwrDlg;
+//class QCalR1FTXPwrDlg;
+//class QCalR1CTxAttDlg;
+//class QCalR1CTxFilterOffsetDlg;
+//class QCalR1FTXFilterOffsetDlg;
+//class QCalR1CRXFilterDlg;
+//class QCalR1FRXFilterDlg;
+//class QCalR1CRxRefDlg;
+//class QCalR1CRxAttDlg;
+//class QCalR1CRxFilterOffsetDlg;
+//class QCalR1FRXFilterOffsetDlg;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
 public:
     qint8 tabIdxRf;
-    qint8 tabIdxDMA;
     qint8 tabIdxRfu;
+    qint8 tabIdxDMA;
     sp3301 *_sp3301;
     sp3501 *_sp3501;
 public:
     QMsgLogModel *msgLogModel;
     QRegLogModel *regLogModel;
 public:
-    QProgressBar *mainProgress;
+    QProgressBar *mainProgressBar;
     QLabel *labelProgressName;
+    QLabel *labelVerRF;
     QLabel *labelVerK7_0;
     QLabel *labelVerK7_1;
     QLabel *labelVerS6;
     QLabel *labelVerDriver;
 public:
-    QRfR1AContainerDlg  *dlgRfR1AContainer[MAX_RF];
-    QRfR1AAdvDlg        *dlgRfR1AAdv[MAX_RF];
-    QRfR1CContainerDlg  *dlgRfR1CContainer[MAX_RF];
-    QRfR1CAdvDlg        *dlgRfR1CAdv[MAX_RF];
-    QArbDlg     *dlgRfArb[MAX_RF];
-    QArbDlg     *dlgBbArb[MAX_RF];
-    QIQCapDlg   *dlgRfIQCap[MAX_RF];
-    QIQCapDlg   *dlgBbIQCap[MAX_RF];
-    QBbDlg      *dlgBb[MAX_RF];
-    QFPGADlg    *dlgFpga;
+    QHBoxLayout *childDlgLayout;
+    QHBoxLayout *mainTabLayout;
 public:
-    QCalR1CTxLOLeakDlg          *dlgCalR1CTxLOLeak[MAX_RF];
-    QCalR1CTxSBDlg              *dlgCalR1CTxSB[MAX_RF];
-    QCalR1CTxFilterDlg          *dlgCalR1CTxFilter[MAX_RF];
-    QCalR1CTxPwrDlg             *dlgCalR1CTxPwr[MAX_RF];
-    QCalR1CTxAttDlg             *dlgCalR1CTxAtt[MAX_RF];
-    QCalR1CTxFilterOffsetDlg    *dlgCalR1CTxFilterOffset[MAX_RF];
-    QCalR1CRxFilterDlg          *dlgCalR1CRxFilter[MAX_RF];
-    QCalR1CRxRefDlg             *dlgCalR1CRxRef[MAX_RF];
-    QCalR1CRxAttDlg             *dlgCalR1CRxAtt[MAX_RF];
-    QCalR1CRxFilterOffsetDlg    *dlgCalR1CRxFilterOffset[MAX_RF];
+    QRFR1AContainerDlg *dlgRFR1AContainer[MAX_RF];
+    QRfR1AAdvDlg       *dlgRFR1AAdv[MAX_RF];
+    QRFR1CContainerDlg *dlgRFR1CContainer[MAX_RF];
+    QRFR1CAdvDlg       *dlgRFR1CAdv[MAX_RF];
+    QRFR1FContainerDlg *dlgRFR1FContainer[MAX_RF];
+    QRFR1FAdvDlg       *dlgRFR1FAdv[MAX_RF];
+    QArbDlg     *dlgArb[MAX_RF];
+    QIQCapDlg   *dlgIQCap[MAX_RF];
+    QBbDlg      *dlgBB[MAX_RF];
+    QFPGADlg    *dlgFPGA;
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    QCalR1CDlg                  *dlgCalR1C[MAX_RF];
+    QCalR1CTXLOLeakDlg          *dlgCalR1CTXLOLeak[MAX_RF];
+    QCalR1CTXSBDlg              *dlgCalR1CTXSB[MAX_RF];
+    QCalR1CTXFilterDlg          *dlgCalR1CTXFilter[MAX_RF];
+    QCalR1CTXPwrDlg             *dlgCalR1CTXPwr[MAX_RF];
+    QCalR1CTXAttDlg             *dlgCalR1CTXAtt[MAX_RF];
+    QCalR1CTXFilterOffsetDlg    *dlgCalR1CTXFilterOffset[MAX_RF];
+    QCalR1CRXFilterDlg          *dlgCalR1CRXFilter[MAX_RF];
+    QCalR1CRXRefDlg             *dlgCalR1CRXRef[MAX_RF];
+    QCalR1CRXAttDlg             *dlgCalR1CRXAtt[MAX_RF];
+    QCalR1CRXFilterOffsetDlg    *dlgCalR1CRXFilterOffset[MAX_RF];
+
+public:
+    QTestR1CTabWidget *dlgTestR1C[MAX_RF];
+//    QTestR1CTxFreqResponseDlg   *dlgTestR1CTxFreqResponse[MAX_RF];
+//    QTestR1CRxFreqResponseDlg   *dlgTestR1CRxFreqResponse[MAX_RF];
+//    QTestR1CTestPowDlg          *dlgTestR1CTxTestPow[MAX_RF];
+//    QTestR1CTxFreqDlg           *dlgTestR1CTxFreq[MAX_RF];
+//    QTestR1CRxAttDlg            *dlgTestR1CRxAtt[MAX_RF];
+//    QTestR1CRxFreqDlg           *dlgTestR1CRxFreq[MAX_RF];
+public:
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 public slots:
     void deviceInit();
@@ -86,21 +123,36 @@ public slots:
     void selSP3301_4();
     void starAllIQCapture();
     void stopAllIQCapture();
-    void showSwHwVer(const sp3301::rfu_info_t &info,const char *driver);
-    void initProg(const QString name,int pts);
-    void setProgPos(int pos);
+    void showSwHwVer(const sp3301::rfu_info_t &info, const char *driver);
+    void initProg(const QString name,quint32 pts);
+    void setProgPos(quint32 pos);
     void updateMsgTable(int row);
     void updateRegTable(int row);
-    void threadCheckBox(const QString msg);
-    void threadErrorBox(const QString msg);
+
+    void threadCheckBox(const QString msg)
+    { ::threadCheckBox(msg.toStdString().c_str()); }
+
+    void threadErrorBox(const QString msg)
+    { ::threadErrorBox(msg.toStdString().c_str()); }
+
+    bool ftpRetryBox()
+    { return ::ftpRetryBox(); }
+
 public:
     void updateParamInChildDlg();
     void addMsgListCallback();
     void addRegListCallback();
-    QString rfIdx2RfTabName(int idx);
-    QString rfIdx2BbTabName(int idx);
+private:
+    void registerMetaType();
+    void initStatusBar();
+    void initChildDlg();
+    void initMainTreeWidget();
+    void initMainTabWidget();
+    void initMsgLogDlg();
+    void initRegLogDlg();
+    QString rfIdx2RFTabName(int idx);
+    QString rfIdx2BBTabName(int idx);
 signals:
-    void sp3301Changed();
     void tabIdxChanged(int idx);
     void addMsgList(int row);
     void addRegList(int row);
@@ -115,4 +167,4 @@ private:
 
 extern MainWindow *g_MainW;
 
-#endif // MAINWINDOW_H
+#endif // MAIN_WINDOW_H

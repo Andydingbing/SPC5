@@ -1,23 +1,26 @@
-#ifndef PM_H
-#define PM_H
+#ifndef INSTR_PM_H
+#define INSTR_PM_H
 
+#include "rd.h"
 #include "visa.h"
+#include <string>
 
-class pm
+class pm : sp_rd::noncopyable
 {
 public:
-    pm(void){}
-    virtual ~pm(void){}
-    virtual char* get_des() = 0;
-    virtual bool init(ViRsrc dev) = 0;
+    virtual ~pm(void) {}
+    virtual std::string get_descriptor() = 0;
+    virtual bool init(const std::string &dev) = 0;
+
 public:
     virtual bool reset() = 0;
     virtual bool set_freq(double freq) = 0;
     virtual bool get_pwr(double &pwr) = 0;
     virtual bool get_pwr(double freq,double &pwr) = 0;
     virtual bool close() = 0;
+
 protected:
-    ViSession m_session;
+    unsigned long m_session;
 };
 
-#endif // PM_H
+#endif // INSTR_PM_H

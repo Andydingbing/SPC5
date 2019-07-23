@@ -1,37 +1,49 @@
-//
-// Copyright 2018 StarPoint Inc.,Ltd
-//
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
 
-#ifndef WD_PCI_DEV_H
-#define WD_PCI_DEV_H
+#ifndef RD_WD_PCI_DEV_H
+#define RD_WD_PCI_DEV_H
 
 #include "pci_dev.h"
 
 namespace sp_rd {
 
-class RD_API wd_pci_dev : public sp_rd::pci_dev
+class RD_API wd_pci_dev : public pci_dev
 {
 public:
-    wd_pci_dev(void);
-    wd_pci_dev(const char *des);
+    wd_pci_dev();
+    wd_pci_dev(const std::string &descriptor);
     virtual ~wd_pci_dev(void);
 
 public:
-    virtual int32_t get_devs(vector<string> &devs);
-    virtual int32_t init(const string dev) { return 0; }
-    virtual int32_t init(const string dev, uint32_t vid, uint32_t did) { return 0; }
+    virtual int32_t get_devs(std::vector<std::string> &devs);
+    virtual int32_t init(const std::string &dev);
+    virtual int32_t init(const std::string &dev, uint32_t vid, uint32_t did);
     virtual int32_t close() { return 0; }
 
 public:
-    virtual int32_t w8(addr_space_t addr, uint32_t offset, uint8_t data) { return 0; }
-    virtual int32_t w16(addr_space_t addr, uint32_t offset, uint16_t data) { return 0; }
-    virtual int32_t w32(addr_space_t addr, uint32_t offset, uint32_t data) { return 0; }
-    virtual int32_t w32(addr_space_t addr, uint32_t offset, uint32_t len, uint32_t *buf) { return 0; }
-    virtual int32_t r8(addr_space_t addr, uint32_t offset, uint8_t *data) { return 0; }
-    virtual int32_t r16(addr_space_t addr, uint32_t offset, uint16_t *data) { return 0; }
-    virtual int32_t r32(addr_space_t addr, uint32_t offset, uint32_t *data) { return 0; }
+    virtual int32_t w8(addr_space_t addr, uint32_t offset, uint8_t data);
+    virtual int32_t w16(addr_space_t addr, uint32_t offset, uint16_t data);
+    virtual int32_t w32(addr_space_t addr, uint32_t offset, uint32_t data);
+    virtual int32_t w32(addr_space_t addr, uint32_t offset, uint32_t len, uint32_t *buf);
+
+    virtual int32_t r8(addr_space_t addr, uint32_t offset, uint8_t *data);
+    virtual int32_t r16(addr_space_t addr, uint32_t offset, uint16_t *data);
+    virtual int32_t r32(addr_space_t addr, uint32_t offset, uint32_t *data);
 };
 
-} //namespace sp_rd
+} // namespace sp_rd
 
-#endif // WD_PCI_DEV_H
+#endif // RD_WD_PCI_DEV_H

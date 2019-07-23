@@ -1,25 +1,20 @@
-#
-# Copyright 2018 StarPoint Inc.,Ltd
-#
+include( ../include/boost.pri )
 
-#
-# Qt project file of library "bd".
-#
-
-QT -= core gui
-TARGET = bd
-TEMPLATE = lib
 CONFIG += shared
+CONFIG -= qt
+TEMPLATE = lib
 
-INCLUDEPATH += ../include       \
-               ../include/win   \
-               ../include/win/windrvr
+INCLUDEPATH += \
+    ../include \
+    ../include/win \
+    ../include/win/windrvr
 
 DEFINES += RD_DLL_EXPORTS
 
 win32 {
-    LIBS += $$PWD/../lib/visa64.lib \
-            $$PWD/../lib/windrvr/amd64/wdapi1020.lib
+    LIBS += \
+        ../lib/visa64.lib \
+        ../lib/windrvr/amd64/wdapi1020.lib
 }
 
 unix {
@@ -32,10 +27,8 @@ unix {
 }
 
 CONFIG(debug,debug|release) {
-    OBJECTS_DIR = $$PWD/x64/debug
     DESTDIR = ../Qt/x64/debug
 } else {
-    OBJECTS_DIR = $$PWD/x64/release
     DESTDIR = ../Qt/x64/release
 }
 
@@ -43,11 +36,7 @@ SOURCES += \
     vi_pci_dev.cpp \
     wd_pci_dev.cpp \
     vi_mem_io.cpp \
-    gpib_dev.cpp \
-    algorithm.cpp \
-    fraction_float.cpp \
-    gen_ini_file.cpp \
-    gen_int.cpp
+    gpib_dev.cpp
 
 HEADERS += \
     pci_dev.h \
@@ -55,8 +44,4 @@ HEADERS += \
     wd_pci_dev.h \
     vi_mem_io.h \
     gpib_dev.h \
-    libbd.h \
-    algorithm.h \
-    fraction_float.h \
-    gen_ini_file.h \
-    gen_int.h
+    libbd.h

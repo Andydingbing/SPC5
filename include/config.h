@@ -1,17 +1,22 @@
-//
-// Copyright 2018 StarPoint Inc.,Ltd
-//
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
 
-#ifndef CONFIG_H
-#define CONFIG_H
+#ifndef INCLUDE_CONFIG_H
+#define INCLUDE_CONFIG_H
 
-//! GUI defines
-
-//#ifndef GUI_MFC
-//#define GUI_MFC
-//#endif
-
-//! Define cross-platform macros,taken from uhd(USRP Hardware Driver) library
+//! Define cross-platform macros,taken from uhd(USRP Hardware Driver) library.
 #if defined(_MSC_VER)
     #define RD_EXPORT       __declspec(dllexport)
     #define RD_IMPORT       __declspec(dllimport)
@@ -53,7 +58,13 @@
     #define RD_API  RD_EXPORT
 #else
     #define RD_API  RD_IMPORT
-#endif // RD_DLL_EXPORTS
+#endif
+
+#ifdef RD_EXCEPTION
+    #define RD_THROW throw
+#else
+    #define RD_THROW //
+#endif
 
 //! Platform defines
 /*!
@@ -74,13 +85,13 @@
 #endif
 
 #ifdef RD_C_MSC
-#if _MSC_VER >= 1913
-/*!
- * both pthread.h in Windows & Windows time.h define struct timespec.
- * Use Windows time.h here.
- */
-#define _TIMESPEC_DEFINED 1
+    #if _MSC_VER >= 1913
+    /*!
+     * Both pthread.h & time.h of Windows define struct timespec.
+     * Use Windows time.h here.
+     */
+    #define _TIMESPEC_DEFINED 1
+    #endif
 #endif
-#endif // RD_C_MSC
 
-#endif // CONFIG_H
+#endif // INCLUDE_CONFIG_H

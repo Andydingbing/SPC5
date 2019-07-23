@@ -1,8 +1,9 @@
 #include "rs_nrp.h"
-#include "rd.h"
-#include <math.h>
+#include <cmath>
 #include "rsnrpz.h"
 #include "sleep_common.h"
+
+using namespace std;
 
 #ifdef NRP_DEBUG
 #define NRP_CHECK(func)										\
@@ -23,34 +24,19 @@
 #define NRP_CHECK(func) func;
 #endif
 
-rs_nrp::rs_nrp() : pm()
-{	
-}
-
-rs_nrp::~rs_nrp()
+bool rs_nrp::init(const string &dev)
 {
-}
-
-char* rs_nrp::get_des()
-{
-    return const_cast<char *>("ROHDE&SCHWARZ,NRP");
-}
-
-bool rs_nrp::init(ViRsrc dev)
-{
-    NRP_CHECK(rsnrpz_init(dev,false,false,&m_session));
+    NRP_CHECK(rsnrpz_init(ViRsrc(dev.c_str()),false,false,&m_session));
     sleep_ms(100);
 	return true;
 }
 
 bool rs_nrp::reset()
 {
-//    ViBoolean meas_complete = VI_FALSE;
-
     NRP_CHECK(rsnrpz_status_preset(m_session));
-    NRP_CHECK(rsnrpz_avg_setAutoEnabled(m_session, 1, VI_FALSE));
-    NRP_CHECK(rsnrpz_avg_setCount(m_session, 1, 3));
-    NRP_CHECK(rsnrpz_trigger_setSource(m_session, 1, RSNRPZ_TRIGGER_SOURCE_IMMEDIATE));
+    NRP_CHECK(rsnrpz_avg_setAutoEnabled(m_session,1,VI_FALSE));
+    NRP_CHECK(rsnrpz_avg_setCount(m_session,1,3));
+    NRP_CHECK(rsnrpz_trigger_setSource(m_session,1,RSNRPZ_TRIGGER_SOURCE_IMMEDIATE));
     NRP_CHECK(rsnrpz_reset(m_session));
     NRP_CHECK(rsnrpz_chans_initiate(m_session));
     sleep_ms(100);
@@ -72,16 +58,17 @@ bool rs_nrp::get_pwr(double &pwr)
 	do {
         sleep_ms(50);
         NRP_CHECK(rsnrpz_chan_isMeasurementComplete(m_session,1,&meas_complete));
-    } while ((meas_complete == VI_FALSE));
+    } while (meas_complete == VI_FALSE);
 
     NRP_CHECK(rsnrpz_meass_readMeasurement(m_session,1,10000,&meas));
-    pwr = 10 * log10(fabs(meas * 1000));
+    pwr = 10.0 * log10(fabs(meas * 1000.0));
 	return true;	
 }
 
 bool rs_nrp::get_pwr(double freq,double &pwr)
 {
     BOOL_CHECK(set_freq(freq));
+    sleep_ms(10);
     BOOL_CHECK(get_pwr(pwr));
 	return true;
 }

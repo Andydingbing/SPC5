@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include <QStyleFactory>
+#include <QStyle>
 
 void addMsgListCallback() {g_MainW->addMsgListCallback();}
 void addRegListCallback() {g_MainW->addRegListCallback();}
@@ -15,7 +16,7 @@ int main(int argc, char *argv[])
     g_MainW->show();
     g_MainW->setWindowState(Qt::WindowMaximized);
 
-//    QApplication::setStyle(QStyleFactory::create("Windows"));
+//    QApplication::setStyle(QStyleFactory::create("windowsvista"));
 //    QApplication::setPalette(QApplication::style()->standardPalette());
 
     return a.exec();

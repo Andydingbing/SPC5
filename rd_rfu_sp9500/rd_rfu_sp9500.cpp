@@ -1,7 +1,9 @@
 #include "liblog.h"
-#include "libsp3301.h"
-#include "libsp3501.h"
+#include "sp3301.h"
+#include "sp3501.h"
 #include "reg_def.h"
+#include "dsp_buf.h"
+#include "gen_ini_file.h"
 #include "rd_rfu_sp9500.h"
 #include <vector>
 
@@ -9,32 +11,52 @@ using namespace std;
 using namespace sp_rd;
 using namespace sp_rd::sp1401;
 
-typedef struct AvailableModule {
-    sp3301 *m_pSP3301;	//which rfu does this rf module belong
-    uint32_t m_uiRfIdx;	//the rf module index of particular rfu above
-}AvailableModule;
+typedef struct available_rf_board_t {
+    sp3301  *m_sp3301; // The RFU
+    uint32_t m_rf_idx; // The RF index in particular RFU
+} spec_rf_board_t;
 
-vector <AvailableModule> g_Module;
+static const uint32_t max_mimo_ports = ARRAY_SIZE(IQ_Capture_Index::Idx);
+static vector<available_rf_board_t> g_rf_board;
 
-#define DECLARE_DYNAMIC_SP3301						\
-    if (RFIndex > g_Module.size())					\
-        return -1;									\
-    sp3301 *pSP3301 = g_Module[RFIndex].m_pSP3301;	\
-    uint32_t uiRfIdx = g_Module[RFIndex].m_uiRfIdx;
+#define DECL_DYNAMIC_SP3301 \
+    if (RFIndex > g_rf_board.size() - 1) \
+        return -1; \
+    sp3301 *SP3301 = g_rf_board[RFIndex].m_sp3301; \
+    uint32_t rf_idx = g_rf_board[RFIndex].m_rf_idx;
 
-int32_t RF_SetBitPath(char *Path_0,char *Path_1)
+IQ_Capture_Param::IQ_Capture_Param()
 {
-    INT_CHECK(SP3301_2.set_program_bit(true,true,Path_0,Path_1));
-    INT_CHECK(SP3301_3.set_program_bit(true,true,Path_0,Path_1));
+    TriggerType = 0;
+    RadioFrameCondition_X = 0;
+    RadioFrameCondition_Y = 0;
+    TriggerOffset = 0;
+    MeasLength = 0;
+}
+
+IQ_Capture_Index::IQ_Capture_Index()
+{
+    for (uint32_t i = 0;i < max_mimo_ports;i ++) {
+        Idx[i] = false;
+    }
+}
+
+int32_t RF_SetBitPath(char *Path)
+{
+    INT_CHECK(SP3301_2.set_program_bit(Path));
+    INT_CHECK(SP3301_3.set_program_bit(Path));
     return 0;
 }
 
+static uint32_t g_samples[4]={0};
+static double g_RxLevel[4]={0};
+
 int32_t RF_Boot()
 {
-    Log.set_enalbe(log_t::l_all_off, true);
-    Log.set_enalbe(log_t::l_prompt, true);
-    g_Module.clear();
-    AvailableModule AvaiModule;
+    Log.en(log_t::RD_LOG_ALL_OFF, true);
+    Log.en(log_t::RD_LOG_PROMPT, true);
+    g_rf_board.clear();
+    available_rf_board_t rf_board;
     sp3301::active_t RfuActiveInfo[MAX_RFU];
 
     SP3301_2.boot();
@@ -44,27 +66,27 @@ int32_t RF_Boot()
     SP3301_2.boot();
     SP3301_3.boot();
 
-    int16_t iOCXO = 0;
-    SP3301_2.get_ocxo(iOCXO);
-    Log.stdprintf("ocxo : %d\n",iOCXO);
+    uint16_t ocxo_value = 0;
+    SP3301_2.get_ocxo(ocxo_value);
+    Log.stdprintf("ocxo : %d\n",ocxo_value);
     SP3501.open_board();
-    SP3501.vol_9119(iOCXO);
+    SP3501.vol_9119(ocxo_value);
 
     RfuActiveInfo[2] = SP3301_2.is_actived();
     RfuActiveInfo[3] = SP3301_3.is_actived();
 
-    for (int i = 0;i < MAX_RF;i ++) {
+    for (int i = MAX_RF - 1;i >= 0;i --) {
         if (RfuActiveInfo[2].sp1401[i]) {
-            AvaiModule.m_pSP3301 = &SP3301_2;
-            AvaiModule.m_uiRfIdx = i;
-            g_Module.push_back(AvaiModule);
+            rf_board.m_sp3301 = &SP3301_2;
+            rf_board.m_rf_idx = i;
+            g_rf_board.push_back(rf_board);
         }
     }
-    for (int i = 0;i < MAX_RF;i ++) {
+    for (int i = MAX_RF - 1;i >= 0;i --) {
         if (RfuActiveInfo[3].sp1401[i]) {
-            AvaiModule.m_pSP3301 = &SP3301_3;
-            AvaiModule.m_uiRfIdx = i;
-            g_Module.push_back(AvaiModule);
+            rf_board.m_sp3301 = &SP3301_3;
+            rf_board.m_rf_idx = i;
+            g_rf_board.push_back(rf_board);
         }
     }
     return 0;
@@ -129,6 +151,13 @@ int32_t RF_GetRFPortNumber(uint32_t &uiRFPortNumber)
     return 0;
 }
 
+int32_t RF_GetRFSerialNumber(uint32_t RFIndex, char *SerialNumber)
+{
+    DECL_DYNAMIC_SP3301
+    INT_CHECK(SP3301->get_rf_sn(rf_idx,SerialNumber));
+    return 0;
+}
+
 int32_t RF_GetRFUSerialNumber(uint32_t RFUIndex,char *SerialNumber)
 {
     switch (RFUIndex) {
@@ -142,6 +171,12 @@ int32_t RF_GetRFUSerialNumber(uint32_t RFUIndex,char *SerialNumber)
     return 0;
 }
 
+int32_t RF_GetRFDriverVersion(const char **version)
+{
+    *version = SP3301_2.get_driver_ver();
+    return 0;
+}
+
 int32_t RF_GetRFUVersion(char *version)
 {
     SP3301_2.get_ver(version);
@@ -150,54 +185,64 @@ int32_t RF_GetRFUVersion(char *version)
 
 int32_t RF_SetTxState(uint32_t RFIndex,bool State)
 {
+    DECL_DYNAMIC_SP3301;
+    INT_CHECK(SP3301->rf_set_tx_state(rf_idx, State));
     return 0;
 }
 
 int32_t RF_SetTxPower(uint32_t RFIndex,float Power)
 {
-    DECLARE_DYNAMIC_SP3301;
-    INT_CHECK(pSP3301->rf_set_tx_pwr(uiRfIdx,Power));
+    DECL_DYNAMIC_SP3301;
+    INT_CHECK(SP3301->rf_set_tx_pwr(rf_idx,Power));
     return 0;
 }
 
 int32_t RF_SetTxFrequency(uint32_t RFIndex,uint64_t Freq)
 {
-    DECLARE_DYNAMIC_SP3301;
-    INT_CHECK(pSP3301->rf_set_tx_freq(uiRfIdx,Freq));
+    DECL_DYNAMIC_SP3301;
+    INT_CHECK(SP3301->rf_set_tx_freq(rf_idx,Freq));
+    return 0;
+}
+
+int32_t RF_GetTxFrequency(uint32_t RFIndex,uint64_t &Freq)
+{
+    DECL_DYNAMIC_SP3301;
+    INT_CHECK(SP3301->rf_get_tx_freq(rf_idx,Freq));
     return 0;
 }
 
 int32_t RF_SetTxSource(uint32_t RFIndex,SOURCE Source)
 {
-    DECLARE_DYNAMIC_SP3301;
+    DECL_DYNAMIC_SP3301;
     sp2401_r1a::da_src_t TxSrc = sp2401_r1a::INTER_FILTER;
 
     switch (Source) {
-        case ARB  : {break;}
+        case ARB  : {TxSrc = sp2401_r1a::DRIVER_ARB;break;}
         case FPGA : {TxSrc = sp2401_r1a::INTER_FILTER;break;}
         case CW   : {TxSrc = sp2401_r1a::SINGLE_TONE;break;}
-        default:break;
     }
-    INT_CHECK(pSP3301->rf_set_tx_src(uiRfIdx,TxSrc));
+    INT_CHECK(SP3301->rf_set_tx_src(rf_idx,TxSrc));
     return 0;
 }
 
 int32_t RF_SetSourceFrequency(uint32_t RFIndex,uint64_t Freq)
 {
-    DECLARE_DYNAMIC_SP3301;
-    INT_CHECK(pSP3301->rf_set_src_freq(uiRfIdx,Freq));
+    DECL_DYNAMIC_SP3301;
+    INT_CHECK(SP3301->rf_set_src_freq(rf_idx,Freq));
     return 0;
 }
 
 int32_t RF_LoadARBSource(uint32_t RFIndex,char *filename)
 {
-//    DECLARE_DYNAMIC_SP3301;
-//	INT_CHECK(pSP3301->RF_LoadArb(uiRfIdx,filename));
+    DECL_DYNAMIC_SP3301;
+    INT_CHECK(SP3301->arb_load(rf_idx,filename));
     return 0;
 }
 
 int32_t RF_SetARBEnable(uint32_t RFIndex,bool bState)
 {
+    DECL_DYNAMIC_SP3301;
+    INT_CHECK(SP3301->set_arb_en(rf_idx,bState));
     return 0;
 }
 
@@ -218,21 +263,35 @@ int32_t RF_SetARBCount(uint32_t RFIndex,int iCnt)
 
 int32_t RF_SetRxLevel(uint32_t RFIndex,double Level)
 {
-    DECLARE_DYNAMIC_SP3301;
-    INT_CHECK(pSP3301->rf_set_rx_level(uiRfIdx,Level));
+    DECL_DYNAMIC_SP3301;
+    INT_CHECK(SP3301->rf_set_rx_level(rf_idx,Level));
+    g_RxLevel[RFIndex]=Level;
+    return 0;
+}
+
+int32_t RF_GetRxLevel(uint32_t RFIndex,double &Level)
+{
+    Level = g_RxLevel[RFIndex];
     return 0;
 }
 
 int32_t RF_SetRxFrequency(uint32_t RFIndex,uint64_t Freq)
 {
-    DECLARE_DYNAMIC_SP3301;
-    INT_CHECK(pSP3301->rf_set_rx_freq(uiRfIdx,Freq));
+    DECL_DYNAMIC_SP3301;
+    INT_CHECK(SP3301->rf_set_rx_freq(rf_idx,Freq));
+    return 0;
+}
+
+int32_t RF_GetRxFrequency(uint32_t RFIndex,uint64_t &Freq)
+{
+    DECL_DYNAMIC_SP3301;
+    INT_CHECK(SP3301->rf_get_rx_freq(rf_idx,Freq));
     return 0;
 }
 
 int32_t RF_SetConnector(uint32_t RFIndex,CONNECTOR Connector)
 {
-    DECLARE_DYNAMIC_SP3301;
+    DECL_DYNAMIC_SP3301;
     io_mode_t Mode = sp1401::OUTPUT;
     switch (Connector) {
         case ::IO     : {Mode = sp1401::IO;break;}
@@ -240,7 +299,7 @@ int32_t RF_SetConnector(uint32_t RFIndex,CONNECTOR Connector)
         case ::LOOP   : {Mode = sp1401::LOOP;break;}
         default:break;
     }
-    INT_CHECK(pSP3301->rf_set_io_mode(uiRfIdx,Mode));
+    INT_CHECK(SP3301->rf_set_io_mode(rf_idx,Mode));
     return 0;
 }
 
@@ -256,22 +315,22 @@ int32_t RF_SetTriggerSource(uint32_t RFIndex,RFU_TRIGGERSOURCE TriggerSource)
 
 int32_t RF_SetTriggerMode(uint32_t RFIndex,TRIGGERMODE TriggerMode)
 {
-    DECLARE_DYNAMIC_SP3301;
-    basic_sp1401::pwr_meas_src_t MeasSrc = basic_sp1401::PWR_MEAS_FREE_RUN;
+    DECL_DYNAMIC_SP3301;
+    basic_sp1401::iq_cap_src_t MeasSrc = basic_sp1401::PWR_MEAS_FREE_RUN;
     switch (TriggerMode) {
         case IF		 : {MeasSrc = basic_sp1401::PWR_MEAS_IF_PWR;break;}
         case FREERUN : {MeasSrc = basic_sp1401::PWR_MEAS_FREE_RUN;break;}
         case MARKER  : {break;}
         default:break;
     }
-    INT_CHECK(pSP3301->rf_set_trig_mode(uiRfIdx,MeasSrc));
+    INT_CHECK(SP3301->set_iq_cap_trig_src(rf_idx,MeasSrc));
     return 0;
 }
 
 int32_t RF_SetTriggerLevel(uint32_t RFIndex,float TriggerLevel)
 {
-    DECLARE_DYNAMIC_SP3301;
-    INT_CHECK(pSP3301->rf_set_trig_level(uiRfIdx,TriggerLevel));
+    DECL_DYNAMIC_SP3301;
+    INT_CHECK(SP3301->set_iq_cap_trig_level(rf_idx,TriggerLevel));
     return 0;
 }
 
@@ -280,38 +339,27 @@ int32_t RF_SetTriggerOffset(uint32_t RFIndex,uint32_t Offset)
     return 0;
 }
 
-int32_t RF_SetCaptureLength(uint32_t RFIndex,uint32_t MLength)
-{
-    DECLARE_DYNAMIC_SP3301;
-    INT_CHECK(pSP3301->set_iq_cap_samples(uiRfIdx,MLength));
-    return 0;
-}
-
-int32_t RF_SetIQDataMap(uint32_t RFIndex,uint16_t *pData)
-{
-    return 0;
-}
 
 int32_t RF_InitPowerMeasure(uint32_t RFIndex)
 {
-    DECLARE_DYNAMIC_SP3301;
-    INT_CHECK(pSP3301->rf_init_pwr_meas(uiRfIdx));
+    DECL_DYNAMIC_SP3301;
+    INT_CHECK(SP3301->rf_init_pwr_meas(rf_idx));
     return 0;
 }
 
 int32_t RF_AbortPowerMeasure(uint32_t RFIndex)
 {
-    DECLARE_DYNAMIC_SP3301;
-    INT_CHECK(pSP3301->rf_abort_pwr_meas(uiRfIdx));
+    DECL_DYNAMIC_SP3301;
+    INT_CHECK(SP3301->rf_abort_pwr_meas(rf_idx));
     return 0;
 }
 
 int32_t RF_GetMeasProcess(uint32_t RFIndex,PROCESS &Process)
 {
-    DECLARE_DYNAMIC_SP3301;
+    DECL_DYNAMIC_SP3301;
     Process = IDLE_Driver;
     basic_sp1401::pwr_meas_state_t MeasState = basic_sp1401::PMS_IDLE;
-    INT_CHECK(pSP3301->rf_get_pwr_meas_proc(uiRfIdx,MeasState));
+    INT_CHECK(SP3301->rf_get_pwr_meas_proc(rf_idx,MeasState));
     switch (MeasState) {
         case basic_sp1401::PMS_IDLE     : {Process = IDLE_Driver;break;}
         case basic_sp1401::PMS_WFT      : {Process = WFTrigger_Driver;break;}
@@ -325,23 +373,91 @@ int32_t RF_GetMeasProcess(uint32_t RFIndex,PROCESS &Process)
 
 int32_t RF_GetMeasResult(uint32_t RFIndex,float &Power,float &Crest)
 {
-    DECLARE_DYNAMIC_SP3301;
-    INT_CHECK(pSP3301->rf_get_pwr_meas_result(uiRfIdx,Power,Crest));
+    DECL_DYNAMIC_SP3301
+    INT_CHECK(SP3301->rf_get_pwr_meas_result(rf_idx,Power,Crest));
     return 0;
 }
 
-int32_t RF_InitIQCapture(uint32_t RFIndex)
+int32_t RF_SetIQCaptureBuffer(uint32_t RFIndex,int16_t *I,int16_t *Q)
 {
+    DECL_DYNAMIC_SP3301
+    INT_CHECK(SP3301->set_iq_cap_buffer(rf_idx,I,Q));
     return 0;
 }
 
-int32_t RF_AbortIQCapture(uint32_t RFIndex)
+int32_t RF_SetIQCaptureParams(uint32_t RFIndex,IQ_Capture_Param Param)
 {
+    DECL_DYNAMIC_SP3301
+
+    INT_CHECK(SP3301->set_iq_cap_frame_trig_src(rf_idx,sp2401_r1a::frame_trig_src_t(Param.TriggerType)));
+    INT_CHECK(SP3301->set_iq_cap_frame_trig_mod_x_y(rf_idx,Param.RadioFrameCondition_X,Param.RadioFrameCondition_Y));
+    INT_CHECK(SP3301->set_iq_cap_frame_trig_offset(rf_idx,Param.TriggerOffset));
+    INT_CHECK(SP3301->set_iq_cap_samples(rf_idx,Param.MeasLength));
     return 0;
 }
 
-int32_t RF_GetIQCaptureProcess(uint32_t RFIndex,PROCESS &Process)
+int32_t RF_SetIQCaptureStart(uint32_t RFIndex)
 {
+    DECL_DYNAMIC_SP3301
+
+    INT_CHECK(SP3301->iq_cap(rf_idx));
+    INT_CHECK(SP3301->iq_cap_iq2buf(rf_idx));
+    return 0;
+}
+
+int32_t RF_SetIQCaptureStarts(IQ_Capture_Index &RFIndex)
+{
+    vector<spec_rf_board_t *> SP1401;
+    vector<spec_rf_board_t *>::iterator iter_SP1401;
+    vector<dma_mgr *> ddr;
+    vector<dma_mgr *>::iterator iter_ddr;
+    uint32_t i = 0;
+
+    // Find the first specified SP1401.
+    for (i = 0;i < max_mimo_ports;i ++) {
+        if (RFIndex.Idx[i]) {
+            SP1401.push_back(&(g_rf_board.at(i)));
+            ddr.push_back(SP1401.back()->m_sp3301->ddr(SP1401.back()->m_rf_idx));
+            i ++;
+            break;
+        }
+    }
+
+    // Find the other SP1401s orderly.
+    // If the next and the last specified SP1401s are connected to the same FPGA,
+    // the next specified SP1401 will be ignored.
+    for (;i < max_mimo_ports;i ++) {
+        if (RFIndex.Idx[i]) {
+            if (!is_brother_l_r(g_rf_board.at(i).m_rf_idx,SP1401.back()->m_rf_idx)) {
+                SP1401.push_back(&(g_rf_board.at(i)));
+                ddr.push_back(SP1401.back()->m_sp3301->ddr(SP1401.back()->m_rf_idx));
+            }
+        }
+    }
+
+    // Start.
+    // We cannot make sure this will finish in 10ms right now!!!
+    // All ports may not be synced!!!
+    for (iter_ddr = ddr.begin();iter_ddr != ddr.end();iter_ddr ++) {
+        INT_CHECK((*iter_ddr)->fpga_w_start());
+    }
+
+    for (iter_ddr = ddr.begin();iter_ddr != ddr.end();iter_ddr ++) {
+        (*iter_ddr)->fpga_w_trans();
+        (*iter_ddr)->fpga_w_abort();
+    }
+
+    for (iter_SP1401 = SP1401.begin();iter_SP1401 != SP1401.end();iter_SP1401 ++) {
+        (*iter_SP1401)->m_sp3301->iq_cap_iq2buf((*iter_SP1401)->m_rf_idx);
+    }
+
+    return 0;
+}
+
+int32_t RF_SetIQCaptureAbort(uint32_t RFIndex)
+{
+    DECL_DYNAMIC_SP3301
+    INT_CHECK(SP3301->iq_cap_abort(rf_idx));
     return 0;
 }
 
@@ -352,7 +468,7 @@ int32_t RF_WarningInfo(uint32_t RFIndex,uint32_t &State)
 
 int32_t RF_GetTemperature(uint32_t RFIndex,double &TxTemperature,double &RxTemperature)
 {
-    DECLARE_DYNAMIC_SP3301;
-    INT_CHECK(pSP3301->rf_get_temp(uiRfIdx,TxTemperature,RxTemperature));
+    DECL_DYNAMIC_SP3301;
+    INT_CHECK(SP3301->rf_get_temp(rf_idx,TxTemperature,RxTemperature));
     return 0;
 }

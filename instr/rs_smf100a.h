@@ -1,15 +1,19 @@
-#ifndef RS_SMF100A_H
-#define RS_SMF100A_H
+#ifndef INSTR_RS_SMF100A_H
+#define INSTR_RS_SMF100A_H
 
-#include "ks_n5182b.h"
+#include "ks_sg.h"
 
 class rs_smf100a : public ks_n5182b
 {
 public:
-    rs_smf100a(void);
-    virtual ~rs_smf100a(void);
-    virtual char* get_des();
-    virtual bool set_en_mod(bool en);
+    std::string get_descriptor() { return std::string("SMF100A"); }
+    bool set_en_mod(bool en)
+    {
+        if (en)
+            return w("MOD:STAT ON");
+        else
+            return w("MOD:STAT OFF");
+    }
 };
 
-#endif // RS_SMF100A_H
+#endif // INSTR_RS_SMF100A_H

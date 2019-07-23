@@ -1,249 +1,49 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QLabel>
+#include <QVBoxLayout>
 #include <QMetaType>
 #include <QMessageBox>
-#include <QStackedLayout>
-#include "qdeviceinitthread.h"
-#include "qiqcapthread.h"
-
-MainWindow *g_MainW = NULL;
-
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
-{
-    ui->setupUi(this);
-    qRegisterMetaType<sp3301::rfu_info_t>("sp3301::rfu_info_t");
-    qRegisterMetaType<cal_file::cal_item_t>("cal_file::cal_item_t");
-
-    tabIdxRf = 0;
-    tabIdxDMA = 0;
-    tabIdxRfu = 0;
-
-    _sp3501 = &SP3501;
-    _sp3301 = &SP3301_2;
-
-    mainProgress = new QProgressBar(ui->statusBar);
-    mainProgress->setTextVisible(false);
-    mainProgress->setValue(0);
-    mainProgress->setFixedHeight(15);
-
-    labelProgressName = new QLabel(QString("..."));
-    labelVerK7_0 = new QLabel(QString("K7_0:0x00000000"));
-    labelVerK7_1 = new QLabel(QString("K7_1:0x00000000"));
-    labelVerS6 = new QLabel(QString("S6:0x00000000"));
-    labelVerDriver = new QLabel(QString("Driver:0.0.00000"));
-
-    ui->statusBar->clearMessage();
-    ui->statusBar->addWidget(labelProgressName);
-    ui->statusBar->addWidget(mainProgress,1);
-    ui->statusBar->addPermanentWidget(labelVerK7_0);
-    ui->statusBar->addPermanentWidget(labelVerK7_1);
-    ui->statusBar->addPermanentWidget(labelVerS6);
-    ui->statusBar->addPermanentWidget(labelVerDriver);
-
-    ui->mainTree->setHeaderHidden(true);
-    ui->mainTree->setRootIsDecorated(true);
-    ui->mainTree->clear();
-    ui->mainTree->setColumnCount(1);
-    ui->mainTree->setStyleSheet("QTreeWidget {background:rgb(179,217,255)}"
-                                "QTreeWidget::item:selected {background:rgb(0,255,0);color:black;}");
-    ui->mainTab->setStyleSheet("QTabBar::tab {height:20px; width:120px;}"
-                               "QTabBar::tab:selected {background:rgb(0,255,0)}");
-
-    QStringList strRoot;
-    QStringList strChild;
-    QStringList::ConstIterator constIter;
-    strRoot.append(QString("RF Debug"));
-    strRoot.append(QString("BB Debug"));
-    strRoot.append(QString("Calibration(R1A/B)"));
-    strRoot.append(QString("Calibration(R1C/D)"));
-    strRoot.append(QString("Test(R1A/B)"));
-    strRoot.append(QString("Test(R1C/D)"));
-
-    QList<QTreeWidgetItem *> itemRoot;
-    QList<QTreeWidgetItem *> itemChild_0;
-    QList<QTreeWidgetItem *> itemChild_1;
-    for (constIter = strRoot.constBegin();constIter != strRoot.constEnd();constIter ++) {
-        itemRoot.append(new QTreeWidgetItem(ui->mainTree,QStringList(* constIter)));
-        itemRoot.back()->setExpanded(true);
-    }
-
-    strChild.clear();
-    strChild.append(QString("R1A/B"));
-    strChild.append(QString("R1C/D"));
-    strChild.append(QString("Arb"));
-    strChild.append(QString("IQ Capture"));
-    itemChild_0.clear();
-    for (constIter = strChild.constBegin();constIter != strChild.constEnd();constIter ++) {
-        itemChild_0.append(new QTreeWidgetItem(itemRoot.at(0),QStringList(*constIter)));
-        itemChild_0.back()->setExpanded(true);
-    }
-    strChild.clear();
-    strChild.append(QString("Overview"));
-    strChild.append(QString("Advance"));
-    itemChild_1.clear();
-    for (constIter = strChild.constBegin();constIter != strChild.constEnd();constIter ++)
-        itemChild_1.append(new QTreeWidgetItem(itemChild_0.at(0),QStringList(*constIter)));
-    itemChild_1.clear();
-    for (constIter = strChild.constBegin();constIter != strChild.constEnd();constIter ++)
-        itemChild_1.append(new QTreeWidgetItem(itemChild_0.at(1),QStringList(*constIter)));
-
-    strChild.clear();
-    strChild.append(QString("Overview"));
-    strChild.append(QString("Arb"));
-    strChild.append(QString("IQ Capture"));
-    strChild.append(QString("DMA"));
-    strChild.append(QString("FPGA"));
-    itemChild_0.clear();
-    for (constIter = strChild.constBegin();constIter != strChild.constEnd();constIter ++)
-        itemChild_0.append(new QTreeWidgetItem(itemRoot.at(1),QStringList(*constIter)));
-
-    strChild.clear();
-    strChild.append(QString("TxLOLeakage"));
-    strChild.append(QString("TxSideband"));
-    strChild.append(QString("TxAttenuation"));
-    strChild.append(QString("TxBasePower"));
-    strChild.append(QString("RxSGPMMTable"));
-    strChild.append(QString("RxReference"));
-    itemChild_0.clear();
-    for (constIter = strChild.constBegin();constIter != strChild.constEnd();constIter ++)
-        itemChild_0.append(new QTreeWidgetItem(itemRoot.at(2),QStringList(*constIter)));
-
-    strChild.clear();
-    strChild.append(QString("TxLOLeakage"));
-    strChild.append(QString("TxSideband"));
-    strChild.append(QString("TxCompensateFilter"));
-    strChild.append(QString("TxBasePower"));
-    strChild.append(QString("TxAttenuation"));
-    strChild.append(QString("TxFilterOffset"));
-    strChild.append(QString("RxCompensateFilter"));
-    strChild.append(QString("RxReference"));
-    strChild.append(QString("RxAttenuation"));
-    strChild.append(QString("RxFilterOffset"));
-    itemChild_0.clear();
-    for (constIter = strChild.constBegin();constIter != strChild.constEnd();constIter ++)
-        itemChild_0.append(new QTreeWidgetItem(itemRoot.at(3),QStringList(*constIter)));
-
-    strChild.clear();
-    strChild.append(QString("BoardStability"));
-    strChild.append(QString("TxFreqResponse"));
-    strChild.append(QString("RxFreqResponse"));
-    itemChild_0.clear();
-    for (constIter = strChild.constBegin();constIter != strChild.constEnd();constIter ++)
-        itemChild_0.append(new QTreeWidgetItem(itemRoot.at(4),QStringList(*constIter)));
-
-    strChild.clear();
-    strChild.append(QString("TxFreqResponse"));
-    strChild.append(QString("RxFreqResponse"));
-    strChild.append(QString("Blower-MachineTemp"));
-    strChild.append(QString("RFTemp-TxPower"));
-    itemChild_0.clear();
-    for (constIter = strChild.constBegin();constIter != strChild.constEnd();constIter ++)
-        itemChild_0.append(new QTreeWidgetItem(itemRoot.at(5),QStringList(*constIter)));
-
-    QSizePolicy childDlgPolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    QHBoxLayout *childDlgLayout = new QHBoxLayout;
-    QHBoxLayout *mainTabLayout = new QHBoxLayout;
-
-
-#define ADD_CHILD_DLG(dlg,class_name)                       \
-    dlg = new class_name(ui->mainTab);                      \
-    dlg->setSizePolicy(childDlgPolicy);                     \
-    dlg->setVisible(false);                                 \
-    childDlgLayout->addWidget(dlg);
-
-#define ADD_CHILD_DLG__RF_DLG(dlg,class_name)               \
-    ADD_CHILD_DLG(dlg,class_name);                          \
-    dlg->setSP3301(_sp3301);                                \
-    dlg->setRfIdx(quint8(i));
-
-
-    for (qint8 i = 0;i < MAX_RF;i ++) {
-        ADD_CHILD_DLG(dlgRfR1AContainer[i],QRfR1AContainerDlg);
-        ADD_CHILD_DLG(dlgRfR1CContainer[i],QRfR1CContainerDlg);
-        dlgRfR1AContainer[i]->dlgRfR1A->setSP3301(_sp3301);
-        dlgRfR1AContainer[i]->dlgRfR1A->setRfIdx(i);
-        dlgRfR1CContainer[i]->dlgRfR1C->setSP3301(_sp3301);
-        dlgRfR1CContainer[i]->dlgRfR1C->setRfIdx(i);
-
-        ADD_CHILD_DLG__RF_DLG(dlgRfR1AAdv[i],QRfR1AAdvDlg);
-        ADD_CHILD_DLG__RF_DLG(dlgRfR1CAdv[i],QRfR1CAdvDlg);
-        ADD_CHILD_DLG__RF_DLG(dlgRfArb[i],QArbDlg);
-        ADD_CHILD_DLG__RF_DLG(dlgBbArb[i],QArbDlg);
-        ADD_CHILD_DLG__RF_DLG(dlgRfIQCap[i],QIQCapDlg);
-        ADD_CHILD_DLG__RF_DLG(dlgBbIQCap[i],QIQCapDlg);
-        ADD_CHILD_DLG__RF_DLG(dlgBb[i],QBbDlg);
-        ADD_CHILD_DLG(dlgCalR1CTxLOLeak[i],QCalR1CTxLOLeakDlg);
-        ADD_CHILD_DLG(dlgCalR1CTxSB[i],QCalR1CTxSBDlg);
-        ADD_CHILD_DLG(dlgCalR1CTxFilter[i],QCalR1CTxFilterDlg);
-        ADD_CHILD_DLG(dlgCalR1CTxPwr[i],QCalR1CTxPwrDlg);
-        ADD_CHILD_DLG(dlgCalR1CTxAtt[i],QCalR1CTxAttDlg);
-        ADD_CHILD_DLG(dlgCalR1CTxFilterOffset[i],QCalR1CTxFilterOffsetDlg);
-        ADD_CHILD_DLG(dlgCalR1CRxFilter[i],QCalR1CRxFilterDlg);
-        ADD_CHILD_DLG(dlgCalR1CRxRef[i],QCalR1CRxRefDlg);
-        ADD_CHILD_DLG(dlgCalR1CRxAtt[i],QCalR1CRxAttDlg);
-        ADD_CHILD_DLG(dlgCalR1CRxFilterOffset[i],QCalR1CRxFilterOffsetDlg);
-
-        connect(this,SIGNAL(sp3301Changed()),dlgCalR1CTxLOLeak[i],SLOT(sp3301Change()));
-        connect(this,SIGNAL(sp3301Changed()),dlgCalR1CTxSB[i],SLOT(sp3301Change()));
-        connect(this,SIGNAL(sp3301Changed()),dlgCalR1CTxFilter[i],SLOT(sp3301Change()));
-        connect(this,SIGNAL(sp3301Changed()),dlgCalR1CTxPwr[i],SLOT(sp3301Change()));
-        connect(this,SIGNAL(sp3301Changed()),dlgCalR1CTxAtt[i],SLOT(sp3301Change()));
-        connect(this,SIGNAL(sp3301Changed()),dlgCalR1CTxFilterOffset[i],SLOT(sp3301Change()));
-        connect(this,SIGNAL(sp3301Changed()),dlgCalR1CRxFilter[i],SLOT(sp3301Change()));
-        connect(this,SIGNAL(sp3301Changed()),dlgCalR1CRxRef[i],SLOT(sp3301Change()));
-        connect(this,SIGNAL(sp3301Changed()),dlgCalR1CRxAtt[i],SLOT(sp3301Change()));
-        connect(this,SIGNAL(sp3301Changed()),dlgCalR1CRxFilterOffset[i],SLOT(sp3301Change()));
-    }
-    ADD_CHILD_DLG(dlgFpga,QFPGADlg);
-
-    mainTabLayout->addLayout(childDlgLayout);
-    ui->mainTab->setLayout(mainTabLayout);
-
-    updateParamInChildDlg();
-
-    msgLogModel = new QMsgLogModel;
-    ui->msgTableView->setModel(msgLogModel);
-    ui->msgTableView->setColumnWidth(0,125);
-    ui->msgTableView->setColumnWidth(1,350);
-    ui->msgTableView->setColumnWidth(2,50);
-    ui->msgTableView->setColumnWidth(3,80);
-    ui->msgTableView->horizontalHeader()->setFixedHeight(20);
-    ui->msgTableView->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
-    ui->msgTableView->verticalHeader()->setDefaultSectionSize(18);
+#include <QTreeWidgetItem>
+#include <QProgressBar>
+#include "q_msg_log_model.h"
+#include "q_reg_log_model.h"
+#include "q_rf_r1a_dlg.h"
+#include "q_rf_r1a_adv_dlg.h"
+#include "q_rf_r1c_dlg.h"
+#include "q_rf_r1c_adv_dlg.h"
+#include "q_rf_r1f_dlg.h"
+#include "q_rf_r1f_adv_dlg.h"
+#include "q_temp_ctrl_dlg.h"
+#include "q_device_init_thread.h"
+#include "q_iq_cap_thread.h"
 
 #if (QT_VERSION < QT_VERSION_CHECK(5,0,0))
     #define setSectionResizeMode setResizeMode
 #endif
 
-    ui->msgTableView->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
-    ui->msgTableView->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Stretch);
-    ui->msgTableView->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
-    ui->msgTableView->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
+MainWindow *g_MainW = nullptr;
 
-    regLogModel = new QRegLogModel;
-    ui->regTableView->setModel(regLogModel);
-    ui->regTableView->setColumnWidth(0,68);
-    ui->regTableView->setColumnWidth(1,68);
-    ui->regTableView->setColumnWidth(2,60);
-    ui->regTableView->setColumnWidth(3,85);
-    ui->regTableView->setColumnWidth(4,85);
-    ui->regTableView->setColumnWidth(5,50);
-    ui->regTableView->horizontalHeader()->setFixedHeight(20);
-    ui->regTableView->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
-    ui->regTableView->verticalHeader()->setDefaultSectionSize(18);
-    ui->regTableView->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
-    ui->regTableView->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
-    ui->regTableView->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
-    ui->regTableView->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
-    ui->regTableView->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Fixed);
-    ui->regTableView->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Fixed);
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    tabIdxRf(0),
+    tabIdxRfu(0),
+    tabIdxDMA(0),
+    _sp3301(&SP3301_2),
+    _sp3501(&SP3501),
+    childDlgLayout(new QHBoxLayout),
+    ui(new Ui::MainWindow)
+{
+    ui->setupUi(this);
 
-    connect(this,SIGNAL(addMsgList(int)),msgLogModel,SLOT(update(int)));
-    connect(this,SIGNAL(addRegList(int)),regLogModel,SLOT(update(int)));
-    connect(this,SIGNAL(addMsgList(int)),this,SLOT(updateMsgTable(int)));
-    connect(this,SIGNAL(addRegList(int)),this,SLOT(updateRegTable(int)));
+    registerMetaType();
+
+    initStatusBar();
+    initChildDlg();
+    initMainTreeWidget();
+    initMainTabWidget();
+    initMsgLogDlg();
+    initRegLogDlg();
 
     connect(ui->actionInit,SIGNAL(triggered(bool)),this,SLOT(deviceInit()));
     connect(ui->actionExit,SIGNAL(triggered(bool)),this,SLOT(exit()));
@@ -265,7 +65,8 @@ void MainWindow::deviceInit()
 {
     QWinThread::g_threadThread = new QDeviceInitThread(this);
     QDeviceInitThread *thread = (QDeviceInitThread *)(QWinThread::g_threadThread);
-    connect(thread,SIGNAL(swhwVerReady(sp3301::rfu_info_t,const char*)),this,SLOT(showSwHwVer(sp3301::rfu_info_t,const char*)));
+    connect(thread,SIGNAL(swhwVerReady(sp3301::rfu_info_t,const char*)),
+                 this,SLOT(showSwHwVer(sp3301::rfu_info_t,const char*)));
     thread->start();
 }
 
@@ -283,7 +84,7 @@ void MainWindow::selSP3301_0()
     ui->actionRFU4->setChecked(false);
     _sp3301 = &SP3301_0;
     updateParamInChildDlg();
-    Log.add_msg_list(0,"working on rfu0");
+    Log.add_msg(0,"working on rfu0");
 }
 
 void MainWindow::selSP3301_1()
@@ -295,7 +96,7 @@ void MainWindow::selSP3301_1()
     ui->actionRFU4->setChecked(false);
     _sp3301 = &SP3301_1;
     updateParamInChildDlg();
-    Log.add_msg_list(0,"working on rfu1");
+    Log.add_msg(0,"working on rfu1");
 }
 
 void MainWindow::selSP3301_2()
@@ -307,7 +108,7 @@ void MainWindow::selSP3301_2()
     ui->actionRFU4->setChecked(false);
     _sp3301 = &SP3301_2;
     updateParamInChildDlg();
-    Log.add_msg_list(0,"working on rfu2");
+    Log.add_msg(0,"working on rfu2");
 }
 
 void MainWindow::selSP3301_3()
@@ -319,7 +120,7 @@ void MainWindow::selSP3301_3()
     ui->actionRFU4->setChecked(false);
     _sp3301 = &SP3301_3;
     updateParamInChildDlg();
-    Log.add_msg_list(0,"working on rfu3");
+    Log.add_msg(0,"working on rfu3");
 }
 
 void MainWindow::selSP3301_4()
@@ -331,25 +132,21 @@ void MainWindow::selSP3301_4()
     ui->actionRFU4->setChecked(true);
     _sp3301 = &SP3301_4;
     updateParamInChildDlg();
-    Log.add_msg_list(0,"working on rfu4");
+    Log.add_msg(0,"working on rfu4");
 }
 
 void MainWindow::starAllIQCapture()
 {
     THREAD_EXISTED_CHK();
     QIQCapThread::Param param;
+    param._sp3301 = _sp3301;
     for (int i = 0;i < MAX_RF;i ++) {
-        param._sp1401[i] = _sp3301->m_sp1401->at(i).get();
-        if (dlgRfIQCap[i]->isVisible() | dlgBbIQCap[i]->isVisible())
-            param.visible[i] = true;
-        else
-            param.visible[i] = false;
+        param.visible[i] = (dlgIQCap[i]->isVisible());
     }
     QWinThread::g_threadThread = new QIQCapThread(param,this);
     QIQCapThread *pThread = (QIQCapThread *)(QWinThread::g_threadThread);
     for (int i = 0;i < MAX_RF;i ++) {
-        connect(pThread,SIGNAL(updatePlot()),dlgRfIQCap[i],SLOT(updatePlot()),Qt::BlockingQueuedConnection);
-        connect(pThread,SIGNAL(updatePlot()),dlgBbIQCap[i],SLOT(updatePlot()),Qt::BlockingQueuedConnection);
+        connect(pThread,SIGNAL(updatePlot()),dlgIQCap[i],SLOT(updatePlot()),Qt::BlockingQueuedConnection);
     }
     connect(this,SIGNAL(tabIdxChanged(int)),pThread,SLOT(tabIdxChanged(int)));
     QWinThread::g_threadThread->start();
@@ -357,6 +154,9 @@ void MainWindow::starAllIQCapture()
 
 void MainWindow::stopAllIQCapture()
 {
+  //by byf 2018.10.22
+        QWinThread::g_threadStop = true;
+        //QWinThread::g_threadThread->threadLock.unlock();
 
 }
 
@@ -368,79 +168,359 @@ void MainWindow::showSwHwVer(const sp3301::rfu_info_t &info, const char *driver)
     labelVerDriver->setText(QString("Driver:%1").arg(driver));
 }
 
+void MainWindow::registerMetaType()
+{
+    qRegisterMetaType<sp3301::rfu_info_t>("sp3301::rfu_info_t");
+    qRegisterMetaType<cal_file::cal_item_t>("cal_file::cal_item_t");
+    qRegisterMetaType<CalResult>("CalResult");
+    qRegisterMetaType<test_item_t>("test_item_t");
+    qRegisterMetaType<TestResult>("TestResult");
+}
+
+void MainWindow::initStatusBar()
+{
+    mainProgressBar = new QProgressBar(ui->statusBar);
+    mainProgressBar->setTextVisible(false);
+    mainProgressBar->setValue(0);
+    mainProgressBar->setFixedHeight(15);
+
+    labelProgressName = new QLabel(QString("..."));
+    labelVerRF = new QLabel(QString("RF:"));
+    labelVerK7_0 = new QLabel(QString("K7_0:0x00000000"));
+    labelVerK7_1 = new QLabel(QString("K7_1:0x00000000"));
+    labelVerS6 = new QLabel(QString("S6:0x00000000"));
+    labelVerDriver = new QLabel(QString("Driver:0.0.00000"));
+
+    ui->statusBar->clearMessage();
+    ui->statusBar->addWidget(labelProgressName);
+    ui->statusBar->addWidget(mainProgressBar,1);
+    ui->statusBar->addPermanentWidget(labelVerRF);
+    ui->statusBar->addPermanentWidget(labelVerK7_0);
+    ui->statusBar->addPermanentWidget(labelVerK7_1);
+    ui->statusBar->addPermanentWidget(labelVerS6);
+    ui->statusBar->addPermanentWidget(labelVerDriver);
+}
+
+void MainWindow::initChildDlg()
+{
+    QSizePolicy childDlgPolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+
+#define ADD_CHILD_DLG(dlg,class_name) \
+    dlg = new class_name(ui->mainTab); \
+    dlg->setSizePolicy(childDlgPolicy); \
+    dlg->setVisible(false); \
+    childDlgLayout->addWidget(dlg);
+
+#define ADD_CHILD_DLG__RF_DLG(dlg,class_name) \
+    ADD_CHILD_DLG(dlg,class_name); \
+    dlg->setSP3301(_sp3301); \
+    dlg->setRFIdx(i);
+
+    for (quint8 i = 0;i < MAX_RF;i ++) {
+        ADD_CHILD_DLG(dlgRFR1AContainer[i],QRFR1AContainerDlg);
+        ADD_CHILD_DLG(dlgRFR1CContainer[i],QRFR1CContainerDlg);
+        ADD_CHILD_DLG(dlgRFR1FContainer[i],QRFR1FContainerDlg);
+
+        dlgRFR1AContainer[i]->dlg->setSP3301(_sp3301);
+        dlgRFR1AContainer[i]->dlg->setRFIdx(i);
+        dlgRFR1CContainer[i]->dlg->setSP3301(_sp3301);
+        dlgRFR1CContainer[i]->dlg->setRFIdx(i);
+        dlgRFR1FContainer[i]->dlg->setSP3301(_sp3301);
+        dlgRFR1FContainer[i]->dlg->setRFIdx(i);
+
+        ADD_CHILD_DLG__RF_DLG(dlgRFR1AAdv[i],QRfR1AAdvDlg);
+        ADD_CHILD_DLG__RF_DLG(dlgRFR1CAdv[i],QRFR1CAdvDlg);
+        ADD_CHILD_DLG__RF_DLG(dlgRFR1FAdv[i],QRFR1FAdvDlg);
+        ADD_CHILD_DLG__RF_DLG(dlgArb[i],QArbDlg);
+        ADD_CHILD_DLG__RF_DLG(dlgIQCap[i],QIQCapDlg);
+        ADD_CHILD_DLG__RF_DLG(dlgBB[i],QBbDlg);
+
+        ADD_CHILD_DLG(dlgCalR1C[i],QCalR1CDlg);
+        ADD_CHILD_DLG(dlgCalR1CTXLOLeak[i],QCalR1CTXLOLeakDlg);
+        ADD_CHILD_DLG(dlgCalR1CTXSB[i],QCalR1CTXSBDlg);
+        ADD_CHILD_DLG(dlgCalR1CTXFilter[i],QCalR1CTXFilterDlg);
+        ADD_CHILD_DLG(dlgCalR1CTXPwr[i],QCalR1CTXPwrDlg);
+        ADD_CHILD_DLG(dlgCalR1CTXAtt[i],QCalR1CTXAttDlg);
+        ADD_CHILD_DLG(dlgCalR1CTXFilterOffset[i],QCalR1CTXFilterOffsetDlg);
+        ADD_CHILD_DLG(dlgCalR1CRXFilter[i],QCalR1CRXFilterDlg);
+        ADD_CHILD_DLG(dlgCalR1CRXRef[i],QCalR1CRXRefDlg);
+        ADD_CHILD_DLG(dlgCalR1CRXAtt[i],QCalR1CRXAttDlg);
+        ADD_CHILD_DLG(dlgCalR1CRXFilterOffset[i],QCalR1CRXFilterOffsetDlg);
+
+        ADD_CHILD_DLG(dlgTestR1C[i],QTestR1CTabWidget);
+    }
+    ADD_CHILD_DLG(dlgFPGA,QFPGADlg);
+
+    updateParamInChildDlg();
+}
+
+void MainWindow::initMainTreeWidget()
+{
+    ui->mainTree->setHeaderHidden(true);
+    ui->mainTree->setRootIsDecorated(true);
+    ui->mainTree->clear();
+    ui->mainTree->setColumnCount(1);
+    ui->mainTree->setStyleSheet(
+                "QTreeWidget {background:rgb(179,217,255)}"
+                "QTreeWidget::item:selected {background:rgb(0,255,0);color:black;}");
+
+    QStringList root;
+    QStringList rfChild;
+    QStringList rfChildChild;
+    QStringList bbChild;
+    QStringList::ConstIterator iterString;
+
+    root.append(tr("RF-R1F"));
+    root.append(tr("BB-Debug"));
+    root.append(tr("RF-R1C/D/E"));
+    root.append(tr("RF-R1A/B"));
+
+    rfChild.append(tr("Overview"));
+    rfChild.append(tr("Advance"));
+    rfChild.append(tr("Test"));
+    rfChild.append(tr("Calibration"));
+
+    bbChild.append(tr("Overview"));
+    bbChild.append(tr("Arb"));
+    bbChild.append(tr("IQ-Capture"));
+    bbChild.append(tr("DMA"));
+    bbChild.append(tr("FPGA"));
+
+    QList<QTreeWidgetItem *> itemRoot;
+    QList<QTreeWidgetItem *> itemChild;
+    QList<QTreeWidgetItem *> itemChildChild;
+    QList<QTreeWidgetItem *>::ConstIterator iterRoot;
+    QList<QTreeWidgetItem *>::ConstIterator iterChild;
+
+    for (iterString = root.constBegin();iterString != root.constEnd();iterString ++) {
+        itemRoot.append(new QTreeWidgetItem(ui->mainTree,QStringList(*iterString)));
+    }
+
+    for (iterRoot = itemRoot.constBegin();iterRoot != itemRoot.constEnd();iterRoot ++) {
+        if ((*iterRoot)->text(0).left(2) == "RF") {
+            itemChild.clear();
+            for (iterString = rfChild.constBegin();iterString != rfChild.constEnd();iterString ++) {
+                itemChild.append(new QTreeWidgetItem(*iterRoot,QStringList(*iterString)));
+            }
+
+            for (iterChild = itemChild.constBegin();iterChild != itemChild.constEnd();iterChild ++) {
+                rfChildChild.clear();
+                if ((*iterChild)->text(0).contains("Test")) {
+                    if ((*iterRoot)->text(0).contains("R1F")) {
+                        rfChildChild.clear();
+                    } else if ((*iterRoot)->text(0).contains("R1C/D/E")) {
+                        rfChildChild.clear();
+                        rfChildChild.append(QString("TX-FreqResponse"));
+                        rfChildChild.append(QString("RX-FreqResponse"));
+                        rfChildChild.append(QString("TX-PowTest"));
+                        rfChildChild.append(QString("TX-FreqTest"));
+                        rfChildChild.append(QString("RX-RefTest"));
+                        rfChildChild.append(QString("RX-FreqTest"));
+                        rfChildChild.append(QString("Blower-MachineTemp"));
+                        rfChildChild.append(QString("RFTemp-TxPower"));
+                    } else if ((*iterRoot)->text(0).contains("R1A/B")) {
+                        rfChildChild.clear();
+                        rfChildChild.append(QString("BoardStability"));
+                        rfChildChild.append(QString("TX-FreqResponse"));
+                        rfChildChild.append(QString("RX-FreqResponse"));
+                    }
+                } else if ((*iterChild)->text(0).contains("Calibration")) {
+                    if ((*iterRoot)->text(0).contains("R1F") || (*iterRoot)->text(0).contains("R1C/D/E")) {
+                        rfChildChild.clear();
+                        rfChildChild.append(QString("TX-LOLeakage"));
+                        rfChildChild.append(QString("TX-Sideband"));
+                        rfChildChild.append(QString("TX-Filter"));
+                        rfChildChild.append(QString("TX-BasePower"));
+                        rfChildChild.append(QString("TX-Attenuation"));
+                        rfChildChild.append(QString("TX-FilterOffset"));
+                        rfChildChild.append(QString("RX-Filter"));
+                        rfChildChild.append(QString("RX-Reference"));
+                        rfChildChild.append(QString("RX-Attenuation"));
+                        rfChildChild.append(QString("RX-FilterOffset"));
+                    } else if ((*iterRoot)->text(0).contains("R1A/B")) {
+                        rfChildChild.clear();
+                        rfChildChild.append(QString("TX-LOLeakage"));
+                        rfChildChild.append(QString("TX-Sideband"));
+                        rfChildChild.append(QString("TX-Attenuation"));
+                        rfChildChild.append(QString("TX-BasePower"));
+                        rfChildChild.append(QString("RX-SGPMMTable"));
+                        rfChildChild.append(QString("RX-Reference"));
+                    }
+                }
+
+                itemChildChild.clear();
+                for (iterString = rfChildChild.constBegin();iterString != rfChildChild.constEnd();iterString ++) {
+                    itemChildChild.append(new QTreeWidgetItem(*iterChild,QStringList(*iterString)));
+                }
+            }
+        } else if ((*iterRoot)->text(0).left(2) == "BB") {
+            itemChild.clear();
+            for (iterString = bbChild.constBegin();iterString != bbChild.constEnd();iterString ++) {
+                itemChild.append(new QTreeWidgetItem(*iterRoot,QStringList(*iterString)));
+            }
+        }
+    }
+
+    ui->mainTree->expandAll();
+    for (int i = 0;i < itemRoot.size();i ++) {
+        if (i >= 2) {
+            itemRoot.at(i)->setExpanded(false);
+        }
+    }
+}
+
+void MainWindow::initMainTabWidget()
+{
+    ui->mainTab->setStyleSheet(
+                "QTabBar::tab {height:20px; width:120px;}"
+                "QTabBar::tab:selected {background:rgb(0,255,0)}");
+
+    QHBoxLayout *mainTabLayout = new QHBoxLayout;
+    mainTabLayout->addLayout(childDlgLayout);
+    ui->mainTab->setLayout(mainTabLayout);
+}
+
+void MainWindow::initMsgLogDlg()
+{
+    msgLogModel = new QMsgLogModel;
+    ui->msgTableView->setModel(msgLogModel);
+    ui->msgTableView->setColumnWidth(0,125);
+    ui->msgTableView->setColumnWidth(1,350);
+    ui->msgTableView->setColumnWidth(2,50);
+    ui->msgTableView->setColumnWidth(3,80);
+    ui->msgTableView->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
+    ui->msgTableView->verticalHeader()->setDefaultSectionSize(18);
+
+    ui->msgTableView->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
+    ui->msgTableView->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Stretch);
+    ui->msgTableView->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
+    ui->msgTableView->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
+
+    connect(this,SIGNAL(addMsgList(int)),msgLogModel,SLOT(update(int)));
+    connect(this,SIGNAL(addMsgList(int)),this,SLOT(updateMsgTable(int)));
+}
+
+void MainWindow::initRegLogDlg()
+{
+    regLogModel = new QRegLogModel;
+    ui->regTableView->setModel(regLogModel);
+    ui->regTableView->setColumnWidth(0,68);
+    ui->regTableView->setColumnWidth(1,68);
+    ui->regTableView->setColumnWidth(2,60);
+    ui->regTableView->setColumnWidth(3,85);
+    ui->regTableView->setColumnWidth(4,85);
+    ui->regTableView->setColumnWidth(5,50);
+    ui->regTableView->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
+    ui->regTableView->verticalHeader()->setDefaultSectionSize(18);
+    ui->regTableView->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
+    ui->regTableView->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
+    ui->regTableView->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
+    ui->regTableView->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
+    ui->regTableView->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Fixed);
+    ui->regTableView->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Stretch);
+
+    connect(this,SIGNAL(addRegList(int)),regLogModel,SLOT(update(int)));
+    connect(this,SIGNAL(addRegList(int)),this,SLOT(updateRegTable(int)));
+}
+
 void MainWindow::updateParamInChildDlg()
 {
-    for (int8_t i = 0;i < MAX_RF;i ++) {
-        dlgCalR1CTxLOLeak[i]->_sp1401 = _sp3301->get_sp1401_r1c(i);
-        dlgCalR1CTxLOLeak[i]->_sp2401 = _sp3301->get_sp2401(i);
-        dlgCalR1CTxLOLeak[i]->_sp3501 = &SP3501;
-        dlgCalR1CTxSB[i]->_sp1401 = _sp3301->get_sp1401_r1c(i);
-        dlgCalR1CTxSB[i]->_sp2401 = _sp3301->get_sp2401(i);
-        dlgCalR1CTxFilter[i]->_sp1401 = _sp3301->get_sp1401_r1c(i);
-        dlgCalR1CTxFilter[i]->_sp2401 = _sp3301->get_sp2401(i);
-        dlgCalR1CTxPwr[i]->_sp1401 = _sp3301->get_sp1401_r1c(i);
-        dlgCalR1CTxPwr[i]->_sp2401 = _sp3301->get_sp2401(i);
-        dlgCalR1CTxAtt[i]->_sp1401 = _sp3301->get_sp1401_r1c(i);
-        dlgCalR1CTxAtt[i]->_sp2401 = _sp3301->get_sp2401(i);
-        dlgCalR1CTxFilterOffset[i]->_sp1401 = _sp3301->get_sp1401_r1c(i);
-        dlgCalR1CTxFilterOffset[i]->_sp2401 = _sp3301->get_sp2401(i);
-        dlgCalR1CRxFilter[i]->_sp1401 = _sp3301->get_sp1401_r1c(i);
-        dlgCalR1CRxFilter[i]->_sp2401 = _sp3301->get_sp2401(i);
-        dlgCalR1CRxRef[i]->_sp1401 = _sp3301->get_sp1401_r1c(i);
-        dlgCalR1CRxRef[i]->_sp2401 = _sp3301->get_sp2401(i);
-        dlgCalR1CRxAtt[i]->_sp1401 = _sp3301->get_sp1401_r1c(i);
-        dlgCalR1CRxAtt[i]->_sp2401 = _sp3301->get_sp2401(i);
-        dlgCalR1CRxFilterOffset[i]->_sp1401 = _sp3301->get_sp1401_r1c(i);
-        dlgCalR1CRxFilterOffset[i]->_sp2401 = _sp3301->get_sp2401(i);
+#define UPDATE_CAL_PARAM_IN(dlg) \
+    for (quint8 i = 0;i < MAX_RF;i ++) { \
+        dlg[i]->SP1401 = _sp3301->get_sp1401(i); \
+        dlg[i]->SP2401 = _sp3301->get_sp2401(i); \
     }
-    dlgTempCtrl->_sp3501 = &SP3501;
-    dlgFpga->_sp2401[0] = _sp3301->get_sp2401(0);
-    dlgFpga->_sp2401[1] = _sp3301->get_sp2401(2);
 
-    emit sp3301Changed();
+#define UPDATE_TEST_PARAM_IN(dlg,daughterDlg) \
+    for (quint8 i = 0;i < MAX_RF;i ++) { \
+        dlg[i]->daughterDlg->SP1401 = _sp3301->get_sp1401(i); \
+        dlg[i]->daughterDlg->SP2401 = _sp3301->get_sp2401(i); \
+}
+
+    UPDATE_CAL_PARAM_IN(dlgCalR1C);
+    UPDATE_CAL_PARAM_IN(dlgCalR1CTXLOLeak);
+    UPDATE_CAL_PARAM_IN(dlgCalR1CTXSB);
+    UPDATE_CAL_PARAM_IN(dlgCalR1CTXFilter);
+    UPDATE_CAL_PARAM_IN(dlgCalR1CTXPwr);
+    UPDATE_CAL_PARAM_IN(dlgCalR1CTXAtt);
+    UPDATE_CAL_PARAM_IN(dlgCalR1CTXFilterOffset);
+    UPDATE_CAL_PARAM_IN(dlgCalR1CRXFilter);
+    UPDATE_CAL_PARAM_IN(dlgCalR1CRXRef);
+    UPDATE_CAL_PARAM_IN(dlgCalR1CRXAtt);
+    UPDATE_CAL_PARAM_IN(dlgCalR1CRXFilterOffset);
+
+    UPDATE_TEST_PARAM_IN(dlgTestR1C,dlgFreqRes);
+    UPDATE_TEST_PARAM_IN(dlgTestR1C,dlgRF);
+
+//    UPDATE_CAL_PARAM_IN(dlgTestR1CTxTestPow);
+//    UPDATE_CAL_PARAM_IN(dlgTestR1CTxFreq);
+//    UPDATE_CAL_PARAM_IN(dlgTestR1CRxAtt);
+//    UPDATE_CAL_PARAM_IN(dlgTestR1CRxFreq);
+
+//    for (qint8 i = 0;i < MAX_RF;i ++) {
+//        dlgTestR1CTxTestPow[i]->SP3301 = _sp3301;
+//        dlgTestR1CTxTestPow[i]->tabIdxRf = i;
+//        dlgTestR1CTxFreq[i]->SP3301 = _sp3301;
+//        dlgTestR1CTxFreq[i]->tabIdxRf = i;
+//        dlgTestR1CRxAtt[i]->SP3301 = _sp3301;
+//        dlgTestR1CRxAtt[i]->tabIdxRf = i;
+//        dlgTestR1CRxFreq[i]->SP3301 = _sp3301;
+//        dlgTestR1CRxFreq[i]->tabIdxRf = i;
+//    }
+
+    dlgTempCtrl->_sp3501 = &SP3501;
+    dlgTempCtrl->_sp3301 = _sp3301;
+    dlgTempCtrl->_sp1401_r1c = _sp3301->get_sp1401_r1c(tabIdxRf);
+    dlgFPGA->_sp2401[0] = _sp3301->get_sp2401(0);
+    dlgFPGA->_sp2401[1] = _sp3301->get_sp2401(2);
+    for (quint8 i = 0;i < MAX_RF;i ++) {
+        dlgRFR1CContainer[i]->dlg->setSP3301(_sp3301);
+        dlgRFR1CContainer[i]->dlg->setRFIdx(i);
+    }
 }
 
 void MainWindow::addMsgListCallback()
 {
-    int row = Log.get_msg_log()->size();
+    int row = Log.msgs()->size();
     emit addMsgList(row);
 }
 
 void MainWindow::addRegListCallback()
 {
-    int row = Log.get_reg_log()->size();
+    int row = Log.regs()->size();
     emit addRegList(row);
 }
 
-QString MainWindow::rfIdx2RfTabName(int idx)
+QString MainWindow::rfIdx2RFTabName(int idx)
 {
     return QString("RF-%1").arg(idx);
 }
 
-QString MainWindow::rfIdx2BbTabName(int idx)
+QString MainWindow::rfIdx2BBTabName(int idx)
 {
     return QString("k7-%1--->RF%2").arg((MAX_RF - 1 - idx)/2).arg(idx);
 }
 
-void MainWindow::initProg(const QString name, int pts)
+void MainWindow::initProg(const QString name, quint32 pts)
 {
     QWinThread::g_threadName = name;
     labelProgressName->setText(name + " %0");
-    mainProgress->setRange(0,pts);
-    mainProgress->setValue(0);
+    mainProgressBar->setRange(0,int(pts));
+    mainProgressBar->setValue(0);
 }
 
-void MainWindow::setProgPos(int pos)
+void MainWindow::setProgPos(quint32 pos)
 {
-    int iRange = mainProgress->maximum();
-    if (pos > iRange)
+    int iRange = mainProgressBar->maximum();
+    if (int(pos) > iRange) {
         return;
+    }
     QString strProgName = labelProgressName->text();
     QString strPercent = QString("%%1").arg(double(pos) / double(iRange) * 100.0,0,'f',2);
     int iPercentPos = strProgName.indexOf("%",0);
     strProgName.replace(iPercentPos,strProgName.length() - iPercentPos,strPercent);
     labelProgressName->setText(strProgName);
-    mainProgress->setValue(pos);
+    mainProgressBar->setValue(int(pos));
 }
 
 void MainWindow::updateMsgTable(int row)
@@ -457,147 +537,108 @@ void MainWindow::updateRegTable(int row)
 
 void MainWindow::on_mainTree_itemClicked(QTreeWidgetItem *item, int column)
 {
+#define ADD_RF_TAB(dlg) \
+    for (quint8 i = 0;i < MAX_RF;i ++) { \
+        ui->mainTab->addTab(dlg[i],rfIdx2RFTabName(i)); \
+    }
+
+#define ADD_BB_TAB(dlg) \
+    for (quint8 i = 0;i < MAX_RF;i ++) { \
+        ui->mainTab->addTab(dlg[i],rfIdx2BBTabName(i)); \
+    }
+
     QString strItem = item->text(column);
+    QString strParent;
+    QString strParentParent;
+
+    if (item->parent() != nullptr) {
+        strParent = item->parent()->text(0);
+        if (item->parent()->parent() != nullptr) {
+            strParentParent = item->parent()->parent()->text(0);
+        }
+    }
 
     disconnect(ui->mainTab,SIGNAL(currentChanged(int)),this,SLOT(on_mainTab_currentChanged(int)));
     ui->mainTab->clear();
 
     emit tabIdxChanged(-1);
-    if (strItem == QString("Overview")) {
-        if (item->parent()->text(0) == "R1A/B") {
-            for (qint8 i = 0;i < MAX_RF;i ++)
-                ui->mainTab->addTab(dlgRfR1AContainer[i],rfIdx2RfTabName(i));
-        }
-        else if (item->parent()->text(0) == "R1C/D") {
-            for (qint8 i = 0;i < MAX_RF;i ++)
-                ui->mainTab->addTab(dlgRfR1CContainer[i],rfIdx2RfTabName(i));
-        }
-        else if (item->parent()->text(0) == "BB Debug") {
-            for (qint8 i = 0;i < MAX_RF;i ++)
-                ui->mainTab->addTab(dlgBb[i],rfIdx2BbTabName(i));
-        }
+
+    if (strItem == tr("Overview")) {
+        if (strParent == ("RF-R1F"))          {ADD_RF_TAB(dlgRFR1FContainer);}
+        else if (strParent == ("RF-R1C/D/E")) {ADD_RF_TAB(dlgRFR1CContainer);}
+        else if (strParent == ("RF-R1A/B"))   {ADD_RF_TAB(dlgRFR1AContainer);}
+        else if (strParent == ("BB-Debug"))   {ADD_BB_TAB(dlgBB);}
+    } else if (strItem == tr("Advance")) {
+        if (strParent == ("RF-R1F"))          {ADD_RF_TAB(dlgRFR1FAdv);}
+        else if (strParent == ("RF-R1C/D/E")) {ADD_RF_TAB(dlgRFR1CAdv);}
+        else if (strParent == ("RF-R1A/B"))   {ADD_RF_TAB(dlgRFR1AAdv);}
+    } else if (strItem == tr("Arb")) {        {ADD_RF_TAB(dlgArb);}
+    } else if (strItem == tr("IQ-Capture")) { {ADD_RF_TAB(dlgIQCap);}
+    } else if (strItem == tr("FPGA")) {
+        ui->mainTab->addTab(dlgFPGA,tr("FPGA"));
+    } else if (strItem == tr("Calibraton")) {
+        if (strParentParent == "RF-R1F")          { }
+        else if (strParentParent == "RF-R1C/D/E") {ADD_RF_TAB(dlgCalR1C);}
+        else if (strParentParent == "RF-R1A/B")   { }
+    } else if (strItem == tr("TX-LOLeakage")) {
+        if (strParentParent == "RF-R1F")          {ADD_RF_TAB(dlgCalR1CTXLOLeak);}
+        else if (strParentParent == "RF-R1C/D/E") {ADD_RF_TAB(dlgCalR1CTXLOLeak);}
+        else if (strParentParent == "RF-R1A/B")   { }
+    } else if (strItem == tr("TX-Sideband")) {
+        if (strParentParent == "RF-R1F")          {ADD_RF_TAB(dlgCalR1CTXSB);}
+        else if (strParentParent == "RF-R1C/D/E") {ADD_RF_TAB(dlgCalR1CTXSB);}
+        else if (strParentParent == "RF-R1A/B")   { }
+    } else if (strItem == tr("TX-Filter")) {
+        if (strParentParent == "RF-R1F")          {ADD_RF_TAB(dlgCalR1CTXFilter);}
+        else if (strParentParent == "RF-R1C/D/E") {ADD_RF_TAB(dlgCalR1CTXFilter);}
+    } else if (strItem == tr("TX-BasePower")) {
+        if (strParentParent == "RF-R1F")          {ADD_RF_TAB(dlgCalR1CTXPwr);}
+        else if (strParentParent == "RF-R1C/D/E") {ADD_RF_TAB(dlgCalR1CTXPwr);}
+        else if (strParentParent == "RF-R1A/B")   { }
+    } else if (strItem == tr("TX-Attenuation")) {
+        if (strParentParent == "RF-R1F")          {ADD_RF_TAB(dlgCalR1CTXAtt);}
+        else if (strParentParent == "RF-R1C/D/E") {ADD_RF_TAB(dlgCalR1CTXAtt);}
+        else if (strParentParent == "RF-R1A/B")   { }
+    } else if (strItem == tr("TX-FilterOffset")) {
+        if (strParentParent == "RF-R1F")          {ADD_RF_TAB(dlgCalR1CTXFilterOffset);}
+        else if (strParentParent == "RF-R1C/D/E") {ADD_RF_TAB(dlgCalR1CTXFilterOffset);}
+        else if (strParentParent == "RF-R1A/B")   { }
+    } else if (strItem == tr("RX-Filter")) {
+        if (strParentParent == "RF-R1F")          {ADD_RF_TAB(dlgCalR1CRXFilter);}
+        else if (strParentParent == "RF-R1C/D/E") {ADD_RF_TAB(dlgCalR1CRXFilter);}
+        else if (strParentParent == "RF-R1A/B")   { }
+    } else if (strItem == tr("RX-Reference")) {
+        if (strParentParent == "RF-R1F")          {ADD_RF_TAB(dlgCalR1CRXRef);}
+        else if (strParentParent == "RF-R1C/D/E") {ADD_RF_TAB(dlgCalR1CRXRef);}
+        else if (strParentParent == "RF-R1A/B")   { }
+    } else if (strItem == tr("RX-Attenuation")) {
+        if (strParentParent == "RF-R1F")          {ADD_RF_TAB(dlgCalR1CRXAtt);}
+        else if (strParentParent == "RF-R1C/D/E") {ADD_RF_TAB(dlgCalR1CRXAtt);}
+        else if (strParentParent == "RF-R1A/B")   { }
+    } else if (strItem == tr("RX-FilterOffset")) {
+        if (strParentParent == "RF-R1F")          {ADD_RF_TAB(dlgCalR1CRXFilterOffset);}
+        else if (strParentParent == "RF-R1C/D/E") {ADD_RF_TAB(dlgCalR1CRXFilterOffset);}
+        else if (strParentParent == "RF-R1A/B")   { }
+    } else if (strItem == tr("Test")) {
+        if (strParent == "RF-R1F") { ADD_RF_TAB(dlgTestR1C); }
     }
-    else if (strItem == QString("Advance")) {
-        if (item->parent()->text(0) == "R1A/B") {
-            for (qint8 i = 0;i < MAX_RF;i ++)
-                ui->mainTab->addTab(dlgRfR1AAdv[i],rfIdx2RfTabName(i));
-        }
-        if (item->parent()->text(0) == "R1C/D") {
-            for (qint8 i = 0;i < MAX_RF;i ++)
-                ui->mainTab->addTab(dlgRfR1CAdv[i],rfIdx2RfTabName(i));
-        }
-    }
-    else if (strItem == QString("Arb")) {
-        if (item->parent()->text(0) == "RF Debug")
-            for (qint8 i = 0;i < MAX_RF;i ++) {
-                ui->mainTab->addTab(dlgRfArb[i],rfIdx2RfTabName(i));
-        }
-        else if (item->parent()->text(0) == "BB Debug")
-            for (qint8 i = 0;i < MAX_RF;i ++) {
-                ui->mainTab->addTab(dlgBbArb[i],rfIdx2BbTabName(i));
-        }
-    }
-    else if (strItem == QString("IQ Capture")) {
-        if (item->parent()->text(0) == "RF Debug")
-            for (qint8 i = 0;i < MAX_RF;i ++) {
-                ui->mainTab->addTab(dlgRfIQCap[i],rfIdx2RfTabName(i));
-            on_mainTab_currentChanged(int(tabIdxRf));
-        }
-        else if (item->parent()->text(0) == "BB Debug") {
-            for (qint8 i = 0;i < MAX_RF;i ++)
-                ui->mainTab->addTab(dlgBbIQCap[i],rfIdx2BbTabName(i));
-            on_mainTab_currentChanged(int(tabIdxRf));
-        }
-    }
-    else if (strItem == tr("TxLOLeakage")) {
-        if (item->parent()->text(0) == "Calibration(R1C/D)") {
-            for (qint8 i = 0;i < MAX_RF;i ++)
-                ui->mainTab->addTab(dlgCalR1CTxLOLeak[i],rfIdx2RfTabName(i));
-        }
-    }
-    else if (strItem == tr("TxSideband")) {
-        if (item->parent()->text(0) == "Calibration(R1C/D)") {
-            for (qint8 i = 0;i < MAX_RF;i ++)
-                ui->mainTab->addTab(dlgCalR1CTxSB[i],rfIdx2RfTabName(i));
-        }
-    }
-    else if (strItem == tr("TxCompensateFilter")) {
-        if (item->parent()->text(0) == "Calibration(R1C/D)") {
-            for (qint8 i = 0;i < MAX_RF;i ++)
-                ui->mainTab->addTab(dlgCalR1CTxFilter[i],rfIdx2RfTabName(i));
-        }
-    }
-    else if (strItem == tr("TxBasePower")) {
-        if (item->parent()->text(0) == "Calibration(R1C/D)") {
-            for (qint8 i = 0;i < MAX_RF;i ++)
-                ui->mainTab->addTab(dlgCalR1CTxPwr[i],rfIdx2RfTabName(i));
-        }
-    }
-    else if (strItem == tr("TxAttenuation")) {
-        if (item->parent()->text(0) == "Calibration(R1C/D)") {
-            for (qint8 i = 0;i < MAX_RF;i ++)
-                ui->mainTab->addTab(dlgCalR1CTxAtt[i],rfIdx2RfTabName(i));
-        }
-	}
-    else if (strItem == tr("TxFilterOffset")) {
-        if (item->parent()->text(0) == "Calibration(R1C/D)") {
-            for (qint8 i = 0;i < MAX_RF;i ++)
-                ui->mainTab->addTab(dlgCalR1CTxFilterOffset[i],rfIdx2RfTabName(i));
-        }
-    }
-    else if (strItem == tr("RxCompensateFilter")) {
-        if (item->parent()->text(0) == "Calibration(R1C/D)") {
-            for (qint8 i = 0;i < MAX_RF;i ++)
-                ui->mainTab->addTab(dlgCalR1CRxFilter[i],rfIdx2RfTabName(i));
-        }
-    }
-    else if (strItem == tr("RxReference")) {
-        if (item->parent()->text(0) == "Calibration(R1C/D)") {
-            for (qint8 i = 0;i < MAX_RF;i ++)
-                ui->mainTab->addTab(dlgCalR1CRxRef[i],rfIdx2RfTabName(i));
-        }
-    }
-    else if (strItem == tr("RxAttenuation")) {
-        if (item->parent()->text(0) == "Calibration(R1C/D)") {
-            for (qint8 i = 0;i < MAX_RF;i ++)
-                ui->mainTab->addTab(dlgCalR1CRxAtt[i],rfIdx2RfTabName(i));
-        }
-    }
-    else if (strItem == tr("RxFilterOffset")) {
-        if (item->parent()->text(0) == "Calibration(R1C/D)") {
-            for (qint8 i = 0;i < MAX_RF;i ++)
-                ui->mainTab->addTab(dlgCalR1CRxFilterOffset[i],rfIdx2RfTabName(i));
-        }
-    }
-	connect(ui->mainTab,SIGNAL(currentChanged(int)),this,SLOT(on_mainTab_currentChanged(int)));
+
+    connect(ui->mainTab,SIGNAL(currentChanged(int)),this,SLOT(on_mainTab_currentChanged(int)));
     ui->mainTab->setCurrentIndex(int(tabIdxRf));
-
-    if (strItem == QString("FPGA")) {
-        ui->mainTab->addTab(dlgFpga,QString("FPGA"));
-    }
-}
-
-void MainWindow::threadCheckBox(const QString msg)
-{
-    ::threadCheckBox(msg.toStdString().c_str());
-}
-
-void MainWindow::threadErrorBox(const QString msg)
-{
-    ::threadErrorBox(msg.toStdString().c_str());
 }
 
 void MainWindow::on_mainTab_currentChanged(int index)
 {
-	if (-1 == index)
-		return;
+    if (-1 == index)
+        return;
 
-	ui->mainTab->setCurrentIndex(index);
+    ui->mainTab->setCurrentIndex(index);
 
-    if (dlgRfIQCap[index]->isVisible() | dlgBbIQCap[index]->isVisible())
+    if (dlgIQCap[index]->isVisible())
         emit tabIdxChanged(index);
     else
         emit tabIdxChanged(-1);
 
     tabIdxRf = qint8(index);
+    updateParamInChildDlg();
 }

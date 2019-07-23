@@ -21,10 +21,8 @@ using namespace sp_rd;
 #endif
 
 #ifdef RD_C_MSC
-    #pragma comment(lib,"pthreadVC2.lib")
     #pragma data_seg("LogShareData")
-        boost::shared_ptr<log_t> g_log(new log_t);
-//        static log_t g_log /*= log_t()*/;
+        static boost::shared_ptr<log_t> g_log(new log_t);
     #pragma data_seg()
     #pragma comment(linker,"/section:LogShareData,rws")
 #elif defined RD_C_GNUC
@@ -34,49 +32,31 @@ using namespace sp_rd;
 
 pthread_mutex_t g_log_lock = PTHREAD_MUTEX_INITIALIZER;
 
-log_t::msg_log_t::msg_log_t() :
-    result(0),
-    msg("\0"),
-    time("\0")
-{
-}
-
-log_t::reg_log_t::reg_log_t() :
-    addr(0xffff),
-    result(0),
-    w(0xffffffff),
-    r(0xffffffff),
-    fpga("\0"),
-    time("\0")
-{
-}
+log_t::msg_log_t::msg_log_t() : result(0),msg("\0"),time("\0") {}
+log_t::reg_log_t::reg_log_t() : result(0),addr(0xffff),w(0xFFFFFFFF),r(0xFFFFFFFF),fpga("\0"),time("\0") {}
 
 log_t::log_t() :
-    m_msg_log(NULL),
-    m_reg_log(NULL)
+    m_msg_log(nullptr),
+    m_reg_log(nullptr)
 {
     m_tstar = boost::make_shared<log_t::ptime>(boost::posix_time::microsec_clock::local_time());
     m_tcurr = boost::make_shared<log_t::ptime>(*m_tstar);
 
 #ifdef RD_PLATFORM_WIN32
-    m_console = NULL;
+    m_console = nullptr;
 #endif
 
 #ifdef GUI_MFC
     m_wnd = NULL;
 #else
-    m_msg_callback = NULL;
-    m_reg_callback = NULL;
+    m_msg_callback = nullptr;
+    m_reg_callback = nullptr;
 #endif
 
     m_fp_msg = fopen(MSG_LOG_PATH,"a");
     m_fp_reg = fopen(REG_LOG_PATH,"a");
 
-#ifdef _DEBUG
-    m_sw = l_msg | l_prompt | l_trace;
-#else
-    m_sw = l_msg;
-#endif
+    set_default();
 }
 
 log_t::~log_t()
@@ -135,49 +115,39 @@ void log_t::init(void (*msg_callback)(),void (*reg_callback)())
 }
 #endif
 
-log_t::msg_log_vector *log_t::get_msg_log()
+log_t::msg_log_vector *log_t::msgs()
 {
     return m_msg_log.get();
 }
 
-log_t::reg_log_vector *log_t::get_reg_log()
+log_t::reg_log_vector *log_t::regs()
 {
     return m_reg_log.get();
 }
 
-void log_t::set(uint64_t sw)
+bool log_t::is_en(log_t::log_sw_t sw)
 {
-    m_sw = sw;
-}
-
-uint64_t log_t::get()
-{
-    return m_sw;
-}
-
-bool log_t::is_enabled(log_t::log_sw_t sw)
-{
-    if (l_all_on == sw)
-        return l_all_on == m_sw ? true : false;
-    if (l_all_off == sw)
-        return l_all_off == m_sw ? true : false;
+    if (RD_LOG_ALL_ON == sw)
+        return RD_LOG_ALL_ON == m_sw ? true : false;
+    if (RD_LOG_ALL_OFF == sw)
+        return RD_LOG_ALL_OFF == m_sw ? true : false;
     return (m_sw & sw) ? true : false;
 }
 
-void log_t::set_enalbe(log_t::log_sw_t sw,bool en)
+void log_t::en(log_t::log_sw_t sw,bool en)
 {
     if (en)
-        m_sw |= (uint64_t)sw;
+        m_sw |= uint64_t(sw);
 	else
-        m_sw &= (~(uint64_t)sw);
+        m_sw &= (~uint64_t(sw));
 }
 
 void log_t::set_default()
 {
 #ifdef _DEBUG
-    m_sw = l_msg | l_prompt | l_trace;
+    m_sw = RD_LOG_MESSAGE | RD_LOG_PROMPT | RD_LOG_TRACE;
 #else
-    m_sw = l_msg;
+    m_sw = RD_LOG_MESSAGE;
 #endif
 }
 
@@ -189,7 +159,7 @@ boost::posix_time::time_duration log_t::time_elapsed()
 
 void log_t::stdprintf(const char *fmt,...)
 {	
-    if (!(m_sw & l_prompt))
+    if (!(m_sw & RD_LOG_PROMPT))
 		return;
 
     std::string buf = to_simple_string(time_elapsed());
@@ -208,7 +178,7 @@ void log_t::stdprintf(const char *fmt,...)
 		AllocConsole();
         m_console = GetStdHandle(STD_OUTPUT_HANDLE);
 	}
-    WriteConsoleA(m_console,buf.c_str(),DWORD(buf.length()),NULL,NULL);
+    WriteConsoleA(m_console,buf.c_str(),DWORD(buf.length()),nullptr,nullptr);
 #elif defined RD_PLATFORM_LINUX
     printf("%s",buf);
 #endif
@@ -243,9 +213,9 @@ void log_t::set_log_time(log_t::reg_log_t *lg)
     lg->time = tf.str();
 }
 
-int log_t::add_msg_list(const char *fmt,...)
+int log_t::add_msg(const char *fmt,...)
 {
-    if ((!(m_sw & l_msg)) && (!(m_sw & l_msg_f)))
+    if ((!(m_sw & RD_LOG_MESSAGE)) && (!(m_sw & RD_LOG_MESSAGE_F)))
 		return 0;
 
     pthread_mutex_lock(&g_log_lock);
@@ -261,12 +231,15 @@ int log_t::add_msg_list(const char *fmt,...)
     va_end(ap);
     msg.msg = msg_buf;
 
-    if (m_sw & l_msg_f) {
-        fprintf(m_fp_msg,"%s %50s %#010x\n",msg.time,msg.msg,msg.result);
+    if (m_sw & RD_LOG_MESSAGE_F) {
+        fprintf(m_fp_msg,"%s %50s %#010x\n",
+                msg.time.c_str(),
+                msg.msg.c_str(),
+                msg.result);
         fflush(m_fp_msg);
 	}
 
-    if ((m_sw & l_msg) && (NULL != m_msg_log)) {
+    if ((m_sw & RD_LOG_MESSAGE) && (nullptr != m_msg_log)) {
         m_msg_log->push_back(msg);
 
 #if defined GUI_MFC
@@ -285,9 +258,9 @@ int log_t::add_msg_list(const char *fmt,...)
 	return 0;
 }
 
-int log_t::add_msg_list(int result, const char *fmt,...)
+int log_t::add_msg(int32_t result,const char *fmt,...)
 {
-    if ((!(m_sw & l_msg)) && (!(m_sw & l_msg_f)))
+    if ((!(m_sw & RD_LOG_MESSAGE)) && (!(m_sw & RD_LOG_MESSAGE_F)))
 		return 0;
 
     pthread_mutex_lock(&g_log_lock);
@@ -304,12 +277,15 @@ int log_t::add_msg_list(int result, const char *fmt,...)
     msg.msg = msg_buf;
     msg.result = result;
 
-    if (m_sw & l_msg_f) {
-        fprintf(m_fp_msg,"%s %50s %#010x\n",msg.time,msg.msg,msg.result);
+    if (m_sw & RD_LOG_MESSAGE_F) {
+        fprintf(m_fp_msg,"%s %50s %#010x\n",
+                msg.time.c_str(),
+                msg.msg.c_str(),
+                msg.result);
         fflush(m_fp_msg);
 	}
 
-    if ((m_sw & l_msg) && (NULL != m_msg_log)) {
+    if ((m_sw & RD_LOG_MESSAGE) && (nullptr != m_msg_log)) {
         m_msg_log->push_back(msg);
 
 #if defined GUI_MFC
@@ -328,9 +304,9 @@ int log_t::add_msg_list(int result, const char *fmt,...)
     return result;
 }
 
-int log_t::add_reg_list(int result,char *fpga,int addr,unsigned w,unsigned r)
+int log_t::add_reg(int32_t result, const std::string &fpga, uint32_t addr, uint32_t w, uint32_t r)
 {
-    if ((!(m_sw & l_reg)) && (!(m_sw & l_reg_f)))
+    if ((!(m_sw & RD_LOG_REG)) && (!(m_sw & RD_LOG_REG_F)))
 		return 0;
 
     pthread_mutex_lock(&g_log_lock);
@@ -345,10 +321,10 @@ int log_t::add_reg_list(int result,char *fpga,int addr,unsigned w,unsigned r)
     reg.fpga = fpga;
 
     if (w != 0xffffffff) {
-        if (m_sw & l_reg_f) {
+        if (m_sw & RD_LOG_REG_F) {
             fprintf(m_fp_reg,"%s	%4s  %#06x  %#010x  %16s  %d\n",
-                    reg.time,
-                    reg.fpga,
+                    reg.time.c_str(),
+                    reg.fpga.c_str(),
                     reg.addr,
                     reg.w,
                     "",
@@ -357,10 +333,10 @@ int log_t::add_reg_list(int result,char *fpga,int addr,unsigned w,unsigned r)
 		}
 	}
     if (r != 0xffffffff) {
-        if (m_sw & l_reg_f) {
+        if (m_sw & RD_LOG_REG_F) {
             fprintf(m_fp_reg,"%s	%4s  %#06x  %16s  %#010x  %d\n",
-                    reg.time,
-                    reg.fpga,
+                    reg.time.c_str(),
+                    reg.fpga.c_str(),
                     reg.addr,
                     "",
                     reg.r,
@@ -369,7 +345,7 @@ int log_t::add_reg_list(int result,char *fpga,int addr,unsigned w,unsigned r)
 		}
 	}
 
-    if ((m_sw & l_reg) && (NULL != m_reg_log)) {
+    if ((m_sw & RD_LOG_REG) && (nullptr != m_reg_log)) {
         m_reg_log->push_back(reg);
 
 #if defined GUI_MFC
@@ -396,7 +372,7 @@ void log_t::set_last_err(const char *format,...)
     va_start(ap,format);
     vsprintf(m_last_err,format,ap);
 	va_end(ap);
-    add_msg_list(-1,m_last_err);
+    add_msg(-1,m_last_err);
 }
 
 void log_t::set_last_err(int result,const char *format,...)
@@ -407,10 +383,10 @@ void log_t::set_last_err(int result,const char *format,...)
     va_start(ap,format);
     vsprintf(m_last_err,format,ap);
 	va_end(ap);
-    add_msg_list(result,m_last_err);
+    add_msg(result,m_last_err);
 }
 
-char *log_t::get_last_err()
+char *log_t::last_err()
 {
     return m_last_err;
 }

@@ -1,28 +1,46 @@
-#ifndef GPIB_DEV_H
-#define GPIB_DEV_H
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
+#ifndef RD_GPIB_DEV_H
+#define RD_GPIB_DEV_H
 
 #include "rd.h"
-#include "visa.h"
+#include <string>
 
 namespace sp_rd {
 
-class RD_API gpib_dev
+class RD_API gpib_dev : public noncopyable
 {
 public:
-    gpib_dev(void);
-    virtual ~gpib_dev(void);
+    gpib_dev();
+    virtual ~gpib_dev();
+
 public:
     virtual int32_t get_default_pri_addr() = 0;
     virtual int32_t get_default_sec_addr() = 0;
-    virtual char* get_des() = 0;
+    virtual std::string get_descriptor() = 0;
+
 public:
-    virtual bool init(ViRsrc dev);
-    virtual bool w(const char *format, ...);
-    virtual bool r(char *buf, uint32_t max_len, uint32_t to = 3000);
+    virtual bool init(const std::string &dev);
+    virtual bool w(const std::string &scpi) const;
+    virtual bool r(std::string &buf, uint32_t length, uint32_t to = 3000) const;
+
 private:
-    ViSession m_session;
+    unsigned long _session;
 };
 
-} //namespace sp_rd
+} // namespace sp_rd
 
-#endif // GPIB_DEV_H
+#endif // RD_GPIB_DEV_H

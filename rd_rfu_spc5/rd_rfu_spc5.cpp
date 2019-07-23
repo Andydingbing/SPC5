@@ -1,40 +1,41 @@
 #include "liblog.h"
-#include "libsp3301.h"
-#include "libsp3501.h"
+#include "sp3301.h"
+#include "sp3501.h"
 #include "reg_def.h"
 #include "rd_rfu_spc5.h"
+#include "gen_ini_file.h"
 #include <vector>
 
 using namespace std;
 using namespace sp_rd;
 using namespace sp_rd::sp1401;
 
-typedef struct AvailableModule {
-    sp3301 *m_pSP3301;	//which rfu does this rf module belong
-    uint32_t m_uiRfIdx;	//the rf module index of particular rfu above
-}AvailableModule;
+typedef struct available_rf_board_t {
+    sp3301  *m_sp3301;	// the rfu this rf belongs to
+    uint32_t m_rf_idx;	// the rf index
+}available_rf_board_t;
 
-vector <AvailableModule> g_Module;
+vector<available_rf_board_t> g_rf_board;
 
-#define DECLARE_DYNAMIC_SP3301						\
-    if (RFIndex > g_Module.size())					\
-        return -1;									\
-    sp3301 *pSP3301 = g_Module[RFIndex].m_pSP3301;	\
-    uint32_t uiRfIdx = g_Module[RFIndex].m_uiRfIdx;
+#define DECLARE_DYNAMIC_SP3301 \
+    if (RFIndex > g_rf_board.size() - 1) \
+        return -1; \
+    sp3301  *pSP3301 = g_rf_board[RFIndex].m_sp3301; \
+    uint32_t uiRfIdx = g_rf_board[RFIndex].m_rf_idx;
 
-int32_t RF_SetBitPath(char *Path_0,char *Path_1)
+int32_t RF_SetBitPath(char *Path)
 {
-    INT_CHECK(SP3301_2.set_program_bit(true,true,Path_0,Path_1));
-    INT_CHECK(SP3301_3.set_program_bit(true,true,Path_0,Path_1));
+    INT_CHECK(SP3301_2.set_program_bit(Path));
+    INT_CHECK(SP3301_3.set_program_bit(Path));
     return 0;
 }
 
 int32_t RF_Boot()
 {
-    Log.set_enalbe(log_t::l_all_off, true);
-    Log.set_enalbe(log_t::l_prompt, true);
-    g_Module.clear();
-    AvailableModule AvaiModule;
+    Log.en(log_t::RD_LOG_ALL_OFF, true);
+    Log.en(log_t::RD_LOG_PROMPT, true);
+    g_rf_board.clear();
+    available_rf_board_t rf_board;
     sp3301::active_t RfuActiveInfo[MAX_RFU];
 
     SP3301_2.boot();
@@ -44,27 +45,27 @@ int32_t RF_Boot()
     SP3301_2.boot();
     SP3301_3.boot();
 
-    int16_t iOCXO = 0;
-    SP3301_2.get_ocxo(iOCXO);
-    Log.stdprintf("ocxo : %d\n",iOCXO);
+    uint16_t ocxo_value = 0;
+    SP3301_2.get_ocxo(ocxo_value);
+    Log.stdprintf("ocxo : %d\n",ocxo_value);
     SP3501.open_board();
-    SP3501.vol_9119(iOCXO);
+    SP3501.vol_9119(ocxo_value);
 
     RfuActiveInfo[2] = SP3301_2.is_actived();
     RfuActiveInfo[3] = SP3301_3.is_actived();
 
     for (int i = 0;i < MAX_RF;i ++) {
         if (RfuActiveInfo[2].sp1401[i]) {
-            AvaiModule.m_pSP3301 = &SP3301_2;
-            AvaiModule.m_uiRfIdx = i;
-            g_Module.push_back(AvaiModule);
+            rf_board.m_sp3301 = &SP3301_2;
+            rf_board.m_rf_idx = i;
+            g_rf_board.push_back(rf_board);
         }
     }
     for (int i = 0;i < MAX_RF;i ++) {
         if (RfuActiveInfo[3].sp1401[i]) {
-            AvaiModule.m_pSP3301 = &SP3301_3;
-            AvaiModule.m_uiRfIdx = i;
-            g_Module.push_back(AvaiModule);
+            rf_board.m_sp3301 = &SP3301_3;
+            rf_board.m_rf_idx = i;
+            g_rf_board.push_back(rf_board);
         }
     }
     return 0;
@@ -320,21 +321,21 @@ int32_t RF_SetTriggerSource(uint32_t RFIndex,RFU_TRIGGERSOURCE TriggerSource)
 int32_t RF_SetTriggerMode(uint32_t RFIndex,TRIGGERMODE TriggerMode)
 {
     DECLARE_DYNAMIC_SP3301;
-    basic_sp1401::pwr_meas_src_t MeasSrc = basic_sp1401::PWR_MEAS_FREE_RUN;
+    basic_sp1401::iq_cap_src_t MeasSrc = basic_sp1401::PWR_MEAS_FREE_RUN;
     switch (TriggerMode) {
         case IF		 : {MeasSrc = basic_sp1401::PWR_MEAS_IF_PWR;break;}
         case FREERUN : {MeasSrc = basic_sp1401::PWR_MEAS_FREE_RUN;break;}
         case MARKER  : {break;}
         default:break;
     }
-    INT_CHECK(pSP3301->rf_set_trig_mode(uiRfIdx,MeasSrc));
+    INT_CHECK(pSP3301->set_iq_cap_trig_src(uiRfIdx,MeasSrc));
     return 0;
 }
 
 int32_t RF_SetTriggerLevel(uint32_t RFIndex,float TriggerLevel)
 {
     DECLARE_DYNAMIC_SP3301;
-    INT_CHECK(pSP3301->rf_set_trig_level(uiRfIdx,TriggerLevel));
+    INT_CHECK(pSP3301->set_iq_cap_trig_level(uiRfIdx,TriggerLevel));
     return 0;
 }
 
