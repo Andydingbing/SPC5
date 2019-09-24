@@ -51,7 +51,8 @@ public:
         QWidget(parent),
         model(new QVector<QCalBaseModel *>),
         SP1401(nullptr),
-        SP2401(nullptr) {}
+        SP2401(nullptr),
+        SP3301(nullptr) {}
 
     virtual void star() = 0; // Start the calibration thread
     virtual void threadDone() = 0;
@@ -86,6 +87,7 @@ public:
     QVector<QCalBaseModel *> *model;
     basic_sp1401 *SP1401;
     sp2401_r1a *SP2401;
+    sp3301 *SP3301;
 };
 
 
@@ -249,9 +251,9 @@ public slots: \
     void update(const QModelIndex &tl, const QModelIndex &br, \
                 test_item_t item, int sec); \
 public : \
-    void init(); \
-    void resetShowWidget(TestBaseParam *param); \
-    void uiToTestParam(TestBaseParam *param);
+    virtual void init(); \
+    virtual void resetShowWidget(TestBaseParam *param); \
+    virtual void uiToTestParam(TestBaseParam *param);
 
 #define DECL_TEST_DLG(Name, Name_ui, Test_Param, Cal_Thread) \
 class Name : public QTestDlg<Test_Param, Cal_Thread> { \
@@ -261,7 +263,6 @@ public: \
         ui(new Ui::Name_ui) { ui->setupUi(this);init(); } \
     ~Name() { delete ui; } \
     DECL_TEST_DLG_MEMBER_FUNC \
-private: \
     Ui::Name_ui *ui; \
 };
 

@@ -7,7 +7,7 @@
 
 namespace sp_rd {
 
-// rx reference table r1a/b
+// RX reference table R1A/B
 class RD_API rx_ref_table_r1ab
 {
 public:
@@ -89,6 +89,13 @@ public:
     STRUCT_ALIGN_E(data_m_t, 4)
 
 public:
+    static double cal_rollback(sp1401::hw_ver_t ver)
+    {
+        if (ver == sp1401::R1F) return 5.0;
+
+        return 0.0;
+    }
+
     virtual void get_base(uint64_t freq,data_m_t *data) = 0;
     virtual void get_base(uint64_t freq,data_f_t *data) = 0;
     virtual void get(sp1401::hw_ver_t,uint64_t freq,double ref,rx_state_m_t *) = 0;
@@ -105,6 +112,7 @@ public: \
     static void get_config_table_r1f(int32_t ref,data_m_t data_ref,rx_state_m_t *state); \
     static void guess_base_r1c(int32_t idx,int32_t &ref,int32_t &lna_att,int32_t &att_019,double &att1,double &att2,double &att3); \
     static void guess_base_r1f(int32_t idx,int32_t &ref,int32_t &lna_att,int32_t &att_019,double &att1,double &att2); \
+    static void guess_base(sp1401::hw_ver_t,uint32_t idx,int32_t &ref,rx_state_m_t *state = nullptr); \
     static int32_t get_ref_seg_idx(double ref); \
     void get_base(uint64_t freq,data_m_t *data); \
     void get_base(uint64_t freq,data_f_t *data); \

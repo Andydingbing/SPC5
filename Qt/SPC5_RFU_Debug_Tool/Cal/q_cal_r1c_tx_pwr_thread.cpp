@@ -1,11 +1,13 @@
 #include "q_cal_r1c_tx_pwr_thread.h"
 #include "q_model_tx_pwr.h"
 #include "algorithm.h"
+#include "spec.h"
+#include "test_data.hpp"
 
 void QCalR1CTXPwrThread::run()
 {
     RD_CAL_TRY
-    CAL_THREAD_START("TX Power",freqRange.freqs.size());
+    CAL_THREAD_START("TX Power",totalPts);
 
     if (calOP(calParam.mode)) {
         THREAD_CHECK_BOX("TX<===>Power Meter");
@@ -20,7 +22,16 @@ void QCalR1CTXPwrThread::run()
     init();
 
     if (calOP(calParam.mode)) {
-        cal(OUTPUT);
+        THREAD_TEST_CANCEL
+        if (calParam.cal) {
+            initProgress("Calibrating TX Power");
+            calIt(OUTPUT);
+        }
+        THREAD_TEST_CANCEL
+        if (calParam.check) {
+            initProgress("Checking TX Power");
+            checkIt(OUTPUT);
+        }
     }
 
     if (calOP(calParam.mode) && calIO(calParam.mode)) {
@@ -28,14 +39,22 @@ void QCalR1CTXPwrThread::run()
     }
 
     if (calIO(calParam.mode)) {
-        cal(IO);
+        THREAD_TEST_CANCEL
+        if (calParam.cal) {
+            initProgress("Calibrating TX Power");
+            calIt(IO);
+        }
+        THREAD_TEST_CANCEL
+        if (calParam.check) {
+            initProgress("Checking TX Power");
+            checkIt(IO);
+        }
     }
-
-    CAL_THREAD_ABOART
+    THREAD_ENDED
     RD_CAL_CATCH
 }
 
-void QCalR1CTXPwrThread::cal(io_mode_t mode)
+void QCalR1CTXPwrThread::calIt(io_mode_t mode)
 {
     QTXPwrModel *model_op = dynamic_cast<QTXPwrModel *>(calParam.model_0);
     QTXPwrModel *model_io = dynamic_cast<QTXPwrModel *>(calParam.model_1);
@@ -54,8 +73,8 @@ void QCalR1CTXPwrThread::cal(io_mode_t mode)
     double d_gain = -5.0;
     double target = 0.0;
 
-    int secBfr = -1;
-    int secCur = 0;
+    qint32 secBfr = -1;
+    qint32 secCur = 0;
 
     target = (mode == OUTPUT ? R1C_TX_BASE_POWER_OP : R1C_TX_BASE_POWER_IO);
 
@@ -63,11 +82,11 @@ void QCalR1CTXPwrThread::cal(io_mode_t mode)
 
     Instr.pm_reset();
 
-    for (quint32 i = 0;i < freqRange.freqs.size();i ++) {
-        CAL_THREAD_TEST_PAUSE_S
-        CAL_THREAD_TEST_CANCEL
+    for (quint32 i = 0;i < freqRangeCal.freqs.size();i ++) {
+        THREAD_TEST_PAUSE_S
+        THREAD_TEST_CANCEL
 
-        freq = freqRange.freqs.at(i);
+        freq = freqRangeCal.freqs.at(i);
         SP1401->cf()->m_tx_filter_160m->get(freq,&dataFilter);
         dataFilter._2double(coefReal,coefImag);
 
@@ -102,7 +121,7 @@ void QCalR1CTXPwrThread::cal(io_mode_t mode)
         SP1401->get_temp(7,data.temp[3]);
         data.time = getCurTime();
 
-        secCur = freq_section(freq,freqRange);
+        secCur = freq_section(freq,freqRangeCal);
 
         if (mode == OUTPUT) {
             if (secCur != secBfr) {
@@ -123,9 +142,8 @@ void QCalR1CTXPwrThread::cal(io_mode_t mode)
             SP1401->cf()->add(cal_file::TX_PWR_IO,&data);
             emit update(model_io->index(i,0),model_io->index(i,11),cal_file::TX_PWR_IO,secCur);
         }
-
-        SET_PROG_POS(i + 1);
-        CAL_THREAD_TEST_PAUSE_E
+        addProgressPos(1);
+        THREAD_TEST_PAUSE_E
     }
 
     if (mode == OUTPUT) {
@@ -135,6 +153,84 @@ void QCalR1CTXPwrThread::cal(io_mode_t mode)
         SP1401->cf()->w(cal_file::TX_PWR_IO);
         SP1401->cf()->m_tx_pwr_io->save_as("c:\\tx_power_io.txt");
     }
+}
+
+void QCalR1CTXPwrThread::checkIt(io_mode_t mode)
+{
+    const double pwrBase = (mode == OUTPUT ? R1C_TX_BASE_POWER_OP : R1C_TX_BASE_POWER_IO);
+    quint64 freq = 0;
+    double pwr = 0.0;
+    double real[TX_FILTER_ORDER_2I] = {0.0};
+    double imag[TX_FILTER_ORDER_2I] = {0.0};
+    tx_filter_table::data_m_t dataFilter;
+    tx_pwr_table_r1c::data_m_t dataPwr;
+
+    tx_base_pwr_cal_data data;
+    bool res = true;
+
+    SP1401->set_io_mode(mode);
+    SP1401->prepare_cr_tx_base_pwr_cal();
+
+    for (quint32 i = 0;i < freqRangeCheck.freqs.size();i ++) {
+        THREAD_TEST_PAUSE_S
+        THREAD_TEST_CANCEL
+        freq = freqRangeCheck.freqs.at(i);
+        data = SP1401->cr_tx_base_pwr_cal()->data(freq);
+        res = data.result();
+
+        SP1401->set_tx_freq(freq);
+        SP1401->cf()->m_tx_filter_160m->get(freq,&dataFilter);
+        dataFilter._2double(real,imag);
+
+        if (mode == OUTPUT) {
+            SP1401->cf()->m_tx_pwr_op->get_base(freq,&dataPwr);
+        } else if (mode == IO) {
+            SP1401->cf()->m_tx_pwr_io->get_base(freq,&dataPwr);
+        }
+
+        SP2401->set_tx_filter(real,imag);
+        SP1401->set_tx_att(dataPwr.att0 / 2.0,
+                           dataPwr.att1 / 2.0,
+                           dataPwr.att2 / 2.0,
+                           dataPwr.att3 / 2.0);
+        SP2401->set_tx_pwr_comp(double(dataPwr.d_gain));
+        msleep(10);
+
+        Instr.pm_get_pwr(double(freq),pwr);
+
+        if (mode == OUTPUT) {
+            data.pwr_op = pwr;
+        } else if (mode == IO) {
+            data.pwr_io = pwr;
+        }
+
+        res = abs(pwr - pwrBase) <= spec::cal_tx_base_pwr_accuracy();
+
+        if (!res) {
+            Log.set_last_err("%s Fail.Freq:%s,Power:%f(%f)(%s)",
+                             g_threadName.toStdString().c_str(),
+                             freq_string_from(freq).c_str(),
+                             pwr,
+                             pwrBase,
+                             string_of(mode).c_str());
+            emit threadProcess(RUNNING_EXCEPT);
+        }
+
+        if (mode == OUTPUT) {
+            data.res_op = res;
+        } else if (mode == IO) {
+            data.res_io = res;
+        }
+
+        data.set_result(data.res_op && data.res_io);
+        data.set_time();
+        SP1401->cr_tx_base_pwr_cal()->add(freq,data);
+        updateTotalResult(res);
+        addProgressPos(1);
+        THREAD_TEST_PAUSE_E
+    }
+    SP1401->cr_tx_base_pwr_cal()->update();
+    SP1401->ftp_put_cr_tx_base_pwr_cal();
 }
 
 void QCalR1CTXPwrThread::init()
@@ -154,7 +250,7 @@ void QCalR1CTXPwrThread::init()
 
     SP1401->cf()->m_tx_sb->get(2000000000,&dataSB);
     SP1401->cf()->m_tx_lol->get(2000000000,&dataLOL);
-    SP2401->set_tx_phase_rotate_I((double)(dataSB.th));
+    SP2401->set_tx_phase_rotate_I(double(dataSB.th));
     SP2401->set_tx_amplitude_balance(dataSB.am_i,dataSB.am_q);
     SP2401->set_tx_dc_offset(quint16(dataLOL.dc_i),quint16(dataLOL.dc_q));
 }
@@ -207,7 +303,7 @@ void QCalR1CTXPwrThread::coarseTuning(double target, double &att0, double &att1)
     offset = target - pwrPM;
 
     while (abs(offset) > 0.5) {
-        if (offset > att0) {		// Even if att0 == 0.0,this is still correct.
+        if (offset > att0) { // Even if att0 == 0.0,this is still correct.
             att1 -= (offset - att0);
             att0 = 0.0;
             att1 = att1 < 0.0 ? 0.0 : att1;
@@ -251,15 +347,16 @@ void QCalR1CTXPwrThread::fineTuning(double target, double &dGain)
         Instr.pm_get_pwr(pwrPM);
         offset = target - pwrPM;
 
-        if (++count > 10)
+        if (++count > 10) {
             break;
+        }
     }
 }
 
 
 void QExpR1CTXPwrThread::run()
 {
-    INIT_PROG("Exporting Tx Power",100);
+    initProgress("Exporting Tx Power",100);
 
     QTXPwrModel *model_op = dynamic_cast<QTXPwrModel *>(calParam.model_0);
     QTXPwrModel *model_io = dynamic_cast<QTXPwrModel *>(calParam.model_1);
@@ -274,10 +371,10 @@ void QExpR1CTXPwrThread::run()
     if (calOP(calMode)) {
         SP1401->cf()->map2buf(cal_file::TX_PWR_OP);
 
-        for (quint32 i = 0;i < freqRange.freqs.size();i ++) {
-            freq = freqRange.freqs.at(i);
+        for (quint32 i = 0;i < freqRangeCal.freqs.size();i ++) {
+            freq = freqRangeCal.freqs.at(i);
             SP1401->cf()->m_tx_pwr_op->get_base(freq,&data);
-            secCur = freq_section(freq,freqRange);
+            secCur = freq_section(freq,freqRangeCal);
             if (secCur != secBfr) {
                 model_op->iterTable()->at(secCur)->locate2CalTable(model_op->calTable()->begin() + i);
                 secBfr = secCur;
@@ -287,7 +384,7 @@ void QExpR1CTXPwrThread::run()
         }
 
         emit update(model_op->index(0,0),
-                    model_op->index(freqRange.freqs.size(),11),
+                    model_op->index(freqRangeCal.freqs.size(),11),
                     cal_file::TX_PWR_OP,
                     secCur);
     }
@@ -298,10 +395,10 @@ void QExpR1CTXPwrThread::run()
     if (calIO(calMode)) {
         SP1401->cf()->map2buf(cal_file::TX_PWR_IO);
 
-        for (quint32 i = 0;i < freqRange.freqs.size();i ++) {
-            freq = freqRange.freqs.at(i);
+        for (quint32 i = 0;i < freqRangeCal.freqs.size();i ++) {
+            freq = freqRangeCal.freqs.at(i);
             SP1401->cf()->m_tx_pwr_io->get_base(freq,&data);
-            secCur = freq_section(freq,freqRange);
+            secCur = freq_section(freq,freqRangeCal);
             if (secCur != secBfr) {
                 model_io->iterTable()->at(secCur)->locate2CalTable(model_io->calTable()->begin() + i);
                 secBfr = secCur;
@@ -311,11 +408,11 @@ void QExpR1CTXPwrThread::run()
         }
 
         emit update(model_io->index(0,0),
-                    model_io->index(freqRange.freqs.size(),11),
+                    model_io->index(freqRangeCal.freqs.size(),11),
                     cal_file::TX_PWR_OP,
                     secCur);
     }
 
     SET_PROG_POS(100);
-    THREAD_ABORT
+    THREAD_ENDED
 }

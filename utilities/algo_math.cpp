@@ -14,14 +14,28 @@
  */
 
 #include "algo_math.h"
+#include "exception.hpp"
+
+using namespace std;
 
 double round(double x,uint32_t digit)
 {
     uint64_t divider = 1;
-    for (uint32_t i = 0;i < digit;i ++)
+    for (uint32_t i = 0;i < digit;i ++) {
         divider *= 10;
+    }
     double a = x * divider;
     int64_t b = int64_t(a + (a >= 0 ? 0.5 : -0.5));
 
     return double(b) / divider;
+}
+
+float inv_sqrt(float x)
+{
+    float x_half = 0.5f * x;
+    int i = *(int *)&x;
+    i = 0x5f375a86 - (i >> 1);
+    x = *(float *)&i;
+    x = x * (1.5f - x_half * x * x); // newton iteration
+    return x;
 }

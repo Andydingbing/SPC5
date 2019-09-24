@@ -5,37 +5,6 @@
 #include <stdio.h>
 #include <cmath>
 
-//freq number to strings
-//e.g. 50000000--->"50M"	1000000000--->"1G"
-int32_t RD_API freq2str(double freq,char *str,int32_t digit = 0);
-int32_t RD_API freq2str(float freq,char *str,int32_t digit = 0);
-int32_t RD_API freq2str(uint64_t freq,char *str,int32_t digit = 0);
-int32_t RD_API freq2str(int32_t freq,char *str,int32_t digit = 0);
-int32_t RD_API freq2str(int64_t freq,char *str,int32_t digit = 0);
-
-//exact number to easy to see strings
-//e.g. 1048576--->"1M"
-int32_t RD_API byte2str(uint32_t byte,char *str,int32_t digit = 0);
-
-//coefficient to string
-int32_t RD_API coef2str(int16_t *coef,int32_t order,char *buf);
-
-//get how much sections does the strings have
-//pin : e.g. "50M;1G,4G" return 3
-int32_t RD_API str_sections(const char *pin);
-
-//get which section does the "freq" in
-int32_t RD_API freq_section(int64_t *pfreqstar,int64_t *pfreqstop,int64_t freq);
-int32_t RD_API freq_section_s(int64_t *pfreqstar,int64_t *pfreqstop,int64_t freq,int32_t sec);
-
-bool RD_API is_even(int32_t x);
-bool RD_API is_even(uint32_t x);
-bool RD_API is_exact_div(int32_t x,int32_t div);
-
-uint32_t RD_API gcd(uint32_t x,uint32_t y);
-uint64_t RD_API gcd(uint64_t x,uint64_t y);
-float RD_API inv_sqrt(float x);						//1/sqrt()
-
 double RD_API ad2dBc(int64_t x,int64_t x1);
 double RD_API ad2dBc(double x,double x1);
 float RD_API ad2dBc(float x,float x1);
@@ -81,10 +50,6 @@ void discretept(T_x x,int64_t step,T_x &x1,T_x &x2)
 //unsigned __int64 get_cycle_count();
 
 int32_t RD_API radix_chg(int32_t dec,char *result,int32_t radix);
-
-//ADF5355
-//int32_t RD_API adf5355_freq_formula(uint64_t freq,uint32_t ref_freq,bool ref_doubler,bool ref_divider,uint32_t r_counter,uint32_t f_chsp,uint32_t &_int,uint32_t &_frac1,uint32_t &_frac2,uint32_t &_mod1,uint32_t &_mod2);
-//int32_t RD_API adf5355_freq_formula(uint32_t _int,uint32_t _frac1,uint32_t _frac2,uint32_t _mod1,uint32_t _mod2,uint32_t ref_freq,double &freq);
 
 uint32_t RD_API adf5355para2reg0(uint32_t _int,uint32_t prescaler,uint32_t autocal);
 uint32_t RD_API adf5355para2reg1(uint32_t _frac1);
@@ -138,21 +103,6 @@ void RD_API sort_bubble(double *x,int32_t n);
 //if x has "3.0,3.0.3.0",and mapped y "6.0,5.0,4.0",the output y will be "4.0,5.0,6.0"
 void RD_API sort_bubble(double *x,double *y,int32_t n);
 
-//resolve polynomial
-//x : e.g. 1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0
-//y : e.g. 1.0,2.0,3.0
-//n : e.g. 3
-//this will resolve the polynomial shown below : 
-//1.0*a + 2.0*b + 3.0*c = 1.0
-//4.0*a + 5.0*b + 6.0*c = 2.0
-//7.0*a + 8.0*b + 9.0*c = 3.0
-//coef : will store a,b,c
-int32_t RD_API polynomial(double *x,double *y,int32_t n,double *coef);
-
-//value of polynomial
-//a[0] + a[1]*x^1 + a[2]*x^2 + ... + a[n]*x^n
-double RD_API polynomial(double *a,double x,int32_t n);
-
 //sum of cross multiply array a and b
 //a[0]*b[n] + a[1]*b[n-1] + a[2]*b[n-2] + ... + a[n]*b[0]
 double RD_API sumxmul(double *a,double *b,int32_t n);
@@ -172,19 +122,8 @@ int32_t RD_API conv(double *a,int32_t m,double *b,int32_t n,double *coef);
 //lagrange will make an function such as f(x) = a + b*x + c*x^2,and coef will store a,b,c
 int32_t RD_API lagrange(double *x,double *y,int32_t n,double *coef);
 
-//method of least squares
-//x : e.g. 1.0,2.0,3.0
-//y : e.g. 4.0,5.0,6.0
-//m : e.g. 3
-//n : e.g. 4
-//coef : polyfit will make an equation like "a + b*x + c*x^2 + d*x^3 + e*x^4 = 0",and coef will store a,b,c,d,e
-int32_t RD_API polyfit(double *x,double *y,int32_t m,int32_t n,double *coef);
-
 //as shown before,pout will be something like "f(x)= a + b*x + c*x^2 + d*x^3 + e*x^4";
 int32_t RD_API coef2polynomial(double *coef,int32_t n,char *pout);
-
-//x(1)^n + x(2)^n + ... + x(m)^n
-double RD_API sumpow(double *x,int32_t m,int32_t n);
 
 //1 dimension data interpolation
 ////m_linear : linear interpolation,default

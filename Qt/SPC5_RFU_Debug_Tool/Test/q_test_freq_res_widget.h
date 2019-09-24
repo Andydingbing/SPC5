@@ -4,12 +4,13 @@
 #include <QWidget>
 #include "q_plot.h"
 #include "q_model_freq_res.h"
+#include "q_model_temp_pwr.h"
 
 struct TestBaseParam;
 class QwtPlotCurve;
+
 class QTestFreqResWidget : public QWidget
 {
-    Q_OBJECT
 public:
     explicit QTestFreqResWidget(QWidget *parent = nullptr);
     void resetShowWidget(TestBaseParam *param);
@@ -25,6 +26,19 @@ public:
     QwtPlotCurve *curveIF_RX;
     QTestPlot *plotRF;
     QTestPlot *plotIF;
+};
+
+
+class QTestTempPwrWidget :public QWidget
+{
+public:
+    explicit QTestTempPwrWidget(QWidget *parent = nullptr);
+    void resetShowWidget(TestBaseParam *param);
+
+public:
+    QVector<QwtTempPwrData *> data;
+    QVector<QwtPlotCurve *> curve;
+    QTestPlot *plot;
 };
 
 #endif // Q_TEST_FREQ_RES_WIDGET_H

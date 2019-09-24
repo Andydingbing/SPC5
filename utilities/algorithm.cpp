@@ -3,241 +3,7 @@
 #include <string>
 #include <cstdlib>
 #include "algo_math.h"
-
-int32_t freq2str(double freq,char *str,int32_t digit)
-{
-    char unit[4] = {0};
-    memset(unit,0,sizeof(unit));
-
-    if (abs(freq) >= 1e9) {
-        freq /= 1000000000;
-        strcpy(unit,"G");
-    }
-    else if (abs(freq) >= 1e6) {
-        freq /= 1000000;
-        strcpy(unit,"M");
-    }
-    else if (abs(freq) >= 1e3) {
-        freq /= 1000;
-        strcpy(unit,"K");
-    }
-
-    if (digit != 0)
-        sprintf(str,"%.*f",digit,freq);
-    else
-        sprintf(str,"%g",freq);
-//  : = "%g"
-// 	if (strstr(str_freq,".")) {
-// 		for (int i = strlen(str_freq) - 1;i > 0;i --) {
-// 			strcpy(para,&str_freq[i]);
-// 			if (strcmp(para,"0") == 0)
-// 				strcpy(&str_freq[i],"\0");
-// 			else
-// 				break;
-// 		}
-// 	}
-    if (0 != unit[0])
-        strcat(str,unit);
-    return 0;
-}
-
-int32_t freq2str(float freq,char *str,int32_t digit)
-{
-    return freq2str(double(freq),str,digit);
-}
-
-int32_t freq2str(uint64_t freq,char *str,int32_t digit)
-{
-    return freq2str(double(freq),str,digit);
-}
-
-int32_t freq2str(int32_t freq,char *str,int32_t digit)
-{
-    return freq2str(double(freq),str,digit);
-}
-
-int32_t freq2str(int64_t freq,char *str,int32_t digit)
-{
-    return freq2str(double(freq),str,digit);
-}
-
-int32_t byte2str(uint32_t byte,char *str,int32_t digit)
-{
-    char unit[4] = {0};
-    memset(unit,0,sizeof(unit));
-    double data_part = 0.0;
-
-    if (byte >= 1024 * 1024 * 1024) {
-        data_part = byte / (1024.0 * 1024.0 * 1024.0);
-        strcpy(unit,"G");
-    }
-    else if (byte >= 1024 * 1024) {
-        data_part = byte / (1024.0 * 1024.0);
-        strcpy(unit,"M");
-    }
-    else if (byte >= 1024) {
-        data_part = byte / 1024.0;
-        strcpy(unit,"K");
-    }
-    else {
-        data_part = byte / 1.0;
-    }
-
-    if (digit != 0)
-        sprintf(str,"%.*f",digit,data_part);
-    else
-        sprintf(str,"%g",data_part);
-
-    if (0 != unit[0])
-        strcat(str,unit);
-    return 0;
-}
-
-int32_t coef2str(int16_t *coef,int32_t order,char *buf)
-{
-    char each_coef[32] = {0};
-    memset(each_coef,0,sizeof(each_coef));
-
-	for (int32_t i = 0;i < order;i ++) {
-        sprintf(each_coef,"%d,",coef[i]);
-        strcat(buf,each_coef);
-	}
-	buf[strlen(buf)] = '\0';
-	return 0;
-}
-
-int32_t str_sections(const char *pin)
-{
-    int32_t sec = 0;
-    const char *pin_temp = pin;
-    int32_t pos[2] = {0,0};
-    while ((pin = strpbrk(pin,";"))) {				//find all ";" and ","
-        sec ++;
-        pin ++;
-    }
-    pin = pin_temp;
-    while ((pin = strpbrk(pin,","))) {
-        sec ++;
-        pin ++;
-    }
-    pin = pin_temp;
-    if ((pin = strrchr(pin,';')))					//find the last ';' or ','
-        pos[0] = int32_t(pin - pin_temp) + 1;		//x64 platform pin will be 64bit
-    pin = pin_temp;
-    if ((pin = strrchr(pin,',')))
-        pos[1] = int32_t(pin - pin_temp) + 1;
-    pos[0] = pos[0] > pos[1] ? pos[0] : pos[1];
-    sec += pos[0] < int32_t(strlen(pin_temp)) ? 1 : 0;
-    return sec;
-}
-
-int32_t split_freq_character(const char *pin,char (*pout)[32],int32_t sec)
-{
-    const char *pin_temp = pin;
-    int32_t pos[2] = {0,0};
-    for (int i = 0;i < sec;i ++) {					//find the very first ';' or ','
-        pos[0] = int32_t(((nullptr != (pin = strchr(pin,','))) ? pin : pin_temp - 1) - pin_temp);
-        pin = pin_temp;
-        pos[1] = int32_t(((nullptr != (pin = strchr(pin,';'))) ? pin : pin_temp - 1) - pin_temp);
-        pin = pin_temp;
-        if (pos[0] < 0) {							//no ',' left
-            if (pos[1] < 0)							//no ';'?
-                pos[0] = int32_t(strlen(pin));
-            else
-                pos[0] = pos[1];
-        }
-        else {										//',' left
-            if (pos[1] > 0)							//';' left
-                pos[0] = pos[0] < pos[1] ? pos[0] : pos[1];
-        }
-        for (int j = 0;j < pos[0];j ++)
-            pout[i][j] = pin[j];
-        pout[i][pos[0]] = '\0';
-        pin += pos[0] + 1;
-        pin_temp = pin;
-        while (' ' == *pin || '\t' == *pin)
-            pin ++;
-        pin_temp = pin;
-    }
-    return 0;
-}
-
-int32_t freq_section(int64_t *pfreqstar,int64_t *pfreqstop,int64_t freq)
-{
-    for (int i = 0;;i ++) {
-        if (freq >= pfreqstar[i] && freq <= pfreqstop[i])
-            return i;
-    }
-    return -1;
-}
-
-int32_t freq_section_s(int64_t *pfreqstar,int64_t *pfreqstop,int64_t freq,int32_t sec)
-{
-    for (int i = 0;i < sec;i ++) {
-        if (freq >= pfreqstar[i] && freq <= pfreqstop[i])
-            return i;
-    }
-    return -1;
-}
-
-bool is_even(int32_t x)
-{
-    return (x % 2) ? false : true;
-}
-
-bool is_even(uint32_t x)
-{
-    return is_even(int32_t(x));
-}
-
-bool is_exact_div(int32_t x,int32_t div)
-{
-    return (x % div) ? false : true;
-}
-
-uint32_t gcd(uint32_t x,uint32_t y)
-{
-    if (0 == x) return y;
-    if (0 == y) return x;
-    uint32_t *max = (x > y ? &x : &y);
-    uint32_t *min = (max == &x ? &y : &x);
-    uint32_t remainder = 1;
-    while (remainder != 0) {
-        remainder = *max % *min;
-        if (remainder) {
-            *max = *min;
-            *min = remainder;
-        }
-    }
-    return *min;
-}
-
-uint64_t gcd(uint64_t x,uint64_t y)
-{
-    if (0 == x) return y;
-    if (0 == y) return x;
-    uint64_t *max = (x > y ? &x : &y);
-    uint64_t *min = (max == &x ? &y : &x);
-    uint64_t remainder = 1;
-    while (remainder != 0) {
-        remainder = *max % *min;
-        if (remainder) {
-            *max = *min;
-            *min = remainder;
-        }
-    }
-    return *min;
-}
-
-float inv_sqrt(float x)
-{
-    float xhalf = 0.5f*x;
-    int i = *(int *)&x;
-    i = 0x5f375a86 - (i>>1);
-    x = *(float *)&i;
-    x = x * (1.5f - xhalf * x * x); // newton iteration
-    return x;
-}
+#include <boost/rational.hpp>
 
 // unsigned __int64 get_cycle_count()
 // {
@@ -260,7 +26,7 @@ double ad2dBc(double x,double x1)
 
 float ad2dBc(float x,float x1)
 {
-    return 10.0 * log10(x1 / x);
+    return 10.0f * log10(x1 / x);
 }
 
 int64_t dBc2ad(int64_t x,double dBc)
@@ -272,32 +38,6 @@ void hmc624(double *x)
 {
     *x = (int32_t(*x * 10) / 5) * 5 / 10.0;
 }
-
-//int32_t adf5355_freq_formula(uint64_t freq,uint32_t ref_freq,bool ref_doubler,bool ref_divider,uint32_t r_counter,uint32_t f_chsp,uint32_t &_int,uint32_t &_frac1,uint32_t &_frac2,uint32_t &_mod1,uint32_t &_mod2)
-//{
-//    double f_pfd = double(ref_freq) * (((ref_doubler ? 1.0 : 0.0) + 1.0) / (((ref_divider ? 1.0 : 0.0) + 1.0) * double(r_counter)));
-
-//    _int   = uint32_t(freq / uint32_t(f_pfd));
-//    _mod1  = 16777216;
-//    _frac1 = uint32_t((freq % uint32_t(f_pfd)) / f_pfd * _mod1);
-
-//    double _mod2_bfr_reduction_fraction  = f_pfd / gcd(uint32_t(f_pfd),f_chsp);
-//    double _frac2_bfr_reduction_fraction = round(((freq % uint32_t(f_pfd)) / f_pfd * _mod1 - _frac1) * _mod2_bfr_reduction_fraction,2);
-
-//    uint32_t gcd_of_mod2_frac2 = gcd(uint32_t(_mod2_bfr_reduction_fraction),uint32_t(_frac2_bfr_reduction_fraction));
-//    _mod2  = uint32_t(_mod2_bfr_reduction_fraction)  / gcd_of_mod2_frac2;
-//    _frac2 = uint32_t(_frac2_bfr_reduction_fraction) / gcd_of_mod2_frac2;
-
-//    return 0;
-//}
-
-//int32_t adf5355_freq_formula(uint32_t _int,uint32_t _frac1,uint32_t _frac2,uint32_t _mod1,uint32_t _mod2,uint32_t ref_freq,double &freq)
-//{
-//    freq = ((double(_frac2) / double(_mod2)) + double(_frac1)) / double(_mod1) + double(_int);
-//    freq *= double(ref_freq);
-//    freq = round(freq,5);
-//    return 0;
-//}
 
 uint32_t adf5355para2reg0(uint32_t _int,uint32_t prescaler,uint32_t autocal)
 {
@@ -442,7 +182,7 @@ int32_t hmc1197_freq_formula_exactmode(uint64_t freq,uint32_t ref_freq,uint32_t 
     double f_pd = double(ref_freq) / double(r_counter);
     double _int_all_part = double(freq) / f_pd;
     _int = uint32_t(round(_int_all_part,1));
-    uint64_t f_gcd = gcd(freq,uint64_t(ref_freq / r_counter));	//ref_freq = r_counter * integer default
+    uint64_t f_gcd = boost::gcd(freq,uint64_t(ref_freq / r_counter));	//ref_freq = r_counter * integer default
     if (double(f_gcd) > (f_pd / 16777216.0)) {
         _chs = uint32_t(ref_freq / r_counter / f_gcd);
         _frac = uint32_t(round((_int_all_part - double(_int)) * 16777216.0,0));
@@ -610,53 +350,6 @@ void sort_bubble(double *x,double *y,int32_t n)
     }
 }
 
-int32_t polynomial(double *x,double *y,int32_t n,double *coef)
-{
-    double **X = new double *[n];
-    for (int32_t i = 0;i < n;i ++)
-        X[i] = new double[n];
-    for (int32_t i = 0;i < n;i ++) {
-        for (int32_t j = 0;j < n;j ++)
-            X[i][j] = x[i * n + j];
-    }
-    double div = 0.0;
-    for (int32_t dimen = n;dimen > 0;dimen --) {
-        for (int32_t i = n - dimen;i < n;i ++) {
-            div = X[i][n-dimen];
-            if (div) {
-                for (int32_t j = n - dimen;j < n;j ++)
-                    X[i][j] /= div;
-                y[i] /= div;
-            }
-        }
-        for (int32_t i = n - dimen + 1;i < n;i ++) {
-            if (X[i][n - dimen]) {
-                for (int32_t j = n - dimen;j < n;j ++)
-                    X[i][j] -= X[n - dimen][j];
-                y[i] -= y[n - dimen];
-            }
-        }
-    }
-    coef[n - 1] = y[n - 1];
-    for (int32_t i = n - 1 - 1;i >= 0;i --) {
-        for (int32_t j = i + 1;j < n;j ++)
-            y[i] -= X[i][j] * coef[j];
-        coef[i] = y[i];
-    }
-    for (int32_t i = 0;i < n;i ++)
-        delete [](X[i]);
-    delete []X;
-    return 0;
-}
-
-double polynomial(double *a,double x,int32_t n)
-{
-    double y = 0.0;
-    for (int32_t i = 0;i <= n;i ++)
-        y += a[i] * pow(x,i);
-    return y;
-}
-
 double sumxmul(double *a,double *b,int32_t n)
 {
     double y = 0.0;
@@ -742,27 +435,6 @@ int32_t lagrange(double *x,double *y,int32_t n,double *coef)
     return 0;
 }
 
-int32_t polyfit(double *x,double *y,int32_t m,int32_t n,double *coef)
-{
-    double *X = new double[(n + 1) * (n + 1)];
-    double *Y = new double[n + 1];
-    memset(X,0,sizeof(double) * (n + 1) * (n + 1));
-    memset(Y,0,sizeof(double) * (n + 1));
-
-    for (int32_t i = 0;i <= n;i ++) {
-        for (int32_t j = 0;j <= n;j ++)
-            X[i * (n + 1) + j] = sumpow(x,m,i + j);
-    }
-    for (int32_t i = 0;i <= n;i ++) {
-        for (int32_t j = 0;j < m;j ++)
-            Y[i] += pow(x[j],i) * y[j];
-    }
-    polynomial(X,Y,n + 1,coef);
-    delete []Y;
-    delete []X;
-    return 0;
-}
-
 int32_t coef2polynomial(double *coef,int32_t n,char *pout)
 {
     char rank[32] = {0};
@@ -775,14 +447,6 @@ int32_t coef2polynomial(double *coef,int32_t n,char *pout)
     sprintf(rank,"%+.6f",coef[0]);
     strcat(pout,rank);
     return 0;
-}
-
-double sumpow(double *x,int32_t m,int32_t n)
-{
-    double sum = 0.0;
-    for (int32_t i = 0;i < m;i ++)
-        sum += pow(x[i],n);
-    return sum;
 }
 
 int32_t interp1(double *x,double *y,int32_t n,double *x1,double *y1,interp_method method,int32_t I)
@@ -887,7 +551,7 @@ int32_t spline(double *x,double *y,int32_t n,double *a,double *b,double *c,doubl
         Y[i] *= 6.0;
     }
 
-    polynomial(X,Y,n,m);
+ //   polynomial(X,Y,n,m);
 
     for (int32_t i = 0;i < n - 1;i ++) {
         a[i] = y[i];

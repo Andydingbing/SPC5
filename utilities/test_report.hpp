@@ -31,8 +31,18 @@ enum test_item_t : unsigned {
     TI_IF_RX_FREQ_RES,
     TI_TX_PHASE_NOISE,
     TI_TX_NOISE_FLOOR,
+    TI_TX_LO_LD,
+    TI_TX_PWR_MOD_SW,
+    TI_TX_FILTER_SW,
+    TI_TX_IO_SW,
     TI_TX_PASSBAND_160,
     TI_RX_PASSBAND_160,
+    TI_TX_BASE_PWR,
+    TI_TX_PWR_OP,
+    TI_TX_PWR_IO,
+    TI_RX_REF,
+    TI_RX_PWR_OP,
+    TI_RX_PWR_IO,
 
     TEST_TOTAL_ITEMS
 };
@@ -115,11 +125,40 @@ protected:
     virtual void map_from(std::ifstream &stream,const tr_header_t &head) = 0;
 
 public:
-    std::map<int64_t,data_t> *data()
-    { return &_data; }
+    std::map<int64_t,data_t> *data() { return &_data; }
 
-    std::string full_path()
-    { return _path; }
+    data_t data(int64_t freq)
+    {
+        typename std::map<int64_t,data_t>::iterator iter = _data.find(freq);
+        if (iter != _data.end()) {
+            return iter->second;
+        } else {
+            return data_t();
+        }
+    }
+
+    data_t data(uint64_t freq) { return data(int64_t(freq)); }
+
+    std::string full_path() { return _path; }
+
+    bool result(int64_t freq) const
+    {
+        typename std::map<int64_t,data_t>::const_iterator iter = _data.find(freq);
+        if (iter != _data.end()) {
+            return iter->second.result();
+        } else {
+            return true;
+        }
+    }
+
+    bool result(uint64_t freq) const { return result(int64_t(freq)); }
+
+    bool result() const
+    {
+        tr_header_t header = get_header();
+        std::string res = header.result;
+        return res.substr(0,4) == std::string("Pass");
+    }
 
     tr_header_t get_header() const
     {
@@ -174,7 +213,7 @@ public:
         stream.close();
     }
 
-    void set_sn(const std::string &sn)
+    void set_sn(const std::string &sn) const
     {
         RD_ASSERT_THROW(sn.length() > 0);
         RD_ASSERT_THROW(sn.length() < ARRAY_SIZE(tr_header_t::sn));
@@ -189,7 +228,7 @@ public:
         set_header(header);
     }
 
-    void set_item(const test_item_t &item)
+    void set_item(const test_item_t &item) const
     {
         RD_ASSERT_THROW(item < TEST_TOTAL_ITEMS);
 
@@ -198,7 +237,7 @@ public:
         set_header(header);
     }
 
-    void set_result(const std::string &res)
+    void set_result(const std::string &res) const
     {
         RD_ASSERT_THROW(res.length() > 0);
         RD_ASSERT_THROW(res.length() < ARRAY_SIZE(tr_header_t::result));
@@ -213,6 +252,25 @@ public:
         set_header(header);
     }
 
+    void set_result(const bool res) const
+    {
+        tr_header_t header = get_header();
+
+        if (res == true) {
+            header.result[0] = 'P';
+            header.result[1] = 'a';
+            header.result[2] = 's';
+            header.result[3] = 's';
+        } else {
+            header.result[0] = 'F';
+            header.result[1] = 'a';
+            header.result[2] = 'i';
+            header.result[3] = 'l';
+        }
+
+        set_header(header);
+    }
+
     void add(const int64_t freq,const data_t &each_data)
     {
         typename std::map<int64_t,data_t>::iterator iter;
@@ -223,27 +281,32 @@ public:
         }
     }
 
+    void add(const uint64_t freq,const data_t &each_data)
+    { add(int64_t(freq),each_data); }
+
     void update() const
     {
-        tr_header_t header = get_header();
-        header.pt = uint32_t(_data.size());
-
-        if (header.pt > 0) {
-            header.size = sizeof(data_t);
-        }
-        set_header(header);
-
+        bool res = true;
         std::ofstream stream;
         open_for_write(stream);
 
         typename std::map<int64_t,data_t>::const_iterator iter;
-
         for (iter = _data.begin();iter != _data.end();iter ++) {
+            res = res ? iter->second.result() : res;
             stream << vertical_freq(iter->first);
             stream << iter->second.format_it();
             stream << std::endl;
         }
         stream.close();
+
+        tr_header_t header = get_header();
+
+        header.pt = uint32_t(_data.size());
+        if (header.pt > 0) {
+            header.size = sizeof(data_t);
+        }
+        set_header(header);
+        set_result(res);
     }
 
 protected:
@@ -354,10 +417,7 @@ protected:
     }
 
     static std::string vertical_freq(const int64_t freq)
-    {
-        return (boost::format("%-10s") %
-                freq_string_from_int64_t(freq)).str();
-    }
+    { return (boost::format("%-10s") % freq_string_from_int64_t(freq)).str(); }
 
 protected:
     std::string _path;

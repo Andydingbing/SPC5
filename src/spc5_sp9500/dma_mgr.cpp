@@ -225,20 +225,20 @@ int32_t dma_mgr::get_fpga_w_samples(uint32_t &samples)
 
 int32_t dma_mgr::dump2buf(int32_t *data, uint32_t samples)
 {
-    int	data_idx = 0;
-    int total_blocks = samples / R_BLOCK_SAMPLES;
-    int	samples_left = samples;
-    int samples_reading = 0;
-    int samples_last_block = samples % R_BLOCK_SAMPLES;
+    uint32_t data_idx = 0;
+    uint32_t total_blocks = samples / R_BLOCK_SAMPLES;
+    uint32_t samples_left = samples;
+    uint32_t samples_reading = 0;
+    uint32_t samples_last_block = samples % R_BLOCK_SAMPLES;
 
     if (samples_last_block != 0)
         total_blocks ++;
 
-    for (int i = 0;i < total_blocks;i ++) {
+    for (uint32_t i = 0;i < total_blocks;i ++) {
         samples_reading = (samples_left > int(R_BLOCK_SAMPLES) ? int(R_BLOCK_SAMPLES) : samples_left);
         INT_CHECK(m_dmaw[i]->r32(m_usr_spc,samples_reading));
 
-        for (int j = 0;j < samples_reading;j ++) {
+        for (uint32_t j = 0;j < samples_reading;j ++) {
             data_idx = i * R_BLOCK_SAMPLES + j;
             data[data_idx] = m_usr_spc[j];
 		}
@@ -250,13 +250,13 @@ int32_t dma_mgr::dump2buf(int32_t *data, uint32_t samples)
 int32_t dma_mgr::dump2buf_ch(uint32_t rf_idx,int32_t *data,uint32_t samples,int32_t *data_2)
 {
     samples *= 2;
-    int	data_idx = 0;
-    int package_idx = rf_idx % 2 + 1;
-    int package_idx_inter_ch = (0 == package_idx ? 1 : 0);
-    int total_blocks = samples / R_BLOCK_SAMPLES;
-    int samples_left = samples;
-    int samples_reading = 0;
-    int samples_last_block = samples % R_BLOCK_SAMPLES;
+    uint32_t data_idx = 0;
+    uint32_t package_idx = (rf_idx + 1) % 2;
+    uint32_t package_idx_inter_ch = (0 == package_idx ? 1 : 0);
+    uint32_t total_blocks = samples / R_BLOCK_SAMPLES;
+    uint32_t samples_left = samples;
+    uint32_t samples_reading = 0;
+    uint32_t samples_last_block = samples % R_BLOCK_SAMPLES;
 
     if (samples_last_block != 0)
         total_blocks ++;
@@ -264,11 +264,11 @@ int32_t dma_mgr::dump2buf_ch(uint32_t rf_idx,int32_t *data,uint32_t samples,int3
     iq_data_t iq_data_this_ch;
     iq_data_t iq_data_2;
 
-    for (int i = 0;i < total_blocks;i ++) {
+    for (uint32_t i = 0;i < total_blocks;i ++) {
         samples_reading = (samples_left > int(R_BLOCK_SAMPLES) ? int(R_BLOCK_SAMPLES) : samples_left);
         INT_CHECK(m_dmaw[i]->r32(m_usr_spc,samples_reading));
 
-        for (int j = 0;j < samples_reading;j += 2) {
+        for (uint32_t j = 0;j < samples_reading;j += 2) {
             data_idx = (i * R_BLOCK_SAMPLES + j) / 2;
 
             iq_data_this_ch = ((w_package_t *)(&m_usr_spc[j]))->data[package_idx];
@@ -287,12 +287,12 @@ int32_t dma_mgr::dump2buf_ch(uint32_t rf_idx,int32_t *data,uint32_t samples,int3
 int32_t dma_mgr::dump2file_ch(uint32_t rf_idx,char *path,uint32_t samples,char *path_2)
 {
     samples *= 2;
-    int package_idx = rf_idx % 2 + 1;
-    int package_idx_inter_ch = (0 == package_idx ? 1 : 0);
-    int total_blocks = samples / R_BLOCK_SAMPLES;
-    int samples_left = samples;
-    int samples_reading = 0;
-    int samples_last_block = samples % R_BLOCK_SAMPLES;
+    uint32_t package_idx = (rf_idx + 1) % 2;
+    uint32_t package_idx_inter_ch = (0 == package_idx ? 1 : 0);
+    uint32_t total_blocks = samples / R_BLOCK_SAMPLES;
+    uint32_t samples_left = samples;
+    uint32_t samples_reading = 0;
+    uint32_t samples_last_block = samples % R_BLOCK_SAMPLES;
 
     if (samples_last_block != 0)
         total_blocks ++;
@@ -316,11 +316,11 @@ int32_t dma_mgr::dump2file_ch(uint32_t rf_idx,char *path,uint32_t samples,char *
     int32_t i_data_this_ch;
     int32_t i_data_2;
 
-    for (int i = 0;i < total_blocks;i ++) {
+    for (uint32_t i = 0;i < total_blocks;i ++) {
         samples_reading = (samples_left > int(R_BLOCK_SAMPLES) ? int(R_BLOCK_SAMPLES) : samples_left);
         INT_CHECK(m_dmaw[i]->r32(m_usr_spc,samples_reading));
 
-        for (int j = 0;j < samples_reading;j += 2) {
+        for (uint32_t j = 0;j < samples_reading;j += 2) {
             iq_data_this_ch = ((w_package_t *)(&m_usr_spc[j]))->data[package_idx];
             i_data_this_ch = *(int32_t *)&iq_data_this_ch;
             fprintf(fp,"%d\n",i_data_this_ch);
@@ -355,13 +355,13 @@ int32_t dma_mgr::iq2buf(uint32_t rf_idx,int16_t *I,int16_t *Q,uint32_t samples,i
         return 0;
     }
 
-    int	data_idx = 0;
-    int package_idx = rf_idx % 2 + 1;
-    int package_idx_inter_ch = (0 == package_idx ? 1 : 0);
-    int total_blocks = samples / R_BLOCK_SAMPLES;
-    int samples_left = samples;
-    int samples_reading = 0;
-    int samples_last_block = samples % R_BLOCK_SAMPLES;
+    uint32_t data_idx = 0;
+    uint32_t package_idx = (rf_idx + 1) % 2;
+    uint32_t package_idx_inter_ch = (0 == package_idx ? 1 : 0);
+    uint32_t total_blocks = samples / R_BLOCK_SAMPLES;
+    uint32_t samples_left = samples;
+    uint32_t samples_reading = 0;
+    uint32_t samples_last_block = samples % R_BLOCK_SAMPLES;
 
     if (samples_last_block != 0) {
         total_blocks ++;
@@ -370,16 +370,16 @@ int32_t dma_mgr::iq2buf(uint32_t rf_idx,int16_t *I,int16_t *Q,uint32_t samples,i
     iq_data_t iq_data_this_ch;
     iq_data_t iq_data_2;
 
-    for (int i = 0;i < total_blocks;i ++) {
+    for (uint32_t i = 0;i < total_blocks;i ++) {
         samples_reading = (samples_left > int(R_BLOCK_SAMPLES) ? int(R_BLOCK_SAMPLES) : samples_left);
         INT_CHECK(m_dmaw[i]->r32(m_usr_spc,samples_reading));
 
-        for (int j = 0;j < samples_reading;j += 2) {
+        for (uint32_t j = 0;j < samples_reading;j += 2) {
             data_idx = (i * R_BLOCK_SAMPLES + j) / 2;
 
             iq_data_this_ch = ((w_package_t *)(&m_usr_spc[j]))->data[package_idx];
-            I[data_idx] = (int16_t)(iq_data_this_ch.i);
-            Q[data_idx] = (int16_t)(iq_data_this_ch.q);
+            I[data_idx] = iq_data_this_ch.i;
+            Q[data_idx] = iq_data_this_ch.q;
 
             iq_data_2 = ((w_package_t *)(&m_usr_spc[j]))->data[package_idx_inter_ch];
             if (I_2)
@@ -395,12 +395,12 @@ int32_t dma_mgr::iq2buf(uint32_t rf_idx,int16_t *I,int16_t *Q,uint32_t samples,i
 int32_t	dma_mgr::iq2file(uint32_t uiRfIdx,char *pPath,uint32_t uiSamples,char *path_2)
 {
     uiSamples *= 2;
-    int package_idx = uiRfIdx % 2 + 1;
-    int package_idx_inter_ch = (0 == package_idx ? 1 : 0);
-    int total_blocks = uiSamples / R_BLOCK_SAMPLES;
-    int samples_left = uiSamples;
-    int samples_reading = 0;
-    int samples_last_block = uiSamples % R_BLOCK_SAMPLES;
+    uint32_t package_idx = (uiRfIdx + 1) % 2;
+    uint32_t package_idx_inter_ch = (0 == package_idx ? 1 : 0);
+    uint32_t total_blocks = uiSamples / R_BLOCK_SAMPLES;
+    uint32_t samples_left = uiSamples;
+    uint32_t samples_reading = 0;
+    uint32_t samples_last_block = uiSamples % R_BLOCK_SAMPLES;
 
     if (samples_last_block != 0)
         total_blocks ++;
@@ -422,11 +422,11 @@ int32_t	dma_mgr::iq2file(uint32_t uiRfIdx,char *pPath,uint32_t uiSamples,char *p
     iq_data_t iq_data_this_ch;
     iq_data_t iq_data_2;
 
-    for (int i = 0;i < total_blocks;i ++) {
+    for (uint32_t i = 0;i < total_blocks;i ++) {
         samples_reading = (samples_left > int(R_BLOCK_SAMPLES) ? int(R_BLOCK_SAMPLES) : samples_left);
         INT_CHECK(m_dmaw[i]->r32(m_usr_spc,samples_reading));
 
-        for (int j = 0;j < samples_reading;j += 2) {
+        for (uint32_t j = 0;j < samples_reading;j += 2) {
             iq_data_this_ch = ((w_package_t *)(&m_usr_spc[j]))->data[package_idx];
             fprintf(fp,"%6d,%6d\n",iq_data_this_ch.i,iq_data_this_ch.q);
 

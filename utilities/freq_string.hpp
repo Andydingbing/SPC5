@@ -27,7 +27,7 @@
 #include <boost/format.hpp>
 #include <boost/algorithm/string/trim.hpp>
 
-/*!
+/*
  *
  * freq_string is a std::string type string with this format :
  *
@@ -78,11 +78,11 @@
  *
  */
 
-struct range_freq_string {
+typedef struct range_string {
     std::string star;
     std::string stop;
     std::string step;
-};
+} range_freq_string, range_pwr_string, range_temp_string;
 
 template <typename T>
 struct range_freq {
@@ -91,9 +91,39 @@ struct range_freq {
     std::vector<T> stop;
     T max;
     T min;
+
+    bool has(const T &freq)
+    {
+        for (size_t i = 0;i < freqs.size();i ++) {
+            if (freq - freqs.at(i) == T(0)) {
+                return true;
+            }
+        }
+        return false;
+    }
 };
 
-/*!
+template <typename T>
+struct range_pwr {
+    std::vector<T> pwrs;
+    std::vector<T> star;
+    std::vector<T> stop;
+    T max;
+    T min;
+    range_pwr<T> & operator = (const range_freq<T> &fake_pwr)
+    {
+        this->pwrs = fake_pwr.freqs;
+        this->star = fake_pwr.star;
+        this->stop = fake_pwr.stop;
+        this->max = fake_pwr.max;
+        this->min = fake_pwr.min;
+        return *this;
+    }
+};
+
+typedef range_pwr<float> range_temp;
+
+/*
  * Calculate which sectoin does "freq" in "range".
  * "range" must be valid and "freq" must be in range.
  *
@@ -107,7 +137,7 @@ struct range_freq {
  * freq_section(1000000000,range) = 1;
  */
 template <typename T>
-uint32_t freq_section(T freq, range_freq<T> &range)
+int32_t freq_section(T freq, range_freq<T> &range)
 {
     RD_ASSERT_THROW(range.star.size() == range.stop.size());
     RD_ASSERT_THROW(freq >= range.min);
@@ -115,14 +145,14 @@ uint32_t freq_section(T freq, range_freq<T> &range)
 
     for (size_t i = 0;i < range.star.size();i ++) {
         if (freq >= range.star.at(i) && freq <= range.stop.at(i)) {
-            return uint32_t(i);
+            return int32_t(i);
         }
     }
     return 0;
 }
 
 
-/*!
+/*
  * Normal notation string to built in types.
  *
  * string ---> int/float/double/int8_t/......
@@ -162,7 +192,7 @@ IMPL_NORMAL_NOTATION_STRING_TO_(uint32_t)
 IMPL_NORMAL_NOTATION_STRING_TO_(uint64_t)
 
 
-/*!
+/*
  * Scientific notation string to built in types.
  *
  * string ---> int/float/double/int8_t/......
@@ -214,7 +244,7 @@ IMPL_SCIENTIFIC_NOTATION_STRING_TO_(uint32_t)
 IMPL_SCIENTIFIC_NOTATION_STRING_TO_(uint64_t)
 
 
-/*!
+/*
  * Frequency abbreviation string to type T.
  *
  * string -----> int/float/double/int8_t......
@@ -296,7 +326,7 @@ IMPL_FREQ_STRING_TO_(uint32_t)
 IMPL_FREQ_STRING_TO_(uint64_t)
 
 
-/*!
+/*
  * Frequency abbreviation string from type T.
  * Only support integer types.
  *
@@ -312,8 +342,15 @@ IMPL_FREQ_STRING_TO_(uint64_t)
  * freq_string_from_int16_t(xxx);
  * ......
  */
+enum freq_string_unit_priority_t {
+    FSU_G,   // GHz
+    FSU_M,   // MHz
+    FSU_K,   // KHz
+    FSU_NONE // None
+};
+
 template <typename T>
-std::string freq_string_from(const T &freq)
+std::string freq_string_from(const T &freq, freq_string_unit_priority_t priority = FSU_M)
 {
     char unit = '\0';
     double freq_copy = double(freq);
@@ -324,15 +361,30 @@ std::string freq_string_from(const T &freq)
         str += "-";
     }
 
-    if (freq_copy >= 1e9) {
-        freq_copy /= 1e9;
-        unit = 'G';
-    } else if (freq_copy >= 1e6) {
-        freq_copy /= 1e6;
-        unit = 'M';
-    } else if (freq_copy >= 1e3) {
-        freq_copy /= 1e3;
-        unit = 'K';
+    if (priority == FSU_G) {
+        if (freq_copy >= 1e9) {
+            freq_copy /= 1e9;
+            unit = 'G';
+        } else if (freq_copy >= 1e6) {
+            freq_copy /= 1e6;
+            unit = 'M';
+        } else if (freq_copy >= 1e3) {
+            freq_copy /= 1e3;
+            unit = 'K';
+        }
+    } else if (priority == FSU_M) {
+        if (freq_copy >= 1e6) {
+            freq_copy /= 1e6;
+            unit = 'M';
+        } else if (freq_copy >= 1e3) {
+            freq_copy /= 1e3;
+            unit = 'K';
+        }
+    } else if (priority == FSU_K) {
+        if (freq_copy >= 1e3) {
+            freq_copy /= 1e3;
+            unit = 'K';
+        }
     }
 
     boost::format fmt("%g");
@@ -360,7 +412,7 @@ IMPL_FREQ_STRING_FROM_(uint32_t)
 IMPL_FREQ_STRING_FROM_(uint64_t)
 
 
-/*!
+/*
  * Calculate how much sections does the string have.
  * The overload c-style function use a different algorithm.
  *
@@ -370,12 +422,12 @@ IMPL_FREQ_STRING_FROM_(uint64_t)
  */
 uint32_t freq_string_sections(const std::string &str);
 
-/*!
+/*
  * Make sure the end of "str" is '\0'!
  */
 uint32_t freq_string_sections(const char *str);
 
-/*!
+/*
  * Split freq_string.Usually called follow freq_string_sections.
  * So there is no syntax check.
  * The overload c-style function use a different algorithm.
@@ -408,7 +460,7 @@ void split_freq_string(const std::string &str_in, uint32_t sections, T &str_out)
     }
 }
 
-/*!
+/*
  * Make sure the end of "str" is '\0'!
  */
 void split_freq_string(const char *str_in, uint32_t sections, char (*str_out)[32]);
@@ -419,6 +471,11 @@ uint32_t parse_range_freq_string(const range_freq_string &freq_string, range_fre
     uint32_t section_star = freq_string_sections(freq_string.star);
     uint32_t section_stop = freq_string_sections(freq_string.stop);
     uint32_t section_step = freq_string_sections(freq_string.step);
+
+    if (section_star == 0 || section_stop == 0 || section_step == 0) {
+        freq_out = range_freq<T>();
+        return 0;
+    }
 
     RD_ASSERT_THROW(section_star == section_stop);
 
@@ -451,7 +508,7 @@ uint32_t parse_range_freq_string(const range_freq_string &freq_string, range_fre
         }
     }
 
-    sort(freq_out.freqs.begin(),freq_out.freqs.end());
+    std::sort(freq_out.freqs.begin(),freq_out.freqs.end());
 
     iter_freqs_repeated_begin = unique(freq_out.freqs.begin(),freq_out.freqs.end());
     freq_out.freqs.erase(iter_freqs_repeated_begin,freq_out.freqs.end());
@@ -461,5 +518,18 @@ uint32_t parse_range_freq_string(const range_freq_string &freq_string, range_fre
 
     return uint32_t(freq_out.freqs.size());
 }
+
+template <typename T>
+RD_INLINE uint32_t parse_range_pwr_string(const range_pwr_string &pwr_string, range_pwr<T> &pwr_out)
+{
+    range_freq<T> fake_pwr_out;
+    uint32_t pts = parse_range_freq_string(pwr_string,fake_pwr_out);
+    pwr_out = fake_pwr_out;
+    sort(pwr_out.pwrs.begin(),pwr_out.pwrs.end(),std::greater<>());
+    return pts;
+}
+
+RD_INLINE uint32_t parse_range_temp_string(const range_temp_string &temp_string, range_temp &temp_out)
+{ return parse_range_pwr_string(temp_string,temp_out); }
 
 #endif // RD_UTILITIES_FREQ_STRING_HPP

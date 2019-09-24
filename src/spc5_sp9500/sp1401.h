@@ -10,9 +10,15 @@
 #include "dsp_buf.h"
 #include "test_data.hpp"
 #include "cal_file.h"
+#include <list>
 #include <boost/function.hpp>
+#include "freq_string.hpp"
 
 namespace sp_rd {
+
+const static float g_temp_star = 20.0f;
+const static float g_temp_stop = 70.0f;
+const static float g_temp_step = 0.5f;
 
 class RD_API basic_sp1401 : boost::noncopyable
 {
@@ -123,6 +129,9 @@ public:
     int32_t get_k7_ver(uint32_t &ver);
     arb_reader *get_arb_reader() { return m_arb_reader.get(); }
 
+    virtual void tx_att_states(std::list<sp1401::common_chain_pwr_state_t> &states) { states.clear(); }
+    virtual void rx_att_states(std::list<sp1401::common_chain_pwr_state_t> &states) { states.clear(); }
+
     static  uint32_t ass_ordinal(uint32_t ordinal);
     static  int32_t is_valid_sn(const char *sn);
     static  int32_t get_hw_ver(const char *sn,sp1401::hw_ver_t &ver);
@@ -217,9 +226,21 @@ protected: \
     DECL_FUNC_PREPARE_TR(rf_rx_freq_res_test,TI_RF_RX_FREQ_RES)
     DECL_FUNC_PREPARE_TR(if_rx_freq_res_test,TI_IF_RX_FREQ_RES)
     DECL_FUNC_PREPARE_TR(tx_phase_noise_test,TI_TX_PHASE_NOISE)
+    DECL_FUNC_PREPARE_TR(tx_noise_floor_test,TI_TX_NOISE_FLOOR)
+    DECL_FUNC_PREPARE_TR(tx_lo_ld_test,TI_TX_LO_LD)
+    DECL_FUNC_PREPARE_TR(tx_pwr_mod_sw_test,TI_TX_PWR_MOD_SW)
+    DECL_FUNC_PREPARE_TR(tx_filter_sw_test,TI_TX_FILTER_SW)
+    DECL_FUNC_PREPARE_TR(tx_io_sw_test,TI_TX_IO_SW)
 
     DECL_FUNC_PREPARE_CR(tx_passband_freq_res_160_cal,TI_TX_PASSBAND_160)
     DECL_FUNC_PREPARE_CR(rx_passband_freq_res_160_cal,TI_RX_PASSBAND_160)
+    DECL_FUNC_PREPARE_CR(tx_base_pwr_cal,TI_TX_BASE_PWR)
+    DECL_FUNC_PREPARE_CR(tx_pwr_op_cal,TI_TX_PWR_OP)
+    DECL_FUNC_PREPARE_CR(tx_pwr_io_cal,TI_TX_PWR_IO)
+    DECL_FUNC_PREPARE_CR(rx_ref_cal,TI_RX_REF)
+    DECL_FUNC_PREPARE_CR(rx_pwr_op_cal,TI_RX_PWR_OP)
+    DECL_FUNC_PREPARE_CR(rx_pwr_io_cal,TI_RX_PWR_IO)
+
     DECL_FUNC_PREPARE_CR(rf_tx_freq_res_cal,TI_RF_TX_FREQ_RES)
     DECL_FUNC_PREPARE_CR(rf_rx_freq_res_cal,TI_RF_RX_FREQ_RES)
 
@@ -233,9 +254,20 @@ public: \
     DECL_FUNC_FTP_PUT(_tr_rf_rx_freq_res_test)
     DECL_FUNC_FTP_PUT(_tr_if_rx_freq_res_test)
     DECL_FUNC_FTP_PUT(_tr_tx_phase_noise_test)
+    DECL_FUNC_FTP_PUT(_tr_tx_noise_floor_test)
+    DECL_FUNC_FTP_PUT(_tr_tx_lo_ld_test)
+    DECL_FUNC_FTP_PUT(_tr_tx_pwr_mod_sw_test)
+    DECL_FUNC_FTP_PUT(_tr_tx_filter_sw_test)
+    DECL_FUNC_FTP_PUT(_tr_tx_io_sw_test)
 
     DECL_FUNC_FTP_PUT(_cr_tx_passband_freq_res_160_cal)
     DECL_FUNC_FTP_PUT(_cr_rx_passband_freq_res_160_cal)
+    DECL_FUNC_FTP_PUT(_cr_tx_base_pwr_cal)
+    DECL_FUNC_FTP_PUT(_cr_tx_pwr_op_cal)
+    DECL_FUNC_FTP_PUT(_cr_tx_pwr_io_cal)
+    DECL_FUNC_FTP_PUT(_cr_rx_ref_cal)
+    DECL_FUNC_FTP_PUT(_cr_rx_pwr_op_cal)
+    DECL_FUNC_FTP_PUT(_cr_rx_pwr_io_cal)
 
     template <typename ftp_call_back_t>
     static void set_ftp_retry_call_back(ftp_call_back_t f)

@@ -38,6 +38,7 @@ public:
 public:  
     bool sa_reset();
     bool sa_set_cf(double freq);
+    bool sa_set_cf(uint64_t freq);
     bool sa_set_span(double freq);
     bool sa_set_rbw(double freq,bool is_auto);
     bool sa_set_vbw(double freq,bool is_auto);

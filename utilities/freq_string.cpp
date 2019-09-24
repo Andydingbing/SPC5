@@ -19,7 +19,9 @@ uint32_t freq_string_sections(const std::string &str)
 {
     std::string::size_type length = str.length();
 
-    RD_ASSERT_THROW(length > 0);
+    if (length == 0) {
+        return 0;
+    }
 
     char next = str.at(0);
     uint32_t sections = 0;

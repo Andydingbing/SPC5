@@ -8,7 +8,10 @@ class QCalR1CTXPwrThread : public QCalR1CBaseThread
 public:
     explicit QCalR1CTXPwrThread(const CalParam &param) :
         QCalR1CBaseThread(param) {}
+    void run();
 
+    void calIt(io_mode_t mode);
+    void checkIt(io_mode_t mode);
     virtual void init();
     virtual void initTXBaseStateOP(double &att0,
                                    double &att1,
@@ -24,9 +27,6 @@ public:
 
     virtual void coarseTuning(double target, double &att0, double &att1);
     virtual void fineTuning(double target, double &dGain);
-
-    void run();
-    void cal(io_mode_t mode);
 };
 
 

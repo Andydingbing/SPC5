@@ -2,6 +2,7 @@
 #include "q_model_tx_loleak.h"
 #include "algorithm.h"
 #include "algo_math.h"
+#include "spec.h"
 
 void QCalR1CTXLOLeakThread::run()
 {
@@ -23,14 +24,18 @@ void QCalR1CTXLOLeakThread::run()
 
     initTXChain();
 
-    if (calParam.calX9119)
+    if (calParam.calX9119) {
         calX9119();
+    }
 
-    if (useSA)
+    THREAD_TEST_CANCEL
+    if (useSA) {
         calUseSA(dc_i_m,dc_q_m,data.pwr);
-    else
+    } else {
         calUseLoop(dc_i_m,dc_q_m,data.pwr);
+    }
 
+    THREAD_TEST_CANCEL
     data.freq = freq;
     data.dc_i = dc_i_m;
     data.dc_q = dc_q_m;
@@ -50,7 +55,7 @@ void QCalR1CTXLOLeakThread::run()
     }
 
     SET_PROG_POS(100);
-    CAL_THREAD_ABOART
+    THREAD_ENDED
     RD_CAL_CATCH
 }
 
@@ -77,8 +82,8 @@ void QCalR1CTXLOLeakThread::calX9119()
     Instr.sa_set_ref(-10.0);
 
     for (quint16 value = 0;value < 1023;value ++) {
-        CAL_THREAD_TEST_PAUSE_S
-        CAL_THREAD_TEST_CANCEL
+        THREAD_TEST_PAUSE_S
+        THREAD_TEST_CANCEL
         pSP3501->vol_9119(value);
         Instr.sa_sweep_once();
         Instr.sa_set_peak_search(sa::PEAK_HIGHEST);
@@ -98,11 +103,13 @@ void QCalR1CTXLOLeakThread::calX9119()
         } else if (freqDelta < 5000.0) {
             if (curSpan != 10000.0) Instr.sa_set_span(curSpan = 10000.0);
         }
-        CAL_THREAD_TEST_PAUSE_E
+        THREAD_TEST_PAUSE_E
     }
 
     if (freqDelta > 5.0) {
-        THREAD_ERROR_BOX("Cal OCXO Fail!");
+        Log.set_last_err("Cal OCXO Fail");
+        THREAD_ERROR_BOX(Log.last_err());
+        emit threadProcess(RUNNING_EXCEPT);
     }
 
     SP1401->cf()->add(cal_file::X9119,&Xdata);
@@ -111,10 +118,6 @@ void QCalR1CTXLOLeakThread::calX9119()
 
 void QCalR1CTXLOLeakThread::calUseSA(qint16 &dc_i_m, qint16 &dc_q_m,double &pwrLOL)
 {
-    CAL_THREAD_TEST_CANCEL
-
-    SP1401->set_io_mode(OUTPUT);
-
     Instr.init();
     Instr.has_sa();
     Instr.sa_reset();
@@ -129,10 +132,11 @@ void QCalR1CTXLOLeakThread::calUseSA(qint16 &dc_i_m, qint16 &dc_q_m,double &pwrL
     qint16 step = 0;
     double pwrSA = 0.0;
 
+    SP1401->set_io_mode(OUTPUT);
     SP1401->set_tx_freq(freq);
     SP2401->set_tx_dc_offset(dc_i_m,dc_q_m);
 
-    Instr.sa_set_cf((double)freq);
+    Instr.sa_set_cf(freq);
     Instr.sa_set_ref(0.0);
     Instr.sa_sweep_once();
     Instr.sa_sweep_once();
@@ -140,24 +144,24 @@ void QCalR1CTXLOLeakThread::calUseSA(qint16 &dc_i_m, qint16 &dc_q_m,double &pwrL
 
     step = 200;
     while ((dc_i_r - dc_i_l) > 4) {
-        CAL_THREAD_TEST_PAUSE_S
-        CAL_THREAD_TEST_CANCEL
+        THREAD_TEST_PAUSE_S
+        THREAD_TEST_CANCEL
         dc_i_m = (qint16)round((dc_i_l + dc_i_r) / 2.0,0);
         if (slopeI_SA(dc_i_m,dc_q_m,step,pwrLOL) > 0)
             dc_i_r = dc_i_m;
         else
             dc_i_l = dc_i_m;
-        CAL_THREAD_TEST_PAUSE_E
+        THREAD_TEST_PAUSE_E
     }
     while ((dc_q_r - dc_q_l) > 4) {
-        CAL_THREAD_TEST_PAUSE_S
-        CAL_THREAD_TEST_CANCEL
+        THREAD_TEST_PAUSE_S
+        THREAD_TEST_CANCEL
         dc_q_m = (qint16)round((dc_q_l + dc_q_r) / 2.0,0);
         if (slopeQ_SA(dc_i_m,dc_q_m,step,pwrLOL) > 0)
             dc_q_r = dc_q_m;
         else
             dc_q_l = dc_q_m;
-        CAL_THREAD_TEST_PAUSE_E
+        THREAD_TEST_PAUSE_E
     }
 
     step = 20;
@@ -169,26 +173,26 @@ void QCalR1CTXLOLeakThread::calUseSA(qint16 &dc_i_m, qint16 &dc_q_m,double &pwrL
     }
 
     while ((dc_i_r - dc_i_l) > 4) {
-        CAL_THREAD_TEST_PAUSE_S
-        CAL_THREAD_TEST_CANCEL
+        THREAD_TEST_PAUSE_S
+        THREAD_TEST_CANCEL
         dc_i_m = (qint16)round((dc_i_l + dc_i_r) / 2.0,0);
         if (slopeI_SA(dc_i_m,dc_q_m,step,pwrLOL) > 0)
             dc_i_r = dc_i_m;
         else
             dc_i_l = dc_i_m;
-        CAL_THREAD_TEST_PAUSE_E
+        THREAD_TEST_PAUSE_E
     }
     dc_q_l = dc_q_m - 100;
     dc_q_r = dc_q_m + 100;
     while ((dc_q_r - dc_q_l) > 4) {
-        CAL_THREAD_TEST_PAUSE_S
-        CAL_THREAD_TEST_CANCEL
+        THREAD_TEST_PAUSE_S
+        THREAD_TEST_CANCEL
         dc_q_m = (qint16)round((dc_q_l + dc_q_r) / 2.0,0);
         if (slopeQ_SA(dc_i_m,dc_q_m,step,pwrLOL) > 0)
             dc_q_r = dc_q_m;
         else
             dc_q_l = dc_q_m;
-        CAL_THREAD_TEST_PAUSE_E
+        THREAD_TEST_PAUSE_E
     }
 
     if (pwrLOL <= -40.0)
@@ -196,7 +200,7 @@ void QCalR1CTXLOLeakThread::calUseSA(qint16 &dc_i_m, qint16 &dc_q_m,double &pwrL
 
     step = 1;
     for (qint16 retry = 0;retry < 3;retry ++) {
-        CAL_THREAD_TEST_PAUSE_S
+        THREAD_TEST_PAUSE_S
         if (slopeI_SA(dc_i_m,dc_q_m,1,pwrLOL) > 0) {
             while ( -- dc_i_m) {
                 if (slopeI_SA(dc_i_m,dc_q_m,step,pwrLOL) < 0)
@@ -220,7 +224,7 @@ void QCalR1CTXLOLeakThread::calUseSA(qint16 &dc_i_m, qint16 &dc_q_m,double &pwrL
                     break;
             }
         }
-        CAL_THREAD_TEST_PAUSE_E
+        THREAD_TEST_PAUSE_E
     }
 
     qint16 DC_I_M_Min = dc_i_m;
@@ -230,7 +234,7 @@ void QCalR1CTXLOLeakThread::calUseSA(qint16 &dc_i_m, qint16 &dc_q_m,double &pwrL
         dc_i_l = dc_i_m - 5;
         dc_i_r = dc_i_m + 5;
         for (dc_i_m = dc_i_l; dc_i_m <= dc_i_r; dc_i_m ++) {
-            CAL_THREAD_TEST_PAUSE_S
+            THREAD_TEST_PAUSE_S
             SP2401->set_tx_dc_offset(dc_i_m,dc_q_m);
             Instr.sa_sweep_once();
             Instr.sa_get_marker_pwr(pwrSA);
@@ -238,11 +242,11 @@ void QCalR1CTXLOLeakThread::calUseSA(qint16 &dc_i_m, qint16 &dc_q_m,double &pwrL
                 pwrLOL = pwrSA;
                 DC_I_M_Min = dc_i_m;
             }
-            CAL_THREAD_TEST_PAUSE_E
+            THREAD_TEST_PAUSE_E
         }
         dc_i_m = DC_I_M_Min;
         for (dc_q_m = dc_q_l; dc_q_m <= dc_q_r; dc_q_m ++) {
-            CAL_THREAD_TEST_PAUSE_S
+            THREAD_TEST_PAUSE_S
             SP2401->set_tx_dc_offset(dc_i_m,dc_q_m);
             Instr.sa_sweep_once();
             Instr.sa_get_marker_pwr(pwrSA);
@@ -250,22 +254,22 @@ void QCalR1CTXLOLeakThread::calUseSA(qint16 &dc_i_m, qint16 &dc_q_m,double &pwrL
                 pwrLOL = pwrSA;
                 DC_Q_M_Min = dc_q_m;
             }
-            CAL_THREAD_TEST_PAUSE_E
+            THREAD_TEST_PAUSE_E
         }
         dc_q_m = DC_Q_M_Min;
     }
 
-    if (pwrLOL > -70.0) {
+    if (pwrLOL > spec::cal_tx_lol()) {
         dc_i_m = 0;
         dc_q_m = 0;
-        THREAD_ERROR_BOX("Cal Fail!");
+        Log.set_last_err("Cal TX LO Leakage Fail.Power:%f",pwrLOL);
+        THREAD_ERROR_BOX(Log.last_err());
+        emit threadProcess(RUNNING_EXCEPT);
     }
 }
 
 void QCalR1CTXLOLeakThread::calUseLoop(qint16 &dc_i_m, qint16 &dc_q_m,double &pwrLOL)
 {
-    CAL_THREAD_TEST_CANCEL
-
     SP1401->set_io_mode(LOOP);
     SP1401->set_rx_lna_att_sw(sp1401::RX_ATT);
     SP1401->set_rx_att_019_sw(sp1401::RX_ATT_0);
@@ -285,14 +289,14 @@ void QCalR1CTXLOLeakThread::calUseLoop(qint16 &dc_i_m, qint16 &dc_q_m,double &pw
     SP2401->set_tx_dc_offset(dc_i_m,dc_q_m);
     msleep(50);
 
-    CAL_THREAD_TEST_CANCEL
+    THREAD_TEST_CANCEL
     step = 200;
     memset(adLOL,0,sizeof(adLOL));
     adMin = getMinDCOffsetI_Rx(step,1,&dc_i_l,&dc_i_r,&dc_i_m,&dc_q_m,adLOL);
     memset(adLOL,0,sizeof(adLOL));
     adMin = getMinDCOffsetQ_Rx(step,1,&dc_q_l,&dc_q_r,&dc_i_m,&dc_q_m,adLOL);
 
-    CAL_THREAD_TEST_CANCEL
+    THREAD_TEST_CANCEL
     step = 20;
     SP1401->set_rx_att1(10.0);
     memset(adLOL,0,sizeof(adLOL));
@@ -300,7 +304,7 @@ void QCalR1CTXLOLeakThread::calUseLoop(qint16 &dc_i_m, qint16 &dc_q_m,double &pw
     memset(adLOL,0,sizeof(adLOL));
     adMin = getMinDCOffsetQ_Rx(step,1,&dc_q_l,&dc_q_r,&dc_i_m,&dc_q_m,adLOL);
 
-    CAL_THREAD_TEST_CANCEL
+    THREAD_TEST_CANCEL
     step = 5;
     SP1401->set_rx_att2(0.0);
     memset(adLOL,0,sizeof(adLOL));
@@ -308,11 +312,11 @@ void QCalR1CTXLOLeakThread::calUseLoop(qint16 &dc_i_m, qint16 &dc_q_m,double &pw
     memset(adLOL,0,sizeof(adLOL));
     adMin = getMinDCOffsetQ_Rx(step,1,&dc_q_l,&dc_q_r,&dc_i_m,&dc_q_m,adLOL);
 
-    CAL_THREAD_TEST_CANCEL
+    THREAD_TEST_CANCEL
     step = 1;
     SP1401->set_rx_att1(0.0);
     for (int32_t retry = 0;retry < 3;retry ++) {
-        CAL_THREAD_TEST_CANCEL
+        THREAD_TEST_CANCEL
         memset(adLOL,0,sizeof(adLOL));
         adMin = getMinDCOffsetI_Rx(step,2,&dc_i_l,&dc_i_r,&dc_i_m,&dc_q_m,adLOL);
         memset(adLOL,0,sizeof(adLOL));
@@ -368,7 +372,7 @@ int64_t QCalR1CTXLOLeakThread::getMinDCOffsetI_Rx(qint16 step, qint16 lr_coef, q
     int64_t adMin = LONG_MAX;
     qint16 idx = 0,idxMin = 0;
     for (*dc_i_m = *dc_i_l;*dc_i_m <= *dc_i_r;*dc_i_m += step) {
-        CAL_THREAD_TEST_PAUSE_S
+        THREAD_TEST_PAUSE_S
         SP2401->set_tx_dc_offset(*dc_i_m,*dc_q_m);
         SP1401->get_ads5474(ad[idx]);
         if (ad[idx] < adMin) {
@@ -376,7 +380,7 @@ int64_t QCalR1CTXLOLeakThread::getMinDCOffsetI_Rx(qint16 step, qint16 lr_coef, q
             idxMin = idx;
         }
         idx ++;
-        CAL_THREAD_TEST_PAUSE_E
+        THREAD_TEST_PAUSE_E
     }
     *dc_i_m = *dc_i_l + idxMin * step;
     *dc_i_l = *dc_i_m - step * lr_coef;
@@ -389,7 +393,7 @@ int64_t QCalR1CTXLOLeakThread::getMinDCOffsetQ_Rx(qint16 step, qint16 lr_coef, q
     int64_t adMin = LONG_MAX;
     qint16 idx = 0,idxMin = 0;
     for (*dc_q_m = *dc_q_l;*dc_q_m <= *dc_q_r;*dc_q_m += step) {
-        CAL_THREAD_TEST_PAUSE_S
+        THREAD_TEST_PAUSE_S
         SP2401->set_tx_dc_offset(*dc_i_m,*dc_q_m);
         SP1401->get_ads5474(ad[idx]);
         if (ad[idx] < adMin) {
@@ -397,7 +401,7 @@ int64_t QCalR1CTXLOLeakThread::getMinDCOffsetQ_Rx(qint16 step, qint16 lr_coef, q
             idxMin = idx;
         }
         idx ++;
-        CAL_THREAD_TEST_PAUSE_E
+        THREAD_TEST_PAUSE_E
     }
     *dc_q_m = *dc_q_l + idxMin * step;
     *dc_q_l = *dc_q_m - step * lr_coef;
@@ -408,7 +412,7 @@ int64_t QCalR1CTXLOLeakThread::getMinDCOffsetQ_Rx(qint16 step, qint16 lr_coef, q
 
 void QExpR1CTXLOLeakThread::run()
 {
-    INIT_PROG("Exporting TX LO Leakage",100);
+    initProgress("Exporting TX LO Leakage",100);
 
     QTXLOLeakModel *model = dynamic_cast<QTXLOLeakModel *>(calParam.model_0);
 
@@ -422,9 +426,8 @@ void QExpR1CTXLOLeakThread::run()
         idx ++;
     }
 
-    emit update(model->index(0,0),
-                model->index(RF_TX_FREQ_PTS_CALLED,9));
+    emit update(model->index(0,0),model->index(RF_TX_FREQ_PTS_CALLED,9));
 
     SET_PROG_POS(100);
-    THREAD_ABORT
+    THREAD_ENDED
 }

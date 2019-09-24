@@ -10,6 +10,7 @@
 #include "q_r1c_temp_ctrl_model.h"
 #include <qwt_plot_legenditem.h>
 #include <qwt_legend.h>
+
 namespace Ui {
 class QTempCtrlDlg;
 }
@@ -25,7 +26,6 @@ public:
         Ajust_All = 0,
         Ajust_Single
     };
-    sp3501 *_sp3501;
     sp3301 *_sp3301;
     sp1401_r1a *_sp1401_r1a;
     sp1401_r1c *_sp1401_r1c;
@@ -57,7 +57,7 @@ public:
     //    QVector<QPointF> vector7;
     //    QVector<QR1CTempCtrlModel*> *_model;
 public:
-    explicit QTempCtrlDlg(QWidget *parent = 0);
+    explicit QTempCtrlDlg(QWidget *parent = nullptr);
     ~QTempCtrlDlg();
 public:
     void initAllSlider(int max);
@@ -86,6 +86,8 @@ private slots:
     void on_verticalSlider10_valueChanged(int value);
 
     void on_verticalSlider11_valueChanged(int value);
+
+    void on_verticalSlider12_valueChanged(int value);
 
     void on_pushButtonStart_clicked();
 

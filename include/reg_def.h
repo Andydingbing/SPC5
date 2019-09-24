@@ -1,5 +1,5 @@
-#ifndef __REG_DEF_H__
-#define __REG_DEF_H__
+#ifndef INCLUDE_REG_DEF_H
+#define INCLUDE_REG_DEF_H
 
 #define CONFIG_FILE_PATH "config.ini"
 
@@ -31,6 +31,7 @@
 #define K7_OP(ns,addr) K7OP(ns,addr,op)
 #define K7_OP_DELAY(ns,addr,time) K7OP_DELAY(ns,addr,op,time)
 #define K7_RE(ns,addr) K7RE(ns,addr,op)
+#define K7_FE(ns,addr) K7FE(ns,addr,op)
 #define K7_WAIT_IDLE(ns,addr,flag,times) K7WAIT_IDLE(ns,addr,busy,flag,times)
 #define K7_WAIT_IDLE_BUSY2(ns,addr,flag,times) K7WAIT_IDLE(ns,addr,busy2,flag,times)
 #define S6_OP(ns,addr) S6OP(ns,addr,op)
@@ -96,14 +97,9 @@
         K7_W(ns,addr); \
     }while (0);
 
-#define K7OP_DELAY(ns,addr,bit,time) \
-    do {if (time) { sleep_ms(time); } \
-        REG(ns,addr).bit = 0; \
+#define K7FE(ns,addr,bit) \
+    do {REG(ns,addr).bit = 1; \
         K7_W(ns,addr); \
-        if (time) { sleep_ms(time); } \
-        REG(ns,addr).bit = 1; \
-        K7_W(ns,addr); \
-        if (time) { sleep_ms(time); } \
         REG(ns,addr).bit = 0; \
         K7_W(ns,addr); \
     }while (0);
@@ -183,6 +179,7 @@
 #define RFU_K7_OP(addr) K7_OP(ns_reg_rfu_k7,addr)
 #define RFU_K7_OP_DELAY(addr,time) K7_OP_DELAY(ns_reg_rfu_k7,addr,time)
 #define RFU_K7_RE(addr) K7_RE(ns_reg_rfu_k7,addr)
+#define RFU_K7_FE(addr) K7_FE(ns_reg_rfu_k7,addr)
 #define RFU_K7_WAIT_IDLE(addr,flag,times) K7_WAIT_IDLE(ns_reg_rfu_k7,addr,flag,times)
 #define RFU_K7_WAIT_IDLE_BUSY2(addr,flag,times) K7_WAIT_IDLE_BUSY2(ns_reg_rfu_k7,addr,flag,times)
 #define RFU_K7_W(addr) K7_W(ns_reg_rfu_k7,addr)
@@ -364,15 +361,15 @@
 #define RFU_S6_W_2(addr0,addr1) S6_W_2(ns_reg_rfu_s6,addr0,addr1)
 #define RFU_S6_R_2(addr0,addr1) S6_R_2(ns_reg_rfu_s6,addr0,addr1)
 
-//! Register Define
+// Register Define
 
-//! RFU K7
+// RFU K7
 namespace ns_reg_rfu_k7 {
 
 REG_DEF_S(0x0000)
-    unsigned op   : 1;	//! dma reset
+    unsigned op   : 1;	// DMA state-machine reset signal
     unsigned rsv  : 7;
-    unsigned ver  : 8;	//! firmware ver
+    unsigned ver  : 8;	// firmware version
     unsigned cdw  : 4;
 #define cdw_invalid 0
 #define cdw_32      1
@@ -381,55 +378,64 @@ REG_DEF_S(0x0000)
 REG_DEF_E
 
 REG_DEF_S(0x0001)
-    unsigned fpga_wr_op   : 1;		//! fpga dma write start
+    unsigned fpga_wr_op   : 1; // FPGA DMA write start signal
     unsigned rsv          : 6;
-    unsigned dis_wr_int   : 1;		//! disable fpga dma write interruption
-    unsigned fpga_wr_done : 1;		//! fpga dma write done
+    unsigned dis_wr_int   : 1; // disable FPGA DMA write interruption
+    unsigned fpga_wr_done : 1; // FPGA DMA write done
     unsigned rsv2         : 7;
 
-    unsigned fpga_rd_op   : 1;		//! fpga dma read start
+    unsigned fpga_rd_op   : 1; // FPGA DMA read start signal
     unsigned rsv3         : 6;
-    unsigned dis_rd_int   : 1;		//! disable fpga dma read interruption
-    unsigned fpga_rd_done : 1;		//! fpga dma read done
+    unsigned dis_rd_int   : 1; // disable FPGA DMA read interruption
+    unsigned fpga_rd_done : 1; // FPGA DMA read done
     unsigned rsv4         : 7;
 REG_DEF_E
 
+REG_DEF_S(0x0002)
+    unsigned op    : 1;  // FPGA reset signal
+    unsigned rsv0  : 3;
+    unsigned ld_da : 1;  // ADF4351(to DAC) lock detect
+    unsigned rsv1  : 3;
+    unsigned ld_ad : 1;  // ADF4351(to ADC) lock detect
+    unsigned rsv   : 23;
+REG_DEF_E
+
 REG_DEF_S(0x0007)
-    unsigned adr : 32;			//! fpga dma read physical address
+    unsigned adr : 32; // FPGA DMA read physical address
 REG_DEF_E
 
 REG_DEF_S(0x0008)
-    unsigned tlp_size : 16;		//! fpga dma read tlp size
+    unsigned tlp_size : 16; // FPGA DMA read TLP size
 REG_DEF_E
 
 REG_DEF_S(0x0009)
-    unsigned tlp_count : 20;		//! fpga dma read tlp count
+    unsigned tlp_count : 20; // FPGA DMA read TLP count
 REG_DEF_E
 
 REG_DEF_S(0x0014)
-    unsigned samples : 32;		//! fpga dma write total samples written
+    unsigned samples : 32; // FPGA DMA write total samples written
 REG_DEF_E
 
 REG_DEF_S(0x0016)
-    unsigned data : 32;			//! fpga dma write physical memory block index
+    unsigned data : 32; // FPGA DMA write physical memory block index
 REG_DEF_E
 
 REG_DEF_S(0x0017)
-    unsigned adr : 32;                  //! fpga dma write physical memory block address
+    unsigned adr : 32; // FPGA DMA write physical memory block address
 REG_DEF_E
 
 REG_DEF_S(0x0020)
-    unsigned dma_rd_timer : 32;		//! fpga dma read timer
+    unsigned dma_rd_timer : 32; // FPGA DMA read timer
 REG_DEF_E
 
 REG_DEF_S(0x0021)
-    unsigned dma_rd_counter : 32;	//! fpga dma read counter
+    unsigned dma_rd_counter : 32; // FPGA DMA read counter
 REG_DEF_E
 
 REG_DEF_S(0x0025)
     unsigned rsv0 : 23;
-    unsigned op_0 : 1; // Meas capture start,freerun/waiting for trigger.
-    unsigned op_1 : 1; // FPGA write start.
+    unsigned op_0 : 1;  // Meas capture start,freerun/waiting for trigger.
+    unsigned op_1 : 1;  // FPGA write start.
     unsigned rsv1 : 7;
 REG_DEF_E
 
@@ -1503,4 +1509,4 @@ using namespace ns_reg_rfu_k7;
 using namespace ns_reg_rfu_s6;
 using namespace ns_reg_cxu_s6;
 
-#endif
+#endif // INCLUDE_REG_DEF_H

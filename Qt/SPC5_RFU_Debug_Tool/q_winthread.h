@@ -4,26 +4,15 @@
 #include "define.h"
 #include <QThread>
 #include <QMutex>
+//#include <QColor>
 #include "freq_string.hpp"
 #include "q_r1c_temp_ctrl_model.h"
 #include "test_data.hpp"
 
-#define THREAD_TEST_CANCEL  \
-{   if (QWinThread::g_threadStop) { \
-        emit done(); \
-        return; \
-    } \
-}
-
-#define THREAD_ABORT \
-{   emit done(); \
-    return; \
-}
-
 #define THREAD_CHECK_BOX(msg) \
 {   emit threadCheckBox(msg); \
     if (QWinThread::g_threadStop) { \
-        emit result(CTR_MANUAL_STOPED); \
+        emit threadProcess(END_MANUAL); \
         emit done(); \
         return; \
     } \
@@ -33,66 +22,63 @@
 {   emit threadErrorBox(msg);       \
 }
 
-// Calibration/Test thread stop support.
-#define CAL_THREAD_TEST_CANCEL \
+#define THREAD_TEST_CANCEL \
 {   if (QWinThread::g_threadStop) { \
         Instr.close(); \
-        emit result(CTR_MANUAL_STOPED); \
+        emit threadProcess(END_MANUAL); \
         emit done(); \
         return; \
     } \
 }
 
-#define TEST_THREAD_TEST_CANCEL \
-    CAL_THREAD_TEST_CANCEL
-
-#define CAL_THREAD_TEST_CANCEL_S(post) \
+#define THREAD_TEST_CANCEL_S(post) \
 {   if (QWinThread::g_threadStop) { \
         post; \
         Instr.close(); \
-        emit result(CTR_MANUAL_STOPED); \
+        emit threadProcess(END_MANUAL); \
         emit done(); \
         return; \
     } \
 }
 
-// Calibration thread pause/continue support.
-#define CAL_THREAD_TEST_PAUSE_S \
+// Thread pause/continue support.
+#define THREAD_TEST_PAUSE_S \
 {   threadLock.lock();
 
-#define CAL_THREAD_TEST_PAUSE_E \
+#define THREAD_TEST_PAUSE_E \
     threadLock.unlock(); }
 
 
 #define CAL_THREAD_START(name,pts) \
-    CAL_THREAD_TEST_CANCEL; \
+    THREAD_TEST_CANCEL; \
+    emit threadProcess(PREPARE); \
     THREAD_CHECK_BOX(QString("Prepare Calibrating %1").arg(name)); \
-    INIT_PROG(QString("Calibrating %1").arg(name),pts);
+    emit threadProcess(STARTED); \
+    initProgress(QString("Calibrating %1").arg(name),pts);
 
 #define TEST_THREAD_START(name,pts) \
-    TEST_THREAD_TEST_CANCEL; \
-    THREAD_CHECK_BOX(QString("Prepare Testing %1").arg(name));  \
-    INIT_PROG(QString("Testing %1").arg(name),pts);
+    THREAD_TEST_CANCEL; \
+    emit threadProcess(PREPARE); \
+    THREAD_CHECK_BOX(QString("Prepare Testing %1").arg(name)); \
+    emit threadProcess(STARTED); \
+    initProgress(QString("Testing %1").arg(name),pts);
 
-#define CAL_THREAD_ABOART \
+#define THREAD_ENDED \
 {   threadLock.lock(); \
     threadLock.unlock(); \
     Instr.close(); \
-    emit result(CTR_COMPLETE_PASS); \
+    emit threadProcess(END_NORMAL); \
     emit done(); \
     return; \
 }
 
-#define TEST_THREAD_ABOART \
-    CAL_THREAD_ABOART
-
-#define CAL_THREAD_ABOART_S(post) \
+#define THREAD_ENDED_S(POST) \
 {   threadLock.lock(); \
     threadLock.unlock(); \
-    post; \
+    POST \
     Instr.close(); \
+    emit threadProcess(END_NORMAL); \
     emit done(); \
-    emit result(CTR_COMPLETE_PASS); \
     return; \
 }
 
@@ -103,7 +89,11 @@
     #define RD_CAL_CATCH \
         } catch (std::exception &e) { \
             THREAD_ERROR_BOX(QString("%1").arg(e.what())); \
-            CAL_THREAD_ABOART \
+            threadLock.lock(); \
+            threadLock.unlock(); \
+            Instr.close(); \
+            emit threadProcess(END_EXCEPT); \
+            emit done(); \
         }
 #else
     #define RD_CAL_TRY
@@ -117,13 +107,6 @@
 class QCalBaseThread;
 class QCalBaseModel;
 class QwtCalData;
-
-
-typedef enum CalResult {
-    CTR_COMPLETE_PASS = 0,
-    CTR_COMPLETE_FAIL,
-    CTR_MANUAL_STOPED
-} CalResult, TestResult;
 
 typedef enum CalIOMode {
     CAL_IO = 0,
@@ -156,18 +139,38 @@ public:
     QwtCalData    *plotData_0;
     QwtCalData    *plotData_1;
     QwtCalData    *plotData_2;
-    basic_sp1401  *_sp1401;
-    sp2401_r1a    *_sp2401;
+    basic_sp1401  *SP1401;
+    sp2401_r1a    *SP2401;
+    sp3301        *SP3301;
     sp3501        *_sp3501;
     QString       rfFreqStar;
     QString       rfFreqStop;
     QString       rfFreqStep;
+    range_freq_string freqStringCheck;
     bool          calX9119;
     LOLeak_Method methodLOLeak;
     SB_Method     methodSB;
     bool          justRebuildCoef;
-public:
-    CalParam();
+
+    CalParam() :
+        cal(false),
+        check(false),
+        parent(nullptr),
+        model_0(nullptr),
+        model_1(nullptr),
+        SP1401(nullptr),
+        SP2401(nullptr),
+        SP3301(nullptr),
+        _sp3501(nullptr),
+        calX9119(true),
+        methodLOLeak(M_Spectrum),
+        methodSB(M_Spectrum),
+        justRebuildCoef(false)
+    {
+        rfFreqStar = QString("%1").arg(RF_TX_FREQ_STAR);
+        rfFreqStop = QString("%1").arg(RF_TX_FREQ_STOP);
+        rfFreqStep = QString("%1").arg(RF_TX_FREQ_STEP_CALLED);
+    }
 };
 
 struct CalR1CParam
@@ -180,8 +183,10 @@ public:
     QString   rfRxFreqStar;
     QString   rfRxFreqStop;
     QVector<QCalBaseThread *> calThreads;
-public:
-    CalR1CParam();
+
+    CalR1CParam() :
+        txMode(CAL_IO_OP),
+        rxMode(CAL_IO_OP) {}
 };
 
 
@@ -207,7 +212,13 @@ public:
     sp2401_r1a   *SP2401;
     sp3301       *SP3301;
 
-    TestBaseParam();
+    TestBaseParam() :
+        parent(nullptr),
+        model_0(nullptr),
+        model_1(nullptr),
+        SP1401(nullptr),
+        SP2401(nullptr),
+        SP3301(nullptr) {}
 };
 
 typedef struct TempParam {
@@ -223,7 +234,6 @@ public:
     basic_sp1401    *_sp1401;
     sp2401_r1a      *_sp2401;
     sp3501          *_sp3501;
-
 }TempParam;
 
 
@@ -232,17 +242,36 @@ class QWinThread : public QThread
     Q_OBJECT
 
 public:
+    enum Process {
+        PREPARE = 0,     // The thread is prepared,but not started yet.
+        STARTED,         // The thread has been started and running.
+        RUNNING_NOTMAL,  // Running normally.
+        RUNNING_EXCEPT,  // Some exceptions happened or something failed,but still running.
+        PAUSED,          // The thread has been paused.
+        END_NORMAL,      // The thread is normally ended.
+        END_MANUAL,      // The thread is manually ended.
+        END_EXCEPT       // Some exceptions are throwed and the thread is ended.
+    };
+
+public:
     explicit QWinThread(QObject *parent = nullptr);
+    static int registerMetaType() { return qRegisterMetaType<Process>("Process"); }
+    void initProgress(const QString name) { emit initProg(name); }
+    void initProgress(const QString name, quint32 pts) { emit initProg(name,pts); }
+    void setProgressPos(quint32 pos) { emit setProgPos(pos); }
+    void addProgressPos(quint32 off) { emit addProgPos(off); }
 
 signals:
-    void initProg(const QString name,quint32 pts);
+    void initProg(const QString name);
+    void initProg(const QString name, quint32 pts);
     void setProgPos(quint32 pos);
+    void addProgPos(quint32 off);
     void done(bool success = true);
     void threadCheckBox(QString msg);
     void threadErrorBox(QString msg);
+    void threadProcess(const Process p);
 
 public:
-    int32_t funcIdx;
     QMutex threadLock;
     static bool g_threadStop;
     static bool g_threadPausing;
@@ -250,8 +279,21 @@ public:
     static QWinThread *g_threadThread;
 };
 
+class QCalTestBaseThread : public QWinThread
+{
+public:
+    explicit QCalTestBaseThread(QObject *parent = nullptr) :
+        QWinThread (parent), totalResult(true), totalPts(0) {}
 
-typedef class QCalBaseThread : public QWinThread
+    void updateTotalResult(bool singleResult)
+    { totalResult = totalResult ? singleResult : totalResult; }
+
+protected:
+    bool totalResult;
+    quint32 totalPts;
+};
+
+typedef class QCalBaseThread : public QCalTestBaseThread
 {
     Q_OBJECT
 
@@ -267,7 +309,7 @@ public:
         RD_CAL_TRY
         if (calParam.cal) cal();
         if (calParam.check) check();
-        CAL_THREAD_ABOART
+        THREAD_ENDED
         RD_CAL_CATCH
     }
 
@@ -280,13 +322,15 @@ signals:
                 const QModelIndex &br,
                 cal_file::cal_item_t item = cal_file::TX_LOL,
                 int sec = 0);
-    void result(CalResult cr = CTR_COMPLETE_PASS);
 
 protected:
+    sp3301 *SP3301;
     hw_ver_t RFVer;
     CalParam calParam;
-    range_freq_string freqString;
-    range_freq<quint64> freqRange;
+    range_freq_string freqStringCal;
+    range_freq<quint64> freqRangeCal;
+    range_freq_string freqStringCheck;
+    range_freq<quint64> freqRangeCheck;
 } QCalBaseThread, QExportBaseThread;
 
 typedef class QCalR1CBaseThread : public QCalBaseThread
@@ -295,8 +339,8 @@ public:
     explicit QCalR1CBaseThread(const CalParam &param) :
         QCalBaseThread(param)
     {
-        SP1401 = (sp1401_r1c *)(param._sp1401);
-        SP2401 = (sp2401_r1a *)(param._sp2401);
+        SP1401 = dynamic_cast<sp1401_r1c *>(param.SP1401);
+        SP2401 = dynamic_cast<sp2401_r1a *>(param.SP2401);
     }
 
 protected:
@@ -305,28 +349,26 @@ protected:
 } QCalR1CBaseThread, QExpR1CBaseThread;
 
 
-class QTestBaseThread : public QWinThread
+class QTestBaseThread : public QCalTestBaseThread
 {
     Q_OBJECT
 
 public:
     explicit QTestBaseThread(QObject *parent = nullptr) :
-        QWinThread(parent) {}
+        QCalTestBaseThread(parent) {}
 
 signals:
     void update(const QModelIndex &tl,
                 const QModelIndex &br,
                 test_item_t item = TI_RF_TX_FREQ_RES,
                 int sec = 0);
-    void result(TestResult tr = CTR_COMPLETE_PASS);
 };
 
 class QTestThread : public QTestBaseThread
 {
 public:
     explicit QTestThread(const TestBaseParam *param) :
-        QTestBaseThread(param->parent),
-        totalResult(true)
+        QTestBaseThread(param->parent)
     {
         RFVer = param->SP1401->get_hw_ver();
 
@@ -352,13 +394,10 @@ public:
     }
 
     ~QTestThread() { SAFE_DEL(testParam); }
-    void updateTotalResult(bool singleResult)
-    { totalResult = totalResult ? singleResult : totalResult; }
 
 protected:
     hw_ver_t RFVer;
     TestBaseParam *testParam;
-    bool totalResult;
 };
 
 typedef class QTestR1CBaseThread : public QTestThread
@@ -393,10 +432,10 @@ protected:
     sp2401_r1a *SP2401;
 } QTestR1CBaseThread;
 
-bool calOP(CalIOMode mode);
-bool calIO(CalIOMode mode);
-Q_ALWAYS_INLINE bool testOP(TestIOMode mode) { return calOP(mode); }
-Q_ALWAYS_INLINE bool testIO(TestIOMode mode) { return calIO(mode); }
+Q_ALWAYS_INLINE bool calOP(const CalIOMode mode) { return (mode == CAL_OP || mode == CAL_IO_OP); }
+Q_ALWAYS_INLINE bool calIO(const CalIOMode mode) { return (mode == CAL_IO || mode == CAL_IO_OP); }
+Q_ALWAYS_INLINE bool testOP(const TestIOMode mode) { return calOP(mode); }
+Q_ALWAYS_INLINE bool testIO(const TestIOMode mode) { return calIO(mode); }
 
 int exeFirProcess(char *path);
 void getADS5474(basic_sp1401 *sp1401,qint64 &ad,qint32 avgTime = 3);
@@ -404,6 +443,7 @@ void getADS5474(basic_sp1401 *sp1401,qint64 &ad,qint32 avgTime = 3);
 void threadCheckBox(const char *format, ...);
 void threadErrorBox(const char *format, ...);
 bool ftpRetryBox();
+void testTXIOSwBox(const QColor TX, const QColor RX, int &exec);
 
 template <typename T>
 quint32 parseRangeFreqStringFrom(const CalParam *param, range_freq<T> *freqRange = nullptr)

@@ -15,7 +15,6 @@ QTempCtrlDlg::QTempCtrlDlg(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    _sp3501 = nullptr;
     _sp1401_r1a = nullptr;
     _sp1401_r1c = nullptr;
 
@@ -58,7 +57,6 @@ QTempCtrlDlg::QTempCtrlDlg(QWidget *parent) :
 
 
         for (qint8 j = 0;j < 8;j ++) {
-
             curveR1C.at(i)->at(j)->setPen(clrTable[j % clrTableSize]);
             curveR1C.at(i)->at(j)->setVisible(true);
             curveR1C.at(i)->at(j)->attach(ui->plot);
@@ -67,15 +65,10 @@ QTempCtrlDlg::QTempCtrlDlg(QWidget *parent) :
             dataTempCtr[j]->calTable()->clear();
             curveR1C.at(i)->at(j)->setSamples(dataTempCtr[j]);
             //curveR1C.at(i)->at(j)->setLegendAttribute(curveR1C.at(i)->at(j)->LegendShowSymbol);
-
         }
 
     }
-
     ui->plot->insertLegend(new QwtLegend(),QwtPlot::RightLegend);
-
-
-
 }
 
 QTempCtrlDlg::~QTempCtrlDlg()
@@ -83,31 +76,33 @@ QTempCtrlDlg::~QTempCtrlDlg()
     delete ui;
 }
 
-#define DECLARE_SLIDER_ARRAY        \
-    QSlider *slider[NUM_BLOWER] = { \
-        ui->verticalSlider1,        \
-        ui->verticalSlider2,        \
-        ui->verticalSlider3,        \
-        ui->verticalSlider4,        \
-        ui->verticalSlider5,        \
-        ui->verticalSlider6,        \
-        ui->verticalSlider7,        \
-        ui->verticalSlider8,        \
-        ui->verticalSlider9,        \
-        ui->verticalSlider10,       \
-        ui->verticalSlider11,       \
+#define DECLARE_SLIDER_ARRAY \
+    QSlider *slider[NUM_FAN] = { \
+        ui->verticalSlider1, \
+        ui->verticalSlider2, \
+        ui->verticalSlider3, \
+        ui->verticalSlider4, \
+        ui->verticalSlider5, \
+        ui->verticalSlider6, \
+        ui->verticalSlider7, \
+        ui->verticalSlider8, \
+        ui->verticalSlider9, \
+        ui->verticalSlider10, \
+        ui->verticalSlider11, \
+        ui->verticalSlider12, \
     };
 
 void QTempCtrlDlg::initAllSlider(int max)
 {
-    DECLARE_SLIDER_ARRAY;
+    DECLARE_SLIDER_ARRAY
 
-    for (qint8 i = 0;i < NUM_BLOWER;i ++) {
+    for (quint8 i = 0;i < NUM_FAN;i ++) {
         slider[i]->setTracking(true);
         slider[i]->setRange(0,max);
         slider[i]->setValue(0);
     }
 }
+
 TempParam QTempCtrlDlg::ui2TempParam()
 {
     TempParam p;
@@ -121,94 +116,93 @@ TempParam QTempCtrlDlg::ui2TempParam()
     p.plot_6 = dataTempCtr[6];
     p.plot_7 = dataTempCtr[7];
     p._sp1401 = _sp1401_r1c;
-    p._sp3501 = _sp3501;
     //p._sp2401 = _sp2401;
     return p;
 }
 
 void QTempCtrlDlg::on_verticalSlider1_valueChanged(int value)
 {
-    DECLARE_SLIDER_ARRAY;
+    DECLARE_SLIDER_ARRAY
 
-    int indexFan=ui->comboBoxFan->currentIndex();
-    if(indexFan == 0)
-    {
-        _sp3501->set_blower(0,value);
+    SP3501.set_fan(0,value);
+    ui->labelSpeed1->setText(QString("%1").arg(value));
 
-        ui->labelSpeed1->setText(QString("%1").arg(value));
-
-        for(qint8 i = 1; i < 11;i ++)
-        {
-             slider[i]->setValue(value);
-             sleep_ms(1);
+    if (QApplication::keyboardModifiers() == Qt::ControlModifier) {
+        for (quint8 i = 0;i < NUM_FAN;i ++) {
+            if (i != 0) {
+                slider[i]->setValue(value);
+                sleep_ms(5);
+            }
         }
-    }else
-    {
-            _sp3501->set_blower(0,value);
-            ui->labelSpeed1->setText(QString("%1").arg(value));
     }
-
 }
 
 void QTempCtrlDlg::on_verticalSlider2_valueChanged(int value)
 {
-    _sp3501->set_blower(1,value);
+    SP3501.set_fan(1,value);
     ui->labelSpeed2->setText(QString("%1").arg(value));
 }
 
 void QTempCtrlDlg::on_verticalSlider3_valueChanged(int value)
 {
-    _sp3501->set_blower(2,value);
+    SP3501.set_fan(2,value);
     ui->labelSpeed3->setText(QString("%1").arg(value));
 }
 
 void QTempCtrlDlg::on_verticalSlider4_valueChanged(int value)
 {
-    _sp3501->set_blower(3,value);
+    SP3501.set_fan(3,value);
     ui->labelSpeed4->setText(QString("%1").arg(value));
 }
 
 void QTempCtrlDlg::on_verticalSlider5_valueChanged(int value)
 {
-    _sp3501->set_blower(4,value);
+    SP3501.set_fan(4,value);
     ui->labelSpeed5->setText(QString("%1").arg(value));
 }
 
 void QTempCtrlDlg::on_verticalSlider6_valueChanged(int value)
 {
-    _sp3501->set_blower(5,value);
+    SP3501.set_fan(5,value);
     ui->labelSpeed6->setText(QString("%1").arg(value));
 }
 
 void QTempCtrlDlg::on_verticalSlider7_valueChanged(int value)
 {
-    _sp3501->set_blower(6,value);
+    SP3501.set_fan(6,value);
     ui->labelSpeed7->setText(QString("%1").arg(value));
 }
 
 void QTempCtrlDlg::on_verticalSlider8_valueChanged(int value)
 {
-    _sp3501->set_blower(7,value);
+    SP3501.set_fan(7,value);
     ui->labelSpeed8->setText(QString("%1").arg(value));
 }
 
 void QTempCtrlDlg::on_verticalSlider9_valueChanged(int value)
 {
-    _sp3501->set_blower(8,value);
+    SP3501.set_fan(8,value);
     ui->labelSpeed9->setText(QString("%1").arg(value));
 }
 
 void QTempCtrlDlg::on_verticalSlider10_valueChanged(int value)
 {
-    _sp3501->set_blower(9,value);
+    SP3501.set_fan(9,value);
     ui->labelSpeed10->setText(QString("%1").arg(value));
 }
 
 void QTempCtrlDlg::on_verticalSlider11_valueChanged(int value)
 {
-    _sp3501->set_blower(10,value);
+    SP3501.set_fan(10,value);
     ui->labelSpeed11->setText(QString("%1").arg(value));
 }
+
+void QTempCtrlDlg::on_verticalSlider12_valueChanged(int value)
+{
+    SP3501.set_fan(11,value);
+    ui->labelSpeed12->setText(QString("%1").arg(value));
+}
+
 void QTempCtrlDlg::update(double *gettemp)
 {
     ui->plot->setAxisScale(QwtPlot::xBottom,0,gettemp[1]+10);
@@ -218,8 +212,6 @@ void QTempCtrlDlg::update(double *gettemp)
 //    ui->plot->setAxisScale(QwtPlot::yLeft,20,gettemp[1]+10);
     ui->plot->replot();
     ui->plot->show();
-
-
 }
 
 void QTempCtrlDlg::on_pushButtonStart_clicked()
@@ -229,13 +221,10 @@ void QTempCtrlDlg::on_pushButtonStart_clicked()
     //curveR1C[0].at(0)->detach();
 
     for (qint8 i = 0;i < MAX_RF;i ++) {
-
-
         for (qint8 j = 0;j < 8;j ++) {
             dataTempCtr[j]->calTable()->clear();
             curveR1C.at(i)->at(j)->setSamples(dataTempCtr[j]);
         }
-
         ui->plot->replot();
         ui->plot->show();
     }

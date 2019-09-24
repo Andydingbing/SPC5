@@ -456,74 +456,6 @@ void rx_ref_op_table_r1cd::get_config_table_r1f(int32_t ref,data_m_t data_ref,rx
     state->temp = temp;
 }
 
-//void rx_ref_op_table_r1cd::get_config_table_r1f(int32_t ref,data_m_t data_ref,rx_state_m_t *state)
-//{
-//    /*
-//     * ref   att0   att1   att2
-//     *  30    -20	 -30    -20
-//     *  10    -20	 -10	-20 // state[0]
-//     *  10      0	 -30    -20 // state[1]
-//     * -20      0	   0	-20
-//     * -20     14	 -15    -20 // state[2]
-//     * -35     14	   0    -20
-//     * -40     14    0    -15
-//     */
-
-//    short lna_att = 0;
-//    short att_019 = 0;
-//    float att1 = 0.0;
-//    float att2 = 0.0;
-//    int32_t ad_offset = 0;
-//    float temp = 0.0;
-
-//    if (ref > 10) {
-//        lna_att = data_ref.state[0].lna_att;
-//        att_019 = data_ref.state[0].att_019;
-//        att1    = data_ref.state[0].att1 + float(ref - 10);
-//        att2    = data_ref.state[0].att2;
-//        ad_offset = data_ref.state[0].ad_offset;
-//        temp = data_ref.state[0].temp;
-//    } else if (ref > -20) {
-//        lna_att = data_ref.state[1].lna_att;
-//        att_019 = data_ref.state[1].att_019;
-//        att1    = data_ref.state[1].att1 + float(ref - 10);
-//        att2    = data_ref.state[1].att2;
-//        ad_offset = data_ref.state[1].ad_offset;
-//        temp = data_ref.state[1].temp;
-//    } else if (ref >= -35) {
-//        lna_att = data_ref.state[2].lna_att;
-//        att_019 = data_ref.state[2].att_019;
-//        att1    = data_ref.state[2].att1 + float(ref + 20);
-//        att2    = data_ref.state[2].att2;
-//        ad_offset = data_ref.state[2].ad_offset;
-//        temp = data_ref.state[2].temp;
-//    } else if (ref >= -40) {
-//        lna_att = data_ref.state[2].lna_att;
-//        att_019 = data_ref.state[2].att_019;
-//        att1    = data_ref.state[2].att1 - 15.0f;
-//        att2    = data_ref.state[2].att2 + float(ref + 35);
-//        ad_offset = data_ref.state[2].ad_offset;
-//        temp = data_ref.state[2].temp;
-//    }
-
-//    if (att1 < 0) {
-//        ad_offset += int32_t(_0dBFS - dBc2ad(_0dBFS,-att1));
-//        att1 = 0;
-//    }
-//    if (att2 < 0) {
-//        ad_offset += int32_t(_0dBFS - dBc2ad(_0dBFS,-att2));
-//        att2 = 0;
-//    }
-
-//    state->lna_att = lna_att;
-//    state->att_019 = att_019;
-//    state->att1 = att1;
-//    state->att2 = att2;
-//    state->att3 = 0;
-//    state->ad_offset = ad_offset;
-//    state->temp = temp;
-//}
-
 int32_t rx_ref_op_table_r1cd::get_ref_seg_idx(double ref)
 {
     if (ref > 10.0) {
@@ -559,6 +491,36 @@ void rx_ref_op_table_r1cd::guess_base_r1c(int32_t idx,int32_t &ref,int32_t &lna_
 	}
 }
 
+void rx_ref_op_table_r1cd::guess_base(hw_ver_t ver,uint32_t idx,int32_t &ref,rx_state_m_t *state)
+{
+    rx_state_m_t s;
+
+    if (is_rf_ver_between(ver,R1C,R1E)) {
+        s.att3 = 10.0;
+        s.att2 = 15.0;
+
+        switch (idx) {
+        case 0 : {ref = 10;  s.lna_att = RX_ATT; s.att_019 = RX_ATT_19; s.att1 = 5.0;  return;}
+        case 1 : {ref = 10;  s.lna_att = RX_ATT; s.att_019 = RX_ATT_0;  s.att1 = 25.0; return;}
+        case 2 : {ref = -20; s.lna_att = RX_LNA; s.att_019 = RX_ATT_19; s.att1 = 10.0; return;}
+        }
+    }
+
+    if (is_rf_ver_after(ver,R1F)) {
+        s.att2 = 13.0;
+
+        switch (idx) {
+        case 0 : {ref = 10;  s.lna_att = RX_ATT; s.att_019 = RX_ATT_19; s.att1 = 0.0;  return;}
+        case 1 : {ref = 10;  s.lna_att = RX_ATT; s.att_019 = RX_ATT_0;  s.att1 = 20.0; return;}
+        case 2 : {ref = -10; s.lna_att = RX_LNA; s.att_019 = RX_ATT_19; s.att1 = 15.0; return;}
+        }
+    }
+
+    if (state != nullptr) {
+        *state = s;
+    }
+}
+
 void rx_ref_op_table_r1cd::guess_base_r1f(int32_t idx,int32_t &ref,int32_t &lna_att,int32_t &att_019,double &att1,double &att2)
 {
     att2 = 13.0;
@@ -580,28 +542,6 @@ void rx_ref_op_table_r1cd::guess_base_r1f(int32_t idx,int32_t &ref,int32_t &lna_
         att1 = 15.0;
     }
 }
-
-//void rx_ref_op_table_r1cd::guess_base_r1f(int32_t idx,int32_t &ref,int32_t &lna_att,int32_t &att_019,double &att1,double &att2)
-//{
-//    att2 = 20.0;
-
-//    if (idx == 0) {
-//        ref = 10;
-//        lna_att = RX_ATT;
-//        att_019 = RX_ATT_19;
-//        att1 = 10.0;
-//    } else if (idx == 1) {
-//        ref = 10;
-//        lna_att = RX_ATT;
-//        att_019 = RX_ATT_0;
-//        att1 = 30.0;
-//    } else if (idx == 2) {
-//        ref = -20;
-//        lna_att = RX_LNA;
-//        att_019 = RX_ATT_19;
-//        att1 = 15.0;
-//    }
-//}
 
 void rx_ref_op_table_r1cd::get_base(uint64_t freq,data_m_t *data)
 {
@@ -922,82 +862,6 @@ void rx_ref_io_table_r1cd::get_config_table_r1f(int32_t ref,data_m_t data_ref,rx
     state->temp = temp;
 }
 
-//void rx_ref_io_table_r1cd::get_config_table_r1f(int32_t ref,data_m_t data_ref,rx_state_m_t *state)
-//{
-//    /*
-//     * ref   att0   att1   att2
-//     *  30    -20	 -23	-20
-//     *  10    -20	  -3    -20 // state[0]
-//     *  10      0	 -23    -20 // state[1]
-//     * -13      0	   0    -20
-//     * -20      0    0    -13
-//     * -20     14	 -15    -13 // state[2]
-//     * -35     14	   0    -13
-//     * -40     14      0     -8
-//     */
-
-//    short lna_att = 0;
-//    short att_019 = 0;
-//    float att1 = 0.0;
-//    float att2 = 0.0;
-//    int32_t ad_offset = 0;
-//    float temp = 0.0;
-
-//    if (ref > 10) {
-//        lna_att = data_ref.state[0].lna_att;
-//        att_019 = data_ref.state[0].att_019;
-//        att1    = data_ref.state[0].att1 + float(ref - 10);
-//        att2    = data_ref.state[0].att2;
-//        ad_offset = data_ref.state[0].ad_offset;
-//        temp = data_ref.state[0].temp;
-//    } else if (ref > -13) {
-//        lna_att = data_ref.state[1].lna_att;
-//        att_019 = data_ref.state[1].att_019;
-//        att1    = data_ref.state[1].att1 + float(ref - 10);
-//        att2    = data_ref.state[1].att2;
-//        ad_offset = data_ref.state[1].ad_offset;
-//        temp = data_ref.state[1].temp;
-//    } else if (ref > -20) {
-//        lna_att = data_ref.state[1].lna_att;
-//        att_019 = data_ref.state[1].att_019;
-//        att1    = data_ref.state[1].att1 - 23.0f;
-//        att2    = data_ref.state[1].att2 + float(ref + 13);
-//        ad_offset = data_ref.state[1].ad_offset;
-//        temp = data_ref.state[1].temp;
-//    } else if (ref >= -35) {
-//        lna_att = data_ref.state[2].lna_att;
-//        att_019 = data_ref.state[2].att_019;
-//        att1    = data_ref.state[2].att1 + float(ref + 20);
-//        att2    = data_ref.state[2].att2;
-//        ad_offset = data_ref.state[2].ad_offset;
-//        temp = data_ref.state[2].temp;
-//    } else if (ref >= -40) {
-//        lna_att = data_ref.state[2].lna_att;
-//        att_019 = data_ref.state[2].att_019;
-//        att1    = data_ref.state[2].att1 - 15.0f;
-//        att2    = data_ref.state[2].att2 + float(ref + 35);
-//        ad_offset = data_ref.state[2].ad_offset;
-//        temp = data_ref.state[2].temp;
-//    }
-
-//    if (att1 < 0) {
-//        ad_offset += int32_t(_0dBFS - dBc2ad(_0dBFS,-att1));
-//        att1 = 0;
-//    }
-//    if (att2 < 0) {
-//        ad_offset += int32_t(_0dBFS - dBc2ad(_0dBFS,-att2));
-//        att2 = 0;
-//    }
-
-//    state->lna_att = lna_att;
-//    state->att_019 = att_019;
-//    state->att1 = att1;
-//    state->att2 = att2;
-//    state->att3 = 0;
-//    state->ad_offset = ad_offset;
-//    state->temp = temp;
-//}
-
 void rx_ref_io_table_r1cd::guess_base_r1c(int32_t idx,int32_t &ref,int32_t &lna_att,int32_t &att_019,double &att1,double &att2,double &att3)
 {
     att3 = 10.0;
@@ -1021,6 +885,35 @@ void rx_ref_io_table_r1cd::guess_base_r1c(int32_t idx,int32_t &ref,int32_t &lna_
         att1 = 4.0;
         att2 = 13.0;
 	}
+}
+
+void rx_ref_io_table_r1cd::guess_base(hw_ver_t ver,uint32_t idx,int32_t &ref,rx_state_m_t *state)
+{
+    rx_state_m_t s;
+
+    if (is_rf_ver_between(ver,R1C,R1E)) {
+        s.att3 = 10.0;
+
+        switch (idx) {
+        case 0 : {ref = 10;  s.lna_att = RX_ATT; s.att_019 = RX_ATT_19; s.att1 = 0.0;  s.att2 = 13.0; return;}
+        case 1 : {ref = 10;  s.lna_att = RX_ATT; s.att_019 = RX_ATT_0;  s.att1 = 20.0; s.att2 = 13.0; return;}
+        case 2 : {ref = -20; s.lna_att = RX_LNA; s.att_019 = RX_ATT_19; s.att1 = 4.0;  s.att2 = 13.0; return;}
+        }
+    }
+
+    if (is_rf_ver_after(ver,R1F)) {
+        s.att2 = 18.0;
+
+        switch (idx) {
+        case 0 :
+        case 1 : {ref = 10; s.lna_att = RX_ATT; s.att_019 = RX_ATT_0;  s.att1 = 10.0; return;}
+        case 2 : {ref = 0;  s.lna_att = RX_LNA; s.att_019 = RX_ATT_19; s.att1 = 15.0; return;}
+        }
+    }
+
+    if (state != nullptr) {
+        *state = s;
+    }
 }
 
 void rx_ref_io_table_r1cd::guess_base_r1f(int32_t idx,int32_t &ref,int32_t &lna_att,int32_t &att_019,double &att1,double &att2)

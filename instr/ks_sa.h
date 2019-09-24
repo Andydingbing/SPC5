@@ -65,4 +65,10 @@ public:
     std::string get_descriptor() { return std::string("N9020A"); }
 };
 
+class ks_n9020b : public ks_n9030a
+{
+public:
+    std::string get_descriptor() { return std::string("N9020B"); }
+};
+
 #endif // INSTR_KS_SA_H

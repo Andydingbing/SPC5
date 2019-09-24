@@ -99,7 +99,6 @@ void QCalRXFilterOffsetTabWidget::init(QRXFilterOffsetModel *model)
 void QCalRXFilterOffsetTabWidget::resetShowWidget(CalParam *param)
 {
     quint32 pts = parseRangeFreqStringFrom<quint64>(param);
-    qint32 sec = str_sections(param->rfFreqStar.toStdString().c_str());
-
+    quint32 sec = freq_string_sections(param->rfFreqStar.toStdString());
     widget_80->resetShowWidget(pts, sec);
 }

@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     g_MainW->show();
     g_MainW->setWindowState(Qt::WindowMaximized);
 
-//    QApplication::setStyle(QStyleFactory::create("windowsvista"));
+//    QApplication::setStyle(QStyleFactory::create("windowsxp"));
 //    QApplication::setPalette(QApplication::style()->standardPalette());
 
     return a.exec();

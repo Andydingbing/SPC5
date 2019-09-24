@@ -342,12 +342,18 @@ void QRFR1CAdvDlg::on_checkBoxRXLED_clicked(bool checked)
 
 void QRFR1CAdvDlg::on_pushButtonSetTXFreq_clicked()
 {
-    PTR_CHECKV(SP3301);
+    PTR_CHECK
+    RD_TRY
+    SP1401R1F()->set_tx_freq(freq_string_to_uint64_t(ui->lineEditTXFreq->text().toStdString()));
+    RD_CATCH_ALL_EXCEPTION
 }
 
 void QRFR1CAdvDlg::on_pushButtonSetRXFreq_clicked()
 {
-    PTR_CHECKV(SP3301);
+    PTR_CHECK
+    RD_TRY
+    SP1401R1F()->set_rx_freq(freq_string_to_uint64_t(ui->lineEditRXFreq->text().toStdString()));
+    RD_CATCH_ALL_EXCEPTION
 }
 
 void QRFR1CAdvDlg::on_pushButtonEEPROM_clicked()

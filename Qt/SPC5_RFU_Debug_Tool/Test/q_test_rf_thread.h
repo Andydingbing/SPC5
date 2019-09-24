@@ -6,6 +6,10 @@
 
 struct TestRFParam : TestBaseParam
 {
+    bool isTestTX_IOSw;
+    bool isTestTX_PwrModSw;
+    bool isTestTX_FilterSw;
+    bool isTestTX_LOLD;
     bool isTestTX_PhaseNoise;
     bool isTestTX_NoiseFloor;
 };
@@ -16,12 +20,23 @@ struct TestRFParam : TestBaseParam
 //                     int sec)           // The test result.0:fail;1:pass.
 class QTestR1CRFThread : public QTestR1CBaseThread
 {
+    Q_OBJECT
+
 public:
     explicit QTestR1CRFThread(TestBaseParam *param) :
         QTestR1CBaseThread(param) {}
 
     void run();
+    void TX_IOSw();
+    void TX_PwrModSw();
+    void TX_FilterSw();
+    void TX_FilterSw_R1F();
+    void TX_LOLD();
     void TX_PhaseNoise();
+    void TX_NoiseFloor();
+
+signals:
+    void testTXIOSwBox(const QColor TX, const QColor RX, int &exec);
 
 private:
     TestRFParam *param;

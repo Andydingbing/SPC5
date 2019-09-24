@@ -52,8 +52,8 @@ ns_adf5355::freq_formula_in::freq_formula_in()
 void ns_adf5355::freq_formula(const freq_formula_in &in,freq_formula_out &out)
 {
     double freq_pfd = double(in.freq_ref);
-    freq_pfd *= (1.0 + in.ref_doubler ? 1.0 : 0.0);
-    freq_pfd /= (1.0 + in.ref_divider ? 1.0 : 0.0);
+    freq_pfd *= (1.0 + (in.ref_doubler ? 1.0 : 0.0));
+    freq_pfd /= (1.0 + (in.ref_divider ? 1.0 : 0.0));
     freq_pfd /= in.r_counter;
 
     out._int = uint32_t(in.freq_vco / uint32_t(freq_pfd));

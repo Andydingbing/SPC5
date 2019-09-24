@@ -309,18 +309,17 @@ void QRfR1AAdvDlg::on_pushButtonSetTxLO1_clicked()
 {
     PTR_CHECK
     uint64_t freq = 0;
-    char szFreq[32] = {0};
     quint64 freqLO1 = freq_string_to<quint64>(ui->lineEditTxLO1->text().toStdString());
     quint64 freqLO2 = freq_string_to<quint64>(ui->lineEditTxLO2->text().toStdString());
-    sp1401_r1a::tx_band_t band = (sp1401_r1a::tx_band_t)(ui->comboBoxTxBandSw->currentIndex());
+    sp1401_r1a::tx_band_t band = sp1401_r1a::tx_band_t(ui->comboBoxTxBandSw->currentIndex());
     bool isLock = false;
 
     SP1401R1A()->tx_lo2freq(freqLO1,freqLO2,band,freq);
-    freq2str(freq,szFreq);
-    ui->lineEditTxFreq->setText(QString("%1").arg(szFreq));
 
     INT_CHECKV(SP1401R1A()->set_lo(sp1401_r1a::TX_LO_1,freqLO1));
     INT_CHECKV(SP1401R1A()->det_lo(sp1401_r1a::TX_LO_1,isLock));
+
+    ui->lineEditTxFreq->setText(QString::fromStdString(freq_string_from_uint64_t(freq)));
     ui->checkBoxTxLO1->setChecked(isLock);
 }
 
@@ -328,18 +327,17 @@ void QRfR1AAdvDlg::on_pushButtonSetTxLO2_clicked()
 {
     PTR_CHECK
     uint64_t freq = 0;
-    char szFreq[32] = {0};
     quint64 freqLO1 = freq_string_to<quint64>(ui->lineEditTxLO1->text().toStdString());
     quint64 freqLO2 = freq_string_to<quint64>(ui->lineEditTxLO2->text().toStdString());
-    sp1401_r1a::tx_band_t band = (sp1401_r1a::tx_band_t)(ui->comboBoxTxBandSw->currentIndex());
+    sp1401_r1a::tx_band_t band = sp1401_r1a::tx_band_t(ui->comboBoxTxBandSw->currentIndex());
     bool isLock = false;
 
     SP1401R1A()->tx_lo2freq(freqLO1,freqLO2,band,freq);
-    freq2str(freq,szFreq);
-    ui->lineEditTxFreq->setText(QString("%1").arg(szFreq));
 
     INT_CHECKV(SP1401R1A()->set_lo(sp1401_r1a::TX_LO_2,freqLO2));
     INT_CHECKV(SP1401R1A()->det_lo(sp1401_r1a::TX_LO_2,isLock));
+
+    ui->lineEditTxFreq->setText(QString::fromStdString(freq_string_from_uint64_t(freq)));
     ui->checkBoxTxLO2->setChecked(isLock);
 }
 
@@ -347,17 +345,16 @@ void QRfR1AAdvDlg::on_pushButtonSetRxLO1_clicked()
 {
     PTR_CHECK
     uint64_t freq = 0;
-    char szFreq[32] = {0};
     quint64 freqLO1 = freq_string_to<quint64>(ui->lineEditRxLO1->text().toStdString());
     quint64 freqLO2 = freq_string_to<quint64>(ui->lineEditRxLO2->text().toStdString());
     bool isLock = false;
 
     SP1401R1A()->rx_lo2freq(freqLO1,freqLO2,freq);
-    freq2str(freq,szFreq);
-    ui->lineEditRxFreq->setText(QString("%1").arg(szFreq));
 
     INT_CHECKV(SP1401R1A()->set_lo(sp1401_r1a::RX_LO_1,freqLO1));
     INT_CHECKV(SP1401R1A()->det_lo(sp1401_r1a::RX_LO_1,isLock));
+
+    ui->lineEditRxFreq->setText(QString::fromStdString(freq_string_from_uint64_t(freq)));
     ui->checkBoxRxLO1->setChecked(isLock);
 }
 
@@ -365,16 +362,15 @@ void QRfR1AAdvDlg::on_pushButtonSetRxLO2_clicked()
 {
     PTR_CHECK
     uint64_t freq = 0;
-    char szFreq[32] = {0};
     quint64 freqLO1 = freq_string_to<quint64>(ui->lineEditRxLO1->text().toStdString());
     quint64 freqLO2 = freq_string_to<quint64>(ui->lineEditRxLO2->text().toStdString());
     bool isLock = false;
 
     SP1401R1A()->rx_lo2freq(freqLO1,freqLO2,freq);
-    freq2str(freq,szFreq);
-    ui->lineEditRxFreq->setText(QString("%1").arg(szFreq));
 
     INT_CHECKV(SP1401R1A()->set_lo(sp1401_r1a::RX_LO_2,freqLO2));
     INT_CHECKV(SP1401R1A()->det_lo(sp1401_r1a::RX_LO_2,isLock));
+
+    ui->lineEditRxFreq->setText(QString::fromStdString(freq_string_from_uint64_t(freq)));
     ui->checkBoxRxLO2->setChecked(isLock);
 }

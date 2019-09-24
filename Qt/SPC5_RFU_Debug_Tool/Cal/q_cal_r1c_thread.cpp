@@ -15,16 +15,16 @@ void QCalR1CThread::subThreadDone()
     subThreadRunning = false;
 }
 
-void QCalR1CThread::subThreadResult(CalResult cr)
+void QCalR1CThread::subThreadResult(const Process p)
 {
-    subThreadContinue = (cr == CTR_COMPLETE_PASS ? true : false);
+//    subThreadContinue = (cr == CTR_COMPLETE_PASS ? true : false);
 
-    for (int calItemIdx = 0;calItemIdx < calParam.calThreads.size();calItemIdx ++) {
-        if (sender() == calParam.calThreads.at(calItemIdx)) {
-            emit update(QModelIndex(),QModelIndex(),cal_file::cal_item_t(calItemIdx),cr);
-            break;
-        }
-    }
+//    for (int calItemIdx = 0;calItemIdx < calParam.calThreads.size();calItemIdx ++) {
+//        if (sender() == calParam.calThreads.at(calItemIdx)) {
+//            emit update(QModelIndex(),QModelIndex(),cal_file::cal_item_t(calItemIdx),cr);
+//            break;
+//        }
+//    }
 }
 
 void QCalR1CThread::run()
@@ -43,7 +43,7 @@ void QCalR1CThread::run()
         waitSubThread();
     }
 
-    CAL_THREAD_ABOART;
+    THREAD_ENDED;
 }
 
 void QCalR1CThread::waitSubThread(int timeout)

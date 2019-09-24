@@ -112,9 +112,10 @@
 #define INT_CHECKV(func)        { if (int ret = func) {return;} }
 #define PTR_CHECKV(ptr)         { if (ptr == nullptr) {return;} }
 
-#define ARRAY_SIZE(array)           (uint32_t(sizeof(array) / sizeof(array[0])))
-#define SERIE_SIZE(star,stop,step)  (uint32_t((stop - star) / step + 1))
-#define SERIE_INDEX(num,star,step)  (uint32_t((num - star) / step))
+#define ARRAY_SIZE(array)          (uint32_t(sizeof(array) / sizeof(array[0])))
+#define SERIE_SIZE(star,stop,step) (uint32_t((stop - star) / step + 1))
+#define SERIE_INDEX(num,star,step) (uint32_t((num - star) / step))
+#define SERIE_VALUE(star,step,i)   (star + step * i)
 
 #define ZERO_ARRAY(array) { memset(array,0,sizeof(array)); }
 
@@ -130,6 +131,7 @@
 #elif defined RD_C_GNUC
     #pragma GCC diagnostic ignored "-Wunused-parameter"
     #pragma GCC diagnostic ignored "-Wunused-variable"
+    #pragma GCC diagnostic ignored "-Wunused-function"
     #pragma GCC diagnostic ignored "-Wmisleading-indentation"
     #pragma GCC diagnostic ignored "-Wno-reserved-id-macro"
 #endif

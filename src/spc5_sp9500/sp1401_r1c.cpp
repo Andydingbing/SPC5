@@ -869,11 +869,19 @@ int32_t sp1401_r1c::set_rx_att(double att1,double att2,double att3)
 	return 0;
 }
 
+int32_t sp1401_r1c::set_rx_att(const rx_ref_table_r1cd::rx_state_m_t &data)
+{
+    INT_CHECK(set_rx_lna_att_sw(rx_lna_att_t(data.lna_att)));
+    INT_CHECK(set_rx_att_019_sw(rx_att_019_t(data.att_019)));
+    INT_CHECK(set_rx_att(data.att1,data.att2,data.att3));
+    return 0;
+}
+
 int32_t sp1401_r1c::get_temp(uint32_t idx, double &temp)
 {
     uint32_t ad = 0;
     INT_CHECK(get_mcp3208(idx,ad));
-    temp = tc1047_voltage_to_temp(mcp3208_ad_to_voltage_mv(ad));
+    temp = ns_tc1047::voltage_to_temp(ns_mcp3208::ad_to_voltage_mv(ad));
     return 0;
 }
 

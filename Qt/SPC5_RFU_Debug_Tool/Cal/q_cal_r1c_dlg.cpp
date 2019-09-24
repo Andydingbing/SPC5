@@ -152,8 +152,8 @@ void QCalR1CDlg::on_pushButtonStar_clicked()
 
 void QCalR1CDlg::update(const QModelIndex &tl,const QModelIndex &br,cal_file::cal_item_t item,int sec)
 {
-    CalResult result = CalResult(sec);
-    QColor clr = (result == CTR_COMPLETE_PASS ? Qt::green : Qt::red);
+    QWinThread::Process p = QWinThread::Process(sec);
+    QColor clr = Qt::green;
 
     if (item == 0)
         ui->ledTxLOLeakage->setColor(clr);

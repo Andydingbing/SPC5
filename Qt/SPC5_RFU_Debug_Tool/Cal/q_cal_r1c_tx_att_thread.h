@@ -9,7 +9,11 @@ public:
     explicit QCalR1CTXAttThread(const CalParam &param) :
         QCalR1CBaseThread(param) { idxOffsetStar = 0; }
     void run();
+    void checkIt(io_mode_t mode);
     void calOneSec(io_mode_t mode, double pwrStar, double pwrStop);
+
+private:
+    double ajustSA(double pwr) const;
 
 private:
     // The index of the start att configuration of one section;

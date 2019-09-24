@@ -6,23 +6,21 @@
 #include "rd.h"
 #include "liblog.h"
 #include "libbd.h"
+//#include <boost/noncopyable.hpp>
 
 namespace sp_rd {
 
-class RD_API sp3501
+class RD_API sp3501 : boost::noncopyable
 {
 public:
-    typedef struct blower_map_t {
-        int32_t fpga_addr;
-        int32_t addr;
-        int32_t blower_sel;
-	public:
-        blower_map_t(int32_t fpga_addr,int32_t addr,int32_t blower_sel) {
-            this->fpga_addr = fpga_addr;
-            this->addr = addr;
-            this->blower_sel = blower_sel;
-		}
-    }blower_map_t;
+    struct fan_map_t {
+        uint32_t _fpga_addr;
+        uint32_t _addr;
+        uint32_t _fan_sel;
+
+        fan_map_t(uint32_t fpga_addr,uint32_t addr,uint32_t fan_sel) :
+            _fpga_addr(fpga_addr),_addr(addr),_fan_sel(fan_sel) {}
+    };
 public:
     sp3501();
     ~sp3501();
@@ -34,9 +32,14 @@ public:
 
     int32_t vol_9119(uint16_t val);
     int32_t vol_9119(double vol);
-    int32_t set_blower(int32_t idx,int32_t speed);
-    int32_t set_blower(int32_t speed);
-    int32_t autoFanControlRoutinue(double *RFtemp = nullptr, uint8_t *speed = nullptr);
+
+    int32_t set_fan(uint32_t idx,uint32_t speed);
+    int32_t set_fan(uint32_t idx,int32_t speed) { return set_fan(idx,uint32_t(speed)); }
+
+    int32_t set_fan(uint32_t speed);
+    int32_t set_fan(int32_t speed) { return set_fan(uint32_t(speed)); }
+
+    int32_t autoFanControlRoutinue(double *RFtemp = nullptr,uint8_t *speed = nullptr);
 public:
     vi_pci_dev *m_s6;
 };

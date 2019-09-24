@@ -330,48 +330,40 @@
        </item>
       </layout>
      </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout12">
+       <item>
+        <widget class="QLabel" name="label12">
+         <property name="text">
+          <string>12</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="verticalSlider12">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelSpeed12">
+         <property name="text">
+          <string>0</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
     </layout>
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayoutTemp" stretch="0,1">
      <item>
       <layout class="QHBoxLayout" name="horizontalLayoutTemp">
-       <item>
-        <widget class="QComboBox" name="comboBoxFan">
-         <property name="minimumSize">
-          <size>
-           <width>87</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="currentText">
-          <string>Adjust All</string>
-         </property>
-         <item>
-          <property name="text">
-           <string>Adjust All</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Adjust Single</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item>
         <widget class="QPushButton" name="pushButtonStart">
          <property name="sizePolicy">
@@ -391,32 +383,6 @@
           <string>Stop Record</string>
          </property>
         </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
        </item>
        <item>
         <spacer name="horizontalSpacer">

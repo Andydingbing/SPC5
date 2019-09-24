@@ -16,6 +16,10 @@ public:
 public:
     virtual int32_t open();
     void set_bw(sp_rd::sp1401::bw_t bw);
+
+    tx_lol_table_r1cd* tx_lol() { return m_tx_lol.get(); }
+//    tx_sb_table_r1cd* tx_sb { return m_tx_sb.get(); }
+
 public:
     boost::shared_ptr<tx_lol_table_r1cd>        m_tx_lol;
     boost::shared_ptr<tx_sb_table_r1cd>         m_tx_sb;

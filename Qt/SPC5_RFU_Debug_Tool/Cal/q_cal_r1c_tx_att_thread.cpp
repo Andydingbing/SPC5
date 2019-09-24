@@ -1,11 +1,21 @@
 #include "q_cal_r1c_tx_att_thread.h"
 #include "q_model_tx_att.h"
 #include "algorithm.h"
+#include "algo_math.h"
+#include "spec.h"
 
 void QCalR1CTXAttThread::run()
 {
     RD_CAL_TRY
-    CAL_THREAD_START("TX Att",freqRange.freqs.size());
+
+    if (calOP(calParam.mode) && calParam.cal) {
+        totalPts += freqRangeCal.freqs.size() * 5;
+    }
+    if (calIO(calParam.mode) && calParam.cal) {
+        totalPts += freqRangeCal.freqs.size() * 4;
+    }
+
+    CAL_THREAD_START("TX Att",totalPts);
 
     CalIOMode calMode = calParam.mode;
 
@@ -31,55 +41,70 @@ void QCalR1CTXAttThread::run()
     SP1401->set_rx_lna_att_sw(sp1401::RX_ATT);
     SP1401->set_rx_att(30.0,30.0,30.0);
     SP2401->set_dds_src(sp2401_r1a::SINGLE_TONE);
-    SP2401->set_dds1(20000000.0);
+    SP2401->set_dds1(0.0);
     SP2401->set_duc_dds(0.0);
     SP2401->set_tx_filter_sw(true);
 
     SP1401->cf()->m_tx_sb->get(2000000000,&dataSB);
     SP1401->cf()->m_tx_lol->get(2000000000,&dataLOL);
-    SP2401->set_tx_phase_rotate_I((double)(dataSB.th));
+    SP2401->set_tx_phase_rotate_I(double(dataSB.th));
     SP2401->set_tx_amplitude_balance(dataSB.am_i,dataSB.am_q);
     SP2401->set_tx_dc_offset(quint16(dataLOL.dc_i),quint16(dataLOL.dc_q));
 
     if (calOP(calMode)) {
-        SP1401->set_io_mode(OUTPUT);
+        THREAD_TEST_CANCEL
+        if (calParam.cal) {
+            initProgress("Calibrating TX Att");
+            SP1401->set_io_mode(OUTPUT);
 
-        CAL_THREAD_TEST_CANCEL
-        Instr.sa_set_ref(R1C_TX_BASE_POWER_OP + 25.0);
-        Instr.sa_set_en_preamp(false);
-        Instr.sa_set_mech_att(true);
-        Instr.sa_set_avg_trace(false,0);
-        msleep(10);
-        calOneSec(OUTPUT,R1C_TX_ATT_OP_POWER_STAR - R1C_TX_ATT_STEP,R1C_TX_BASE_POWER_OP - R1C_TX_ATT_STEP);
+            THREAD_TEST_CANCEL
+            Instr.sa_set_ref(R1C_TX_BASE_POWER_OP + 25.0);
+            Instr.sa_set_en_preamp(false);
+            Instr.sa_set_mech_att(true);
+            Instr.sa_set_avg_trace(false,0);
+            Instr.sa_sweep_once();
+            msleep(10);
+            calOneSec(OUTPUT,R1C_TX_ATT_OP_POWER_STAR - R1C_TX_ATT_STEP,R1C_TX_BASE_POWER_OP - R1C_TX_ATT_STEP);
 
-        CAL_THREAD_TEST_CANCEL
-        Instr.sa_set_ref(R1C_TX_BASE_POWER_OP + 20.0);
-        msleep(10);
-        calOneSec(OUTPUT,R1C_TX_BASE_POWER_OP,R1C_TX_BASE_POWER_OP - 20.0);
+            THREAD_TEST_CANCEL
+            Instr.sa_set_ref(R1C_TX_BASE_POWER_OP + 20.0);
+            Instr.sa_sweep_once();
+            msleep(10);
+            calOneSec(OUTPUT,R1C_TX_BASE_POWER_OP,R1C_TX_BASE_POWER_OP - 20.0);
 
-        CAL_THREAD_TEST_CANCEL
-        Instr.sa_set_ref(R1C_TX_BASE_POWER_OP + 20.0 - 20.0);
-        msleep(10);
-        calOneSec(OUTPUT,R1C_TX_BASE_POWER_OP - 20.0 * 1,R1C_TX_BASE_POWER_OP - 20.0 * 2);
+            THREAD_TEST_CANCEL
+            Instr.sa_set_ref(R1C_TX_BASE_POWER_OP + 20.0 - 20.0);
+            Instr.sa_sweep_once();
+            msleep(10);
+            calOneSec(OUTPUT,R1C_TX_BASE_POWER_OP - 20.0 * 1,R1C_TX_BASE_POWER_OP - 20.0 * 2);
 
-        CAL_THREAD_TEST_CANCEL
-        Instr.sa_set_ref(R1C_TX_BASE_POWER_OP + 20.0 - 20.0 * 2);
-        msleep(10);
-        calOneSec(OUTPUT,R1C_TX_BASE_POWER_OP - 20.0 * 2,R1C_TX_BASE_POWER_OP - 20.0 * 3);
+            THREAD_TEST_CANCEL
+            Instr.sa_set_ref(R1C_TX_BASE_POWER_OP + 20.0 - 20.0 * 2);
+            Instr.sa_sweep_once();
+            msleep(10);
+            calOneSec(OUTPUT,R1C_TX_BASE_POWER_OP - 20.0 * 2,R1C_TX_BASE_POWER_OP - 20.0 * 3);
 
-        CAL_THREAD_TEST_CANCEL
-        Instr.sa_set_ref(R1C_TX_BASE_POWER_OP + 20.0 - 20.0 * 3);
-        Instr.sa_set_en_preamp(true);
-        Instr.sa_set_mech_att(false,0);
-        Instr.sa_set_avg_trace(true,3);
-        msleep(10);
-        calOneSec(OUTPUT,R1C_TX_BASE_POWER_OP - 20.0 * 3,R1C_TX_BASE_POWER_OP - 20.0 * 4);
+            THREAD_TEST_CANCEL
+            Instr.sa_set_ref(R1C_TX_BASE_POWER_OP + 20.0 - 20.0 * 3);
+            Instr.sa_set_en_preamp(true);
+            Instr.sa_set_mech_att(false,0);
+            Instr.sa_set_avg_trace(true,3);
+            Instr.sa_sweep_once();
+            msleep(10);
+            calOneSec(OUTPUT,R1C_TX_BASE_POWER_OP - 20.0 * 3,R1C_TX_BASE_POWER_OP - 20.0 * 4);
 
-        CAL_THREAD_TEST_CANCEL
-        Instr.sa_set_ref(R1C_TX_BASE_POWER_OP + 20.0 - 20.0 * 4);
-        Instr.sa_set_avg_trace(true,6);
-        msleep(10);
-        calOneSec(OUTPUT,R1C_TX_BASE_POWER_OP - 20.0 * 4,R1C_TX_ATT_OP_POWER_STOP);
+            THREAD_TEST_CANCEL
+            Instr.sa_set_ref(R1C_TX_BASE_POWER_OP + 20.0 - 20.0 * 4);
+            Instr.sa_set_avg_trace(true,6);
+            Instr.sa_sweep_once();
+            msleep(10);
+            calOneSec(OUTPUT,R1C_TX_BASE_POWER_OP - 20.0 * 4,R1C_TX_ATT_OP_POWER_STOP);
+        }
+        THREAD_TEST_CANCEL
+        if (calParam.check) {
+            initProgress("Checking TX Power");
+            checkIt(OUTPUT);
+        }
     }
 
     if (calOP(calMode) && calIO(calMode)) {
@@ -87,48 +112,170 @@ void QCalR1CTXAttThread::run()
     }
 
     if (calIO(calMode)) {
-        SP1401->set_io_mode(sp1401::IO);
+        THREAD_TEST_CANCEL
+        if (calParam.cal) {
+            initProgress("Calibrating TX Att");
+            SP1401->set_io_mode(sp1401::IO);
 
-        idxOffsetStar = 0;
+            idxOffsetStar = 0;
 
-        CAL_THREAD_TEST_CANCEL
-        Instr.sa_reset();
-        Instr.sa_set_span(20000.0);
-        Instr.sa_set_rbw(1000.0,true);
-        Instr.sa_set_vbw(1000.0,true);
+            THREAD_TEST_CANCEL
+            Instr.sa_reset();
+            Instr.sa_set_span(20000.0);
+            Instr.sa_set_rbw(1000.0,true);
+            Instr.sa_set_vbw(1000.0,true);
+            Instr.sa_set_en_preamp(false);
+            Instr.sa_set_mech_att(true);
+            Instr.sa_set_avg_trace(false,0);
+            Instr.sa_set_ref(R1C_TX_BASE_POWER_IO + 25.0);
+            Instr.sa_sweep_once();
+            msleep(10);
+            calOneSec(IO,R1C_TX_ATT_IO_POWER_STAR - R1C_TX_ATT_STEP,R1C_TX_BASE_POWER_IO - R1C_TX_ATT_STEP);
+
+            THREAD_TEST_CANCEL
+            Instr.sa_set_ref(R1C_TX_BASE_POWER_IO + 20.0);
+            Instr.sa_sweep_once();
+            msleep(10);
+            calOneSec(IO,R1C_TX_BASE_POWER_IO,R1C_TX_BASE_POWER_IO - 20.0);
+
+            THREAD_TEST_CANCEL
+            Instr.sa_set_ref(R1C_TX_BASE_POWER_IO + 20.0 - 20.0);
+            Instr.sa_sweep_once();
+            msleep(10);
+            calOneSec(IO,R1C_TX_BASE_POWER_IO - 20.0 * 1,R1C_TX_BASE_POWER_IO - 20.0 * 2);
+
+            THREAD_TEST_CANCEL
+            Instr.sa_set_ref(R1C_TX_BASE_POWER_IO + 20.0 - 20.0 * 2);
+            Instr.sa_set_en_preamp(true);
+            Instr.sa_set_mech_att(false,0);
+            Instr.sa_set_avg_trace(true,3);
+            Instr.sa_sweep_once();
+            msleep(10);
+            calOneSec(IO,R1C_TX_BASE_POWER_IO - 20.0 * 2,R1C_TX_BASE_POWER_IO - 20.0 * 3);
+
+            THREAD_TEST_CANCEL
+            Instr.sa_set_ref(R1C_TX_BASE_POWER_IO + 20.0 - 20.0 * 3);
+            Instr.sa_set_avg_trace(true,6);
+            Instr.sa_sweep_once();
+            msleep(10);
+            calOneSec(IO,R1C_TX_BASE_POWER_IO - 20.0 * 3,R1C_TX_ATT_IO_POWER_STOP);
+        }
+        THREAD_TEST_CANCEL
+        if (calParam.check) {
+            initProgress("Checking TX Power");
+            checkIt(IO);
+        }
+    }
+    THREAD_ENDED
+    RD_CAL_CATCH
+}
+
+void QCalR1CTXAttThread::checkIt(io_mode_t mode)
+{
+    quint64 freq = 0;
+    double lineLoss = 0.0;
+    double targetPwr = 0.0;
+    double SAPeakPwr[2] = { 0.0,0.0 };
+    double actualPwr = 0.0;
+    double refOffset = 0.0;
+    double refCur = 10.0;
+    double refBfr = refCur;
+    tx_pwr_cal_data data;
+    bool res = true;
+
+    range_pwr_string pwrString;
+    range_pwr<double> pwrRange;
+
+    spec::cal_tx_pwr_pwr(mode,pwrString);
+    parse_range_pwr_string(pwrString,pwrRange);
+
+    THREAD_TEST_CANCEL
+
+    if (mode == OUTPUT) {
+        SP1401->prepare_cr_tx_pwr_op_cal();
+    } else if (mode == IO) {
+        SP1401->prepare_cr_tx_pwr_io_cal();
+    }
+
+    SP1401->set_io_mode(mode);
+
+    for (quint32 i = 0;i < freqRangeCheck.freqs.size();i ++) {
+        THREAD_TEST_CANCEL
+        refBfr = refCur = 10.0;
+        freq = freqRangeCheck.freqs.at(i);
+
+        Instr.sa_set_cf(double(freq));
         Instr.sa_set_en_preamp(false);
         Instr.sa_set_mech_att(true);
         Instr.sa_set_avg_trace(false,0);
-        Instr.sa_set_ref(R1C_TX_BASE_POWER_IO + 25.0);
-        msleep(10);
-        calOneSec(IO,R1C_TX_ATT_IO_POWER_STAR - R1C_TX_ATT_STEP,R1C_TX_BASE_POWER_IO - R1C_TX_ATT_STEP);
+        Instr.sa_set_ref(refCur);
+        Instr.sa_sweep_once();
+        SP3301->rf_set_tx_freq(SP1401->get_rf_idx(),freq);
+        SP3301->rf_set_tx_pwr(SP1401->get_rf_idx(),0.0);
+        msleep(500);
+        Instr.sa_sweep_once();
+        Instr.sa_set_peak_search(sa::PEAK_HIGHEST);
+        Instr.sa_get_marker_pwr(SAPeakPwr[0]);
+        lineLoss = 0.0 - SAPeakPwr[0];
 
-        CAL_THREAD_TEST_CANCEL
-        Instr.sa_set_ref(R1C_TX_BASE_POWER_IO + 20.0);
-        msleep(10);
-        calOneSec(IO,R1C_TX_BASE_POWER_IO,R1C_TX_BASE_POWER_IO - 20.0);
+        SP3301->rf_set_tx_pwr(SP1401->get_rf_idx(),-3.0);
+        msleep(500);
+        Instr.sa_sweep_once();
+        Instr.sa_get_marker_pwr(SAPeakPwr[0]);
 
-        CAL_THREAD_TEST_CANCEL
-        Instr.sa_set_ref(R1C_TX_BASE_POWER_IO + 20.0 - 20.0);
-        msleep(10);
-        calOneSec(IO,R1C_TX_BASE_POWER_IO - 20.0 * 1,R1C_TX_BASE_POWER_IO - 20.0 * 2);
+        if (abs(-3.0 - SAPeakPwr[0] - lineLoss) > 0.1) {
+            RD_THROW sp_rd::runtime_error("Lineloss test failed.Not called yet?");
+        }
 
-        CAL_THREAD_TEST_CANCEL
-        Instr.sa_set_ref(R1C_TX_BASE_POWER_IO + 20.0 - 20.0 * 2);
-        Instr.sa_set_en_preamp(true);
-        Instr.sa_set_mech_att(false,0);
-        Instr.sa_set_avg_trace(true,3);
-        msleep(10);
-        calOneSec(IO,R1C_TX_BASE_POWER_IO - 20.0 * 2,R1C_TX_BASE_POWER_IO - 20.0 * 3);
+        refBfr = refCur = ajustSA(pwrRange.pwrs.at(0));
+        refOffset = 0.0;
+        for (quint32 j = 0;j < pwrRange.pwrs.size();j ++) {
+            THREAD_TEST_PAUSE_S
+            THREAD_TEST_CANCEL
+            targetPwr = pwrRange.pwrs.at(j);
+            refCur = ajustSA(targetPwr);
+            if (refCur - refBfr != 0.0) {
+                Instr.sa_get_marker_pwr(SAPeakPwr[1]);
+                refOffset += SAPeakPwr[0] - SAPeakPwr[1];
+                refBfr = refCur;
+            }
+            SP3301->rf_set_tx_pwr(SP1401->get_rf_idx(),float(targetPwr));
+            Instr.sa_sweep_once();
+            Instr.sa_get_marker_pwr(SAPeakPwr[0]);
+            actualPwr = SAPeakPwr[0] + lineLoss + refOffset;
+            data.pwr[j] = actualPwr;
 
-        CAL_THREAD_TEST_CANCEL
-        Instr.sa_set_ref(R1C_TX_BASE_POWER_IO + 20.0 - 20.0 * 3);
-        Instr.sa_set_avg_trace(true,6);
-        msleep(10);
-        calOneSec(IO,R1C_TX_BASE_POWER_IO - 20.0 * 3,R1C_TX_ATT_IO_POWER_STOP);
+            res = abs(actualPwr - targetPwr) <= spec::cal_tx_pwr_accuracy();
+            if (!res) {
+                Log.set_last_err("%s Fail.Freq:%s,Power:%f(%f)(%s)",
+                                 g_threadName.toStdString().c_str(),
+                                 freq_string_from(freq).c_str(),
+                                 actualPwr,
+                                 targetPwr,
+                                 string_of(mode).c_str());
+                emit threadProcess(RUNNING_EXCEPT);
+            }
+            data.set_result(res);
+            data.set_time();
+
+            if (mode == OUTPUT) {
+                SP1401->cr_tx_pwr_op_cal()->add(qint64(freq),data);
+            } else if (mode == IO) {
+                SP1401->cr_tx_pwr_io_cal()->add(qint64(freq),data);
+            }
+            updateTotalResult(res);
+            THREAD_TEST_PAUSE_E
+        }
+        addProgressPos(1);
     }
-    CAL_THREAD_ABOART
-    RD_CAL_CATCH
+
+    if (mode == OUTPUT) {
+        SP1401->cr_tx_pwr_op_cal()->update();
+        SP1401->ftp_put_cr_tx_pwr_op_cal();
+    } else if (mode == IO) {
+        SP1401->cr_tx_pwr_io_cal()->update();
+        SP1401->ftp_put_cr_tx_pwr_io_cal();
+    }
 }
 
 void QCalR1CTXAttThread::calOneSec(io_mode_t mode, double pwrStar, double pwrStop)
@@ -149,7 +296,7 @@ void QCalR1CTXAttThread::calOneSec(io_mode_t mode, double pwrStar, double pwrSto
     double pwrSA[2] = {0.0,0.0};
     double pwr = 0.0;
     double basePwr = 0.0;
-    qint32 idxOffset = 0;
+    quint32 idxOffset = 0;
     qint32 secBfr = -1;
     qint32 secCur = 0;
     float offsetBase = 0.0;
@@ -161,12 +308,13 @@ void QCalR1CTXAttThread::calOneSec(io_mode_t mode, double pwrStar, double pwrSto
         basePwr = (pwrStar <= R1C_TX_BASE_POWER_IO ? pwrStar : R1C_TX_BASE_POWER_IO);
     }
 
-    for (quint32 i = 0;i < freqRange.freqs.size();i ++) {
-        CAL_THREAD_TEST_CANCEL
+    for (quint32 i = 0;i < freqRangeCal.freqs.size();i ++) {
+        THREAD_TEST_CANCEL
 
-        freq = freqRange.freqs.at(i);
+        freq = freqRangeCal.freqs.at(i);
 
-        Instr.sa_set_cf(freq + 20000000.0);
+        Instr.sa_set_cf(freq);
+        Instr.sa_sweep_once();
         SP1401->set_tx_freq(freq);
 
         if (mode == OUTPUT) {
@@ -203,16 +351,17 @@ void QCalR1CTXAttThread::calOneSec(io_mode_t mode, double pwrStar, double pwrSto
         dataFilter._2double(coefReal,coefImag);
         SP2401->set_tx_filter(coefReal,coefImag);
 
-        msleep(2);
+        msleep(20);
 
         Instr.sa_sweep_once();
         Instr.sa_set_peak_search(sa::PEAK_HIGHEST);
         Instr.sa_get_marker_pwr(pwrSA[0]);
 
         idxOffset = idxOffsetStar;
-        secCur = freq_section(freq,freqRange);
+        secCur = freq_section(freq,freqRangeCal);
         for (pwr = pwrStar + pwrStep;pwr >= pwrStop;pwr += pwrStep) {
-            CAL_THREAD_TEST_CANCEL
+            THREAD_TEST_PAUSE_S
+            THREAD_TEST_CANCEL
 
             if (mode == OUTPUT) {
                 SP1401->cf()->m_tx_pwr_op->get(RFVer,freq,pwr,&dataPwrOP);
@@ -262,10 +411,10 @@ void QCalR1CTXAttThread::calOneSec(io_mode_t mode, double pwrStar, double pwrSto
                             model_io->index((i + 1) * R1C_TX_ATT_IO_POWER_PTS, 13),
                             cal_file::TX_ATT_IO,
                             secCur);
-
             }
 
             idxOffset ++;
+            THREAD_TEST_PAUSE_E
         }
         secBfr = secCur;
 
@@ -286,7 +435,7 @@ void QCalR1CTXAttThread::calOneSec(io_mode_t mode, double pwrStar, double pwrSto
             dataIO.time = getCurTime();
             SP1401->cf()->add(cal_file::TX_ATT_IO,&dataIO);
         }
-        SET_PROG_POS(i + 1);
+        addProgressPos(1);
     }
     idxOffsetStar = idxOffset;
 
@@ -297,10 +446,38 @@ void QCalR1CTXAttThread::calOneSec(io_mode_t mode, double pwrStar, double pwrSto
     }
 }
 
+double QCalR1CTXAttThread::ajustSA(double pwr) const
+{
+    pwr += 10.0;
+    double ref = linear_quantify<double>(20.0,-20.0,pwr);
+    double refCur = 0.0;
+
+    Instr.sa_get_ref(refCur);
+    if (refCur - ref != 0.0) {
+        Instr.sa_set_ref(ref);
+    } else {
+        return ref;
+    }
+
+    if (pwr < -40.0) {
+        Instr.sa_set_en_preamp(true);
+        Instr.sa_set_mech_att(false,0);
+        if (pwr > -60.0) {
+            Instr.sa_set_avg_trace(true,3);
+        } else {
+            Instr.sa_set_avg_trace(true,6);
+        }
+        msleep(100);
+    }
+    msleep(100);
+    Instr.sa_sweep_once();
+    return ref;
+}
+
 
 void QExpR1CTXAttThread::run()
 {
-    INIT_PROG("Exporting TX Att",100);
+    initProgress("Exporting TX Att",100);
 
     CalIOMode calMode = calParam.mode;
     quint64 freq = 0;
@@ -313,11 +490,11 @@ void QExpR1CTXAttThread::run()
 
         SP1401->cf()->map2buf(cal_file::TX_ATT_OP);
 
-        for (quint32 i = 0;i < freqRange.freqs.size();i ++) {
-            freq = freqRange.freqs.at(i);
+        for (quint32 i = 0;i < freqRangeCal.freqs.size();i ++) {
+            freq = freqRangeCal.freqs.at(i);
             SP1401->cf()->m_tx_att_op->get(freq, &dataOP);
 
-            secCur = freq_section(freq,freqRange);
+            secCur = freq_section(freq,freqRangeCal);
             for (quint32 j = 0;j < R1C_TX_ATT_OP_POWER_PTS;j ++) {
                 if (secCur != secBfr)
                     modelOP->iterTable(j)->at(secCur)->locate2CalTable(modelOP->calTable()->begin() + i);
@@ -329,7 +506,7 @@ void QExpR1CTXAttThread::run()
         }
 
         emit update(modelOP->index(0, 0),
-                    modelOP->index(freqRange.freqs.size() * R1C_TX_ATT_OP_POWER_PTS, 13),
+                    modelOP->index(freqRangeCal.freqs.size() * R1C_TX_ATT_OP_POWER_PTS, 13),
                     cal_file::TX_ATT_OP,
                     secCur);
     }
@@ -343,11 +520,11 @@ void QExpR1CTXAttThread::run()
 
         SP1401->cf()->map2buf(cal_file::TX_ATT_IO);
 
-        for (quint32 i = 0;i < freqRange.freqs.size();i ++) {
-            freq = freqRange.freqs.at(i);
+        for (quint32 i = 0;i < freqRangeCal.freqs.size();i ++) {
+            freq = freqRangeCal.freqs.at(i);
             SP1401->cf()->m_tx_att_io->get(freq, &dataIO);
 
-            secCur = freq_section(freq,freqRange);
+            secCur = freq_section(freq,freqRangeCal);
             for (quint32 j = 0;j < R1C_TX_ATT_IO_POWER_PTS;j ++) {
                 if (secCur != secBfr)
                     modelIO->iterTable(j)->at(secCur)->locate2CalTable(modelIO->calTable()->begin() + i);
@@ -359,11 +536,11 @@ void QExpR1CTXAttThread::run()
         }
 
         emit update(modelIO->index(0, 0),
-                    modelIO->index(freqRange.freqs.size() * R1C_TX_ATT_IO_POWER_PTS, 13),
+                    modelIO->index(freqRangeCal.freqs.size() * R1C_TX_ATT_IO_POWER_PTS, 13),
                     cal_file::TX_ATT_IO,
                     secCur);
     }
 
     SET_PROG_POS(100);
-    THREAD_ABORT
+    THREAD_ENDED
 }

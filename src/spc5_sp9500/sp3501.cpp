@@ -2,8 +2,10 @@
 #include "reg_def.h"
 #include "gen_ini_file.h"
 #include "algorithm.h"
-#include <string.h>
+#include <string>
 #include "algo_chip.h"
+#include "cal_table.h"
+#include "sleep_common.h"
 
 using namespace sp_rd;
 
@@ -60,7 +62,7 @@ int32_t sp3501::vol_9119(uint16_t val)
     CXU_S6_REG_DECLARE(0x000e);
     CXU_S6_REG_DECLARE(0x000f);
     CXU_S6_REG(0x000f).sign = 0;
-    CXU_S6_REG(0x000f).val = (unsigned)val;
+    CXU_S6_REG(0x000f).val = val;
     CXU_S6_W(0x000f);
     CXU_S6_OP(0x000e);
 	return 0;
@@ -68,49 +70,51 @@ int32_t sp3501::vol_9119(uint16_t val)
 
 int32_t sp3501::vol_9119(double vol)
 {
-    return vol_9119(x9119_voltage_to_tap(vol));
+    return vol_9119(ns_x9119::voltage_to_tap(vol));
 }
 
-int32_t sp3501::set_blower(int32_t idx,int32_t speed)
+int32_t sp3501::set_fan(uint32_t idx,uint32_t speed)
 {
     CXU_S6_REG_DECLARE(0x0012);
     CXU_S6_REG_DECLARE(0x0013);
-    blower_map_t blower_map[11] = {
-        blower_map_t(0x0012,0x0032,0),
-        blower_map_t(0x0012,0x0033,0),
-        blower_map_t(0x0012,0x0033,1),
-        blower_map_t(0x0012,0x0034,0),
-        blower_map_t(0x0012,0x0034,1),
-        blower_map_t(0x0013,0x0032,0),
-        blower_map_t(0x0013,0x0032,1),
-        blower_map_t(0x0013,0x0033,0),
-        blower_map_t(0x0013,0x0033,1),
-        blower_map_t(0x0013,0x0034,0),
-        blower_map_t(0x0013,0x0034,1)
+
+    fan_map_t blower_map[NUM_FAN] = {
+        fan_map_t(0x0012,0x0032,0),
+        fan_map_t(0x0012,0x0032,1),
+        fan_map_t(0x0012,0x0033,0),
+        fan_map_t(0x0012,0x0033,1),
+        fan_map_t(0x0012,0x0034,0),
+        fan_map_t(0x0012,0x0034,1),
+        fan_map_t(0x0013,0x0032,0),
+        fan_map_t(0x0013,0x0032,1),
+        fan_map_t(0x0013,0x0033,0),
+        fan_map_t(0x0013,0x0033,1),
+        fan_map_t(0x0013,0x0034,0),
+        fan_map_t(0x0013,0x0034,1)
     };
-    if (idx <= 4) {
-        CXU_S6_REG(0x0012).speed = (unsigned)speed;
-        CXU_S6_REG(0x0012).addr = (unsigned)blower_map[idx].addr;
-        CXU_S6_REG(0x0012).blower = (unsigned)blower_map[idx].blower_sel;
+    if (idx < 6) {
+        CXU_S6_REG(0x0012).speed = speed;
+        CXU_S6_REG(0x0012).addr = blower_map[idx]._addr;
+        CXU_S6_REG(0x0012).blower = blower_map[idx]._fan_sel;
         CXU_S6_OP(0x0012);
-        return 0;
-    }
-    else {
-        CXU_S6_REG(0x0013).speed = (unsigned)speed;
-        CXU_S6_REG(0x0013).addr = (unsigned)blower_map[idx].addr;
-        CXU_S6_REG(0x0013).blower = (unsigned)blower_map[idx].blower_sel;
+    } else {
+        CXU_S6_REG(0x0013).speed = speed;
+        CXU_S6_REG(0x0013).addr = blower_map[idx]._addr;
+        CXU_S6_REG(0x0013).blower = blower_map[idx]._fan_sel;
         CXU_S6_OP(0x0013);
-        return 0;
     }
+    sleep_ms(10);
     return 0;
 }
 
-int32_t sp3501::set_blower(int32_t speed)
+int32_t sp3501::set_fan(uint32_t speed)
 {
-	for (int32_t i = 0;i < 11;i ++)
-        INT_CHECK(set_blower(i,speed));
+    for (uint32_t i = 0;i < NUM_FAN;i ++) {
+        INT_CHECK(set_fan(i,speed));
+    }
 	return 0;
 }
+
 int32_t sp3501::autoFanControlRoutinue(double *RFtemp, uint8_t *speed)
 {
     static uint8_t current = 0;
@@ -136,7 +140,7 @@ int32_t sp3501::autoFanControlRoutinue(double *RFtemp, uint8_t *speed)
         *speed = (uint8_t)fan;
 
     if (current == 0 || current != (uint8_t)fan) {
-        set_blower(int32_t (*speed));
+        set_fan(int32_t (*speed));
         current = (uint8_t)fan;
 
     }

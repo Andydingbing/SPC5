@@ -4,6 +4,7 @@
 #include "sleep_common.h"
 #include "algo_chip.h"
 
+using namespace std;
 using namespace sp_rd;
 using namespace sp_rd::sp1401;
 
@@ -109,6 +110,93 @@ int32_t sp1401_r1f::get_temp(uint32_t idx,double &temp)
     RFU_K7_REG_2(0x1839,0x2839).op = 0;
     RFU_K7_W_2(0x1839,0x2839);
 
-    temp = tc1047_voltage_to_temp(ns_ad7949::ad_to_voltage_mv(ad,ns_ad7949::INTERNAL_4_096_V,3.0));
+    temp = ns_tc1047::voltage_to_temp(ns_ad7949::ad_to_voltage_mv(ad,ns_ad7949::INTERNAL_4_096_V,3.0));
     return 0;
+}
+
+void sp1401_r1f::tx_att_states(list<common_chain_pwr_state_t> &states)
+{
+    basic_sp1401::tx_att_states(states);
+
+    const float att_step = 0.5;
+    float att0 = 0.0;
+    float att1 = 0.0;
+    float att2 = 0.0;
+    common_chain_pwr_state_t state;
+
+    state.d_gain = -10.0;
+
+    state.att[3] = 0.0f;
+    for (att0 = 0.0;att0 <= 5.0f;att0 += att_step) {
+        for (att1 = 0.0;att1 <= 15.0f;att1 += att_step) {
+            state.att[0] = att0;
+            state.att[1] = att1;
+            state.att[2] = att2;
+            states.push_back(state);
+        }
+    }
+
+    for (att1 = 0.0;att1 <= 15.0f;att1 += att_step) {
+        for (att2 = 0.0;att2 <= 30.0f;att2 += att_step) {
+            state.att[0] = att0;
+            state.att[1] = att1;
+            state.att[2] = att2;
+            states.push_back(state);
+        }
+    }
+
+    for (att1 = 0.0;att1 <= 30.0f;att1 += att_step) {
+        state.att[0] = att0;
+        state.att[1] = att1;
+        state.att[2] = att2;
+        states.push_back(state);
+    }
+
+    for (;att0 <= 30.0f;att0 += att_step) {
+        state.att[0] = att0;
+        state.att[1] = att1;
+        state.att[2] = att2;
+        states.push_back(state);
+    }
+}
+
+void sp1401_r1f::rx_att_states(list<common_chain_pwr_state_t> &states)
+{
+    basic_sp1401::rx_att_states(states);
+
+    const float att_step = 0.5;
+    float att1 = 0.0;
+    float att2 = 0.0;
+    common_chain_pwr_state_t state;
+
+    state.d_gain = 0.0;
+
+    state.rsv.r1f.lna_att = RX_ATT;
+    state.rsv.r1f.att_019 = RX_ATT_19;
+    for (att1 = 20.0;att1 >= 0.0f;att1 -= att_step) {
+        for (att2 = 25.0;att2 >= 10.0f;att2 -= att_step) {
+            state.att[1] = att1;
+            state.att[2] = att2;
+            states.push_back(state);
+        }
+    }
+
+    state.rsv.r1f.att_019 = RX_ATT_0;
+    for (att1 = 20.0;att1 >= 0.0f;att1 -= att_step) {
+        for (att2 = 25.0;att2 >= 10.0f;att2 -= att_step) {
+            state.att[1] = att1;
+            state.att[2] = att2;
+            states.push_back(state);
+        }
+    }
+
+    state.rsv.r1f.lna_att = RX_LNA;
+    state.rsv.r1f.att_019 = RX_ATT_19;
+    for (att1 = 15.0;att1 >= 0.0f;att1 -= att_step) {
+        for (att2 = 25.0;att2 >= 10.0f;att2 -= att_step) {
+            state.att[1] = att1;
+            state.att[2] = att2;
+            states.push_back(state);
+        }
+    }
 }

@@ -17,6 +17,12 @@
 #define SP3301_3 sp3301::instance(3)
 #define SP3301_4 sp3301::instance(4)
 
+/*
+ * RF_0 RF_1 RF_2 RF_3
+ *   |    |    |    |
+ *   ------    ------
+ *    K7_1      K7_0
+ */
 #define K7_IDX(idx) ((MAX_RF - 1 - idx) / 2)
 
 namespace sp_rd {
@@ -32,6 +38,9 @@ static RD_INLINE bool is_brother_l_r(uint32_t rf_idx_l,uint32_t rf_idx_r)
 
 static RD_INLINE bool is_brother_r_l(uint32_t rf_idx_r,uint32_t rf_idx_l)
 { return is_brother_l_r(rf_idx_l,rf_idx_r); }
+
+static RD_INLINE uint32_t brother_idx(uint32_t rf_idx)
+{ return rf_idx / 2 * 2 + (rf_idx + 1) % 2; }
 
 
 class RD_API sp3301
@@ -93,6 +102,7 @@ public:
 
     int32_t rf_set_io_mode(uint32_t rf_idx,sp_rd::sp1401::io_mode_t mode);
     int32_t rf_get_temp(uint32_t rf_idx,double &tx_temp,double &rx_temp);
+    int32_t rf_get_cal_temp(uint32_t rf_idx,double &temp);
 
     int32_t rf_init_pwr_meas(uint32_t rf_idx);
     int32_t rf_abort_pwr_meas(uint32_t rf_idx);

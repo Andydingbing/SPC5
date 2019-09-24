@@ -35,7 +35,7 @@ QBbDlg::QBbDlg(QWidget *parent) :
     QString strRxCoefImag = "";
     double rxCoefReal[RX_FILTER_ORDER] = {0.0};
     double rxCoefImag[RX_FILTER_ORDER] = {0.0};
-    sp2401_r1a::get_rx_filter_coef_default(rxCoefReal,rxCoefImag,RX_FILTER_ORDER);
+    sp2401_r1a::rx_filter_coef_default(rxCoefReal,rxCoefImag,RX_FILTER_ORDER);
     for (qint32 i = 0;i < RX_FILTER_ORDER - 1;i ++) {
         strRxCoefReal.append(QString("%1,").arg(rxCoefReal[i]));
         strRxCoefImag.append(QString("%1,").arg(rxCoefImag[i]));
@@ -61,7 +61,7 @@ void QBbDlg::on_pushButtonSetDAClock_clicked()
 void QBbDlg::on_pushButtonSetDASw_clicked()
 {
     PTR_CHECK
-    sp2401_r1a::ad_da_port_t port = (sp2401_r1a::ad_da_port_t)(ui->comboBoxDASw->currentIndex());
+    sp2401_r1a::ad_da_port_t port = sp2401_r1a::ad_da_port_t(ui->comboBoxDASw->currentIndex());
     INT_CHECKV(SP2401R1A()->set_da_sw(port));
 }
 
@@ -75,7 +75,7 @@ void QBbDlg::on_pushButtonResetDA_clicked()
 void QBbDlg::on_pushButtonSetDDSSrc_clicked()
 {
     PTR_CHECK
-    sp2401_r1a::da_src_t src = (sp2401_r1a::da_src_t)(ui->comboBoxDDSSrc->currentIndex());
+    sp2401_r1a::da_src_t src = sp2401_r1a::da_src_t(ui->comboBoxDDSSrc->currentIndex());
     INT_CHECKV(SP2401R1A()->set_dds_src(src));
 }
 

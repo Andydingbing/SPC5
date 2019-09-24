@@ -2,7 +2,6 @@
 #include "liblog.h"
 #include "reg_def.h"
 #include "cal_table.h"
-#include <string.h>
 #include "sleep_common.h"
 #include "algorithm.h"
 #include "algo_math.h"
@@ -33,8 +32,26 @@ int32_t sp2401_r1a::open_board(vi_pci_dev *k7, vi_pci_dev *s6)
 
     INT_CHECK(set_da_sw(FROM_TO_RF));
     INT_CHECK(set_ad_sw(FROM_TO_RF));
-    INT_CHECK(set_da_freq_MHz(491.53));
-    INT_CHECK(set_ad_freq_MHz(368.65));
+
+    if (m_rf_idx == 2) {
+        INT_CHECK(set_da_freq_MHz(491.52));
+        INT_CHECK(set_ad_freq_MHz(368.64));
+    }
+
+    bool lock = false;
+    if (m_rf_idx == 0 || m_rf_idx == 2) {
+        INT_CHECK(clock_of_da_ld(lock));
+        if (lock == false) {
+            Log.set_last_err("ADF4351 of DAC unlocked\n");
+            Log.stdprintf(Log.last_err());
+        }
+        INT_CHECK(clock_of_ad_ld(lock));
+        if (lock == false) {
+            Log.set_last_err("ADF4351 of ADC unlocked\n");
+            Log.stdprintf(Log.last_err());
+        }
+    }
+
     INT_CHECK(set_dds_src(INTER_FILTER));
     INT_CHECK(set_dds1(20e6));
     INT_CHECK(set_dds2(20e6));
@@ -69,11 +86,6 @@ int32_t sp2401_r1a::get_s6_ver(uint32_t &ver)
 	return 0;
 }
 
-uint32_t sp2401_r1a::get_rf_idx()
-{
-    return m_rf_idx;
-}
-
 int32_t sp2401_r1a::fpga_reset()
 {
     RFU_K7_REG_DECLARE(0x0000);
@@ -89,6 +101,30 @@ pci_dev* sp2401_r1a::get_k7()
 pci_dev* sp2401_r1a::get_s6()
 {
     return m_s6;
+}
+
+int32_t sp2401_r1a::clock_of_da_ld(bool &lock)
+{
+    RFU_K7_REG_DECLARE(0x0002);
+    RFU_K7_RE(0x0002);
+    RFU_K7_R(0x0002);
+    lock = RFU_K7_REG(0x0002).ld_da == 1;
+    sleep_ms(2);
+    RFU_K7_FE(0x0002);
+    sleep_ms(50);
+    return 0;
+}
+
+int32_t sp2401_r1a::clock_of_ad_ld(bool &lock)
+{
+    RFU_K7_REG_DECLARE(0x0002);
+    RFU_K7_RE(0x0002);
+    RFU_K7_R(0x0002);
+    lock = RFU_K7_REG(0x0002).ld_ad == 1;
+    sleep_ms(2);
+    RFU_K7_FE(0x0002);
+    sleep_ms(50);
+    return 0;
 }
 
 int32_t sp2401_r1a::set_da_freq_MHz(double freq)
@@ -147,10 +183,10 @@ int32_t sp2401_r1a::set_ad_sw(ad_da_port_t port)
     RFU_S6_REG_DECLARE(0x000a);
     RFU_S6_R(0x000a);
     switch (m_rf_idx) {
-        case 0 : {RFU_S6_REG(0x000a).rf_ch_0 = (unsigned)port;break;}
-        case 1 : {RFU_S6_REG(0x000a).rf_ch_1 = (unsigned)port;break;}
-        case 2 : {RFU_S6_REG(0x000a).rf_ch_2 = (unsigned)port;break;}
-        case 3 : {RFU_S6_REG(0x000a).rf_ch_3 = (unsigned)port;break;}
+        case 0 : {RFU_S6_REG(0x000a).rf_ch_0 = unsigned(port);break;}
+        case 1 : {RFU_S6_REG(0x000a).rf_ch_1 = unsigned(port);break;}
+        case 2 : {RFU_S6_REG(0x000a).rf_ch_2 = unsigned(port);break;}
+        case 3 : {RFU_S6_REG(0x000a).rf_ch_3 = unsigned(port);break;}
 		default:break;
 	}
     RFU_S6_W(0x000a);
@@ -160,10 +196,15 @@ int32_t sp2401_r1a::set_ad_sw(ad_da_port_t port)
 int32_t sp2401_r1a::set_tx_pwr_comp(double offset)
 {
     RFU_K7_REG_DECLARE_2(0x0094,0x2094);
-    RFU_K7_REG_2(0x0094,0x2094).i = (uint16_t)(offset * 512.0);
-    RFU_K7_REG_2(0x0094,0x2094).q = (uint16_t)(offset * 512.0);
+    RFU_K7_REG_2(0x0094,0x2094).i = uint16_t(offset * 512.0);
+    RFU_K7_REG_2(0x0094,0x2094).q = uint16_t(offset * 512.0);
     RFU_K7_W_2(0x0094,0x2094);
 	return 0;
+}
+
+int32_t sp2401_r1a::set_tx_pwr_comp(float offset)
+{
+    return set_tx_pwr_comp(double(offset));
 }
 
 int32_t sp2401_r1a::set_dds_src(da_src_t src)
@@ -405,6 +446,37 @@ int32_t sp2401_r1a::set_rx_filter(double *real,double *imag)
 	return 0;
 }
 
+template <typename data_t>
+int32_t sp2401_r1a::set_rx_filter(const data_t &data) const
+{
+    RFU_K7_REG_DECLARE_2(0x00f2,0x20f2);
+    RFU_K7_REG_DECLARE_2(0x00f3,0x20f3);
+    RFU_K7_REG_DECLARE_2(0x00f4,0x20f4);
+    RFU_K7_REG_DECLARE_2(0x00f5,0x20f5);
+    RFU_K7_REG_DECLARE_2(0x00f6,0x20f6);
+    RFU_K7_REG_DECLARE_2(0x00f7,0x20f7);
+
+    for (uint32_t i = 0;i < ARRAY_SIZE(data.coef);i ++) {
+        RFU_K7_REG_2(0x00f3,0x20f3).addr = unsigned(i);
+        RFU_K7_REG_2(0x00f5,0x20f5).real = unsigned(data.coef[i].real);
+        RFU_K7_REG_2(0x00f6,0x20f6).imag = unsigned(data.coef[i].imag);
+        RFU_K7_REG_2(0x00f4,0x20f4).sum  = unsigned(data.coef[i].real + data.coef[i].imag);
+        RFU_K7_W_2(0x00f3,0x20f3);
+        RFU_K7_W_2(0x00f4,0x20f4);
+        RFU_K7_W_2(0x00f5,0x20f5);
+        RFU_K7_W_2(0x00f6,0x20f6);
+        RFU_K7_OP_2(0x00f2,0x20f2);
+    }
+    RFU_K7_OP_2(0x00f7,0x20f7);
+    return 0;
+}
+
+int32_t sp2401_r1a::set_rx_filter(const rx_filter_80m_table::data_m_t &data) const
+{ return set_rx_filter<rx_filter_80m_table::data_m_t>(data); }
+
+int32_t sp2401_r1a::set_rx_filter(const rx_filter_160m_table::data_m_t &data) const
+{ return set_rx_filter<rx_filter_160m_table::data_m_t>(data); }
+
 int32_t sp2401_r1a::set_rx_filter_nb()
 {
     double real[RX_FILTER_ORDER] = {
@@ -429,13 +501,13 @@ int32_t sp2401_r1a::set_rx_filter_default()
     double real[RX_FILTER_ORDER] = {0.0};
     double imag[RX_FILTER_ORDER] = {0.0};
 
-    sp2401_r1a::get_rx_filter_coef_default(real,imag,RX_FILTER_ORDER);
+    sp2401_r1a::rx_filter_coef_default(real,imag,RX_FILTER_ORDER);
     return set_rx_filter(real,imag);
 }
 
 int32_t sp2401_r1a::set_rx_pwr_comp(int32_t offset)
 {
-    double ptp_iq = sqrt((double)(_0dBFS - offset));
+    double ptp_iq = sqrt(double(_0dBFS - offset));
 	int32_t ratio = (int32_t)round((sqrt((double)_0dBFS) * (8192 / ptp_iq)),0);
 
     RFU_K7_REG_DECLARE_2(0x00e4,0x20e4);
@@ -643,7 +715,7 @@ int32_t sp2401_r1a::set_tx_amplitude_balance(uint16_t I,uint16_t Q)
 	return 0;
 }
 
-int32_t sp2401_r1a::get_rx_filter_coef_default(double *real,double *imag,int32_t order)
+int32_t sp2401_r1a::rx_filter_coef_default(double *real,double *imag,int32_t order)
 {
     if (order == RX_FILTER_ORDER) {
         double real_def[RX_FILTER_ORDER] = {

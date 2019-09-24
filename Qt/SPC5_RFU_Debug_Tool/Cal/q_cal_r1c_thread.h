@@ -16,7 +16,7 @@ public:
 
 public slots:
     void subThreadDone();
-    void subThreadResult(CalResult);
+    void subThreadResult(const Process p);
 
 public:
     void waitSubThread(int timeout = 0);

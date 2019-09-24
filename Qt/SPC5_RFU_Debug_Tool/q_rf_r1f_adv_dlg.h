@@ -92,6 +92,10 @@ private slots:
 
     void on_comboBoxIFFilterSw_currentIndexChanged(int index);
 
+    void on_lineEditTXFreq_textChanged(const QString &arg1);
+
+    void on_lineEditRXFreq_textChanged(const QString &arg1);
+
 private:
     Ui::QRFR1FAdvDlg *ui;
 };

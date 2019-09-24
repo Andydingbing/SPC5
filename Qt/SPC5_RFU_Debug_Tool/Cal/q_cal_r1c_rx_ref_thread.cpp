@@ -1,14 +1,12 @@
 #include "q_cal_r1c_rx_ref_thread.h"
 #include "q_model_rx_ref.h"
 #include "algorithm.h"
+#include "spec.h"
 
 void QCalR1CRXRefThread::run()
 {
     RD_CAL_TRY
-    CAL_THREAD_START("RX Reference",freqRange.freqs.size());
-
-    CalIOMode calMode = calParam.mode;
-
+    CAL_THREAD_START("RX Reference",totalPts);
     THREAD_CHECK_BOX("RX<===>Z28<===>Signal Generator");
 
     Instr.init();
@@ -19,14 +17,31 @@ void QCalR1CRXRefThread::run()
     Instr.sg_set_pl(-60.0);
     Instr.sg_set_en_output(true);
 
-    if (calOP(calMode)) {
-        cal(OUTPUT);
+    if (calOP(calParam.mode)) {
+        THREAD_TEST_CANCEL
+        if (calParam.cal) {
+            initProgress("Calibrating RX Reference");
+            cal(OUTPUT);
+        }
+        THREAD_TEST_CANCEL
+        if (calParam.check) {
+            initProgress("Checking RX Reference");
+            checkIt(OUTPUT);
+        }
     }
-    if (calIO(calMode)) {
-        cal(IO);
+    if (calIO(calParam.mode)) {
+        THREAD_TEST_CANCEL
+        if (calParam.cal) {
+            initProgress("Calibrating RX Reference");
+            cal(IO);
+        }
+        THREAD_TEST_CANCEL
+        if (calParam.check) {
+            initProgress("Checking RX Reference");
+            checkIt(IO);
+        }
     }
-
-    CAL_THREAD_ABOART
+    THREAD_ENDED
     RD_CAL_CATCH
 }
 
@@ -63,9 +78,8 @@ void QCalR1CRXRefThread::cal(io_mode_t mode)
 
     Instr.pm_reset();
 
-    for (quint32 i = 0; i < freqRange.freqs.size() ;i ++) {
-        CAL_THREAD_TEST_CANCEL
-        freq = freqRange.freqs.at(i);
+    for (quint32 i = 0; i < freqRangeCal.freqs.size() ;i ++) {
+        freq = freqRangeCal.freqs.at(i);
 
         SP1401->cf()->m_rx_filter_160m->get(freq,&dataFilter);
         dataFilter._2double(coefReal,coefImag);
@@ -73,6 +87,8 @@ void QCalR1CRXRefThread::cal(io_mode_t mode)
         SP1401->set_rx_freq(freq);
 
         for (quint32 j = 0;j < ARRAY_SIZE(data.state);j ++) {
+            THREAD_TEST_PAUSE_S
+            THREAD_TEST_CANCEL
             if (mode == OUTPUT) {
                 if (RFVer == R1C || RFVer == R1D || RFVer == R1E) {
                     rx_ref_op_table_r1cd::guess_base_r1c(j,ref,lnaAtt,att019,att1,att2,att3);
@@ -92,7 +108,7 @@ void QCalR1CRXRefThread::cal(io_mode_t mode)
             SP1401->set_rx_att(att1,att2,att3);
             msleep(10);
 
-            ajustSG(freq,ref);
+            ajustSG(freq,ref - rx_ref_table_r1cd::cal_rollback(RFVer));
             tuning(att1,att2,att3);
 
             data.freq = freq;
@@ -108,7 +124,7 @@ void QCalR1CRXRefThread::cal(io_mode_t mode)
             SP1401->get_temp(3,data.state[j].temp[3]);
             data.time = getCurTime();
 
-            secCur = freq_section(freq,freqRange);
+            secCur = freq_section(freq,freqRangeCal);
 
             if (mode == OUTPUT) {
                 if (secCur != secBfr) {
@@ -121,6 +137,7 @@ void QCalR1CRXRefThread::cal(io_mode_t mode)
                 }
                 modelIO->iterTable(j)->at(secCur)->addOneData();
             }
+            THREAD_TEST_PAUSE_E
         }
         secBfr = secCur;
 
@@ -139,16 +156,99 @@ void QCalR1CRXRefThread::cal(io_mode_t mode)
                         secCur);
             SP1401->cf()->add(cal_file::RX_REF_IO,&data);
         }
-        SET_PROG_POS(i + 1);
+        addProgressPos(1);
     }
 
     if (mode == OUTPUT) {
         SP1401->cf()->w(cal_file::RX_REF_OP);
-        SP1401->cf()->m_rx_ref_op->save_as("c:\\rx_ref_op.txt");
     } else if (mode == IO) {
         SP1401->cf()->w(cal_file::RX_REF_IO);
-        SP1401->cf()->m_rx_ref_io->save_as("c:\\rx_ref_io.txt");
     }
+}
+
+void QCalR1CRXRefThread::checkIt(io_mode_t mode)
+{
+    quint64 freq = 0;
+    qint64 ad = 0;
+    qint32 ref = 0;
+    double dBc = 0.0;
+    rx_filter_160m_table::data_m_t dataFilter;
+    rx_ref_table_r1cd::data_m_t dataRef;
+    rx_ref_cal_data data;
+    bool res = true;
+
+    SP1401->set_io_mode(mode);
+    SP1401->prepare_cr_rx_ref_cal();
+
+    for (quint32 i = 0;i < freqRangeCheck.freqs.size();i ++) {
+        THREAD_TEST_CANCEL
+        freq = freqRangeCheck.freqs.at(i);
+        data = SP1401->cr_rx_ref_cal()->data(freq);
+        res = data.result();;
+
+        SP1401->set_rx_freq(freq);
+        SP1401->cf()->m_rx_filter_160m->get(freq,&dataFilter);
+
+        if (mode == OUTPUT) {
+            SP1401->cf()->m_rx_ref_op->get_base(freq,&dataRef);
+        } else if (mode == IO) {
+            SP1401->cf()->m_rx_ref_io->get_base(freq,&dataRef);
+        }
+
+        SP2401->set_rx_filter(dataFilter);
+
+        for (quint32 j = 0;j < ARRAY_SIZE(dataRef.state);j ++) {
+            THREAD_TEST_PAUSE_S
+            THREAD_TEST_CANCEL
+            if (mode == OUTPUT) {
+                SP1401->cf()->m_rx_ref_op->guess_base(RFVer,j,ref);
+            } else if (mode == IO) {
+                SP1401->cf()->m_rx_ref_io->guess_base(RFVer,j,ref);
+            }
+            SP1401->set_rx_att(dataRef.state[j]);
+            SP2401->set_rx_pwr_comp(dataRef.state[j].ad_offset);
+            msleep(10);
+
+            ajustSG(freq,ref - rx_ref_table_r1cd::cal_rollback(RFVer));
+
+            getADS5474(SP1401,ad);
+            ad = dBc2ad(ad,-1.0 * rx_ref_table_r1cd::cal_rollback(RFVer));
+            dBc = ad2dBc(_0dBFS,ad);
+
+            if (mode == OUTPUT) {
+                data.pwr_op[j] = ref + dBc;
+            } else if (mode == IO) {
+                data.pwr_io[j] = ref + dBc;
+            }
+
+            res = abs(dBc) <= spec::cal_rx_ref_accuracy();
+
+            if (!res) {
+                Log.set_last_err("%s Fail.Freq:%s,Power:%f(%f)(%s)",
+                                 g_threadName.toStdString().c_str(),
+                                 freq_string_from(freq).c_str(),
+                                 ref + dBc,
+                                 double(ref),
+                                 string_of(mode).c_str());
+                emit threadProcess(RUNNING_EXCEPT);
+            }
+
+            if (mode == OUTPUT) {
+                data.res_op[j] = res;
+            } else if (mode == IO) {
+                data.res_io[j] = res;
+            }
+
+            data.set_result(data.res_op[0] && data.res_op[1] && data.res_op[2] &&
+                            data.res_io[0] && data.res_io[1] && data.res_io[2]);
+            data.set_time();
+            SP1401->cr_rx_ref_cal()->add(freq,data);
+            THREAD_TEST_PAUSE_E
+        }
+        addProgressPos(1);
+    }
+    SP1401->cr_rx_ref_cal()->update();
+    SP1401->ftp_put_cr_rx_ref_cal();
 }
 
 void QCalR1CRXRefThread::tuning(double &att1, double &att2, double &att3)
@@ -165,6 +265,7 @@ void QCalR1CRXRefThread::tuning(double &att1, double &att2, double &att3)
     quint32 count = 0;
 
     getADS5474(SP1401,ad,AVERAGE_TIMES);
+    ad = dBc2ad(ad,-1.0 * rx_ref_table_r1cd::cal_rollback(RFVer));
     dBc = ad2dBc(_0dBFS,ad);
 
     while (abs(dBc) > 0.3) {
@@ -191,6 +292,7 @@ void QCalR1CRXRefThread::tuning(double &att1, double &att2, double &att3)
         msleep(10);
 
         getADS5474(SP1401,ad,AVERAGE_TIMES);
+        ad = dBc2ad(ad,-1.0 * rx_ref_table_r1cd::cal_rollback(RFVer));
         dBc = ad2dBc(_0dBFS,ad);
 
         if (++count > 10) {
@@ -199,12 +301,12 @@ void QCalR1CRXRefThread::tuning(double &att1, double &att2, double &att3)
     }
 }
 
-void QCalR1CRXRefThread::ajustSG(quint64 freq, qint32 pwr)
+void QCalR1CRXRefThread::ajustSG(quint64 freq, double pwr)
 {
     double pmPwr = 0.0;
+    Instr.pm_set_freq(double(freq));
     Instr.sg_set_cw(double(freq));
     Instr.sg_set_pl(pwr + pmIL);
-    Instr.pm_set_freq(double(freq));
     msleep(10);
 
     for (quint32 i = 0;i < 10;i ++) {
@@ -217,13 +319,12 @@ void QCalR1CRXRefThread::ajustSG(quint64 freq, qint32 pwr)
         pmIL += (pwr - pmPwr);
     }
     msleep(10);
-    sgPwr = pwr;
 }
 
 
 void QExpR1CRXRefThread::run()
 {
-    INIT_PROG("Exporting RX Reference",100);
+    initProgress("Exporting RX Reference",100);
 
     QR1CRXRefModel *modelOP = dynamic_cast<QR1CRXRefModel *>(calParam.model_0);
     QR1CRXRefModel *modelIO = dynamic_cast<QR1CRXRefModel *>(calParam.model_1);
@@ -237,10 +338,10 @@ void QExpR1CRXRefThread::run()
     if (calOP(calParam.mode)) {
         SP1401->cf()->map2buf(cal_file::RX_REF_OP);
 
-        for (quint32 i = 0;i < freqRange.freqs.size();i ++) {
-            freq = freqRange.freqs.at(i);
+        for (quint32 i = 0;i < freqRangeCal.freqs.size();i ++) {
+            freq = freqRangeCal.freqs.at(i);
             SP1401->cf()->m_rx_ref_op->get_base(freq,&data);
-            secCur = freq_section(freq,freqRange);
+            secCur = freq_section(freq,freqRangeCal);
             for (quint32 j = 0;j < ARRAY_SIZE(data.state);j ++) {
                 if (secCur != secBfr) {
                     modelOP->iterTable(j)->at(secCur)->locate2CalTable(modelOP->calTable()->begin() + i);
@@ -251,7 +352,7 @@ void QExpR1CRXRefThread::run()
             modelOP->calTable()->replace(i,data);
         }
         emit update(modelOP->index(0,0),
-                    modelOP->index(freqRange.freqs.size(),13),
+                    modelOP->index(freqRangeCal.freqs.size(),13),
                     cal_file::RX_REF_OP,
                     secCur);
     }
@@ -262,10 +363,10 @@ void QExpR1CRXRefThread::run()
     if (calIO(calParam.mode)) {
         SP1401->cf()->map2buf(cal_file::RX_REF_IO);
 
-        for (quint32 i = 0;i < freqRange.freqs.size();i ++) {
-            freq = freqRange.freqs.at(i);
+        for (quint32 i = 0;i < freqRangeCal.freqs.size();i ++) {
+            freq = freqRangeCal.freqs.at(i);
             SP1401->cf()->m_rx_ref_io->get_base(freq,&data);
-            secCur = freq_section(freq,freqRange);
+            secCur = freq_section(freq,freqRangeCal);
             for (quint32 j = 0;j < ARRAY_SIZE(data.state);j ++) {
                 if (secCur != secBfr) {
                     modelIO->iterTable(j)->at(secCur)->locate2CalTable(modelIO->calTable()->begin() + i);
@@ -276,11 +377,11 @@ void QExpR1CRXRefThread::run()
             modelIO->calTable()->replace(i,data);
         }
         emit update(modelIO->index(0,0),
-                    modelIO->index(freqRange.freqs.size(),13),
+                    modelIO->index(freqRangeCal.freqs.size(),13),
                     cal_file::RX_REF_IO,
                     secCur);
     }
 
     SET_PROG_POS(100);
-    THREAD_ABORT
+    THREAD_ENDED
 }

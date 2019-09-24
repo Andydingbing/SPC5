@@ -9,7 +9,7 @@
 #define MAX_RF	4
 #define MAX_CEU	2
 
-#define NUM_BLOWER 11
+#define NUM_FAN 12
 #define MAX_BW	160000000LL
 
 #define ADF5355_FREQ_SPACE 6250
@@ -271,6 +271,57 @@ namespace sp1401 {
         OUTPUT,
         LOOP
 	};
+
+    // Define common T/RX states.
+    struct common_chain_pwr_state_t
+    {
+        float att[4];
+        float d_gain;
+        float att_rsv[3];
+
+        /*
+         * R1A/B/C/D/E/F :
+         * rsv[0] : rx_lna_att_t
+         *
+         * R1C/D/E/F :
+         * rsv[0] : rx_lna_att_t
+         * rsv[1] : rx_att_019_t
+         */
+        union {
+            int32_t rsv[8];
+            struct {
+                rx_lna_att_t lna_att;
+            } r1a,r1b;
+            struct {
+                rx_lna_att_t lna_att;
+                rx_att_019_t att_019;
+            } r1c,r1d,r1e,r1f;
+        } rsv;
+    };
+
+    struct common_tx_det_state_t
+    {
+        uint16_t det[4];
+        int32_t rsv[4];
+    };
+
+    struct common_tx_temp_state_t
+    {
+        float temp[4];
+        int32_t rsv[4];
+    };
+
+    struct common_tx_state_t
+    {
+        common_chain_pwr_state_t pwr;
+        common_tx_det_state_t det;
+        common_tx_temp_state_t temp;
+    };
+
+    RD_INLINE std::string string_of(const io_mode_t mode)
+    {
+        return mode == IO ? std::string("IO") : (mode == OUTPUT ? std::string("Output") : std::string("Loop"));
+    }
 
     enum bw_t {
 		_80M,

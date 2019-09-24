@@ -7,7 +7,7 @@ void QCalR1CTXFilterOffsetThread::run()
 #define POST_CLEAR DYNAMIC_SP1401_R1CE_CAL->cf()->set_bw(_160M);
 
     RD_CAL_TRY
-    CAL_THREAD_START("TX Filter Offset",freqRange.freqs.size());
+    CAL_THREAD_START("TX Filter Offset",freqRangeCal.freqs.size());
     THREAD_CHECK_BOX("TX<===>Spectrum");
 
     QTXFilterOffsetModel *model = dynamic_cast<QTXFilterOffsetModel *>(calParam.model_0);
@@ -38,10 +38,10 @@ void QCalR1CTXFilterOffsetThread::run()
 
     init();
 
-    for (quint32 i = 0;i < freqRange.freqs.size();i ++) {
-        CAL_THREAD_TEST_CANCEL_S(POST_CLEAR);
+    for (quint32 i = 0;i < freqRangeCal.freqs.size();i ++) {
+        THREAD_TEST_CANCEL_S(POST_CLEAR);
 
-        freq = freqRange.freqs.at(i);
+        freq = freqRangeCal.freqs.at(i);
         SP1401->set_tx_freq(freq);
         Instr.sa_set_cf(freq + dds1);
 
@@ -77,7 +77,7 @@ void QCalR1CTXFilterOffsetThread::run()
         SP1401->get_temp(7,data.temp[3]);
         data.time = getCurTime();
 
-        secCur = freq_section(freq,freqRange);
+        secCur = freq_section(freq,freqRangeCal);
         if (secCur != secBfr) {
             model->iterTable()->at(secCur)->locate2CalTable(model->calTable()->begin() + i);
             secBfr = secCur;
@@ -94,7 +94,7 @@ void QCalR1CTXFilterOffsetThread::run()
     SP1401->cf()->w(cal_file::TX_FILTER_OFFSET_80);
     SP1401->cf()->m_tx_filter_offset_op_80m->save_as("c:\\tx_filter_off_op_80.txt");
 
-    CAL_THREAD_ABOART_S(POST_CLEAR);
+    THREAD_ENDED_S(POST_CLEAR);
     RD_CAL_CATCH
 }
 
@@ -122,7 +122,7 @@ void QCalR1CTXFilterOffsetThread::init()
 
 void QExpR1CTXFilterOffsetThread::run()
 {
-    INIT_PROG("Exporting TX Filter Offset",100);
+    initProgress("Exporting TX Filter Offset",100);
 
     QTXFilterOffsetModel *model = dynamic_cast<QTXFilterOffsetModel *>(calParam.model_0);
 
@@ -135,10 +135,10 @@ void QExpR1CTXFilterOffsetThread::run()
     SP1401->cf()->set_bw(_80M);
     SP1401->cf()->map2buf(cal_file::TX_FILTER_OFFSET_OP_80);
 
-    for (quint32 i = 0;i < freqRange.freqs.size();i ++) {
-        freq = freqRange.freqs.at(i);
+    for (quint32 i = 0;i < freqRangeCal.freqs.size();i ++) {
+        freq = freqRangeCal.freqs.at(i);
         SP1401->cf()->m_tx_filter_offset_op_80m->get(freq,&data);
-        secCur = freq_section(freq,freqRange);
+        secCur = freq_section(freq,freqRangeCal);
         if (secCur != secBfr) {
             model->iterTable()->at(secCur)->locate2CalTable(model->calTable()->begin() + i);
             secBfr = secCur;
@@ -148,12 +148,12 @@ void QExpR1CTXFilterOffsetThread::run()
     }
 
     emit update(model->index(0,0),
-                model->index(freqRange.freqs.size(),7),
+                model->index(freqRangeCal.freqs.size(),7),
                 cal_file::TX_FILTER_OFFSET_OP_80,
                 secCur);
 
     SP1401->cf()->set_bw(_160M);
 
     SET_PROG_POS(100);
-    THREAD_ABORT
+    THREAD_ENDED
 }

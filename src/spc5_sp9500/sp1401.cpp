@@ -6,6 +6,7 @@
 #include "ftp.h"
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/filesystem/path.hpp>
+#include <boost/function.hpp>
 
 using namespace std;
 using namespace sp_rd;
@@ -553,6 +554,17 @@ IMPL_FUNC_FTP_PUT(_tr_if_tx_freq_res_test)
 IMPL_FUNC_FTP_PUT(_tr_rf_rx_freq_res_test)
 IMPL_FUNC_FTP_PUT(_tr_if_rx_freq_res_test)
 IMPL_FUNC_FTP_PUT(_tr_tx_phase_noise_test)
+IMPL_FUNC_FTP_PUT(_tr_tx_noise_floor_test)
+IMPL_FUNC_FTP_PUT(_tr_tx_lo_ld_test)
+IMPL_FUNC_FTP_PUT(_tr_tx_pwr_mod_sw_test)
+IMPL_FUNC_FTP_PUT(_tr_tx_filter_sw_test)
+IMPL_FUNC_FTP_PUT(_tr_tx_io_sw_test)
 
 IMPL_FUNC_FTP_PUT(_cr_tx_passband_freq_res_160_cal)
 IMPL_FUNC_FTP_PUT(_cr_rx_passband_freq_res_160_cal)
+IMPL_FUNC_FTP_PUT(_cr_tx_base_pwr_cal)
+IMPL_FUNC_FTP_PUT(_cr_tx_pwr_op_cal)
+IMPL_FUNC_FTP_PUT(_cr_tx_pwr_io_cal)
+IMPL_FUNC_FTP_PUT(_cr_rx_ref_cal)
+IMPL_FUNC_FTP_PUT(_cr_rx_pwr_op_cal)
+IMPL_FUNC_FTP_PUT(_cr_rx_pwr_io_cal)

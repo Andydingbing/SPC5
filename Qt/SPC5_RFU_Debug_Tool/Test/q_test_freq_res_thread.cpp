@@ -38,13 +38,13 @@ void QTestR1CFreqResThread::run()
         sweepTX();
     }
 
-    TEST_THREAD_TEST_CANCEL
+    THREAD_TEST_CANCEL
 
     if (param->isTestRF_RX || param->isTestIF_RX) {
         sweepRX();
     }
 
-    TEST_THREAD_ABOART
+    THREAD_ENDED
     RD_TEST_CATCH
 }
 
@@ -94,10 +94,11 @@ void QTestR1CFreqResThread::sweepTX()
     SP2401->set_tx_filter_sw(false);
 
     if (param->isTestRF_TX) {
+        totalResult = true;
         dataRF_TX->report()->set_result("Pass");
 
         for (quint32 i = 0;i < RF_TXFreqRange.freqs.size();i ++) {
-            TEST_THREAD_TEST_CANCEL
+            THREAD_TEST_CANCEL
 
             RF_Freq = RF_TXFreqRange.freqs.at(i);
             SP1401->set_tx_freq(RF_Freq);
@@ -127,6 +128,7 @@ void QTestR1CFreqResThread::sweepTX()
     }
 
     if (param->isTestIF_TX) {
+        totalResult = true;
         dataIF_TX->report()->set_result("Pass");
 
         RF_Freq = 2000000000;
@@ -135,7 +137,7 @@ void QTestR1CFreqResThread::sweepTX()
         SP1401->set_tx_freq(RF_Freq);
 
         for (quint32 i = 0;i < IF_TX_FILTER_160M_PTS;i ++) {
-            TEST_THREAD_TEST_CANCEL
+            THREAD_TEST_CANCEL
 
             IF_Freq = IF_TX_FILTER_160M_FREQ_STAR + i * IF_TX_FILTER_FREQ_STEP;
             SP2401->set_dds1(IF_Freq);
@@ -247,10 +249,11 @@ void QTestR1CFreqResThread::sweepRX()
     Instr.sg_set_pl(ref - 5.0);
 
     if (param->isTestRF_RX) {
+        totalResult = true;
         dataRF_RX->report()->set_result("Pass");
 
         for (quint32 i = 0;i < RF_RXFreqRange.freqs.size();i ++) {
-            TEST_THREAD_TEST_CANCEL
+            THREAD_TEST_CANCEL
 
             RF_Freq = RF_RXFreqRange.freqs.at(i);
             SP1401->set_rx_freq(RF_Freq);
@@ -279,13 +282,14 @@ void QTestR1CFreqResThread::sweepRX()
     }
 
     if (param->isTestIF_RX) {
+        totalResult = true;
         dataIF_RX->report()->set_result("Pass");
 
         RF_Freq = 2000000000;
         SP1401->set_rx_freq(RF_Freq);
 
         for (quint32 i = 0;i < IF_RX_FILTER_160M_PTS;i ++) {
-            TEST_THREAD_TEST_CANCEL
+            THREAD_TEST_CANCEL
 
             IF_Freq = IF_RX_FILTER_160M_FREQ_STAR + i * IF_RX_FILTER_FREQ_STEP;
 

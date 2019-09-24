@@ -6,6 +6,7 @@
 
 using namespace std;
 using namespace sp_rd;
+using namespace sp1401;
 using namespace boost;
 using namespace boost::property_tree;
 
@@ -140,6 +141,44 @@ double spec::test_tx_phase_noise(uint64_t freq,double offset)
     return 0.0;
 }
 
+void spec::test_tx_noise_floor_freq(range_freq_string &freq)
+{
+    ptree pt;
+    read_ini(path(),pt);
+    freq.star = pt.get<string>("TX_Noise_Floor.FreqStar");
+    freq.stop = pt.get<string>("TX_Noise_Floor.FreqStop");
+    freq.step = pt.get<string>("TX_Noise_Floor.FreqStep");
+}
+
+void spec::test_tx_noise_floor_span(string &span)
+{
+    ptree pt;
+    read_ini(path(),pt);
+    span = pt.get<string>("TX_Noise_Floor.Span");
+}
+
+void spec::test_tx_noise_floor_rbw(string &rbw)
+{
+    ptree pt;
+    read_ini(path(),pt);
+    rbw = pt.get<string>("TX_Noise_Floor.RBW");
+}
+
+double spec::test_tx_noise_floor(uint64_t freq,double pwr)
+{
+    ptree pt;
+    read_ini(path(),pt);
+
+    if (freq <= 2000000000) {
+        if (pwr >= 10.0) { return pt.get<double>("TX_Noise_Floor.@10dBm"); }
+        if (pwr >= -40.0) { return pt.get<double>("TX_Noise_Floor.@-40dBm"); }
+    } else if (freq <= 6000000000) {
+        if (pwr >= 10.0) { return pt.get<double>("TX_Noise_Floor.@10dBm"); }
+        if (pwr >= -40.0) { return pt.get<double>("TX_Noise_Floor.@-40dBm"); }
+    }
+    return 0.0;
+}
+
 double spec::cal_tx_lol()
 {
     ptree pt;
@@ -175,6 +214,103 @@ double spec::cal_tx_filter_ripple()
     ptree pt;
     read_ini(path(),pt);
     return pt.get<double>("TX_Filter.Ripple");
+}
+
+void spec::cal_tx_base_pwr_freq(range_freq_string &freq)
+{
+    ptree pt;
+    read_ini(path(),pt);
+    freq.star = pt.get<string>("TX_Base_Power.FreqStar");
+    freq.stop = pt.get<string>("TX_Base_Power.FreqStop");
+    freq.step = pt.get<string>("TX_Base_Power.FreqStep");
+}
+
+double spec::cal_tx_base_pwr_accuracy()
+{
+    ptree pt;
+    read_ini(path(),pt);
+    return pt.get<double>("TX_Base_Power.Accuracy");
+}
+
+void spec::cal_tx_pwr_freq(range_freq_string &freq)
+{
+    ptree pt;
+    read_ini(path(),pt);
+    freq.star = pt.get<string>("TX_Power.FreqStar");
+    freq.stop = pt.get<string>("TX_Power.FreqStop");
+    freq.step = pt.get<string>("TX_Power.FreqStep");
+}
+
+void spec::cal_tx_pwr_pwr(const io_mode_t mode,range_pwr_string &pwr)
+{
+    ptree pt;
+    read_ini(path(),pt);
+
+    if (mode == OUTPUT) {
+        pwr.star = pt.get<string>("TX_Power.PowerStar_Output");
+        pwr.stop = pt.get<string>("TX_Power.PowerStop_Output");
+        pwr.step = pt.get<string>("TX_Power.PowerStep_Output");
+    } else if (mode == IO) {
+        pwr.star = pt.get<string>("TX_Power.PowerStar_IO");
+        pwr.stop = pt.get<string>("TX_Power.PowerStop_IO");
+        pwr.step = pt.get<string>("TX_Power.PowerStep_IO");
+    }
+}
+
+double spec::cal_tx_pwr_accuracy()
+{
+    ptree pt;
+    read_ini(path(),pt);
+    return pt.get<double>("TX_Power.Accuracy");
+}
+
+void spec::cal_rx_ref_freq(range_freq_string &freq)
+{
+    ptree pt;
+    read_ini(path(),pt);
+    freq.star = pt.get<string>("RX_Reference.FreqStar");
+    freq.stop = pt.get<string>("RX_Reference.FreqStop");
+    freq.step = pt.get<string>("RX_Reference.FreqStep");
+}
+
+double spec::cal_rx_ref_accuracy()
+{
+    ptree pt;
+    read_ini(path(),pt);
+    return pt.get<double>("RX_Reference.Accuracy");
+}
+
+void spec::cal_rx_pwr_freq(range_freq_string &freq)
+{
+    ptree pt;
+    read_ini(path(),pt);
+
+    freq.star = pt.get<string>("RX_Power.FreqStar");
+    freq.stop = pt.get<string>("RX_Power.FreqStop");
+    freq.step = pt.get<string>("RX_Power.FreqStep");
+}
+
+void spec::cal_rx_pwr_pwr(const sp1401::io_mode_t mode,range_pwr_string &pwr)
+{
+    ptree pt;
+    read_ini(path(),pt);
+
+    if (mode == OUTPUT) {
+        pwr.star = pt.get<string>("RX_Power.PowerStar_Output");
+        pwr.stop = pt.get<string>("RX_Power.PowerStop_Output");
+        pwr.step = pt.get<string>("RX_Power.PowerStep_Output");
+    } else if (mode == IO) {
+        pwr.star = pt.get<string>("RX_Power.PowerStar_IO");
+        pwr.stop = pt.get<string>("RX_Power.PowerStop_IO");
+        pwr.step = pt.get<string>("RX_Power.PowerStep_IO");
+    }
+}
+
+double spec::cal_rx_pwr_accuracy()
+{
+    ptree pt;
+    read_ini(path(),pt);
+    return pt.get<double>("RX_Power.Accuracy");
 }
 
 string spec::path()

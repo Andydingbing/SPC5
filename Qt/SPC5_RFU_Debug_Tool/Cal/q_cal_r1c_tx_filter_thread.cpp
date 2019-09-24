@@ -4,7 +4,7 @@
 
 void QCalR1CTXFilterThread::cal()
 {
-    CAL_THREAD_START("TX Filter",(RF_TX_FILTER_PTS +IF_TX_FILTER_160M_PTS));
+    CAL_THREAD_START("TX Filter",(RF_TX_FILTER_PTS + IF_TX_FILTER_160M_PTS));
 
     Qwt_TX_RF_FR_Data *dataRF_FR_0 = dynamic_cast<Qwt_TX_RF_FR_Data *>(calParam.plotData_0);
     Qwt_TX_RF_FR_Data *dataRF_FR_1 = dynamic_cast<Qwt_TX_RF_FR_Data *>(calParam.plotData_1);
@@ -21,13 +21,18 @@ void QCalR1CTXFilterThread::cal()
         Instr.pm_reset();
 
         initTXChain();
-
+        THREAD_TEST_CANCEL
         sweepRF_0(dataRF_FR_0);
+        THREAD_TEST_CANCEL
         sweepRF_1(dataRF_FR_1);
+        THREAD_TEST_CANCEL
         sweepIF(dataIF_FR);
     }
+    THREAD_TEST_CANCEL
     generateFreqResponse();
+    THREAD_TEST_CANCEL
     generateCoef();
+    THREAD_TEST_CANCEL
     updateCalFile();
 
     if (calParam.justRebuildCoef == true) {
@@ -76,8 +81,8 @@ void QCalR1CTXFilterThread::sweepRF_0(Qwt_TX_RF_FR_Data *qwtData)
     quint64 freq = 0;
 
     for (quint32 i = 0;i < RF_TX_FILTER_PTS_0;i ++) {
-        CAL_THREAD_TEST_PAUSE_S
-        CAL_THREAD_TEST_CANCEL
+        THREAD_TEST_PAUSE_S
+        THREAD_TEST_CANCEL
 
         data.freq = RF_TX_FILTER_FREQ_STAR_0 + i * RF_TX_FILTER_FREQ_STEP;
         freq = data.freq < RF_TX_FREQ_STAR ? RF_TX_FREQ_STAR : data.freq;
@@ -92,7 +97,7 @@ void QCalR1CTXFilterThread::sweepRF_0(Qwt_TX_RF_FR_Data *qwtData)
         emit update(QModelIndex(),QModelIndex(),cal_file::TX_RF_FR_0);
 
         SET_PROG_POS(i + 1);
-        CAL_THREAD_TEST_PAUSE_E
+        THREAD_TEST_PAUSE_E
     }
     SP1401->cf()->w(cal_file::TX_RF_FR_0);
     SP1401->cf()->m_tx_rf_fr_0->save_as("c:\\tx_filter_rf_fr_0.txt");
@@ -104,8 +109,8 @@ void QCalR1CTXFilterThread::sweepRF_1(Qwt_TX_RF_FR_Data *qwtData)
     quint64 freq = 0;
 
     for (quint32 i = 0;i < RF_TX_FILTER_PTS_1;i ++) {
-        CAL_THREAD_TEST_PAUSE_S
-        CAL_THREAD_TEST_CANCEL
+        THREAD_TEST_PAUSE_S
+        THREAD_TEST_CANCEL
         data.freq = RF_TX_FILTER_FREQ_STAR_1 + i * RF_TX_FILTER_FREQ_STEP;
         freq = data.freq > RF_TX_FREQ_STOP ? RF_TX_FREQ_STOP : data.freq;
         SP1401->set_tx_freq(freq);
@@ -119,7 +124,7 @@ void QCalR1CTXFilterThread::sweepRF_1(Qwt_TX_RF_FR_Data *qwtData)
         emit update(QModelIndex(),QModelIndex(),cal_file::TX_RF_FR_1);
 
         SET_PROG_POS(RF_TX_FILTER_PTS_0 + i + 1);
-        CAL_THREAD_TEST_PAUSE_E
+        THREAD_TEST_PAUSE_E
     }
     SP1401->cf()->w(cal_file::TX_RF_FR_1);
     SP1401->cf()->m_tx_rf_fr_1->save_as("c:\\tx_filter_rf_fr_1.txt");
@@ -133,8 +138,8 @@ void QCalR1CTXFilterThread::sweepIF(Qwt_TX_IF_FR_Data *qwtData)
     msleep(10);
 
     for (quint32 i = 0;i < IF_TX_FILTER_160M_PTS;i ++) {
-        CAL_THREAD_TEST_PAUSE_S
-        CAL_THREAD_TEST_CANCEL
+        THREAD_TEST_PAUSE_S
+        THREAD_TEST_CANCEL
         data.freq = IF_TX_FILTER_160M_FREQ_STAR + i * IF_TX_FILTER_FREQ_STEP;
         SP2401->set_duc_dds(data.freq);
         msleep(10);
@@ -146,7 +151,7 @@ void QCalR1CTXFilterThread::sweepIF(Qwt_TX_IF_FR_Data *qwtData)
         emit update(QModelIndex(),QModelIndex(),cal_file::TX_IF_FR);
 
         SET_PROG_POS(RF_TX_FILTER_PTS + i + 1);
-        CAL_THREAD_TEST_PAUSE_E
+        THREAD_TEST_PAUSE_E
     }
     SP1401->cf()->w(cal_file::TX_IF_FR);
     SP1401->cf()->m_tx_if_fr->save_as("c:\\tx_filter_if_fr.txt");
@@ -175,7 +180,7 @@ void QCalR1CTXFilterThread::generateFreqResponse()
     if (fp_fr == nullptr) {
         QString msg = QString("Could not open file");
         THREAD_ERROR_BOX(msg);
-        CAL_THREAD_ABOART
+        THREAD_ENDED
     }
 
     // (2G-43M)~~~(2G+43M),step 2M.
@@ -250,7 +255,7 @@ void QCalR1CTXFilterThread::generateFreqResponse()
     if (fp_fr == nullptr) {
         QString msg = QString("could not open file");
         THREAD_ERROR_BOX(msg);
-        CAL_THREAD_ABOART
+        THREAD_ENDED
     }
 
     // (2G-83M)~~~(2G+83M),step 2M.
@@ -334,7 +339,7 @@ void QCalR1CTXFilterThread::generateCoef()
     if (exeFirProcess(firExePath)) {
         QString msg = QString("%1").arg(Log.last_err());
         THREAD_ERROR_BOX(msg);
-        CAL_THREAD_ABOART
+        THREAD_ENDED
     }
 }
 
@@ -363,13 +368,13 @@ void QCalR1CTXFilterThread::updateCalFile()
         Log.set_last_err("Could not open %s",pathReal);
         QString msg = QString("%1").arg(Log.last_err());
         THREAD_ERROR_BOX(msg);
-        CAL_THREAD_ABOART
+        THREAD_ENDED
     }
     if (fp_imag == nullptr) {
         Log.set_last_err("Could not open %s",pathImag);
         QString msg = QString("%1").arg(Log.last_err());
         THREAD_ERROR_BOX(msg);
-        CAL_THREAD_ABOART
+        THREAD_ENDED
     }
 
     for (quint64 freq = RF_TX_FREQ_STAR;freq <= RF_TX_FREQ_STOP;freq += RF_TX_FREQ_STEP_CALLED) {
@@ -413,13 +418,13 @@ void QCalR1CTXFilterThread::updateCalFile()
         Log.set_last_err("Could not open %s",pathReal);
         QString msg = QString("%1").arg(Log.last_err());
         THREAD_ERROR_BOX(msg);
-        CAL_THREAD_ABOART
+        THREAD_ENDED
     }
     if (fp_imag == nullptr) {
         Log.set_last_err("Could not open %s",pathImag);
         QString msg = QString("%1").arg(Log.last_err());
         THREAD_ERROR_BOX(msg);
-        CAL_THREAD_ABOART
+        THREAD_ENDED
     }
 
     idx = 0;
@@ -479,8 +484,8 @@ void QCalR1CTXFilterThread::check()
 
     double flatness = spec::cal_tx_filter_flatness();
     double ripple = spec::cal_tx_filter_ripple();
-    spec::cal_tx_filter_freq(freqString);
-    parse_range_freq_string(freqString,freqRange);
+    spec::cal_tx_filter_freq(freqStringCheck);
+    parse_range_freq_string(freqStringCheck,freqRangeCheck);
 
     tx_filter_160m_table::data_m_t dataFilter;
     tx_passband_freq_res_160_cal_data data;
@@ -489,8 +494,8 @@ void QCalR1CTXFilterThread::check()
     SP2401->set_tx_filter_sw(true);
     freqStarIF = IF_TX_FILTER_160M_FREQ_STAR;
     freqStopIF = IF_TX_FILTER_160M_FREQ_STOP;
-    for (quint32 i = 0;i < freqRange.freqs.size();i ++) {
-        freqRF = freqRange.freqs.at(i);
+    for (quint32 i = 0;i < freqRangeCheck.freqs.size();i ++) {
+        freqRF = freqRangeCheck.freqs.at(i);
 
         SP1401->set_tx_freq(freqRF);
         SP1401->cf()->m_tx_filter_160m->get(freqRF,&dataFilter);
@@ -514,7 +519,7 @@ void QCalR1CTXFilterThread::check()
 void QExpR1CTXFilterThread::run()
 {
     RD_TRY
-    INIT_PROG("Exporting TX Filter",100);
+    initProgress("Exporting TX Filter",100);
 
     tx_rf_fr_table::data_f_t tempDataRF_FR;;
     tx_if_fr_table::data_f_t tempDataIF_FR;
@@ -596,6 +601,6 @@ void QExpR1CTXFilterThread::run()
                 cal_file::TX_FILTER_160);
 
     SET_PROG_POS(100);
-    THREAD_ABORT
+    THREAD_ENDED
     RD_CAL_CATCH
 }

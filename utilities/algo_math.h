@@ -17,7 +17,16 @@
 #define RD_UTILITIES_ALGO_MATH_H
 
 #include "rd.h"
+#include "exception.hpp"
+#include <boost/rational.hpp>
 
 double RD_API round(double x,uint32_t digit);
 
-#endif
+template <typename T>
+RD_INLINE T linear_quantify(const T star,const T step,const T value)
+{ return uint64_t((value - star) / step) * step + star; }
+
+// 1 / sqrt(x)
+float RD_API inv_sqrt(float x);
+
+#endif // RD_UTILITIES_ALGO_MATH_H

@@ -328,12 +328,18 @@ void QRFR1FAdvDlg::on_checkBoxRXLED_clicked(bool checked)
 
 void QRFR1FAdvDlg::on_pushButtonSetTXFreq_clicked()
 {
-    PTR_CHECKV(SP3301);
+    PTR_CHECK
+    RD_TRY
+    SP1401R1F()->set_tx_freq(freq_string_to_uint64_t(ui->lineEditTXFreq->text().toStdString()));
+    RD_CATCH_ALL_EXCEPTION
 }
 
 void QRFR1FAdvDlg::on_pushButtonSetRXFreq_clicked()
 {
-    PTR_CHECKV(SP3301);
+    PTR_CHECK
+    RD_TRY
+    SP1401R1F()->set_rx_freq(freq_string_to_uint64_t(ui->lineEditRXFreq->text().toStdString()));
+    RD_CATCH_ALL_EXCEPTION
 }
 
 void QRFR1FAdvDlg::on_pushButtonEEPROM_clicked()
@@ -372,12 +378,12 @@ void QRFR1FAdvDlg::on_pushButtonGetAllDet_clicked()
     DECLARE_R1C_GETAD7680_FUNCTION_MAP
 
     uint32_t det[4] = {0};
-    QLineEdit *lineEditDet[4] = {
+    QLineEdit *lineEditDet[3] = {
         ui->lineEditDetRXCom,
         ui->lineEditDetRXIF1,
         ui->lineEditDetTXIF2
     };
-    for (quint8 i = 0;i < 4;i ++) {
+    for (quint8 i = 0;i < 3;i ++) {
         (SP1401R1F()->*get_r1c_ad7680[i])(det[i]);
         lineEditDet[i]->setText(QString("%1").arg(det[i]));
     }
@@ -445,5 +451,37 @@ void QRFR1FAdvDlg::on_comboBoxIFFilterSw_currentIndexChanged(int index)
     PTR_CHECK
     RD_TRY
     SP1401R1F()->set_rx_if_filter_sw(sp1401_r1c::rx_if_filter_t(index));
+    RD_CATCH_ALL_EXCEPTION
+}
+
+void QRFR1FAdvDlg::on_lineEditTXFreq_textChanged(const QString &arg1)
+{
+    PTR_CHECK
+    RD_TRY
+    quint64 freq = freq_string_to<quint64>(arg1.toStdString());
+    quint64 freqLO1 = 0;
+    quint64 freqLO2 = 0;
+    quint64 freqLO3 = 0;
+    sp1401_r1f::tx_filter_t filter1;
+    sp1401_r1f::tx_filter_t filter2;
+    SP1401R1F()->tx_freq2lo(freq,freqLO1,freqLO2,freqLO3,filter1,filter2);
+    ui->lineEditTXLO1->setText(QString::fromStdString(freq_string_from(freqLO1)));
+    ui->lineEditTXLO2->setText(QString::fromStdString(freq_string_from(freqLO2)));
+    ui->lineEditTXLO3->setText(QString::fromStdString(freq_string_from(freqLO3)));
+    ui->comboBoxTXFilterSw1->setCurrentIndex(int(filter1));
+    ui->comboBoxTXFilterSw2->setCurrentIndex(int(filter2));
+    RD_CATCH_ALL_EXCEPTION
+}
+
+void QRFR1FAdvDlg::on_lineEditRXFreq_textChanged(const QString &arg1)
+{
+    PTR_CHECK
+    RD_TRY
+    quint64 freq = freq_string_to<quint64>(arg1.toStdString());
+    quint64 freqLO1 = 0;
+    quint64 freqLO2 = 0;
+    SP1401R1F()->rx_freq2lo(freq,freqLO1,freqLO2);
+    ui->lineEditRXLO1->setText(QString::fromStdString(freq_string_from(freqLO1)));
+    ui->lineEditTXLO2->setText(QString::fromStdString(freq_string_from(freqLO2)));
     RD_CATCH_ALL_EXCEPTION
 }

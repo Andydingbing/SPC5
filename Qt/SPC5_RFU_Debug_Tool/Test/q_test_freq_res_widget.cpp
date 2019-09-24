@@ -1,18 +1,21 @@
+#include "q_test_dlg.h"
 #include "q_test_freq_res_widget.h"
 #include "q_test_freq_res_thread.h"
+#include "q_model_temp_pwr.h"
 #include "qwt_plot_curve.h"
 #include "define.h"
 #include <QVBoxLayout>
+#include <list>
+
+using namespace std;
 
 QTestFreqResWidget::QTestFreqResWidget(QWidget *parent) :
     QWidget(parent)
 {
-    QwtText title;
     plotRF = new QTestPlot(this);
-    plotRF->init(RF_TX_FREQ_STAR / 1e6,
-                 RF_TX_FREQ_STOP / 1e6,
-                 -15.0,5.0);
-    title = plotRF->title();
+    plotRF->init(RF_TX_FREQ_STAR / 1e6,RF_TX_FREQ_STOP / 1e6, -15.0,5.0);
+
+    QwtText title = plotRF->title();
     title.setText(tr("RF T/RX Freq Response(X:Freq(MHz) Y:Power(dBm))"));
     plotRF->setTitle(title);
     plotRF->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
@@ -84,4 +87,49 @@ void QTestFreqResWidget::resetShowWidget(TestBaseParam *param)
     if (p->isTestIF_TX || p->isTestIF_RX) {
         plotIF->replot();
     }
+}
+
+
+QTestTempPwrWidget::QTestTempPwrWidget(QWidget *parent) :
+    QWidget(parent)
+{
+    plot = new QTestPlot(this);
+    plot->init(double(g_temp_star),double(g_temp_stop), -95.0,20.0);
+
+    QwtText title = plot->title();
+    title.setText(tr("RF Temp Property(X:Temp Y:Power(dBm))"));
+    plot->setTitle(title);
+    plot->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
+
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    layout->addWidget(plot);
+}
+
+void QTestTempPwrWidget::resetShowWidget(TestBaseParam *param)
+{
+    list<common_chain_pwr_state_t> states;
+    param->SP1401->tx_att_states(states);
+
+    if (data.empty()) {
+        for (quint32 i = 0;i < states.size();i ++) {
+            QwtTempPwrData *tempData = new QwtTempPwrData;
+            data.push_back(tempData);
+        }
+    }
+
+    if (curve.empty()) {
+        for (quint32 i = 0;i < states.size();i ++) {
+            QwtPlotCurve *tempCurve = new QwtPlotCurve;
+            tempCurve->attach(plot);
+            tempCurve->setPen(Qt::red);
+            curve.push_back(tempCurve);
+        }
+    }
+
+    for (int i = 0;i < data.size();i ++) {
+        data.at(i)->reset();
+        curve.at(i)->setSamples(data.at(i));
+    }
+
+    plot->replot();
 }

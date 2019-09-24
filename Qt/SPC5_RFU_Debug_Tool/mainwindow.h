@@ -12,13 +12,6 @@
 #include "q_cal_r1c_dlg.h"
 #include "q_test_dlg.h"
 
-//#include "qtestr1ctxfreqresponsedlg.h"
-//#include "qtestr1crxfreqresponsedlg.h"
-//#include "qtestr1ctestpowdlg.h"
-//#include "qtestr1ctxfreqdlg.h"
-//#include "qtestr1crxattdlg.h"
-//#include "qtestr1crxfreqdlg.h"
-
 namespace Ui {
 class MainWindow;
 }
@@ -85,31 +78,24 @@ public:
     QRFR1CAdvDlg       *dlgRFR1CAdv[MAX_RF];
     QRFR1FContainerDlg *dlgRFR1FContainer[MAX_RF];
     QRFR1FAdvDlg       *dlgRFR1FAdv[MAX_RF];
-    QArbDlg     *dlgArb[MAX_RF];
-    QIQCapDlg   *dlgIQCap[MAX_RF];
-    QBbDlg      *dlgBB[MAX_RF];
-    QFPGADlg    *dlgFPGA;
+    QArbDlg   *dlgArb[MAX_RF];
+    QIQCapDlg *dlgIQCap[MAX_RF];
+    QBbDlg    *dlgBB[MAX_RF];
+    QFPGADlg  *dlgFPGA;
 public:
-    QCalR1CDlg                  *dlgCalR1C[MAX_RF];
-    QCalR1CTXLOLeakDlg          *dlgCalR1CTXLOLeak[MAX_RF];
-    QCalR1CTXSBDlg              *dlgCalR1CTXSB[MAX_RF];
-    QCalR1CTXFilterDlg          *dlgCalR1CTXFilter[MAX_RF];
-    QCalR1CTXPwrDlg             *dlgCalR1CTXPwr[MAX_RF];
-    QCalR1CTXAttDlg             *dlgCalR1CTXAtt[MAX_RF];
-    QCalR1CTXFilterOffsetDlg    *dlgCalR1CTXFilterOffset[MAX_RF];
-    QCalR1CRXFilterDlg          *dlgCalR1CRXFilter[MAX_RF];
-    QCalR1CRXRefDlg             *dlgCalR1CRXRef[MAX_RF];
-    QCalR1CRXAttDlg             *dlgCalR1CRXAtt[MAX_RF];
-    QCalR1CRXFilterOffsetDlg    *dlgCalR1CRXFilterOffset[MAX_RF];
-
-public:
+    QCalR1CDlg               *dlgCalR1C[MAX_RF];
+    QCalR1CTXLOLeakDlg       *dlgCalR1CTXLOLeak[MAX_RF];
+    QCalR1CTXSBDlg           *dlgCalR1CTXSB[MAX_RF];
+    QCalR1CTXFilterDlg       *dlgCalR1CTXFilter[MAX_RF];
+    QCalR1CTXPwrDlg          *dlgCalR1CTXPwr[MAX_RF];
+    QCalR1CTXAttDlg          *dlgCalR1CTXAtt[MAX_RF];
+    QCalR1CTXFilterOffsetDlg *dlgCalR1CTXFilterOffset[MAX_RF];
+    QCalR1CRXFilterDlg       *dlgCalR1CRXFilter[MAX_RF];
+    QCalR1CRXRefDlg          *dlgCalR1CRXRef[MAX_RF];
+    QCalR1CRXAttDlg          *dlgCalR1CRXAtt[MAX_RF];
+    QCalR1CRXFilterOffsetDlg *dlgCalR1CRXFilterOffset[MAX_RF];
     QTestR1CTabWidget *dlgTestR1C[MAX_RF];
-//    QTestR1CTxFreqResponseDlg   *dlgTestR1CTxFreqResponse[MAX_RF];
-//    QTestR1CRxFreqResponseDlg   *dlgTestR1CRxFreqResponse[MAX_RF];
-//    QTestR1CTestPowDlg          *dlgTestR1CTxTestPow[MAX_RF];
-//    QTestR1CTxFreqDlg           *dlgTestR1CTxFreq[MAX_RF];
-//    QTestR1CRxAttDlg            *dlgTestR1CRxAtt[MAX_RF];
-//    QTestR1CRxFreqDlg           *dlgTestR1CRxFreq[MAX_RF];
+
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -124,24 +110,31 @@ public slots:
     void starAllIQCapture();
     void stopAllIQCapture();
     void showSwHwVer(const sp3301::rfu_info_t &info, const char *driver);
+
+    void initProg(const QString name);
     void initProg(const QString name,quint32 pts);
     void setProgPos(quint32 pos);
+    void addProgPos(quint32 off);
+    void setProgClr(const QColor clr);
+
     void updateMsgTable(int row);
     void updateRegTable(int row);
 
-    void threadCheckBox(const QString msg)
-    { ::threadCheckBox(msg.toStdString().c_str()); }
-
-    void threadErrorBox(const QString msg)
-    { ::threadErrorBox(msg.toStdString().c_str()); }
+    void threadCheckBox(const QString msg) { ::threadCheckBox(msg.toStdString().c_str()); }
+    void threadErrorBox(const QString msg) { ::threadErrorBox(msg.toStdString().c_str()); }
+    void threadProcess(const QWinThread::Process p);
 
     bool ftpRetryBox()
     { return ::ftpRetryBox(); }
 
+    void testTXIOSwBox(const QColor TX, const QColor RX, int &exec)
+    { return ::testTXIOSwBox(TX,RX,exec); }
+
 public:
     void updateParamInChildDlg();
-    void addMsgListCallback();
-    void addRegListCallback();
+    void addMsgListCallback() { emit addMsgList(Log.msgs()->size()); }
+    void addRegListCallback() { emit addRegList(Log.regs()->size()); }
+
 private:
     void registerMetaType();
     void initStatusBar();
@@ -156,6 +149,7 @@ signals:
     void tabIdxChanged(int idx);
     void addMsgList(int row);
     void addRegList(int row);
+
 private slots:
     void on_mainTree_itemClicked(QTreeWidgetItem *item, int column);
 

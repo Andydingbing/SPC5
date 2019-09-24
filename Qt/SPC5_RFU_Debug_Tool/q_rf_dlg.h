@@ -5,16 +5,34 @@
 #include "define.h"
 
 #define PTR_CHECK { \
-    if (SP3301 == nullptr) { return; } \
+    if (SP3301 == nullptr) { \
+        Log.add_msg(-1,"The selected RFU is not connected."); \
+        return; \
+    } \
     hw_ver_t ver = SP3301->get_rf_ver(rfIdx); \
-    if (ver == R1F) { \
-        if (SP1401R1F() == nullptr) { return; } \
+    if (ver == HW_ERROR || ver == HW_MAX) { \
+        Log.add_msg(-1,"Missing RF? / Menu--->Initialization? / The SN is wrong?"); \
+        /*return;*/ \
+    } else if (ver == R1F) { \
+        if (SP1401R1F() == nullptr) { \
+            Log.add_msg(-1,"Not matched RF version(Please goto RF-R1F)."); \
+            return; \
+        } \
     } else if (ver == R1E) { \
-        if (SP1401R1E() == nullptr) { return; } \
+        if (SP1401R1E() == nullptr) { \
+            Log.add_msg(-1,"Not matched RF version(Please goto RF-R1C/D/E)."); \
+            return; \
+        } \
     } else if (ver == R1C || ver == R1D) { \
-        if (SP1401R1C() == nullptr) { return; } \
+        if (SP1401R1C() == nullptr) { \
+            Log.add_msg(-1,"Not matched RF version(Please goto RF-R1C/D/E)."); \
+            return; \
+        } \
     } else if (ver == R1A || ver == R1B) { \
-        if (SP1401R1A() == nullptr) { return; } \
+        if (SP1401R1A() == nullptr) { \
+            Log.add_msg(-1,"Not matched RF version(Please goto RF-R1A/B)."); \
+            return; \
+        } \
     } \
     }
 

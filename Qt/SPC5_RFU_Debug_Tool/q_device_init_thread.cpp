@@ -8,7 +8,7 @@ QDeviceInitThread::QDeviceInitThread(QObject *parent) : QWinThread(parent)
 
 void QDeviceInitThread::run()
 {
-    INIT_PROG(tr("Initialization"),100);
+    initProgress(tr("Initialization"),100);
     MainWindow *parent = (MainWindow *)(this->parent());
     sp3301 *pSP3301 = parent->_sp3301;
     sp3501 *pSP3501 = parent->_sp3501;

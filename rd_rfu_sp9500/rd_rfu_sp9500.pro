@@ -4,6 +4,9 @@ CONFIG += shared
 CONFIG -= qt
 TEMPLATE = lib
 
+# Multi-Processor
+QMAKE_CXXFLAGS += /MP
+
 LIB_DIR = ../lib
 SRC_DIR = ../src/spc5_sp9500
 UTILITIES_DIR = ../utilities
@@ -54,6 +57,7 @@ HEADERS += \
     $$UTILITIES_DIR/test_report.hpp \
     $$UTILITIES_DIR/algo_math.h \
     $$UTILITIES_DIR/algo_chip.h \
+    $$UTILITIES_DIR/algo_fit.hpp \
     $$UTILITIES_DIR/spec.h \
     $$LIB_DIR/ftplib/ftplib.h \
     $$SRC_DIR/arb_reader.h \

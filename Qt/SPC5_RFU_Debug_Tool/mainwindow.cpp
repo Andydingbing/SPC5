@@ -6,8 +6,7 @@
 #include <QMessageBox>
 #include <QTreeWidgetItem>
 #include <QProgressBar>
-#include "q_msg_log_model.h"
-#include "q_reg_log_model.h"
+#include "q_log_model.h"
 #include "q_rf_r1a_dlg.h"
 #include "q_rf_r1a_adv_dlg.h"
 #include "q_rf_r1c_dlg.h"
@@ -38,12 +37,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     registerMetaType();
 
-    initStatusBar();
-    initChildDlg();
-    initMainTreeWidget();
-    initMainTabWidget();
+    Log.en(log_t::RD_LOG_ALL_ON,false);
     initMsgLogDlg();
     initRegLogDlg();
+    initStatusBar();
+    initMainTreeWidget();
+    initMainTabWidget();
+    initChildDlg();
+    Log.set_default();
 
     connect(ui->actionInit,SIGNAL(triggered(bool)),this,SLOT(deviceInit()));
     connect(ui->actionExit,SIGNAL(triggered(bool)),this,SLOT(exit()));
@@ -172,17 +173,16 @@ void MainWindow::registerMetaType()
 {
     qRegisterMetaType<sp3301::rfu_info_t>("sp3301::rfu_info_t");
     qRegisterMetaType<cal_file::cal_item_t>("cal_file::cal_item_t");
-    qRegisterMetaType<CalResult>("CalResult");
     qRegisterMetaType<test_item_t>("test_item_t");
-    qRegisterMetaType<TestResult>("TestResult");
+    QWinThread::registerMetaType();
 }
 
 void MainWindow::initStatusBar()
 {
     mainProgressBar = new QProgressBar(ui->statusBar);
-    mainProgressBar->setTextVisible(false);
-    mainProgressBar->setValue(0);
     mainProgressBar->setFixedHeight(15);
+    mainProgressBar->setStyleSheet("QProgressBar{text-align:center;}");
+    setProgClr(Qt::green);
 
     labelProgressName = new QLabel(QString("..."));
     labelVerRF = new QLabel(QString("RF:"));
@@ -429,6 +429,7 @@ void MainWindow::updateParamInChildDlg()
     for (quint8 i = 0;i < MAX_RF;i ++) { \
         dlg[i]->SP1401 = _sp3301->get_sp1401(i); \
         dlg[i]->SP2401 = _sp3301->get_sp2401(i); \
+        dlg[i]->SP3301 = _sp3301; \
     }
 
 #define UPDATE_TEST_PARAM_IN(dlg,daughterDlg) \
@@ -451,24 +452,9 @@ void MainWindow::updateParamInChildDlg()
 
     UPDATE_TEST_PARAM_IN(dlgTestR1C,dlgFreqRes);
     UPDATE_TEST_PARAM_IN(dlgTestR1C,dlgRF);
+    UPDATE_TEST_PARAM_IN(dlgTestR1C,dlgTxTempPwr);
+    UPDATE_TEST_PARAM_IN(dlgTestR1C,dlgRxTempPwr);
 
-//    UPDATE_CAL_PARAM_IN(dlgTestR1CTxTestPow);
-//    UPDATE_CAL_PARAM_IN(dlgTestR1CTxFreq);
-//    UPDATE_CAL_PARAM_IN(dlgTestR1CRxAtt);
-//    UPDATE_CAL_PARAM_IN(dlgTestR1CRxFreq);
-
-//    for (qint8 i = 0;i < MAX_RF;i ++) {
-//        dlgTestR1CTxTestPow[i]->SP3301 = _sp3301;
-//        dlgTestR1CTxTestPow[i]->tabIdxRf = i;
-//        dlgTestR1CTxFreq[i]->SP3301 = _sp3301;
-//        dlgTestR1CTxFreq[i]->tabIdxRf = i;
-//        dlgTestR1CRxAtt[i]->SP3301 = _sp3301;
-//        dlgTestR1CRxAtt[i]->tabIdxRf = i;
-//        dlgTestR1CRxFreq[i]->SP3301 = _sp3301;
-//        dlgTestR1CRxFreq[i]->tabIdxRf = i;
-//    }
-
-    dlgTempCtrl->_sp3501 = &SP3501;
     dlgTempCtrl->_sp3301 = _sp3301;
     dlgTempCtrl->_sp1401_r1c = _sp3301->get_sp1401_r1c(tabIdxRf);
     dlgFPGA->_sp2401[0] = _sp3301->get_sp2401(0);
@@ -477,18 +463,6 @@ void MainWindow::updateParamInChildDlg()
         dlgRFR1CContainer[i]->dlg->setSP3301(_sp3301);
         dlgRFR1CContainer[i]->dlg->setRFIdx(i);
     }
-}
-
-void MainWindow::addMsgListCallback()
-{
-    int row = Log.msgs()->size();
-    emit addMsgList(row);
-}
-
-void MainWindow::addRegListCallback()
-{
-    int row = Log.regs()->size();
-    emit addRegList(row);
 }
 
 QString MainWindow::rfIdx2RFTabName(int idx)
@@ -501,26 +475,36 @@ QString MainWindow::rfIdx2BBTabName(int idx)
     return QString("k7-%1--->RF%2").arg((MAX_RF - 1 - idx)/2).arg(idx);
 }
 
-void MainWindow::initProg(const QString name, quint32 pts)
+void MainWindow::initProg(const QString name)
 {
     QWinThread::g_threadName = name;
-    labelProgressName->setText(name + " %0");
+    labelProgressName->setText(name);
+}
+
+void MainWindow::initProg(const QString name, quint32 pts)
+{
+    initProg(name);
     mainProgressBar->setRange(0,int(pts));
     mainProgressBar->setValue(0);
 }
 
 void MainWindow::setProgPos(quint32 pos)
 {
-    int iRange = mainProgressBar->maximum();
-    if (int(pos) > iRange) {
-        return;
-    }
-    QString strProgName = labelProgressName->text();
-    QString strPercent = QString("%%1").arg(double(pos) / double(iRange) * 100.0,0,'f',2);
-    int iPercentPos = strProgName.indexOf("%",0);
-    strProgName.replace(iPercentPos,strProgName.length() - iPercentPos,strPercent);
-    labelProgressName->setText(strProgName);
     mainProgressBar->setValue(int(pos));
+}
+
+void MainWindow::addProgPos(quint32 off)
+{
+    mainProgressBar->setValue(mainProgressBar->value() + int(off));
+}
+
+void MainWindow::setProgClr(const QColor clr)
+{
+    QString ss = QString("QProgressBar::chunk{background-color:rgb(%1,%2,%3)}")
+                        .arg(clr.red())
+                        .arg(clr.green())
+                        .arg(clr.blue());
+    mainProgressBar->setStyleSheet(mainProgressBar->styleSheet() + ss);
 }
 
 void MainWindow::updateMsgTable(int row)
@@ -533,6 +517,19 @@ void MainWindow::updateRegTable(int row)
 {
     ui->regTableView->scrollToBottom();
     ui->regTableView->selectRow(row - 1);
+}
+
+void MainWindow::threadProcess(const QWinThread::Process p)
+{
+    if (p == QWinThread::PREPARE) {
+        setProgClr(Qt::darkGreen);
+    } else if (p == QWinThread::STARTED) {
+        setProgClr(Qt::green);
+    } else if (p == QWinThread::RUNNING_EXCEPT || p == QWinThread::END_EXCEPT) {
+        setProgClr(Qt::red);
+    } else if (p == QWinThread::PAUSED) {
+        setProgClr(Qt::yellow);
+    }
 }
 
 void MainWindow::on_mainTree_itemClicked(QTreeWidgetItem *item, int column)
@@ -629,15 +626,17 @@ void MainWindow::on_mainTree_itemClicked(QTreeWidgetItem *item, int column)
 
 void MainWindow::on_mainTab_currentChanged(int index)
 {
-    if (-1 == index)
+    if (index == -1) {
         return;
+    }
 
     ui->mainTab->setCurrentIndex(index);
 
-    if (dlgIQCap[index]->isVisible())
+    if (dlgIQCap[index]->isVisible()) {
         emit tabIdxChanged(index);
-    else
+    } else {
         emit tabIdxChanged(-1);
+    }
 
     tabIdxRf = qint8(index);
     updateParamInChildDlg();

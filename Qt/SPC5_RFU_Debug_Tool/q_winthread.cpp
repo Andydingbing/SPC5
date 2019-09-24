@@ -3,51 +3,22 @@
 #include "mainwindow.h"
 #include <QDateTime>
 #include "algorithm.h"
+#include "q_test_tx_io_sw_msg_dlg.h"
 
 bool QWinThread::g_threadStop = true;
 bool QWinThread::g_threadPausing = false;
 QString QWinThread::g_threadName = QString("");
 QWinThread *QWinThread::g_threadThread = nullptr;
 
-CalParam::CalParam()
-{
-    parent = nullptr;
-    rfFreqStar = QString("%1").arg(RF_TX_FREQ_STAR);
-    rfFreqStop = QString("%1").arg(RF_TX_FREQ_STOP);
-    rfFreqStep = QString("%1").arg(RF_TX_FREQ_STEP_CALLED);
-    model_0 = nullptr;
-    model_1 = nullptr;
-    _sp1401 = nullptr;
-    _sp2401 = nullptr;
-    _sp3501 = nullptr;
-    calX9119 = true;
-    methodLOLeak = M_Spectrum;
-    methodSB = M_Spectrum;
-    justRebuildCoef = false;
-}
-
-CalR1CParam::CalR1CParam()
-{
-    txMode = CAL_IO_OP;
-    rxMode = CAL_IO_OP;
-}
-
-TestBaseParam::TestBaseParam()
-{
-    parent = nullptr;
-    model_0 = nullptr;
-    model_1 = nullptr;
-    SP1401 = nullptr;
-    SP2401 = nullptr;
-    SP3301 = nullptr;
-}
-
 QWinThread::QWinThread(QObject *parent) :
     QThread(parent)
 {
     connect(this,SIGNAL(finished()),this,SLOT(deleteLater()));
+
+    connect(this,SIGNAL(initProg(QString)),g_MainW,SLOT(initProg(QString)));
     connect(this,SIGNAL(initProg(QString,quint32)),g_MainW,SLOT(initProg(QString,quint32)));
     connect(this,SIGNAL(setProgPos(quint32)),g_MainW,SLOT(setProgPos(quint32)));
+    connect(this,SIGNAL(addProgPos(quint32)),g_MainW,SLOT(addProgPos(quint32)));
 
     connect(this,SIGNAL(threadCheckBox(QString)),
            g_MainW,SLOT(threadCheckBox(QString)),Qt::BlockingQueuedConnection);
@@ -57,16 +28,29 @@ QWinThread::QWinThread(QObject *parent) :
 }
 
 QCalBaseThread::QCalBaseThread(const CalParam &param) :
-    QWinThread(param.parent) ,
+    QCalTestBaseThread(param.parent),
     calParam(param)
 {
-    freqString.star = param.rfFreqStar.toStdString();
-    freqString.stop = param.rfFreqStop.toStdString();
-    freqString.step = param.rfFreqStep.toStdString();
+    SP3301 = calParam.SP3301;
 
-    parse_range_freq_string(freqString,freqRange);
+    freqStringCal.star = calParam.rfFreqStar.toStdString();
+    freqStringCal.stop = calParam.rfFreqStop.toStdString();
+    freqStringCal.step = calParam.rfFreqStep.toStdString();
+    freqStringCheck = calParam.freqStringCheck;
 
-    RFVer = param._sp1401->get_hw_ver();
+    parse_range_freq_string(freqStringCal,freqRangeCal);
+    parse_range_freq_string(freqStringCheck,freqRangeCheck);
+
+    if (calOP(calParam.mode)) {
+        if (calParam.cal) { totalPts += freqRangeCal.freqs.size(); }
+        if (calParam.check) { totalPts += freqRangeCheck.freqs.size(); }
+    }
+    if (calIO(calParam.mode)) {
+        if (calParam.cal) { totalPts += freqRangeCal.freqs.size(); }
+        if (calParam.check) { totalPts += freqRangeCheck.freqs.size(); }
+    }
+
+    RFVer = param.SP1401->get_hw_ver();
 
     if (this->parent() != nullptr) {
         connect(this,SIGNAL(update(QModelIndex,QModelIndex,cal_file::cal_item_t,int)),
@@ -82,6 +66,8 @@ QCalBaseThread::QCalBaseThread(const CalParam &param) :
         connect(this,SIGNAL(update(QModelIndex,QModelIndex,cal_file::cal_item_t,int)),
       calParam.model_1,SLOT(update(QModelIndex,QModelIndex,cal_file::cal_item_t,int)));
     }
+
+    connect(this,&QCalBaseThread::threadProcess,g_MainW,&MainWindow::threadProcess);
 }
 
 tm QCalBaseThread::getCurTime()
@@ -89,16 +75,6 @@ tm QCalBaseThread::getCurTime()
     time_t curTime;
     time(&curTime);
     return *localtime(&curTime);
-}
-
-bool calOP(CalIOMode mode)
-{
-    return (mode == CAL_OP || mode == CAL_IO_OP);
-}
-
-bool calIO(CalIOMode mode)
-{
-    return (mode == CAL_IO || mode == CAL_IO_OP);
 }
 
 int exeFirProcess(char *path)
@@ -215,4 +191,16 @@ bool ftpRetryBox()
     msgBox.setModal(true);
 
     return msgBox.exec() == QMessageBox::Yes;
+}
+
+void testTXIOSwBox(const QColor TX, const QColor RX, int &exec)
+{
+    QTestTXIOSwMsgDlg msgBox(TX,RX);
+    msgBox.setWindowTitle(QObject::tr("Check LED"));
+    msgBox.setWindowFlag(Qt::WindowCloseButtonHint,false);
+    msgBox.setWindowFlag(Qt::WindowContextHelpButtonHint,false);
+    msgBox.setFixedSize(msgBox.size());
+    msgBox.setModal(true);
+
+    exec = msgBox.exec();
 }

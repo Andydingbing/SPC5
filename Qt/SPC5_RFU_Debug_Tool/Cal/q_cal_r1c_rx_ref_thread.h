@@ -9,8 +9,9 @@ public:
     explicit QCalR1CRXRefThread(const CalParam &param) :
         QCalR1CBaseThread(param), sgPwr(-160), pmIL(PM_IL) {}
     void run();
-    void ajustSG(quint64 freq, qint32 pwr);
+    void ajustSG(quint64 freq, double pwr);
     void cal(io_mode_t mode);
+    void checkIt(io_mode_t mode);
     virtual void tuning(double &att1, double &att2, double &att3);
 
 private:

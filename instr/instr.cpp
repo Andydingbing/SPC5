@@ -31,6 +31,7 @@ instr::instr(void) :
     boost::assign::push_back(*m_all_sa)
             (boost::make_shared<ks_n9010a>())
             (boost::make_shared<ks_n9020a>())
+            (boost::make_shared<ks_n9020b>())
             (boost::make_shared<ks_n9030a>())
             (boost::make_shared<ks_e4440a>())
             (boost::make_shared<ks_e4443a>())
@@ -270,6 +271,11 @@ bool instr::sa_set_cf(double freq)
     BOOL_CHECK(has_sa());
     INSTR_CHECK(m_sa->set_cf(freq));
 	return true;
+}
+
+bool instr::sa_set_cf(uint64_t freq)
+{
+    return sa_set_cf(double(freq));
 }
 
 bool instr::sa_set_span(double freq)

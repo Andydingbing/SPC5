@@ -23,16 +23,16 @@ using namespace sp_rd::sp1401;
 
 #define STRING_FREQ_TIPS QString("e.g. 2G,2g,2000M,2000000000")
 
-#define INIT_PROG(name,pts) emit(initProg(name,quint32(pts)))
 #define SET_PROG_POS(pos) emit(setProgPos(pos))
+#define ADD_PROG_POS(off) emit(addProgPos(off))
 
-#define DYNAMIC_SP1401_R1CE_SP1401(sp1401)          \
-    ((R1E == sp1401->get_hw_ver()) ?                \
+#define DYNAMIC_SP1401_R1CE_SP1401(sp1401) \
+    ((R1E == sp1401->get_hw_ver()) ? \
     ((sp1401_r1e *)(sp1401)) : ((sp1401_r1c *)(sp1401)))
 
-#define DYNAMIC_SP1401_R1CE_CAL                     \
-    ((R1E == calParam._sp1401->get_hw_ver()) ?      \
-    ((sp1401_r1e *)(calParam._sp1401)) : ((sp1401_r1c *)(calParam._sp1401)))
+#define DYNAMIC_SP1401_R1CE_CAL \
+    ((R1E == calParam.SP1401->get_hw_ver()) ? \
+    ((sp1401_r1e *)(calParam.SP1401)) : ((sp1401_r1c *)(calParam.SP1401)))
 
 inline QString tm2QString(const tm &t)
 {

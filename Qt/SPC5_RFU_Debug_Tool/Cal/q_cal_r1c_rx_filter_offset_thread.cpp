@@ -7,7 +7,7 @@ void QCalR1CRXFilterOffsetThread::run()
 #define POST_CLEAR DYNAMIC_SP1401_R1CE_CAL->cf()->set_bw(_160M);
 
     RD_CAL_TRY
-    CAL_THREAD_START("RX Filter Offset",freqRange.freqs.size());
+    CAL_THREAD_START("RX Filter Offset",freqRangeCal.freqs.size());
     THREAD_CHECK_BOX("RX<===>Z28<===>Signal Generator");
 
     qint64 ad[2] = {0,0};
@@ -52,10 +52,10 @@ void QCalR1CRXFilterOffsetThread::run()
 
     rx_ref_op_table_r1cd::data_m_t dataRef;
 
-    for (qint32 i = 0;i < freqRange.freqs.size();i ++) {
-        CAL_THREAD_TEST_CANCEL_S(POST_CLEAR);
+    for (qint32 i = 0;i < freqRangeCal.freqs.size();i ++) {
+        THREAD_TEST_CANCEL_S(POST_CLEAR);
 
-        freq = freqRange.freqs.at(i);
+        freq = freqRangeCal.freqs.at(i);
 
         Instr.sg_set_cw(double(freq));
         SP1401->set_rx_freq(freq);
@@ -64,7 +64,7 @@ void QCalR1CRXFilterOffsetThread::run()
         SP1401->cf()->m_rx_filter_80m->get(freq,&dataFilter_80);
 
         for (qint32 j = 0;j < offsetCnt;j ++) {
-            CAL_THREAD_TEST_CANCEL_S(POST_CLEAR);
+            THREAD_TEST_CANCEL_S(POST_CLEAR);
             Instr.sg_set_pl(pwrSG[j]);
             dataFilter_160._2double(coefReal,coefImag);
             SP2401->set_rx_filter_sw(sp2401_r1a::_2I3D);
@@ -95,7 +95,7 @@ void QCalR1CRXFilterOffsetThread::run()
         SP1401->get_temp(3,data.temp[3]);
         data.time = getCurTime();
 
-        secCur = freq_section(freq,freqRange);
+        secCur = freq_section(freq,freqRangeCal);
 
         for (qint32 j = 0;j < offsetCnt;j ++) {
             if(secCur != secBfr)
@@ -115,14 +115,14 @@ void QCalR1CRXFilterOffsetThread::run()
     SP1401->cf()->w(cal_file::RX_FILTER_OFFSET_OP_80);
     SP1401->cf()->m_rx_filter_offset_op_80m->save_as("c:\\rx_filter_off_op_80.txt");
 
-    CAL_THREAD_ABOART_S(POST_CLEAR);
+    THREAD_ENDED_S(POST_CLEAR);
     RD_CAL_CATCH
 }
 
 
 void QExpR1CRXFilterOffsetThread::run()
 {
-    INIT_PROG("Exporting Rx Filter Offset",100);
+    initProgress("Exporting Rx Filter Offset",100);
 
     QRXFilterOffsetModel *model = (QRXFilterOffsetModel *)(calParam.model_0);
 
@@ -136,10 +136,10 @@ void QExpR1CRXFilterOffsetThread::run()
     SP1401->cf()->set_bw(_80M);
     SP1401->cf()->map2buf(cal_file::RX_FILTER_OFFSET_OP_80);
 
-    for (quint32 i = 0;i < freqRange.freqs.size();i ++) {
-        freq = freqRange.freqs.at(i);
+    for (quint32 i = 0;i < freqRangeCal.freqs.size();i ++) {
+        freq = freqRangeCal.freqs.at(i);
         SP1401->cf()->m_rx_filter_offset_op_80m->get(freq,&data);
-        secCur = freq_section(freq,freqRange);
+        secCur = freq_section(freq,freqRangeCal);
         for (quint32 j = 0;j < offsetCnt;j ++) {
             if(secCur != secBfr)
                 model->iterTable(j)->at(secCur)->locate2CalTable(model->calTable()->begin() + i);
@@ -151,12 +151,12 @@ void QExpR1CRXFilterOffsetThread::run()
     }
 
     emit update(model->index(0,0),
-                model->index(freqRange.freqs.size() * offsetCnt,7),
+                model->index(freqRangeCal.freqs.size() * offsetCnt,7),
                 cal_file::RX_FILTER_OFFSET_OP_80,
                 secCur);
 
     SP1401->cf()->set_bw(_160M);
 
     SET_PROG_POS(100);
-    THREAD_ABORT
+    THREAD_ENDED
 }

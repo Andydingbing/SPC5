@@ -8,6 +8,7 @@
 #include "q_model_rx_att.h"
 #include "q_model_rx_filter_offset.h"
 #include "algorithm.h"
+#include "spec.h"
 
 void QCalR1CTXLOLeakDlg::init()
 {
@@ -63,8 +64,8 @@ void QCalR1CTXLOLeakDlg::uiToCalParam(CalParam *param)
 {
     param->parent = this;
     param->model_0 = model->at(0);
-    param->_sp1401 = SP1401;
-    param->_sp2401 = SP2401;
+    param->SP1401 = SP1401;
+    param->SP2401 = SP2401;
     param->_sp3501 = &SP3501;
     param->rfFreqStar = ui->lineEditFreqStar->text();
     param->rfFreqStop = ui->lineEditFreqStop->text();
@@ -153,8 +154,8 @@ void QCalR1CTXSBDlg::uiToCalParam(CalParam *param)
 {
     param->parent = this;
     param->model_0 = model->at(0);
-    param->_sp1401 = SP1401;
-    param->_sp2401 = SP2401;
+    param->SP1401 = SP1401;
+    param->SP2401 = SP2401;
     param->rfFreqStar = ui->lineEditFreqStar->text();
     param->rfFreqStop = ui->lineEditFreqStop->text();
     param->rfFreqStep = ui->lineEditFreqStep->text();
@@ -235,8 +236,8 @@ void QCalR1CTXFilterDlg::uiToCalParam(CalParam *param)
     param->plotData_0 = ui->tabWidget->dataRF_FR_0;
     param->plotData_1 = ui->tabWidget->dataRF_FR_1;
     param->plotData_2 = ui->tabWidget->dataIF_FR;
-    param->_sp1401 = SP1401;
-    param->_sp2401 = SP2401;
+    param->SP1401 = SP1401;
+    param->SP2401 = SP2401;
     param->justRebuildCoef = ui->checkBoxRebuildCoef->isChecked();
 }
 
@@ -336,14 +337,17 @@ void QCalR1CTXPwrDlg::resetShowWidget(CalParam *param)
 void QCalR1CTXPwrDlg::uiToCalParam(CalParam *param)
 {
     param->parent = this;
+    param->cal = ui->checkBoxCal->isChecked();
+    param->check = ui->checkBoxCheck->isChecked();
     param->mode = CalIOMode(ui->comboBoxCalIOMode->currentIndex());
     param->model_0 = model->at(0);
     param->model_1 = model->at(1);
-    param->_sp1401 = SP1401;
-    param->_sp2401 = SP2401;
+    param->SP1401 = SP1401;
+    param->SP2401 = SP2401;
     param->rfFreqStar = ui->lineEditFreqStar->text();
     param->rfFreqStop = ui->lineEditFreqStop->text();
     param->rfFreqStep = ui->lineEditFreqStep->text();
+    spec::cal_tx_base_pwr_freq(param->freqStringCheck);
 }
 
 void QCalR1CTXPwrDlg::updateFromParam(const CalR1CParam &param)
@@ -455,14 +459,18 @@ void QCalR1CTXAttDlg::resetShowWidget(CalParam *param)
 void QCalR1CTXAttDlg::uiToCalParam(CalParam *param)
 {
     param->parent = this;
+    param->cal = ui->checkBoxCal->isChecked();
+    param->check = ui->checkBoxCheck->isChecked();
     param->mode = CalIOMode(ui->comboBoxCalIOMode->currentIndex());
     param->model_0 = model->at(0);
     param->model_1 = model->at(1);
-    param->_sp1401 = SP1401;
-    param->_sp2401 = SP2401;
+    param->SP1401 = SP1401;
+    param->SP2401 = SP2401;
+    param->SP3301 = SP3301;
     param->rfFreqStar = ui->lineEditFreqStar->text();
     param->rfFreqStop = ui->lineEditFreqStop->text();
     param->rfFreqStep = ui->lineEditFreqStep->text();
+    spec::cal_tx_pwr_freq(param->freqStringCheck);
 }
 
 void QCalR1CTXAttDlg::updateFromParam(const CalR1CParam &param)
@@ -522,8 +530,8 @@ void QCalR1CTXFilterOffsetDlg::uiToCalParam(CalParam *param)
     param->parent = this;
     param->mode = CalIOMode(ui->comboBoxCalIOMode->currentIndex());
     param->model_0 = model->at(0);
-    param->_sp1401 = SP1401;
-    param->_sp2401 = SP2401;
+    param->SP1401 = SP1401;
+    param->SP2401 = SP2401;
     param->rfFreqStar = ui->lineEditFreqStar->text();
     param->rfFreqStop = ui->lineEditFreqStop->text();
     param->rfFreqStep = ui->lineEditFreqStep->text();
@@ -594,8 +602,8 @@ void QCalR1CRXFilterDlg::uiToCalParam(CalParam *param)
     param->model_1 = ui->tabWidget->model_160;
     param->plotData_0 = ui->tabWidget->dataRF_FR;
     param->plotData_1 = ui->tabWidget->dataIF_FR;
-    param->_sp1401 = SP1401;
-    param->_sp2401 = SP2401;
+    param->SP1401 = SP1401;
+    param->SP2401 = SP2401;
     param->justRebuildCoef = ui->checkBoxRebuildCoef->isChecked();
 }
 
@@ -683,14 +691,17 @@ void QCalR1CRXRefDlg::resetShowWidget(CalParam *param)
 void QCalR1CRXRefDlg::uiToCalParam(CalParam *param)
 {
     param->parent = this;
+    param->cal = ui->checkBoxCal->isChecked();
+    param->check = ui->checkBoxCheck->isChecked();
     param->mode = CalIOMode(ui->comboBoxCalIOMode->currentIndex());
     param->model_0 = model->at(0);
     param->model_1 = model->at(1);
-    param->_sp1401 = SP1401;
-    param->_sp2401 = SP2401;
+    param->SP1401 = SP1401;
+    param->SP2401 = SP2401;
     param->rfFreqStar = ui->lineEditFreqStar->text();
     param->rfFreqStop = ui->lineEditFreqStop->text();
     param->rfFreqStep = ui->lineEditFreqStep->text();
+    spec::cal_rx_ref_freq(param->freqStringCheck);
 }
 
 void QCalR1CRXRefDlg::updateFromParam(const CalR1CParam &param)
@@ -823,14 +834,18 @@ void QCalR1CRXAttDlg::resetShowWidget(CalParam *param)
 void QCalR1CRXAttDlg::uiToCalParam(CalParam *param)
 {
     param->parent = this;
+    param->cal = ui->checkBoxCal->isChecked();
+    param->check = ui->checkBoxCheck->isChecked();
     param->mode = CalIOMode(ui->comboBoxCalIOMode->currentIndex());
     param->model_0 = model->at(0);
     param->model_1 = model->at(1);
-    param->_sp1401 = SP1401;
-    param->_sp2401 = SP2401;
+    param->SP3301 = SP3301;
+    param->SP1401 = SP1401;
+    param->SP2401 = SP2401;
     param->rfFreqStar = ui->lineEditFreqStar->text();
     param->rfFreqStop = ui->lineEditFreqStop->text();
     param->rfFreqStep = ui->lineEditFreqStep->text();
+    spec::cal_rx_pwr_freq(param->freqStringCheck);
 }
 
 void QCalR1CRXAttDlg::updateFromParam(const CalR1CParam &param)
@@ -891,8 +906,8 @@ void QCalR1CRXFilterOffsetDlg::uiToCalParam(CalParam *param)
     param->parent = this;
     param->mode = CalIOMode(ui->comboBoxCalIOMode->currentIndex());
     param->model_0 = model->at(0);
-    param->_sp1401 = SP1401;
-    param->_sp2401 = SP2401;
+    param->SP1401 = SP1401;
+    param->SP2401 = SP2401;
     param->rfFreqStar = ui->lineEditFreqStar->text();
     param->rfFreqStop = ui->lineEditFreqStop->text();
     param->rfFreqStep = ui->lineEditFreqStep->text();

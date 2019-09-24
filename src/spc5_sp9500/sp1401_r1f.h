@@ -24,18 +24,20 @@ public:
             tx_filter_t &filter1,
             tx_filter_t &filter2);
 
-    int32_t set_rx_att2(double att)
-    { return set_rx_att3(att); }
+    int32_t set_rx_att2(double att) { return set_rx_att3(att); }
 
     int32_t set_rx_att(double att1,double att2,double att3)
     {
+        boost::ignore_unused(att3);
         INT_CHECK(set_rx_att1(att1));
-//        sleep_ms(100);
         INT_CHECK(set_rx_att2(att2));
         return 0;
     }
 
     int32_t get_temp(uint32_t idx,double &temp);
+
+    void tx_att_states(std::list<sp1401::common_chain_pwr_state_t> &states);
+    void rx_att_states(std::list<sp1401::common_chain_pwr_state_t> &states);
 };
 
 } // namespace sp_rd

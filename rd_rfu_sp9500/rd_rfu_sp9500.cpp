@@ -215,9 +215,16 @@ int32_t RF_SetTxSource(uint32_t RFIndex,SOURCE Source)
 {
     DECL_DYNAMIC_SP3301;
     sp2401_r1a::da_src_t TxSrc = sp2401_r1a::INTER_FILTER;
+    basic_sp1401::iq_cap_src_t ddr_src = basic_sp1401::PWR_MEAS_FREE_RUN;
 
     switch (Source) {
-        case ARB  : {TxSrc = sp2401_r1a::DRIVER_ARB;break;}
+        case ARB  : {
+            TxSrc = sp2401_r1a::DRIVER_ARB;
+            ddr_src = basic_sp1401::PWR_MEAS_FREE_RUN;
+            INT_CHECK(SP3301->set_iq_cap_trig_src(rf_idx,ddr_src));
+            INT_CHECK(SP3301->set_iq_cap_trig_src(brother_idx(rf_idx),ddr_src));
+            break;
+        }
         case FPGA : {TxSrc = sp2401_r1a::INTER_FILTER;break;}
         case CW   : {TxSrc = sp2401_r1a::SINGLE_TONE;break;}
     }
@@ -470,5 +477,20 @@ int32_t RF_GetTemperature(uint32_t RFIndex,double &TxTemperature,double &RxTempe
 {
     DECL_DYNAMIC_SP3301;
     INT_CHECK(SP3301->rf_get_temp(rf_idx,TxTemperature,RxTemperature));
+    return 0;
+}
+
+// This is mother fucking stupid!
+int32_t RF_GetCalTemperature(uint32_t RFIndex,double &Temperature)
+{
+    DECL_DYNAMIC_SP3301
+
+    SP3301->rf_get_cal_temp(rf_idx,Temperature);
+    return 0;
+}
+
+int32_t RF_SetFans(uint32_t Speed)
+{
+    INT_CHECK(SP3501.set_fan(Speed));
     return 0;
 }

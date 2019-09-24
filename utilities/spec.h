@@ -16,6 +16,7 @@
 #ifndef UTILITIES_SPEC_HPP
 #define UTILITIES_SPEC_HPP
 
+#include "cal_table.h"
 #include <freq_string.hpp>
 
 namespace sp_rd {
@@ -45,12 +46,32 @@ public:
     static void test_tx_phase_noise_rbw(std::string &rbw);
     static double test_tx_phase_noise(uint64_t freq,double offset);
 
+    static void test_tx_noise_floor_freq(range_freq_string &freq);
+    static void test_tx_noise_floor_span(std::string &span);
+    static void test_tx_noise_floor_rbw(std::string &rbw);
+    static double test_tx_noise_floor(uint64_t freq,double pwr);
+
 public:
     static double cal_tx_lol();
     static double cal_tx_sb();
+
     static void cal_tx_filter_freq(range_freq_string &freq);
     static double cal_tx_filter_flatness();
     static double cal_tx_filter_ripple();
+
+    static void cal_tx_base_pwr_freq(range_freq_string &freq);
+    static double cal_tx_base_pwr_accuracy();
+
+    static void cal_tx_pwr_freq(range_freq_string &freq);
+    static void cal_tx_pwr_pwr(const sp1401::io_mode_t mode,range_pwr_string &pwr);
+    static double cal_tx_pwr_accuracy();
+
+    static void cal_rx_ref_freq(range_freq_string &freq);
+    static double cal_rx_ref_accuracy();
+
+    static void cal_rx_pwr_freq(range_freq_string &freq);
+    static void cal_rx_pwr_pwr(const sp1401::io_mode_t mode,range_pwr_string &pwr);
+    static double cal_rx_pwr_accuracy();
 
 private:
     static std::string path();

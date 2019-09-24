@@ -24,19 +24,22 @@ void QCalR1CRXFilterThread::run()
         Instr.sg_set_en_output(true);
 
         initRXChain();
-
+        THREAD_TEST_CANCEL
         sweepRF(dataRF_FR);
+        THREAD_TEST_CANCEL
         sweepIF(dataIF_FR);
     }
+    THREAD_TEST_CANCEL
     generateFreqResponse();
+    THREAD_TEST_CANCEL
     generateCoef();
+    THREAD_TEST_CANCEL
     updateCalFile();
 
     if (calParam.justRebuildCoef == true) {
         SET_PROG_POS(RF_RX_FILTER_PTS + IF_RX_FILTER_160M_PTS);
     }
-
-    CAL_THREAD_ABOART
+    THREAD_ENDED
     RD_CAL_CATCH
 }
 
@@ -80,8 +83,8 @@ void QCalR1CRXFilterThread::sweepRF(Qwt_RX_RF_FR_Data *qwtData)
     quint64 freq = 0;
 
     for (quint32 i = 0;i < RF_RX_FILTER_PTS;i ++) {
-        CAL_THREAD_TEST_PAUSE_S
-        CAL_THREAD_TEST_CANCEL
+        THREAD_TEST_PAUSE_S
+        THREAD_TEST_CANCEL
 
         data.freq = RF_RX_FILTER_FREQ_STAR + i * RF_RX_FILTER_FREQ_STEP;
         freq = data.freq < RF_RX_FREQ_STAR ? RF_RX_FREQ_STAR : data.freq;
@@ -98,7 +101,7 @@ void QCalR1CRXFilterThread::sweepRF(Qwt_RX_RF_FR_Data *qwtData)
         emit update(QModelIndex(),QModelIndex(),cal_file::RX_RF_FR);
 
         SET_PROG_POS(i + 1);
-        CAL_THREAD_TEST_PAUSE_E
+        THREAD_TEST_PAUSE_E
     }
     SP1401->cf()->w(cal_file::RX_RF_FR);
     SP1401->cf()->m_rx_rf_fr->save_as("c:\\rx_filter_rf_fr.txt");
@@ -112,8 +115,8 @@ void QCalR1CRXFilterThread::sweepIF(Qwt_RX_IF_FR_Data *qwtData)
     msleep(10);
 
     for (quint32 i = 0;i < IF_RX_FILTER_160M_PTS;i ++) {
-        CAL_THREAD_TEST_PAUSE_S
-        CAL_THREAD_TEST_CANCEL
+        THREAD_TEST_PAUSE_S
+        THREAD_TEST_CANCEL
 
         data.freq = IF_RX_FILTER_160M_FREQ_STAR + i * IF_RX_FILTER_FREQ_STEP;
         ajustSG(2000000000 + data.freq,fakeRef);
@@ -126,7 +129,7 @@ void QCalR1CRXFilterThread::sweepIF(Qwt_RX_IF_FR_Data *qwtData)
         emit update(QModelIndex(),QModelIndex(),cal_file::RX_IF_FR);
 
         SET_PROG_POS(RF_RX_FILTER_PTS + i + 1);
-        CAL_THREAD_TEST_PAUSE_E
+        THREAD_TEST_PAUSE_E
     }
     SP1401->cf()->w(cal_file::RX_IF_FR);
     SP1401->cf()->m_rx_if_fr->save_as("c:\\rx_filter_if_fr.txt");
@@ -155,7 +158,7 @@ void QCalR1CRXFilterThread::generateFreqResponse()
     if (fp_fr == nullptr) {
         QString msg = QString("Could not open file");
         THREAD_ERROR_BOX(msg);
-        CAL_THREAD_ABOART
+        THREAD_ENDED
     }
 
     // (2G-43M)~~~(2G+43M),step 2M.
@@ -213,7 +216,7 @@ void QCalR1CRXFilterThread::generateFreqResponse()
     if (fp_fr == nullptr) {
         QString msg = QString("Could not open file");
         THREAD_ERROR_BOX(msg);
-        CAL_THREAD_ABOART
+        THREAD_ENDED
     }
 
     // (2G-83M)~~~(2G+83M),step 2M.
@@ -281,7 +284,7 @@ void QCalR1CRXFilterThread::generateCoef()
     if (exeFirProcess(firExePath)) {
         QString msg = QString("%1").arg(Log.last_err());
         THREAD_ERROR_BOX(msg);
-        CAL_THREAD_ABOART
+        THREAD_ENDED
     }
 }
 
@@ -310,13 +313,13 @@ void QCalR1CRXFilterThread::updateCalFile()
         Log.set_last_err("Could not open %s",pathReal);
         QString msg = QString("%1").arg(Log.last_err());
         THREAD_ERROR_BOX(msg);
-        CAL_THREAD_ABOART
+        THREAD_ENDED
     }
     if (fp_imag == nullptr) {
         Log.set_last_err("Could not open %s",pathImag);
         QString msg = QString("%1").arg(Log.last_err());
         THREAD_ERROR_BOX(msg);
-        CAL_THREAD_ABOART
+        THREAD_ENDED
     }
 
     for (quint64 freq = RF_RX_FREQ_STAR;freq <= RF_RX_FREQ_STOP;freq += RF_RX_FREQ_STEP_CALLED_R1C) {
@@ -356,13 +359,13 @@ void QCalR1CRXFilterThread::updateCalFile()
         Log.set_last_err("Could not open %s",pathReal);
         QString msg = QString("%1").arg(Log.last_err());
         THREAD_ERROR_BOX(msg);
-        CAL_THREAD_ABOART
+        THREAD_ENDED
     }
     if (fp_imag == nullptr) {
         Log.set_last_err("Could not open %s",pathImag);
         QString msg = QString("%1").arg(Log.last_err());
         THREAD_ERROR_BOX(msg);
-        CAL_THREAD_ABOART
+        THREAD_ENDED
     }
 
     idx = 0;
@@ -433,7 +436,7 @@ double QCalR1CRXFilterThread::getRXPwr()
 
 void QExpR1CRXFilterThread::run()
 {
-    INIT_PROG("Exporting RX Filter",100);
+    initProgress("Exporting RX Filter",100);
 
     rx_rf_fr_table::data_f_t tempDataRF_FR;
     rx_if_fr_table::data_f_t tempDataIF_FR;
@@ -504,5 +507,5 @@ void QExpR1CRXFilterThread::run()
                 cal_file::RX_FILTER_160);
 
     SET_PROG_POS(100);
-    THREAD_ABORT
+    THREAD_ENDED
 }

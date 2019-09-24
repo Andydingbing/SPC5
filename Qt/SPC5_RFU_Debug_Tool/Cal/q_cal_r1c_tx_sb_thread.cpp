@@ -2,6 +2,7 @@
 #include "q_model_tx_sb.h"
 #include "algorithm.h"
 #include "algo_math.h"
+#include "spec.h"
 
 void QCalR1CTXSBThread::run()
 {
@@ -18,16 +19,19 @@ void QCalR1CTXSBThread::run()
 
     tx_sb_table_r1cd::data_f_t data;
 
-    if (useSA)
+    if (useSA) {
         THREAD_CHECK_BOX(QString("TX<===>Spectrum"));
+    }
 
     initTXChain();
 
-    if (useSA)
+    if (useSA) {
         calUseSA(thM,am_i_m,am_q_m,pwrSB);
-    else
+    } else {
         calUseLoop(thM,am_i_m,am_q_m,pwrSB);
+    }
 
+    THREAD_TEST_CANCEL
     data.th   = thM;
     data.am_i = am_i_m;
     data.am_q = am_q_m;
@@ -48,7 +52,7 @@ void QCalR1CTXSBThread::run()
     }
 
     SET_PROG_POS(100);
-    CAL_THREAD_ABOART
+    THREAD_ENDED
     RD_CAL_CATCH
 }
 
@@ -102,34 +106,34 @@ void QCalR1CTXSBThread::calUseSA(double &thM, uint16_t &am_i_m, uint16_t &am_q_m
     Instr.sa_set_peak_search(sa::PEAK_HIGHEST);
 
     while ((thR - thL) >= 1) {
-        CAL_THREAD_TEST_PAUSE_S
-        CAL_THREAD_TEST_CANCEL
+        THREAD_TEST_PAUSE_S
+        THREAD_TEST_CANCEL
         thM = round((thL + thR) / 2.0,1);
         if (slopeTh_SA(thM,1,pwrSb) > 0)
             thR = thM;
         else
             thL = thM;
-        CAL_THREAD_TEST_PAUSE_E
+        THREAD_TEST_PAUSE_E
     }
     Instr.sa_set_ref(-40.0);
 
     thL = thM - 0.5;
     thR = thM + 0.5;
     while ((thR - thL) >= 1) {
-        CAL_THREAD_TEST_PAUSE_S
-        CAL_THREAD_TEST_CANCEL
+        THREAD_TEST_PAUSE_S
+        THREAD_TEST_CANCEL
         thM = round((thL + thR) / 2.0,1);
         if (slopeTh_SA(thM,0.1,pwrSb) > 0)
             thR = thM;
         else
             thL = thM;
-        CAL_THREAD_TEST_PAUSE_E
+        THREAD_TEST_PAUSE_E
     }
 
     double thM_min = thM;
     for (thM = thL; thM <= thR; thM += 0.1) {
-        CAL_THREAD_TEST_PAUSE_S
-        CAL_THREAD_TEST_CANCEL
+        THREAD_TEST_PAUSE_S
+        THREAD_TEST_CANCEL
         SP2401->set_tx_phase_rotate_I(thM);
         Instr.sa_sweep_once();
         Instr.sa_get_marker_pwr(pwrSA);
@@ -137,38 +141,38 @@ void QCalR1CTXSBThread::calUseSA(double &thM, uint16_t &am_i_m, uint16_t &am_q_m
             pwrSb = pwrSA;
             thM_min = thM;
         }
-        CAL_THREAD_TEST_PAUSE_E
+        THREAD_TEST_PAUSE_E
     }
     thM = thM_min;
     SP2401->set_tx_phase_rotate_I(thM);
 
     while ((am_i_r - am_i_l) >= 2 ) {
-        CAL_THREAD_TEST_PAUSE_S
-        CAL_THREAD_TEST_CANCEL
+        THREAD_TEST_PAUSE_S
+        THREAD_TEST_CANCEL
         am_i_m = quint16((am_i_l + am_i_r) / 2);
         if (slopeAmI_SA(am_i_m,am_q_m,10,pwrSb) > 0)
             am_i_r = am_i_m;
         else
             am_i_l = am_i_m;
-        CAL_THREAD_TEST_PAUSE_E
+        THREAD_TEST_PAUSE_E
     }
     while ((am_q_r - am_q_l) >= 2) {
-        CAL_THREAD_TEST_PAUSE_S
-        CAL_THREAD_TEST_CANCEL
+        THREAD_TEST_PAUSE_S
+        THREAD_TEST_CANCEL
         am_q_m = quint16((am_q_l + am_q_r) / 2);
         if (slopeAmQ_SA(am_i_m,am_q_m,10,pwrSb) > 0)
             am_q_r = am_q_m;
         else
             am_q_l = am_q_m;
-        CAL_THREAD_TEST_PAUSE_E
+        THREAD_TEST_PAUSE_E
     }
 
     thM_min = thM;
     thL = thM - 0.5;
     thR = thM + 0.5;
     for (thM = thL; thM <= thR; thM += 0.1) {
-        CAL_THREAD_TEST_PAUSE_S
-        CAL_THREAD_TEST_CANCEL
+        THREAD_TEST_PAUSE_S
+        THREAD_TEST_CANCEL
         SP2401->set_tx_phase_rotate_I(thM);
         Instr.sa_sweep_once();
         Instr.sa_get_marker_pwr(pwrSA);
@@ -176,13 +180,13 @@ void QCalR1CTXSBThread::calUseSA(double &thM, uint16_t &am_i_m, uint16_t &am_q_m
             pwrSb = pwrSA;
             thM_min = thM;
         }
-        CAL_THREAD_TEST_PAUSE_E
+        THREAD_TEST_PAUSE_E
     }
     thM = thM_min;
     SP2401->set_tx_phase_rotate_I(thM);
 
     for (int16_t retry = 0;retry < 2;retry ++) {
-        CAL_THREAD_TEST_PAUSE_S
+        THREAD_TEST_PAUSE_S
         thM_min = thM;
         thL = thM - 0.2;
         thR = thM + 0.2;
@@ -221,14 +225,16 @@ void QCalR1CTXSBThread::calUseSA(double &thM, uint16_t &am_i_m, uint16_t &am_q_m
                     break;
             }
         }
-        CAL_THREAD_TEST_PAUSE_E
+        THREAD_TEST_PAUSE_E
     }
 
-    if (pwrSb > -70.0) {
+    if (pwrSb > spec::cal_tx_sb()) {
         thM = 0.0;
         am_i_m = 8192;
         am_q_m = 8192;
-        THREAD_ERROR_BOX("Cal Fail!");
+        Log.set_last_err("Cal TX Sideband Fail.Power:%f",pwrSb);
+        THREAD_ERROR_BOX(Log.last_err());
+        emit threadProcess(RUNNING_EXCEPT);
     }
 }
 
@@ -252,7 +258,7 @@ void QCalR1CTXSBThread::calUseLoop(double &thM, uint16_t &am_i_m, uint16_t &am_q
     SP1401->set_pwr_meas_src(basic_sp1401::PWR_MEAS_FREE_RUN,false);
     SP1401->set_pwr_meas_samples(327680);
 
-    CAL_THREAD_TEST_CANCEL
+    THREAD_TEST_CANCEL
     double stepTh = 0.0;
     uint16_t stepAm = 0;
 
@@ -272,7 +278,7 @@ void QCalR1CTXSBThread::calUseLoop(double &thM, uint16_t &am_i_m, uint16_t &am_q
     SP2401->set_tx_dc_offset(dc_i,dc_q);
     msleep(50);
 
-    CAL_THREAD_TEST_CANCEL
+    THREAD_TEST_CANCEL
     stepTh = 2.0;
     memset(pwr,0,sizeof(pwr));
     pwrSB = getMinThI_Rx(stepTh,0.5,&thL,&thR,&thM,pwr);
@@ -281,12 +287,12 @@ void QCalR1CTXSBThread::calUseLoop(double &thM, uint16_t &am_i_m, uint16_t &am_q
     memset(pwr,0,sizeof(pwr));
     pwrSB = getMinThI_Rx(stepTh,0.4,&thL,&thR,&thM,pwr);
 
-    CAL_THREAD_TEST_CANCEL
+    THREAD_TEST_CANCEL
     stepTh = 0.1;
     memset(pwr,0,sizeof(pwr));
     pwrSB = getMinThI_Rx(stepTh,1.0,&thL,&thR,&thM,pwr);
 
-    CAL_THREAD_TEST_CANCEL
+    THREAD_TEST_CANCEL
     stepAm = 20;
     memset(pwr,0,sizeof(pwr));
     pwrSB = getMinAmI_Rx(stepAm,1,&am_i_l,&am_i_r,&am_i_m,&am_q_m,pwr);
@@ -302,16 +308,16 @@ void QCalR1CTXSBThread::calUseLoop(double &thM, uint16_t &am_i_m, uint16_t &am_q
     memset(pwr,0,sizeof(pwr));
     pwrSB = getMinThI_Rx(stepTh,1.0,&thL,&thR,&thM,pwr);
 
-    CAL_THREAD_TEST_CANCEL
+    THREAD_TEST_CANCEL
     stepAm = 1;
     for (int32_t retry = 0;retry < 3;retry ++) {
-        CAL_THREAD_TEST_PAUSE_S
-        CAL_THREAD_TEST_CANCEL
+        THREAD_TEST_PAUSE_S
+        THREAD_TEST_CANCEL
         memset(pwr,0,sizeof(pwr));
         pwrSB = getMinAmI_Rx(stepAm,2,&am_i_l,&am_i_r,&am_i_m,&am_q_m,pwr);
         memset(pwr,0,sizeof(pwr));
         pwrSB = getMinAmQ_Rx(stepAm,2,&am_q_l,&am_q_r,&am_i_m,&am_q_m,pwr);
-        CAL_THREAD_TEST_PAUSE_E
+        THREAD_TEST_PAUSE_E
     }
 }
 
@@ -368,7 +374,7 @@ double QCalR1CTXSBThread::getMinThI_Rx(double step, double lrCoef, double *thL, 
     int16_t idx = 0,idxMin = 0;
 
     for (*thM = *thL;*thM <= *thR;*thM += step) {
-        calParam._sp2401->set_tx_phase_rotate_I(*thM);
+        SP2401->set_tx_phase_rotate_I(*thM);
         measOnce_Rx(&pwr[idx]);
         if (pwr[idx] < pwrMin) {
             pwrMin = pwr[idx];
@@ -388,7 +394,7 @@ double QCalR1CTXSBThread::getMinAmI_Rx(uint16_t step, uint16_t lrCoef, uint16_t 
     int16_t idx = 0,idxMin = 0;
 
     for (*am_i_m = *am_i_l;*am_i_m <= *am_i_r;*am_i_m += step) {
-        calParam._sp2401->set_tx_amplitude_balance(*am_i_m,*am_q_m);
+        SP2401->set_tx_amplitude_balance(*am_i_m,*am_q_m);
         measOnce_Rx(&pwr[idx]);
         if (pwr[idx] < pwrMin) {
             pwrMin = pwr[idx];
@@ -408,7 +414,7 @@ double QCalR1CTXSBThread::getMinAmQ_Rx(uint16_t step, uint16_t lrCoef, uint16_t 
     int16_t idx = 0,idxMin = 0;
 
     for (*am_q_m = *am_q_l;*am_q_m <= *am_q_r;*am_q_m += step) {
-        calParam._sp2401->set_tx_amplitude_balance(*am_i_m,*am_q_m);
+        SP2401->set_tx_amplitude_balance(*am_i_m,*am_q_m);
         measOnce_Rx(&pwr[idx]);
         if (pwr[idx] < pwrMin) {
             pwrMin = pwr[idx];
@@ -446,7 +452,7 @@ void QCalR1CTXSBThread::measOnce_Rx(double *pwrAvg)
 
 void QExpR1CTXSBThread::run()
 {
-    INIT_PROG("Exporting TX Sideband",100);
+    initProgress("Exporting TX Sideband",100);
 
     QTXSBModel *model = dynamic_cast<QTXSBModel *>(calParam.model_0);
 
@@ -464,5 +470,5 @@ void QExpR1CTXSBThread::run()
                 model->index(RF_TX_FREQ_PTS_CALLED,10));
 
     SET_PROG_POS(100);
-    THREAD_ABORT
+    THREAD_ENDED
 }

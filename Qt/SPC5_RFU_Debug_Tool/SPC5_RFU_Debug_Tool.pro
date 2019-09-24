@@ -61,8 +61,10 @@ unix {
 }
 
 SOURCES += \
+    Test/q_test_temp_pwr_thread.cpp \
         main.cpp \
         mainwindow.cpp \
+    q_log_model.cpp \
     q_temp_ctrl_dlg.cpp \
     q_rf_r1a_dlg.cpp \
     q_rf_r1a_adv_dlg.cpp \
@@ -79,8 +81,6 @@ SOURCES += \
     q_attach_thread_dlg.cpp \
     q_device_init_thread.cpp \
     q_frame_slot_trig_widget.cpp \
-    q_msg_log_model.cpp \
-    q_reg_log_model.cpp \
     q_r1c_temp_ctrl_model.cpp \
     q_r1c_temp_ctrl_thread.cpp \
     q_rdt_tableview.cpp \
@@ -90,7 +90,8 @@ SOURCES += \
     q_cal_rx_filter_offset_tabwidget.cpp \
     $$UTILITIES_DIR/freq_string.cpp \
     Test/q_test_freq_res_widget.cpp \
-    q_plot.cpp
+    q_plot.cpp \
+    Test/q_test_tx_io_sw_msg_dlg.cpp
 
 SOURCES += \
     Cal/q_cal_dlg.cpp \
@@ -132,10 +133,13 @@ HEADERS += \
     Cal/q_model_tx_loleak.h \
     Cal/q_model_tx_pwr.h \
     Cal/q_model_tx_sb.h \
+    Test/q_model_temp_pwr.h \
+    Test/q_test_temp_pwr_thread.h \
     q_cal_tx_filter_offset_tabwidget.h \
     Cal/q_model_rx_filter_offset.h \
     q_cal_rx_filter_offset_tabwidget.h \
     Cal/q_cal_base_dlg.h \
+    q_log_model.h \
     q_rf_r1f_adv_dlg.h \
     Cal/q_model_rx_filter.h \
     Cal/q_model_tx_att.h \
@@ -150,7 +154,8 @@ HEADERS += \
     Test/q_model_freq_res.h \
     Test/q_test_freq_res_widget.h \
     Test/q_test_rf_thread.h \
-    q_plot.h
+    q_plot.h \
+    Test/q_test_tx_io_sw_msg_dlg.h
 
 HEADERS += \
         mainwindow.h \
@@ -164,11 +169,9 @@ HEADERS += \
     q_frame_slot_trig_widget.h \
     q_iq_cap_dlg.h \
     q_iq_cap_thread.h \
-    q_msg_log_model.h \
     q_r1c_temp_ctrl_model.h \
     q_r1c_temp_ctrl_thread.h \
     q_rdt_tableview.h \
-    q_reg_log_model.h \
     q_rf_dlg.h \
     q_rf_r1a_adv_dlg.h \
     q_rf_r1a_dlg.h \
@@ -197,6 +200,7 @@ HEADERS += \
     q_scrolledit.h
 
 FORMS += \
+    Test/q_test_temp_pwr_dlg.ui \
         mainwindow.ui \
     q_temp_ctrl_dlg.ui \
     q_rf_r1a_dlg.ui \
@@ -211,7 +215,8 @@ FORMS += \
     q_fpga_dlg.ui \
     q_iq_cap_dlg.ui \
     q_frame_slot_trig_widget.ui \
-    Test/q_test_rf_dlg.ui
+    Test/q_test_rf_dlg.ui \
+    Test/q_test_tx_io_sw_msg_dlg.ui
 
 FORMS += \
     Cal/q_cal_r1c_dlg.ui \

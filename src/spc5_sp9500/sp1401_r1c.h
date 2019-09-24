@@ -239,10 +239,20 @@ public:
     int32_t set_rx_lo1_reg(uint32_t data);
     int32_t det_rx_lo1_lock(bool &lock);
     int32_t set_rx_att_019_sw(sp_rd::sp1401::rx_att_019_t att);
+
     virtual int32_t set_rx_att1(double att);
+    virtual int32_t set_rx_att1(float att) { return set_rx_att1(double(att)); }
+
     virtual int32_t set_rx_att2(double att);
+    virtual int32_t set_rx_att2(float att) { return set_rx_att2(double(att)); }
+
     int32_t set_rx_att3(double att);
+    int32_t set_rx_att3(float att) { return set_rx_att3(double(att)); }
+
+    int32_t set_rx_att(const rx_ref_table_r1cd::rx_state_m_t &data);
     virtual int32_t set_rx_att(double att1,double att2,double att3);
+    virtual int32_t set_rx_att(float att1,float att2,float att3)
+    { return set_rx_att(double(att1),double(att2),double(att3)); }
 
     // 0 : RX LO2 // 1 : RX LNA // 2 : RX LO1 // 3 : RX PA1
     // 4 : TX LO2 // 5 : TX LO1 // 6 : TX PA4 // 7 : TX PA3

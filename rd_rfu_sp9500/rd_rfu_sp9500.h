@@ -120,6 +120,8 @@ RD_API int32_t RF_GetMeasResult(uint32_t RFIndex,float &Power,float &Crest);
 
 RD_API int32_t RF_WarningInfo(uint32_t RFIndex,uint32_t &State);
 RD_API int32_t RF_GetTemperature(uint32_t RFIndex,double &TxTemperature,double &RxTemperature);
+RD_API int32_t RF_GetCalTemperature(uint32_t RFIndex,double &Temperature);
+RD_API int32_t RF_SetFans(uint32_t Speed);
 
 #if defined(__cplusplus) || defined(__cplusplus__)
 }

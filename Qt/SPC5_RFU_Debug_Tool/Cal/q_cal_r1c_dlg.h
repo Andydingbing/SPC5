@@ -17,6 +17,7 @@ class QCalR1CDlg : public QWidget, public QAttachThreadDlg
 public:
     basic_sp1401 *SP1401;
     sp2401_r1a *SP2401;
+    sp3301 *SP3301;
     QTxTroubleShootModel *modelTxTS;
     QRxTroubleShootModel *modelRxTS;
 
