@@ -45,6 +45,7 @@ int32_t sp2401_r1a::open_board(vi_pci_dev *k7, vi_pci_dev *s6)
             Log.set_last_err("ADF4351 of DAC unlocked\n");
             Log.stdprintf(Log.last_err());
         }
+        INT_CHECK(da_reset());
         INT_CHECK(clock_of_ad_ld(lock));
         if (lock == false) {
             Log.set_last_err("ADF4351 of ADC unlocked\n");

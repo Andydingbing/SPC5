@@ -239,8 +239,8 @@ void QCalR1CRXAttThread::checkIt(io_mode_t mode)
             msleep(50);
 
             getADS5474(SP1401,ad);
-            ad = dBc2ad(ad,pwrIn - ref);
-            pwr = ref + ad2dBc(_0dBFS,ad);
+            ad = dBc_to_ad(ad,pwrIn - ref);
+            pwr = ref + ad_to_dBc(_0dBFS,ad);
             data.pwr[j] = pwr;
 
             res = abs(pwr - ref) <= spec::cal_rx_pwr_accuracy();
@@ -328,7 +328,7 @@ void QCalR1CRXAttThread::calOneSec(io_mode_t mode, quint64 freq, qint32 refStar,
     getADS5474(SP1401,adBase);
 
     if (refStar < 10) {
-        adBase = dBc2ad(adBase,sgPwrTarget - (refStar + 1)) + offsetBase;
+        adBase = dBc_to_ad(adBase,sgPwrTarget - (refStar + 1)) + offsetBase;
     }
 
     for (qint32 ref = refStar;ref >= refStop;ref += R1C_RX_REF_STEP) {
@@ -342,7 +342,7 @@ void QCalR1CRXAttThread::calOneSec(io_mode_t mode, quint64 freq, qint32 refStar,
 
         setRXState(state);
         getADS5474(SP1401,ad);
-        offset = adBase - dBc2ad(ad,double(sgPwrTarget - ref));
+        offset = adBase - dBc_to_ad(ad,sgPwrTarget - ref);
 
         if (mode == OUTPUT) {
             dataOP.offset[attIdx] = offset;

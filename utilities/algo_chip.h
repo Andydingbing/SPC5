@@ -19,6 +19,15 @@
 #include "rd.h"
 #include "reg_def.h"
 
+// HMC624
+namespace ns_hmc624 {
+
+RD_INLINE void att(double *x)
+{ *x = (int32_t(*x * 10) / 5) * 5 / 10.0; }
+
+} // ns_hmc624
+
+
 // ADI ADF5355
 namespace ns_adf5355 {
 

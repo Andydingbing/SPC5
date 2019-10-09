@@ -1,6 +1,7 @@
 #include "q_test_freq_res_thread.h"
 #include "q_model_freq_res.h"
 #include "algorithm.h"
+#include "algo_math.h"
 #include "spec.h"
 
 void QTestR1CFreqResThread::run()
@@ -261,7 +262,7 @@ void QTestR1CFreqResThread::sweepRX()
             msleep(200);
 
             getADS5474(SP1401,ad,1);
-            data.pwr = ad2dBc(_0dBFS,ad);
+            data.pwr = ad_to_dBc(_0dBFS,ad);
 
             if (i == 0) {
                 pwrBefore = data.pwr;

@@ -322,7 +322,7 @@ void QCalR1CTXLOLeakThread::calUseLoop(qint16 &dc_i_m, qint16 &dc_q_m,double &pw
         memset(adLOL,0,sizeof(adLOL));
         adMin = getMinDCOffsetQ_Rx(step,2,&dc_q_l,&dc_q_r,&dc_i_m,&dc_q_m,adLOL);
     }
-    pwrLOL = ad2dBc(_0dBFS,adMin);
+    pwrLOL = ad_to_dBc(_0dBFS,adMin);
 }
 
 double QCalR1CTXLOLeakThread::slopeI_SA(qint16 dc_i_m, qint16 dc_q_m, qint16 delta, double &pwr)

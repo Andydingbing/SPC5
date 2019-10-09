@@ -1,11 +1,12 @@
 #include "q_model_rx_ref.h"
 #include <QPointF>
 #include "algorithm.h"
+#include "algo_math.h"
 
 QPointF QwtRXRefData::sample(size_t i) const
 {
     double freq = (*(iter + i)).freq / 1000000.0;
-    double offset = ad2dBc(_0dBFS,_0dBFS + (*(iter + i)).state[refIdx].ad_offset);
+    double offset = ad_to_dBc(_0dBFS,_0dBFS + (*(iter + i)).state[refIdx].ad_offset);
     return QPointF(freq,offset);
 }
 

@@ -8,6 +8,7 @@
 #include "q_model_rx_att.h"
 #include "q_model_rx_filter_offset.h"
 #include "algorithm.h"
+#include "algo_math.h"
 #include "spec.h"
 
 void QCalR1CTXLOLeakDlg::init()
@@ -785,7 +786,7 @@ void QCalR1CRXRefDlg::getset()
 
     qint64 ad = 0;
     getADS5474(SP1401,ad,AVERAGE_TIMES);
-    pwr = ad2dBc(_0dBFS,ad) + ref;
+    pwr = ad_to_dBc(_0dBFS,ad) + ref;
     ui->lineEditPowerNB->setText(QString("%1").arg(pwr));
 
     ui->lineEditAtt1->setText(QString("%1").arg(rxState.att1));

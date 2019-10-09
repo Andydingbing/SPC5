@@ -1,6 +1,7 @@
 #include "q_cal_r1c_rx_filter_offset_thread.h"
 #include "q_model_rx_filter_offset.h"
 #include "algorithm.h"
+#include "algo_math.h"
 
 void QCalR1CRXFilterOffsetThread::run()
 {
@@ -85,7 +86,7 @@ void QCalR1CRXFilterOffsetThread::run()
             msleep(50);
 
             getADS5474(DYNAMIC_SP1401_R1CE_CAL,ad[1]);
-            data.offset[j] = _0dBFS - dBc2ad(_0dBFS,ad2dBc(ad[1],ad[0]));
+            data.offset[j] = _0dBFS - dBc_to_ad(_0dBFS,ad_to_dBc(ad[1],ad[0]));
         }
 
         data.freq = freq;

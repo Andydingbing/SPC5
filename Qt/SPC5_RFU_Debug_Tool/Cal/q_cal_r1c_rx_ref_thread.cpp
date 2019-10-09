@@ -1,6 +1,8 @@
 #include "q_cal_r1c_rx_ref_thread.h"
 #include "q_model_rx_ref.h"
 #include "algorithm.h"
+#include "algo_math.h"
+#include "algo_chip.h"
 #include "spec.h"
 
 void QCalR1CRXRefThread::run()
@@ -212,8 +214,8 @@ void QCalR1CRXRefThread::checkIt(io_mode_t mode)
             ajustSG(freq,ref - rx_ref_table_r1cd::cal_rollback(RFVer));
 
             getADS5474(SP1401,ad);
-            ad = dBc2ad(ad,-1.0 * rx_ref_table_r1cd::cal_rollback(RFVer));
-            dBc = ad2dBc(_0dBFS,ad);
+            ad = dBc_to_ad(ad,-1.0 * rx_ref_table_r1cd::cal_rollback(RFVer));
+            dBc = ad_to_dBc(_0dBFS,ad);
 
             if (mode == OUTPUT) {
                 data.pwr_op[j] = ref + dBc;
@@ -265,8 +267,8 @@ void QCalR1CRXRefThread::tuning(double &att1, double &att2, double &att3)
     quint32 count = 0;
 
     getADS5474(SP1401,ad,AVERAGE_TIMES);
-    ad = dBc2ad(ad,-1.0 * rx_ref_table_r1cd::cal_rollback(RFVer));
-    dBc = ad2dBc(_0dBFS,ad);
+    ad = dBc_to_ad(ad,-1.0 * rx_ref_table_r1cd::cal_rollback(RFVer));
+    dBc = ad_to_dBc(_0dBFS,ad);
 
     while (abs(dBc) > 0.3) {
         if (-dBc > *att__2) {
@@ -278,8 +280,8 @@ void QCalR1CRXRefThread::tuning(double &att1, double &att2, double &att3)
         }
         *att__2 = *att__2 < 0.0  ? 0.0  : *att__2;
         *att__2 = *att__2 > 31.5 ? 31.5 : *att__2;
-        hmc624(att__1);
-        hmc624(att__2);
+        ns_hmc624::att(att__1);
+        ns_hmc624::att(att__2);
 
         if (RFVer == R1C || RFVer == R1D || RFVer == R1E) {
             SP1401->set_rx_att2(att2);
@@ -292,8 +294,8 @@ void QCalR1CRXRefThread::tuning(double &att1, double &att2, double &att3)
         msleep(10);
 
         getADS5474(SP1401,ad,AVERAGE_TIMES);
-        ad = dBc2ad(ad,-1.0 * rx_ref_table_r1cd::cal_rollback(RFVer));
-        dBc = ad2dBc(_0dBFS,ad);
+        ad = dBc_to_ad(ad,-1.0 * rx_ref_table_r1cd::cal_rollback(RFVer));
+        dBc = ad_to_dBc(_0dBFS,ad);
 
         if (++count > 10) {
             break;

@@ -5,13 +5,6 @@
 #include <stdio.h>
 #include <cmath>
 
-double RD_API ad2dBc(int64_t x,int64_t x1);
-double RD_API ad2dBc(double x,double x1);
-float RD_API ad2dBc(float x,float x1);
-
-int64_t RD_API dBc2ad(int64_t x,double dBc);
-void RD_API hmc624(double *x);
-
 template <class T_freq,class T_data>
 RD_INLINE void linear(T_freq x1,T_data y1,T_freq x2,T_data y2,T_freq x,T_data &y)
 {
@@ -48,8 +41,6 @@ void discretept(T_x x,int64_t step,T_x &x1,T_x &x2)
 }
 
 //unsigned __int64 get_cycle_count();
-
-int32_t RD_API radix_chg(int32_t dec,char *result,int32_t radix);
 
 uint32_t RD_API adf5355para2reg0(uint32_t _int,uint32_t prescaler,uint32_t autocal);
 uint32_t RD_API adf5355para2reg1(uint32_t _frac1);
@@ -102,25 +93,6 @@ void RD_API sort_bubble(double *x,int32_t n);
 //bubble sort,2 dimension,both x,y ascend mode
 //if x has "3.0,3.0.3.0",and mapped y "6.0,5.0,4.0",the output y will be "4.0,5.0,6.0"
 void RD_API sort_bubble(double *x,double *y,int32_t n);
-
-//sum of cross multiply array a and b
-//a[0]*b[n] + a[1]*b[n-1] + a[2]*b[n-2] + ... + a[n]*b[0]
-double RD_API sumxmul(double *a,double *b,int32_t n);
-
-//convolution and polynomial multiplication
-//a : e.g. 1.0,2.0,3.0
-//m : e.g. 2
-//b : e.g. 5.0,6.0,7.0,8.0,9.0
-//n : e.g. 4
-//(1.0 + 2.0*x * 3.0*x^2) * (5.0 + 6.0*x + 7.0*x^2 + 8.0*x^3 + 9.0*x^4),coef will store coef
-int32_t RD_API conv(double *a,int32_t m,double *b,int32_t n,double *coef);
-
-//lagrange interpolation
-//x : e.g. 4.0, 5.0, 6.0
-//y : e.g. 10.0,5.25,1.0 ---> f(4.0) = 10.0; f(5.0) = 5.25; f(6.0) = 1
-//n : e.g. 3
-//lagrange will make an function such as f(x) = a + b*x + c*x^2,and coef will store a,b,c
-int32_t RD_API lagrange(double *x,double *y,int32_t n,double *coef);
 
 //as shown before,pout will be something like "f(x)= a + b*x + c*x^2 + d*x^3 + e*x^4";
 int32_t RD_API coef2polynomial(double *coef,int32_t n,char *pout);

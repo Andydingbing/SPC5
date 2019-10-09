@@ -1,10 +1,11 @@
 #include "q_model_rx_filter_offset.h"
 #include "algorithm.h"
+#include "algo_math.h"
 
 QPointF QwtRXFilterOffsetData::sample(size_t i) const
 {
     double freq = (*(iter + i)).freq / 1000000.0;
-    double offset = ad2dBc(_0dBFS - (*(iter + i)).offset[offsetIdx],_0dBFS);
+    double offset = ad_to_dBc(_0dBFS - (*(iter + i)).offset[offsetIdx],_0dBFS);
     return QPointF(freq,offset);
 }
 

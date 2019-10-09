@@ -1,6 +1,7 @@
 #include "q_model_rx_att.h"
 #include <QPointF>
 #include "algorithm.h"
+#include "algo_math.h"
 
 // QwtRxAttOPData
 QwtRxAttOPData::QwtRxAttOPData() :
@@ -24,7 +25,7 @@ size_t QwtRxAttOPData::size() const
 QPointF QwtRxAttOPData::sample(size_t i) const
 {
     double freq = (*(iter + i)).freq / 1000000.0;
-    double offset = ad2dBc(_0dBFS,_0dBFS - (*(iter + i)).offset[attIdx]);
+    double offset = ad_to_dBc(_0dBFS,_0dBFS - (*(iter + i)).offset[attIdx]);
     return QPointF(freq,offset);
 }
 
@@ -60,7 +61,7 @@ size_t QwtRxAttIOData::size() const
 QPointF QwtRxAttIOData::sample(size_t i) const
 {
     double freq = (*(iter + i)).freq / 1000000.0;
-    double offset = ad2dBc(_0dBFS,_0dBFS - (*(iter + i)).offset[attIdx]);
+    double offset = ad_to_dBc(_0dBFS,_0dBFS - (*(iter + i)).offset[attIdx]);
     return QPointF(freq,offset);
 }
 

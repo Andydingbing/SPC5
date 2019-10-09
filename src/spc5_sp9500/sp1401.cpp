@@ -394,7 +394,7 @@ int32_t basic_sp1401::is_pwr_meas_timeout(bool &timeout)
 int32_t basic_sp1401::set_pwr_meas_trig_threshold(double if_pwr)
 {
     RFU_K7_REG_DECLARE_2(0x1068,0x1098);
-    RFU_K7_REG_2(0x1068,0x1098).threshold = unsigned(dBc2ad(_0dBFS,-1 * if_pwr));
+    RFU_K7_REG_2(0x1068,0x1098).threshold = unsigned(dBc_to_ad(_0dBFS,-1 * if_pwr));
     RFU_K7_W_2(0x1068,0x1098);
     return 0;
 }
@@ -452,7 +452,7 @@ int32_t basic_sp1401::get_pwr_meas_peak(double &pwr)
 {
     RFU_K7_REG_DECLARE_2(0x1075,0x10a5);
     RFU_K7_R_2(0x1075,0x10a5);
-    pwr = 0.0 + ad2dBc(double(_0dBFS),double(RFU_K7_REG_2(0x1075,0x10a5).iq_sum));
+    pwr = ad_to_dBc(_0dBFS,RFU_K7_REG_2(0x1075,0x10a5).iq_sum);
     return 0;
 }
 
@@ -467,7 +467,7 @@ int32_t basic_sp1401::get_pwr_meas_pwr(double &pwr)
     uint32_t samples = 0;
     get_pwr_meas_samples(samples);
     double iq_sum = (double(iq_sum_l + (iq_sum_h << 32)) / double(samples));
-    pwr = 0.0 + ad2dBc(double(_0dBFS),iq_sum);
+    pwr = ad_to_dBc(_0dBFS,iq_sum);
     return 0;
 }
 

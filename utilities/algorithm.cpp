@@ -14,31 +14,6 @@
 // /*#pragma warning ( pop )*/
 // }
 
-double ad2dBc(int64_t x,int64_t x1)
-{
-    return 10.0 * log10(double(x1) / double(x));
-}
-
-double ad2dBc(double x,double x1)
-{
-    return 10.0 * log10(x1 / x);
-}
-
-float ad2dBc(float x,float x1)
-{
-    return 10.0f * log10(x1 / x);
-}
-
-int64_t dBc2ad(int64_t x,double dBc)
-{
-    return int64_t(pow(10.0,(-1.0 * dBc / 10.0)) * x);
-}
-
-void hmc624(double *x)
-{
-    *x = (int32_t(*x * 10) / 5) * 5 / 10.0;
-}
-
 uint32_t adf5355para2reg0(uint32_t _int,uint32_t prescaler,uint32_t autocal)
 {
     return (0 | (_int << 4) | (prescaler << 20) | (autocal << 21));
@@ -104,29 +79,6 @@ uint32_t adf5355para2reg12(uint32_t resync_clock)
 {
     uint32_t reserved_12 = strtol("000001000001",nullptr,2) << 4;
     return (12 | reserved_12 | (resync_clock << 16));
-}
-
-int32_t radix_chg(int32_t dec,char *result,int32_t radix)
-{
-    int i = 0;
-    while (1) {
-        if (dec / radix) {
-            sprintf(&result[i],"%d",dec % radix);
-            dec /= radix;
-            i ++;
-        }
-        else {
-            sprintf(&result[i],"%d",dec);
-            break;
-        }
-    }
-    char *revert = new char[i + 1];
-    for (int n = 0;n <= i;n ++)
-        revert[n] = result[i - n];
-    for (int n = 0;n <= i;n ++)
-        result[n] = revert[n];
-    delete []revert;
-    return 0;
 }
 
 int32_t ltc2666vol2dac(double vol)
@@ -348,91 +300,6 @@ void sort_bubble(double *x,double *y,int32_t n)
             i += num_y_dup - 1;
         }
     }
-}
-
-double sumxmul(double *a,double *b,int32_t n)
-{
-    double y = 0.0;
-    for (int32_t i = 0;i <= n;i ++)
-        y += a[i] * b[n - i];
-    return y;
-}
-
-int32_t conv(double *a,int32_t m,double *b,int32_t n,double *coef)
-{
-    double *A = nullptr;
-    double *B = nullptr;
-    int32_t M = 0,N = 0;
-    if (m >= n) {
-        A = a;
-        M = m;
-        B = b;
-        N = n;
-    }
-    else {
-        A = b;
-        M = n;
-        B = a;
-        N = m;
-    }
-    for (int32_t i = 0;i <= N;i ++)
-        coef[i] = sumxmul(A,B,i);
-    for (int32_t i = N + 1;i <= M;i ++)
-        coef[i] = sumxmul(A + i - N,B,N);
-    for (int32_t i = M + 1;i <= M + N;i ++)
-        coef[i] = sumxmul(A + i - N,B + i - M,N + M - i);
-    return 0;
-}
-
-int32_t lagrange(double *x,double *y,int32_t n,double *coef)
-{
-    double b[2] = {0.0,1.0};
-    double divider = 1.0;
-    int32_t degree = 0;
-
-    double **l = new double *[n];
-    for (int32_t i = 0;i < n;i ++) {
-        coef[i] = 1.0;
-        l[i] = new double[n];
-        for (int32_t j = 1;j < n;j ++)
-            l[i][j] = 0.0;
-    }
-
-    for (int32_t i = 0;i < n;i ++) {
-        divider = 1.0;
-        degree = 0;
-        for (int32_t j = 0;j < n;j ++)
-            coef[j] = 1.0;
-        for (int32_t j = 0;j < n;j ++) {
-            if (i == j) {
-                b[0] = 1.0;
-                b[1] = 0.0;
-                conv(coef,degree,b,0,l[i]);
-            }
-            else {
-                b[0] = x[j] * -1.0;
-                b[1] = 1.0;
-                divider *= (x[i] - x[j]);
-                conv(coef,degree,b,1,l[i]);
-                degree ++;
-            }
-            memcpy(coef,l[i],n * sizeof(double));
-        }
-        for (int32_t j = 0;j < n;j ++) {
-            l[i][j] /= divider;
-            l[i][j] *= y[i];
-        }
-    }
-    for (int32_t i = 0;i < n;i ++) {
-        coef[i] = 0;
-        for (int32_t j = 0;j < n;j ++)
-            coef[i] += l[j][i];
-    }
-
-    for (int32_t i = 0;i < n;i ++)
-        delete [](l[i]);
-    delete []l;
-    return 0;
 }
 
 int32_t coef2polynomial(double *coef,int32_t n,char *pout)

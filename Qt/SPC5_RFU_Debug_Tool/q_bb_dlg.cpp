@@ -158,7 +158,7 @@ void QBbDlg::on_pushButtonGetADManual_clicked()
     int64_t ad = 0;
     INT_CHECKV(SP1401()->get_ads5474_manual(ad));
     ui->lineEditADManual->setText(QString("%1").arg(ad));
-    ui->lineEditManualPower->setText(QString("%1").arg(round(ad2dBc(_0dBFS,ad),3)));
+    ui->lineEditManualPower->setText(QString("%1").arg(round(ad_to_dBc(_0dBFS,ad),3)));
     ui->lineEditRxPowerComp->setText(QString("%1").arg(_0dBFS - ad));
 }
 

@@ -1,5 +1,6 @@
 #include "rx_ref_table.h"
 #include "algorithm.h"
+#include "algo_math.h"
 
 using namespace sp_rd;
 using namespace sp1401;
@@ -159,7 +160,7 @@ void rx_ref_table_r1ab::get_io(uint64_t freq,double ref,int64_t &ad_0dbfs,int32_
         data_m_m.state_io[i].att1    = data_m_l.state_io[i].att1;
         data_m_m.state_io[i].att2    = data_m_l.state_io[i].att2;
 	}
-    ad_0dbfs = dBc2ad(_0dBFS - data_m_l.state_io[ref_idx_l].ad_offset,ref_l - ref);
+    ad_0dbfs = dBc_to_ad(_0dBFS - data_m_l.state_io[ref_idx_l].ad_offset,ref_l - ref);
     lna_att  = data_m_m.state_io[ref_idx_l].lna_att;
     att1     = double(data_m_m.state_io[ref_idx_l].att1);
     att2     = data_m_m.state_io[ref_idx_l].att2;
@@ -202,7 +203,7 @@ void rx_ref_table_r1ab::get_op(uint64_t freq,double ref,int64_t &ad_0dbfs,int32_
         data_m_m.state_op[i].att2   = data_m_l.state_op[i].att2;
 	}
 	
-    ad_0dbfs = dBc2ad(_0dBFS - data_m_l.state_op[ref_idx_l].ad_offset,ref_l - ref);
+    ad_0dbfs = dBc_to_ad(_0dBFS - data_m_l.state_op[ref_idx_l].ad_offset,ref_l - ref);
     lna_att  = data_m_m.state_op[ref_idx_l].lna_att;
     att1     = double(data_m_m.state_op[ref_idx_l].att1);
     att2     = data_m_m.state_op[ref_idx_l].att2;
@@ -371,11 +372,11 @@ void rx_ref_op_table_r1cd::get_config_table_r1c(int32_t ref,data_m_t data_ref,rx
 	}
 
     if (att1 < 0) {
-        ad_offset += int32_t(_0dBFS - dBc2ad(_0dBFS,-att1));
+        ad_offset += int32_t(_0dBFS - dBc_to_ad(_0dBFS,-att1));
         att1 = 0;
 	}
     if (att2 < 0) {
-        ad_offset += int32_t(_0dBFS - dBc2ad(_0dBFS,-att2));
+        ad_offset += int32_t(_0dBFS - dBc_to_ad(_0dBFS,-att2));
         att2 = 0;
 	}
 
@@ -439,11 +440,11 @@ void rx_ref_op_table_r1cd::get_config_table_r1f(int32_t ref,data_m_t data_ref,rx
     }
 
     if (att1 < 0) {
-        ad_offset += int32_t(_0dBFS - dBc2ad(_0dBFS,-att1));
+        ad_offset += int32_t(_0dBFS - dBc_to_ad(_0dBFS,-att1));
         att1 = 0;
     }
     if (att2 < 0) {
-        ad_offset += int32_t(_0dBFS - dBc2ad(_0dBFS,-att2));
+        ad_offset += int32_t(_0dBFS - dBc_to_ad(_0dBFS,-att2));
         att2 = 0;
     }
 
@@ -612,7 +613,7 @@ void rx_ref_op_table_r1cd::get(hw_ver_t ver,uint64_t freq,double ref,rx_state_m_
     } else if (ver >= R1F) {
         rx_ref_op_table_r1cd::get_config_table_r1f(int32_t(ref_l),data_ref,state);
     }
-    state->ad_offset -= int32_t(dBc2ad(_0dBFS,ref_l - ref)) - _0dBFS;
+    state->ad_offset -= int32_t(dBc_to_ad(_0dBFS,ref_l - ref)) - _0dBFS;
 }
 
 void rx_ref_op_table_r1cd::get(hw_ver_t ver,uint64_t freq,double ref,rx_state_f_t *state,tm *time)
@@ -779,11 +780,11 @@ void rx_ref_io_table_r1cd::get_config_table_r1c(int32_t ref,data_m_t data_ref,rx
 	}
 
     if (att1 < 0) {
-        ad_offset += int32_t(_0dBFS - dBc2ad(_0dBFS,-att1));
+        ad_offset += int32_t(_0dBFS - dBc_to_ad(_0dBFS,-att1));
         att1 = 0;
 	}
     if (att2 < 0) {
-        ad_offset += int32_t(_0dBFS - dBc2ad(_0dBFS,-att2));
+        ad_offset += int32_t(_0dBFS - dBc_to_ad(_0dBFS,-att2));
         att2 = 0;
 	}
 
@@ -845,11 +846,11 @@ void rx_ref_io_table_r1cd::get_config_table_r1f(int32_t ref,data_m_t data_ref,rx
     }
 
     if (att1 < 0) {
-        ad_offset += int32_t(_0dBFS - dBc2ad(_0dBFS,-att1));
+        ad_offset += int32_t(_0dBFS - dBc_to_ad(_0dBFS,-att1));
         att1 = 0;
     }
     if (att2 < 0) {
-        ad_offset += int32_t(_0dBFS - dBc2ad(_0dBFS,-att2));
+        ad_offset += int32_t(_0dBFS - dBc_to_ad(_0dBFS,-att2));
         att2 = 0;
     }
 
@@ -1010,7 +1011,7 @@ void rx_ref_io_table_r1cd::get(hw_ver_t ver,uint64_t freq,double ref,rx_state_m_
     } else if (ver >= R1F) {
         rx_ref_io_table_r1cd::get_config_table_r1f(int32_t(ref_l),data_ref,state);
     }
-    state->ad_offset -= int32_t(dBc2ad(_0dBFS,ref_l - ref)) - _0dBFS;
+    state->ad_offset -= int32_t(dBc_to_ad(_0dBFS,ref_l - ref)) - _0dBFS;
 }
 
 void rx_ref_io_table_r1cd::get(hw_ver_t ver,uint64_t freq,double ref,rx_state_f_t *state,tm *time)

@@ -1,6 +1,7 @@
 #include "q_cal_r1c_tx_pwr_thread.h"
 #include "q_model_tx_pwr.h"
 #include "algorithm.h"
+#include "algo_chip.h"
 #include "spec.h"
 #include "test_data.hpp"
 
@@ -311,8 +312,8 @@ void QCalR1CTXPwrThread::coarseTuning(double target, double &att0, double &att1)
             att0 -= offset;
         }
         att0 = att0 > 20.0 ? 20.0 : att0;
-        hmc624(&att0);
-        hmc624(&att1);
+        ns_hmc624::att(&att0);
+        ns_hmc624::att(&att1);
 
         if (is_rf_ver_between(RFVer,R1C,R1E)) {
             SP1401->set_tx_att0(att0);
