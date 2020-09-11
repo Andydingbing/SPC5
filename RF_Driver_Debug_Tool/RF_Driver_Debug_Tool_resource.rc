@@ -1,6 +1,6 @@
 #include <windows.h>
 
-IDI_ICON1	ICON	DISCARDABLE	"C:\\rd\\RF_Driver_Debug_Tool\\RF_Driver_Debug_Tool.ico"
+IDI_ICON1	ICON	DISCARDABLE	"C:\\msys64\\home\\Andy\\github\\rd\\RF_Driver_Debug_Tool\\RF_Driver_Debug_Tool.ico"
 
 VS_VERSION_INFO VERSIONINFO
 	FILEVERSION 0,0,0,0
