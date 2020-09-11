@@ -2,8 +2,9 @@
 #include <limits>
 #include <string>
 #include <cstdlib>
-#include "algo_math.h"
+#include "algo_math.hpp"
 #include <boost/rational.hpp>
+#include <boost/math/constants/constants.hpp>
 
 // unsigned __int64 get_cycle_count()
 // {
@@ -434,11 +435,12 @@ int32_t spline(double *x,double *y,int32_t n,double *a,double *b,double *c,doubl
     return 0;
 }
 
+
 int32_t sine(double A,double f,double phy,double B,double sr,double *x,double *y,int32_t samples)
 {
     for (int32_t i = 0;i < samples;i ++) {
         x[i] = 1.0 / sr * double(i);
-        y[i] = A * sin(2 * PI * f * x[i] + phy) + B;
+        y[i] = A * sin(2 * boost::math::constants::pi<double>() * f * x[i] + phy) + B;
     }
     return 0;
 }
@@ -447,7 +449,7 @@ int32_t cosine(double A,double f,double phy,double B,double sr,double *x,double 
 {
     for (int32_t i = 0;i < samples;i ++) {
         x[i] = 1.0 / sr * double(i);
-        y[i] = A * cos(2 * PI * f * x[i] + phy) + B;
+        y[i] = A * cos(2 * boost::math::constants::pi<double>() * f * x[i] + phy) + B;
     }
     return 0;
 }

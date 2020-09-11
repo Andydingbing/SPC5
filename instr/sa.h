@@ -3,7 +3,7 @@
 
 #include "gpib_dev.h"
 
-class sa : public sp_rd::gpib_dev
+class sa : public gpib_dev
 {
 public:
     enum det_type_t {

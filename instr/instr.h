@@ -10,7 +10,7 @@
 
 #define Instr instr::instance()
 
-class RD_API instr : sp_rd::noncopyable
+class RD_API instr : boost::noncopyable
 {
 public:
     typedef boost::shared_ptr<sa> sa_sptr;

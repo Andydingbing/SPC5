@@ -21,9 +21,9 @@
 #include <fstream>
 #include <boost/filesystem.hpp>
 
-namespace sp_rd {
+namespace rd {
 
-//! List all test items,value only allowed to accumulate.
+// List all test items,value only allowed to accumulate.
 enum test_item_t : unsigned {
     TI_RF_TX_FREQ_RES,
     TI_IF_TX_FREQ_RES,
@@ -88,7 +88,7 @@ public:
 
         if (!boost::filesystem::exists(_path)) {
             if (!boost::filesystem::create_directory(_path)) {
-                RD_THROW sp_rd::runtime_error("Can't create" + _path);
+                RD_THROW rd::runtime_error("Can't create" + _path);
             }
         }
 
@@ -99,7 +99,7 @@ public:
 
         if (!boost::filesystem::exists(_path)) {
             if (!boost::filesystem::create_directory(_path)) {
-                RD_THROW sp_rd::runtime_error("Can't create" + _path);
+                RD_THROW rd::runtime_error("Can't create" + _path);
             }
         }
 
@@ -108,7 +108,7 @@ public:
 
         if (!boost::filesystem::exists(_path)) {
             if (!boost::filesystem::create_directory(_path)) {
-                RD_THROW sp_rd::runtime_error("Can't create" + _path);
+                RD_THROW rd::runtime_error("Can't create" + _path);
             }
         }
 
@@ -162,7 +162,7 @@ public:
 
     tr_header_t get_header() const
     {
-        std::ifstream stream(_path,std::ios::_Nocreate);
+        std::ifstream stream(_path,std::ios::in | std::ios::out);
         tr_header_t header;
         uint32_t i_item = 0;
 
@@ -203,10 +203,10 @@ public:
 
     void set_header(const tr_header_t &header) const
     {
-        std::ofstream stream(_path,std::ios::_Nocreate);
+        std::ofstream stream(_path,std::ios::in | std::ios::out);
 
         if (!stream.is_open()) {
-            throw sp_rd::runtime_error("Can't read " + _path);
+            throw rd::runtime_error("Can't read " + _path);
         }
 
         stream << header_from(header);
@@ -277,7 +277,7 @@ public:
         if ((iter = _data.find(freq)) != _data.end()) {
             iter->second = each_data;
         } else {
-            _data.insert(std::map<int64_t,data_t>::value_type(freq,each_data));
+            _data.insert(typename std::map<int64_t,data_t>::value_type(freq,each_data));
         }
     }
 
@@ -315,11 +315,11 @@ protected:
         if (!is_file_valid(header)) {
             if (creat) {
                 if (!create(header)) {
-                    throw sp_rd::runtime_error("Can't create/open " + _path);
+                    throw rd::runtime_error("Can't create/open " + _path);
                 }
             }
             if (!is_file_valid(header)) {
-                throw sp_rd::runtime_error("Invalid file : " + _path);
+                throw rd::runtime_error("Invalid file : " + _path);
             }
         }
     }
@@ -361,25 +361,25 @@ protected:
 
     void open_for_read(std::ifstream &stream) const
     {
-        stream.open(_path,std::ios::_Nocreate);
+        stream.open(_path,std::ios::in | std::ios::out);
         if (!stream.is_open()) {
-            throw sp_rd::runtime_error("Can't read " + _path);
+            throw rd::runtime_error("Can't read " + _path);
         }
         stream.seekg(offset_data,std::ios::beg);
         if (stream.bad()) {
-            throw sp_rd::runtime_error("Invalid file : " + _path);
+            throw rd::runtime_error("Invalid file : " + _path);
         }
     }
 
     void open_for_write(std::ofstream &stream) const
     {
-        stream.open(_path,std::ios::_Nocreate);
+        stream.open(_path,std::ios::in | std::ios::out);
         if (!stream.is_open()) {
-            throw sp_rd::runtime_error("Can't Write " + _path);
+            throw rd::runtime_error("Can't Write " + _path);
         }
         stream.seekp(offset_data,std::ios::beg);
         if (stream.bad()) {
-            throw sp_rd::runtime_error("Invalid file : " + _path);
+            throw rd::runtime_error("Invalid file : " + _path);
         }
     }
 
@@ -388,7 +388,7 @@ protected:
         std::stringstream stream;
 
         stream << std::string("SN : ");
-        for (uint32_t i = 0;i < ARRAY_SIZE(tr_header_t::sn);i ++) {
+        for (uint32_t i = 0;i < ARRAY_SIZE(head.sn);i ++) {
             stream << head.sn[i];
         }
         stream << std::endl;
@@ -407,7 +407,7 @@ protected:
                << std::endl;
 
         stream << std::string("Result : ");
-        for (uint32_t i = 0;i < ARRAY_SIZE(tr_header_t::result);i ++) {
+        for (uint32_t i = 0;i < ARRAY_SIZE(head.result);i ++) {
             stream << head.result[i];
         }
         stream << std::endl;
@@ -424,7 +424,7 @@ protected:
     std::map<int64_t,data_t> _data;
 
 private:
-    const uint8_t offset_data = 178;
+    static const uint8_t offset_data = 178;
 };
 
 #define DECL_TEST_REPORT_S(class_name) \
@@ -445,7 +445,7 @@ private: \
 
 #define DECL_TEST_REPORT_E(class_name) };
 
-} // namespace sp_rd
+} // namespace rd
 
 #endif // UTILITIES_TEST_REPORT_HPP
 

@@ -12,11 +12,11 @@
 #include <boost/format.hpp>
 
 using namespace std;
-using namespace sp_rd;
+using namespace rd;
 
 #define INSTR_CHECK(func) \
 {   if (!(func)) { \
-        if (m_en_expt) { throw sp_rd::runtime_error(__FUNCTION__); } \
+        if (m_en_expt) { throw rd::runtime_error(__FUNCTION__); } \
         else { return false; } \
     } \
 }
@@ -85,7 +85,7 @@ bool instr::init()
 
     if (viFindRsrc(vi_pci_dev::get_default_rm(),expr,&find_list,&ret_cnt,des) < VI_SUCCESS) {
         if (m_en_expt) {
-            throw sp_rd::runtime_error("vi find rsrc GPIB?*INSTR");
+            throw rd::runtime_error("vi find rsrc GPIB?*INSTR");
         } else {
             return false;
         }
@@ -122,7 +122,7 @@ bool instr::init()
             if (m_en_expt) {
                 ViChar msg[256] = {0};
                 rsnrpz_error_message(VI_NULL,status,msg);
-                throw sp_rd::runtime_error(msg);
+                throw rd::runtime_error(msg);
             } else {
                 return false;
             }
@@ -141,7 +141,7 @@ bool instr::init()
             if (m_en_expt) {
                 ViChar msg[256] = {0};
                 rsnrpz_error_message(VI_NULL,status,msg);
-                throw sp_rd::runtime_error(msg);
+                throw rd::runtime_error(msg);
             } else {
                 return false;
             }
@@ -211,7 +211,7 @@ bool instr::has_sa()
 {
     if (m_sa == nullptr) {
         if (m_en_expt) {
-            throw sp_rd::runtime_error((m_des_sa.empty() ? "sa" : m_des_sa) + " disconnect");
+            throw rd::runtime_error((m_des_sa.empty() ? "sa" : m_des_sa) + " disconnect");
         } else {
 			return false;
 		}
@@ -223,7 +223,7 @@ bool instr::has_sg()
 {
     if (m_sg == nullptr) {
         if (m_en_expt) {
-            throw sp_rd::runtime_error((m_des_sg.empty() ? "sg" : m_des_sg) + " disconnect");
+            throw rd::runtime_error((m_des_sg.empty() ? "sg" : m_des_sg) + " disconnect");
         } else {
 			return false;
 		}
@@ -235,7 +235,7 @@ bool instr::has_pm()
 {
     if (m_pm == nullptr) {
         if (m_en_expt) {
-            throw sp_rd::runtime_error((m_des_pm.empty() ? "pm" : m_des_pm) + " disconnect");
+            throw rd::runtime_error((m_des_pm.empty() ? "pm" : m_des_pm) + " disconnect");
         } else {
 			return false;
 		}

@@ -20,16 +20,14 @@
 #include <vector>
 #include <string>
 
-namespace sp_rd {
-
-/*!
- * The pure virtual class of all PCI/PCIe devices(vi_pci_dev/wd_pci_dev).
+/*
+ * The pure virtual class of all PCI/PCIe devices.
  * Usage :
  * 1. Call get_devs() to get all avalible devices.
  * 2. Call init() to init the specific device.
  * 3. Then operate I/O from/to the device.
  */
-class RD_API pci_dev : noncopyable
+class RD_API pci_dev : sp_rd::noncopyable
 {
 public:
     enum addr_space_t {
@@ -50,7 +48,7 @@ public:
 	};
 
 public:
-    /*!
+    /*
      * Get all PCI/PCIe devices.
      * If linked to NI_VISA,the string format will be "PXI?::0::INSTR".
      * For more detailed information,please refer to "NI_VISA Documentation".
@@ -58,18 +56,19 @@ public:
     virtual int32_t get_devs(std::vector<std::string> &devs) = 0;
 
     virtual int32_t init(const std::string &dev) = 0;
-    virtual int32_t init(const std::string &dev, uint32_t vid, uint32_t did) = 0;
+    virtual int32_t init(const std::string &dev, uint32_t vid,uint32_t did) = 0;
+    virtual void set_descriptor(const std::string &des) { _descriptor = des; }
     virtual std::string descriptor() const { return _descriptor; }
 
 public:
-    virtual int32_t w8(addr_space_t addr, uint32_t offset, uint8_t data) = 0;
-    virtual int32_t w16(addr_space_t addr, uint32_t offset, uint16_t data) = 0;
-    virtual int32_t w32(addr_space_t addr, uint32_t offset, uint32_t data) = 0;
-    virtual int32_t w32(addr_space_t addr, uint32_t offset, uint32_t len, uint32_t *buf) = 0;
+    virtual int32_t w8(addr_space_t addr,uint32_t offset,uint8_t data) = 0;
+    virtual int32_t w16(addr_space_t addr,uint32_t offset,uint16_t data) = 0;
+    virtual int32_t w32(addr_space_t addr,uint32_t offset,uint32_t data) = 0;
+    virtual int32_t w32(addr_space_t addr,uint32_t offset,uint32_t len,uint32_t *buf) = 0;
 
-    virtual int32_t r8(addr_space_t addr, uint32_t offset, uint8_t *data) = 0;
-    virtual int32_t r16(addr_space_t addr, uint32_t offset, uint16_t *data) = 0;
-    virtual int32_t r32(addr_space_t addr, uint32_t offset, uint32_t *data) = 0;
+    virtual int32_t r8(addr_space_t addr,uint32_t offset,uint8_t *data) = 0;
+    virtual int32_t r16(addr_space_t addr,uint32_t offset,uint16_t *data) = 0;
+    virtual int32_t r32(addr_space_t addr,uint32_t offset,uint32_t *data) = 0;
 
 public:
     virtual ~pci_dev(void) {}
@@ -78,6 +77,31 @@ protected:
     std::string _descriptor;
 };
 
-} // namespace sp_rd
+
+/*
+ * The pure virtual class of memory IO with PCI/PCIe device.
+ */
+class RD_API mem_io : public sp_rd::noncopyable
+{
+public:
+    mem_io() { _addr = nullptr; }
+    virtual ~mem_io() {}
+
+public:
+    virtual int32_t allocate(uint32_t size) = 0;
+    virtual int32_t release() = 0;
+    void* addr() { return _addr; }
+
+public:
+    virtual int32_t w8(uint8_t *buf,uint32_t size) = 0;
+    virtual int32_t w16(uint16_t *buf,uint32_t size) = 0;
+    virtual int32_t w32(uint32_t *buf,uint32_t size) = 0;
+    virtual int32_t r8(uint8_t *buf,uint32_t size) = 0;
+    virtual int32_t r16(uint16_t *buf,uint32_t size) = 0;
+    virtual int32_t r32(uint32_t *buf,uint32_t size) = 0;
+
+protected:
+    void* _addr; // The virtual/physical address after align
+};
 
 #endif // BD_PCI_DEV_H

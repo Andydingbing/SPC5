@@ -16,7 +16,7 @@
 #ifndef RD_UTILITIES_UTILITIES_HPP
 #define RD_UTILITIES_UTILITIES_HPP
 
-#include "rd.h"
+#include "integers.hpp"
 #include <string>
 #include <boost/format.hpp>
 
@@ -60,8 +60,9 @@ std::string size_abbrev_from(const T &freq)
     fmt % freq_copy;
     str += fmt.str();
 
-    if (unit != '\0')
+    if (unit != '\0') {
         str += unit;
+    }
 
     return str;
 }
@@ -81,10 +82,58 @@ MAKE_FUNC_SIZE_ABBREV_FROM_(uint32_t)
 MAKE_FUNC_SIZE_ABBREV_FROM_(uint64_t)
 
 
-template <typename T>
-bool is_even(T value)
+template<typename int_t,typename traits_type = traits_int<int_t>>
+RD_INLINE bool is_even(int_t value)
 {
-    return value & 1 == 0;
+    return (value & 1) == 0;
+}
+
+template<typename str_t,typename int_t,typename container_t,typename traits_type = traits_int<int_t>>
+str_t string_of(const container_t &in,const str_t &separator)
+{
+    str_t str;
+    typename container_t::const_iterator iter;
+    boost::format fmt("%d");
+
+    for (iter = in.begin();iter != in.end();++iter) {
+        fmt % (*iter);
+        str += fmt.str().c_str();
+        str += separator;
+    }
+    return str;
+}
+
+// std::vector<>,std::list<>...
+template<typename str_t,typename int_t,
+template<typename T_p = int_t,typename allocator_t = std::allocator<T_p>> class container_t,
+typename traits_type = traits_int<int_t>>
+str_t string_of(const container_t<int_t> &in,const str_t &separator)
+{ return string_of<str_t,int_t,container_t<int_t>>(in,separator); }
+
+// QVector...
+template<typename str_t,typename int_t,
+template<typename T_p = int_t> class container_t,
+typename traits_type = traits_int<int_t>>
+str_t string_of(const container_t<int_t> &in,const str_t &separator)
+{ return string_of<str_t,int_t,container_t<int_t>>(in,separator); }
+
+
+void string_to_container(const std::string &str,const char separator,std::vector<int16_t> &out)
+{
+    std::string each_str;
+    int16_t each_int = 0;
+
+    for (size_t i = 0;i < str.length();++i) {
+        if (str[i] == separator) {
+            integers::normal_notation(each_str,each_int);
+            out.push_back(each_int);
+
+//            ++i;
+            each_str.clear();
+        } else {
+            each_str.push_back(str[i]);
+        }
+    }
 }
 
 #endif // RD_UTILITIES_UTILITIES_HPP

@@ -21,7 +21,22 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 
-namespace sp_rd {
+// Test/Cal Report spport.These may throw runtime_exception.
+#define DECL_PREPARE_TR(r,name,item_t) \
+public: \
+    void prepare_##r_##name() { \
+        tr_header_t header; \
+        get_sn_major(header.sn); \
+        header.item = item_t; \
+        header.size = sizeof(name##_data); \
+        if (_##r_##name == nullptr) { \
+            _##r_##name = boost::make_shared<name>(#name,&header,true); \
+        } \
+    } \
+    name *##r_##name() const { return _##r_##name.get(); } \
+protected: boost::shared_ptr<name> _##r_##name;
+
+namespace rd {
 
 struct test_common_data
 {
@@ -40,8 +55,14 @@ struct test_common_data
 
     test_common_data() :
         year(2000),month(1),day(1),
-        hour(0),minute(0),second(0),
-        _result("Fail") {}
+        hour(0),minute(0),second(0)
+    {
+        _result[0] = 'F';
+        _result[1] = 'a';
+        _result[2] = 'i';
+        _result[3] = 'l';
+        _result[4] = '\0';
+    }
 
     std::string time() const
     {
@@ -57,12 +78,12 @@ struct test_common_data
     {
         RD_ASSERT_THROW(time.length() == 19);
 
-        year = normal_notation_string_to_uint16_t(time.substr(0,4));
-        month = normal_notation_string_to_uint16_t(time.substr(5,7));
-        day = normal_notation_string_to_uint16_t(time.substr(8,10));
-        hour = normal_notation_string_to_uint16_t(time.substr(11,13));
-        minute = normal_notation_string_to_uint16_t(time.substr(14,16));
-        second = normal_notation_string_to_uint16_t(time.substr(17,19));
+        floating_point_numbers::normal_notation(time.substr(0,4),year);
+        floating_point_numbers::normal_notation(time.substr(5,7),month);
+        floating_point_numbers::normal_notation(time.substr(8,10),day);
+        floating_point_numbers::normal_notation(time.substr(11,13),hour);
+        floating_point_numbers::normal_notation(time.substr(14,16),minute);
+        floating_point_numbers::normal_notation(time.substr(17,19),second);
     }
 
     void set_time()
@@ -213,7 +234,7 @@ struct tx_noise_floor_test_data : test_common_data
         std::string str;
         boost::format fmt("%-10.2f");
         fmt % noise_floor[0]; str += "@10dBm: " + fmt.str();
-        fmt % noise_floor[1]; str += "@-30dBm: " + fmt.str();
+        fmt % noise_floor[1]; str += "@-40dBm: " + fmt.str();
         str += (boost::format("%10s%25s") % _result % time()).str();
         return str;
     }
@@ -660,7 +681,7 @@ void map_from(std::ifstream &stream, const tr_header_t &header)
 DECL_TEST_REPORT_E(rx_ref_cal)
 
 
-} // namespace sp_rd
+} // namespace rd
 
 #endif // UTILITIES_TEST_DATA_HPP
 

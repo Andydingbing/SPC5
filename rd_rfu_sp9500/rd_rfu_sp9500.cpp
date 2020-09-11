@@ -1,15 +1,18 @@
+#include "rd_rfu_sp9500.h"
 #include "liblog.h"
 #include "sp3301.h"
 #include "sp3501.h"
 #include "reg_def.h"
-#include "dsp_buf.h"
-#include "gen_ini_file.h"
-#include "rd_rfu_sp9500.h"
+#include "complex_sequence.h"
+#include "gen_ini_file.inline.hpp"
+#include "algo_math.inline.hpp"
+#include "algo_chip_pll.inl.hpp"
 #include <vector>
 
 using namespace std;
-using namespace sp_rd;
-using namespace sp_rd::sp1401;
+using namespace rd;
+using namespace rd::ns_sp9500;
+using namespace rd::ns_sp1401;
 
 typedef struct available_rf_board_t {
     sp3301  *m_sp3301; // The RFU
@@ -55,9 +58,10 @@ int32_t RF_Boot()
 {
     Log.en(log_t::RD_LOG_ALL_OFF, true);
     Log.en(log_t::RD_LOG_PROMPT, true);
+
     g_rf_board.clear();
     available_rf_board_t rf_board;
-    sp3301::active_t RfuActiveInfo[MAX_RFU];
+    sp3301::active_t RfuActiveInfo[g_max_rfu];
 
     SP3301_2.boot();
     SP3301_3.boot();
@@ -75,14 +79,14 @@ int32_t RF_Boot()
     RfuActiveInfo[2] = SP3301_2.is_actived();
     RfuActiveInfo[3] = SP3301_3.is_actived();
 
-    for (int i = MAX_RF - 1;i >= 0;i --) {
+    for (int i = g_max_rf - 1;i >= 0;i --) {
         if (RfuActiveInfo[2].sp1401[i]) {
             rf_board.m_sp3301 = &SP3301_2;
             rf_board.m_rf_idx = i;
             g_rf_board.push_back(rf_board);
         }
     }
-    for (int i = MAX_RF - 1;i >= 0;i --) {
+    for (int i = g_max_rf - 1;i >= 0;i --) {
         if (RfuActiveInfo[3].sp1401[i]) {
             rf_board.m_sp3301 = &SP3301_3;
             rf_board.m_rf_idx = i;
@@ -95,7 +99,7 @@ int32_t RF_Boot()
 int32_t RF_GetRFUNumber(uint32_t &uiRFUNumber)
 {
     uiRFUNumber = 0;
-    sp3301::rfu_info_t RfuInfo[MAX_RF];
+    sp3301::rfu_info_t RfuInfo[g_max_rf];
     vector<string> strRsrcRfu;
     vector<string>::iterator iterRsrcRfu;
     vi_pci_dev viDev;
@@ -109,8 +113,8 @@ int32_t RF_GetRFUNumber(uint32_t &uiRFUNumber)
 
     gen_ini_file IniFile(CONFIG_FILE_PATH);
 
-    bool bK7_0_Active[MAX_RFU],bK7_1_Active[MAX_RFU],bS6_Active[MAX_RFU];
-    for (int32_t i = 0;i < MAX_RFU;i ++) {
+    bool bK7_0_Active[g_max_rfu],bK7_1_Active[g_max_rfu],bS6_Active[g_max_rfu];
+    for (int32_t i = 0;i < g_max_rfu;i ++) {
         bK7_0_Active[i] = false;
         bK7_1_Active[i] = false;
         bS6_Active[i] = false;
@@ -119,23 +123,23 @@ int32_t RF_GetRFUNumber(uint32_t &uiRFUNumber)
     IniFile.get_config_str_value("Product Form","Form",szProductForm);
     strcpy(szRsrcSection,"RESOURCE");
     strcat(szRsrcSection,szProductForm);
-    for (int32_t i = 0;i < MAX_RFU;i ++) {
+    for (int32_t i = 0;i < g_max_rfu;i ++) {
         sprintf(szDevKey,"RFU%d_K7_0",i);
-        IniFile.get_config_str_value(szRsrcSection,szDevKey,RfuInfo[i].rsrc_name.k7_0);
+        IniFile.get_config_str_value(szRsrcSection,szDevKey,RfuInfo[i].k7_0);
         sprintf(szDevKey,"RFU%d_K7_1",i);
-        IniFile.get_config_str_value(szRsrcSection,szDevKey,RfuInfo[i].rsrc_name.k7_1);
+        IniFile.get_config_str_value(szRsrcSection,szDevKey,RfuInfo[i].k7_1);
         sprintf(szDevKey,"RFU%d_S6",i);
-        IniFile.get_config_str_value(szRsrcSection,szDevKey,RfuInfo[i].rsrc_name.s6);
+        IniFile.get_config_str_value(szRsrcSection,szDevKey,RfuInfo[i].s6);
     }
 
     viDev.get_devs(strRsrcRfu);
-    for (int32_t i = 0;i < MAX_RFU;i ++) {
+    for (int32_t i = 0;i < g_max_rfu;i ++) {
         for (iterRsrcRfu = strRsrcRfu.begin();iterRsrcRfu != strRsrcRfu.end();iterRsrcRfu ++ ) {
-            if (0 == strcmp(RfuInfo[i].rsrc_name.k7_0,iterRsrcRfu->c_str()))
+            if (0 == strcmp(RfuInfo[i].k7_0,iterRsrcRfu->c_str()))
                 bK7_0_Active[i] = true;
-            if (0 == strcmp(RfuInfo[i].rsrc_name.k7_1,iterRsrcRfu->c_str()))
+            if (0 == strcmp(RfuInfo[i].k7_1,iterRsrcRfu->c_str()))
                 bK7_1_Active[i] = true;
-            if (0 == strcmp(RfuInfo[i].rsrc_name.s6,iterRsrcRfu->c_str()))
+            if (0 == strcmp(RfuInfo[i].s6,iterRsrcRfu->c_str()))
                 bS6_Active[i] = true;
         }
         if (bK7_0_Active[i] == true || bK7_1_Active[i] == true || bS6_Active[i] == true) {
@@ -215,12 +219,12 @@ int32_t RF_SetTxSource(uint32_t RFIndex,SOURCE Source)
 {
     DECL_DYNAMIC_SP3301;
     sp2401_r1a::da_src_t TxSrc = sp2401_r1a::INTER_FILTER;
-    basic_sp1401::iq_cap_src_t ddr_src = basic_sp1401::PWR_MEAS_FREE_RUN;
+    sp1401::iq_cap_src_t ddr_src = sp1401::PWR_MEAS_FREE_RUN;
 
     switch (Source) {
         case ARB  : {
             TxSrc = sp2401_r1a::DRIVER_ARB;
-            ddr_src = basic_sp1401::PWR_MEAS_FREE_RUN;
+            ddr_src = sp1401::PWR_MEAS_FREE_RUN;
             INT_CHECK(SP3301->set_iq_cap_trig_src(rf_idx,ddr_src));
             INT_CHECK(SP3301->set_iq_cap_trig_src(brother_idx(rf_idx),ddr_src));
             break;
@@ -299,11 +303,11 @@ int32_t RF_GetRxFrequency(uint32_t RFIndex,uint64_t &Freq)
 int32_t RF_SetConnector(uint32_t RFIndex,CONNECTOR Connector)
 {
     DECL_DYNAMIC_SP3301;
-    io_mode_t Mode = sp1401::OUTPUT;
+    io_mode_t Mode = rd::OUTPUT;
     switch (Connector) {
-        case ::IO     : {Mode = sp1401::IO;break;}
-        case ::OUTPUT : {Mode = sp1401::OUTPUT;break;}
-        case ::LOOP   : {Mode = sp1401::LOOP;break;}
+        case ::IO     : {Mode = rd::IO;break;}
+        case ::OUTPUT : {Mode = rd::OUTPUT;break;}
+        case ::LOOP   : {Mode = rd::LOOP;break;}
         default:break;
     }
     INT_CHECK(SP3301->rf_set_io_mode(rf_idx,Mode));
@@ -323,10 +327,10 @@ int32_t RF_SetTriggerSource(uint32_t RFIndex,RFU_TRIGGERSOURCE TriggerSource)
 int32_t RF_SetTriggerMode(uint32_t RFIndex,TRIGGERMODE TriggerMode)
 {
     DECL_DYNAMIC_SP3301;
-    basic_sp1401::iq_cap_src_t MeasSrc = basic_sp1401::PWR_MEAS_FREE_RUN;
+    sp1401::iq_cap_src_t MeasSrc = sp1401::PWR_MEAS_FREE_RUN;
     switch (TriggerMode) {
-        case IF		 : {MeasSrc = basic_sp1401::PWR_MEAS_IF_PWR;break;}
-        case FREERUN : {MeasSrc = basic_sp1401::PWR_MEAS_FREE_RUN;break;}
+        case IF		 : {MeasSrc = sp1401::PWR_MEAS_IF_PWR;break;}
+        case FREERUN : {MeasSrc = sp1401::PWR_MEAS_FREE_RUN;break;}
         case MARKER  : {break;}
         default:break;
     }
@@ -365,14 +369,14 @@ int32_t RF_GetMeasProcess(uint32_t RFIndex,PROCESS &Process)
 {
     DECL_DYNAMIC_SP3301;
     Process = IDLE_Driver;
-    basic_sp1401::pwr_meas_state_t MeasState = basic_sp1401::PMS_IDLE;
+    sp1401::pwr_meas_state_t MeasState = sp1401::PMS_IDLE;
     INT_CHECK(SP3301->rf_get_pwr_meas_proc(rf_idx,MeasState));
     switch (MeasState) {
-        case basic_sp1401::PMS_IDLE     : {Process = IDLE_Driver;break;}
-        case basic_sp1401::PMS_WFT      : {Process = WFTrigger_Driver;break;}
-        case basic_sp1401::PMS_TT       : {Process = Timeout_Driver;break;}
-        case basic_sp1401::PMS_RUNNING  : {Process = RUNNING_Driver;break;}
-        case basic_sp1401::PMS_DONE     : {Process = DONE_Driver;break;}
+        case sp1401::PMS_IDLE     : {Process = IDLE_Driver;break;}
+        case sp1401::PMS_WFT      : {Process = WFTrigger_Driver;break;}
+        case sp1401::PMS_TT       : {Process = Timeout_Driver;break;}
+        case sp1401::PMS_RUNNING  : {Process = RUNNING_Driver;break;}
+        case sp1401::PMS_DONE     : {Process = DONE_Driver;break;}
         default:break;
     }
     return 0;
@@ -480,7 +484,6 @@ int32_t RF_GetTemperature(uint32_t RFIndex,double &TxTemperature,double &RxTempe
     return 0;
 }
 
-// This is mother fucking stupid!
 int32_t RF_GetCalTemperature(uint32_t RFIndex,double &Temperature)
 {
     DECL_DYNAMIC_SP3301
@@ -491,6 +494,29 @@ int32_t RF_GetCalTemperature(uint32_t RFIndex,double &Temperature)
 
 int32_t RF_SetFans(uint32_t Speed)
 {
-    INT_CHECK(SP3501.set_fan(Speed));
+    boost::ignore_unused(Speed);
+
+    double tx_temp = 0.0;
+    double rx_temp = 0.0;
+
+    INT_CHECK(RF_GetTemperature(0,tx_temp,rx_temp));
+
+    if (tx_temp >= 50.0) {
+        INT_CHECK(SP3501.set_fan_group(1,180));
+        INT_CHECK(SP3501.set_fan_group(3,140));
+    } else {
+        INT_CHECK(SP3501.set_fan_group(1,120));
+        INT_CHECK(SP3501.set_fan_group(3,80));
+    }
+
+    return 0;
+}
+
+int32_t RF_CarrierLeakLoopCal(uint32_t RFIndex)
+{
+    DECL_DYNAMIC_SP3301
+
+    SP3301->boot();
+    INT_CHECK(SP3301->rf_carrierleak_loop_cal(rf_idx));
     return 0;
 }

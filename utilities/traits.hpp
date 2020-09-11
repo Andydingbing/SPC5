@@ -18,7 +18,7 @@
 
 #include <boost/rational.hpp>
 
-// float traits
+// floating point numbers
 template <typename T>
 class float_traits;
 
@@ -57,5 +57,36 @@ public:
     static bool equal_0(data_t x) { return x == _0(); }
     static bool equal_1(data_t x) { return x == _1(); }
 };
+
+
+// built in types
+template<typename T> class built_in_traits;
+template<> class built_in_traits<int8_t>   { typedef int8_t   data_t; };
+template<> class built_in_traits<uint8_t>  { typedef uint8_t  data_t; };
+template<> class built_in_traits<int16_t>  { typedef int16_t  data_t; };
+template<> class built_in_traits<uint16_t> { typedef uint16_t data_t; };
+template<> class built_in_traits<int32_t>  { typedef int32_t  data_t; };
+template<> class built_in_traits<uint32_t> { typedef uint32_t data_t; };
+template<> class built_in_traits<int64_t>  { typedef int64_t  data_t; };
+template<> class built_in_traits<uint64_t> { typedef uint64_t data_t; };
+template<> class built_in_traits<float>    { typedef float    data_t; };
+template<> class built_in_traits<double>   { typedef double   data_t; };
+
+// integer types
+template<typename T> class traits_int;
+template<> class traits_int<int8_t>    { typedef int8_t   data_t; };
+template<> class traits_int<uint8_t>   { typedef uint8_t  data_t; };
+template<> class traits_int<int16_t>   { typedef int16_t  data_t; };
+template<> class traits_int<uint16_t>  { typedef uint16_t data_t; };
+template<> class traits_int<int32_t>   { typedef int32_t  data_t; };
+template<> class traits_int<uint32_t>  { typedef uint32_t data_t; };
+template<> class traits_int<int64_t>   { typedef int64_t  data_t; };
+template<> class traits_int<uint64_t>  { typedef uint64_t data_t; };
+
+template<typename T> class traits_uint;
+template<> class traits_uint<uint8_t>  { typedef uint8_t  data_t; };
+template<> class traits_uint<uint16_t> { typedef uint16_t data_t; };
+template<> class traits_uint<uint32_t> { typedef uint32_t data_t; };
+template<> class traits_uint<uint64_t> { typedef uint64_t data_t; };
 
 #endif // RD_UTILITIES_TRAITS_H

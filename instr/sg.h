@@ -3,7 +3,7 @@
 
 #include "gpib_dev.h"
 
-class sg : public sp_rd::gpib_dev
+class sg : public gpib_dev
 {
 public:
     virtual bool reset() = 0;

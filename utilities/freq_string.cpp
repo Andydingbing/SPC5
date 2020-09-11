@@ -31,7 +31,7 @@ uint32_t freq_string_sections(const std::string &str)
         if (pos < length - 1) {
             next = str.at(pos + 1);
             if ((next == ',') || (next == ';')) {
-                RD_THROW sp_rd::syntax_error("Invalid string : \""
+                RD_THROW rd::syntax_error("Invalid string : \""
                                              + str
                                              + "\",with continuously separator.");
             }
@@ -43,7 +43,7 @@ uint32_t freq_string_sections(const std::string &str)
         if (pos < length - 1) {
             next = str.at(pos + 1);
             if ((next == ',') || (next == ';')) {
-                RD_THROW sp_rd::syntax_error("Invalid string : \""
+                RD_THROW rd::syntax_error("Invalid string : \""
                                              + str
                                              + "\",with continuously separator.");
             }
@@ -73,7 +73,7 @@ uint32_t freq_string_sections(const char *str)
         if (size_t(str_temp - str) < length - 1) {
             next = *(str_temp + 1);
             if ((next == ',') || (next == ';')) {
-                RD_THROW sp_rd::syntax_error("Invalid string : \""
+                RD_THROW rd::syntax_error("Invalid string : \""
                                              + std::string(str)
                                              + "\",with continuously separator.");
             }
@@ -87,7 +87,7 @@ uint32_t freq_string_sections(const char *str)
         if (size_t(str_temp - str) < length - 1) {
             next = *(str_temp + 1);
             if ((next == ',') || (next == ';')) {
-                RD_THROW sp_rd::syntax_error("Invalid string : \""
+                RD_THROW rd::syntax_error("Invalid string : \""
                                              + std::string(str)
                                              + "\",with continuously separator.");
             }

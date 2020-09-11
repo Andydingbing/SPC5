@@ -5,8 +5,8 @@
 #include <boost/property_tree/ini_parser.hpp>
 
 using namespace std;
-using namespace sp_rd;
-using namespace sp1401;
+using namespace rd;
+using namespace rd::ns_sp1401;
 using namespace boost;
 using namespace boost::property_tree;
 
@@ -179,18 +179,32 @@ double spec::test_tx_noise_floor(uint64_t freq,double pwr)
     return 0.0;
 }
 
-double spec::cal_tx_lol()
+double spec::cal_tx_lol_up()
 {
     ptree pt;
     read_ini(path(),pt);
-    return pt.get<double>("TX_LOLeakage.LOLeakage");
+    return pt.get<double>("TX_LOLeakage.Up");
 }
 
-double spec::cal_tx_sb()
+double spec::cal_tx_lol_down()
 {
     ptree pt;
     read_ini(path(),pt);
-    return pt.get<double>("TX_Sideband.Sideband");
+    return pt.get<double>("TX_LOLeakage.Down");
+}
+
+double spec::cal_tx_sb_up()
+{
+    ptree pt;
+    read_ini(path(),pt);
+    return pt.get<double>("TX_Sideband.Up");
+}
+
+double spec::cal_tx_sb_down()
+{
+    ptree pt;
+    read_ini(path(),pt);
+    return pt.get<double>("TX_Sideband.Down");
 }
 
 void spec::cal_tx_filter_freq(range_freq_string &freq)
@@ -290,7 +304,7 @@ void spec::cal_rx_pwr_freq(range_freq_string &freq)
     freq.step = pt.get<string>("RX_Power.FreqStep");
 }
 
-void spec::cal_rx_pwr_pwr(const sp1401::io_mode_t mode,range_pwr_string &pwr)
+void spec::cal_rx_pwr_pwr(const io_mode_t mode,range_pwr_string &pwr)
 {
     ptree pt;
     read_ini(path(),pt);

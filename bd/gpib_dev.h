@@ -19,13 +19,11 @@
 #include "rd.h"
 #include <string>
 
-namespace sp_rd {
-
-class RD_API gpib_dev : public noncopyable
+class RD_API gpib_dev : public boost::noncopyable
 {
 public:
     gpib_dev();
-    virtual ~gpib_dev();
+    virtual ~gpib_dev() {}
 
 public:
     virtual int32_t get_default_pri_addr() = 0;
@@ -35,12 +33,10 @@ public:
 public:
     virtual bool init(const std::string &dev);
     virtual bool w(const std::string &scpi) const;
-    virtual bool r(std::string &buf, uint32_t length, uint32_t to = 3000) const;
+    virtual bool r(std::string &buf,uint32_t length,uint32_t to = 3000) const;
 
 private:
     unsigned long _session;
 };
-
-} // namespace sp_rd
 
 #endif // RD_GPIB_DEV_H

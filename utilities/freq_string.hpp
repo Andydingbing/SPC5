@@ -16,16 +16,10 @@
 #ifndef RD_UTILITIES_FREQ_STRING_HPP
 #define RD_UTILITIES_FREQ_STRING_HPP
 
-#include "rd.h"
 #include "exception.hpp"
 #include <vector>
-#include <list>
-#include <sstream>
-#include <regex>
-#include <cmath>
-#include <algorithm>
 #include <boost/format.hpp>
-#include <boost/algorithm/string/trim.hpp>
+#include "floating_point_numbers.hpp"
 
 /*
  *
@@ -78,12 +72,6 @@
  *
  */
 
-typedef struct range_string {
-    std::string star;
-    std::string stop;
-    std::string step;
-} range_freq_string, range_pwr_string, range_temp_string;
-
 template <typename T>
 struct range_freq {
     std::vector<T> freqs;
@@ -123,19 +111,6 @@ struct range_pwr {
 
 typedef range_pwr<float> range_temp;
 
-/*
- * Calculate which sectoin does "freq" in "range".
- * "range" must be valid and "freq" must be in range.
- *
- * e.g.
- * range_freq parsed from range_freq_string :
- * .star = "10M,1G"
- * .stop = "100M,2G"
- * .step = "10M"
- *
- * freq_section(10000000,range) = 0;
- * freq_section(1000000000,range) = 1;
- */
 template <typename T>
 int32_t freq_section(T freq, range_freq<T> &range)
 {
@@ -151,99 +126,6 @@ int32_t freq_section(T freq, range_freq<T> &range)
     return 0;
 }
 
-
-/*
- * Normal notation string to built in types.
- *
- * string ---> int/float/double/int8_t/......
- * "123" ----> 123(int)(u?int8_t)(u?int16_t)(u?int32_t)(u?int64_t)
- * "12.3" ---> 12.3(float)(double)
- * ......
- *
- * Type specialized functions :
- * normal_notation_string_to_int(xxx);
- * normal_notation_string_to_float(xxx);
- * normal_notation_string_to_double(xxx);
- * ......
- */
-template <typename T>
-T normal_notation_string_to_built_in(const std::string &str)
-{
-    T value = T(0);
-    std::stringstream ss(str);
-    ss >> value;
-    return value;
-}
-
-#define IMPL_NORMAL_NOTATION_STRING_TO_(type) \
-RD_INLINE type normal_notation_string_to_##type(const std::string &str) \
-{ return normal_notation_string_to_built_in<type>(str); }
-
-IMPL_NORMAL_NOTATION_STRING_TO_(int)
-IMPL_NORMAL_NOTATION_STRING_TO_(float)
-IMPL_NORMAL_NOTATION_STRING_TO_(double)
-IMPL_NORMAL_NOTATION_STRING_TO_(int8_t)
-IMPL_NORMAL_NOTATION_STRING_TO_(int16_t)
-IMPL_NORMAL_NOTATION_STRING_TO_(int32_t)
-IMPL_NORMAL_NOTATION_STRING_TO_(int64_t)
-IMPL_NORMAL_NOTATION_STRING_TO_(uint8_t)
-IMPL_NORMAL_NOTATION_STRING_TO_(uint16_t)
-IMPL_NORMAL_NOTATION_STRING_TO_(uint32_t)
-IMPL_NORMAL_NOTATION_STRING_TO_(uint64_t)
-
-
-/*
- * Scientific notation string to built in types.
- *
- * string ---> int/float/double/int8_t/......
- * "1e2" ----> 100(int)(u?int8_t)(u?int16_t)(u?int32_t)(u?int64_t)
- * "1E2" ----> 100.0(float)(double)
- * ......
- *
- * Type specialized functions :
- * scientific_notation_string_to_int(xxx);
- * scientific_notation_string_to_float(xxx);
- * scientific_notation_string_to_double(xxx);
- * ......
- */
-template <typename T>
-T scientific_notation_string_to_built_in(const std::string &str)
-{
-    std::string::size_type pos_e = str.find('e');
-    std::string::size_type pos_E = std::string::npos;
-    std::string::size_type pos = pos_e;
-    double base = 0.0;
-    double exponent = 0.0;
-    double value = 0.0;
-    
-    if (pos_e == std::string::npos) {
-        pos_E = str.find('E');
-        pos = pos_E;
-    }
-
-    base = normal_notation_string_to_built_in<double>(str.substr(0,pos));
-    exponent = normal_notation_string_to_built_in<double>(str.substr(pos + 1,str.length()));
-    value = base * pow(10.0,exponent);
-    return T(value);
-}
-
-#define IMPL_SCIENTIFIC_NOTATION_STRING_TO_(type) \
-RD_INLINE type scientific_notation_string_to_##type(const std::string &str) \
-{ return scientific_notation_string_to_built_in<type>(str); }
-
-IMPL_SCIENTIFIC_NOTATION_STRING_TO_(int)
-IMPL_SCIENTIFIC_NOTATION_STRING_TO_(float)
-IMPL_SCIENTIFIC_NOTATION_STRING_TO_(double)
-IMPL_SCIENTIFIC_NOTATION_STRING_TO_(int8_t)
-IMPL_SCIENTIFIC_NOTATION_STRING_TO_(int16_t)
-IMPL_SCIENTIFIC_NOTATION_STRING_TO_(int32_t)
-IMPL_SCIENTIFIC_NOTATION_STRING_TO_(int64_t)
-IMPL_SCIENTIFIC_NOTATION_STRING_TO_(uint8_t)
-IMPL_SCIENTIFIC_NOTATION_STRING_TO_(uint16_t)
-IMPL_SCIENTIFIC_NOTATION_STRING_TO_(uint32_t)
-IMPL_SCIENTIFIC_NOTATION_STRING_TO_(uint64_t)
-
-
 /*
  * Frequency abbreviation string to type T.
  *
@@ -257,56 +139,14 @@ IMPL_SCIENTIFIC_NOTATION_STRING_TO_(uint64_t)
  * "2.5E3" ----> 2500(int)(u?int16_t)(u?int32_t)(u?int64_t)
  * "2.5E1M" ---> 25000000.0(float)(double)
  *
- * Type specialized functions :
- * freq_string_to_int(xxx);
- * freq_string_to_float(xxx);
- * freq_string_to_double(xxx);
  * ......
  */
 template <typename T>
 T freq_string_to(const std::string &str)
 {
-    if (str.length() < 1) {
-        RD_THROW sp_rd::syntax_error("Invalid string : \""
-                                     + str
-                                     + "\",it's empty.");
-    }
-
-    std::string str_copy = boost::trim_copy(str);
-    std::string str_freq_numerical = str_copy;
-    std::string pattern_normal = "([-+]?)(\\d*)(\\.?)(\\d+)";
-    std::string pattern_scientific = "([-+]?)(\\d*)(\\.?)(\\d+)(e|E)(\\d*)(\\.?)(\\d+)";
-    std::string::const_reference unit = str_copy.back();
-    std::regex reg_normal(pattern_normal);
-    std::regex reg_scientific(pattern_scientific);
-    double freq_numerical = 0.0;
-    bool with_unit = false;
-
-    if (unit == 'K' || unit == 'M' || unit == 'G') {
-        str_freq_numerical = std::string(str_copy,0,str_copy.length() - 1);
-        with_unit = true;
-    }
-
-    if (str_copy.find(' ') != std::string::npos) {
-        RD_THROW sp_rd::syntax_error("Invalid string : \""
-                                     + str_copy
-                                     + "\",with space character.");
-    }
-    if (std::regex_match(str_freq_numerical,reg_normal)) {
-        freq_numerical = normal_notation_string_to_built_in<double>(str_freq_numerical);
-    } else if (std::regex_match(str_freq_numerical,reg_scientific)) {
-        freq_numerical = scientific_notation_string_to_built_in<double>(str_freq_numerical);
-    } else {
-        RD_THROW sp_rd::syntax_error("Invalid string : \""  + str_copy + "\".");
-    }
-
-    if (with_unit) {
-        freq_numerical *= (unit == 'K' ? 1e3  :
-                          (unit == 'M' ? 1e6  :
-                          (unit == 'G' ? 1e9  : 1)));
-    }
-
-    return T(freq_numerical);
+    T out;
+    floating_point_numbers::auto_notation<T>(str,out);
+    return out;
 }
 
 #define IMPL_FREQ_STRING_TO_(type) \
@@ -391,8 +231,9 @@ std::string freq_string_from(const T &freq, freq_string_unit_priority_t priority
     fmt % freq_copy;
     str += fmt.str();
 
-    if (unit != '\0')
+    if (unit != '\0') {
         str += unit;
+    }
 
     return str;
 }
@@ -412,124 +253,8 @@ IMPL_FREQ_STRING_FROM_(uint32_t)
 IMPL_FREQ_STRING_FROM_(uint64_t)
 
 
-/*
- * Calculate how much sections does the string have.
- * The overload c-style function use a different algorithm.
- *
- * e.g.
- * str = "50M;1G,4G";
- * "str" has 3 sections(50M and 1G and 4G).
- */
-uint32_t freq_string_sections(const std::string &str);
-
-/*
- * Make sure the end of "str" is '\0'!
- */
-uint32_t freq_string_sections(const char *str);
-
-/*
- * Split freq_string.Usually called follow freq_string_sections.
- * So there is no syntax check.
- * The overload c-style function use a different algorithm.
- *
- * e.g.
- * str_in -------> str_out
- * "1G;2G;3G" ---> {"1G","2G","3G"}
- */
-template <typename T>
-void split_freq_string(const std::string &str_in, uint32_t sections, T &str_out)
-{
-    std::string::size_type length = str_in.length();
-
-    RD_ASSERT_THROW(length > 0);
-
-    std::string::size_type pos[2] = {0,0};
-    std::string::size_type pos_start = 0;
-
-    str_out.clear();
-
-    for (uint32_t i = 0;i < sections;i ++) {
-        pos[0] = str_in.find(';',pos_start);
-        pos[1] = str_in.find(',',pos_start);
-        pos[0] = (pos[0] != std::string::npos ?
-                 (pos[1] != std::string::npos ? std::min(pos[0],pos[1]) : pos[0]) :
-                 (pos[1] != std::string::npos ? pos[1] : length));
-
-        str_out.push_back(str_in.substr(pos_start,pos[0] - pos_start));
-        pos_start = pos[0] + 1;
-    }
-}
-
-/*
- * Make sure the end of "str" is '\0'!
- */
-void split_freq_string(const char *str_in, uint32_t sections, char (*str_out)[32]);
-
-template <typename T>
-uint32_t parse_range_freq_string(const range_freq_string &freq_string, range_freq<T> &freq_out)
-{
-    uint32_t section_star = freq_string_sections(freq_string.star);
-    uint32_t section_stop = freq_string_sections(freq_string.stop);
-    uint32_t section_step = freq_string_sections(freq_string.step);
-
-    if (section_star == 0 || section_stop == 0 || section_step == 0) {
-        freq_out = range_freq<T>();
-        return 0;
-    }
-
-    RD_ASSERT_THROW(section_star == section_stop);
-
-    freq_out.freqs.clear();
-    freq_out.star.clear();
-    freq_out.stop.clear();
-
-    T T_freq_star = 0;
-    T T_freq_stop = 0;
-    T T_freq_step = 0;
-    std::vector<std::string> splitted_freq_star;
-    std::vector<std::string> splitted_freq_stop;
-    std::vector<std::string> splitted_freq_step;
-    typename std::vector<T>::iterator iter_freqs_repeated_begin;
-
-    split_freq_string(freq_string.star,section_star,splitted_freq_star);
-    split_freq_string(freq_string.stop,section_stop,splitted_freq_stop);
-    split_freq_string(freq_string.step,section_step,splitted_freq_step);
-
-    for (uint32_t i = 0;i < section_star;i ++) {
-        T_freq_star = freq_string_to<T>(splitted_freq_star.at(i));
-        T_freq_stop = freq_string_to<T>(splitted_freq_stop.at(i));
-        T_freq_step = freq_string_to<T>(splitted_freq_step.at(std::min(i,section_step - 1)));
-
-        freq_out.star.push_back(T_freq_star);
-        freq_out.stop.push_back(T_freq_stop);
-
-        for (uint32_t j = 0;j < SERIE_SIZE(T_freq_star,T_freq_stop,T_freq_step);j ++) {
-            freq_out.freqs.push_back(T_freq_star + T(j) * T_freq_step);
-        }
-    }
-
-    std::sort(freq_out.freqs.begin(),freq_out.freqs.end());
-
-    iter_freqs_repeated_begin = unique(freq_out.freqs.begin(),freq_out.freqs.end());
-    freq_out.freqs.erase(iter_freqs_repeated_begin,freq_out.freqs.end());
-
-    freq_out.max = freq_out.freqs.at(freq_out.freqs.size() - 1);
-    freq_out.min = freq_out.freqs.at(0);
-
-    return uint32_t(freq_out.freqs.size());
-}
-
-template <typename T>
-RD_INLINE uint32_t parse_range_pwr_string(const range_pwr_string &pwr_string, range_pwr<T> &pwr_out)
-{
-    range_freq<T> fake_pwr_out;
-    uint32_t pts = parse_range_freq_string(pwr_string,fake_pwr_out);
-    pwr_out = fake_pwr_out;
-    sort(pwr_out.pwrs.begin(),pwr_out.pwrs.end(),std::greater<>());
-    return pts;
-}
-
-RD_INLINE uint32_t parse_range_temp_string(const range_temp_string &temp_string, range_temp &temp_out)
-{ return parse_range_pwr_string(temp_string,temp_out); }
+//RD_INLINE uint32_t parse_range_temp_string(const range_temp_string &temp_string, range_temp &temp_out)
+//{ return parse_range_pwr_string(temp_string,temp_out); }
 
 #endif // RD_UTILITIES_FREQ_STRING_HPP
+

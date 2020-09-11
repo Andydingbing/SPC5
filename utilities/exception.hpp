@@ -24,7 +24,7 @@
 #include <boost/current_function.hpp>
 #include <boost/core/ignore_unused.hpp>
 
-/*!
+/*
  * Define common exceptions used throughout the code:
  *
  * - The python built-in exceptions were used as inspiration.
@@ -49,12 +49,17 @@
         } catch (std::exception &e) { \
             boost::ignore_unused(e); \
         }
+
+    #define RD_LOG_ALL_EXCEPTION \
+        } catch (rd::exception &e) { \
+            Log.add_msg(-1,"%s",e.what()); \
+        }
 #else
     #define RD_TRY
     #define RD_CATCH_ALL_EXCEPTION
 #endif
 
-namespace sp_rd {
+namespace rd {
 
 // Base class of all exceptions.
 struct exception : std::runtime_error
@@ -108,7 +113,7 @@ DECL_RD_EXCEPTION(os_error, environment_error, "OSError")
 // Raised when a parser encounters a syntax error.
 DECL_RD_EXCEPTION(syntax_error, exception, "SyntaxError")
 
-/*!
+/*
  * Create a formatted string with throw-site information.
  * Fills in the function name, file name, and line number.
  * \param what the std::exception message
@@ -119,16 +124,16 @@ DECL_RD_EXCEPTION(syntax_error, exception, "SyntaxError")
                 + "\n" + "  at " + std::string(__FILE__) + ":"                           \
                 + BOOST_STRINGIZE(__LINE__) + "\n")
 
-/*!
+/*
  * Assert the result of the code evaluation.
  * If the code evaluates to false, throw an assertion error.
  * \param code the code that resolved to a boolean
  */
 #define RD_ASSERT_THROW(code) {                                         \
     if (!(code))                                                        \
-            RD_THROW sp_rd::assertion_error(RD_THROW_SITE_INFO(#code)); \
+            RD_THROW rd::assertion_error(RD_THROW_SITE_INFO(#code)); \
     }
 
-} // namespace sp_rd
+} // namespace rd
 
 #endif // RD_UTILITIES_EXCEPTION_HPP

@@ -18,7 +18,7 @@
 
 #include "rd.h"
 #include "exception.hpp"
-#include "algo_math.h"
+#include "algo_math.hpp"
 
 // x(0)^n + x(1)^n + x(2)^n + ... + x(x.size() - 1)^n
 template <typename T,typename data_type = float_traits<T>>
@@ -34,13 +34,64 @@ typename data_type::data_t sum_pow(const std::vector<typename data_type::data_t>
 // Value of polynomial
 // coef(0) + coef(1)*x^1 + coef(2)*x^2 + ... + coef(coef.size() - 1)*x^n
 template <typename T,typename data_type = float_traits<T>>
-typename data_type::float_t polynomial(const std::vector<typename data_type::data_t> &coef,typename data_type::data_t x)
+typename data_type::float_t polynomial(const std::vector<T> &coef,T x)
 {
     typename data_type::float_t y = 0.0;
     for (size_t i = 0;i < coef.size();i ++) {
         y += data_type::value_float(coef[i] * pow(x,i));
     }
     return y;
+}
+
+template <typename T,typename data_type = float_traits<T>>
+typename data_type::float_t polynomial(const T *coef,size_t order,T x)
+{
+    typename data_type::float_t y = 0.0;
+    for (size_t i = 0;i < order + 1;i ++) {
+        y += data_type::value_float(coef[i] * pow(x,i));
+    }
+    return y;
+}
+
+// Coefs to polynomial
+template <typename T,typename data_type = float_traits<T>>
+std::string polynomial(const std::vector<T> &coef)
+{
+    std::string out;
+
+    if (coef.size() < 1) {
+        return out;
+    }
+
+    boost::format tf_0("%.16f");
+    boost::format tf_1("%+.16fx^%d");
+    boost::format tf_2("%-.16fx^%d");
+
+    out = "f(x) = ";
+    out += (tf_0 % data_type::value_float(coef[0])).str();
+    for (size_t i = 1;i < coef.size();i ++) {
+        if (coef[i] > 0) {
+            tf_1 % data_type::value_float(coef[i]);
+            tf_1 % i;
+            out += tf_1.str();
+        } else if (coef[i] < 0) {
+            tf_2 % data_type::value_float(coef[i]);
+            tf_2 % i;
+            out += tf_2.str();
+        }
+    }
+    return out;
+}
+
+template <typename T,typename data_type = float_traits<T>>
+std::string polynomial(const T *coef,size_t order)
+{
+    std::vector<T> _coef;
+
+    for (size_t i = 0;i <= order;i ++) {
+        _coef.push_back(coef[i]);
+    }
+    return polynomial<T>(_coef);
 }
 
 /*
@@ -133,7 +184,7 @@ void polynomial(std::vector<typename data_type::data_t> x,
     const size_t n_y = y.size();
 
     if (n_y * n_y != n_x) {
-        RD_THROW sp_rd::index_error(RD_THROW_SITE_INFO("Not matched array size of x and y"));
+        RD_THROW rd::index_error(RD_THROW_SITE_INFO("Not matched array size of x and y"));
     }
 
     typedef typename data_type::data_t data_t;

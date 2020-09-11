@@ -20,9 +20,14 @@
 #define _AMD64_
 #endif
 
-#include "stdint_common.h"
+//#ifndef _X86_
+//#define _X86_
+//#endif
 
-/*!
+#include "stdint_common.h"
+#include <boost/noncopyable.hpp>
+
+/*
  * nullptr_t & nullptr for compiler not support C++11 and later.
  * Re-precompile here to reduce the include files.
  */
@@ -30,7 +35,7 @@
 #include "nullptr.h"
 #endif // __cplusplus
 
-//! struct align defines
+// struct align defines
 #ifdef RD_C_MSC
     #define STRUCT_ALIGN_S(name,x) \
             __declspec(align(x)) struct name {
@@ -111,6 +116,7 @@
 #define INT_CHECKB(func)        { if (int ret = func) {return false;} }
 #define INT_CHECKV(func)        { if (int ret = func) {return;} }
 #define PTR_CHECKV(ptr)         { if (ptr == nullptr) {return;} }
+#define VI_CHECK(func)          { if ((status = func) < VI_SUCCESS) { return status; }}
 
 #define ARRAY_SIZE(array)          (uint32_t(sizeof(array) / sizeof(array[0])))
 #define SERIE_SIZE(star,stop,step) (uint32_t((stop - star) / step + 1))
@@ -119,10 +125,11 @@
 
 #define ZERO_ARRAY(array) { memset(array,0,sizeof(array)); }
 
-#define PI 3.141592653589793
-#define ANGLE_TO_RADIAN(th) (th / 180.0 * PI)
-
 #define BOOST_SPTR_SAFE_MAKE(type,sptr) { if (!sptr) sptr = boost::make_shared<type>(); }
+
+#define FREQ_K(freq) freq##000ll
+#define FREQ_M(freq) freq##000000ll
+#define FREQ_G(freq) freq##000000000ll
 
 #ifdef RD_C_MSC
     #pragma warning ( disable : 4996 )
@@ -133,7 +140,7 @@
     #pragma GCC diagnostic ignored "-Wunused-variable"
     #pragma GCC diagnostic ignored "-Wunused-function"
     #pragma GCC diagnostic ignored "-Wmisleading-indentation"
-    #pragma GCC diagnostic ignored "-Wno-reserved-id-macro"
+    #pragma GCC diagnostic ignored "-Wunused-but-set-parameter"
 #endif
 
 namespace sp_rd {
@@ -143,16 +150,23 @@ class noncopyable
 protected:
     constexpr noncopyable() = default;
     ~noncopyable() = default;
-
     noncopyable( const noncopyable& ) = delete;
     noncopyable& operator=( const noncopyable& ) = delete;
 };
+
+}
+
+namespace rd {
+
+enum link_t { UL,DL };
+
+enum rf_ch_t { Tx,Rx };
 
 struct iq_data_t {
     int16_t i : 16;
     int16_t q : 16;
 };
 
-} // namespace sp_rd
+} // namespace rd
 
 #endif // INCLUDE_RD_H

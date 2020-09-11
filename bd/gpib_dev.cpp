@@ -1,9 +1,9 @@
 #include "gpib_dev.h"
-#include "vi_pci_dev.h"
+#include "pci_dev_vi.h"
 #include "visa.h"
 
 using namespace std;
-using namespace sp_rd;
+//using namespace sp_rd;
 
 gpib_dev::gpib_dev() :
     _session(0)
@@ -11,18 +11,16 @@ gpib_dev::gpib_dev() :
     vi_pci_dev::open_default_rm();
 }
 
-gpib_dev::~gpib_dev()
-{
-
-}
-
 bool gpib_dev::init(const std::string &dev)
 {
-    if (viOpen(vi_pci_dev::get_default_rm(),const_cast<ViRsrc>(dev.c_str()),VI_NULL,50000,&_session) < VI_SUCCESS) {
+    ViSession session = 0;
+
+    if (viOpen(vi_pci_dev::get_default_rm(),const_cast<ViRsrc>(dev.c_str()),VI_NULL,50000,&session) < VI_SUCCESS) {
+        _session = 0;
 		return false;
     }
-    if (viSetAttribute(_session,VI_ATTR_TMO_VALUE,50000)) {
-        viClose(_session);
+    if (viSetAttribute(session,VI_ATTR_TMO_VALUE,50000)) {
+        viClose(session);
         _session = 0;
 		return false;
 	}
@@ -40,11 +38,10 @@ bool gpib_dev::w(const string &scpi) const
     if (status < VI_SUCCESS || ret_cnt != length) {
         return false;
     }
-
     return true;
 }
 
-bool gpib_dev::r(string &buf, uint32_t length, uint32_t to) const
+bool gpib_dev::r(string &buf,uint32_t length,uint32_t to) const
 {
     ViUInt32 ret_cnt = 0;
     ViStatus status = VI_SUCCESS;

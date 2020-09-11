@@ -16,9 +16,11 @@
 #ifndef INCLUDE_NULLPTR_H
 #define INCLUDE_NULLPTR_H
 
+#include "config.h"
+
 //! nullptr_t & nullptr for compiler not support C++11 and later.
 
-#if (defined(__cplusplus) && (__cplusplus < 201103L))
+#if (defined(RD_C_MSC) && (_MSC_VER < 1700))
 
 const class nullptr_t
 {
@@ -33,6 +35,6 @@ private:
     void operator&() const;
 } nullptr = {};
 
-#endif // __cplusplus
+#endif
 
 #endif // INCLUDE_NULLPTR_H

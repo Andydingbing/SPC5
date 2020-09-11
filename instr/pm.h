@@ -4,8 +4,9 @@
 #include "rd.h"
 #include "visa.h"
 #include <string>
+#include <boost/noncopyable.hpp>
 
-class pm : sp_rd::noncopyable
+class pm : boost::noncopyable
 {
 public:
     virtual ~pm(void) {}

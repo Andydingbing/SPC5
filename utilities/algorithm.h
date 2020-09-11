@@ -12,29 +12,21 @@ RD_INLINE void linear(T_freq x1,T_data y1,T_freq x2,T_data y2,T_freq x,T_data &y
 #pragma warning ( push )
 #pragma warning ( disable : 4244)
 #endif
-	y = (T_data)((((double)(x - x1)) / ((double)(x2 - x1))) * ((double)(y2 - y1)) + y1);
+    y = T_data(((double(x - x1)) / (double(x2 - x1))) * (double(y2 - y1)) + y1);
 #ifdef RD_C_MSC
 #pragma warning ( pop )
 #endif
 }
 
-template <class T_x>
-void discretept(T_x x,int64_t step,T_x &x1,T_x &x2)
+template <class T>
+void discretept(T x,int64_t step,T &x1,T &x2)
 {
-	T_x x_min = (T_x)((int64_t)(((int64_t)(x / (step * 1.0))) * step));
-	if (x_min > x) {
-		if (step < 0)
-			x1 = x_min;
-		else
-			x1 = x_min - step;
-	}
-	else if (x_min < x) {
-		if (step < 0)
-			x1 = x_min - step;
-		else
-			x1 = x_min;
-	}
-	else {
+    T x_min = T(int64_t((int64_t(x / (step * 1.0))) * step));
+    if (x_min > x) {
+        x1 = step < 0 ? x_min : (x_min - step);
+    } else if (x_min < x) {
+        x1 = step < 0 ? (x_min - step) : x_min;
+    } else {
 		x1 = x_min;
 	}
 	x2 = x1 + step;

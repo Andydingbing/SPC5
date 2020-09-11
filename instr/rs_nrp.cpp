@@ -26,8 +26,10 @@ using namespace std;
 
 bool rs_nrp::init(const string &dev)
 {
-    NRP_CHECK(rsnrpz_init(ViRsrc(dev.c_str()),false,false,&m_session));
+    ViSession session = 0;
+    NRP_CHECK(rsnrpz_init(ViRsrc(dev.c_str()),false,false,&session));
     sleep_ms(100);
+    m_session = session;
 	return true;
 }
 

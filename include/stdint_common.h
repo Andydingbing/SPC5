@@ -18,10 +18,10 @@
 
 #include "config.h"
 
-/*!
+/*
   * Bring in std type.
-  * Use platform related int8_t/int16_t/int32_t/int64_t,uint8_t/uint16_t/uint32_t/uint64_t....
-  * There is no standard stdint define while MSC_VER <= 1500 in Windows,so add the stdint_msc.h.
+  * Platform related int8_t/int16_t/int32_t/int64_t,uint8_t/uint16_t/uint32_t/uint64_t....
+  * No standard stdint define while MSC_VER <= 1500,thanks to the stdint_msc.h.
   */
 #ifdef RD_C_MSC
     #if _MSC_VER <= 1500

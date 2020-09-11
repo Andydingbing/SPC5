@@ -123,6 +123,8 @@ RD_API int32_t RF_GetTemperature(uint32_t RFIndex,double &TxTemperature,double &
 RD_API int32_t RF_GetCalTemperature(uint32_t RFIndex,double &Temperature);
 RD_API int32_t RF_SetFans(uint32_t Speed);
 
+RD_API int32_t RF_CarrierLeakLoopCal(uint32_t RFIndex);
+
 #if defined(__cplusplus) || defined(__cplusplus__)
 }
 #endif
