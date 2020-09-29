@@ -58,9 +58,6 @@ QCalBaseThread::QCalBaseThread(const CalParam &param) :
         if (calParam.check) { totalPts += freqRangeCheck.freqs.size(); }
     }
 
-    RFVer = param.SP1401->get_hw_ver();
-    RFIdx = param.SP1401->get_rf_idx();
-
     if (this->parent() != nullptr) {
         connect(this,SIGNAL(update(QModelIndex,QModelIndex,cal_file::cal_item_t,int)),
         this->parent(),SLOT(update(QModelIndex,QModelIndex,cal_file::cal_item_t,int)));

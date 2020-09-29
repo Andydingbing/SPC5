@@ -250,16 +250,6 @@ void Q_LMX2594_Dlg::updateReg0x4b()
     RF->set_lo_reg(LO,0x4b,LMX2594_REG_DATA(0x4b));
 }
 
-void Q_LMX2594_Dlg::on_lineEditRFFreq_textEdited(const QString &arg1)
-{
-    updateFreq();
-}
-
-void Q_LMX2594_Dlg::on_lineEditRefFreq_textEdited(const QString &arg1)
-{
-    updateFreq();
-}
-
 void Q_LMX2594_Dlg::on_checkBoxOSCinDoubler_clicked(bool checked)
 {
     LMX2594_REG_DECL_0x09;

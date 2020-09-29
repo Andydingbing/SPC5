@@ -7,89 +7,97 @@
     int32_t set_##sw_name(const sw_enum &sw) const; \
     int32_t get_##sw_name(sw_enum &sw) const;
 
-namespace rd { namespace ns_sp1403 { namespace r1a {
-    BETTER_ENUM(tx_sw1_t, uint32_t,
-                TX_SW1_300_3000,
-                TX_SW1_3000_8000)
+namespace rd {
+namespace ns_sp1403 {
+namespace r1a {
+BETTER_ENUM(tx_sw1_t, uint32_t,
+            TX_SW1_300_3000,
+            TX_SW1_3000_8000)
 
-    BETTER_ENUM(tx_sw2_t, uint32_t,
-                TX_SW2_300_3000,
-                TX_SW2_3000_8000)
+BETTER_ENUM(tx_sw2_t, uint32_t,
+            TX_SW2_300_3000,
+            TX_SW2_3000_8000)
 
-    BETTER_ENUM(tx_sw3_t, uint32_t,
-                TX_SW3_6000_8000,
-                TX_SW3_3000_6000)
+BETTER_ENUM(tx_sw3_t, uint32_t,
+            TX_SW3_6000_8000,
+            TX_SW3_3000_6000)
 
-    BETTER_ENUM(tx_sw4_t, uint32_t,
-                TX_SW4_4800_6000,
-                TX_SW4_3000_4800)
+BETTER_ENUM(tx_sw4_t, uint32_t,
+            TX_SW4_4800_6000,
+            TX_SW4_3000_4800)
 
-    BETTER_ENUM(tx0_sw5_t, uint32_t,
-                TO_OUT,
-                TO_IO)
+BETTER_ENUM(tx0_sw5_t, uint32_t,
+            TO_OUT,
+            TO_IO)
 
-    BETTER_ENUM(tx0_sw6_t, uint32_t,
-                TO_LOOP,
-                TO_OUT)
+BETTER_ENUM(tx0_sw6_t, uint32_t,
+            TO_LOOP,
+            TO_OUT)
 
-    BETTER_ENUM(tx0_sw7_t, uint32_t,
-                TO_OFF,
-                TO_OUT)
+BETTER_ENUM(tx0_sw7_t, uint32_t,
+            TO_OFF,
+            TO_OUT)
 
-    BETTER_ENUM(tx0_sw8_t, uint32_t,
-                TO_OFF,
-                TO_LOOP)
+BETTER_ENUM(tx0_sw8_t, uint32_t,
+            TO_OFF,
+            TO_LOOP)
 
-    BETTER_ENUM(tx0_sw9_t, uint32_t,
-                TO_TX1_LOOP,
-                TO_TX0_IN)
+BETTER_ENUM(tx0_sw9_t, uint32_t,
+            TO_TX1_LOOP,
+            TO_TX0_IN)
 
-    BETTER_ENUM(tx0_sw10_t, uint32_t,
-                TO_RX,
-                TO_TX0_LOOP)
+BETTER_ENUM(tx0_sw10_t, uint32_t,
+            TO_RX,
+            TO_TX0_LOOP)
 
-    BETTER_ENUM(tx0_sw11_t, uint32_t,
-                TO_RX,
-                TO_OFF)
+BETTER_ENUM(tx0_sw11_t, uint32_t,
+            TO_RX,
+            TO_OFF)
 
-    BETTER_ENUM(tx0_sw12_t, uint32_t,
-                TO_RX,
-                TO_OFF)
+BETTER_ENUM(tx0_sw12_t, uint32_t,
+            TO_RX,
+            TO_OFF)
 
-    BETTER_ENUM(tx1_sw5_t, uint32_t,
-                TO_LOOP,
-                TO_OUT)
+BETTER_ENUM(tx1_sw5_t, uint32_t,
+            TO_LOOP,
+            TO_OUT)
 
-    BETTER_ENUM(tx1_sw6_t, uint32_t,
-                TO_OFF,
-                TO_OUT)
+BETTER_ENUM(tx1_sw6_t, uint32_t,
+            TO_OFF,
+            TO_OUT)
 
-    BETTER_ENUM(rx_sw1_t, uint32_t,
-                TO_ATT,
-                TO_LNA)
+BETTER_ENUM(rx_sw1_t, uint32_t,
+            TO_ATT,
+            TO_LNA)
 
-    BETTER_ENUM(rx_sw2_t, uint32_t,
-                TO_ATT_0,
-                TO_ATT_10)
+BETTER_ENUM(rx_sw2_t, uint32_t,
+            TO_ATT_0,
+            TO_ATT_10)
 
-    BETTER_ENUM(rx_sw3_t, uint32_t,
-                _300_1000,
-                _1000_8000)
+BETTER_ENUM(rx_sw3_t, uint32_t,
+            _300_1000,
+            _1000_8000)
 
-    BETTER_ENUM(rx_lna_att_t, uint32_t,
-                RX_ATT_0 = 0,
-                RX_ATT_10 = 1,
-                Reserved,
-                RX_LNA = 3)
+BETTER_ENUM(rx_lna_att_t, uint32_t,
+            RX_ATT_0 = 0,
+            RX_ATT_10 = 1,
+            Reserved,
+            RX_LNA = 3)
 
-    BETTER_ENUM(temp_t, uint32_t,
-                TX_LO1 = 0,
-                TX0_SW = 1,
-                TX0_PA = 4,
-                RX_LNA = 5,
-                TX1_PA = 6)
+BETTER_ENUM(temp_t, uint32_t,
+            TX_LO1 = 0,
+            TX0_SW = 1,
+            TX0_PA = 4,
+            RX_LNA = 5,
+            TX1_PA = 6)
 
-    enum lo_t { LO_BEGIN = 0,TX_LMX2594_0 = LO_BEGIN,TX_LMX2594_1,RX_LMX2594_0,LO_MAX };
+enum lo_t {
+    LO_BEGIN = 0,
+    TX_LMX2594_0 = LO_BEGIN,
+    TX_LMX2594_1,
+    RX_LMX2594_0,
+    LO_MAX
+};
 
 } // namespace r1a
 } // namespace ns_sp1403

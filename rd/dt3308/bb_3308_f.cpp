@@ -1,6 +1,6 @@
 #include "bb_3308_f.h"
 #include "liblog.h"
-#include "reg_def_3308_f.h"
+#include "reg_def_dt3308_f.h"
 #include "reg_def_ad9122.h"
 #include "algo_chip_dac.hpp"
 

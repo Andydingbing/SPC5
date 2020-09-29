@@ -88,6 +88,20 @@ RD_INLINE bool is_even(int_t value)
     return (value & 1) == 0;
 }
 
+template<typename str_t,typename int_t,typename traits_t = traits_int<int_t>>
+str_t string_of(const int_t *in,const size_t size,const str_t &separator)
+{
+    str_t str;
+    boost::format fmt("%d");
+
+    for (size_t i = 0;i < size;++i) {
+        fmt % in[i];
+        str += fmt.str().c_str();
+        str += separator;
+    }
+    return str;
+}
+
 template<typename str_t,typename int_t,typename container_t,typename traits_type = traits_int<int_t>>
 str_t string_of(const container_t &in,const str_t &separator)
 {
@@ -118,14 +132,15 @@ str_t string_of(const container_t<int_t> &in,const str_t &separator)
 { return string_of<str_t,int_t,container_t<int_t>>(in,separator); }
 
 
-void string_to_container(const std::string &str,const char separator,std::vector<int16_t> &out)
+template<typename int_t,typename container_t,typename traits_t = traits_int<int_t>>
+void string_to_container(const std::string &str,const char separator,container_t &out)
 {
     std::string each_str;
-    int16_t each_int = 0;
+    int_t each_int = 0;
 
     for (size_t i = 0;i < str.length();++i) {
         if (str[i] == separator) {
-            integers::normal_notation(each_str,each_int);
+            integers::normal_notation<int_t>(each_str,each_int);
             out.push_back(each_int);
 
 //            ++i;

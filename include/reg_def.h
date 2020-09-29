@@ -166,6 +166,16 @@
         Log.add_reg(ret,dev->descriptor(),addr,0xffffffff,REG_DATA_2(ns,addr0,addr1)); \
     }while (0);
 
+#define PCIE_DEV_SET_BITS(dev,addr,bits,data) \
+    dev##_R(addr); \
+    dev##_REG(addr).bits = data; \
+    dev##_W(addr);
+
+#define PCIE_DEV_SET_BITS_2(dev,addr0,addr1,bits,data) \
+    dev##_R_2(addr0,addr1); \
+    dev##_REG_2(addr0,addr1).bits = data; \
+    dev##_W_2(addr0,addr1);
+
 // Rising edge
 #define CTRLLER_RE(ctrller,addr,bit) \
     do {ctrller##_REG(addr).bit = 0; \

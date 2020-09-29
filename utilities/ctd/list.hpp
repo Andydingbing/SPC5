@@ -24,11 +24,11 @@ namespace ctd {
 
 // double linked list node
 template<typename ptr_t>
-class dl_list_node {
+class dlist_node {
 public:
     ptr_t _data;
-    dl_list_node *_prev;
-    dl_list_node *_next;
+    dlist_node *_prev;
+    dlist_node *_next;
 };
 
 /*
@@ -45,11 +45,11 @@ public:
  */
 
 template<typename ptr_t>
-class dl_list
+class dlist
 {
 public:
-    dl_list();
-    ~dl_list();
+    dlist();
+    ~dlist();
 
     size_t size() const { return _size; }
 
@@ -67,9 +67,9 @@ private:
     }
 
 private:
-    dl_list_node<ptr_t> *_fst;
-    dl_list_node<ptr_t> *_cur;
-    dl_list_node<ptr_t> *_lst;
+    dlist_node<ptr_t> *_fst;
+    dlist_node<ptr_t> *_cur;
+    dlist_node<ptr_t> *_lst;
     size_t _size;
     size_t _idx_mid_l;
     size_t _idx_mid_r;

@@ -43,7 +43,7 @@ BETTER_ENUM(dl_src_t, uint8_t,
             CPRI = 0,
             Const = 1,
             DDS0 = 2,
-            DDS0_Bypass = 3,
+            DDS1 = 3,
             ARB = 4,
             ARB_Bypass = 5,
             BRAM = 8,
@@ -105,10 +105,11 @@ BETTER_ENUM(arb_multi_seg_repetition_t, uint32_t,
 BETTER_ENUM(iq_cap_src_t, uint8_t,
             DDC,
             DL_CPRI,
-            DUC,
+            DUC_Ch0,
             ARB,
             CW,
             Increment,
+            DUC_Ch1,
             BRAM = 8)
 
 BETTER_ENUM(iq_cap_src_ddc_t, uint8_t,
@@ -530,10 +531,6 @@ public:
     int32_t get_iq_cap_trig_frame_y(uint16_t &y) const;
 
     int32_t program(const v9_t fpga,const char *path);
-
-public:
-    int32_t set_ad998x_reg(const uint16_t addr,const uint8_t data) const;
-    int32_t get_ad998x_reg(const uint16_t addr,uint8_t &data) const;
 
 private:
     uint32_t _rf_idx;

@@ -40,6 +40,19 @@ typename std::vector<T>::size_type min_idx(const std::vector<T> &x)
     return i_min;
 }
 
+
+template<typename x_t,typename bound_t>
+RD_INLINE bool is_after(const x_t &x,const bound_t &lower_bound)
+{ return (x >= lower_bound); }
+
+template<typename x_t,typename bound_t>
+RD_INLINE bool is_before(const x_t &x,const bound_t &upper_bound)
+{ return (x <= upper_bound); }
+
+template<typename x_t,typename bound_t>
+RD_INLINE bool is_between(const x_t &x,const bound_t &lower_bound,const bound_t &upper_bound)
+{ return (x >= lower_bound) && (x <= upper_bound); }
+
 template<typename T>
 RD_INLINE void limit_after(const T &lower_bound,T &x)
 { x = x < lower_bound ? lower_bound : x; }

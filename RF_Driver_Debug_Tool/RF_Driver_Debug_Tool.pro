@@ -2,6 +2,7 @@ include(../include/config.pri)
 include(sp9500.pri)
 include(dt3308.pri)
 include(sp9500x.pri)
+include(sp9500pro.pri)
 
 QT += core gui network svg
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -135,6 +136,7 @@ cal/q_cal_r1c_dlg.h \
 cal/q_cal_r1c_thread.h
 
 FORMS += \
+cal/cal_filter.ui \
 test/q_test_temp_pwr_dlg.ui \
 mainwindow.ui \
 q_temp_ctrl_dlg.ui \

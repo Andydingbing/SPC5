@@ -124,7 +124,7 @@ void NS_SP9500X::Q_FPGA_Widget::on_pushButtonWriteAD998X_clicked()
     uint16_t addr = ui->lineEditAD998X_Addr->text().toUShort(nullptr,16);
     uint8_t  data = uint8_t(ui->lineEditAD998X_Data->text().toUShort(nullptr,16));
 
-    SP2406->set_ad998x_reg(addr,data);
+    SP1403->set_ad998x_reg(addr,data);
 }
 
 void NS_SP9500X::Q_FPGA_Widget::on_pushButtonReadAD998X_clicked()
@@ -132,6 +132,6 @@ void NS_SP9500X::Q_FPGA_Widget::on_pushButtonReadAD998X_clicked()
     uint16_t addr = ui->lineEditAD998X_Addr->text().toUShort(nullptr,16);
     uint8_t  data = 0;
 
-    SP2406->get_ad998x_reg(addr,data);
+    SP1403->get_ad998x_reg(addr,data);
     ui->lineEditAD998X_Data->setText(DecimalToHexString(data));
 }

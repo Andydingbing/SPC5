@@ -3,6 +3,7 @@
 #include "algorithm.h"
 #include "algo_math.hpp"
 #include <boost/date_time/gregorian/gregorian.hpp>
+#include <boost/bind.hpp>
 
 using namespace std;
 using namespace rd;
@@ -17,12 +18,15 @@ sp1403::sp1403(uint32_t rf_idx,uint32_t rfu_idx) :
     _tx_freq(*(_tx_freqs.begin())),
     _rx_freq(*(_rx_freqs.begin()))
 {
-    _tx_freq = (*(_tx_freqs.begin()));
-    _rx_freq = (*(_rx_freqs.begin()));
+    _ad908x.set_reg = boost::bind(&sp1403::set_ad998x_reg,this,_1,_2);
+    _ad908x.get_reg = boost::bind(&sp1403::get_ad998x_reg,this,_1,_2);
 
     _io_mode_tx0 = CLOSE;
     _io_mode_tx1 = CLOSE;
     _io_mode_rx  = CLOSE;
+
+    _tx_freq = (*(_tx_freqs.begin()));
+    _rx_freq = (*(_rx_freqs.begin()));
 }
 
 sp1403::~sp1403()
@@ -70,9 +74,9 @@ int32_t sp1403::get_ctrller_ver(const std::string &des,uint32_t &ver)
 {
     boost::ignore_unused(des);
 
-    SP9500X_RFU_V9_REG_DECL(0x0000);
-    SP9500X_RFU_V9_R(0x0000);
-    ver = SP9500X_RFU_V9_REG_DATA(0x0000);
+    SP9500PRO_RFU_V9_REG_DECL(0x0000);
+    SP9500PRO_RFU_V9_R(0x0000);
+    ver = SP9500PRO_RFU_V9_REG_DATA(0x0000);
     return 0;
 }
 
@@ -135,5 +139,32 @@ int32_t sp1403::is_valid_sn(const char *sn)
 //        return SN_WRONG;
 //    }
 //    return SN_RIGHT;
+    return 0;
+}
+
+int32_t sp1403::set_ad998x_reg(const uint16_t addr,const uint8_t data)
+{
+    SP9500PRO_RFU_V9_REG_DECL(0x0841);
+
+    SP9500PRO_RFU_V9_REG(0x0841).addr = addr;
+    SP9500PRO_RFU_V9_REG(0x0841).data = data;
+    SP9500PRO_RFU_V9_REG(0x0841).wr = 0;
+    SP9500PRO_RFU_V9_OP(0x0841);
+    SP9500PRO_RFU_V9_WAIT_IDLE(0x0841,0,1000);
+    return 0;
+}
+
+int32_t sp1403::get_ad998x_reg(const uint16_t addr,uint8_t &data)
+{
+    SP9500PRO_RFU_V9_REG_DECL(0x0841);
+    SP9500PRO_RFU_V9_REG_DECL(0x0842);
+
+    data = 0;
+    SP9500PRO_RFU_V9_REG(0x0841).addr = addr;
+    SP9500PRO_RFU_V9_REG(0x0841).wr = 1;
+    SP9500PRO_RFU_V9_OP(0x0841);
+    SP9500PRO_RFU_V9_WAIT_IDLE(0x0841,0,1000);
+    SP9500PRO_RFU_V9_R(0x0842);
+    data = SP9500PRO_RFU_V9_REG(0x0842).data;
     return 0;
 }

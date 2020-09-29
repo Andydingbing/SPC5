@@ -78,6 +78,7 @@ public slots:
     void switchToSP9500();
     void switchToDT3308();
     void switchToSP9500X();
+    void switchToSP9500Pro();
     void switchProject();
     void deviceInit();
     void deviceInitSilent();
@@ -129,6 +130,7 @@ private:
     QAction *actionSP9500;
     QAction *actionDT3308;
     QAction *actionSP9500X;
+    QAction *actionSP9500Pro;
 };
 
 extern MainWindow *g_MainW;

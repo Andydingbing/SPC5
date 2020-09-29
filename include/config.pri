@@ -36,6 +36,8 @@ INCLUDEPATH += \
 ../rd/sp9500 \
 ./sp9500x \
 ../rd/sp9500x \
+./sp9500pro \
+../rd/sp9500pro \
 ../include \
 ../../include \
 ../bd \

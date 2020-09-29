@@ -24,6 +24,7 @@ bool gpib_dev::init(const std::string &dev)
         _session = 0;
 		return false;
 	}
+    _session = session;
 	return true;
 }
 

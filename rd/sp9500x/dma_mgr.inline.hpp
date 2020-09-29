@@ -18,38 +18,38 @@ int32_t ns_sp9500x::dma_mgr::init(const uint32_t dl_samples,const uint32_t ul_sa
     INT_CHECK(_memory_dl.allocate(dl_samples * 4,nullptr,true));
     INT_CHECK(_memory_ul.allocate(ul_samples * 4,nullptr,true));
 
-    SP9500X_RFU_V9_REG_DECL(0x0180);
-    SP9500X_RFU_V9_REG_DECL(0x0181);
-    SP9500X_RFU_V9_REG_DECL(0x0182);
-    SP9500X_RFU_V9_REG_DECL(0x0183);
-    SP9500X_RFU_V9_REG_DECL(0x0184);
-    SP9500X_RFU_V9_REG_DECL(0x0185);
-    SP9500X_RFU_V9_REG_DECL(0x0186);
-    SP9500X_RFU_V9_REG_DECL(0x0187);
-    SP9500X_RFU_V9_REG_DECL(0x0188);
+    SP9500PRO_RFU_V9_REG_DECL(0x0180);
+    SP9500PRO_RFU_V9_REG_DECL(0x0181);
+    SP9500PRO_RFU_V9_REG_DECL(0x0182);
+    SP9500PRO_RFU_V9_REG_DECL(0x0183);
+    SP9500PRO_RFU_V9_REG_DECL(0x0184);
+    SP9500PRO_RFU_V9_REG_DECL(0x0185);
+    SP9500PRO_RFU_V9_REG_DECL(0x0186);
+    SP9500PRO_RFU_V9_REG_DECL(0x0187);
+    SP9500PRO_RFU_V9_REG_DECL(0x0188);
 
     // DL / FPGA Read
-    SP9500X_RFU_V9_REG(0x0186).addr_low  = _memory_dl.phy_addr(0) & 0x00000000ffffffff;
-    SP9500X_RFU_V9_REG(0x0187).addr_high = _memory_dl.phy_addr(0) >> 32;
-    SP9500X_RFU_V9_REG(0x0188).length    = _memory_dl.block_size(0);
-    SP9500X_RFU_V9_W(0x0186);
-    SP9500X_RFU_V9_W(0x0187);
-    SP9500X_RFU_V9_W(0x0188);
+    SP9500PRO_RFU_V9_REG(0x0186).addr_low  = _memory_dl.phy_addr(0) & 0x00000000ffffffff;
+    SP9500PRO_RFU_V9_REG(0x0187).addr_high = _memory_dl.phy_addr(0) >> 32;
+    SP9500PRO_RFU_V9_REG(0x0188).length    = _memory_dl.block_size(0);
+    SP9500PRO_RFU_V9_W(0x0186);
+    SP9500PRO_RFU_V9_W(0x0187);
+    SP9500PRO_RFU_V9_W(0x0188);
 
     // UL / FPGA Write
-    SP9500X_RFU_V9_REG(0x0181).cnt = _memory_ul.total_block();
-    SP9500X_RFU_V9_W(0x0181);
+    SP9500PRO_RFU_V9_REG(0x0181).cnt = _memory_ul.total_block();
+    SP9500PRO_RFU_V9_W(0x0181);
 
     for (uint32_t i = 0;i < _memory_ul.total_block();++i) {
-        SP9500X_RFU_V9_REG(0x0182).n = i;
-        SP9500X_RFU_V9_REG(0x0183).addr_low  = _memory_ul.phy_addr(i) & 0x00000000ffffffff;
-        SP9500X_RFU_V9_REG(0x0184).addr_high = _memory_ul.phy_addr(i) >> 32;
-        SP9500X_RFU_V9_REG(0x0185).length    = _memory_ul.block_size(i);
-        SP9500X_RFU_V9_W(0x0182);
-        SP9500X_RFU_V9_W(0x0183);
-        SP9500X_RFU_V9_W(0x0184);
-        SP9500X_RFU_V9_W(0x0185);
-        SP9500X_RFU_V9_OP(0x0180);
+        SP9500PRO_RFU_V9_REG(0x0182).n = i;
+        SP9500PRO_RFU_V9_REG(0x0183).addr_low  = _memory_ul.phy_addr(i) & 0x00000000ffffffff;
+        SP9500PRO_RFU_V9_REG(0x0184).addr_high = _memory_ul.phy_addr(i) >> 32;
+        SP9500PRO_RFU_V9_REG(0x0185).length    = _memory_ul.block_size(i);
+        SP9500PRO_RFU_V9_W(0x0182);
+        SP9500PRO_RFU_V9_W(0x0183);
+        SP9500PRO_RFU_V9_W(0x0184);
+        SP9500PRO_RFU_V9_W(0x0185);
+        SP9500PRO_RFU_V9_OP(0x0180);
     }
 
     INT_CHECK(set_fpga_ddr_addr_r(0));
@@ -66,9 +66,9 @@ RD_INLINE bool is_timeout(boost::timer::cpu_timer &time,uint32_t timeout)
 
 int32_t ns_sp9500x::dma_mgr::fpga_r(const uint32_t samples)
 {
-    SP9500X_RFU_V9_REG_DECL(0x018e);
-    SP9500X_RFU_V9_REG_DECL(0x018f);
-    SP9500X_RFU_V9_REG_DECL(0x0192);
+    SP9500PRO_RFU_V9_REG_DECL(0x018e);
+    SP9500PRO_RFU_V9_REG_DECL(0x018f);
+    SP9500PRO_RFU_V9_REG_DECL(0x0192);
 
     uint32_t byte_cur[5] = {0};
     const uint32_t byte_target = samples << 2;
@@ -77,9 +77,9 @@ int32_t ns_sp9500x::dma_mgr::fpga_r(const uint32_t samples)
 
     Log.stdprintf("DMA:FPGA prepare read samples:%d\n",samples);
 
-    SP9500X_RFU_V9_REG(0x018f).length = byte_target;
-    SP9500X_RFU_V9_W(0x018f);
-    SP9500X_RFU_V9_OP(0x018e);
+    SP9500PRO_RFU_V9_REG(0x018f).length = byte_target;
+    SP9500PRO_RFU_V9_W(0x018f);
+    SP9500PRO_RFU_V9_OP(0x018e);
 
     /* wait interrupt
     for (int i = 0; i < 3; i++) {
@@ -92,9 +92,9 @@ int32_t ns_sp9500x::dma_mgr::fpga_r(const uint32_t samples)
         break;
     }*/
 
-    SP9500X_RFU_V9_R(0x0192);
-    while (SP9500X_RFU_V9_REG(0x0192).byte == 0) {
-        SP9500X_RFU_V9_R(0x0192);
+    SP9500PRO_RFU_V9_R(0x0192);
+    while (SP9500PRO_RFU_V9_REG(0x0192).byte == 0) {
+        SP9500PRO_RFU_V9_R(0x0192);
 
         if (is_timeout(time,timeout)) {
             Log.set_last_err("DMA:FPGA read timeout.");
@@ -104,8 +104,8 @@ int32_t ns_sp9500x::dma_mgr::fpga_r(const uint32_t samples)
 
     while(1) {
         for (int32_t i = 0;i < 5;++i) {
-            SP9500X_RFU_V9_R(0x0192);
-            byte_cur[i] = SP9500X_RFU_V9_REG(0x0192).byte;
+            SP9500PRO_RFU_V9_R(0x0192);
+            byte_cur[i] = SP9500PRO_RFU_V9_REG(0x0192).byte;
 
             if (byte_cur[i] == byte_target) {
                 Log.stdprintf("DMA:FPGA read complete.\n");
@@ -136,16 +136,16 @@ int32_t ns_sp9500x::dma_mgr::fpga_w() const
 
 int32_t ns_sp9500x::dma_mgr::fpga_w_start() const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0189);
+    SP9500PRO_RFU_V9_REG_DECL(0x0189);
 
-    SP9500X_RFU_V9_OP(0x0189);
+    SP9500PRO_RFU_V9_OP(0x0189);
     return 0;
 }
 
 int32_t ns_sp9500x::dma_mgr::fpga_w_trans() const
 {
-    SP9500X_RFU_V9_REG_DECL(0x018a);
-    SP9500X_RFU_V9_REG_DECL(0x018d);
+    SP9500PRO_RFU_V9_REG_DECL(0x018a);
+    SP9500PRO_RFU_V9_REG_DECL(0x018d);
 
     uint32_t byte_cur[5] = { 0 };
     uint32_t byte_target = 0;
@@ -156,9 +156,9 @@ int32_t ns_sp9500x::dma_mgr::fpga_w_trans() const
 
     byte_target <<= 2;
 
-    SP9500X_RFU_V9_R(0x018d);
-    while (SP9500X_RFU_V9_REG(0x018d).byte == 0) {
-        SP9500X_RFU_V9_R(0x018d);
+    SP9500PRO_RFU_V9_R(0x018d);
+    while (SP9500PRO_RFU_V9_REG(0x018d).byte == 0) {
+        SP9500PRO_RFU_V9_R(0x018d);
 
 //        if (is_timeout(time,timeout)) {
 //            Log.set_last_err("DMA:FPGA write timeout.");
@@ -173,8 +173,8 @@ int32_t ns_sp9500x::dma_mgr::fpga_w_trans() const
 
     while(1) {
         for (int32_t i = 0;i < 5;++i) {
-            SP9500X_RFU_V9_R(0x018d);
-            byte_cur[i] = SP9500X_RFU_V9_REG(0x018d).byte;
+            SP9500PRO_RFU_V9_R(0x018d);
+            byte_cur[i] = SP9500PRO_RFU_V9_REG(0x018d).byte;
 
             if (byte_cur[i] == byte_target) {
                 return 0;
@@ -203,100 +203,100 @@ int32_t ns_sp9500x::dma_mgr::fpga_w_trans() const
 
 int32_t ns_sp9500x::dma_mgr::set_fpga_ddr_addr_r(const uint64_t addr)
 {
-    SP9500X_RFU_V9_REG_DECL(0x0190);
-    SP9500X_RFU_V9_REG_DECL(0x0191);
+    SP9500PRO_RFU_V9_REG_DECL(0x0190);
+    SP9500PRO_RFU_V9_REG_DECL(0x0191);
 
-    SP9500X_RFU_V9_REG(0x0190).addr_low  = addr & 0x00000000ffffffff;
-    SP9500X_RFU_V9_REG(0x0191).addr_high = addr >> 32;
-    SP9500X_RFU_V9_W(0x0190);
-    SP9500X_RFU_V9_W(0x0191);
+    SP9500PRO_RFU_V9_REG(0x0190).addr_low  = addr & 0x00000000ffffffff;
+    SP9500PRO_RFU_V9_REG(0x0191).addr_high = addr >> 32;
+    SP9500PRO_RFU_V9_W(0x0190);
+    SP9500PRO_RFU_V9_W(0x0191);
     return 0;
 }
 
 int32_t ns_sp9500x::dma_mgr::get_fpga_ddr_addr_r(uint64_t &addr)
 {
-    SP9500X_RFU_V9_REG_DECL(0x0190);
-    SP9500X_RFU_V9_REG_DECL(0x0191);
+    SP9500PRO_RFU_V9_REG_DECL(0x0190);
+    SP9500PRO_RFU_V9_REG_DECL(0x0191);
 
-    SP9500X_RFU_V9_R(0x0190);
-    SP9500X_RFU_V9_R(0x0191);
-    addr = (SP9500X_RFU_V9_REG(0x0190).addr_low);
-    addr |= uint64_t(SP9500X_RFU_V9_REG(0x0191).addr_high) << 32;
+    SP9500PRO_RFU_V9_R(0x0190);
+    SP9500PRO_RFU_V9_R(0x0191);
+    addr = (SP9500PRO_RFU_V9_REG(0x0190).addr_low);
+    addr |= uint64_t(SP9500PRO_RFU_V9_REG(0x0191).addr_high) << 32;
     return 0;
 }
 
 int32_t ns_sp9500x::dma_mgr::set_fpga_ddr_addr_w(const uint64_t addr)
 {
-    SP9500X_RFU_V9_REG_DECL(0x018b);
-    SP9500X_RFU_V9_REG_DECL(0x018c);
-    SP9500X_RFU_V9_REG_DECL(0x024d);
-    SP9500X_RFU_V9_REG_DECL(0x024e);
+    SP9500PRO_RFU_V9_REG_DECL(0x018b);
+    SP9500PRO_RFU_V9_REG_DECL(0x018c);
+    SP9500PRO_RFU_V9_REG_DECL(0x024d);
+    SP9500PRO_RFU_V9_REG_DECL(0x024e);
 
-    SP9500X_RFU_V9_REG(0x018b).addr_low  = addr & 0x00000000ffffffff;
-    SP9500X_RFU_V9_REG(0x018c).addr_high = addr >> 32;
-    SP9500X_RFU_V9_REG(0x024d).addr_low  = SP9500X_RFU_V9_REG(0x018b).addr_low;
-    SP9500X_RFU_V9_REG(0x024e).addr_high = SP9500X_RFU_V9_REG(0x018c).addr_high;
-    SP9500X_RFU_V9_W(0x018b);
-    SP9500X_RFU_V9_W(0x018c);
-    SP9500X_RFU_V9_W(0x024d);
-    SP9500X_RFU_V9_W(0x024e);
+    SP9500PRO_RFU_V9_REG(0x018b).addr_low  = addr & 0x00000000ffffffff;
+    SP9500PRO_RFU_V9_REG(0x018c).addr_high = addr >> 32;
+    SP9500PRO_RFU_V9_REG(0x024d).addr_low  = SP9500PRO_RFU_V9_REG(0x018b).addr_low;
+    SP9500PRO_RFU_V9_REG(0x024e).addr_high = SP9500PRO_RFU_V9_REG(0x018c).addr_high;
+    SP9500PRO_RFU_V9_W(0x018b);
+    SP9500PRO_RFU_V9_W(0x018c);
+    SP9500PRO_RFU_V9_W(0x024d);
+    SP9500PRO_RFU_V9_W(0x024e);
     return 0;
 }
 
 int32_t ns_sp9500x::dma_mgr::get_fpga_ddr_addr_w(uint64_t &addr)
 {
-    SP9500X_RFU_V9_REG_DECL(0x018b);
-    SP9500X_RFU_V9_REG_DECL(0x018c);
+    SP9500PRO_RFU_V9_REG_DECL(0x018b);
+    SP9500PRO_RFU_V9_REG_DECL(0x018c);
 
-    SP9500X_RFU_V9_R(0x018b);
-    SP9500X_RFU_V9_R(0x018c);
-    addr = (SP9500X_RFU_V9_REG(0x018b).addr_low);
-    addr |= uint64_t(SP9500X_RFU_V9_REG(0x018c).addr_high) << 32;
+    SP9500PRO_RFU_V9_R(0x018b);
+    SP9500PRO_RFU_V9_R(0x018c);
+    addr = (SP9500PRO_RFU_V9_REG(0x018b).addr_low);
+    addr |= uint64_t(SP9500PRO_RFU_V9_REG(0x018c).addr_high) << 32;
     return 0;
 }
 
 int32_t ns_sp9500x::dma_mgr::set_fpga_w_samples(const uint32_t samples) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x018a);
+    SP9500PRO_RFU_V9_REG_DECL(0x018a);
 
-    SP9500X_RFU_V9_REG(0x018a).length = samples << 2;
-    SP9500X_RFU_V9_W(0x018a);
+    SP9500PRO_RFU_V9_REG(0x018a).length = samples << 2;
+    SP9500PRO_RFU_V9_W(0x018a);
     return 0;
 }
 
 int32_t ns_sp9500x::dma_mgr::get_fpga_w_samples(uint32_t &samples) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x018a);
+    SP9500PRO_RFU_V9_REG_DECL(0x018a);
 
-    SP9500X_RFU_V9_R(0x018a);
-    samples = SP9500X_RFU_V9_REG(0x018a).length >> 2;
+    SP9500PRO_RFU_V9_R(0x018a);
+    samples = SP9500PRO_RFU_V9_REG(0x018a).length >> 2;
     return 0;
 }
 
 int32_t ns_sp9500x::dma_mgr::set_fpga_w_timeout_time(const uint32_t us) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0247);
+    SP9500PRO_RFU_V9_REG_DECL(0x0247);
 
-    SP9500X_RFU_V9_REG(0x0247).time = unsigned(1.0 / 491.52 * us);
-    SP9500X_RFU_V9_W(0x0247);
+    SP9500PRO_RFU_V9_REG(0x0247).time = unsigned(1.0 / 491.52 * us);
+    SP9500PRO_RFU_V9_W(0x0247);
     return 0;
 }
 
 int32_t ns_sp9500x::dma_mgr::get_fpga_w_timeout_time(uint32_t &us) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0247);
+    SP9500PRO_RFU_V9_REG_DECL(0x0247);
 
-    SP9500X_RFU_V9_R(0x0247);
-    us = SP9500X_RFU_V9_REG(0x0247).time * 49152 / 100;
+    SP9500PRO_RFU_V9_R(0x0247);
+    us = SP9500PRO_RFU_V9_REG(0x0247).time * 49152 / 100;
     return 0;
 }
 
 int32_t ns_sp9500x::dma_mgr::is_fpga_w_timeout(bool &timeout) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0247);
+    SP9500PRO_RFU_V9_REG_DECL(0x0247);
 
-    SP9500X_RFU_V9_R(0x0247);
-    timeout = SP9500X_RFU_V9_REG(0x0247).timeout;
+    SP9500PRO_RFU_V9_R(0x0247);
+    timeout = SP9500PRO_RFU_V9_REG(0x0247).timeout;
     return 0;
 }
 
@@ -352,11 +352,11 @@ int32_t	ns_sp9500x::dma_mgr::dump(const char *path,const uint32_t samples) const
 
 int32_t ns_sp9500x::dma_mgr::test_case(const uint64_t samples)
 {
-    SP9500X_RFU_V9_REG_DECL(0x018b);
-    SP9500X_RFU_V9_REG_DECL(0x018c);
+    SP9500PRO_RFU_V9_REG_DECL(0x018b);
+    SP9500PRO_RFU_V9_REG_DECL(0x018c);
 
-    SP9500X_RFU_V9_REG_DECL(0x0190);
-    SP9500X_RFU_V9_REG_DECL(0x0191);
+    SP9500PRO_RFU_V9_REG_DECL(0x0190);
+    SP9500PRO_RFU_V9_REG_DECL(0x0191);
 
     const uint32_t samples_dl_max = _memory_dl.block_size(0) / 4;
 
@@ -373,10 +373,10 @@ int32_t ns_sp9500x::dma_mgr::test_case(const uint64_t samples)
         while (samples_left > 0) {
             samples_transing = samples_left > samples_dl_max ? samples_dl_max : samples_left;
 
-            SP9500X_RFU_V9_REG(0x0190).addr_low  = (samples_transed * 4) & 0x00000000ffffffff;
-            SP9500X_RFU_V9_REG(0x0191).addr_high = (samples_transed * 4) >> 32;
-            SP9500X_RFU_V9_W(0x0190);
-            SP9500X_RFU_V9_W(0x0191);
+            SP9500PRO_RFU_V9_REG(0x0190).addr_low  = (samples_transed * 4) & 0x00000000ffffffff;
+            SP9500PRO_RFU_V9_REG(0x0191).addr_high = (samples_transed * 4) >> 32;
+            SP9500PRO_RFU_V9_W(0x0190);
+            SP9500PRO_RFU_V9_W(0x0191);
 
             for (uint64_t i = 0;i < samples_transing;++i) {
                 dl()[i] = (samples_transed + i) & 0x00000000ffffffff;

@@ -107,6 +107,7 @@ rd_dt3308.cpp
 # sp9500x
 HEADERS += \
 ./sp9500x/cal_table_tx_lol.h \
+./sp9500x/cal_table_filter.h \
 ./sp9500x/cal_file_sp9500x.h \
 ./sp9500x/sp1403.h \
 ./sp9500x/sp1403_r1a.h \
@@ -117,6 +118,7 @@ rd_sp9500x.h
 
 SOURCES += \
 ./sp9500x/cal_table_tx_lol.cpp \
+./sp9500x/cal_table_filter.cpp \
 ./sp9500x/cal_file_sp9500x.cpp \
 ./sp9500x/sp1403.cpp \
 ./sp9500x/sp1403_r1a.cpp \

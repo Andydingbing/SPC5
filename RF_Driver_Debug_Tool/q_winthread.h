@@ -310,9 +310,11 @@ signals:
                 cal_file::cal_item_t item = cal_file::TX_LOL,
                 int sec = 0);
 
+    void uiInsert(const int first,const int last,const int cal_table);
+    void uiUpdate(const int first,const int last,const int cal_table);
+
 protected:
     sp3301 *SP3301;
-    ns_sp1401::hw_ver_t RFVer;
     quint32 RFIdx;
     double tempCur;
     double tempMin;
@@ -323,18 +325,19 @@ protected:
     range_freq<quint64> freqRangeCal;
     range_freq_string freqStringCheck;
     range_freq<quint64> freqRangeCheck;
-} QCalBaseThread, QExportBaseThread;
+} QCalBaseThread, QExportBaseThread, QExpBaseThread;
 
 typedef class QCalR1CBaseThread : public QCalBaseThread
 {
-    Q_OBJECT
-
 public:
     explicit QCalR1CBaseThread(const CalParam &param) :
         QCalBaseThread(param)
     {
         SP1401 = dynamic_cast<rd::sp1401_r1c *>(param.SP1401);
         SP2401 = dynamic_cast<rd::sp2401_r1a *>(param.SP2401);
+
+        RFVer = SP1401->get_hw_ver();
+        RFIdx = SP1401->get_rf_idx();
     }
 
     double getRxAvgPwr()
@@ -356,9 +359,11 @@ public:
     }
 
 protected:
+    ns_sp1401::hw_ver_t RFVer;
     rd::sp1401_r1c *SP1401;
     rd::sp2401_r1a *SP2401;
 } QCalR1CBaseThread, QExpR1CBaseThread;
+
 
 class QTestThread : public QCalTestBaseThread
 {

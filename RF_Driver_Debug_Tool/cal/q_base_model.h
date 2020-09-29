@@ -46,6 +46,21 @@ public slots:
         Q_UNUSED(sec);
         emit dataChanged(tl,br,QVector<int>(Qt::DisplayRole));
     }
+
+    void uiInsert(const int first,const int last,const int cal_table)
+    {
+        beginInsertRows(QModelIndex(),first,last);
+        for (int i = first;i <= last;++i) {
+            insertRow(i);
+        }
+        endInsertRows();
+        emit dataChanged(index(first,0),index(last,columnCount() - 1));
+    }
+
+    void uiUpdate(const int first,const int last,const int cal_table)
+    {
+        emit dataChanged(index(first,0),index(last,columnCount() - 1),QVector<int>(Qt::DisplayRole));
+    }
 } QCalBaseModel, QTestBaseModel;
 
 
@@ -129,6 +144,22 @@ public:
 
 private:
     QVector<Data_Type> *table;
+};
+
+
+template<typename container_t>
+class Qwt_FR_Data : public QwtCalData
+{
+public:
+    Qwt_FR_Data() { table = nullptr; }
+
+    size_t size() const
+    { return table == nullptr ? 0 : table->size(); }
+
+    QPointF sample(size_t i) const
+    { return QPointF(table->at(i).freq / 1e6,table->at(i).pwr); }
+
+    container_t *table;
 };
 
 #endif // Q_CAL_BASE_MODEL_H

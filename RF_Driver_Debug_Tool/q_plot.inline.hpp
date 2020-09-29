@@ -49,7 +49,7 @@ void QCalPlot::init()
     QwtText textTitle = title();
 
     QFont textFont = font();
-    textFont.setPointSize(10);
+    textFont.setPointSize(12);
     textFont.setBold(false);
 
     textTitle.setFont(textFont);

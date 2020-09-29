@@ -12,11 +12,11 @@ public:
     explicit QMsgLogModel(QObject *parent = nullptr) :
         QAbstractTableModel(parent) {}
 
-    int rowCount(const QModelIndex &parent) const
-    { Q_UNUSED(parent); return int(Log.msgs()); }
+    int rowCount(const QModelIndex &/*parent*/) const
+    { return int(Log.msgs()); }
 
-    int columnCount(const QModelIndex &parent) const
-    { Q_UNUSED(parent); return 5; }
+    int columnCount(const QModelIndex &/*parent*/) const
+    { return 5; }
 
     QVariant data(const QModelIndex &index, int role) const
     {

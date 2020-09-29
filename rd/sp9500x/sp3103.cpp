@@ -247,25 +247,25 @@ int32_t sp3103::arb_load(const uint32_t rf_idx,const ns_arb::src_t &src,const st
     INT_CHECK(SP2406->set_arb_abort());
     INT_CHECK(SP2406->set_arb_segs(uint8_t(arb_param.header.segments)));
 
-    SP9500X_RFU_V9_REG_DECL(0x0190);
-    SP9500X_RFU_V9_REG_DECL(0x0191);
+    SP9500PRO_RFU_V9_REG_DECL(0x0190);
+    SP9500PRO_RFU_V9_REG_DECL(0x0191);
 
-    SP9500X_RFU_V9_REG_DECL(0x028a);
-    SP9500X_RFU_V9_REG_DECL(0x028b);
-    SP9500X_RFU_V9_REG_DECL(0x028c);
-    SP9500X_RFU_V9_REG_DECL(0x028d);
-    SP9500X_RFU_V9_REG_DECL(0x028e);
-    SP9500X_RFU_V9_REG_DECL(0x0291);
-    SP9500X_RFU_V9_REG_DECL(0x0292);
+    SP9500PRO_RFU_V9_REG_DECL(0x028a);
+    SP9500PRO_RFU_V9_REG_DECL(0x028b);
+    SP9500PRO_RFU_V9_REG_DECL(0x028c);
+    SP9500PRO_RFU_V9_REG_DECL(0x028d);
+    SP9500PRO_RFU_V9_REG_DECL(0x028e);
+    SP9500PRO_RFU_V9_REG_DECL(0x0291);
+    SP9500PRO_RFU_V9_REG_DECL(0x0292);
 
     for (iter_arb_seg = arb_param.seg.begin();iter_arb_seg != arb_param.seg.end();++iter_arb_seg) {
-        SP9500X_RFU_V9_REG(0x028b).seg     = iter_arb_seg->idx;
-        SP9500X_RFU_V9_REG(0x028c).samples = iter_arb_seg->samples;
-        SP9500X_RFU_V9_REG(0x0292).sr      = 983040000 / iter_arb_seg->sr;
-        SP9500X_RFU_V9_W(0x028b);
-        SP9500X_RFU_V9_W(0x028c);
-        SP9500X_RFU_V9_W(0x0292);
-        SP9500X_RFU_V9_OP(0x028a);
+        SP9500PRO_RFU_V9_REG(0x028b).seg     = iter_arb_seg->idx;
+        SP9500PRO_RFU_V9_REG(0x028c).samples = iter_arb_seg->samples;
+        SP9500PRO_RFU_V9_REG(0x0292).sr      = 983040000 / iter_arb_seg->sr;
+        SP9500PRO_RFU_V9_W(0x028b);
+        SP9500PRO_RFU_V9_W(0x028c);
+        SP9500PRO_RFU_V9_W(0x0292);
+        SP9500PRO_RFU_V9_OP(0x028a);
     }
 
     samples_left = arb_param.samples;
@@ -276,10 +276,10 @@ int32_t sp3103::arb_load(const uint32_t rf_idx,const ns_arb::src_t &src,const st
         ++cnt;
         samples_transing = samples_left > per_samples_max ? per_samples_max : samples_left;
 
-        SP9500X_RFU_V9_REG(0x0190).addr_low  = (samples_transed * 4) & 0x00000000ffffffff;
-        SP9500X_RFU_V9_REG(0x0191).addr_high = (samples_transed * 4) >> 32;
-        SP9500X_RFU_V9_W(0x0190);
-        SP9500X_RFU_V9_W(0x0191);
+        SP9500PRO_RFU_V9_REG(0x0190).addr_low  = (samples_transed * 4) & 0x00000000ffffffff;
+        SP9500PRO_RFU_V9_REG(0x0191).addr_high = (samples_transed * 4) >> 32;
+        SP9500PRO_RFU_V9_W(0x0190);
+        SP9500PRO_RFU_V9_W(0x0191);
 
         SP2406->arb()->produce(0,uint32_t(samples_transing),SP2406->ddr()->dl());
 

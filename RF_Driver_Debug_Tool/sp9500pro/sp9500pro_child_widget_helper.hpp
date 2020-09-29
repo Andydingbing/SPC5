@@ -1,5 +1,5 @@
-#ifndef SP9500X_CHILD_WIDGET_HELPER_HPP
-#define SP9500X_CHILD_WIDGET_HELPER_HPP
+#ifndef SP9500PRO_CHILD_WIDGET_HELPER_HPP
+#define SP9500PRO_CHILD_WIDGET_HELPER_HPP
 
 #include "global.h"
 #include "child_widget_helper.h"
@@ -11,9 +11,10 @@
 #include "signal_analyzer_widget.h"
 #include "sp9500x_fpga_widget.h"
 #include "sp9500x_fan_dlg.h"
+#include "sp9500pro_cal_widget.h"
 #include "q_test_dlg.h"
 
-namespace NS_SP9500X {
+namespace NS_SP9500Pro {
 
 class ChildWidgets : public ChildWidgetHelper
 {
@@ -102,6 +103,7 @@ public:
 
         DECL_TREE_ITEM(str,"RF-R1A" << "Overview",widget_SP1403_R1A);
         DECL_TREE_ITEM(str,"RF-R1A" << "Test",widget_Test_R1A);
+        DECL_TREE_ITEM(str,"RF-R1A" << "Calibration" << "TX-Filter",widget_Cal_TXFilter);
         DECL_TREE_ITEM(str,"RRH" << "Overview",widget_SP9500X_RRH);
         DECL_TREE_ITEM(str,"BB-Debug" << "Overview",widget_SP2406);
         DECL_TREE_ITEM(str,"BB-Debug" << "ARB",widget_ARB);
@@ -130,6 +132,7 @@ public:
     void addChildWidgets()
     {
         ADD_CHILD_WIDGET(widget_SP1403_R1A,Q_SP1403_R1A_Widget,ns_sp3103::g_max_rf);
+        ADD_CHILD_WIDGET(widget_Cal_TXFilter,Q_Cal_TXFilter_Widget,ns_sp3103::g_max_rf);
         ADD_CHILD_WIDGET(widget_Test_R1A,Q_Test_SP9501_TabWidget,ns_sp3103::g_max_rf);
         ADD_CHILD_WIDGET(widget_SP9500X_RRH,Q_SP9500X_RRH_Widget,ns_sp3103::g_max_rf);
         ADD_CHILD_WIDGET(widget_SP2406,Q_SP2406_Widget,ns_sp3103::g_max_rf);
@@ -172,18 +175,14 @@ public slots:
 
     void initChildWidgets()
     {
-        uint32_t RFIdxBefore = RFIdx;
         updatePtr();
-        for (uint8_t i = 0;i < ns_sp3103::g_max_rf;i ++) {
-            RFIdx = i;
-            updatePtr();
+        for (int i = 0;i < ns_sp3103::g_max_rf;i ++) {
             widget_SP1403_R1A[i]->init();
             widget_SP9500X_RRH[i]->init();
             widget_SP2406[i]->init();
             widget_ARB[i]->init();
             widget_SA[i]->init();
         }
-        RFIdx = RFIdxBefore;
         updatePtr();
     }
 
@@ -196,6 +195,7 @@ public:
     QList<Q_SA_Widget *> widget_SA;
     QList<NS_SP9500X::Q_FPGA_Widget *> widget_FPGA;
 
+    QList<Q_Cal_TXFilter_Widget *> widget_Cal_TXFilter;
     QList<Q_Test_SP9501_TabWidget *> widget_Test_R1A;
 
     NS_SP9500X::Q_Fan_Dlg *dlg_Fan;
@@ -220,6 +220,6 @@ private:
     QAction *actionAbout;
 };
 
-} // namespace NS_SP9500X
+} // namespace NS_SP9500Pro
 
-#endif // SP9500X_CHILD_WIDGET_HELPER_HPP
+#endif // SP9500PRO_CHILD_WIDGET_HELPER_HPP

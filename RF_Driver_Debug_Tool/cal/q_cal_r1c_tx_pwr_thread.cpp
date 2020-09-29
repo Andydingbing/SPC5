@@ -1,6 +1,7 @@
 #include "q_cal_r1c_tx_pwr_thread.h"
 #include "q_model_tx_pwr.h"
 #include "algorithm.h"
+#include "algo_math.hpp"
 #include "algo_chip_att.hpp"
 #include "spec.h"
 #include "test_data.hpp"
@@ -106,9 +107,9 @@ void QCalR1CTXPwrThread::calIt(io_mode_t mode)
             initTXBaseStateIO(att0,att1,att2,att3,d_gain);
         }
 
-        if (is_rf_ver_between(RFVer,R1C,R1E)) {
+        if (is_between(RFVer,R1C,R1E)) {
             coarseTuning(target,att0,att1);
-        } else if (is_rf_ver_after(RFVer,R1F)) {
+        } else if (is_after(RFVer,R1F)) {
             coarseTuning(target,att1,att0);
         }
 

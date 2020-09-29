@@ -32,9 +32,9 @@ public:
     void updateReg0x4b();
 
 private slots:
-    void on_lineEditRFFreq_textEdited(const QString &arg1);
+    void on_lineEditRFFreq_textEdited(const QString &/*arg1*/) { updateFreq(); }
 
-    void on_lineEditRefFreq_textEdited(const QString &arg1);
+    void on_lineEditRefFreq_textEdited(const QString &/*arg1*/) { updateFreq(); }
 
     void on_checkBoxOSCinDoubler_clicked(bool checked);
 

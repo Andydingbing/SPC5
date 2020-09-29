@@ -189,72 +189,89 @@ int32_t sp1403_r1a::set_tx_freq(const uint64_t freq)
 
     INT_CHECK(set_lo(TX_LMX2594_1,_tx_lmx2594_1->freq));
 
+    bool reset_dac = false;
+    double freq_dac = 0.0;
     uint8_t inversion = (freq <= FREQ_M(3000) ? 0 : 1);
-    SP9500X_RFU_V9_REG_DECL(0x0462);
-    SP9500X_RFU_V9_R(0x0462);
-    SP9500X_RFU_V9_REG(0x0462).tx_0 = inversion;
-    SP9500X_RFU_V9_REG(0x0462).tx_1 = inversion;
-    SP9500X_RFU_V9_W(0x0462);
+    SP9500PRO_RFU_V9_REG_DECL(0x0462);
+    SP9500PRO_RFU_V9_R(0x0462);
+    SP9500PRO_RFU_V9_REG(0x0462).tx_0 = inversion;
+    SP9500PRO_RFU_V9_REG(0x0462).tx_1 = inversion;
+    SP9500PRO_RFU_V9_W(0x0462);
 
     if (freq <= FREQ_M(3000)) {
+        reset_dac = true;
+        freq_dac = freq;
         INT_CHECK(set_tx0_sw1(tx_sw1_t::TX_SW1_300_3000));
         INT_CHECK(set_tx0_sw2(tx_sw2_t::TX_SW2_300_3000));
         INT_CHECK(set_tx1_sw1(tx_sw1_t::TX_SW1_300_3000));
         INT_CHECK(set_tx1_sw2(tx_sw2_t::TX_SW2_300_3000));
-    } else if (freq <= FREQ_M(4800)) {
-        INT_CHECK(set_tx0_sw1(tx_sw1_t::TX_SW1_3000_8000));
-        INT_CHECK(set_tx0_sw2(tx_sw2_t::TX_SW2_3000_8000));
-        INT_CHECK(set_tx0_sw3(tx_sw3_t::TX_SW3_3000_6000));
-        INT_CHECK(set_tx0_sw4(tx_sw4_t::TX_SW4_3000_4800));
-        INT_CHECK(set_tx1_sw1(tx_sw1_t::TX_SW1_3000_8000));
-        INT_CHECK(set_tx1_sw2(tx_sw2_t::TX_SW2_3000_8000));
-        INT_CHECK(set_tx1_sw3(tx_sw3_t::TX_SW3_3000_6000));
-        INT_CHECK(set_tx1_sw4(tx_sw4_t::TX_SW4_3000_4800));
-    } else if (freq <= FREQ_M(6000)) {
-        INT_CHECK(set_tx0_sw1(tx_sw1_t::TX_SW1_3000_8000));
-        INT_CHECK(set_tx0_sw2(tx_sw2_t::TX_SW2_3000_8000));
-        INT_CHECK(set_tx0_sw3(tx_sw3_t::TX_SW3_3000_6000));
-        INT_CHECK(set_tx0_sw4(tx_sw4_t::TX_SW4_4800_6000));
-        INT_CHECK(set_tx1_sw1(tx_sw1_t::TX_SW1_3000_8000));
-        INT_CHECK(set_tx1_sw2(tx_sw2_t::TX_SW2_3000_8000));
-        INT_CHECK(set_tx1_sw3(tx_sw3_t::TX_SW3_3000_6000));
-        INT_CHECK(set_tx1_sw4(tx_sw4_t::TX_SW4_4800_6000));
     } else {
-        INT_CHECK(set_tx0_sw1(tx_sw1_t::TX_SW1_3000_8000));
-        INT_CHECK(set_tx0_sw2(tx_sw2_t::TX_SW2_3000_8000));
-        INT_CHECK(set_tx0_sw3(tx_sw3_t::TX_SW3_6000_8000));
-        INT_CHECK(set_tx1_sw1(tx_sw1_t::TX_SW1_3000_8000));
-        INT_CHECK(set_tx1_sw2(tx_sw2_t::TX_SW2_3000_8000));
-        INT_CHECK(set_tx1_sw3(tx_sw3_t::TX_SW3_6000_8000));
+        if (_tx_freq < FREQ_M(3000)) {
+            reset_dac = true;
+            freq_dac = FREQ_M(1200);
+        }
+
+        if (freq <= FREQ_M(4800)) {
+            INT_CHECK(set_tx0_sw1(tx_sw1_t::TX_SW1_3000_8000));
+            INT_CHECK(set_tx0_sw2(tx_sw2_t::TX_SW2_3000_8000));
+            INT_CHECK(set_tx0_sw3(tx_sw3_t::TX_SW3_3000_6000));
+            INT_CHECK(set_tx0_sw4(tx_sw4_t::TX_SW4_3000_4800));
+            INT_CHECK(set_tx1_sw1(tx_sw1_t::TX_SW1_3000_8000));
+            INT_CHECK(set_tx1_sw2(tx_sw2_t::TX_SW2_3000_8000));
+            INT_CHECK(set_tx1_sw3(tx_sw3_t::TX_SW3_3000_6000));
+            INT_CHECK(set_tx1_sw4(tx_sw4_t::TX_SW4_3000_4800));
+        } else if (freq <= FREQ_M(6000)) {
+            INT_CHECK(set_tx0_sw1(tx_sw1_t::TX_SW1_3000_8000));
+            INT_CHECK(set_tx0_sw2(tx_sw2_t::TX_SW2_3000_8000));
+            INT_CHECK(set_tx0_sw3(tx_sw3_t::TX_SW3_3000_6000));
+            INT_CHECK(set_tx0_sw4(tx_sw4_t::TX_SW4_4800_6000));
+            INT_CHECK(set_tx1_sw1(tx_sw1_t::TX_SW1_3000_8000));
+            INT_CHECK(set_tx1_sw2(tx_sw2_t::TX_SW2_3000_8000));
+            INT_CHECK(set_tx1_sw3(tx_sw3_t::TX_SW3_3000_6000));
+            INT_CHECK(set_tx1_sw4(tx_sw4_t::TX_SW4_4800_6000));
+        } else {
+            INT_CHECK(set_tx0_sw1(tx_sw1_t::TX_SW1_3000_8000));
+            INT_CHECK(set_tx0_sw2(tx_sw2_t::TX_SW2_3000_8000));
+            INT_CHECK(set_tx0_sw3(tx_sw3_t::TX_SW3_6000_8000));
+            INT_CHECK(set_tx1_sw1(tx_sw1_t::TX_SW1_3000_8000));
+            INT_CHECK(set_tx1_sw2(tx_sw2_t::TX_SW2_3000_8000));
+            INT_CHECK(set_tx1_sw3(tx_sw3_t::TX_SW3_6000_8000));
+        }
     }
+
+    if (reset_dac) {
+//        INT_CHECK(_ad908x.set_dac_duc_nco_ftw(_rf_idx,freq_dac));
+//        INT_CHECK(_ad908x.set_dac_duc_nco_ftw(_rf_idx + 1,freq_dac));
+    }
+
     _tx_freq = freq;
     return 0;
 }
 
 int32_t sp1403_r1a::set_att(const att_t att,const double value) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0103,0x0123);
-    SP9500X_RFU_V9_REG_DECL_2(0x0110,0x0130);
+    SP9500PRO_RFU_V9_REG_DECL_2(0x0103,0x0123);
+    SP9500PRO_RFU_V9_REG_DECL_2(0x0110,0x0130);
 
-    SP9500X_RFU_V9_REG_2(0x0110,0x0130).data = ns_pe43704::att_to_bit_0_25(value);
-    SP9500X_RFU_V9_REG_2(0x0110,0x0130).addr = 0;
-    SP9500X_RFU_V9_REG_2(0x0103,0x0123).ch = att;
-    SP9500X_RFU_V9_W_2(0x0103,0x0123);
-    SP9500X_RFU_V9_W_2(0x0110,0x0130);
-    SP9500X_RFU_V9_OP_2(0x0110,0x0130);
-    SP9500X_RFU_V9_WAIT_IDLE_2(0x0110,0x0130,0,INT_MAX);
+    SP9500PRO_RFU_V9_REG_2(0x0110,0x0130).data = ns_pe43704::att_to_bit_0_25(value);
+    SP9500PRO_RFU_V9_REG_2(0x0110,0x0130).addr = 0;
+    SP9500PRO_RFU_V9_REG_2(0x0103,0x0123).ch = att;
+    SP9500PRO_RFU_V9_W_2(0x0103,0x0123);
+    SP9500PRO_RFU_V9_W_2(0x0110,0x0130);
+    SP9500PRO_RFU_V9_OP_2(0x0110,0x0130);
+    SP9500PRO_RFU_V9_WAIT_IDLE_2(0x0110,0x0130,0,INT_MAX);
     return 0;
 }
 
 int32_t sp1403_r1a::get_att(const att_t att,double &value) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0103,0x0123);
-    SP9500X_RFU_V9_REG_DECL_2(0x0110,0x0130);
+    SP9500PRO_RFU_V9_REG_DECL_2(0x0103,0x0123);
+    SP9500PRO_RFU_V9_REG_DECL_2(0x0110,0x0130);
 
-    SP9500X_RFU_V9_REG_2(0x0103,0x0123).ch = att;
-    SP9500X_RFU_V9_W_2(0x0103,0x0123);
-    SP9500X_RFU_V9_R_2(0x0110,0x0130);
-    value = ns_pe43704::bit_0_25_to_att(SP9500X_RFU_V9_REG_2(0x0110,0x0130).data);
+    SP9500PRO_RFU_V9_REG_2(0x0103,0x0123).ch = att;
+    SP9500PRO_RFU_V9_W_2(0x0103,0x0123);
+    SP9500PRO_RFU_V9_R_2(0x0110,0x0130);
+    value = ns_pe43704::bit_0_25_to_att(SP9500PRO_RFU_V9_REG_2(0x0110,0x0130).data);
     return 0;
 }
 
@@ -271,17 +288,36 @@ int32_t sp1403_r1a::set_rx_freq(const uint64_t freq)
 
     INT_CHECK(set_lo(RX_LMX2594_0,_rx_lmx2594_0->freq));
 
+    bool reset_dac = false;
+    double freq_dac = 0.0;
     uint8_t inversion = (freq <= FREQ_M(1000) ? 0 : 1);
-    SP9500X_RFU_V9_REG_DECL(0x0462);
-    SP9500X_RFU_V9_R(0x0462);
-    SP9500X_RFU_V9_REG(0x0462).rx_0 = inversion;
-    SP9500X_RFU_V9_REG(0x0462).rx_1 = inversion;
-    SP9500X_RFU_V9_W(0x0462);
+    SP9500PRO_RFU_V9_REG_DECL(0x0462);
+    SP9500PRO_RFU_V9_R(0x0462);
+    SP9500PRO_RFU_V9_REG(0x0462).rx_0 = inversion;
+    SP9500PRO_RFU_V9_REG(0x0462).rx_1 = inversion;
+    SP9500PRO_RFU_V9_W(0x0462);
 
     SP1403_S6_REG(0x4).lo_sw1 = _rx_lmx2594_0->freq < FREQ_M(9750) ? 1 : 0;
     SP1403_S6_REG(0x4).lo_sw2 = !SP1403_S6_REG(0x4).lo_sw1;
     INT_CHECK(set_s6_reg(0x4,SP1403_S6_REG_DATA(0x4)));
-    INT_CHECK(set_rx_sw3(freq < FREQ_G(1) ? rx_sw3_t::_300_1000 : rx_sw3_t::_1000_8000));
+
+    if (freq < FREQ_G(1)) {
+        reset_dac = true;
+        freq_dac = freq;
+        set_rx_sw3(rx_sw3_t::_300_1000);
+    } else {
+        if (_rx_freq < FREQ_G(1)) {
+            reset_dac = true;
+            freq_dac = FREQ_M(500);
+        }
+        set_rx_sw3(rx_sw3_t::_1000_8000);
+    }
+
+    if (reset_dac) {
+//        INT_CHECK(_ad908x.set_adc_ddc_coarse_nco_ftw(_rf_idx,freq_dac));
+//        INT_CHECK(_ad908x.set_adc_ddc_coarse_nco_ftw(_rf_idx + 1,freq_dac));
+    }
+
     _rx_freq = freq;
     return 0;
 }
@@ -315,35 +351,35 @@ int32_t sp1403_r1a::get_rx_lna_att_sw(rx_lna_att_t &sw) const
 
 int32_t sp1403_r1a::get_temp(const temp_t &idx,double &temp) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0103,0x0123);
-    SP9500X_RFU_V9_REG_DECL_2(0x0111,0x0131);
-    SP9500X_RFU_V9_REG_DECL_2(0x0112,0x0132);
-    SP9500X_RFU_V9_REG_DECL_2(0x0113,0x0133);
+    SP9500PRO_RFU_V9_REG_DECL_2(0x0103,0x0123);
+    SP9500PRO_RFU_V9_REG_DECL_2(0x0111,0x0131);
+    SP9500PRO_RFU_V9_REG_DECL_2(0x0112,0x0132);
+    SP9500PRO_RFU_V9_REG_DECL_2(0x0113,0x0133);
 
     int16_t ad = 0;
 
-    SP9500X_RFU_V9_REG_2(0x0103,0x0123).ch = 10;
-    SP9500X_RFU_V9_W_2(0x0103,0x0123);
+    SP9500PRO_RFU_V9_REG_2(0x0103,0x0123).ch = 10;
+    SP9500PRO_RFU_V9_W_2(0x0103,0x0123);
 
-    SP9500X_RFU_V9_REG_2(0x0111,0x0131).cfg = 1;
-    SP9500X_RFU_V9_REG_2(0x0111,0x0131).incc = 7;
+    SP9500PRO_RFU_V9_REG_2(0x0111,0x0131).cfg = 1;
+    SP9500PRO_RFU_V9_REG_2(0x0111,0x0131).incc = 7;
 
-    SP9500X_RFU_V9_REG_2(0x0111,0x0131).in   = idx;
-    SP9500X_RFU_V9_REG_2(0x0111,0x0131).bw   = 0;
-    SP9500X_RFU_V9_REG_2(0x0111,0x0131).ref  = ns_ad7949::INTERNAL_2_5_V;
-    SP9500X_RFU_V9_REG_2(0x0111,0x0131).seq  = 0;
-    SP9500X_RFU_V9_REG_2(0x0111,0x0131).rb   = 1;
-    SP9500X_RFU_V9_REG_2(0x0111,0x0131).busy = 1;
+    SP9500PRO_RFU_V9_REG_2(0x0111,0x0131).in   = idx;
+    SP9500PRO_RFU_V9_REG_2(0x0111,0x0131).bw   = 0;
+    SP9500PRO_RFU_V9_REG_2(0x0111,0x0131).ref  = ns_ad7949::INTERNAL_2_5_V;
+    SP9500PRO_RFU_V9_REG_2(0x0111,0x0131).seq  = 0;
+    SP9500PRO_RFU_V9_REG_2(0x0111,0x0131).rb   = 1;
+    SP9500PRO_RFU_V9_REG_2(0x0111,0x0131).busy = 1;
 
-    SP9500X_RFU_V9_OP_2(0x0111,0x0131);
-    SP9500X_RFU_V9_WAIT_IDLE_2(0x0113,0x0133,0,INT32_MAX);
+    SP9500PRO_RFU_V9_OP_2(0x0111,0x0131);
+    SP9500PRO_RFU_V9_WAIT_IDLE_2(0x0113,0x0133,0,INT32_MAX);
 
-    SP9500X_RFU_V9_R_2(0x0112,0x0132);
-    ad = SP9500X_RFU_V9_REG_2(0x0112,0x0132).ad;
+    SP9500PRO_RFU_V9_R_2(0x0112,0x0132);
+    ad = SP9500PRO_RFU_V9_REG_2(0x0112,0x0132).ad;
     ad &= 0x1FFF;
 
-    SP9500X_RFU_V9_REG_2(0x0111,0x0131).op = 0;
-    SP9500X_RFU_V9_W_2(0x0111,0x0131);
+    SP9500PRO_RFU_V9_REG_2(0x0111,0x0131).op = 0;
+    SP9500PRO_RFU_V9_W_2(0x0111,0x0131);
 
     temp = ns_tc1047::voltage_to_temp(ns_ad7949::ad_to_voltage_mv(ad,ns_ad7949::INTERNAL_2_5_V,3.0));
     return 0;
@@ -433,114 +469,114 @@ int32_t sp1403_r1a::get_lo_reg(const lo_t lo,const uint8_t addr,uint16_t &data)
 
 int32_t sp1403_r1a::set_tx_lmx2594_0_reg(const uint8_t addr,const uint16_t data)
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x010a,0x012a);
+    SP9500PRO_RFU_V9_REG_DECL_2(0x010a,0x012a);
 
-    SP9500X_RFU_V9_REG_2(0x010a,0x012a).addr = addr;
-    SP9500X_RFU_V9_REG_2(0x010a,0x012a).data = data;
-    SP9500X_RFU_V9_REG_2(0x010a,0x012a).wr = 0;
-    SP9500X_RFU_V9_W_2(0x010a,0x012a);
-    SP9500X_RFU_V9_OP_2(0x010a,0x012a);
-    SP9500X_RFU_V9_WAIT_IDLE_2(0x010a,0x012a,0,INT_MAX);
+    SP9500PRO_RFU_V9_REG_2(0x010a,0x012a).addr = addr;
+    SP9500PRO_RFU_V9_REG_2(0x010a,0x012a).data = data;
+    SP9500PRO_RFU_V9_REG_2(0x010a,0x012a).wr = 0;
+    SP9500PRO_RFU_V9_W_2(0x010a,0x012a);
+    SP9500PRO_RFU_V9_OP_2(0x010a,0x012a);
+    SP9500PRO_RFU_V9_WAIT_IDLE_2(0x010a,0x012a,0,INT_MAX);
     return 0;
 }
 
 int32_t sp1403_r1a::get_tx_lmx2594_0_reg(const uint8_t addr,uint16_t &data)
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x010a,0x012a);
-    SP9500X_RFU_V9_REG_DECL_2(0x010d,0x012d);
+    SP9500PRO_RFU_V9_REG_DECL_2(0x010a,0x012a);
+    SP9500PRO_RFU_V9_REG_DECL_2(0x010d,0x012d);
 
-    SP9500X_RFU_V9_REG_2(0x010a,0x012a).addr = addr;
-    SP9500X_RFU_V9_REG_2(0x010a,0x012a).wr = 1;
-    SP9500X_RFU_V9_W_2(0x010a,0x012a);
-    SP9500X_RFU_V9_OP_2(0x010a,0x012a);
-    SP9500X_RFU_V9_WAIT_IDLE_2(0x010a,0x012a,0,INT_MAX);
-    SP9500X_RFU_V9_R_2(0x010d,0x012d);
-    data = SP9500X_RFU_V9_REG_2(0x010d,0x012d).data;
+    SP9500PRO_RFU_V9_REG_2(0x010a,0x012a).addr = addr;
+    SP9500PRO_RFU_V9_REG_2(0x010a,0x012a).wr = 1;
+    SP9500PRO_RFU_V9_W_2(0x010a,0x012a);
+    SP9500PRO_RFU_V9_OP_2(0x010a,0x012a);
+    SP9500PRO_RFU_V9_WAIT_IDLE_2(0x010a,0x012a,0,INT_MAX);
+    SP9500PRO_RFU_V9_R_2(0x010d,0x012d);
+    data = SP9500PRO_RFU_V9_REG_2(0x010d,0x012d).data;
     return 0;
 }
 
 int32_t sp1403_r1a::set_tx_lmx2594_1_reg(const uint8_t addr,const uint16_t data)
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0108,0x0128);
+    SP9500PRO_RFU_V9_REG_DECL_2(0x0108,0x0128);
 
-    SP9500X_RFU_V9_REG_2(0x0108,0x0128).addr = addr;
-    SP9500X_RFU_V9_REG_2(0x0108,0x0128).data = data;
-    SP9500X_RFU_V9_REG_2(0x0108,0x0128).wr = 0;
-    SP9500X_RFU_V9_W_2(0x0108,0x0128);
-    SP9500X_RFU_V9_OP_2(0x0108,0x0128);
-    SP9500X_RFU_V9_WAIT_IDLE_2(0x0108,0x0128,0,INT_MAX);
+    SP9500PRO_RFU_V9_REG_2(0x0108,0x0128).addr = addr;
+    SP9500PRO_RFU_V9_REG_2(0x0108,0x0128).data = data;
+    SP9500PRO_RFU_V9_REG_2(0x0108,0x0128).wr = 0;
+    SP9500PRO_RFU_V9_W_2(0x0108,0x0128);
+    SP9500PRO_RFU_V9_OP_2(0x0108,0x0128);
+    SP9500PRO_RFU_V9_WAIT_IDLE_2(0x0108,0x0128,0,INT_MAX);
     return 0;
 }
 
 int32_t sp1403_r1a::get_tx_lmx2594_1_reg(const uint8_t addr,uint16_t &data)
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0108,0x0128);
-    SP9500X_RFU_V9_REG_DECL_2(0x010b,0x012b);
+    SP9500PRO_RFU_V9_REG_DECL_2(0x0108,0x0128);
+    SP9500PRO_RFU_V9_REG_DECL_2(0x010b,0x012b);
 
-    SP9500X_RFU_V9_REG_2(0x0108,0x0128).addr = addr;
-    SP9500X_RFU_V9_REG_2(0x0108,0x0128).wr = 1;
-    SP9500X_RFU_V9_W_2(0x0108,0x0128);
-    SP9500X_RFU_V9_OP_2(0x0108,0x0128);
-    SP9500X_RFU_V9_WAIT_IDLE_2(0x0108,0x0128,0,INT_MAX);
-    SP9500X_RFU_V9_R_2(0x010b,0x012b);
-    data = SP9500X_RFU_V9_REG_2(0x010b,0x012b).data;
+    SP9500PRO_RFU_V9_REG_2(0x0108,0x0128).addr = addr;
+    SP9500PRO_RFU_V9_REG_2(0x0108,0x0128).wr = 1;
+    SP9500PRO_RFU_V9_W_2(0x0108,0x0128);
+    SP9500PRO_RFU_V9_OP_2(0x0108,0x0128);
+    SP9500PRO_RFU_V9_WAIT_IDLE_2(0x0108,0x0128,0,INT_MAX);
+    SP9500PRO_RFU_V9_R_2(0x010b,0x012b);
+    data = SP9500PRO_RFU_V9_REG_2(0x010b,0x012b).data;
     return 0;
 }
 
 int32_t sp1403_r1a::set_rx_lmx2594_0_reg(const uint8_t addr,const uint16_t data)
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0109,0x0129);
+    SP9500PRO_RFU_V9_REG_DECL_2(0x0109,0x0129);
 
-    SP9500X_RFU_V9_REG_2(0x0109,0x0129).addr = addr;
-    SP9500X_RFU_V9_REG_2(0x0109,0x0129).data = data;
-    SP9500X_RFU_V9_REG_2(0x0109,0x0129).wr = 0;
-    SP9500X_RFU_V9_W_2(0x0109,0x0129);
-    SP9500X_RFU_V9_OP_2(0x0109,0x0129);
-    SP9500X_RFU_V9_WAIT_IDLE_2(0x0109,0x0129,0,INT_MAX);
+    SP9500PRO_RFU_V9_REG_2(0x0109,0x0129).addr = addr;
+    SP9500PRO_RFU_V9_REG_2(0x0109,0x0129).data = data;
+    SP9500PRO_RFU_V9_REG_2(0x0109,0x0129).wr = 0;
+    SP9500PRO_RFU_V9_W_2(0x0109,0x0129);
+    SP9500PRO_RFU_V9_OP_2(0x0109,0x0129);
+    SP9500PRO_RFU_V9_WAIT_IDLE_2(0x0109,0x0129,0,INT_MAX);
     return 0;
 }
 
 int32_t sp1403_r1a::get_rx_lmx2594_0_reg(const uint8_t addr,uint16_t &data)
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0109,0x0129);
-    SP9500X_RFU_V9_REG_DECL_2(0x010c,0x012c);
+    SP9500PRO_RFU_V9_REG_DECL_2(0x0109,0x0129);
+    SP9500PRO_RFU_V9_REG_DECL_2(0x010c,0x012c);
 
-    SP9500X_RFU_V9_REG_2(0x0109,0x0129).addr = addr;
-    SP9500X_RFU_V9_REG_2(0x0109,0x0129).wr = 1;
-    SP9500X_RFU_V9_W_2(0x0109,0x0129);
-    SP9500X_RFU_V9_OP_2(0x0109,0x0129);
-    SP9500X_RFU_V9_WAIT_IDLE_2(0x0109,0x0129,0,INT_MAX);
-    SP9500X_RFU_V9_R_2(0x010c,0x012c);
-    data = SP9500X_RFU_V9_REG_2(0x010c,0x012c).data;
+    SP9500PRO_RFU_V9_REG_2(0x0109,0x0129).addr = addr;
+    SP9500PRO_RFU_V9_REG_2(0x0109,0x0129).wr = 1;
+    SP9500PRO_RFU_V9_W_2(0x0109,0x0129);
+    SP9500PRO_RFU_V9_OP_2(0x0109,0x0129);
+    SP9500PRO_RFU_V9_WAIT_IDLE_2(0x0109,0x0129,0,INT_MAX);
+    SP9500PRO_RFU_V9_R_2(0x010c,0x012c);
+    data = SP9500PRO_RFU_V9_REG_2(0x010c,0x012c).data;
     return 0;
 }
 
 int32_t sp1403_r1a::set_s6_reg(const uint8_t addr,const uint16_t data) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x010e,0x012e);
+    SP9500PRO_RFU_V9_REG_DECL_2(0x010e,0x012e);
 
-    SP9500X_RFU_V9_REG_2(0x010e,0x012e).addr = addr;
-    SP9500X_RFU_V9_REG_2(0x010e,0x012e).data = data;
-    SP9500X_RFU_V9_REG_2(0x010e,0x012e).wr = 0;
-    SP9500X_RFU_V9_W_2(0x010e,0x012e);
-    SP9500X_RFU_V9_OP_2(0x010e,0x012e);
-    SP9500X_RFU_V9_WAIT_IDLE_2(0x010e,0x012e,0,INT_MAX);
+    SP9500PRO_RFU_V9_REG_2(0x010e,0x012e).addr = addr;
+    SP9500PRO_RFU_V9_REG_2(0x010e,0x012e).data = data;
+    SP9500PRO_RFU_V9_REG_2(0x010e,0x012e).wr = 0;
+    SP9500PRO_RFU_V9_W_2(0x010e,0x012e);
+    SP9500PRO_RFU_V9_OP_2(0x010e,0x012e);
+    SP9500PRO_RFU_V9_WAIT_IDLE_2(0x010e,0x012e,0,INT_MAX);
     return 0;
 }
 
 int32_t sp1403_r1a::get_s6_reg(const uint8_t addr,uint16_t &data) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x010e,0x012e);
-    SP9500X_RFU_V9_REG_DECL_2(0x010f,0x012f);
+    SP9500PRO_RFU_V9_REG_DECL_2(0x010e,0x012e);
+    SP9500PRO_RFU_V9_REG_DECL_2(0x010f,0x012f);
 
     data = 0;
-    SP9500X_RFU_V9_REG_2(0x010e,0x012e).addr = addr;
-    SP9500X_RFU_V9_REG_2(0x010e,0x012e).wr = 1;
-    SP9500X_RFU_V9_W_2(0x010e,0x012e);
-    SP9500X_RFU_V9_OP_2(0x010e,0x012e);
-    SP9500X_RFU_V9_WAIT_IDLE_2(0x010e,0x012e,0,INT_MAX);
-    SP9500X_RFU_V9_R_2(0x010f,0x012f);
-    data = SP9500X_RFU_V9_REG_2(0x010f,0x012f).data;
+    SP9500PRO_RFU_V9_REG_2(0x010e,0x012e).addr = addr;
+    SP9500PRO_RFU_V9_REG_2(0x010e,0x012e).wr = 1;
+    SP9500PRO_RFU_V9_W_2(0x010e,0x012e);
+    SP9500PRO_RFU_V9_OP_2(0x010e,0x012e);
+    SP9500PRO_RFU_V9_WAIT_IDLE_2(0x010e,0x012e,0,INT_MAX);
+    SP9500PRO_RFU_V9_R_2(0x010f,0x012f);
+    data = SP9500PRO_RFU_V9_REG_2(0x010f,0x012f).data;
     return 0;
 }
 

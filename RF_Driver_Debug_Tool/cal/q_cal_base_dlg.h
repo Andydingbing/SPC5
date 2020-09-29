@@ -101,11 +101,14 @@ public:
 
 public slots:
     virtual void updateFromParam(const CalR1CParam &) {}
-    virtual void update(const QModelIndex &tl,
-                        const QModelIndex &br,
+    virtual void update(const QModelIndex &/*tl*/,
+                        const QModelIndex &/*br*/,
                         cal_file::cal_item_t item = cal_file::TX_LOL,
                         int sec = 0)
-    { Q_UNUSED(tl); Q_UNUSED(br); Q_UNUSED(item); Q_UNUSED(sec); }
+    { Q_UNUSED(item); Q_UNUSED(sec); }
+
+    virtual void uiInsert(const int /*first*/,const int /*last*/,const int /*cal_table*/) {}
+    virtual void uiUpdate(const int /*first*/,const int /*last*/,const int /*cal_table*/) {}
 
     void on_pushButtonPaus_clicked() { paus(); }
     void on_pushButtonCont_clicked() { cont(); }
@@ -119,7 +122,12 @@ class QCalDlg : public QCalBaseDlg, public QAttachThreadDlg
 public:
     explicit QCalDlg(QWidget *parent) :
         QCalBaseDlg(parent),
-        QAttachThreadDlg() {}
+        QAttachThreadDlg(),
+        CalThread(nullptr),
+        ExpThread(nullptr) {}
+
+    Cal_Thread_T *CalThread;
+    Exp_Thread_T *ExpThread;
 
     virtual void resetShowWidget(CalParam *) = 0;
     virtual void uiToCalParam(CalParam *) = 0;
@@ -211,33 +219,47 @@ public:
     }
 };
 
-
-// Calibration dialogs definition.
-// Must overload these slots/functinos.
-#define DECL_CAL_DLG_MEMBER_FUNC \
-public slots: \
-    void updateFromParam(const CalR1CParam &); \
-    void update(const QModelIndex &tl, const QModelIndex &br, \
-                cal_file::cal_item_t item, int sec); \
-public: \
-    void init(); \
-    void resetShowWidget(CalParam *param); \
-    void uiToCalParam(CalParam *param); \
-    void getset();
-
 #define DECL_CAL_DLG(Name, Name_ui, Cal_Thread, Exp_Thread) \
 class Name : public QCalDlg<Cal_Thread, Exp_Thread> { \
 public: \
     explicit Name(QWidget *parent) : \
         QCalDlg(parent), \
-        ui(new Ui::Name_ui) { ui->setupUi(this); init(); } \
+        ui(new Ui::Name_ui) \
+    { ui->setupUi(this); init(); } \
     ~Name() { delete ui; } \
     Ui::Name_ui *UI() const { return ui; } \
-    DECL_CAL_DLG_MEMBER_FUNC \
-private: \
+public slots: \
+    void updateFromParam(const CalR1CParam &); \
+    void update(const QModelIndex &tl, const QModelIndex &br, \
+                cal_file::cal_item_t item, int sec); \
+    void init(); \
+    void resetShowWidget(CalParam *param); \
+    void uiToCalParam(CalParam *param); \
+    void getset(); \
+public: \
     Ui::Name_ui *ui; \
 };
 
+#define CAL_WIDGET(Name, Name_ui, Name_child, Cal_Thread, Exp_Thread) \
+class Name : public QCalDlg<Cal_Thread, Exp_Thread> { \
+public: \
+    explicit Name(QWidget *parent) : \
+        QCalDlg(parent), \
+        ui(new Ui::Name_ui), \
+        childs(nullptr) { ui->setupUi(this); init(); } \
+    ~Name() { delete ui; } \
+public slots: \
+    void updateFromParam(const CalR1CParam &); \
+    void uiInsert(const int first,const int last,const int cal_table); \
+    void uiUpdate(const int first,const int last,const int cal_table); \
+    void init(); \
+    void resetShowWidget(CalParam *param); \
+    void uiToCalParam(CalParam *param); \
+    void getset(); \
+public: \
+    Ui::Name_ui *ui; \
+    Name_child *childs; \
+};
 
 // Test dialogs definition.
 #define DECL_TEST_DLG_MEMBER_FUNC \
@@ -272,6 +294,16 @@ public: \
                  QCal##name##Dlg, \
                  QCalR1C##name##Thread, \
                  QExpR1C##name##Thread)
+
+#define DECL_CAL_WIDGET(project,name) \
+    namespace NS_##project { \
+    class Cal_##name##_ChildWidgets; \
+    CAL_WIDGET(Q_Cal_##name##_Widget, \
+               Q_Cal_##project##_##name##_Widget, \
+               Cal_##name##_ChildWidgets, \
+               Q_Cal_##name##_Thread, \
+               Q_Exp_##name##_Thread) \
+    } // namespace NS_##project
 
 #define DECL_TEST_R1C_DLG(name) \
     DECL_TEST_DLG(QTestR1C##name##Dlg, \

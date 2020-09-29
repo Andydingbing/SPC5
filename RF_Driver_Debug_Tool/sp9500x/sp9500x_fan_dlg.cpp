@@ -1,6 +1,6 @@
 #include "sp9500x_fan_dlg.h"
 #include "ui_sp9500x_fan.h"
-#include "../rd/common/global.h"
+#include "../rd/common/global.hpp"
 
 #define IMPL_SLOT_SLIDER_MOVED(idx) \
 void NS_SP9500X::Q_Fan_Dlg::on_horizontalSlider##idx##_sliderMoved(int position) \

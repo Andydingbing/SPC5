@@ -11,6 +11,7 @@
 #include "sp9500_child_widget_helper.hpp"
 #include "dt3308_child_widget_helper.hpp"
 #include "sp9500x_child_widget_helper.hpp"
+#include "sp9500pro_child_widget_helper.hpp"
 #include "q_log_model.hpp"
 #include "dt3308_bb_f_widget.h"
 #include "q_temp_ctrl_dlg.h"
@@ -47,14 +48,19 @@ MainWindow::MainWindow(QWidget *parent) :
     actionSP9500X = new QAction("SP9500X(&2)",this);
     actionSP9500X->setCheckable(true);
 
+    actionSP9500Pro = new QAction("SP9500Pro(&3)",this);
+    actionSP9500Pro->setCheckable(true);
+
     connect(actionSP9500,SIGNAL(triggered(bool)),this,SLOT(switchToSP9500()));
     connect(actionDT3308,SIGNAL(triggered(bool)),this,SLOT(switchToDT3308()));
     connect(actionSP9500X,SIGNAL(triggered(bool)),this,SLOT(switchToSP9500X()));
+    connect(actionSP9500Pro,SIGNAL(triggered(bool)),this,SLOT(switchToSP9500Pro()));
 
     menuProject = new QMenu("Project(&P)",ui->menuBar);
     menuProject->addAction(actionSP9500);
     menuProject->addAction(actionDT3308);
     menuProject->addAction(actionSP9500X);
+    menuProject->addAction(actionSP9500Pro);
 
     registerMetaType();
 
@@ -63,6 +69,7 @@ MainWindow::MainWindow(QWidget *parent) :
     childWidgets.push_back(new NS_SP9500::ChildWidgets(this));
     childWidgets.push_back(new NS_DT3308::ChildWidgets(this));
     childWidgets.push_back(new NS_SP9500X::ChildWidgets(this));
+    childWidgets.push_back(new NS_SP9500Pro::ChildWidgets(this));
 
     initMsgLogDlg();
     initRegLogDlg();
@@ -84,6 +91,7 @@ void MainWindow::switchToSP9500()
     actionSP9500->setChecked(true);
     actionDT3308->setChecked(false);
     actionSP9500X->setChecked(false);
+    actionSP9500Pro->setChecked(false);
     switchProject();
 }
 
@@ -93,6 +101,7 @@ void MainWindow::switchToDT3308()
     actionSP9500->setChecked(false);
     actionDT3308->setChecked(true);
     actionSP9500X->setChecked(false);
+    actionSP9500Pro->setChecked(false);
     switchProject();
 }
 
@@ -102,6 +111,17 @@ void MainWindow::switchToSP9500X()
     actionSP9500->setChecked(false);
     actionDT3308->setChecked(false);
     actionSP9500X->setChecked(true);
+    actionSP9500Pro->setChecked(false);
+    switchProject();
+}
+
+void MainWindow::switchToSP9500Pro()
+{
+    project = SP9500Pro;
+    actionSP9500->setChecked(false);
+    actionDT3308->setChecked(false);
+    actionSP9500X->setChecked(false);
+    actionSP9500Pro->setChecked(true);
     switchProject();
 }
 

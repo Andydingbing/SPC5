@@ -1,5 +1,5 @@
 #include "log.h"
-#include "list.inline.hpp"
+#include "list.hpp"
 #include <iostream>
 #include <cstdarg> // bring in va
 #include <boost/format.hpp>
@@ -27,8 +27,8 @@
 using namespace rd;
 
 static log_t g_log;
-static ctd::dl_list<log_t::msg_log_t *> g_msg_log = ctd::dl_list<log_t::msg_log_t *>();
-static ctd::dl_list<log_t::reg_log_t *> g_reg_log = ctd::dl_list<log_t::reg_log_t *>();
+static ctd::dlist<log_t::msg_log_t *> g_msg_log = ctd::dlist<log_t::msg_log_t *>();
+static ctd::dlist<log_t::reg_log_t *> g_reg_log = ctd::dlist<log_t::reg_log_t *>();
 static pthread_mutex_t g_log_lock = PTHREAD_MUTEX_INITIALIZER;
 
 log_t::msg_log_t::msg_log_t() : result(0),msg("\0"),time("\0") {}

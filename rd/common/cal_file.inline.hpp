@@ -326,14 +326,27 @@ int32_t basic_cal_file<cal_table_t>::make_sure_has(const cal_table_t table,cal_t
 }
 
 template<typename cal_table_t>
+int32_t basic_cal_file<cal_table_t>::prepare_cal(const cal_table_t table)
+{
+    map<int32_t,cal_table *>::const_iterator iter;
+
+    if ((iter = _tables.find(table._to_integral())) != _tables.end()) {
+        iter->second->prepare_cal();
+        return 0;
+    }
+    return -1;
+}
+
+template<typename cal_table_t>
 int32_t basic_cal_file<cal_table_t>::add(const cal_table_t table,void *data)
 {
     map<int32_t,cal_table *>::const_iterator iter;
 
     if ((iter = _tables.find(table._to_integral())) != _tables.end()) {
         iter->second->add(data);
+        return 0;
     }
-    return 0;
+    return -1;
 }
 
 template<typename cal_table_t>

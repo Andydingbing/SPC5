@@ -3,86 +3,92 @@
 
 #include "reg_def.h"
 
-#define SP9500X_RFU_V9_CHECK \
+#define SP9500PRO_RFU_V9_CHECK \
     if (_v9 == nullptr) { \
         Log.set_last_err("Device:V9 disconnected"); \
         return -1; \
     }
 
-#define SP9500X_S6_CHECK \
+#define SP9500PRO_S6_CHECK \
     if (_s6 == nullptr) { \
         Log.set_last_err("Device:S6 disconnected"); \
         return -1; \
     }
 
 // Register
-#define SP9500X_RFU_V9_REG_DECL(addr) REG_DECL(ns_reg_sp9500x_rfu_v9,addr)
-#define SP9500X_RFU_V9_REG_DATA(addr) REG_DATA(ns_reg_sp9500x_rfu_v9,addr)
-#define SP9500X_RFU_V9_REG_CLER(addr) REG_CLER(ns_reg_sp9500x_rfu_v9,addr)
-#define SP9500X_RFU_V9_REG(addr)      REG(ns_reg_sp9500x_rfu_v9,addr)
+#define SP9500PRO_RFU_V9_REG_DECL(addr) REG_DECL(ns_reg_sp9500pro_rfu_v9,addr)
+#define SP9500PRO_RFU_V9_REG_DATA(addr) REG_DATA(ns_reg_sp9500pro_rfu_v9,addr)
+#define SP9500PRO_RFU_V9_REG_CLER(addr) REG_CLER(ns_reg_sp9500pro_rfu_v9,addr)
+#define SP9500PRO_RFU_V9_REG(addr)      REG(ns_reg_sp9500pro_rfu_v9,addr)
 
-#define SP9500X_RFU_V9_REG_DECL_2(addr0,addr1) REG_DECL_2(ns_reg_sp9500x_rfu_v9,addr0,addr1)
-#define SP9500X_RFU_V9_REG_DATA_2(addr0,addr1) REG_DATA_2(ns_reg_sp9500x_rfu_v9,addr0,addr1)
-#define SP9500X_RFU_V9_REG_CLER_2(addr0,addr1) REG_CLER_2(ns_reg_sp9500x_rfu_v9,addr0,addr1)
-#define SP9500X_RFU_V9_REG_2(addr0,addr1)      REG_2(ns_reg_sp9500x_rfu_v9,addr0,addr1)
+#define SP9500PRO_RFU_V9_REG_DECL_2(addr0,addr1) REG_DECL_2(ns_reg_sp9500pro_rfu_v9,addr0,addr1)
+#define SP9500PRO_RFU_V9_REG_DATA_2(addr0,addr1) REG_DATA_2(ns_reg_sp9500pro_rfu_v9,addr0,addr1)
+#define SP9500PRO_RFU_V9_REG_CLER_2(addr0,addr1) REG_CLER_2(ns_reg_sp9500pro_rfu_v9,addr0,addr1)
+#define SP9500PRO_RFU_V9_REG_2(addr0,addr1)      REG_2(ns_reg_sp9500pro_rfu_v9,addr0,addr1)
 
-#define SP9500X_S6_REG_DECL(addr) REG_DECL(ns_reg_sp9500x_s6,addr)
-#define SP9500X_S6_REG_DATA(addr) REG_DATA(ns_reg_sp9500x_s6,addr)
-#define SP9500X_S6_REG_CLER(addr) REG_CLER(ns_reg_sp9500x_s6,addr)
-#define SP9500X_S6_REG(addr)      REG(ns_reg_sp9500x_s6,addr)
+#define SP9500PRO_S6_REG_DECL(addr) REG_DECL(ns_reg_sp9500pro_s6,addr)
+#define SP9500PRO_S6_REG_DATA(addr) REG_DATA(ns_reg_sp9500pro_s6,addr)
+#define SP9500PRO_S6_REG_CLER(addr) REG_CLER(ns_reg_sp9500pro_s6,addr)
+#define SP9500PRO_S6_REG(addr)      REG(ns_reg_sp9500pro_s6,addr)
 
 #define SP1403_S6_REG_DECL(addr) REG_DECL(ns_reg_sp1403_s6,addr)
 #define SP1403_S6_REG_DATA(addr) REG_DATA(ns_reg_sp1403_s6,addr)
 #define SP1403_S6_REG_CLER(addr) REG_CLER(ns_reg_sp1403_s6,addr)
 #define SP1403_S6_REG(addr)      REG(ns_reg_sp1403_s6,addr)
 
-#define SP9500X_RRH_REG_DECL(addr) REG_DECL(ns_reg_sp9500x_rrh,addr)
-#define SP9500X_RRH_REG_DATA(addr) REG_DATA(ns_reg_sp9500x_rrh,addr)
-#define SP9500X_RRH_REG_CLER(addr) REG_CLER(ns_reg_sp9500x_rrh,addr)
-#define SP9500X_RRH_REG(addr)      REG(ns_reg_sp9500x_rrh,addr)
+#define SP9500PRO_RRH_REG_DECL(addr) REG_DECL(ns_reg_sp9500pro_rrh,addr)
+#define SP9500PRO_RRH_REG_DATA(addr) REG_DATA(ns_reg_sp9500pro_rrh,addr)
+#define SP9500PRO_RRH_REG_CLER(addr) REG_CLER(ns_reg_sp9500pro_rrh,addr)
+#define SP9500PRO_RRH_REG(addr)      REG(ns_reg_sp9500pro_rrh,addr)
 
 // IO
-#define SP9500X_RFU_V9_W(addr) \
-    SP9500X_RFU_V9_CHECK PCIE_DEV_W(_v9,pci_dev::AS_BAR0,ns_reg_sp9500x_rfu_v9,addr)
+#define SP9500PRO_RFU_V9_W(addr) \
+    SP9500PRO_RFU_V9_CHECK PCIE_DEV_W(_v9,pci_dev::AS_BAR0,ns_reg_sp9500pro_rfu_v9,addr)
 
-#define SP9500X_RFU_V9_R(addr) \
-    SP9500X_RFU_V9_CHECK PCIE_DEV_R(_v9,pci_dev::AS_BAR0,ns_reg_sp9500x_rfu_v9,addr)
+#define SP9500PRO_RFU_V9_R(addr) \
+    SP9500PRO_RFU_V9_CHECK PCIE_DEV_R(_v9,pci_dev::AS_BAR0,ns_reg_sp9500pro_rfu_v9,addr)
 
-#define SP9500X_RFU_V9_W_2(addr0,addr1) \
-    SP9500X_RFU_V9_CHECK PCIE_DEV_W_2(_v9,pci_dev::AS_BAR0,ns_reg_sp9500x_rfu_v9,addr0,addr1)
+#define SP9500PRO_RFU_V9_W_2(addr0,addr1) \
+    SP9500PRO_RFU_V9_CHECK PCIE_DEV_W_2(_v9,pci_dev::AS_BAR0,ns_reg_sp9500pro_rfu_v9,addr0,addr1)
 
-#define SP9500X_RFU_V9_R_2(addr0,addr1) \
-    SP9500X_RFU_V9_CHECK PCIE_DEV_R_2(_v9,pci_dev::AS_BAR0,ns_reg_sp9500x_rfu_v9,addr0,addr1)
+#define SP9500PRO_RFU_V9_R_2(addr0,addr1) \
+    SP9500PRO_RFU_V9_CHECK PCIE_DEV_R_2(_v9,pci_dev::AS_BAR0,ns_reg_sp9500pro_rfu_v9,addr0,addr1)
 
-#define SP9500X_S6_W(addr) \
-    SP9500X_S6_CHECK PCIE_DEV_W(_s6,pci_dev::AS_BAR0,ns_reg_sp9500x_s6,addr)
+#define SP9500PRO_S6_W(addr) \
+    SP9500PRO_S6_CHECK PCIE_DEV_W(_s6,pci_dev::AS_BAR0,ns_reg_sp9500pro_s6,addr)
 
-#define SP9500X_S6_R(addr) \
-    SP9500X_S6_CHECK PCIE_DEV_R(_s6,pci_dev::AS_BAR0,ns_reg_sp9500x_s6,addr)
+#define SP9500PRO_S6_R(addr) \
+    SP9500PRO_S6_CHECK PCIE_DEV_R(_s6,pci_dev::AS_BAR0,ns_reg_sp9500pro_s6,addr)
+
+#define SP9500PRO_RFU_V9_SET_BITS(addr,bits,data) \
+    PCIE_DEV_SET_BITS(SP9500PRO_RFU_V9,addr,bits,data)
+
+#define SP9500PRO_RFU_V9_SET_BITS_2(addr0,addr1,bits,data) \
+    PCIE_DEV_SET_BITS_2(SP9500PRO_RFU_V9,addr0,addr1,bits,data)
 
 // Rising edge
-#define SP9500X_RFU_V9_RE(addr,bit) CTRLLER_RE(SP9500X_RFU_V9,addr,bit)
-#define SP9500X_RFU_V9_OP(addr) SP9500X_RFU_V9_RE(addr,op)
+#define SP9500PRO_RFU_V9_RE(addr,bit) CTRLLER_RE(SP9500PRO_RFU_V9,addr,bit)
+#define SP9500PRO_RFU_V9_OP(addr) SP9500PRO_RFU_V9_RE(addr,op)
 
-#define SP9500X_RFU_V9_RE_2(addr0,addr1,bit) CTRLLER_RE_2(SP9500X_RFU_V9,addr0,addr1,bit)
-#define SP9500X_RFU_V9_OP_2(addr0,addr1) SP9500X_RFU_V9_RE_2(addr0,addr1,op)
+#define SP9500PRO_RFU_V9_RE_2(addr0,addr1,bit) CTRLLER_RE_2(SP9500PRO_RFU_V9,addr0,addr1,bit)
+#define SP9500PRO_RFU_V9_OP_2(addr0,addr1) SP9500PRO_RFU_V9_RE_2(addr0,addr1,op)
 
-#define SP9500X_S6_RE(addr,bit) CTRLLER_RE(SP9500X_S6,addr,bit)
-#define SP9500X_S6_OP(addr) SP9500X_S6_RE(addr,op)
+#define SP9500PRO_S6_RE(addr,bit) CTRLLER_RE(SP9500PRO_S6,addr,bit)
+#define SP9500PRO_S6_OP(addr) SP9500PRO_S6_RE(addr,op)
 
 // State machine
-#define SP9500X_RFU_V9_WAIT_IDLE(addr,flag,times) \
-    CTRLLER_WAIT_IDLE(SP9500X_RFU_V9,addr,busy,flag,times)
+#define SP9500PRO_RFU_V9_WAIT_IDLE(addr,flag,times) \
+    CTRLLER_WAIT_IDLE(SP9500PRO_RFU_V9,addr,busy,flag,times)
 
-#define SP9500X_RFU_V9_WAIT_IDLE_2(addr0,addr1,flag,times) \
-    CTRLLER_WAIT_IDLE_2(SP9500X_RFU_V9,addr0,addr1,busy,flag,times)
+#define SP9500PRO_RFU_V9_WAIT_IDLE_2(addr0,addr1,flag,times) \
+    CTRLLER_WAIT_IDLE_2(SP9500PRO_RFU_V9,addr0,addr1,busy,flag,times)
 
 #define SP2406_S6_WAIT_IDLE(addr,flag,times) \
     CTRLLER_WAIT_IDLE(SP2406_S6,addr,busy,flag,times)
 
 // Register Define
 
-namespace ns_reg_sp9500x_rfu_v9 {
+namespace ns_reg_sp9500pro_rfu_v9 {
 
 REG_DEF_CPT_PREFIX_32(0x0000)
     unsigned op : 1;  // DMA state-machine reset signal
@@ -183,7 +189,7 @@ REG_DEF_CPT_PREFIX_32(0x00cf)
     unsigned rsv0 : 24;
 REG_DEF_CPT_SUFFIX_32
 
-REG_DEF_CPT_PREFIX_32(0x00d0)
+REG_DEF_CPT_PREFIX_32_2(0x00d0,0x00db)
     unsigned sr0 : 4;
     unsigned sr1 : 4;
     unsigned sr2 : 4;
@@ -192,9 +198,9 @@ REG_DEF_CPT_PREFIX_32(0x00d0)
     unsigned sr5 : 4;
     unsigned sr6 : 4;
     unsigned sr7 : 4;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x00d1)
+REG_DEF_CPT_PREFIX_32_2(0x00d1,0x00dc)
     unsigned src0 : 4;
     unsigned src1 : 4;
     unsigned src2 : 4;
@@ -203,7 +209,7 @@ REG_DEF_CPT_PREFIX_32(0x00d1)
     unsigned src5 : 4;
     unsigned src6 : 4;
     unsigned src7 : 4;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
 REG_DEF_CPT_PREFIX_32(0x00d2)
     unsigned i : 16;
@@ -229,8 +235,9 @@ REG_DEF_CPT_PREFIX_32(0x00d6)
 REG_DEF_CPT_SUFFIX_32
 
 REG_DEF_CPT_PREFIX_32(0x00f0)
-    unsigned cpri : 8;
-    unsigned rsv0 : 24;
+    unsigned cpri0 : 8;
+    unsigned cpri1 : 8;
+    unsigned rsv0 : 16;
 REG_DEF_CPT_SUFFIX_32
 
 REG_DEF_CPT_PREFIX_32(0x00f1)
@@ -620,7 +627,7 @@ REG_DEF_CPT_PREFIX_32(0x0292)
     unsigned rsv0 : 28;
 REG_DEF_CPT_SUFFIX_32
 
-REG_DEF_CPT_PREFIX_32(0x0400)
+REG_DEF_CPT_PREFIX_32_2(0x0200,0x0400)
     unsigned bypass_lpf : 8;
     unsigned bypass_hbf0 : 8;
     unsigned bypass_hbf1 : 8;
@@ -628,91 +635,96 @@ REG_DEF_CPT_PREFIX_32(0x0400)
     unsigned bypass_cf : 1; // compensate filter
     unsigned bypass_gc : 1; // gain compensate
     unsigned rsv0 : 5;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0402)
+REG_DEF_CPT_PREFIX_32_2(0x04c1,0x0401)
+    unsigned gain : 16;
+    unsigned rsv0 : 16;
+REG_DEF_CPT_SUFFIX_32_2
+
+REG_DEF_CPT_PREFIX_32_2(0x0202,0x0402)
     unsigned op : 8;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0403)
+REG_DEF_CPT_PREFIX_32_2(0x0203,0x0403)
     unsigned freq : 32;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0405)
+REG_DEF_CPT_PREFIX_32_2(0x0205,0x0405)
     unsigned freq : 32;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0407)
+REG_DEF_CPT_PREFIX_32_2(0x0207,0x0407)
     unsigned freq : 32;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0409)
+REG_DEF_CPT_PREFIX_32_2(0x0209,0x0409)
     unsigned freq : 32;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x040b)
+REG_DEF_CPT_PREFIX_32_2(0x020b,0x040b)
     unsigned freq : 32;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x040d)
+REG_DEF_CPT_PREFIX_32_2(0x020d,0x040d)
     unsigned freq : 32;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x040f)
+REG_DEF_CPT_PREFIX_32_2(0x020f,0x040f)
     unsigned freq : 32;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0411)
+REG_DEF_CPT_PREFIX_32_2(0x0211,0x0411)
     unsigned freq : 32;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0413)
+REG_DEF_CPT_PREFIX_32_2(0x0213,0x0413)
     unsigned op0 : 1;
     unsigned op1 : 1;
     unsigned rsv0 : 30;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0414)
+REG_DEF_CPT_PREFIX_32_2(0x0214,0x0414)
     unsigned freq : 32;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0415)
+REG_DEF_CPT_PREFIX_32_2(0x0215,0x0415)
     unsigned phase : 32;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0416)
+REG_DEF_CPT_PREFIX_32_2(0x0216,0x0416)
     unsigned freq : 32;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0417)
+REG_DEF_CPT_PREFIX_32_2(0x0217,0x0417)
     unsigned phase : 32;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0418)
+REG_DEF_CPT_PREFIX_32_2(0x0218,0x0418)
     unsigned freq : 32;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0419)
+REG_DEF_CPT_PREFIX_32_2(0x0219,0x0419)
     unsigned phase : 32;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x041a)
+REG_DEF_CPT_PREFIX_32_2(0x021a,0x041a)
     unsigned freq : 32;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x041b)
+REG_DEF_CPT_PREFIX_32_2(0x021b,0x041b)
     unsigned phase : 32;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x042d)
+REG_DEF_CPT_PREFIX_32_2(0x022d,0x042d)
     unsigned src : 4;
     unsigned rsv0 : 28;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x042e)
+REG_DEF_CPT_PREFIX_32_2(0x022e,0x042e)
     unsigned ch : 8;
     unsigned rsv0 : 24;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
 REG_DEF_CPT_PREFIX_32(0x0301)
     unsigned i : 16;
@@ -729,90 +741,90 @@ REG_DEF_CPT_PREFIX_32(0x0313)
     unsigned rsv0 : 24;
 REG_DEF_CPT_SUFFIX_32
 
-REG_DEF_CPT_PREFIX_32(0x041c)
+REG_DEF_CPT_PREFIX_32_2(0x021c,0x041c)
     unsigned op : 8;
     unsigned rsv0 : 24;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x041d)
+REG_DEF_CPT_PREFIX_32_2(0x021d,0x041d)
     unsigned tap : 8;
     unsigned rsv0 : 24;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x041e)
+REG_DEF_CPT_PREFIX_32_2(0x021e,0x041e)
     unsigned idx : 8;
     unsigned rsv0 : 24;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x041f)
+REG_DEF_CPT_PREFIX_32_2(0x021f,0x041f)
     unsigned coef : 16;
     unsigned rsv0 : 16;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0420)
+REG_DEF_CPT_PREFIX_32_2(0x0220,0x0420)
     unsigned coef : 16;
     unsigned rsv0 : 16;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0421)
+REG_DEF_CPT_PREFIX_32_2(0x0221,0x0421)
     unsigned coef : 16;
     unsigned rsv0 : 16;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0422)
+REG_DEF_CPT_PREFIX_32_2(0x0222,0x0422)
     unsigned coef : 16;
     unsigned rsv0 : 16;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0423)
+REG_DEF_CPT_PREFIX_32_2(0x0223,0x0423)
     unsigned coef : 16;
     unsigned rsv0 : 16;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0424)
+REG_DEF_CPT_PREFIX_32_2(0x0224,0x0424)
     unsigned coef : 16;
     unsigned rsv0 : 16;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0425)
+REG_DEF_CPT_PREFIX_32_2(0x0225,0x0425)
     unsigned coef : 16;
     unsigned rsv0 : 16;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0426)
+REG_DEF_CPT_PREFIX_32_2(0x0226,0x0426)
     unsigned coef : 16;
     unsigned rsv0 : 16;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0427)
+REG_DEF_CPT_PREFIX_32_2(0x0227,0x0427)
     unsigned coef : 16;
     unsigned rsv0 : 16;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0428)
+REG_DEF_CPT_PREFIX_32_2(0x04e8,0x0428)
     unsigned op : 1;
     unsigned rsv0 : 31;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x0429)
+REG_DEF_CPT_PREFIX_32_2(0x04e9,0x0429)
     unsigned tap : 8;
     unsigned rsv0 : 24;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x042a)
+REG_DEF_CPT_PREFIX_32_2(0x04ea,0x042a)
     unsigned idx : 8;
     unsigned rsv0 : 24;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x042b)
+REG_DEF_CPT_PREFIX_32_2(0x04eb,0x042b)
     unsigned real : 16;
     unsigned imag : 16;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
-REG_DEF_CPT_PREFIX_32(0x042c)
+REG_DEF_CPT_PREFIX_32_2(0x04ec,0x042c)
     unsigned real : 16;
     unsigned imag : 16;
-REG_DEF_CPT_SUFFIX_32
+REG_DEF_CPT_SUFFIX_32_2
 
 REG_DEF_CPT_PREFIX_32(0x0440)
     unsigned reset_dl : 1;
@@ -1254,9 +1266,9 @@ REG_DEF_CPT_PREFIX_32(0x103a)
     unsigned rsv0 : 28;
 REG_DEF_CPT_SUFFIX_32
 
-} // namespace ns_reg_sp9500x_rfu_v9
+} // namespace ns_reg_sp9500pro_rfu_v9
 
-namespace ns_reg_sp9500x_rrh {
+namespace ns_reg_sp9500pro_rrh {
 
 REG_DEF_CPT_PREFIX_32(0x03)
     unsigned rx_ref : 15;
@@ -1273,7 +1285,7 @@ REG_DEF_CPT_PREFIX_32(0x07)
     unsigned rsv0 : 12;
 REG_DEF_CPT_SUFFIX_32
 
-} // ns_reg_sp9500x_rrh
+} // ns_reg_sp9500pro_rrh
 
 
 namespace ns_reg_sp1403_s6 {
@@ -1333,7 +1345,7 @@ REG_DEF_CPT_SUFFIX_16
 } // namespace ns_reg_sp1403_s6
 
 
-namespace ns_reg_sp9500x_s6 {
+namespace ns_reg_sp9500pro_s6 {
 
 REG_DEF_CPT_PREFIX_32(0x0000)
     unsigned ver : 32;
@@ -1390,6 +1402,6 @@ REG_DEF_CPT_PREFIX_32(0x0120)
     unsigned rsv0 : 31;
 REG_DEF_CPT_SUFFIX_32
 
-} // namespace ns_reg_sp9500x_s6
+} // namespace ns_reg_sp9500pro_s6
 
 #endif // REG_DEF_SP9500X_H

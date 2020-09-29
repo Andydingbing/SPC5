@@ -21,7 +21,7 @@
 using namespace ctd;
 
 template<typename ptr_t>
-dl_list<ptr_t>::dl_list()
+dlist<ptr_t>::dlist()
 {
     _fst = _cur = _lst = nullptr;
     _size = 0;
@@ -31,10 +31,10 @@ dl_list<ptr_t>::dl_list()
 }
 
 template<typename ptr_t>
-dl_list<ptr_t>::~dl_list()
+dlist<ptr_t>::~dlist()
 {
-    dl_list_node<ptr_t> *node = _fst;
-    dl_list_node<ptr_t> *next = nullptr;
+    dlist_node<ptr_t> *node = _fst;
+    dlist_node<ptr_t> *next = nullptr;
 
     for (size_t i = 0;i < _size;++i) {
         next = node->_next;
@@ -46,10 +46,10 @@ dl_list<ptr_t>::~dl_list()
 
 template<typename ptr_t>
 template<typename int_t,typename traits_t>
-ptr_t dl_list<ptr_t>::at(const int_t idx)
+ptr_t dlist<ptr_t>::at(const int_t idx)
 {
     size_t i = 0;
-    dl_list_node<ptr_t> *searching;
+    dlist_node<ptr_t> *searching;
 
     if (idx < _idx_mid_l) {
         searching = _fst;
@@ -84,9 +84,9 @@ ptr_t dl_list<ptr_t>::at(const int_t idx)
 }
 
 template<typename ptr_t>
-void dl_list<ptr_t>::push_back(const ptr_t data)
+void dlist<ptr_t>::push_back(const ptr_t data)
 {
-    dl_list_node<ptr_t> *node = new dl_list_node<ptr_t>;
+    dlist_node<ptr_t> *node = new dlist_node<ptr_t>;
     node->_data = const_cast<ptr_t>(data);
 
     if (_fst == nullptr) {

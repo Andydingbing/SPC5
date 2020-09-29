@@ -37,6 +37,7 @@ enum Project {
     SP9500 = 0,
     DT3308,
     SP9500X,
+    SP9500Pro,
     PROJECTS
 };
 

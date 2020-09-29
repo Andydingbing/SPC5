@@ -256,7 +256,7 @@ void Q_SP2406_Widget::on_pushButtonSetDL_LPF_clicked()
 {
     std::vector<int16_t> coef;
 
-    string_to_container(ui->textEditDL_LPF_Coef->toPlainText().toStdString(),',',coef);
+    string_to_container<int16_t>(ui->textEditDL_LPF_Coef->toPlainText().toStdString(),',',coef);
     SP2406->set_dl_lpf_coef(DL_ch,coef);
 }
 
@@ -265,8 +265,8 @@ void Q_SP2406_Widget::on_pushButtonSetDL_CF_clicked()
     std::vector<int16_t> real;
     std::vector<int16_t> imag;
 
-    string_to_container(ui->textEditDL_CF_Coef_Real->toPlainText().toStdString(),',',real);
-    string_to_container(ui->textEditDL_CF_Coef_Imag->toPlainText().toStdString(),',',imag);
+    string_to_container<int16_t>(ui->textEditDL_CF_Coef_Real->toPlainText().toStdString(),',',real);
+    string_to_container<int16_t>(ui->textEditDL_CF_Coef_Imag->toPlainText().toStdString(),',',imag);
     SP2406->set_dl_cf_coef(real,imag);
 }
 
@@ -364,8 +364,8 @@ void Q_SP2406_Widget::on_pushButtonSetUL_CF_clicked()
     std::vector<int16_t> real;
     std::vector<int16_t> imag;
 
-    string_to_container(ui->textEditUL_CF_CoefReal->toPlainText().toStdString(),',',real);
-    string_to_container(ui->textEditUL_CF_CoefImag->toPlainText().toStdString(),',',imag);
+    string_to_container<int16_t>(ui->textEditUL_CF_CoefReal->toPlainText().toStdString(),',',real);
+    string_to_container<int16_t>(ui->textEditUL_CF_CoefImag->toPlainText().toStdString(),',',imag);
     SP2406->set_ul_cf_coef(real,imag);
 }
 
@@ -373,7 +373,7 @@ void Q_SP2406_Widget::on_pushButtonSetUL_LPF_clicked()
 {
     std::vector<int16_t> coef;
 
-    string_to_container(ui->textEditUL_LPF_Coef->toPlainText().toStdString(),',',coef);
+    string_to_container<int16_t>(ui->textEditUL_LPF_Coef->toPlainText().toStdString(),',',coef);
     SP2406->set_ul_lpf_coef(UL_ch,coef);
 }
 

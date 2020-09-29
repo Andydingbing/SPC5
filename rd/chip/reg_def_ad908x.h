@@ -6,8 +6,16 @@
 #define AD908X_REG_DECL(addr,init) REG_DECL_INIT(ns_reg_ad908x,addr,init)
 #define AD908X_REG_DATA(addr) REG_DATA(ns_reg_ad908x,addr)
 #define AD908X_REG(addr) REG(ns_reg_ad908x,addr)
+#define AD908X_REG_W(addr) INT_CHECK(set_reg(addr,AD908X_REG_DATA(addr)))
 
 namespace ns_reg_ad908x {
+
+/*
+ * cddc : coarse digital down conversion
+ * pfilt : programmable FIR filter
+ * piw : phase_inc_word
+ *
+ */
 
 REG_DEF_CPT_PREFIX_8(0x0000)
     unsigned soft_reset : 1;
@@ -68,14 +76,8 @@ REG_DEF_CPT_PREFIX_8(0x0013)
 REG_DEF_CPT_SUFFIX_8
 
 REG_DEF_CPT_PREFIX_8(0x0018)
-    unsigned adc0_page : 1;
-    unsigned adc1_page : 1;
-    unsigned adc2_page : 1;
-    unsigned adc3_page : 1;
-    unsigned coarse_ddc0_page : 1;
-    unsigned coarse_ddc1_page : 1;
-    unsigned coarse_ddc2_page : 1;
-    unsigned coarse_ddc3_page : 1;
+    unsigned adc_page : 4;
+    unsigned cddc_page : 4;
 REG_DEF_CPT_SUFFIX_8
 
 REG_DEF_CPT_PREFIX_8(0x0019)
@@ -1429,27 +1431,27 @@ REG_DEF_CPT_PREFIX_8(0x0a04)
 REG_DEF_CPT_SUFFIX_8
 
 REG_DEF_CPT_PREFIX_8(0x0a05)
-    unsigned ddc0_phase_inc0 : 8;
+    unsigned piw : 8;
 REG_DEF_CPT_SUFFIX_8
 
 REG_DEF_CPT_PREFIX_8(0x0a06)
-    unsigned ddc0_phase_inc1 : 8;
+    unsigned piw : 8;
 REG_DEF_CPT_SUFFIX_8
 
 REG_DEF_CPT_PREFIX_8(0x0a07)
-    unsigned ddc0_phase_inc2 : 8;
+    unsigned piw : 8;
 REG_DEF_CPT_SUFFIX_8
 
 REG_DEF_CPT_PREFIX_8(0x0a08)
-    unsigned ddc0_phase_inc3 : 8;
+    unsigned piw : 8;
 REG_DEF_CPT_SUFFIX_8
 
 REG_DEF_CPT_PREFIX_8(0x0a09)
-    unsigned ddc0_phase_inc4 : 8;
+    unsigned piw : 8;
 REG_DEF_CPT_SUFFIX_8
 
 REG_DEF_CPT_PREFIX_8(0x0a0a)
-    unsigned ddc0_phase_inc5 : 8;
+    unsigned piw : 8;
 REG_DEF_CPT_SUFFIX_8
 
 REG_DEF_CPT_PREFIX_8(0x0a0b)
@@ -1565,27 +1567,27 @@ REG_DEF_CPT_PREFIX_8(0x0a25)
 REG_DEF_CPT_SUFFIX_8
 
 REG_DEF_CPT_PREFIX_8(0x0a26)
-    unsigned ddc0_active_phase_inc0 : 8;
+    unsigned active_piw : 8;
 REG_DEF_CPT_SUFFIX_8
 
 REG_DEF_CPT_PREFIX_8(0x0a27)
-    unsigned ddc0_active_phase_inc1 : 8;
+    unsigned active_piw : 8;
 REG_DEF_CPT_SUFFIX_8
 
 REG_DEF_CPT_PREFIX_8(0x0a28)
-    unsigned ddc0_active_phase_inc2 : 8;
+    unsigned active_piw : 8;
 REG_DEF_CPT_SUFFIX_8
 
 REG_DEF_CPT_PREFIX_8(0x0a29)
-    unsigned ddc0_active_phase_inc3 : 8;
+    unsigned active_piw : 8;
 REG_DEF_CPT_SUFFIX_8
 
 REG_DEF_CPT_PREFIX_8(0x0a2a)
-    unsigned ddc0_active_phase_inc4 : 8;
+    unsigned active_piw : 8;
 REG_DEF_CPT_SUFFIX_8
 
 REG_DEF_CPT_PREFIX_8(0x0a2b)
-    unsigned ddc0_active_phase_inc5 : 8;
+    unsigned active_piw : 8;
 REG_DEF_CPT_SUFFIX_8
 
 REG_DEF_CPT_PREFIX_8(0x0a2c)

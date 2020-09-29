@@ -43,14 +43,12 @@ int32_t sp2401_r1a::open_board(vi_pci_dev *k7, vi_pci_dev *s6)
     if (m_rf_idx == 0 || m_rf_idx == 2) {
         INT_CHECK(clock_of_da_ld(lock));
         if (lock == false) {
-            Log.set_last_err("ADF4351 of DAC unlocked\n");
-            Log.stdprintf(Log.last_err());
+            Log.set_last_err("ADF4351 of DAC unlocked");
         }
         INT_CHECK(da_reset());
         INT_CHECK(clock_of_ad_ld(lock));
         if (lock == false) {
-            Log.set_last_err("ADF4351 of ADC unlocked\n");
-            Log.stdprintf(Log.last_err());
+            Log.set_last_err("ADF4351 of ADC unlocked");
         }
     }
 

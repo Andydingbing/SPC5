@@ -154,8 +154,8 @@ void NS_SP9500X::Q_IQ_Cap_Config_Delegate::setCaptureSource(int index)
     comboBoxSourceDDC->setEnabled(index == iq_cap_src_t::DDC);
     comboBoxSourceDDC_Ch->setEnabled(index == iq_cap_src_t::DDC);
     comboBoxSourceDL_CPRI_Ch->setEnabled(index == iq_cap_src_t::DL_CPRI);
-    comboBoxSourceDUC->setEnabled(index == iq_cap_src_t::DUC);
-    comboBoxSourceDUC_Ch->setEnabled(index == iq_cap_src_t::DUC);
+    comboBoxSourceDUC->setEnabled(index == iq_cap_src_t::DUC_Ch0 || index == iq_cap_src_t::DUC_Ch1);
+    comboBoxSourceDUC_Ch->setEnabled(index == iq_cap_src_t::DUC_Ch0 || index == iq_cap_src_t::DUC_Ch1);
 }
 
 void NS_SP9500X::Q_IQ_Cap_Config_Delegate::setCaptureSourceDDC(int index)

@@ -2,6 +2,7 @@
 #define RD_COMMON_CAL_FILE_HPP
 
 #include "cal_table.hpp"
+#include "traits.hpp"
 #include <list>
 #include <map>
 #include <boost/noncopyable.hpp>
@@ -49,8 +50,19 @@ public:
 public:
     int32_t make_sure_has(const cal_table_t table,cal_table *t);
 
+    int32_t prepare_cal(const cal_table_t table);
+
     int32_t add(const cal_table_t table,void *data);
+
+    template<typename int_t,typename traits_t = traits_int<int_t>>
+    int32_t add(const int_t table,void *data)
+    { return add(cal_table_t::_from_integral(table),data); }
+
     int32_t persistence(const cal_table_t table) const;
+
+    template<typename int_t,typename traits_t = traits_int<int_t>>
+    int32_t persistence(const int_t table) const
+    { return persistence(cal_table_t::_from_integral(table)); }
 
 protected:
     virtual int32_t open();
