@@ -45,7 +45,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>NotSet</CharacterSet>
-    <PlatformToolset>Windows7.1SDK</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -57,7 +57,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>NotSet</CharacterSet>
-    <PlatformToolset>Windows7.1SDK</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Static-Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -70,7 +70,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>NotSet</CharacterSet>
-    <PlatformToolset>Windows7.1SDK</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -84,7 +84,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>NotSet</CharacterSet>
-    <PlatformToolset>Windows7.1SDK</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Static-Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -121,7 +121,18 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Static-Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Static-Release|Win32'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>
@@ -129,15 +140,16 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>FFTW_DLL;WIN32;_WIN32;_DEBUG;_WINDOWS;_USRDLL;LIBFFTWF33_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\..\..\api;$(ProjectDir)\..\..\kernel;$(ProjectDir)\..\..\dft;$(ProjectDir)\..\fftw-3.3.8\dft\simd;$(ProjectDir)\..\fftw-3.3.8\dft\scalar;$(ProjectDir)\..\..\rdft;$(ProjectDir)\..\fftw-3.3.8\rdft\simd;$(ProjectDir)\..\fftw-3.3.8\rdft\scalar;$(ProjectDir)\..\..\reodft;$(ProjectDir)\..\..\simd-support;$(ProjectDir)\..\..\threads</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\fftw-3.3.8;$(ProjectDir)..\fftw-3.3.8\api;$(ProjectDir)..\fftw-3.3.8\kernel;$(ProjectDir)..\fftw-3.3.8\dft;$(ProjectDir)..\fftw-3.3.8\dft\simd;$(ProjectDir)..\fftw-3.3.8\dft\scalar;$(ProjectDir)..\fftw-3.3.8\\rdft;$(ProjectDir)..\fftw-3.3.8\rdft\simd;$(ProjectDir)..\fftw-3.3.8\rdft\scalar;$(ProjectDir)..\fftw-3.3.8\reodft;$(ProjectDir)..\fftw-3.3.8\simd-support;$(ProjectDir)..\fftw-3.3.8\threads</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <OpenMPSupport>true</OpenMPSupport>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <BrowseInformation>true</BrowseInformation>
+      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -152,10 +164,11 @@
       <OpenMPSupport>true</OpenMPSupport>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <BrowseInformation>false</BrowseInformation>
+      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Static-Debug|Win32'">
@@ -165,12 +178,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WIN32;_DEBUG;_WINDOWS;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\..\..\api;$(ProjectDir)\..\..\kernel;$(ProjectDir)\..\..\dft;$(ProjectDir)\..\fftw-3.3.8\dft\simd;$(ProjectDir)\..\fftw-3.3.8\dft\scalar;$(ProjectDir)\..\..\rdft;$(ProjectDir)\..\fftw-3.3.8\rdft\simd;$(ProjectDir)\..\fftw-3.3.8\rdft\scalar;$(ProjectDir)\..\..\reodft;$(ProjectDir)\..\..\simd-support;$(ProjectDir)\..\..\threads</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\fftw-3.3.8;$(ProjectDir)..\fftw-3.3.8\api;$(ProjectDir)..\fftw-3.3.8\kernel;$(ProjectDir)..\fftw-3.3.8\dft;$(ProjectDir)..\fftw-3.3.8\dft\simd;$(ProjectDir)..\fftw-3.3.8\dft\scalar;$(ProjectDir)..\fftw-3.3.8\\rdft;$(ProjectDir)..\fftw-3.3.8\rdft\simd;$(ProjectDir)..\fftw-3.3.8\rdft\scalar;$(ProjectDir)..\fftw-3.3.8\reodft;$(ProjectDir)..\fftw-3.3.8\simd-support;$(ProjectDir)..\fftw-3.3.8\threads</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <OpenMPSupport>true</OpenMPSupport>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <StructMemberAlignment>Default</StructMemberAlignment>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -189,7 +202,7 @@
       <OpenMPSupport>true</OpenMPSupport>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <StructMemberAlignment>Default</StructMemberAlignment>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -205,13 +218,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>FFTW_DLL;WIN32;NDEBUG;_WIN32;_WINDOWS;_USRDLL;LIBFFTWF33_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\..\..\api;$(ProjectDir)\..\..\kernel;$(ProjectDir)\..\..\dft;$(ProjectDir)\..\fftw-3.3.8\dft\simd;$(ProjectDir)\..\fftw-3.3.8\dft\scalar;$(ProjectDir)\..\..\rdft;$(ProjectDir)\..\fftw-3.3.8\rdft\simd;$(ProjectDir)\..\fftw-3.3.8\rdft\scalar;$(ProjectDir)\..\..\reodft;$(ProjectDir)\..\..\simd-support;$(ProjectDir)\..\..\threads</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\fftw-3.3.8;$(ProjectDir)..\fftw-3.3.8\api;$(ProjectDir)..\fftw-3.3.8\kernel;$(ProjectDir)..\fftw-3.3.8\dft;$(ProjectDir)..\fftw-3.3.8\dft\simd;$(ProjectDir)..\fftw-3.3.8\dft\scalar;$(ProjectDir)..\fftw-3.3.8\\rdft;$(ProjectDir)..\fftw-3.3.8\rdft\simd;$(ProjectDir)..\fftw-3.3.8\rdft\scalar;$(ProjectDir)..\fftw-3.3.8\reodft;$(ProjectDir)..\fftw-3.3.8\simd-support;$(ProjectDir)..\fftw-3.3.8\threads</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <OpenMPSupport>true</OpenMPSupport>
+      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
@@ -229,10 +243,11 @@
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <OpenMPSupport>true</OpenMPSupport>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
@@ -246,9 +261,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WIN32;_WINDOWS;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\..\..\api;$(ProjectDir)\..\..\kernel;$(ProjectDir)\..\..\dft;$(ProjectDir)\..\fftw-3.3.8\dft\simd;$(ProjectDir)\..\fftw-3.3.8\dft\scalar;$(ProjectDir)\..\..\rdft;$(ProjectDir)\..\fftw-3.3.8\rdft\simd;$(ProjectDir)\..\fftw-3.3.8\rdft\scalar;$(ProjectDir)\..\..\reodft;$(ProjectDir)\..\..\simd-support;$(ProjectDir)\..\..\threads</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\fftw-3.3.8;$(ProjectDir)..\fftw-3.3.8\api;$(ProjectDir)..\fftw-3.3.8\kernel;$(ProjectDir)..\fftw-3.3.8\dft;$(ProjectDir)..\fftw-3.3.8\dft\simd;$(ProjectDir)..\fftw-3.3.8\dft\scalar;$(ProjectDir)..\fftw-3.3.8\\rdft;$(ProjectDir)..\fftw-3.3.8\rdft\simd;$(ProjectDir)..\fftw-3.3.8\rdft\scalar;$(ProjectDir)..\fftw-3.3.8\reodft;$(ProjectDir)..\fftw-3.3.8\simd-support;$(ProjectDir)..\fftw-3.3.8\threads</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <OpenMPSupport>true</OpenMPSupport>
+      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -270,6 +286,7 @@
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <OpenMPSupport>true</OpenMPSupport>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

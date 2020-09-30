@@ -1,6 +1,6 @@
 # Thrid party libraries
 BOOST_VER = 1_67_0
-FFTW_VER  = 3.3.5
+FFTW_VER  = 3.3.8
 QWT_VER   = 6.1.3
 
 # Directory defination
@@ -87,7 +87,7 @@ LIBS += -L$$LIB_DIR
 FFTW_LIB = $$LIB_DIR/fftw/$$FFTW_VER
 
 win32-g++ {
-    message("win32-g++")
+    message("Compiler : win32-g++")
 
     LIB_DIR = $$LIB_DIR/win32-g++
 
@@ -98,10 +98,11 @@ win32-g++ {
     -lboost_chrono
 }
 win32-msvc {
-    message("win32-msvc")
+    message("Compiler : win32-msvc")
 
     # Multi-Processor
-    QMAKE_CXXFLAGS += /MP
+    QMAKE_CFLAGS += /MP
+    QMAKE_LFLAGS_DEBUG -= /DEBUG
 
     INCLUDEPATH += ../include/win/pthread
 
@@ -110,7 +111,7 @@ win32-msvc {
     LIBS += -lpthreadVC2
 }
 linux-g++ {
-    message("linux-g++")
+    message("Compiler : linux-g++")
 
     LIB_DIR = $$LIB_DIR/linux-g++
 

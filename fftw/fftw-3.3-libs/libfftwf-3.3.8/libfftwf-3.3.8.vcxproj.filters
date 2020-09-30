@@ -66,201 +66,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\api\apiplan.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\configure.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\execute.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\execute-dft.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\execute-dft-c2r.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\execute-dft-r2c.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\execute-r2r.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\execute-split-dft.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\execute-split-dft-c2r.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\execute-split-dft-r2c.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\export-wisdom.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\export-wisdom-to-file.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\export-wisdom-to-string.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\f77api.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\flops.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\forget-wisdom.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\import-system-wisdom.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\import-wisdom.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\import-wisdom-from-file.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\import-wisdom-from-string.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\malloc.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\mapflags.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\map-r2r-kind.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\mkprinter-file.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\mktensor-iodims.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\mktensor-iodims64.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\mktensor-rowmajor.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-dft.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-dft-1d.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-dft-2d.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-dft-3d.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-dft-c2r.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-dft-c2r-1d.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-dft-c2r-2d.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-dft-c2r-3d.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-dft-r2c.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-dft-r2c-1d.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-dft-r2c-2d.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-dft-r2c-3d.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-guru64-dft.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-guru64-dft-c2r.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-guru64-dft-r2c.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-guru64-r2r.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-guru64-split-dft.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-guru64-split-dft-c2r.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-guru64-split-dft-r2c.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-guru-dft.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-guru-dft-c2r.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-guru-dft-r2c.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-guru-r2r.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-guru-split-dft.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-guru-split-dft-c2r.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-guru-split-dft-r2c.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-many-dft.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-many-dft-c2r.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-many-dft-r2c.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-many-r2r.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-r2r.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-r2r-1d.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-r2r-2d.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\plan-r2r-3d.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\print-plan.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\rdft2-pad.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\the-planner.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\api\version.c">
-      <Filter>Source Files\api</Filter>
-    </ClCompile>
     <ClCompile Include="..\fftw-3.3.8\dft\bluestein.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1896,9 +1701,6 @@
     <ClCompile Include="..\fftw-3.3.8\reodft\rodft00e-r2hc.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\fftw-3.3.8\simd-support\sse2-nonportable.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\fftw-3.3.8\simd-support\sse2.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1930,6 +1732,204 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\fftw-3.3.8\threads\vrank-geq1-rdft2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\apiplan.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\configure.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\execute-dft-c2r.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\execute-dft-r2c.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\execute-dft.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\execute-r2r.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\execute-split-dft-c2r.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\execute-split-dft-r2c.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\execute-split-dft.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\execute.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\export-wisdom-to-file.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\export-wisdom-to-string.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\export-wisdom.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\f77api.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\flops.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\forget-wisdom.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\import-system-wisdom.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\import-wisdom-from-file.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\import-wisdom-from-string.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\import-wisdom.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\malloc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\mkprinter-str.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\map-r2r-kind.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\mapflags.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\mkprinter-file.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\mktensor-iodims.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\mktensor-iodims64.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\mktensor-rowmajor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-dft-1d.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-dft-2d.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-dft-3d.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-dft-c2r-1d.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-dft-c2r-2d.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-dft-c2r-3d.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-dft-c2r.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-dft-r2c-1d.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-dft-r2c-2d.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-dft-r2c-3d.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-dft-r2c.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-dft.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-guru-dft-c2r.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-guru-dft-r2c.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-guru-dft.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-guru-r2r.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-guru-split-dft-c2r.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-guru-split-dft-r2c.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-guru-split-dft.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-guru64-dft-c2r.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-guru64-dft-r2c.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-guru64-dft.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-guru64-r2r.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-guru64-split-dft-c2r.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-guru64-split-dft-r2c.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-guru64-split-dft.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-many-dft-c2r.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-many-dft-r2c.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-many-dft.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-many-r2r.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-r2r-1d.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-r2r-2d.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-r2r-3d.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\plan-r2r.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\print-plan.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\rdft2-pad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\the-planner.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-3.3.8\api\version.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
