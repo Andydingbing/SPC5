@@ -6,10 +6,9 @@ QWT_VER   = 6.1.3
 # Directory defination
 UTILITIES_DIR = ../utilities
 LIB_DIR = ../lib
-BOOST_LIB   = $$LIB_DIR
-FFTW_LIB    = $$LIB_DIR
-QWT_LIB     = $$LIB_DIR
-PTHREAD_LIB = $$LIB_DIR
+BOOST_LIB = $$LIB_DIR
+FFTW_LIB  = $$LIB_DIR
+QWT_LIB   = $$LIB_DIR
 
 win32 {
     INCLUDEPATH += \
@@ -104,11 +103,7 @@ win32-msvc {
     QMAKE_CFLAGS += /MP
     QMAKE_LFLAGS_DEBUG -= /DEBUG
 
-    INCLUDEPATH += ../include/win/pthread
-
     LIB_DIR = $$LIB_DIR/win32-msvc
-
-    LIBS += -lpthreadVC2
 }
 linux-g++ {
     message("Compiler : linux-g++")
@@ -138,5 +133,4 @@ LIBS += \
 -L../$$BOOST_LIB \
 -L$$BOOST_LIB \
 -L$$FFTW_LIB \
--L$$PTHREAD_LIB \
 -L$$QWT_LIB

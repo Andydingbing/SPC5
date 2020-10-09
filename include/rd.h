@@ -26,6 +26,7 @@
 
 #include "stdint_common.h"
 #include <boost/noncopyable.hpp>
+#include <boost/thread.hpp>
 
 /*
  * nullptr_t & nullptr for compiler not support C++11 and later.
@@ -34,6 +35,12 @@
 #if (defined(__cplusplus) && (__cplusplus < 201103L))
 #include "nullptr.h"
 #endif // __cplusplus
+
+#ifdef BOOST_THREAD_VERSION
+#undef BOOST_THREAD_VERSION
+#endif
+
+#define BOOST_THREAD_VERSION 5
 
 // struct align defines
 #ifdef RD_C_MSC

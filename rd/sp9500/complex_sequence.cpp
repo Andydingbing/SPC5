@@ -1,5 +1,4 @@
 #include "complex_sequence.h"
-#include "pthread.h"
 #include <string.h>
 #include <complex>
 #include <math.h>
@@ -7,7 +6,7 @@
 
 #include "trace.inline.hpp"
 
-pthread_mutex_t g_complex_sequence_lock = PTHREAD_MUTEX_INITIALIZER;
+static boost::mutex g_complex_sequence_lock;
 
 complex_sequence::complex_sequence()
 {
@@ -27,7 +26,7 @@ complex_sequence::~complex_sequence()
 
 void complex_sequence::_new(uint32_t samples)
 {
-    pthread_mutex_lock(&g_complex_sequence_lock);
+    g_complex_sequence_lock.lock();
 
     size_t samples_befor = this->samples();
 
@@ -49,7 +48,7 @@ void complex_sequence::_new(uint32_t samples)
         update_normalized_freq();
     }
 
-    pthread_mutex_unlock(&g_complex_sequence_lock);
+    g_complex_sequence_lock.unlock();
 }
 
 void complex_sequence::set_sr(uint64_t sr)

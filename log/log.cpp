@@ -3,12 +3,12 @@
 #include <iostream>
 #include <cstdarg> // bring in va
 #include <boost/format.hpp>
+#include <boost/thread.hpp>
 
 #ifdef RD_PLATFORM_WIN32
     #define MSG_LOG_PATH "C://msg.log"
     #define REG_LOG_PATH "C://reg.log"
 
-	#include "pthread.h"
 	#include <WinDef.h>
 	#include <WinBase.h>
     #include <WinCon.h>
@@ -16,20 +16,15 @@
     #define MSG_LOG_PATH "/var/log/spc5/msg.log"
     #define REG_LOG_PATH "/var/log/spc5/reg.log"
     #include <sys/time.h>
-    #include <pthread.h>
 #endif
-
-#ifdef RD_C_GNUC
-    #define TRACE(arg)
-#endif
-
 
 using namespace rd;
 
 static log_t g_log;
 static ctd::dlist<log_t::msg_log_t *> g_msg_log = ctd::dlist<log_t::msg_log_t *>();
 static ctd::dlist<log_t::reg_log_t *> g_reg_log = ctd::dlist<log_t::reg_log_t *>();
-static pthread_mutex_t g_log_lock = PTHREAD_MUTEX_INITIALIZER;
+
+static boost::mutex g_log_lock;
 
 log_t::msg_log_t::msg_log_t() : result(0),msg("\0"),time("\0") {}
 log_t::reg_log_t::reg_log_t() : result(0),addr(0xffff),w(0xFFFFFFFF),r(0xFFFFFFFF),fpga("\0"),time("\0") {}
@@ -226,7 +221,7 @@ int log_t::add_msg(const char *fmt,...)
 		return 0;
     }
 
-    pthread_mutex_lock(&g_log_lock);
+    g_log_lock.lock();
 
     msg_log_t *msg = new msg_log_t;
 
@@ -262,7 +257,7 @@ int log_t::add_msg(const char *fmt,...)
         }
 #endif
 	}
-    pthread_mutex_unlock(&g_log_lock);
+    g_log_lock.unlock();
 	return 0;
 }
 
@@ -272,7 +267,7 @@ int log_t::add_msg(int32_t result,const char *fmt,...)
 		return 0;
     }
 
-    pthread_mutex_lock(&g_log_lock);
+    g_log_lock.lock();
 
     msg_log_t *msg = new msg_log_t;
 
@@ -309,7 +304,7 @@ int log_t::add_msg(int32_t result,const char *fmt,...)
         }
 #endif
 	}
-    pthread_mutex_unlock(&g_log_lock);
+    g_log_lock.unlock();
     return result;
 }
 
@@ -319,7 +314,7 @@ int log_t::add_reg(int32_t result, const std::string &fpga, uint32_t addr, uint3
 		return 0;
     }
 
-    pthread_mutex_lock(&g_log_lock);
+    g_log_lock.lock();
 
     reg_log_t *reg = new reg_log_t;
 
@@ -370,7 +365,7 @@ int log_t::add_reg(int32_t result, const std::string &fpga, uint32_t addr, uint3
         }
 #endif
 	}
-    pthread_mutex_unlock(&g_log_lock);
+    g_log_lock.unlock();
     return result;
 }
 

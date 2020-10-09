@@ -217,7 +217,6 @@ void QCalR1CRXTempCompThread::cal()
 
     quint64 freq = 0;
     double temp = 0.0;
-    quint32 fanSpeed = 0;
     double pwr = 0.0;
 
     Point *point = nullptr;
