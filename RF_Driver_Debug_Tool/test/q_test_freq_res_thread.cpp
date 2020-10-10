@@ -1,6 +1,5 @@
 #include "q_test_freq_res_thread.h"
 #include "q_model_freq_res.h"
-#include "algorithm.h"
 #include "algo_math.hpp"
 #include "spec.h"
 

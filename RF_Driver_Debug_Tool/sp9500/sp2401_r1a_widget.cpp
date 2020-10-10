@@ -1,6 +1,5 @@
 #include "sp2401_r1a_widget.h"
 #include "ui_sp2401_r1a.h"
-#include "algorithm.h"
 #include "algo_math.hpp"
 
 using namespace rd;

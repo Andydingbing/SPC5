@@ -1,6 +1,5 @@
 #include "q_test_rf_thread.h"
 #include "q_model_freq_res.h"
-#include "algorithm.h"
 #include "spec.h"
 #include "mainwindow.h"
 

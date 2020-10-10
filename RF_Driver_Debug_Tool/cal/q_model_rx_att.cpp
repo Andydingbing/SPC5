@@ -1,6 +1,5 @@
 #include "q_model_rx_att.h"
 #include <QPointF>
-#include "algorithm.h"
 #include "algo_math.hpp"
 
 using namespace rd;

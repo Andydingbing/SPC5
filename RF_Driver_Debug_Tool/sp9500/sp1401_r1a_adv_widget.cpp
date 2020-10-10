@@ -1,6 +1,5 @@
 #include "sp1401_r1a_adv_widget.h"
 #include "ui_sp1401_r1a_adv.h"
-#include "algorithm.h"
 
 using namespace rd;
 using namespace rd::ns_sp1401;

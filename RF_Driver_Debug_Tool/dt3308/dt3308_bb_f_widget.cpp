@@ -1,6 +1,5 @@
 #include "dt3308_bb_f_widget.h"
 #include "ui_dt3308_bb_f.h"
-#include "algorithm.h"
 #include "algo_math.hpp"
 
 using namespace rd::ns_dt3308;

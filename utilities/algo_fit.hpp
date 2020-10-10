@@ -386,7 +386,7 @@ void spline(const std::vector<typename data_type::data_t> &x,
 
     for (size_t i = 1;i < n - 1;i ++) {
         X[i * n + i - 1] = h[i - 1];
-        X[i * n + i]	 = (h[i - 1] + h[i]) * 2;
+        X[i * n + i]     = (h[i - 1] + h[i]) * 2;
         X[i * n + i + 1] = h[i];
     }
 
@@ -412,10 +412,10 @@ void spline(const std::vector<typename data_type::data_t> &x,
 /*
  * 1 dimension data interpolation
  * x,y    : (x,y)
-// x1,y1  : output （x1,y1）
-// method : linear method
-// I      : interpolation factor
-*/
+ * x1,y1  : output (x1,y1)
+ * method : linear method
+ * I      : interpolation factor
+ */
 namespace ns_interp {
 
 enum method {

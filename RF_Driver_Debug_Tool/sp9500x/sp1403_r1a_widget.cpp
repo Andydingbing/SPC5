@@ -2,7 +2,6 @@
 #include "ui_sp1403_r1a.h"
 #include "lmx2594_dlg.h"
 #include "reg_def_sp9500x.h"
-#include "algorithm.h"
 
 using namespace rd;
 using namespace rd::ns_sp1403;

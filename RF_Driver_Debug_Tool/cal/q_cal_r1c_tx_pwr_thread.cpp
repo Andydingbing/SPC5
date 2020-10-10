@@ -1,6 +1,5 @@
 #include "q_cal_r1c_tx_pwr_thread.h"
 #include "q_model_tx_pwr.h"
-#include "algorithm.h"
 #include "algo_math.hpp"
 #include "algo_chip_att.hpp"
 #include "spec.h"

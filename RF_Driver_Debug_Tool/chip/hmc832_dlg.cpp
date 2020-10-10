@@ -1,6 +1,5 @@
 #include "hmc832_dlg.h"
 #include "reg_def_hmc832.h"
-#include "algorithm.h"
 #include "algo_chip_pll.hpp"
 
 using namespace ns_hmc83x;

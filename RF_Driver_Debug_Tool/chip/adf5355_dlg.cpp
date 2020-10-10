@@ -1,6 +1,5 @@
 #include "adf5355_dlg.h"
 #include "ui_adf5355.h"
-#include "algorithm.h"
 #include "algo_chip_pll.hpp"
 #include <QThread>
 

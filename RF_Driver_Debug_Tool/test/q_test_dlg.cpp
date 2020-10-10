@@ -189,7 +189,7 @@ void QTestR1CTempPwrDlg::resetShowWidget(TestBaseParam *param)
     }
 
     if (p->ch == sp1401::CH_TX) {
-//        p->SP1401->tx_att_states(modelTx->att,modelTx->checked);
+        SP1401->tx_att_states(modelTx->att,modelTx->checked);
     } else {
         SP1401->rx_att_states(modelRx->att,modelRx->checked);
     }

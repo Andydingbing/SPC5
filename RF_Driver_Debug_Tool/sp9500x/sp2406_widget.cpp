@@ -1,6 +1,5 @@
 #include "sp2406_widget.h"
 #include "ui_sp2406.h"
-#include "algorithm.h"
 #include "algo_math.hpp"
 #include "utilities.hpp"
 #include <QBitArray>

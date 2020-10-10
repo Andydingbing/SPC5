@@ -4,7 +4,6 @@
 #include "qwt_plot_curve.h"
 #include "q_rdt_tableview.h"
 #include "q_winthread.h"
-#include "algorithm.h"
 
 using namespace rd;
 using namespace rd::ns_sp1401;

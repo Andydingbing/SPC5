@@ -1,6 +1,5 @@
 #include "q_cal_r1c_rx_filter_offset_thread.h"
 #include "q_model_rx_filter_offset.h"
-#include "algorithm.h"
 #include "algo_math.hpp"
 
 using namespace rd::ns_sp9500;

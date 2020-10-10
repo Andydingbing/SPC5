@@ -1,7 +1,6 @@
 #include "sp3501.h"
 #include "reg_def_sp9500.h"
 #include "gen_ini_file.hpp"
-#include "algorithm.h"
 #include <string>
 #include "algo_chip.hpp"
 #include "cal_table.h"

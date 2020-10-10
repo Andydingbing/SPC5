@@ -1,6 +1,5 @@
 #include "dt3308_rf_f_widget.h"
 #include "ui_dt3308_rf_f.h"
-#include "algorithm.h"
 
 using namespace ns_dt3308::f;
 

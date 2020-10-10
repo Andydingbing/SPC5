@@ -1,6 +1,5 @@
 #include "q_test_temp_pwr_thread.h"
 #include "q_model_temp_pwr.hpp"
-#include "algorithm.h"
 #include "algo_math.hpp"
 #include "spec.h"
 #include "q_test_freq_res_widget.h"

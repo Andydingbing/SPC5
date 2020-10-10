@@ -1,6 +1,5 @@
 #include "q_cal_r1c_tx_filter_offset_thread.h"
 #include "q_model_filter_offset.h"
-#include "algorithm.h"
 
 using namespace rd;
 using namespace rd::ns_sp1401;

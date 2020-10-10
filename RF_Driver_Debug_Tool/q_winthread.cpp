@@ -2,7 +2,6 @@
 #include <QMessageBox>
 #include "mainwindow.h"
 #include <QDateTime>
-#include "algorithm.h"
 #include "q_test_tx_io_sw_msg_dlg.h"
 #include "q_cal_base_dlg.h"
 

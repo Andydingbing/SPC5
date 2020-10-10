@@ -1,6 +1,5 @@
 #include "../sp9500/dma_mgr.h"
 #include "reg_def_sp9500.h"
-#include "algorithm.h"
 #include "sleep_common.h"
 #include "pci_dev_vi.h"
 #include "mem_io_vi.h"

@@ -10,7 +10,6 @@
 #include "q_model_temp_pwr.hpp"
 #include "q_cal_temp_comp_widget.hpp"
 #include "q_cal_temp_comp_widget.cpp"
-#include "algorithm.h"
 #include "algo_math.hpp"
 #include "spec.h"
 
