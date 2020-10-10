@@ -1,6 +1,5 @@
 #include "sp3103.h"
 #include "reg_def_sp9500x.h"
-#include "algorithm.h"
 #include "algo_fit.hpp"
 #include "gen_ini_file.hpp"
 #include <string>

@@ -1,6 +1,5 @@
 #include "../dt3308/dma_mgr.hpp"
 #include "reg_def_dt3308_f.h"
-#include "algorithm.h"
 #include "liblog.h"
 #include "libbd.h"
 #include "sleep_common.h"

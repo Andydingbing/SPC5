@@ -69,6 +69,47 @@ void freq_formula(const freq_formula_out &param,uint32_t freq_ref,double &freq_v
 } // namespace ns_adf5355
 
 
+namespace ns_hmc1197 {
+
+void freq_formula_intmode(const freq_formula_in &in,freq_formula_out &out)
+{
+    double f_pd = double(in.freq_ref) / double(in.r_counter);
+
+    out._int = uint32_t(round((double(in.freq_vco) / f_pd),1));
+    out.freq_err = double(in.freq_vco) - double(out._int) * f_pd;
+}
+
+void freq_formula_fracmode(const freq_formula_in &in,freq_formula_out &out)
+{
+    double f_pd = double(in.freq_ref) / double(in.r_counter);
+    double _int_all_part = double(in.freq_vco) / f_pd;
+
+    out._int = uint32_t(round(_int_all_part,1));
+    out._frac = uint32_t(round((_int_all_part - double(out._int)) * 16777216.0,0));
+    out.freq_err = double(in.freq_vco) - (double(out._int) + double(out._frac) / 16777216.0) * f_pd;
+}
+
+bool freq_formula_exactmode(const freq_formula_in &in,freq_formula_out &out)
+{
+    out._frac = out._chs = 0;
+
+    double f_pd = double(in.freq_ref) / double(in.r_counter);
+    double _int_all_part = double(in.freq_vco) / f_pd;
+
+    out._int = uint32_t(round(_int_all_part,1));
+    uint64_t f_gcd = boost::gcd(in.freq_vco,uint64_t(in.freq_ref / in.r_counter));   // freq_ref = r_counter * integer default
+
+    if (double(f_gcd) > (f_pd / 16777216.0)) {
+        out._chs  = uint32_t(in.freq_ref / in.r_counter / f_gcd);
+        out._frac = uint32_t(round((_int_all_part - double(out._int)) * 16777216.0,0));
+        return true;
+    }
+    return false;
+}
+
+} // namespace ns_hmc1197
+
+
 namespace ns_hmc83x {
 
 freq_formula_in::freq_formula_in()

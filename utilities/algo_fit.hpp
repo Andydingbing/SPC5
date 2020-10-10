@@ -409,4 +409,88 @@ void spline(const std::vector<typename data_type::data_t> &x,
     }
 }
 
+/*
+ * 1 dimension data interpolation
+ * x,y    : (x,y)
+// x1,y1  : output （x1,y1）
+// method : linear method
+// I      : interpolation factor
+*/
+namespace ns_interp {
+
+enum method {
+    linear,  // linear,default
+    nearest, // nearest neighbor
+    zero,    // zero
+    spline   // cubic spline
+};
+
+} // namespace ns_interp
+
+template<typename T,typename traits_t = float_traits<T>>
+void interp1(const std::vector<T> &x,
+             const std::vector<T> &y,
+             std::vector<T> &x1,
+             std::vector<T> &y1,
+             ns_interp::method method = ns_interp::linear,
+             int32_t I = 2)
+{
+    const size_t x_size = x.size();
+    const size_t y_size = y.size();
+
+    RD_ASSERT_THROW(x_size == y_size);
+
+    x1.assign(x_size + (x_size - 1) * I,T(0));
+    y1.assign(y_size + (y_size - 1) * I,T(0));
+
+    size_t i = 0;
+
+    for (i = 0;i < x_size - 1;++i) {
+        x1[i * I] = x[i];
+        y1[i * I] = y[i];
+
+        for (int32_t j = 1;j < I;j ++) {
+            x1[i * I + j] = (x[i + 1] - x[i]) / I * j + x[i];
+        }
+    }
+
+    x1[i * I] = x[i];
+    y1[i * I] = y[i];
+
+    if (method == ns_interp::linear) {
+        for (i = 0;i < x_size - 1;++i) {
+            for (int32_t j = 1;j < I;++j) {
+                y1[i * I + j] = (y[i + 1] - y[i]) / I * j + y[i];
+            }
+        }
+    } else if (method == ns_interp::nearest) {
+        for (i = 0;i < x_size - 1;++i) {
+            for (int32_t j = 1;j < I;++j) {
+                y1[i * I + j] = y[i + 1];
+            }
+        }
+    } else if (method == ns_interp::zero) {
+        for (i = 0;i < x_size - 1;++i) {
+            for (int32_t j = 1;j < I;++j) {
+                y1[i * I + j] = 0;
+            }
+        }
+    } else if (method == ns_interp::spline) {
+        std::vector<T> a;
+        std::vector<T> b;
+        std::vector<T> c;
+        std::vector<T> d;
+        spline(x,y,a,b,c,d,ns_spline::not_a_knot);
+
+        double h = 0.0;
+
+        for (i = 0;i < x_size - 1;++i) {
+            for (int32_t j = 1;j < I;++j) {
+                h = x1[i * I + j] - x[i];
+                y1[i * I + j] = a[i] + b[i] * h + c[i] * h * h + d[i] * h * h * h;
+            }
+        }
+    }
+}
+
 #endif // RD_UTILITIES_ALGO_FIT_H

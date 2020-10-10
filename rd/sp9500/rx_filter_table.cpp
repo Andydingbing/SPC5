@@ -1,5 +1,5 @@
 #include "rx_filter_table.h"
-#include "algorithm.h"
+#include "algo_math.hpp"
 
 using namespace rd;
 using namespace rd::ns_sp1401;

@@ -1,7 +1,6 @@
 #include "sp1401.h"
 #include "reg_def_sp9500.h"
 #include "sleep_common.h"
-#include "algorithm.h"
 #include "algo_math.hpp"
 #include "ftp.h"
 #include <boost/date_time/gregorian/gregorian.hpp>

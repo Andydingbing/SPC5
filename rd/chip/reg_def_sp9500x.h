@@ -638,8 +638,8 @@ REG_DEF_CPT_PREFIX_32_2(0x0200,0x0400)
 REG_DEF_CPT_SUFFIX_32_2
 
 REG_DEF_CPT_PREFIX_32_2(0x04c1,0x0401)
-    unsigned gain : 16;
-    unsigned rsv0 : 16;
+    unsigned i : 16;
+    unsigned q : 16;
 REG_DEF_CPT_SUFFIX_32_2
 
 REG_DEF_CPT_PREFIX_32_2(0x0202,0x0402)

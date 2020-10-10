@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-#include "algorithm.h"
 #include "algo_math.hpp"
 
 using namespace rd;

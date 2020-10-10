@@ -121,15 +121,15 @@ void Q_ADF5355_Dlg::param2Reg(uint32_t *reg)
 
     uint32_t prescaler = ui->comboBoxPrescaler->currentIndex();
     uint32_t autoCal = ui->checkBoxAutoCal->isChecked() ? 1 : 0;
-    reg[0] = adf5355para2reg0(param_out._int,prescaler,autoCal);
-    reg[1] = adf5355para2reg1(param_out._frac1);
-    reg[2] = adf5355para2reg2(param_out._mod2,param_out._frac2);
+    reg[0] = ns_adf5355::reg0(param_out._int,prescaler,autoCal);
+    reg[1] = ns_adf5355::reg1(param_out._frac1);
+    reg[2] = ns_adf5355::reg2(param_out._mod2,param_out._frac2);
 
     uint32_t phaseValue = ui->lineEditPhaseValue->text().toUInt();
     uint32_t phaseAjust = ui->checkBoxPhaseAjust->isChecked();
     uint32_t phaseResync = ui->checkBoxPhaseResync->isChecked();
     uint32_t sdLoadReset = ui->comboBoxSDLoadReset->currentIndex();
-    reg[3] = adf5355para2reg3(phaseValue,phaseAjust,phaseResync,sdLoadReset);
+    reg[3] = ns_adf5355::reg3(phaseValue,phaseAjust,phaseResync,sdLoadReset);
 
     uint32_t counterReset = ui->checkBoxCounterReset->isChecked() ? 1 : 0;
     uint32_t cpThreeState = ui->checkBoxCPThreeState->isChecked() ? 1 : 0;
@@ -141,7 +141,7 @@ void Q_ADF5355_Dlg::param2Reg(uint32_t *reg)
     uint32_t doubleBuff = ui->checkBoxDoubleBuff->isChecked();
     uint32_t RDIV2 = ui->checkBoxRDIV2->isChecked() ? 1 : 0;
     uint32_t muxOut = ui->comboBoxMuxOut->currentIndex();
-    reg[4] = adf5355para2reg4(
+    reg[4] = ns_adf5355::reg4(
                 counterReset,
                 cpThreeState,
                 powerDown,
@@ -155,7 +155,7 @@ void Q_ADF5355_Dlg::param2Reg(uint32_t *reg)
                 refDoubler,
                 muxOut);
 
-    reg[5] = adf5355para2reg5();
+    reg[5] = ns_adf5355::reg5();
 
     uint32_t rfOutputPower = ui->comboBoxRfOutputPower->currentIndex();
     uint32_t rfOutA = ui->checkBoxRfOutA->isChecked() ? 1 : 0;
@@ -166,7 +166,7 @@ void Q_ADF5355_Dlg::param2Reg(uint32_t *reg)
     uint32_t feedbackSel = ui->comboBoxFeedbackSel->currentIndex();
     uint32_t negativeBleed = ui->checkBoxNegativeBleed->isChecked() ? 1 : 0;
     uint32_t gatedBleed = ui->checkBoxGateBleed->isChecked() ? 1 : 0;
-    reg[6] = adf5355para2reg6(
+    reg[6] = ns_adf5355::reg6(
                 rfOutputPower,
                 rfOutA,
                 rfOutB,
@@ -182,25 +182,25 @@ void Q_ADF5355_Dlg::param2Reg(uint32_t *reg)
     uint32_t lolMode = ui->checkBoxLOLMode->isChecked() ? 1 : 0;
     uint32_t ldCycleCount = ui->comboBoxLDCycleCount->currentIndex();
     uint32_t leSync = ui->comboBoxLeSync->currentIndex();
-    reg[7] = adf5355para2reg7(ldMode,fracN_LDPrecision,lolMode,ldCycleCount,leSync);
+    reg[7] = ns_adf5355::reg7(ldMode,fracN_LDPrecision,lolMode,ldCycleCount,leSync);
 
-    reg[8] = adf5355para2reg8();
+    reg[8] = ns_adf5355::reg8();
 
     uint32_t synthesizerLockTimeout = ui->comboBoxSynthesizerLockTimeout->currentIndex();
     uint32_t autoLevelTimeout = ui->comboBoxAutomaticLevelTimeout->currentIndex();
     uint32_t timeout = ui->lineEditTimeout->text().toUInt();
     uint32_t vcoBandDiv = ui->lineEditVCOBandDivision->text().toUInt();
-    reg[9] = adf5355para2reg9(synthesizerLockTimeout,autoLevelTimeout,timeout,vcoBandDiv);
+    reg[9] = ns_adf5355::reg9(synthesizerLockTimeout,autoLevelTimeout,timeout,vcoBandDiv);
 
     uint32_t adcEnable = ui->checkBoxADCEnable->isChecked() ? 1 : 0;
     uint32_t adcConversion = ui->checkBoxADCConversion->isChecked() ? 1 : 0;
     uint32_t adcLockDiv = ui->lineEditADCClockDivider->text().toUInt();
-    reg[10] = adf5355para2reg10(adcEnable,adcConversion,adcLockDiv);
+    reg[10] = ns_adf5355::reg10(adcEnable,adcConversion,adcLockDiv);
 
-    reg[11] = adf5355para2reg11();
+    reg[11] = ns_adf5355::reg11();
 
     uint32_t resyncClock = ui->lineEditResyncClock->text().toUInt();
-    reg[12] = adf5355para2reg12(resyncClock);
+    reg[12] = ns_adf5355::reg12(resyncClock);
 }
 
 void Q_ADF5355_Dlg::param2RegR()

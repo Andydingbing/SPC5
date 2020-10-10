@@ -1,6 +1,5 @@
 #include "sp1403.h"
 #include "reg_def_sp9500x.h"
-#include "algorithm.h"
 #include "algo_math.hpp"
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/bind.hpp>

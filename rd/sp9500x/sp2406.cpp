@@ -1,6 +1,5 @@
 #include "sp2406.h"
 #include "reg_def_sp9500x.h"
-#include "algorithm.h"
 #include "algo_math.hpp"
 #include "algo_chip.hpp"
 #include "gen_int.hpp"
@@ -412,7 +411,8 @@ int32_t sp2406::set_dl_pwr_comp(double offset)
     SP9500PRO_RFU_V9_REG_DECL_2(0x04c1,0x0401);
 
     unsigned gain_reg = unsigned(sqrt(dBc_to_ad(32768.0 * 32768.0,offset * -1)));
-    SP9500PRO_RFU_V9_REG_2(0x04c1,0x0401).gain = gain_reg;
+    SP9500PRO_RFU_V9_REG_2(0x04c1,0x0401).i = gain_reg;
+    SP9500PRO_RFU_V9_REG_2(0x04c1,0x0401).q = gain_reg;
     SP9500PRO_RFU_V9_W_2(0x04c1,0x0401);
     return 0;
 }
@@ -422,7 +422,7 @@ int32_t sp2406::get_dl_pwr_comp(double &offset)
     SP9500PRO_RFU_V9_REG_DECL_2(0x04c1,0x0401);
     SP9500PRO_RFU_V9_R_2(0x04c1,0x0401);
 
-    unsigned gain_reg = SP9500PRO_RFU_V9_REG_2(0x04c1,0x0401).gain;
+    unsigned gain_reg = SP9500PRO_RFU_V9_REG_2(0x04c1,0x0401).i;
     offset = ad_to_dBc(32768.0 * 32768.0,gain_reg * gain_reg);
     return 0;
 }
@@ -1228,6 +1228,27 @@ int32_t sp2406::set_ddc(const double freq)
 int32_t sp2406::set_ul_pwr_comp(int32_t offset)
 {
 	return 0;
+}
+
+int32_t sp2406::set_ul_pwr_comp(const double offset)
+{
+    SP9500PRO_RFU_V9_REG_DECL(0x0801);
+
+    unsigned gain_reg = unsigned(sqrt(dBc_to_ad(32768.0 * 32768.0,offset * -1)));
+    SP9500PRO_RFU_V9_REG(0x0801).i = gain_reg;
+    SP9500PRO_RFU_V9_REG(0x0801).q = gain_reg;
+    SP9500PRO_RFU_V9_W(0x0801);
+    return 0;
+}
+
+int32_t sp2406::get_ul_pwr_comp(double &offset)
+{
+    SP9500PRO_RFU_V9_REG_DECL(0x0801);
+    SP9500PRO_RFU_V9_R(0x0801);
+
+    unsigned gain_reg = SP9500PRO_RFU_V9_REG(0x0801).i;
+    offset = ad_to_dBc(32768.0 * 32768.0,gain_reg * gain_reg);
+    return 0;
 }
 
 int32_t sp2406::set_dl_dc_offset(uint16_t i,uint16_t q)

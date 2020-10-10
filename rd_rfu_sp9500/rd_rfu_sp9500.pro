@@ -13,7 +13,6 @@ win32 { LIBS += -lws2_32 -llibfftw3-3 }
 unix  { LIBS += -lfftw3 }
 
 HEADERS += \
-$$UTILITIES_DIR/algorithm.h \
 $$UTILITIES_DIR/spec.h \
 $$SRC_DIR/../common/ftplib.h \
 $$SRC_DIR/../common/arb_reader.h \
@@ -50,7 +49,6 @@ $$SRC_DIR/sp3501.h \
 rd_rfu_sp9500.h
 
 SOURCES += \
-$$UTILITIES_DIR/algorithm.cpp \
 $$UTILITIES_DIR/spec.cpp \
 $$SRC_DIR/../common/ftplib.c \
 $$SRC_DIR/../common/arb_reader.cpp \

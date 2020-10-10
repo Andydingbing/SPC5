@@ -69,9 +69,28 @@ template<typename int_type>
 RD_INLINE boost::rational<int_type> pow(boost::rational<int_type> x,size_t y)
 { x.assign(int_type(std::pow(x.numerator(),y)),int_type(std::pow(x.denominator(),y))); return x; }
 
+template<typename T_x,typename T_y>
+RD_INLINE void linear(T_x x1,T_y y1,T_x x2,T_y y2,T_x x,T_y &y)
+{ y = T_y(double(x - x1) / double(x2 - x1) * double(y2 - y1) + y1); }
+
 template<typename T>
 RD_INLINE T linear_quantify(const T star,const T step,const T value)
 { return uint64_t((value - star) / step) * step + star; }
+
+template<typename T>
+void discretept(T x,int64_t step,T &x1,T &x2)
+{
+    T x_min = T(int64_t((int64_t(x / (step * 1.0))) * step));
+
+    if (x_min > x) {
+        x1 = step < 0 ? x_min : (x_min - step);
+    } else if (x_min < x) {
+        x1 = step < 0 ? (x_min - step) : x_min;
+    } else {
+        x1 = x_min;
+    }
+    x2 = x1 + step;
+}
 
 // 1 / sqrt(x)
 float RD_API inv_sqrt(float x);
@@ -282,5 +301,42 @@ RD_INLINE T conv(const std::vector<T> &a,
                  const std::vector<T> &b,
                  std::vector<T> &coef)
 { return conv_t<T>::conv(a,b,coef); }
+
+
+// unsigned __int64 get_cycle_count()
+// {
+// // #pragma warning ( push )
+//  #pragma warning ( 2 : 4235 )
+//  __asm _emit 0x0f;
+//  __asm _emit 0x31;
+// /*#pragma warning ( pop )*/
+// }
+
+// #include <boost/math/constants/constants.hpp>
+//make a discrete array of sine or cosine wave
+//A : peak amplitude
+//f : frequency
+//phy : original phase
+//B : dc offset
+//sr : sample rate
+//x,y : output array
+//samples : output array size,sample points
+// int32_t sine(double A,double f,double phy,double B,double sr,double *x,double *y,int32_t samples)
+// {
+//     for (int32_t i = 0;i < samples;i ++) {
+//         x[i] = 1.0 / sr * double(i);
+//         y[i] = A * sin(2 * boost::math::constants::pi<double>() * f * x[i] + phy) + B;
+//     }
+//     return 0;
+// }
+
+// int32_t cosine(double A,double f,double phy,double B,double sr,double *x,double *y,int32_t samples)
+// {
+//     for (int32_t i = 0;i < samples;i ++) {
+//         x[i] = 1.0 / sr * double(i);
+//         y[i] = A * cos(2 * boost::math::constants::pi<double>() * f * x[i] + phy) + B;
+//     }
+//     return 0;
+// }
 
 #endif // RD_UTILITIES_ALGO_MATH_HPP

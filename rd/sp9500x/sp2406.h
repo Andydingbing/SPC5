@@ -366,6 +366,9 @@ public:
     int32_t get_dl_jesd_src_dds_gain(double &gain) const;
 
     int32_t set_ul_pwr_comp(int32_t);
+    int32_t set_ul_pwr_comp(const double offset);
+    int32_t get_ul_pwr_comp(double &offset);
+
     int32_t set_ddc(const double);
 
 public:

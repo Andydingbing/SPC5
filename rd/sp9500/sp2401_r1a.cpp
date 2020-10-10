@@ -2,7 +2,6 @@
 #include "reg_def_sp9500.h"
 #include "cal_table.h"
 #include "sleep_common.h"
-#include "algorithm.h"
 #include "algo_math.hpp"
 #include "gen_int.hpp"
 

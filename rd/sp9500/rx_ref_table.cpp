@@ -1,5 +1,4 @@
 #include "rx_ref_table.h"
-#include "algorithm.h"
 #include "algo_math.hpp"
 
 using namespace rd;

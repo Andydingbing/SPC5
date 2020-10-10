@@ -1,5 +1,4 @@
 #include "tx_tc_table.h"
-#include "algorithm.h"
 #include "algo_fit.hpp"
 #include "sp1401.h"
 

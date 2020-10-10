@@ -31,6 +31,7 @@ public:
     virtual int32_t set_duc(const double) { return 0; }
 
     virtual int32_t set_ul_pwr_comp(int32_t) { return 0; }
+    virtual int32_t set_ul_pwr_comp(const double) { return 0; }
     virtual int32_t set_ddc(const double) { return 0; }
 
 private:

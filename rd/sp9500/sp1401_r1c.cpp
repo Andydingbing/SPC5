@@ -2,7 +2,6 @@
 #include "reg_def_sp9500.h"
 #include <math.h>
 #include "sleep_common.h"
-#include "algorithm.h"
 #include "algo_chip.hpp"
 
 using namespace rd;
@@ -97,9 +96,9 @@ int32_t sp1401_r1c::init_adf5355()
         param_in.freq_vco = freq_vco;
 
         ns_adf5355::freq_formula(param_in,param_out);
-        reg[0] = adf5355para2reg0(param_out._int,0,1);
-        reg[1] = adf5355para2reg1(param_out._frac1);
-        reg[2] = adf5355para2reg2(param_out._mod2,param_out._frac2);
+        reg[0] = ns_adf5355::reg0(param_out._int,0,1);
+        reg[1] = ns_adf5355::reg1(param_out._frac1);
+        reg[2] = ns_adf5355::reg2(param_out._mod2,param_out._frac2);
         reg[6] = freq_lo[lo_idx] < 3400000000 ? 0x3520a076 : 0x3500a076;
         for (int i = 0;i < 13;i ++) {
             (this->*set_r1c_lo_reg[lo_idx])(reg[12 - i]);
@@ -403,9 +402,9 @@ int32_t sp1401_r1c::set_adf5355(lo_t lo,uint64_t freq)
     param_in.freq_vco = freq_vco;
 
     ns_adf5355::freq_formula(param_in,param_out);
-    reg[0] = adf5355para2reg0(param_out._int,0,1);
-    reg[1] = adf5355para2reg1(param_out._frac1);
-    reg[2] = adf5355para2reg2(param_out._mod2,param_out._frac2);
+    reg[0] = ns_adf5355::reg0(param_out._int,0,1);
+    reg[1] = ns_adf5355::reg1(param_out._frac1);
+    reg[2] = ns_adf5355::reg2(param_out._mod2,param_out._frac2);
     reg[4] = 0x30008594;
     reg[6] = freq < 3400000000 ? 0x3520a076 : 0x3500a076;
 

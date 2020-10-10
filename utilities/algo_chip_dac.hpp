@@ -3,6 +3,16 @@
 
 #include "rd.h"
 
+namespace ns_ltc2666 {
+
+RD_INLINE int32_t voltage_to_digital(const double v)
+{ return int32_t(4095.0 * (v + 5.0) / 10.0); }
+
+RD_INLINE double digital_to_voltage(const int32_t d)
+{ return -5.0 + 10.0 * d / 4095.0; }
+
+}
+
 namespace ns_ad9122 {
 
 RD_INLINE void iq_phase_adj_angel_to_reg(const double angel,uint16_t &reg)

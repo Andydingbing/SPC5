@@ -11,7 +11,6 @@ unix  { LIBS += -lfftw3 }
 
 # common
 HEADERS += \
-$$UTILITIES_DIR/algorithm.h \
 $$UTILITIES_DIR/spec.h \
 rf_driver.h \
 frontend.h \
@@ -20,7 +19,6 @@ baseband.h \
 ./common/arb_reader.h
 
 SOURCES += \
-$$UTILITIES_DIR/algorithm.cpp \
 $$UTILITIES_DIR/spec.cpp \
 rf_driver.cpp \
 frontend.cpp \
