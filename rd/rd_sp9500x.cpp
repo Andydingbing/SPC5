@@ -21,6 +21,8 @@ RD_SP9500X_IQ_Capture_Param::RD_SP9500X_IQ_Capture_Param()
     RadioFrameCondition_Y = 0;
     TriggerOffset = 0;
     MeasLength = 0;
+    Channel = 0;
+    SampleRate = SP9500X_UL_SR_98304;
 }
 
 RD_SP9500X_CA_Map::RD_SP9500X_CA_Map()
@@ -189,7 +191,18 @@ int32_t SP9500X_RF_SetIQCaptureParams(const uint32_t RFIndex,const RD_SP9500X_IQ
     DECL_DYNAMIC_SP3103;
     DECL_DYNAMIC_SP2406;
 
-    ns_sp2406::iq_cap_trig_src_t trig_src = ns_sp2406::iq_cap_trig_src_t::Frame;
+    iq_cap_src_ddc_t cap_src = iq_cap_src_ddc_t::CF;
+    iq_cap_trig_src_t trig_src = iq_cap_trig_src_t::Frame;
+
+    if (Param.SampleRate == SP9500X_UL_SR_98304) {
+        cap_src = iq_cap_src_ddc_t::CF;
+    } else if (Param.SampleRate == SP9500X_UL_SR_49152) {
+        cap_src = iq_cap_src_ddc_t::HBF0;
+    } else if (Param.SampleRate == SP9500X_UL_SR_24576) {
+        cap_src = iq_cap_src_ddc_t::HBF1;
+    } else {
+        cap_src = iq_cap_src_ddc_t::LPF;
+    }
 
     if (Param.TriggerType == 0) {
         trig_src = ns_sp2406::iq_cap_trig_src_t::NextFrame;
@@ -200,6 +213,10 @@ int32_t SP9500X_RF_SetIQCaptureParams(const uint32_t RFIndex,const RD_SP9500X_IQ
         INT_CHECK(SP2406->set_iq_cap_trig_frame_x(uint16_t(Param.RadioFrameCondition_X)));
         INT_CHECK(SP2406->set_iq_cap_trig_frame_y(uint16_t(Param.RadioFrameCondition_Y)));
     }
+
+    INT_CHECK(SP2406->set_iq_cap_sr(iq_cap_sr_t::_from_index(Param.SampleRate)));
+    INT_CHECK(SP2406->set_iq_cap_src_ddc_ch(uint8_t(Param.Channel)));
+    INT_CHECK(SP2406->set_iq_cap_src_ddc(iq_cap_src_ddc_t::LPF));
 
     INT_CHECK(SP2406->set_iq_cap_samples(uint32_t(Param.MeasLength)));
     INT_CHECK(SP2406->set_iq_cap_trig_src(trig_src));

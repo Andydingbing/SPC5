@@ -75,6 +75,7 @@ private:
 
     int32_t create();
     int32_t load();
+    int32_t load_to_buf(const cal_table_t table);
     int32_t table_pos_size(const cal_table_t table,uint32_t &pos,uint32_t &size) const;
 
     int32_t get_header(cal_file_header_t &header) const;

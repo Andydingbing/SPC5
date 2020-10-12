@@ -13,12 +13,21 @@ extern "C" {
 #endif
 
 // UL IQ Capture
+enum RD_SP9500X_UL_SR {
+    SP9500X_UL_SR_98304,
+    SP9500X_UL_SR_49152,
+    SP9500X_UL_SR_24576,
+    SP9500X_UL_SR_12288
+};
+
 struct RD_API RD_SP9500X_IQ_Capture_Param {
     int TriggerType;
     int RadioFrameCondition_X;
     int RadioFrameCondition_Y;
     int TriggerOffset;
     int MeasLength;
+    int Channel;
+    RD_SP9500X_UL_SR SampleRate;
     RD_SP9500X_IQ_Capture_Param();
 };
 

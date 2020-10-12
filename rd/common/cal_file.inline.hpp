@@ -42,8 +42,9 @@ public:
     char sn[64];
     int32_t  table;
     uint32_t size;
+    uint32_t size_table;
 
-    convert_buf_t() : _buf(nullptr),table(-1),size(0) { ZERO_ARRAY(sn); }
+    convert_buf_t() : _buf(nullptr),table(-1),size(0),size_table(0) { ZERO_ARRAY(sn); }
     ~convert_buf_t() { if (size > 0) { delete []buf(); } }
 
     char *buf() { return static_cast<char *>(_buf); }
@@ -55,15 +56,55 @@ public:
             delete []buf();
             _buf = new char[new_size / sizeof(char)];
         }
+        size = size_table = new_size;
     }
 };
 
-static const int32_t size_granularity = 256;
 static convert_buf_t convert_buf;
+static const int32_t size_granularity = 256;
 
 template<typename cal_table_t>
 uint32_t basic_cal_file<cal_table_t>::ver_current = 0;
 
+// cal_table_data
+template<typename data_f_t,typename data_m_t>
+void cal_table_data<data_f_t,data_m_t>::prepare_cal()
+{
+    SAFE_NEW(_data_f,std::vector<data_f_t>);
+    SAFE_NEW(_data_calibrating,std::vector<data_f_t>);
+
+    _data_f->clear();
+    _data_f->resize(convert_buf.size_table / size_of_data_f());
+    memcpy(data_f(0),convert_buf.buf(),convert_buf.size_table);
+
+    _data_calibrating->clear();
+}
+
+template<typename data_f_t,typename data_m_t>
+void cal_table_data<data_f_t,data_m_t>::combine()
+{
+    size_t last_idx = 0;
+    bool is_new_element = true;
+
+    if (_data_calibrating == nullptr || _data_f == nullptr) {
+        return;
+    }
+    for (size_t i = 0;i < _data_calibrating->size();++i) {
+        for (size_t j = last_idx;j < _data_f->size();++j) {
+            if (_data_f->at(j).key() == _data_calibrating->at(i).key()) {
+                (*_data_f)[j] = (*_data_calibrating)[i];
+                last_idx = j;
+                is_new_element = false;
+                break;
+            }
+        }
+        if (is_new_element) {
+            _data_f->push_back(_data_calibrating->at(i));
+        }
+    }
+}
+
+// basic_cal_file
 template<typename cal_table_t>
 int32_t basic_cal_file<cal_table_t>::open()
 {
@@ -130,7 +171,9 @@ int32_t basic_cal_file<cal_table_t>::load()
     convert_buf.allocate(max_size);
 
     for (iter_th = table_headers.begin();iter_th != table_headers.end();++iter_th) {
-        assert_fs(stream.read(convert_buf.buf(),(*iter_th).pts * (*iter_th).per_size));
+        cur_table_size = (*iter_th).pts * (*iter_th).per_size;
+        assert_fs(stream.read(convert_buf.buf(),cur_table_size));
+        convert_buf.size_table = cur_table_size;
 
         if ((iter_tables = _tables.find(iter_th->id)) != _tables.end()) {
             if (iter_tables->second->size_of_data_f() != iter_th->per_size) {
@@ -139,6 +182,30 @@ int32_t basic_cal_file<cal_table_t>::load()
             iter_tables->second->map_from(convert_buf.buf(),(*iter_th).pts);
         }
     }
+    return 0;
+}
+
+template<typename cal_table_t>
+int32_t basic_cal_file<cal_table_t>::load_to_buf(const cal_table_t table)
+{
+    map<int32_t,cal_table *>::iterator iter_tables;
+
+    if (convert_buf.table == table) {
+        return 0;
+    }
+
+    if ((iter_tables = _tables.find(table._to_integral())) == _tables.end()) {
+        return -1;
+    }
+
+    uint32_t pos = 0;
+    uint32_t size = 0;
+
+    table_pos_size(table,pos,size);
+    r_from_pos(pos,size,convert_buf.buf());
+
+    convert_buf.table = table;
+    convert_buf.size_table = size;
     return 0;
 }
 
@@ -329,6 +396,8 @@ template<typename cal_table_t>
 int32_t basic_cal_file<cal_table_t>::prepare_cal(const cal_table_t table)
 {
     map<int32_t,cal_table *>::const_iterator iter;
+
+    load_to_buf(table);
 
     if ((iter = _tables.find(table._to_integral())) != _tables.end()) {
         iter->second->prepare_cal();

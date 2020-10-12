@@ -105,6 +105,9 @@ private slots:
 
     void on_pushButtonSetDL_JESD_DDS_Freq_clicked();
 
+    void on_lineEditDL_Gain_textEdited(const QString &arg1)
+    { SP2406->set_dl_pwr_comp(arg1.toDouble()); }
+
     void on_checkBoxUL_CF_clicked(bool checked)
     { SP2406->set_ul_cf_en(checked); }
 
@@ -126,6 +129,9 @@ private slots:
     void on_lineEditUL_DDC1_textEdited(const QString &arg1);
 
     void on_pushButtonSetUL_DDC_clicked();
+
+    void on_lineEditUL_Gain_textEdited(const QString &arg1)
+    { SP2406->set_ul_pwr_comp(arg1.toDouble()); }
 
     void on_checkBoxUL_CH0_clicked() { UL_ch = 0; updateUL(UL_ch); }
 

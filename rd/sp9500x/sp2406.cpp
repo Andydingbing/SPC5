@@ -272,6 +272,7 @@ int32_t sp2406::open_board()
     INT_CHECK(set_ul_ddc1_ch6(FREQ_M(+50)));
     INT_CHECK(set_ul_ddc1_ch7(FREQ_M(+150)));
 
+    INT_CHECK(set_iq_cap_src(iq_cap_src_t::DDC));
     INT_CHECK(set_iq_cap_src_duc_ch(0));
     INT_CHECK(set_iq_cap_src_duc(iq_cap_src_duc_t::LPF));
     INT_CHECK(set_iq_cap_src_ddc_ch(0));

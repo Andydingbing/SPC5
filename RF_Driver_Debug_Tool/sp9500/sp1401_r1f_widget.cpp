@@ -90,7 +90,7 @@ void Q_SP1401_R1F_Widget::on_lineEditDGain_textChanged(const QString &arg1)
     double att1 = ui->comboBoxTXAtt1->currentIndex() * 0.5;
     double att2 = ui->comboBoxTXAtt2->currentIndex() * 0.5;
     double d_gain = arg1.toDouble();
-    //SP1401_R1F->sync_set_tx_gain(att0,att1,att2,att3,d_gain);
+//    SP1401_R1F->sync_set_tx_gain(att0,att1,att2,att2,d_gain);
 }
 
 void Q_SP1401_R1F_Widget::on_pushButtonSetTXAll_clicked()

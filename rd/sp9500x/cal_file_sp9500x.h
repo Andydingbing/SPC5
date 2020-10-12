@@ -2,9 +2,9 @@
 #define CAL_FILE_SP9500X_H
 
 #include "cal_file.hpp"
+#include "cal_file.inline.hpp"
 #include "cal_table_tx_lol.h"
 #include "cal_table_filter.h"
-#include "cal_file.inline.hpp"
 
 namespace rd { namespace ns_sp9500x {
 
