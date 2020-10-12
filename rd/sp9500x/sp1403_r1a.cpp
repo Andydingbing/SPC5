@@ -4,23 +4,6 @@
 #include "reg_def_lmx2594.h"
 #include "algo_chip.hpp"
 
-#define IMPL_SW(reg,sw_name,sw_enum) \
-int32_t sp1403_r1a::set_##sw_name(const sw_enum &sw) const \
-{ \
-    SP1403_S6_REG_DECL(reg); \
-    INT_CHECK(get_s6_reg(reg,SP1403_S6_REG_DATA(reg))); \
-    SP1403_S6_REG(reg).sw_name = sw; \
-    INT_CHECK(set_s6_reg(reg,SP1403_S6_REG_DATA(reg))); \
-    return 0; \
-} \
-int32_t sp1403_r1a::get_##sw_name(sw_enum &sw) const \
-{ \
-    SP1403_S6_REG_DECL(reg); \
-    INT_CHECK(get_s6_reg(reg,SP1403_S6_REG_DATA(reg))); \
-    sw = sw_enum::_from_integral(SP1403_S6_REG(reg).sw_name); \
-    return 0; \
-}
-
 using namespace std;
 using namespace rd;
 using namespace rd::ns_sp1403;
@@ -580,30 +563,30 @@ int32_t sp1403_r1a::get_s6_reg(const uint8_t addr,uint16_t &data) const
     return 0;
 }
 
-IMPL_SW(0x1,tx0_sw1,tx_sw1_t)
-IMPL_SW(0x1,tx0_sw2,tx_sw2_t)
-IMPL_SW(0x1,tx0_sw3,tx_sw3_t)
-IMPL_SW(0x1,tx0_sw4,tx_sw4_t)
-IMPL_SW(0x1,tx0_sw5,tx0_sw5_t)
-IMPL_SW(0x1,tx0_sw6,tx0_sw6_t)
-IMPL_SW(0x1,tx0_sw7,tx0_sw7_t)
-IMPL_SW(0x1,tx0_sw8,tx0_sw8_t)
-IMPL_SW(0x1,tx0_sw9,tx0_sw9_t)
-IMPL_SW(0x1,tx0_sw10,tx0_sw10_t)
-IMPL_SW(0x1,tx0_sw11,tx0_sw11_t)
-IMPL_SW(0x1,tx0_sw12,tx0_sw12_t)
+IMPL_SW(sp1403_r1a,0x1,tx0_sw1,tx_sw1_t)
+IMPL_SW(sp1403_r1a,0x1,tx0_sw2,tx_sw2_t)
+IMPL_SW(sp1403_r1a,0x1,tx0_sw3,tx_sw3_t)
+IMPL_SW(sp1403_r1a,0x1,tx0_sw4,tx_sw4_t)
+IMPL_SW(sp1403_r1a,0x1,tx0_sw5,tx0_sw5_t)
+IMPL_SW(sp1403_r1a,0x1,tx0_sw6,tx0_sw6_t)
+IMPL_SW(sp1403_r1a,0x1,tx0_sw7,tx0_sw7_t)
+IMPL_SW(sp1403_r1a,0x1,tx0_sw8,tx0_sw8_t)
+IMPL_SW(sp1403_r1a,0x1,tx0_sw9,tx0_sw9_t)
+IMPL_SW(sp1403_r1a,0x1,tx0_sw10,tx0_sw10_t)
+IMPL_SW(sp1403_r1a,0x1,tx0_sw11,tx0_sw11_t)
+IMPL_SW(sp1403_r1a,0x1,tx0_sw12,tx0_sw12_t)
 
-IMPL_SW(0x2,tx1_sw1,tx_sw1_t)
-IMPL_SW(0x2,tx1_sw2,tx_sw2_t)
-IMPL_SW(0x2,tx1_sw3,tx_sw3_t)
-IMPL_SW(0x2,tx1_sw4,tx_sw4_t)
-IMPL_SW(0x2,tx1_sw5,tx1_sw5_t)
-IMPL_SW(0x2,tx1_sw6,tx1_sw6_t)
+IMPL_SW(sp1403_r1a,0x2,tx1_sw1,tx_sw1_t)
+IMPL_SW(sp1403_r1a,0x2,tx1_sw2,tx_sw2_t)
+IMPL_SW(sp1403_r1a,0x2,tx1_sw3,tx_sw3_t)
+IMPL_SW(sp1403_r1a,0x2,tx1_sw4,tx_sw4_t)
+IMPL_SW(sp1403_r1a,0x2,tx1_sw5,tx1_sw5_t)
+IMPL_SW(sp1403_r1a,0x2,tx1_sw6,tx1_sw6_t)
 
-IMPL_SW(0x3,rx_sw1,rx_sw1_t)
-IMPL_SW(0x3,rx_sw2,rx_sw2_t)
-IMPL_SW(0x3,rx_sw3,rx_sw3_t)
-IMPL_SW(0x3,rx_sw4,rx_sw4_t)
+IMPL_SW(sp1403_r1a,0x3,rx_sw1,rx_sw1_t)
+IMPL_SW(sp1403_r1a,0x3,rx_sw2,rx_sw2_t)
+IMPL_SW(sp1403_r1a,0x3,rx_sw3,rx_sw3_t)
+IMPL_SW(sp1403_r1a,0x3,rx_sw4,rx_sw4_t)
 
 void sp1403_r1a::tx_freq_to_lo(const uint64_t freq)
 {

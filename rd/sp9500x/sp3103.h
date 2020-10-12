@@ -1,8 +1,8 @@
 #ifndef SP3103_H
 #define SP3103_H
 
-#include "sp1403.h"
 #include "sp1403_r1a.h"
+#include "sp1403_r1b.h"
 #include "rrh.h"
 #include "sp2406.h"
 #include "traits.hpp"
@@ -34,6 +34,10 @@ public:
     template<typename int_t,typename data_type = traits_int<int_t>>
     sp1403_r1a *working_sp1403_r1a(int_t rf_idx) const
     { return _sp1403_r1a.at(size_t(rf_idx)).get(); }
+
+    template<typename int_t,typename traits_t = traits_int<int_t>>
+    sp1403_r1b *working_sp1403_r1b(int_t rf_idx) const
+    { return _sp1403_r1b.at(size_t(rf_idx)).get(); }
 
     template<typename int_t,typename data_type = traits_int<int_t>>
     ns_sp9500x::rrh *working_rrh(int_t rf_idx) const
@@ -95,6 +99,7 @@ private:
 
     std::vector<sp1403::sptr> _sp1403;
     std::vector<sp1403_r1a::sptr> _sp1403_r1a;
+    std::vector<sp1403_r1b::sptr> _sp1403_r1b;
     std::vector<ns_sp9500x::rrh::sptr> _rrh;
     std::vector<sp2406::sptr> _sp2406;
 

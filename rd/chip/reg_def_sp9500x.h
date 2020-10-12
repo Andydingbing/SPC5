@@ -1321,13 +1321,17 @@ REG_DEF_CPT_PREFIX_16(0x3)
     unsigned rx_sw2 : 1;
     unsigned rx_sw3 : 1;
     unsigned rx_sw4 : 1;
-    unsigned rsv0 : 12;
+    unsigned rx_sw5 : 1;
+    unsigned rx_sw6 : 1;
+    unsigned rx_sw7 : 1;
+    unsigned rsv0 : 9;
 REG_DEF_CPT_SUFFIX_16
 
 REG_DEF_CPT_PREFIX_16(0x4)
     unsigned lo_sw1 : 1;
     unsigned lo_sw2 : 1;
-    unsigned rsv0 : 14;
+    unsigned det_sw : 1;
+    unsigned rsv0 : 13;
 REG_DEF_CPT_SUFFIX_16
 
 REG_DEF_CPT_PREFIX_16(0x5)

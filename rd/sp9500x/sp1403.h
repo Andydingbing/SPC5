@@ -13,15 +13,23 @@
 #include "ad908x.hpp"
 
 namespace rd { namespace ns_sp1403 {
-    BETTER_ENUM(hw_ver_t, int32_t, HW_ERROR = -1, R1A = 0, HW_VER_MAX)
-
-    BETTER_ENUM(rx_bw_t, uint32_t, _400M, _800M)
-
-    typedef rx_bw_t rx_sw4_t;
+    BETTER_ENUM(hw_ver_t, int32_t,
+                HW_ERROR = -1,
+                R1A = 0,
+                R1B = 1,
+                HW_VER_MAX)
 
     typedef enum path_t { TX0, TX1, RX } port_t;
 
     BETTER_ENUM(led_t, uint8_t, Red, Green)
+
+    enum lo_t {
+        LO_BEGIN = 0,
+        TX_LMX2594_0 = LO_BEGIN,
+        TX_LMX2594_1,
+        RX_LMX2594_0,
+        LO_MAX
+    };
 } // namespace sp1403
 
 class RD_API sp1403 : public frontend
@@ -29,10 +37,12 @@ class RD_API sp1403 : public frontend
 public:
     typedef boost::shared_ptr<sp1403> sptr;
 
+    typedef ns_sp1403::lo_t lo_t;
+
+public:
     sp1403(uint32_t rf_idx,uint32_t rfu_idx);
     virtual ~sp1403();
 
-public:
     bool connect(const std::list<pci_dev *> &ctrller);
 
     int32_t open_board();

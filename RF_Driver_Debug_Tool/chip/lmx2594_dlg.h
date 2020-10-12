@@ -90,7 +90,7 @@ private slots:
 
 public:
     rd::sp1403_r1a *RF;
-    rd::ns_sp1403::r1a::lo_t LO;
+    rd::sp1403::lo_t LO;
 
 private:
     Ui::Q_LMX2594_Dlg *ui;

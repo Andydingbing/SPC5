@@ -7,9 +7,27 @@
     int32_t set_##sw_name(const sw_enum &sw) const; \
     int32_t get_##sw_name(sw_enum &sw) const;
 
+#define IMPL_SW(class_name,reg,sw_name,sw_enum) \
+int32_t class_name::set_##sw_name(const sw_enum &sw) const \
+{ \
+    SP1403_S6_REG_DECL(reg); \
+    INT_CHECK(get_s6_reg(reg,SP1403_S6_REG_DATA(reg))); \
+    SP1403_S6_REG(reg).sw_name = sw; \
+    INT_CHECK(set_s6_reg(reg,SP1403_S6_REG_DATA(reg))); \
+    return 0; \
+} \
+int32_t class_name::get_##sw_name(sw_enum &sw) const \
+{ \
+    SP1403_S6_REG_DECL(reg); \
+    INT_CHECK(get_s6_reg(reg,SP1403_S6_REG_DATA(reg))); \
+    sw = sw_enum::_from_integral(SP1403_S6_REG(reg).sw_name); \
+    return 0; \
+}
+
 namespace rd {
 namespace ns_sp1403 {
 namespace r1a {
+// tx
 BETTER_ENUM(tx_sw1_t, uint32_t,
             TX_SW1_300_3000,
             TX_SW1_3000_8000)
@@ -66,6 +84,11 @@ BETTER_ENUM(tx1_sw6_t, uint32_t,
             TO_OFF,
             TO_OUT)
 
+// rx
+BETTER_ENUM(rx_bw_t, uint32_t,
+            _400M,
+            _800M)
+
 BETTER_ENUM(rx_sw1_t, uint32_t,
             TO_ATT,
             TO_LNA)
@@ -77,6 +100,8 @@ BETTER_ENUM(rx_sw2_t, uint32_t,
 BETTER_ENUM(rx_sw3_t, uint32_t,
             _300_1000,
             _1000_8000)
+
+typedef rx_bw_t rx_sw4_t;
 
 BETTER_ENUM(rx_lna_att_t, uint32_t,
             RX_ATT_0 = 0,
@@ -90,14 +115,6 @@ BETTER_ENUM(temp_t, uint32_t,
             TX0_PA = 4,
             RX_LNA = 5,
             TX1_PA = 6)
-
-enum lo_t {
-    LO_BEGIN = 0,
-    TX_LMX2594_0 = LO_BEGIN,
-    TX_LMX2594_1,
-    RX_LMX2594_0,
-    LO_MAX
-};
 
 } // namespace r1a
 } // namespace ns_sp1403
@@ -126,10 +143,14 @@ public:
     typedef ns_sp1403::r1a::tx1_sw5_t  tx1_sw5_t;
     typedef ns_sp1403::r1a::tx1_sw6_t  tx1_sw6_t;
 
+    typedef ns_sp1403::r1a::rx_bw_t  rx_bw_t;
+
     typedef ns_sp1403::r1a::rx_sw1_t rx_sw1_t;
     typedef ns_sp1403::r1a::rx_sw2_t rx_sw2_t;
     typedef ns_sp1403::r1a::rx_sw3_t rx_sw3_t;
-    typedef ns_sp1403::rx_sw4_t      rx_sw4_t;
+    typedef ns_sp1403::r1a::rx_sw4_t rx_sw4_t;
+
+    typedef ns_sp1403::r1a::rx_lna_att_t rx_lna_att_t;
 
     typedef ns_sp1403::r1a::temp_t temp_t;
 
@@ -161,10 +182,10 @@ public:
     int32_t get_att(const att_t att,double &value) const;
 
     int32_t set_rx_freq(const uint64_t freq);
-    int32_t set_rx_lna_att_sw(const ns_sp1403::r1a::rx_lna_att_t sw) const;
+    int32_t set_rx_lna_att_sw(const rx_lna_att_t sw) const;
 
-    int32_t set_rx_bw(const ns_sp1403::rx_bw_t bw) const { return set_rx_sw4(bw); }
-    int32_t get_rx_bw(ns_sp1403::rx_bw_t &bw) const { return get_rx_sw4(bw); }
+    int32_t set_rx_bw(const rx_bw_t bw) const { return set_rx_sw4(bw); }
+    int32_t get_rx_bw(rx_bw_t &bw) const { return get_rx_sw4(bw); }
 
     int32_t get_rx_lna_att_sw(ns_sp1403::r1a::rx_lna_att_t &sw) const;
     int32_t get_rx_att0(double &att);
@@ -172,20 +193,20 @@ public:
 
     int32_t get_temp(const temp_t &idx,double &temp) const;
 
-    int32_t init_lo(const ns_sp1403::r1a::lo_t lo);
-    int32_t set_lo(const ns_sp1403::r1a::lo_t lo,const uint64_t freq);
+    int32_t init_lo(const lo_t lo);
+    int32_t set_lo(const lo_t lo,const uint64_t freq);
 
-    int32_t set_lo_reg(const ns_sp1403::r1a::lo_t lo,const uint8_t addr,const uint16_t data);
-    int32_t get_lo_reg(const ns_sp1403::r1a::lo_t lo,const uint8_t addr,uint16_t &data);
+    int32_t set_lo_reg(const lo_t lo,const uint8_t addr,const uint16_t data);
+    int32_t get_lo_reg(const lo_t lo,const uint8_t addr,uint16_t &data);
 
-    common_lo_t *lo(const ns_sp1403::r1a::lo_t id) const
+    common_lo_t *lo(const lo_t id) const
     { return (common_lo_t *)(&_tx_lmx2594_0 + id * sizeof(common_lo_t *)); }
 
     common_lo_t *tx_lmx2594_0() const { return _tx_lmx2594_0; }
     common_lo_t *tx_lmx2594_1() const { return _tx_lmx2594_1; }
     common_lo_t *rx_lmx2594_0() const { return _rx_lmx2594_0; }
 
-    std::string lo_freq_string(const ns_sp1403::r1a::lo_t id)
+    std::string lo_freq_string(const lo_t id)
     const { return freq_string_from_uint64_t(lo(id)->freq); }
 
     std::string tx_lmx2594_0_freq_string() const

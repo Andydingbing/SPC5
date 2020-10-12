@@ -4,6 +4,7 @@
 #include "global.h"
 #include "child_widget_helper.h"
 #include "sp1403_r1a_widget.h"
+#include "sp9500pro_sp1403_r1b_widget.h"
 #include "sp9500x_rrh_widget.h"
 #include "sp2406_widget.h"
 #include "arb_widget.h"
@@ -101,9 +102,9 @@ public:
     {
         QStringList str;
 
-        DECL_TREE_ITEM(str,"RF-R1A" << "Overview",widget_SP1403_R1A);
-        DECL_TREE_ITEM(str,"RF-R1A" << "Test",widget_Test_R1A);
-        DECL_TREE_ITEM(str,"RF-R1A" << "Calibration" << "TX-Filter",widget_Cal_TXFilter);
+        DECL_TREE_ITEM(str,"RF-R1B" << "Overview",widget_SP1403_R1B);
+        DECL_TREE_ITEM(str,"RF-R1B" << "Test",widget_Test_R1A);
+        DECL_TREE_ITEM(str,"RF-R1B" << "Calibration" << "TX-Filter",widget_Cal_TXFilter);
         DECL_TREE_ITEM(str,"RRH" << "Overview",widget_SP9500X_RRH);
         DECL_TREE_ITEM(str,"BB-Debug" << "Overview",widget_SP2406);
         DECL_TREE_ITEM(str,"BB-Debug" << "ARB",widget_ARB);
@@ -131,7 +132,7 @@ public:
 
     void addChildWidgets()
     {
-        ADD_CHILD_WIDGET(widget_SP1403_R1A,Q_SP1403_R1A_Widget,ns_sp3103::g_max_rf);
+        ADD_CHILD_WIDGET(widget_SP1403_R1B,Q_SP9500PRO_SP1403_R1B_Widget,ns_sp3103::g_max_rf);
         ADD_CHILD_WIDGET(widget_Cal_TXFilter,Q_Cal_TXFilter_Widget,ns_sp3103::g_max_rf);
         ADD_CHILD_WIDGET(widget_Test_R1A,Q_Test_SP9501_TabWidget,ns_sp3103::g_max_rf);
         ADD_CHILD_WIDGET(widget_SP9500X_RRH,Q_SP9500X_RRH_Widget,ns_sp3103::g_max_rf);
@@ -146,7 +147,7 @@ public:
         if (SP3103 != nullptr) {
             RFUIdx = SP3103->rfu_idx();
             SP1403 = SP3103->working_sp1403(RFIdx);
-            SP1403_R1A = SP3103->working_sp1403_r1a(RFIdx);
+            SP1403_R1B = SP3103->working_sp1403_r1b(RFIdx);
             SP9500X_RRH = SP3103->working_rrh(RFIdx);
             SP2406 = SP3103->working_sp2406(RFIdx);
             complexSequence = SP2406->ul_sequence();
@@ -177,7 +178,7 @@ public slots:
     {
         updatePtr();
         for (int i = 0;i < ns_sp3103::g_max_rf;i ++) {
-            widget_SP1403_R1A[i]->init();
+            widget_SP1403_R1B[i]->init();
             widget_SP9500X_RRH[i]->init();
             widget_SP2406[i]->init();
             widget_ARB[i]->init();
@@ -187,7 +188,7 @@ public slots:
     }
 
 public:
-    QList<Q_SP1403_R1A_Widget *>  widget_SP1403_R1A;
+    QList<Q_SP9500PRO_SP1403_R1B_Widget *> widget_SP1403_R1B;
     QList<Q_SP9500X_RRH_Widget *> widget_SP9500X_RRH;
 
     QList<Q_SP2406_Widget *> widget_SP2406;

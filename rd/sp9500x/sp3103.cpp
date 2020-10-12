@@ -22,13 +22,17 @@ sp3103::sp3103(uint32_t rfu_idx):
     _is_program_rfu_v9(false),
     _is_program_bbu_v9(false)
 {
+    uint32_t rf_idx = 0;
+
     for (uint32_t i = 0;i < g_max_rf;i ++) {
-        _sp1403_r1a.push_back(boost::make_shared<sp1403_r1a>(g_max_rf - 1 - i,rfu_idx));
-        _rrh.push_back(boost::make_shared<rrh>(g_max_rf - 1 - i,rfu_idx));
+        rf_idx = g_max_rf - 1 - i;
+        _sp1403_r1a.push_back(boost::make_shared<sp1403_r1a>(rf_idx,rfu_idx));
+        _sp1403_r1b.push_back(boost::make_shared<sp1403_r1b>(rf_idx,rfu_idx));
+        _rrh.push_back(boost::make_shared<rrh>(rf_idx,rfu_idx));
         _sp1403.push_back(nullptr);
         _sp1403.at(i) = _sp1403_r1a.at(i);
 
-        _sp2406.push_back(boost::make_shared<sp2406>(g_max_rf - 1 - i));
+        _sp2406.push_back(boost::make_shared<sp2406>(rf_idx));
     }
 }
 
@@ -72,17 +76,20 @@ int32_t sp3103::boot(const bool silent)
     for (uint8_t i = 0;i < g_max_rf;++i) {
         BOOL_CHECK(_sp2406.at(i)->connect(sp2406_ctrller));
         BOOL_CHECK(_sp1403_r1a.at(i)->connect(sp1403_ctrller));
+        BOOL_CHECK(_sp1403_r1b.at(i)->connect(sp1403_ctrller));
         BOOL_CHECK(_rrh.at(i)->connect(sp1403_ctrller));
 
+        instance_sp1403(i);
+
         if (!silent) {
+//            if (is_connected) {
+                INT_CHECK(_sp1403.at(i)->open_board());
+//            }
             INT_CHECK(_sp2406.at(i)->open_board());
-            INT_CHECK(_sp1403_r1a.at(i)->open_board());
             INT_CHECK(_rrh.at(i)->open_board());
         }
     }
 
-    instance_sp1403(0);
-    instance_sp1403(1);
 
     return 0;
 }
@@ -494,49 +501,38 @@ int32_t sp3103::get_temp(uint32_t rf_idx,double &tx_temp,double &rx_temp)
 
 int32_t sp3103::instance_sp1403(uint32_t rf_idx)
 {
-//    bool is_connected = false;
-//    char sn[24] = {0};
-//    hw_ver_t ver = HW_ERROR;
+    bool is_connected = false;
+    char sn[24] = {0};
+    hw_ver_t ver = hw_ver_t::HW_ERROR;
 
-//    INT_CHECK(m_sp1401->at(rf_idx)->get_sn_major(sn));
-//    if (basic_sp1401::is_valid_sn(sn) > SN_NULL) {
-//        is_connected = true;
-//        basic_sp1401::get_hw_ver(sn,ver);
-//        switch (ver) {
-//            case R1A : case R1B : {
-//                m_sp1401->at(rf_idx) = m_sp1401_r1a->at(rf_idx);
-//                break;
-//            }
-//            case R1C : case R1D : {
-//                m_sp1401->at(rf_idx) = m_sp1401_r1c->at(rf_idx);
-//                break;
-//            }
-//            case R1E : {
-//                m_sp1401->at(rf_idx) = m_sp1401_r1e->at(rf_idx);
-//                break;
-//            }
+    INT_CHECK(_sp1403.at(rf_idx)->get_sn_major(sn));
+    if (sp1403::is_valid_sn(sn)) {
+        is_connected = true;
+//        sp1403::get_hw_ver(sn,ver);
+        switch (ver) {
+            case hw_ver_t::R1A : {
+                _sp1403.at(rf_idx) = _sp1403_r1a.at(rf_idx);
+                break;
+            }
+            case hw_ver_t::R1B : {
+                _sp1403.at(rf_idx) = _sp1403_r1b.at(rf_idx);
+                break;
+            }
+
 //            case R1F : case HW_VER_SP9500_MAX : case HW_ERROR : {
 //                m_sp1401->at(rf_idx) = m_sp1401_r1f->at(rf_idx);
 //                break;
 //            }
-//        }
-//        m_sp1401->at(rf_idx)->set_hw_ver(ver);
-//    } else {
-//        if ((is_connected = m_sp1401_r1a->at(rf_idx)->is_connected()))
-//            m_sp1401->at(rf_idx) = m_sp1401_r1a->at(rf_idx);
-//        else if ((is_connected = m_sp1401_r1c->at(rf_idx)->is_connected()))
-//            m_sp1401->at(rf_idx) = m_sp1401_r1c->at(rf_idx);
-//        else if ((is_connected = m_sp1401_r1e->at(rf_idx)->is_connected()))
-//            m_sp1401->at(rf_idx) = m_sp1401_r1e->at(rf_idx);
-//        else if ((is_connected = m_sp1401_r1f->at(rf_idx)->is_connected()))
-//            m_sp1401->at(rf_idx) = m_sp1401_r1f->at(rf_idx);
-//        else
-//            m_sp1401->at(rf_idx) = m_sp1401_r1f->at(rf_idx);
-//    }
-//    if (is_connected) {
-//        INT_CHECK(m_sp1401->at(rf_idx)->open_board());
-//        m_active.sp1401[rf_idx] = true;
-//    }
+        }
+    } else {
+        if ((is_connected = _sp1403_r1a.at(rf_idx)->is_connected())) {
+            _sp1403.at(rf_idx) = _sp1403_r1a.at(rf_idx);
+        } else if ((is_connected = _sp1403_r1b.at(rf_idx)->is_connected())) {
+            _sp1403.at(rf_idx) = _sp1403_r1b.at(rf_idx);
+        } else
+            _sp1403.at(rf_idx) = _sp1403_r1b.at(rf_idx);
+    }
+
     return 0;
 }
 
