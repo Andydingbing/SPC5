@@ -35,8 +35,6 @@ public:
 
     int32_t hw_ver() const { return ns_sp1403::hw_ver_t::R1A; }
 
-    int32_t set_tx_freq(const uint64_t freq);
-
     int32_t set_rx_freq(const uint64_t freq);
 
     int32_t set_rx_bw(const rx_bw_t bw) const;
