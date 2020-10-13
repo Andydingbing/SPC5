@@ -180,6 +180,66 @@ int32_t sp1403_r1b::set_rx_freq(const uint64_t freq)
     return 0;
 }
 
+int32_t sp1403_r1b::set_rx_bw(const rx_bw_t bw) const
+{
+    SP1403_S6_REG_DECL(0x3);
+    uint32_t bw_integral = bw._to_integral();
+
+    INT_CHECK(get_s6_reg(0x3,SP1403_S6_REG_DATA(0x3)));
+
+    if (bw_integral == rx_bw_t::_800M) {
+        SP1403_S6_REG(0x3).rx_sw4 = 0;
+        SP1403_S6_REG(0x3).rx_sw5 = 1;
+        SP1403_S6_REG(0x3).rx_sw5 = 0;
+    } else if (bw_integral == rx_bw_t::_400M) {
+        SP1403_S6_REG(0x3).rx_sw4 = 1;
+        SP1403_S6_REG(0x3).rx_sw5 = 1;
+        SP1403_S6_REG(0x3).rx_sw5 = 0;
+    } else if (bw_integral == rx_bw_t::_200M) {
+        SP1403_S6_REG(0x3).rx_sw4 = 0;
+        SP1403_S6_REG(0x3).rx_sw5 = 0;
+        SP1403_S6_REG(0x3).rx_sw5 = 1;
+    } else {
+        SP1403_S6_REG(0x3).rx_sw4 = 1;
+        SP1403_S6_REG(0x3).rx_sw5 = 0;
+        SP1403_S6_REG(0x3).rx_sw5 = 1;
+    }
+
+    return set_s6_reg(0x3,SP1403_S6_REG_DATA(0x3));
+}
+
+int32_t sp1403_r1b::get_rx_bw(rx_bw_t &bw) const
+{
+    SP1403_S6_REG_DECL(0x3);
+
+    INT_CHECK(get_s6_reg(0x3,SP1403_S6_REG_DATA(0x3)));
+
+    if (SP1403_S6_REG(0x3).rx_sw4 == 0 &&
+        SP1403_S6_REG(0x3).rx_sw5 == 1 &&
+        SP1403_S6_REG(0x3).rx_sw5 == 0) {
+        bw = rx_bw_t::_800M;
+    } else if (
+        SP1403_S6_REG(0x3).rx_sw4 == 1 &&
+        SP1403_S6_REG(0x3).rx_sw5 == 1 &&
+        SP1403_S6_REG(0x3).rx_sw5 == 0) {
+        bw = rx_bw_t::_400M;
+    } else if (
+        SP1403_S6_REG(0x3).rx_sw4 == 0 &&
+        SP1403_S6_REG(0x3).rx_sw5 == 0 &&
+        SP1403_S6_REG(0x3).rx_sw5 == 1) {
+        bw = rx_bw_t::_200M;
+    } else if (
+        SP1403_S6_REG(0x3).rx_sw4 == 1 &&
+        SP1403_S6_REG(0x3).rx_sw5 == 0 &&
+        SP1403_S6_REG(0x3).rx_sw5 == 1) {
+        bw = rx_bw_t::_100M;
+    } else {
+        Log.set_last_err("Error RX bw switch set @RF%d",_rf_idx);
+    }
+
+    return 0;
+}
+
 IMPL_SW(sp1403_r1b,0x3,rx_sw7,rx_sw7_t)
 
 void sp1403_r1b::rx_freq_to_lo(const uint64_t freq)

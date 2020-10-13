@@ -54,6 +54,10 @@ enum Project {
     ((R1E == calParam.SP1401->get_hw_ver()) ? \
     ((sp1401_r1e *)(calParam.SP1401)) : ((sp1401_r1c *)(calParam.SP1401)))
 
+#define COMBOBOX_MAP_FROM_BETTER_ENUM(box,better_enum) \
+for (size_t i = 0;i < better_enum::_size();++i) { \
+    box->addItem(QString::fromUtf8(better_enum::_names()[i])); \
+}
 
 namespace Ui {
 class Q_SP2406_Widget;

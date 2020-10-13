@@ -142,19 +142,19 @@ int32_t sp1403_r1a::get_led(const port_t port,led_t &led) const
 
     if (port == port_t::TX0) {
         if (SP1403_S6_REG(0x5).tx0_red == SP1403_S6_REG(0x5).tx0_green) {
-            Log.set_last_err("Error LED set of RF%d @port TX0",_rf_idx);
+            Log.set_last_err("Error LED set @RF%d @port TX0",_rf_idx);
             return -1;
         }
         led = SP1403_S6_REG(0x5).tx0_green ? led_t::Red : led_t::Green;
     } else if (port == port_t::TX1) {
         if (SP1403_S6_REG(0x5).tx1_red == SP1403_S6_REG(0x5).tx1_green) {
-            Log.set_last_err("Error LED set of RF%d @port TX1",_rf_idx);
+            Log.set_last_err("Error LED set @RF%d @port TX1",_rf_idx);
             return -1;
         }
         led = SP1403_S6_REG(0x5).tx1_green ? led_t::Red : led_t::Green;
     } else {
         if (SP1403_S6_REG(0x5).rx_red == SP1403_S6_REG(0x5).rx_green) {
-            Log.set_last_err("Error LED set of RF%d @port RX",_rf_idx);
+            Log.set_last_err("Error LED set @RF%d @port RX",_rf_idx);
             return -1;
         }
         led = SP1403_S6_REG(0x5).rx_green ? led_t::Red : led_t::Green;

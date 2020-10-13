@@ -79,11 +79,11 @@ int32_t sp3103::boot(const bool silent)
         BOOL_CHECK(_sp1403_r1b.at(i)->connect(sp1403_ctrller));
         BOOL_CHECK(_rrh.at(i)->connect(sp1403_ctrller));
 
-        instance_sp1403(i);
+//        instance_sp1403(i);
 
         if (!silent) {
 //            if (is_connected) {
-                INT_CHECK(_sp1403.at(i)->open_board());
+                INT_CHECK(_sp1403_r1a.at(i)->open_board());
 //            }
             INT_CHECK(_sp2406.at(i)->open_board());
             INT_CHECK(_rrh.at(i)->open_board());

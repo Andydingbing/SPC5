@@ -175,10 +175,10 @@ int32_t SP9500X_RF_SetARBCount(const uint32_t RFIndex,const int Count)
 
 int32_t SP9500X_RF_SetIQCaptureBuffer(const uint32_t RFIndex,int16_t **I,int16_t **Q)
 {
-    if (*I == nullptr || *Q == nullptr) {
-        Log.set_last_err("IQ Capture buffer null.");
-        return -1;
-    }
+//    if (*I == nullptr || *Q == nullptr) {
+//        Log.set_last_err("IQ Capture buffer null.");
+//        return -1;
+//    }
 
     DECL_DYNAMIC_SP3103;
     *I = SP3103_0.working_sp2406(rf_idx)->ul_sequence()->i();

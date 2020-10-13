@@ -1051,7 +1051,7 @@ QGroupBox::title { subcontrol-origin:margin; subcontrol-position:top left; top:-
      <property name="title">
       <string>RX &amp;&amp; Miscellaneous</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_6" stretch="7,0,2,2">
+     <layout class="QVBoxLayout" name="verticalLayout_6" stretch="7,4,2,2">
       <item>
        <widget class="QGroupBox" name="groupBoxRx">
         <property name="styleSheet">

@@ -32,99 +32,35 @@ Q_SP9500PRO_SP1403_R1B_Widget::Q_SP9500PRO_SP1403_R1B_Widget(QWidget *parent) :
         ui->comboBoxRXAtt1->addItem(att);
     }
 
-    for (size_t i = 0;i < io_mode::_size();++i) {
-        ui->comboBoxTX0IOMode->addItem(QString::fromUtf8(io_mode::_names()[i]));
-        ui->comboBoxTX1IOMode->addItem(QString::fromUtf8(io_mode::_names()[i]));
-    }
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0IOMode,io_mode);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX1IOMode,io_mode);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0LED,led_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX1LED,led_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw1,sp1403_r1b::tx_sw1_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX1Sw1,sp1403_r1b::tx_sw1_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw2,sp1403_r1b::tx_sw2_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX1Sw2,sp1403_r1b::tx_sw2_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw3,sp1403_r1b::tx_sw3_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX1Sw3,sp1403_r1b::tx_sw3_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw4,sp1403_r1b::tx_sw4_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX1Sw4,sp1403_r1b::tx_sw4_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw5,sp1403_r1b::tx0_sw5_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX1Sw5,sp1403_r1b::tx1_sw5_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw6,sp1403_r1b::tx0_sw6_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX1Sw6,sp1403_r1b::tx1_sw6_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw7,sp1403_r1b::tx0_sw7_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw8,sp1403_r1b::tx0_sw8_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw9,sp1403_r1b::tx0_sw9_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw10,sp1403_r1b::tx0_sw10_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw11,sp1403_r1b::tx0_sw11_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw12,sp1403_r1b::tx0_sw12_t);
 
-    for (size_t i = 0;i < led_t::_size();++i) {
-        ui->comboBoxTX0LED->addItem(QString::fromUtf8(led_t::_names()[i]));
-        ui->comboBoxTX1LED->addItem(QString::fromUtf8(led_t::_names()[i]));
-    }
-
-    for (size_t i = 0;i < sp1403_r1b::tx_sw1_t::_size();++i) {
-        ui->comboBoxTX0Sw1->addItem(QString::fromUtf8(sp1403_r1b::tx_sw1_t::_names()[i]));
-        ui->comboBoxTX1Sw1->addItem(QString::fromUtf8(sp1403_r1b::tx_sw1_t::_names()[i]));
-    }
-
-    for (size_t i = 0;i < sp1403_r1b::tx_sw2_t::_size();++i) {
-        ui->comboBoxTX0Sw2->addItem(QString::fromUtf8(sp1403_r1b::tx_sw2_t::_names()[i]));
-        ui->comboBoxTX1Sw2->addItem(QString::fromUtf8(sp1403_r1b::tx_sw2_t::_names()[i]));
-    }
-
-    for (size_t i = 0;i < sp1403_r1b::tx_sw3_t::_size();++i) {
-        ui->comboBoxTX0Sw3->addItem(QString::fromUtf8(sp1403_r1b::tx_sw3_t::_names()[i]));
-        ui->comboBoxTX1Sw3->addItem(QString::fromUtf8(sp1403_r1b::tx_sw3_t::_names()[i]));
-    }
-
-    for (size_t i = 0;i < sp1403_r1b::tx_sw4_t::_size();++i) {
-        ui->comboBoxTX0Sw4->addItem(QString::fromUtf8(sp1403_r1b::tx_sw4_t::_names()[i]));
-        ui->comboBoxTX1Sw4->addItem(QString::fromUtf8(sp1403_r1b::tx_sw4_t::_names()[i]));
-    }
-
-    for (size_t i = 0;i < sp1403_r1b::tx0_sw5_t::_size();++i) {
-        ui->comboBoxTX0Sw5->addItem(QString::fromUtf8(sp1403_r1b::tx0_sw5_t::_names()[i]));
-    }
-
-    for (size_t i = 0;i < sp1403_r1b::tx1_sw5_t::_size();++i) {
-        ui->comboBoxTX1Sw5->addItem(QString::fromUtf8(sp1403_r1b::tx0_sw5_t::_names()[i]));
-    }
-
-    for (size_t i = 0;i < sp1403_r1b::tx0_sw6_t::_size();++i) {
-        ui->comboBoxTX0Sw6->addItem(QString::fromUtf8(sp1403_r1b::tx0_sw6_t::_names()[i]));
-    }
-
-    for (size_t i = 0;i < sp1403_r1b::tx1_sw6_t::_size();++i) {
-        ui->comboBoxTX1Sw6->addItem(QString::fromUtf8(sp1403_r1b::tx1_sw6_t::_names()[i]));
-    }
-
-    for (size_t i = 0;i < sp1403_r1b::tx0_sw7_t::_size();++i) {
-        ui->comboBoxTX0Sw7->addItem(QString::fromUtf8(sp1403_r1b::tx0_sw7_t::_names()[i]));
-    }
-
-    for (size_t i = 0;i < sp1403_r1b::tx0_sw8_t::_size();++i) {
-        ui->comboBoxTX0Sw8->addItem(QString::fromUtf8(sp1403_r1b::tx0_sw8_t::_names()[i]));
-    }
-
-    for (size_t i = 0;i < sp1403_r1b::tx0_sw9_t::_size();++i) {
-        ui->comboBoxTX0Sw9->addItem(QString::fromUtf8(sp1403_r1b::tx0_sw9_t::_names()[i]));
-    }
-
-    for (size_t i = 0;i < sp1403_r1b::tx0_sw10_t::_size();++i) {
-        ui->comboBoxTX0Sw10->addItem(QString::fromUtf8(sp1403_r1b::tx0_sw10_t::_names()[i]));
-    }
-
-    for (size_t i = 0;i < sp1403_r1b::tx0_sw11_t::_size();++i) {
-        ui->comboBoxTX0Sw11->addItem(QString::fromUtf8(sp1403_r1b::tx0_sw11_t::_names()[i]));
-    }
-
-    for (size_t i = 0;i < sp1403_r1b::tx0_sw12_t::_size();++i) {
-        ui->comboBoxTX0Sw12->addItem(QString::fromUtf8(sp1403_r1b::tx0_sw12_t::_names()[i]));
-    }
-
-    for (size_t i = 0;i < sp1403_r1b::rx_lna_att_t::_size();++i) {
-        ui->comboBoxRXLNAAttSw->addItem(QString::fromUtf8(sp1403_r1b::rx_lna_att_t::_names()[i]));
-    }
-
-    for (size_t i = 0;i < rx_bw_t::_size();i ++) {
-        ui->comboBoxBWSw->addItem(QString::fromUtf8(rx_bw_t::_names()[i]));
-    }
-
-    for (size_t i = 0;i < sp1403_r1b::rx_sw1_t::_size();++i) {
-        ui->comboBoxRXSw1->addItem(QString::fromUtf8(sp1403_r1b::rx_sw1_t::_names()[i]));
-    }
-
-    for (size_t i = 0;i < sp1403_r1b::rx_sw2_t::_size();++i) {
-        ui->comboBoxRXSw1->addItem(QString::fromUtf8(sp1403_r1b::rx_sw2_t::_names()[i]));
-    }
-
-    for (size_t i = 0;i < sp1403_r1b::rx_sw3_t::_size();++i) {
-        ui->comboBoxRXSw1->addItem(QString::fromUtf8(sp1403_r1b::rx_sw3_t::_names()[i]));
-    }
-
-    for (size_t i = 0;i < sp1403_r1b::rx_sw7_t::_size();++i) {
-        ui->comboBoxRXSw1->addItem(QString::fromUtf8(sp1403_r1b::rx_sw7_t::_names()[i]));
-    }
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxRXLNAAttSw,sp1403_r1b::rx_lna_att_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxBWSw,rx_bw_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxRXSw1,sp1403_r1b::rx_sw1_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxRXSw2,sp1403_r1b::rx_sw2_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxRXSw3,sp1403_r1b::rx_sw3_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxRXSw7,sp1403_r1b::rx_sw7_t);
 
     ui->lineEditS6_Addr->setText("0x0");
 }

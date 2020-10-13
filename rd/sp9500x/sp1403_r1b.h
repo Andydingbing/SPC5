@@ -39,8 +39,8 @@ public:
 
     int32_t set_rx_freq(const uint64_t freq);
 
-    int32_t set_rx_bw(const rx_bw_t bw) const { return 0;/*return set_rx_sw4(bw);*/ }
-    int32_t get_rx_bw(rx_bw_t &bw) const { return 0;/*return get_rx_sw4(bw);*/ }
+    int32_t set_rx_bw(const rx_bw_t bw) const;
+    int32_t get_rx_bw(rx_bw_t &bw) const;
 
     DECL_SW(rx_sw7,rx_sw7_t)
 
