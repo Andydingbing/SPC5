@@ -129,9 +129,9 @@ void Q_SA_Widget::on_pushButtonCap_clicked()
     } else if (project == DT3308) {
         INT_CHECKV(DT3308_BB_F->ddr()->fpga_w());
     } else if (project == SP9500X) {
-        INT_CHECKV(SP2406->set_iq_cap_abort());
-        INT_CHECKV(SP2406->set_iq_cap_start());
-        INT_CHECKV(SP2406->ddr()->dump("c:\\iq.txt"));
+        INT_CHECKV(NS_SP9500X::SP2406->set_iq_cap_abort());
+        INT_CHECKV(NS_SP9500X::SP2406->set_iq_cap_start());
+        INT_CHECKV(NS_SP9500X::SP2406->ddr()->dump("c:\\iq.txt"));
     }
     updatePlotFromBuf();
 }

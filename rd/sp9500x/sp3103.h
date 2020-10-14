@@ -7,13 +7,15 @@
 #include "sp2406.h"
 #include "traits.hpp"
 
-#define SP3103_0 rd::sp3103::instance(0)
+#define SP3103_0 rd::ns_sp9500x::sp3103::instance(0)
 
 namespace rd { namespace ns_sp3103 {
 
 static const uint8_t g_max_rf = 2;
 
 } // namespace ns_sp3103
+
+namespace ns_sp9500x {
 
 class RD_API sp3103 : boost::noncopyable
 {
@@ -111,6 +113,7 @@ private:
     std::string _bit_path_bbu_v9;
 };
 
-} //namespace rd
+} // namespace ns_sp9500x
+} // namespace rd
 
 #endif // SP3103_H

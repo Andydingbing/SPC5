@@ -8,6 +8,7 @@ using namespace std;
 using namespace rd;
 using namespace rd::ns_sp1403;
 using namespace rd::ns_sp1403::r1b;
+using namespace rd::ns_sp9500x;
 
 typedef int32_t (sp1403_r1b::*fp_set_lo_reg)(const uint8_t addr,const uint16_t data);
 typedef int32_t (sp1403_r1b::*fp_get_lo_reg)(const uint8_t addr,uint16_t &data);

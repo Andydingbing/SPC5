@@ -59,8 +59,19 @@ for (size_t i = 0;i < better_enum::_size();++i) { \
     box->addItem(QString::fromUtf8(better_enum::_names()[i])); \
 }
 
+class Q_ADF5355_Dlg;
+class Q_LMX2594_Dlg;
+
 namespace Ui {
+class Q_SP1401_R1A_Adv_Widget;
+}
+
+namespace Ui {
+class Q_SP9500X_SP1403_R1A_Widget;
+class Q_SP9500X_SP1403_R1B_Widget;
 class Q_SP2406_Widget;
+
+class Q_SP9500PRO_SP1403_R1B_Widget;
 }
 
 namespace NS_SP9500 {
@@ -72,10 +83,21 @@ namespace NS_DT3308 {
 class ChildWidgets;
 }
 
+extern sp1403 *SP1403;
+
 namespace NS_SP9500X {
+
 class ChildWidgets;
 class Q_ARB_Config_Widget_Helper;
-}
+
+extern ns_sp9500x::sp3103 *SP3103;
+
+extern ns_sp9500x::sp1403_r1a *SP1403_R1A;
+extern ns_sp9500x::sp1403_r1b *SP1403_R1B;
+extern ns_sp9500x::rrh *SP9500X_RRH;
+extern sp2406 *SP2406;
+
+} // namespace NS_SP9500X
 
 class Q_RD_Widget : public QWidget
 {
@@ -239,14 +261,5 @@ extern sp1401_r1f *SP1401_R1F;
 extern sp2401_r1a *SP2401;
 
 // DT3308
-
-// SP9500X
-extern sp3103 *SP3103;
-
-extern sp1403 *SP1403;
-extern sp1403_r1a *SP1403_R1A;
-extern sp1403_r1b *SP1403_R1B;
-extern ns_sp9500x::rrh *SP9500X_RRH;
-extern sp2406 *SP2406;
 
 #endif // DEFINE_H

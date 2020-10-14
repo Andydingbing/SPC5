@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     SP3301 = &SP3301_2;
-    SP3103 = &SP3103_0;
+    NS_SP9500X::SP3103 = &SP3103_0;
 
     ui->setupUi(this);
 

@@ -73,9 +73,9 @@ int32_t sp1403::get_ctrller_ver(const std::string &des,uint32_t &ver)
 {
     boost::ignore_unused(des);
 
-    SP9500PRO_RFU_V9_REG_DECL(0x0000);
-    SP9500PRO_RFU_V9_R(0x0000);
-    ver = SP9500PRO_RFU_V9_REG_DATA(0x0000);
+    SP9500X_RFU_V9_REG_DECL(0x0000);
+    SP9500X_RFU_V9_R(0x0000);
+    ver = SP9500X_RFU_V9_REG_DATA(0x0000);
     return 0;
 }
 
@@ -143,27 +143,27 @@ int32_t sp1403::is_valid_sn(const char *sn)
 
 int32_t sp1403::set_ad998x_reg(const uint16_t addr,const uint8_t data)
 {
-    SP9500PRO_RFU_V9_REG_DECL(0x0841);
+    SP9500X_RFU_V9_REG_DECL(0x0841);
 
-    SP9500PRO_RFU_V9_REG(0x0841).addr = addr;
-    SP9500PRO_RFU_V9_REG(0x0841).data = data;
-    SP9500PRO_RFU_V9_REG(0x0841).wr = 0;
-    SP9500PRO_RFU_V9_OP(0x0841);
-    SP9500PRO_RFU_V9_WAIT_IDLE(0x0841,0,1000);
+    SP9500X_RFU_V9_REG(0x0841).addr = addr;
+    SP9500X_RFU_V9_REG(0x0841).data = data;
+    SP9500X_RFU_V9_REG(0x0841).wr = 0;
+    SP9500X_RFU_V9_OP(0x0841);
+    SP9500X_RFU_V9_WAIT_IDLE(0x0841,0,1000);
     return 0;
 }
 
 int32_t sp1403::get_ad998x_reg(const uint16_t addr,uint8_t &data)
 {
-    SP9500PRO_RFU_V9_REG_DECL(0x0841);
-    SP9500PRO_RFU_V9_REG_DECL(0x0842);
+    SP9500X_RFU_V9_REG_DECL(0x0841);
+    SP9500X_RFU_V9_REG_DECL(0x0842);
 
     data = 0;
-    SP9500PRO_RFU_V9_REG(0x0841).addr = addr;
-    SP9500PRO_RFU_V9_REG(0x0841).wr = 1;
-    SP9500PRO_RFU_V9_OP(0x0841);
-    SP9500PRO_RFU_V9_WAIT_IDLE(0x0841,0,1000);
-    SP9500PRO_RFU_V9_R(0x0842);
-    data = SP9500PRO_RFU_V9_REG(0x0842).data;
+    SP9500X_RFU_V9_REG(0x0841).addr = addr;
+    SP9500X_RFU_V9_REG(0x0841).wr = 1;
+    SP9500X_RFU_V9_OP(0x0841);
+    SP9500X_RFU_V9_WAIT_IDLE(0x0841,0,1000);
+    SP9500X_RFU_V9_R(0x0842);
+    data = SP9500X_RFU_V9_REG(0x0842).data;
     return 0;
 }

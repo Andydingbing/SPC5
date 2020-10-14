@@ -1,7 +1,8 @@
 #include "sp9500x_rrh_widget.h"
 #include "ui_sp9500x_rrh.h"
 
-using namespace rd::ns_sp9500x::ns_rrh;
+using namespace ns_sp9500x::ns_rrh;
+using namespace NS_SP9500X;
 
 Q_SP9500X_RRH_Widget::Q_SP9500X_RRH_Widget(QWidget *parent) :
     Q_RD_Widget(parent),

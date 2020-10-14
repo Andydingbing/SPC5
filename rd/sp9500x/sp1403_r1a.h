@@ -119,6 +119,8 @@ BETTER_ENUM(temp_t, uint32_t,
 } // namespace r1a
 } // namespace ns_sp1403
 
+namespace ns_sp9500x {
+
 class RD_API sp1403_r1a : public sp1403
 {
 public:
@@ -264,6 +266,7 @@ private:
     common_lo_t *_rx_lmx2594_0;
 };
 
+} // namespace ns_sp9500x
 } // namespace rd
 
 #endif // SP1403_R1A_H

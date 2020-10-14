@@ -1,5 +1,6 @@
 #include "sp1401_r1a_adv_widget.h"
 #include "ui_sp1401_r1a_adv.h"
+#include "adf5355_dlg.h"
 
 using namespace rd;
 using namespace rd::ns_sp1401;

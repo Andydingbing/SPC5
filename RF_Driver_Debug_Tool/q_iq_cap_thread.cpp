@@ -18,8 +18,8 @@ void QIQCapThread::run()
     } else if (project == SP9500X) {
         while (1) {
             THREAD_TEST_CANCEL;
-            INT_CHECKV(SP2406->set_iq_cap_abort());
-            INT_CHECKV(SP2406->set_iq_cap_start());
+            INT_CHECKV(NS_SP9500X::SP2406->set_iq_cap_abort());
+            INT_CHECKV(NS_SP9500X::SP2406->set_iq_cap_start());
             emit updatePlot();
         }
     }

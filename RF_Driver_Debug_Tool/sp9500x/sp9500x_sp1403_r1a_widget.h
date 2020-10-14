@@ -1,13 +1,9 @@
-#ifndef Q_SP1403_R1A_WIDGET_H
-#define Q_SP1403_R1A_WIDGET_H
+#ifndef Q_SP9500X_SP1403_R1A_WIDGET_H
+#define Q_SP9500X_SP1403_R1A_WIDGET_H
 
 #include "global.h"
 
-namespace Ui {
-class Q_SP1403_R1A_Widget;
-}
-
-class Q_LMX2594_Dlg;
+namespace NS_SP9500X {
 
 class Q_SP1403_R1A_Widget : public Q_RD_Widget
 {
@@ -36,28 +32,28 @@ private slots:
     { SP1403_R1A->set_led(ns_sp1403::TX1,ns_sp1403::led_t::_from_index(size_t(index))); }
 
     void on_comboBoxTX0Att0_activated(int index)
-    { SP1403_R1A->set_att(sp1403_r1a::TX0_ATT0,index / 4.0); }
+    { SP1403_R1A->set_att(ns_sp9500x::sp1403_r1a::TX0_ATT0,index / 4.0); }
 
     void on_comboBoxTX1Att0_activated(int index)
-    { SP1403_R1A->set_att(sp1403_r1a::TX1_ATT0,index / 4.0); }
+    { SP1403_R1A->set_att(ns_sp9500x::sp1403_r1a::TX1_ATT0,index / 4.0); }
 
     void on_comboBoxTX0Att1_activated(int index)
-    { SP1403_R1A->set_att(sp1403_r1a::TX0_ATT1,index / 4.0); }
+    { SP1403_R1A->set_att(ns_sp9500x::sp1403_r1a::TX0_ATT1,index / 4.0); }
 
     void on_comboBoxTX1Att1_activated(int index)
-    { SP1403_R1A->set_att(sp1403_r1a::TX1_ATT1,index / 4.0); }
+    { SP1403_R1A->set_att(ns_sp9500x::sp1403_r1a::TX1_ATT1,index / 4.0); }
 
     void on_comboBoxTX0Att2_activated(int index)
-    { SP1403_R1A->set_att(sp1403_r1a::TX0_ATT2,index / 4.0); }
+    { SP1403_R1A->set_att(ns_sp9500x::sp1403_r1a::TX0_ATT2,index / 4.0); }
 
     void on_comboBoxTX1Att2_activated(int index)
-    { SP1403_R1A->set_att(sp1403_r1a::TX1_ATT2,index / 4.0); }
+    { SP1403_R1A->set_att(ns_sp9500x::sp1403_r1a::TX1_ATT2,index / 4.0); }
 
     void on_comboBoxTX0Att3_activated(int index)
-    { SP1403_R1A->set_att(sp1403_r1a::TX0_ATT3,index / 4.0); }
+    { SP1403_R1A->set_att(ns_sp9500x::sp1403_r1a::TX0_ATT3,index / 4.0); }
 
     void on_comboBoxTX1Att3_activated(int index)
-    { SP1403_R1A->set_att(sp1403_r1a::TX1_ATT3,index / 4.0); }
+    { SP1403_R1A->set_att(ns_sp9500x::sp1403_r1a::TX1_ATT3,index / 4.0); }
 
     void on_lineEditTXLMX2594_0_Freq_textEdited(const QString &arg1);
 
@@ -158,10 +154,12 @@ private:
     void updateRXLO();
 
 private:
-    Ui::Q_SP1403_R1A_Widget *ui;
+    Ui::Q_SP9500X_SP1403_R1A_Widget *ui;
     Q_LMX2594_Dlg *dlg_TX_LMX2594_0;
     Q_LMX2594_Dlg *dlg_TX_LMX2594_1;
     Q_LMX2594_Dlg *dlg_RX_LMX2594_0;
 };
 
-#endif // Q_SP1403_R1A_WIDGET_H
+} // namespace NS_SP9500X
+
+#endif // Q_SP9500X_SP1403_R1A_WIDGET_H

@@ -1,6 +1,5 @@
 #include "child_widget_helper.h"
 #include "mainwindow.h"
-#include "sp1403_r1a_widget.h"
 #include "rd_sp9500x.h"
 #include <QString>
 #include <QMenu>

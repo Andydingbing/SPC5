@@ -1,11 +1,17 @@
 include(../include/config.pri)
-include(sp9500.pri)
-include(dt3308.pri)
-include(sp9500x.pri)
-include(sp9500pro.pri)
+#include(sp9500.pri)
+#include(dt3308.pri)
+#include(sp9500x.pri)
+#include(sp9500pro.pri)
 
 QT += core gui network svg
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+SUBDIRS = \
+sp9500 \
+dt3308 \
+sp9500x \
+sp9500pro
 
 DEFINES += RD_EXCEPTION
 
@@ -144,6 +150,107 @@ test/q_test_rf_dlg.ui \
 test/q_test_tx_io_sw_msg_dlg.ui \
 cal/q_cal_rx_temp_comp_dlg.ui
 
+# SP9500
+HEADERS += \
+sp9500/sp1401_r1a_widget.h \
+sp9500/sp1401_r1a_adv_widget.h \
+sp9500/sp1401_r1c_widget.h \
+sp9500/sp1401_r1c_adv_widget.h \
+sp9500/sp1401_r1f_widget.h \
+sp9500/sp1401_r1f_adv_widget.h \
+sp9500/sp2401_r1a_widget.h \
+sp9500/sp9500_child_widget_helper.hpp \
+sp9500/sp9500_arb_config_widget.h \
+sp9500/sp9500_iq_cap_config_widget.h \
+sp9500/sp9500_fpga_widget.h
+
+SOURCES += \
+sp9500/sp1401_r1a_widget.cpp \
+sp9500/sp1401_r1a_adv_widget.cpp \
+sp9500/sp1401_r1c_widget.cpp \
+sp9500/sp1401_r1c_adv_widget.cpp \
+sp9500/sp1401_r1f_widget.cpp \
+sp9500/sp1401_r1f_adv_widget.cpp \
+sp9500/sp2401_r1a_widget.cpp \
+sp9500/sp9500_arb_config_widget.cpp \
+sp9500/sp9500_iq_cap_config_widget.cpp \
+sp9500/sp9500_fpga_widget.cpp
+
+FORMS += \
+sp9500/sp1401_r1a.ui \
+sp9500/sp1401_r1a_adv.ui \
+sp9500/sp1401_r1c.ui \
+sp9500/sp1401_r1c_adv.ui \
+sp9500/sp1401_r1f.ui \
+sp9500/sp1401_r1f_adv.ui \
+sp9500/sp2401_r1a.ui \
+sp9500/sp9500_fpga.ui
+
+# DT3308
+HEADERS += \
+dt3308/dt3308_rf_f_widget.h \
+dt3308/dt3308_bb_f_widget.h \
+dt3308/dt3308_child_widget_helper.hpp \
+dt3308/dt3308_iq_cap_config_widget.h
+
+SOURCES += \
+dt3308/dt3308_rf_f_widget.cpp \
+dt3308/dt3308_bb_f_widget.cpp \
+dt3308/dt3308_iq_cap_config_widget.cpp
+
+FORMS += \
+dt3308/dt3308_rf_f.ui \
+dt3308/dt3308_bb_f.ui
+
+# SP9500X
+HEADERS += \
+sp9500x/sp9500x_sp1403_r1a_widget.h \
+sp9500x/sp9500x_sp1403_r1b_widget.h \
+sp9500x/sp9500x_rrh_widget.h \
+sp9500x/sp2406_widget.h \
+sp9500x/sp9500x_child_widget_helper.hpp \
+sp9500x/sp9500x_arb_config_widget.h \
+sp9500x/sp9500x_iq_cap_config_widget.h \
+sp9500x/sp9500x_fpga_widget.h \
+sp9500x/sp9500x_fan_dlg.h
+
+SOURCES += \
+sp9500x/sp9500x_sp1403_r1a_widget.cpp \
+sp9500x/sp9500x_sp1403_r1b_widget.cpp \
+sp9500x/sp9500x_rrh_widget.cpp \
+sp9500x/sp2406_widget.cpp \
+sp9500x/sp9500x_arb_config_widget.cpp \
+sp9500x/sp9500x_iq_cap_config_widget.cpp \
+sp9500x/sp9500x_fpga_widget.cpp \
+sp9500x/sp9500x_fan_dlg.cpp
+
+FORMS += \
+sp9500x/sp9500x_sp1403_r1a.ui \
+sp9500x/sp9500x_sp1403_r1b.ui \
+sp9500x/sp9500x_rrh.ui \
+sp9500x/sp2406.ui \
+sp9500x/sp9500x_fpga.ui \
+sp9500x/sp9500x_fan.ui
+
+# SP9500Pro
+INCLUDEPATH += \
+sp9500pro/cal
+
+HEADERS += \
+sp9500pro/sp9500pro_sp1403_r1b_widget.h \
+sp9500pro/sp9500pro_child_widget_helper.hpp \
+sp9500pro/cal/sp9500pro_cal_widget.h \
+sp9500pro/cal/sp9500pro_cal_tx_filter_thread.h \
+sp9500pro/cal/sp9500pro_cal_tx_filter_childwidgets.h
+
+SOURCES += \
+sp9500pro/sp9500pro_sp1403_r1b_widget.cpp \
+sp9500pro/cal/sp9500pro_cal_widget.cpp \
+sp9500pro/cal/sp9500pro_cal_tx_filter_thread.cpp \
+sp9500pro/cal/sp9500pro_cal_tx_filter_childwidgets.cpp
+
+FORMS += \
+sp9500pro/sp9500pro_sp1403_r1b.ui
 
 # ARB
 # IQ Capture

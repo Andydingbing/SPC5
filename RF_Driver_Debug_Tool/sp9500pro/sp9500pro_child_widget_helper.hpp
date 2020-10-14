@@ -3,7 +3,6 @@
 
 #include "global.h"
 #include "child_widget_helper.h"
-#include "sp1403_r1a_widget.h"
 #include "sp9500pro_sp1403_r1b_widget.h"
 #include "sp9500x_rrh_widget.h"
 #include "sp2406_widget.h"
@@ -106,7 +105,7 @@ public:
         DECL_TREE_ITEM(str,"RF-R1B" << "Test",widget_Test_R1A);
         DECL_TREE_ITEM(str,"RF-R1B" << "Calibration" << "TX-Filter",widget_Cal_TXFilter);
         DECL_TREE_ITEM(str,"RRH" << "Overview",widget_SP9500X_RRH);
-        DECL_TREE_ITEM(str,"BB-Debug" << "Overview",widget_SP2406);
+//        DECL_TREE_ITEM(str,"BB-Debug" << "Overview",widget_SP2406);
         DECL_TREE_ITEM(str,"BB-Debug" << "ARB",widget_ARB);
         DECL_TREE_ITEM(str,"BB-Debug" << "Signal Analyzer",widget_SA);
         DECL_TREE_ITEM(str,"BB-Debug" << "FPGA",widget_FPGA);
@@ -136,7 +135,7 @@ public:
         ADD_CHILD_WIDGET(widget_Cal_TXFilter,Q_Cal_TXFilter_Widget,ns_sp3103::g_max_rf);
         ADD_CHILD_WIDGET(widget_Test_R1A,Q_Test_SP9501_TabWidget,ns_sp3103::g_max_rf);
         ADD_CHILD_WIDGET(widget_SP9500X_RRH,Q_SP9500X_RRH_Widget,ns_sp3103::g_max_rf);
-        ADD_CHILD_WIDGET(widget_SP2406,Q_SP2406_Widget,ns_sp3103::g_max_rf);
+//        ADD_CHILD_WIDGET(widget_SP2406,Q_SP2406_Widget,ns_sp3103::g_max_rf);
         ADD_CHILD_WIDGET(widget_ARB,Q_ARB_Widget,ns_sp3103::g_max_rf);
         ADD_CHILD_WIDGET(widget_SA,Q_SA_Widget,ns_sp3103::g_max_rf);
         ADD_CHILD_WIDGET(widget_FPGA,NS_SP9500X::Q_FPGA_Widget,1);
@@ -144,17 +143,17 @@ public:
 
     void updatePtr()
     {
-        if (SP3103 != nullptr) {
-            RFUIdx = SP3103->rfu_idx();
-            SP1403 = SP3103->working_sp1403(RFIdx);
-            SP1403_R1B = SP3103->working_sp1403_r1b(RFIdx);
-            SP9500X_RRH = SP3103->working_rrh(RFIdx);
-            SP2406 = SP3103->working_sp2406(RFIdx);
-            complexSequence = SP2406->ul_sequence();
-            widget_SA[RFIdx]->_data_I._sequence = complexSequence;
-            widget_SA[RFIdx]->_data_Q._sequence = complexSequence;
-            widget_SA[RFIdx]->_data_DFT._sequence = complexSequence;
-        }
+//        if (SP3103 != nullptr) {
+//            RFUIdx = SP3103->rfu_idx();
+//            SP1403 = SP3103->working_sp1403(RFIdx);
+//            SP1403_R1B = SP3103->working_sp1403_r1b(RFIdx);
+//            SP9500X_RRH = SP3103->working_rrh(RFIdx);
+//            SP2406 = SP3103->working_sp2406(RFIdx);
+//            complexSequence = SP2406->ul_sequence();
+//            widget_SA[RFIdx]->_data_I._sequence = complexSequence;
+//            widget_SA[RFIdx]->_data_Q._sequence = complexSequence;
+//            widget_SA[RFIdx]->_data_DFT._sequence = complexSequence;
+//        }
     }
 
     void mainTabCurrentChanged(int index)
@@ -180,7 +179,7 @@ public slots:
         for (int i = 0;i < ns_sp3103::g_max_rf;i ++) {
             widget_SP1403_R1B[i]->init();
             widget_SP9500X_RRH[i]->init();
-            widget_SP2406[i]->init();
+//            widget_SP2406[i]->init();
             widget_ARB[i]->init();
             widget_SA[i]->init();
         }
@@ -191,7 +190,7 @@ public:
     QList<Q_SP9500PRO_SP1403_R1B_Widget *> widget_SP1403_R1B;
     QList<Q_SP9500X_RRH_Widget *> widget_SP9500X_RRH;
 
-    QList<Q_SP2406_Widget *> widget_SP2406;
+//    QList<Q_SP2406_Widget *> widget_SP2406;
     QList<Q_ARB_Widget *> widget_ARB;
     QList<Q_SA_Widget *> widget_SA;
     QList<NS_SP9500X::Q_FPGA_Widget *> widget_FPGA;

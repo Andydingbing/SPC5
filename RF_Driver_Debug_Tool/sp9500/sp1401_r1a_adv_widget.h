@@ -2,11 +2,6 @@
 #define Q_SP1401_R1A_ADV_WIDGET_H
 
 #include "global.h"
-#include "adf5355_dlg.h"
-
-namespace Ui {
-class Q_SP1401_R1A_Adv_Widget;
-}
 
 class Q_SP1401_R1A_Adv_Widget : public Q_RD_Widget
 {

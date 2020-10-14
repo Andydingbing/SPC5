@@ -3,6 +3,8 @@
 
 #include "global.h"
 
+namespace NS_SP9500X {
+
 class Q_SP2406_Widget : public Q_RD_Widget
 {
     Q_OBJECT
@@ -162,5 +164,7 @@ private:
     quint8 UL_ch;
     Ui::Q_SP2406_Widget *ui;
 };
+
+} // namespace NS_SP9500X
 
 #endif // Q_SP2406_Widget_H

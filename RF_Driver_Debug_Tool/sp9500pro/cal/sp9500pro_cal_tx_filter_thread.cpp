@@ -46,10 +46,10 @@ void Q_Cal_TXFilter_Thread::cal()
 
 void Q_Cal_TXFilter_Thread::init()
 {
-    SP2406->set_dl_jesd_src(port,dl_jesd_src_t::DDS);
-    SP2406->set_dl_jesd_src_dds(dl_jesd_src_dds_mode_t::Fine);
-    SP2406->set_dl_jesd_src_dds_gain(0.0);
-    SP2406->set_dl_pwr_comp(0);
+//    SP2406->set_dl_jesd_src(port,dl_jesd_src_t::DDS);
+//    SP2406->set_dl_jesd_src_dds(dl_jesd_src_dds_mode_t::Fine);
+//    SP2406->set_dl_jesd_src_dds_gain(0.0);
+//    SP2406->set_dl_pwr_comp(0);
 
 //    double att0 = 0.0;
 //    double att1 = 0.0;

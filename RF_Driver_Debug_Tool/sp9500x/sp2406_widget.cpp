@@ -6,6 +6,7 @@
 
 using namespace rd::ns_sp1403;
 using namespace rd::ns_sp2406;
+using namespace NS_SP9500X;
 
 Q_SP2406_Widget::Q_SP2406_Widget(QWidget *parent) :
     Q_RD_Widget(parent),
