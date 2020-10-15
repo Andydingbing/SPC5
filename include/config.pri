@@ -101,7 +101,7 @@ win32-msvc {
 
     # Multi-Processor
     QMAKE_CFLAGS += /MP
-    QMAKE_LFLAGS_DEBUG -= /DEBUG
+#    QMAKE_LFLAGS_DEBUG -= /DEBUG
 
     LIB_DIR = $$LIB_DIR/win32-msvc
 }
