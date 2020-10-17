@@ -164,6 +164,8 @@ BETTER_ENUM(iq_cap_trig_edge_t, uint32_t,
 
 } // namespace ns_sp2406
 
+namespace ns_sp9500x {
+
 class RD_API sp2406 : public baseband
 {
 public:
@@ -545,6 +547,7 @@ private:
     complex_sequence _ul_sequence;
 };
 
+} // namespace ns_sp9500x
 } // namespace rd
 
 #endif // SP2406_H

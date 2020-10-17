@@ -6,7 +6,7 @@
 #include "sp9500x_sp1403_r1a_widget.h"
 #include "sp9500x_sp1403_r1b_widget.h"
 #include "sp9500x_rrh_widget.h"
-#include "sp2406_widget.h"
+#include "sp9500x_sp2406_widget.h"
 #include "arb_widget.h"
 #include "sp9500x_iq_cap_config_widget.h"
 #include "signal_analyzer_widget.h"

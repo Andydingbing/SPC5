@@ -162,7 +162,7 @@ private:
 private:
     quint8 DL_ch;
     quint8 UL_ch;
-    Ui::Q_SP2406_Widget *ui;
+    Ui::Q_SP9500X_SP2406_Widget *ui;
 };
 
 } // namespace NS_SP9500X

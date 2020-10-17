@@ -2,6 +2,7 @@
 #include "ui_sp9500x_fpga.h"
 #include <QFileDialog>
 
+using namespace ns_sp9500x;
 using namespace NS_SP9500X;
 
 #define V9 SP1403->v9()

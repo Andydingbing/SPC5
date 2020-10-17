@@ -1,5 +1,5 @@
-#include "sp2406_widget.h"
-#include "ui_sp2406.h"
+#include "sp9500x_sp2406_widget.h"
+#include "ui_sp9500x_sp2406.h"
 #include "algo_math.hpp"
 #include "utilities.hpp"
 #include <QBitArray>
@@ -12,7 +12,7 @@ Q_SP2406_Widget::Q_SP2406_Widget(QWidget *parent) :
     Q_RD_Widget(parent),
     DL_ch(0),
     UL_ch(0),
-    ui(new Ui::Q_SP2406_Widget)
+    ui(new Ui::Q_SP9500X_SP2406_Widget)
 {
     ui->setupUi(this);
 

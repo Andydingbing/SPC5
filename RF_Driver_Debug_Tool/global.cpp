@@ -80,7 +80,7 @@ ns_sp9500x::sp3103 *SP3103 = nullptr;
 ns_sp9500x::sp1403_r1a *SP1403_R1A = nullptr;
 ns_sp9500x::sp1403_r1b *SP1403_R1B = nullptr;
 ns_sp9500x::rrh *SP9500X_RRH = nullptr;
-sp2406 *SP2406 = nullptr;
+ns_sp9500x::sp2406 *SP2406 = nullptr;
 
 }
 

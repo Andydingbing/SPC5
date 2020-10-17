@@ -69,7 +69,7 @@ class Q_SP1401_R1A_Adv_Widget;
 namespace Ui {
 class Q_SP9500X_SP1403_R1A_Widget;
 class Q_SP9500X_SP1403_R1B_Widget;
-class Q_SP2406_Widget;
+class Q_SP9500X_SP2406_Widget;
 
 class Q_SP9500PRO_SP1403_R1B_Widget;
 }
@@ -87,6 +87,8 @@ extern sp1403 *SP1403;
 
 namespace NS_SP9500X {
 
+using namespace ns_sp9500x;
+
 class ChildWidgets;
 class Q_ARB_Config_Widget_Helper;
 
@@ -94,8 +96,8 @@ extern ns_sp9500x::sp3103 *SP3103;
 
 extern ns_sp9500x::sp1403_r1a *SP1403_R1A;
 extern ns_sp9500x::sp1403_r1b *SP1403_R1B;
-extern ns_sp9500x::rrh *SP9500X_RRH;
-extern sp2406 *SP2406;
+extern ns_sp9500x::rrh    *SP9500X_RRH;
+extern ns_sp9500x::sp2406 *SP2406;
 
 } // namespace NS_SP9500X
 
