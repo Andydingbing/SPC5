@@ -6,9 +6,9 @@ QWT_VER   = 6.1.3
 # Directory defination
 UTILITIES_DIR = ../utilities
 LIB_DIR = ../lib
-BOOST_LIB = $$LIB_DIR
-FFTW_LIB  = $$LIB_DIR
-QWT_LIB   = $$LIB_DIR
+LIB_DIR_BOOST = $$LIB_DIR
+LIB_DIR_FFTW  = $$LIB_DIR
+LIB_DIR_QWT   = $$LIB_DIR
 
 win32 {
     INCLUDEPATH += \
@@ -83,7 +83,6 @@ contains(QT_ARCH,i386) {
 }
 
 LIBS += -L$$LIB_DIR
-FFTW_LIB = $$LIB_DIR/fftw/$$FFTW_VER
 
 win32-g++ {
     message("Compiler : win32-g++")
@@ -117,20 +116,21 @@ linux-g++ {
     -lboost_chrono
 }
 
-BOOST_LIB = $$LIB_DIR/boost/$$BOOST_VER
-QWT_LIB   = $$LIB_DIR/qwt/$$QWT_VER
+LIB_DIR_BOOST = $$LIB_DIR/boost/$$BOOST_VER
+LIB_DIR_FFTW  = $$LIB_DIR/fftw/$$FFTW_VER
+LIB_DIR_QWT   = $$LIB_DIR/qwt/$$QWT_VER
 
 CONFIG(debug,debug|release) {
     DEFINES += _DEBUG
 }
 
 message($$LIB_DIR)
-message($$BOOST_LIB)
-message($$FFTW_LIB)
-message($$QWT_LIB)
+message($$LIB_DIR_BOOST)
+message($$LIB_DIR_FFTW)
+message($$LIB_DIR_QWT)
 LIBS += \
 -L$$LIB_DIR \
--L../$$BOOST_LIB \
--L$$BOOST_LIB \
--L$$FFTW_LIB \
--L$$QWT_LIB
+-L../$$LIB_DIR_BOOST \
+-L$$LIB_DIR_BOOST \
+-L$$LIB_DIR_FFTW \
+-L$$LIB_DIR_QWT

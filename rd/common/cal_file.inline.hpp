@@ -1,7 +1,6 @@
 #ifndef RD_COMMON_CAL_FILE_INLINE_HPP
 #define RD_COMMON_CAL_FILE_INLINE_HPP
 
-#include "rd.h"
 #include "liblog.h"
 #include "cal_file.hpp"
 #include <fstream>
@@ -66,45 +65,6 @@ static const int32_t size_granularity = 256;
 template<typename cal_table_t>
 uint32_t basic_cal_file<cal_table_t>::ver_current = 0;
 
-// cal_table_data
-template<typename data_f_t,typename data_m_t>
-void cal_table_data<data_f_t,data_m_t>::prepare_cal()
-{
-    SAFE_NEW(_data_f,std::vector<data_f_t>);
-    SAFE_NEW(_data_calibrating,std::vector<data_f_t>);
-
-    _data_f->clear();
-    _data_f->resize(convert_buf.size_table / size_of_data_f());
-    memcpy(data_f(0),convert_buf.buf(),convert_buf.size_table);
-
-    _data_calibrating->clear();
-}
-
-template<typename data_f_t,typename data_m_t>
-void cal_table_data<data_f_t,data_m_t>::combine()
-{
-    size_t last_idx = 0;
-    bool is_new_element = true;
-
-    if (_data_calibrating == nullptr || _data_f == nullptr) {
-        return;
-    }
-    for (size_t i = 0;i < _data_calibrating->size();++i) {
-        for (size_t j = last_idx;j < _data_f->size();++j) {
-            if (_data_f->at(j).key() == _data_calibrating->at(i).key()) {
-                (*_data_f)[j] = (*_data_calibrating)[i];
-                last_idx = j;
-                is_new_element = false;
-                break;
-            }
-        }
-        if (is_new_element) {
-            _data_f->push_back(_data_calibrating->at(i));
-        }
-    }
-}
-
-// basic_cal_file
 template<typename cal_table_t>
 int32_t basic_cal_file<cal_table_t>::open()
 {
@@ -400,7 +360,7 @@ int32_t basic_cal_file<cal_table_t>::prepare_cal(const cal_table_t table)
     load_to_buf(table);
 
     if ((iter = _tables.find(table._to_integral())) != _tables.end()) {
-        iter->second->prepare_cal();
+        iter->second->prepare_cal(convert_buf.buf(),convert_buf.size_table);
         return 0;
     }
     return -1;

@@ -139,7 +139,6 @@ public:
     rd::sp1401     *SP1401;
     rd::sp2401_r1a *SP2401;
     rd::sp3301     *SP3301;
-    rd::sp3501     *_sp3501;
     QObject       *parent;
     CalIOMode     mode;
     QCalBaseModel *model_0;
@@ -159,13 +158,12 @@ public:
     CalParam() :
         cal(false),
         check(false),
-        parent(nullptr),
-        model_0(nullptr),
-        model_1(nullptr),
         SP1401(nullptr),
         SP2401(nullptr),
         SP3301(nullptr),
-        _sp3501(nullptr),
+        parent(nullptr),
+        model_0(nullptr),
+        model_1(nullptr),
         calX9119(true),
         methodLOLeak(M_Spectrum),
         methodSB(M_Spectrum),

@@ -7,10 +7,9 @@ CONFIG -= qt
 TEMPLATE = lib
 INCLUDEPATH += $$SRC_DIR
 DEFINES += RD_DLL_EXPORTS
-LIBS += -lbd -llog
+LIBS += -lbd -llog -lfftw3
 
-win32 { LIBS += -lws2_32 -llibfftw3-3 }
-unix  { LIBS += -lfftw3 }
+win32 { LIBS += -lws2_32 }
 
 HEADERS += \
 $$UTILITIES_DIR/spec.h \

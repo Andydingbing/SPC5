@@ -64,8 +64,6 @@ void QCalR1CTXLOLeakThread::run()
 
 void QCalR1CTXLOLeakThread::calX9119()
 {
-    sp3501 *pSP3501 = calParam._sp3501;
-
     quint64 freq = tx_freq_stop;
     double mkrFreq = 0.0;
     double mkrPwr  = -100;
@@ -87,7 +85,7 @@ void QCalR1CTXLOLeakThread::calX9119()
     for (quint16 value = 0;value < 1023;value ++) {
         THREAD_TEST_PAUSE_S
         THREAD_TEST_CANCEL
-        pSP3501->vol_9119(value);
+        SP3501.vol_9119(value);
         Instr.sa_sweep_once();
         Instr.sa_set_peak_search(sa::PEAK_HIGHEST);
         Instr.sa_get_marker_freq(mkrFreq);

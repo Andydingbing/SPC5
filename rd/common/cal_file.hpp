@@ -102,4 +102,6 @@ protected:
 
 } // namespace rd
 
+#include "cal_file.inline.hpp"
+
 #endif // CAL_FILE_H
