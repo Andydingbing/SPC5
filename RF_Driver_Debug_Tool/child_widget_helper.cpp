@@ -31,6 +31,7 @@ QTreeWidgetItem *addTreeItem(const QString item,QTreeWidgetItem *parent)
         }
     }
     QTreeWidgetItem *treeItem = new QTreeWidgetItem(parent,QStringList(item));
+    Q_UNUSED(treeItem);
     return parent->child(parent->childCount() - 1);
 }
 

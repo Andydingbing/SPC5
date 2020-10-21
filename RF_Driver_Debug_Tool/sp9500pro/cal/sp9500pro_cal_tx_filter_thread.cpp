@@ -63,7 +63,7 @@ void Q_Cal_TXFilter_Thread::init()
 //        tx_pwr_op_table_r1c::guess_base_r1f(att0,att1,att2,d_gain);
 //    }
 
-    SP1403->set_io_mode(OUTPUT);
+//    SP1403->set_io_mode(OUTPUT);
 
 //    SP1401->set_tx_att(att0,att1,att2,att3);
 //    SP1401->set_rx_lna_att_sw(r1c::RX_ATT);
@@ -84,7 +84,7 @@ void Q_Cal_TXFilter_Thread::sweepRF(const uint64_t star,
         THREAD_TEST_PAUSE_S
         THREAD_TEST_CANCEL
 
-        SP1403->set_tx_freq(freq);
+//        SP1403->set_tx_freq(freq);
         msleep(10);
 
         Instr.pm_get_pwr(freq,data.pwr);
@@ -93,21 +93,21 @@ void Q_Cal_TXFilter_Thread::sweepRF(const uint64_t star,
 //        THREAD_CHECK_TEMP;
 
         data.freq = freq;
-        SP1403->cal_file()->add(table,&data);
+//        SP1403->cal_file()->add(table,&data);
 
         emit uiUpdate(0,0,table);
 
         ADD_PROG_POS(1);
         THREAD_TEST_PAUSE_E
     }
-    SP1403->cal_file()->persistence(table);
+//    SP1403->cal_file()->persistence(table);
 }
 
 void Q_Cal_TXFilter_Thread::sweepIF()
 {
 //    tx_if_fr_table::data_f_t data;
 
-    SP1403->set_tx_freq(FREQ_G(2));
+//    SP1403->set_tx_freq(FREQ_G(2));
     msleep(10);
 
     for (quint32 i = 0;i < 1;i ++) {

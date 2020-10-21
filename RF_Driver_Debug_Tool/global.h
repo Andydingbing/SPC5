@@ -63,15 +63,18 @@ class Q_ADF5355_Dlg;
 class Q_LMX2594_Dlg;
 
 namespace Ui {
+class Q_SP1401_R1A_Widget;
 class Q_SP1401_R1A_Adv_Widget;
-}
+class Q_SP1401_R1C_Widget;
+class Q_SP1401_R1C_Adv_Widget;
+class Q_SP1401_R1F_Widget;
+class Q_SP1401_R1F_Adv_Widget;
+class Q_SP2401_R1A_Widget;
 
-namespace Ui {
-class Q_SP9500X_SP1403_R1A_Widget;
-class Q_SP9500X_SP1403_R1B_Widget;
+class Q_SP1403_R1A_Widget;
+class Q_SP1403_R1B_Widget;
 class Q_SP9500X_SP2406_Widget;
 
-class Q_SP9500PRO_SP1403_R1B_Widget;
 }
 
 namespace NS_SP9500 {
@@ -83,7 +86,6 @@ namespace NS_DT3308 {
 class ChildWidgets;
 }
 
-extern sp1403 *SP1403;
 
 namespace NS_SP9500X {
 
@@ -94,6 +96,7 @@ class Q_ARB_Config_Widget_Helper;
 
 extern ns_sp9500x::sp3103 *SP3103;
 
+extern sp1403 *SP1403;
 extern ns_sp9500x::sp1403_r1a *SP1403_R1A;
 extern ns_sp9500x::sp1403_r1b *SP1403_R1B;
 extern ns_sp9500x::rrh    *SP9500X_RRH;

@@ -3,10 +3,6 @@
 
 #include "global.h"
 
-namespace Ui {
-class Q_SP1401_R1F_Widget;
-}
-
 class Q_SP1401_R1F_Widget : public Q_RD_Widget
 {
     Q_OBJECT

@@ -1,5 +1,5 @@
 #include "sp9500x_sp1403_r1b_widget.h"
-#include "ui_sp9500x_sp1403_r1b.h"
+#include "ui_sp1403_r1b.h"
 #include "lmx2594_dlg.h"
 #include "reg_def_sp9500x.h"
 
@@ -11,7 +11,7 @@ using namespace NS_SP9500X;
 
 Q_SP1403_R1B_Widget::Q_SP1403_R1B_Widget(QWidget *parent) :
     Q_RD_Widget(parent),
-    ui(new Ui::Q_SP9500X_SP1403_R1B_Widget)
+    ui(new Ui::Q_SP1403_R1B_Widget)
 {
     ui->setupUi(this);
 
@@ -59,6 +59,7 @@ Q_SP1403_R1B_Widget::Q_SP1403_R1B_Widget(QWidget *parent) :
 
     COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxRXLNAAttSw,sp1403_r1b::rx_lna_att_t);
     COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxBWSw,rx_bw_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxDet,det_sw_t);
     COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxRXSw1,sp1403_r1b::rx_sw1_t);
     COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxRXSw2,sp1403_r1b::rx_sw2_t);
     COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxRXSw3,sp1403_r1b::rx_sw3_t);
@@ -88,6 +89,10 @@ void Q_SP1403_R1B_Widget::init()
     updateTXLO();
     updateRXSw();
     updateRXLO();
+
+    det_sw_t detSw = det_sw_t::TX;
+    INT_CHECKV(SP1403_R1B->get_det_sw(detSw));
+    ui->comboBoxDet->setCurrentIndex(detSw);
 }
 
 void Q_SP1403_R1B_Widget::updateIOMode()
@@ -303,12 +308,16 @@ void Q_SP1403_R1B_Widget::on_pushButtonRXLMX2594_0_Adv_clicked()
     dlg_RX_LMX2594_0->activateWindow();
 }
 
-void Q_SP1403_R1B_Widget::on_pushButtonSetSN_clicked()
+void NS_SP9500X::Q_SP1403_R1B_Widget::on_comboBoxDet_activated(int index)
 {
-//    RF_DT3308_PTR_CHECK
-//    quint32 ordinal = ui->lineEditOrdinal->text().toUInt();
-//    hw_ver_t ver = hw_ver_t(ui->comboBoxHwVer->currentIndex());
-//    INT_CHECKV(SP1401R1A()->set_sn_major(ver,ordinal));
+
+}
+
+void Q_SP1403_R1B_Widget::on_pushButtonGetDet_clicked()
+{
+    uint16_t det = 0;
+    SP1403_R1B->get_ad7680(det);
+    ui->lineEditDet->setText(QString("%1").arg(det));
 }
 
 void Q_SP1403_R1B_Widget::on_pushButtonGetSN_clicked()

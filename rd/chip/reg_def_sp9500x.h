@@ -422,6 +422,21 @@ REG_DEF_CPT_PREFIX_32_2(0x0113,0x0133)
     unsigned rsv0 : 31;
 REG_DEF_CPT_SUFFIX_32_2
 
+REG_DEF_CPT_PREFIX_32_2(0x0114,0x0134)
+    unsigned op : 1;
+    unsigned rsv0 : 31;
+REG_DEF_CPT_SUFFIX_32_2
+
+REG_DEF_CPT_PREFIX_32_2(0x0115,0x0135)
+    unsigned det : 16;
+    unsigned rsv0 : 16;
+REG_DEF_CPT_SUFFIX_32_2
+
+REG_DEF_CPT_PREFIX_32_2(0x0117,0x0137)
+    unsigned busy : 1;
+    unsigned rsv0 : 31;
+REG_DEF_CPT_SUFFIX_32_2
+
 REG_DEF_CPT_PREFIX_32(0x0180)
     unsigned op : 1;
     unsigned rsv0 : 31;

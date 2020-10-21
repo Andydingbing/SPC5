@@ -25,11 +25,11 @@ void Q_Cal_TXFilter_Widget::init()
 
 void Q_Cal_TXFilter_Widget::resetShowWidget(CalParam *param)
 {
-    SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_0);
-    SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_1);
-    SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_2);
-    SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_3);
-    SP1403->cal_file()->prepare_cal(cal_table_t::TX_Filter);
+//    SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_0);
+//    SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_1);
+//    SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_2);
+//    SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_3);
+//    SP1403->cal_file()->prepare_cal(cal_table_t::TX_Filter);
     childs->plotRF->replot();
     childs->plotIF->replot();
     emit reset();

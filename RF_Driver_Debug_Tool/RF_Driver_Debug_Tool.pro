@@ -150,6 +150,18 @@ test/q_test_rf_dlg.ui \
 test/q_test_tx_io_sw_msg_dlg.ui \
 cal/q_cal_rx_temp_comp_dlg.ui
 
+# Common
+FORMS += \
+common/sp1401_r1a.ui \
+common/sp1401_r1a_adv.ui \
+common/sp1401_r1c.ui \
+common/sp1401_r1c_adv.ui \
+common/sp1401_r1f.ui \
+common/sp1401_r1f_adv.ui \
+common/sp2401_r1a.ui \
+common/sp1403_r1a.ui \
+common/sp1403_r1b.ui
+
 # SP9500
 HEADERS += \
 sp9500/sp1401_r1a_widget.h \
@@ -177,13 +189,6 @@ sp9500/sp9500_iq_cap_config_widget.cpp \
 sp9500/sp9500_fpga_widget.cpp
 
 FORMS += \
-sp9500/sp1401_r1a.ui \
-sp9500/sp1401_r1a_adv.ui \
-sp9500/sp1401_r1c.ui \
-sp9500/sp1401_r1c_adv.ui \
-sp9500/sp1401_r1f.ui \
-sp9500/sp1401_r1f_adv.ui \
-sp9500/sp2401_r1a.ui \
 sp9500/sp9500_fpga.ui
 
 # DT3308
@@ -225,8 +230,6 @@ sp9500x/sp9500x_fpga_widget.cpp \
 sp9500x/sp9500x_fan_dlg.cpp
 
 FORMS += \
-sp9500x/sp9500x_sp1403_r1a.ui \
-sp9500x/sp9500x_sp1403_r1b.ui \
 sp9500x/sp9500x_rrh.ui \
 sp9500x/sp9500x_sp2406.ui \
 sp9500x/sp9500x_fpga.ui \
@@ -248,9 +251,6 @@ sp9500pro/sp9500pro_sp1403_r1b_widget.cpp \
 sp9500pro/cal/sp9500pro_cal_widget.cpp \
 sp9500pro/cal/sp9500pro_cal_tx_filter_thread.cpp \
 sp9500pro/cal/sp9500pro_cal_tx_filter_childwidgets.cpp
-
-FORMS += \
-sp9500pro/sp9500pro_sp1403_r1b.ui
 
 # ARB
 # IQ Capture

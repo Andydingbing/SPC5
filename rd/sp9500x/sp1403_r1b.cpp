@@ -16,16 +16,7 @@ typedef int32_t (sp1403_r1b::*fp_get_lo_reg)(const uint8_t addr,uint16_t &data);
 sp1403_r1b::sp1403_r1b(uint32_t rf_idx,uint32_t rfu_idx) :
     sp1403_r1a(rf_idx,rfu_idx)
 {
-    _lo_tx.push_back(common_lo_t()); _tx_lmx2594_0 = &(_lo_tx.back());
-    _lo_tx.push_back(common_lo_t()); _tx_lmx2594_1 = &(_lo_tx.back());
-    _lo_tx.resize(2);
-    _lo_rx.push_back(common_lo_t()); _rx_lmx2594_0 = &(_lo_rx.back());
-    _lo_rx.resize(1);
 
-    _tx_lmx2594_0->type = common_lo_t::HIGH;
-    _tx_lmx2594_0->is_opened = true;
-    _tx_lmx2594_1->type = common_lo_t::HIGH;
-    _tx_lmx2594_1->is_opened = true;
 }
 
 int32_t sp1403_r1b::open_board()
@@ -173,6 +164,39 @@ int32_t sp1403_r1b::get_rx_bw(rx_bw_t &bw) const
 }
 
 IMPL_SW(sp1403_r1b,0x3,rx_sw7,rx_sw7_t)
+
+int32_t sp1403_r1b::set_det_sw(const det_sw_t &sw) const
+{
+    SP1403_S6_REG_DECL(0x4);
+
+    INT_CHECK(get_s6_reg(0x4,SP1403_S6_REG_DATA(0x4)));
+
+    SP1403_S6_REG(0x4).det_sw = sw;
+    INT_CHECK(set_s6_reg(0x4,SP1403_S6_REG_DATA(0x4)));
+    return 0;
+}
+
+int32_t sp1403_r1b::get_det_sw(det_sw_t &sw) const
+{
+    SP1403_S6_REG_DECL(0x4);
+
+    INT_CHECK(get_s6_reg(0x4,SP1403_S6_REG_DATA(0x4)));
+    sw = det_sw_t::_from_integral(SP1403_S6_REG(0x4).det_sw);
+    return 0;
+}
+
+int32_t sp1403_r1b::get_ad7680(uint16_t &det) const
+{
+    SP9500X_RFU_V9_REG_DECL_2(0x0114,0x0134);
+    SP9500X_RFU_V9_REG_DECL_2(0x0115,0x0135);
+    SP9500X_RFU_V9_REG_DECL_2(0x0117,0x0137);
+
+    SP9500X_RFU_V9_OP_2(0x0114,0x0134);
+    SP9500X_RFU_V9_WAIT_IDLE_2(0x0117,0x0137,0,INT_MAX);
+    SP9500X_RFU_V9_R_2(0x0115,0x0135);
+    det = SP9500X_RFU_V9_REG_2(0x0115,0x0135).det;
+    return 0;
+}
 
 void sp1403_r1b::rx_freq_to_lo(const uint64_t freq)
 {

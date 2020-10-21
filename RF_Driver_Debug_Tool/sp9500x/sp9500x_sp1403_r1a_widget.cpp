@@ -1,5 +1,5 @@
 #include "sp9500x_sp1403_r1a_widget.h"
-#include "ui_sp9500x_sp1403_r1a.h"
+#include "ui_sp1403_r1a.h"
 #include "lmx2594_dlg.h"
 #include "reg_def_sp9500x.h"
 
@@ -11,7 +11,7 @@ using namespace NS_SP9500X;
 
 Q_SP1403_R1A_Widget::Q_SP1403_R1A_Widget(QWidget *parent) :
     Q_RD_Widget(parent),
-    ui(new Ui::Q_SP9500X_SP1403_R1A_Widget)
+    ui(new Ui::Q_SP1403_R1A_Widget)
 {
     ui->setupUi(this);
 
@@ -285,31 +285,6 @@ void Q_SP1403_R1A_Widget::on_pushButtonRXLMX2594_0_Adv_clicked()
     dlg_RX_LMX2594_0->setVisible(true);
     dlg_RX_LMX2594_0->showNormal();
     dlg_RX_LMX2594_0->activateWindow();
-}
-
-void Q_SP1403_R1A_Widget::on_pushButtonGetRxTemp_clicked()
-{
-//    RF_DT3308_PTR_CHECK
-//    double temp = 0.0;
-//    INT_CHECKV(SP1401R1A()->get_rx_temp(temp));
-//    ui->lineEditRxTemp->setText(QString("%1").arg(temp));
-}
-
-void Q_SP1403_R1A_Widget::on_pushButtonSetSN_clicked()
-{
-//    RF_DT3308_PTR_CHECK
-//    quint32 ordinal = ui->lineEditOrdinal->text().toUInt();
-//    hw_ver_t ver = hw_ver_t(ui->comboBoxHwVer->currentIndex());
-//    INT_CHECKV(SP1401R1A()->set_sn_major(ver,ordinal));
-}
-
-void Q_SP1403_R1A_Widget::on_pushButtonGetSN_clicked()
-{
-//    RF_DT3308_PTR_CHECK
-//    char sn[32] = {0};
-//    memset(sn,0,sizeof(sn));
-//    INT_CHECKV(SP1401R1A()->get_sn_major(sn));
-//    ui->lineEditSN->setText(QString("%1").arg(sn));
 }
 
 void Q_SP1403_R1A_Widget::on_pushButtonGetTemp0_clicked()

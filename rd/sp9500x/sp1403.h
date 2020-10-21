@@ -37,7 +37,10 @@ class RD_API sp1403 : public frontend
 public:
     typedef boost::shared_ptr<sp1403> sptr;
 
-    typedef ns_sp1403::lo_t lo_t;
+    typedef ns_sp1403::port_t port_t;
+    typedef ns_sp1403::path_t path_t;
+    typedef ns_sp1403::led_t  led_t;
+    typedef ns_sp1403::lo_t   lo_t;
 
 public:
     sp1403(uint32_t rf_idx,uint32_t rfu_idx);
@@ -48,10 +51,6 @@ public:
     int32_t open_board();
     int32_t close_board();
 
-    io_mode_t io_mode() const { return _io_mode_tx0; }
-    io_mode_t io_mode(const ns_sp1403::port_t port)
-    { return *(static_cast<io_mode_t *>(&_io_mode_tx0 + port)); }
-
     int32_t get_ctrller_ver(const std::string &des,uint32_t &ver);
 
     pci_dev *v9() const { return _v9; }
@@ -61,6 +60,15 @@ public:
     static int32_t is_valid_sn(const char *sn);
 
     static ns_sp1403::hw_ver_t parse_hw_ver(const std::string &sn);
+
+    virtual int32_t set_io_mode(const io_mode_t) = 0;
+    virtual int32_t set_io_mode(const ns_sp1403::port_t port,const io_mode_t mode) = 0;
+
+    io_mode_t io_mode() const { return _io_mode_tx0; }
+    io_mode_t io_mode(const ns_sp1403::port_t port)
+    { return *(static_cast<io_mode_t *>(&_io_mode_tx0 + port)); }
+
+    int32_t set_led(const port_t port,const led_t &led) const;
 
 public:
     int32_t set_ad998x_reg(const uint16_t addr,const uint8_t data);

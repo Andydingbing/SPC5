@@ -1,5 +1,5 @@
 #include "sp9500pro_sp1403_r1b_widget.h"
-#include "ui_sp9500pro_sp1403_r1b.h"
+#include "ui_sp1403_r1b.h"
 #include "lmx2594_dlg.h"
 #include "reg_def_sp9500x.h"
 
@@ -11,7 +11,7 @@ using namespace NS_SP9500X;
 
 Q_SP9500PRO_SP1403_R1B_Widget::Q_SP9500PRO_SP1403_R1B_Widget(QWidget *parent) :
     Q_RD_Widget(parent),
-    ui(new Ui::Q_SP9500PRO_SP1403_R1B_Widget)
+    ui(new Ui::Q_SP1403_R1B_Widget)
 {
     ui->setupUi(this);
 

@@ -53,11 +53,9 @@ contains(QT_ARCH,i386) {
 
     CONFIG(debug,debug|release) {
         DESTDIR = ../x86/debug
-        LIBS += -L../x86/debug
         OBJECTS_DIR = ./x86/debug
     } else {
         DESTDIR = ../x86/release
-        LIBS += -L../x86/release
         OBJECTS_DIR = ./x86/release
     }
 
@@ -68,11 +66,9 @@ contains(QT_ARCH,i386) {
     message("Arch : x64")
 
     CONFIG(debug,debug|release) {
-        LIBS += -L../x64/debug
         OBJECTS_DIR = ./x64/debug
         DESTDIR = ../x64/debug
     } else {
-        LIBS += -L../x64/release
         OBJECTS_DIR = ./x64/release
         DESTDIR = ../x64/release
     }
@@ -88,6 +84,8 @@ win32-g++ {
     message("Compiler : win32-g++")
 
     LIB_DIR = $$LIB_DIR/win32-g++
+    OBJECTS_DIR = $$OBJECTS_DIR/win32-g++
+    DESTDIR = $$DESTDIR/win32-g++
 
     LIBS += \
     -lboost_filesystem \
@@ -103,11 +101,15 @@ win32-msvc {
 #    QMAKE_LFLAGS_DEBUG -= /DEBUG
 
     LIB_DIR = $$LIB_DIR/win32-msvc
+    OBJECTS_DIR = $$OBJECTS_DIR/win32-msvc
+    DESTDIR = $$DESTDIR/win32-msvc
 }
 linux-g++ {
     message("Compiler : linux-g++")
 
     LIB_DIR = $$LIB_DIR/linux-g++
+    OBJECTS_DIR = $$OBJECTS_DIR/linux-g++
+    DESTDIR = $$DESTDIR/linux-g++
 
     LIBS += \
     -lboost_filesystem \
@@ -128,7 +130,10 @@ message($$LIB_DIR)
 message($$LIB_DIR_BOOST)
 message($$LIB_DIR_FFTW)
 message($$LIB_DIR_QWT)
+message($$OBJECTS_DIR)
+message($$DESTDIR)
 LIBS += \
+-L$$DESTDIR \
 -L$$LIB_DIR \
 -L../$$LIB_DIR_BOOST \
 -L$$LIB_DIR_BOOST \

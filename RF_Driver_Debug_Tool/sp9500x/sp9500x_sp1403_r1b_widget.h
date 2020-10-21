@@ -131,7 +131,9 @@ private slots:
 
     void on_pushButtonRXLMX2594_0_Adv_clicked();
 
-    void on_pushButtonSetSN_clicked();
+    void on_comboBoxDet_activated(int index);
+
+    void on_pushButtonGetDet_clicked();
 
     void on_pushButtonGetSN_clicked();
 
@@ -152,7 +154,7 @@ private:
     void updateRXLO();
 
 private:
-    Ui::Q_SP9500X_SP1403_R1B_Widget *ui;
+    Ui::Q_SP1403_R1B_Widget *ui;
     Q_LMX2594_Dlg *dlg_TX_LMX2594_0;
     Q_LMX2594_Dlg *dlg_TX_LMX2594_1;
     Q_LMX2594_Dlg *dlg_RX_LMX2594_0;

@@ -15,6 +15,11 @@ BETTER_ENUM(rx_bw_t, uint32_t,
 BETTER_ENUM(rx_sw7_t, uint32_t,
             _300_1000,
             _5100)
+
+BETTER_ENUM(det_sw_t, uint32_t,
+            TX,
+            RX)
+
 } // namespace r1b
 } // namespace ns_sp1403
 
@@ -25,8 +30,9 @@ class RD_API sp1403_r1b : public sp1403_r1a
 public:
     typedef boost::shared_ptr<sp1403_r1b> sptr;
 
-    typedef ns_sp1403::r1b::rx_bw_t rx_bw_t;
+    typedef ns_sp1403::r1b::rx_bw_t  rx_bw_t;
     typedef ns_sp1403::r1b::rx_sw7_t rx_sw7_t;
+    typedef ns_sp1403::r1b::det_sw_t det_sw_t;
 
     sp1403_r1b(uint32_t rf_idx,uint32_t rfu_idx);
     virtual ~sp1403_r1b() {}
@@ -44,13 +50,12 @@ public:
 
     DECL_SW(rx_sw7,rx_sw7_t)
 
+    int32_t set_det_sw(const det_sw_t &sw) const;
+    int32_t get_det_sw(det_sw_t &sw) const;
+    int32_t get_ad7680(uint16_t &det) const;
+
 public:
     void rx_freq_to_lo(const uint64_t freq);
-
-private:
-    common_lo_t *_tx_lmx2594_0;
-    common_lo_t *_tx_lmx2594_1;
-    common_lo_t *_rx_lmx2594_0;
 };
 
 } // namespace ns_sp9500x

@@ -126,10 +126,6 @@ class RD_API sp1403_r1a : public sp1403
 public:
     typedef boost::shared_ptr<sp1403_r1a> sptr;
 
-    typedef ns_sp1403::path_t path_t;
-    typedef ns_sp1403::port_t port_t;
-    typedef ns_sp1403::led_t  led_t;
-
     typedef ns_sp1403::r1a::tx_sw1_t   tx_sw1_t;
     typedef ns_sp1403::r1a::tx_sw2_t   tx_sw2_t;
     typedef ns_sp1403::r1a::tx_sw3_t   tx_sw3_t;
@@ -260,7 +256,7 @@ public:
     void tx_freq_to_lo(const uint64_t freq);
     void rx_freq_to_lo(const uint64_t freq);
 
-private:
+protected:
     common_lo_t *_tx_lmx2594_0;
     common_lo_t *_tx_lmx2594_1;
     common_lo_t *_rx_lmx2594_0;
