@@ -9,6 +9,16 @@
  * 3, Project related types or variables begin with "RD_##Project_".
  */
 
+enum RD_Log_Switch {
+    RD_Log_All_Off      = 0x00000000,
+    RD_Log_Prompt       = 0x00000001,
+    RD_Log_Message      = 0x00000004,
+    RD_Log_Message_File = 0x00000008,
+    RD_Log_Reg          = 0x00000010,
+    RD_Log_Reg_File     = 0x00000020,
+    RD_Log_All_On       = 0x7FFFFFFF
+};
+
 enum RD_IO_Mode {
     RD_IO,
     RD_Output,

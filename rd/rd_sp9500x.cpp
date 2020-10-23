@@ -6,6 +6,7 @@
 #include "sleep_common.h"
 #include <vector>
 
+#define SAFE_RF_INDEX (RFIndex < 2 ? RFIndex : 1)
 #define DECL_DYNAMIC_SP3103 uint32_t rf_idx = (RFIndex < 2 ? 0 : 1);
 #define DECL_DYNAMIC_SP2406 sp2406 *SP2406 = SP3103_0.working_sp2406(rf_idx);
 
@@ -13,6 +14,8 @@ using namespace std;
 using namespace rd;
 using namespace rd::ns_sp2406;
 using namespace rd::ns_sp9500x;
+
+static double g_rx_ref[2] = { 0.0,0.0 };
 
 RD_SP9500X_IQ_Capture_Param::RD_SP9500X_IQ_Capture_Param()
 {
@@ -93,11 +96,14 @@ int32_t SP9500X_RF_GetTxFrequency(const uint32_t RFIndex,uint64_t &Freq)
 int32_t SP9500X_RF_SetRxLevel(const uint32_t RFIndex,const double Level)
 {
     DECL_DYNAMIC_SP3103;
-    return SP3103_0.set_rx_ref(rf_idx,Level);
+    INT_CHECK(SP3103_0.set_rx_ref(rf_idx,Level));
+    g_rx_ref[SAFE_RF_INDEX] = Level;
+    return 0;
 }
 
 int32_t SP9500X_RF_GetRxLevel(const uint32_t RFIndex,double &Level)
 {
+    Level = g_rx_ref[SAFE_RF_INDEX];
     return 0;
 }
 
@@ -216,7 +222,7 @@ int32_t SP9500X_RF_SetIQCaptureParams(const uint32_t RFIndex,const RD_SP9500X_IQ
 
     INT_CHECK(SP2406->set_iq_cap_sr(iq_cap_sr_t::_from_index(Param.SampleRate)));
     INT_CHECK(SP2406->set_iq_cap_src_ddc_ch(uint8_t(Param.Channel)));
-    INT_CHECK(SP2406->set_iq_cap_src_ddc(iq_cap_src_ddc_t::LPF));
+    INT_CHECK(SP2406->set_iq_cap_src_ddc(cap_src));
 
     INT_CHECK(SP2406->set_iq_cap_samples(uint32_t(Param.MeasLength)));
     INT_CHECK(SP2406->set_iq_cap_trig_src(trig_src));
