@@ -1,21 +1,17 @@
 # Thrid party libraries
-BOOST_VER = 1_67_0
-FFTW_VER  = 3.3.8
 QWT_VER   = 6.1.3
+FFTW_VER  = 3.3.8
+BOOST_VER = 1_67_0
 
 # Directory defination
 UTILITIES_DIR = ../utilities
 LIB_DIR = ../lib
-LIB_DIR_BOOST = $$LIB_DIR
-LIB_DIR_FFTW  = $$LIB_DIR
 LIB_DIR_QWT   = $$LIB_DIR
+LIB_DIR_FFTW  = $$LIB_DIR
+LIB_DIR_BOOST = $$LIB_DIR
 
 win32 {
-    INCLUDEPATH += \
-        ../include/win \
-        ../include/win/windrvr \
 }
-
 unix {
 }
 
@@ -78,64 +74,51 @@ contains(QT_ARCH,i386) {
     unix  { LIBS += -L/usr/lib64 -lvisa }
 }
 
-LIBS += -L$$LIB_DIR
-
-win32-g++ {
-    message("Compiler : win32-g++")
-
-    LIB_DIR = $$LIB_DIR/win32-g++
-    OBJECTS_DIR = $$OBJECTS_DIR/win32-g++
-    DESTDIR = $$DESTDIR/win32-g++
-
+win32-g++ { make_spec = win32-g++
     LIBS += \
-    -lboost_filesystem \
-    -lboost_system \
     -lboost_timer \
-    -lboost_chrono
+    -lboost_chrono \
+    -lboost_system \
+    -lboost_filesystem
 }
-win32-msvc {
-    message("Compiler : win32-msvc")
-
+win32-msvc { make_spec = win32-msvc
     # Multi-Processor
     QMAKE_CFLAGS += /MP
 #    QMAKE_LFLAGS_DEBUG -= /DEBUG
-
-    LIB_DIR = $$LIB_DIR/win32-msvc
-    OBJECTS_DIR = $$OBJECTS_DIR/win32-msvc
-    DESTDIR = $$DESTDIR/win32-msvc
 }
-linux-g++ {
-    message("Compiler : linux-g++")
-
-    LIB_DIR = $$LIB_DIR/linux-g++
-    OBJECTS_DIR = $$OBJECTS_DIR/linux-g++
-    DESTDIR = $$DESTDIR/linux-g++
-
+linux-g++ { make_spec = linux-g++
     LIBS += \
-    -lboost_filesystem \
-    -lboost_system \
     -lboost_timer \
-    -lboost_chrono
+    -lboost_chrono \
+    -lboost_system \
+    -lboost_filesystem
 }
 
-LIB_DIR_BOOST = $$LIB_DIR/boost/$$BOOST_VER
-LIB_DIR_FFTW  = $$LIB_DIR/fftw/$$FFTW_VER
+LIBS += -L$$LIB_DIR
+DESTDIR = $$DESTDIR/$$make_spec
+OBJECTS_DIR = $$OBJECTS_DIR/$$make_spec
+
+LIB_DIR       = $$LIB_DIR/$$make_spec
 LIB_DIR_QWT   = $$LIB_DIR/qwt/$$QWT_VER
+LIB_DIR_FFTW  = $$LIB_DIR/fftw/$$FFTW_VER
+LIB_DIR_BOOST = $$LIB_DIR/boost/$$BOOST_VER
 
 CONFIG(debug,debug|release) {
     DEFINES += _DEBUG
 }
 
+message($$make_spec)
 message($$LIB_DIR)
-message($$LIB_DIR_BOOST)
-message($$LIB_DIR_FFTW)
 message($$LIB_DIR_QWT)
-message($$OBJECTS_DIR)
+message($$LIB_DIR_FFTW)
+message($$LIB_DIR_BOOST)
 message($$DESTDIR)
+message($$OBJECTS_DIR)
+
 LIBS += \
 -L$$DESTDIR \
 -L$$LIB_DIR \
--L../$$LIB_DIR_BOOST \
--L$$LIB_DIR_BOOST \
+-L$$LIB_DIR_QWT \
 -L$$LIB_DIR_FFTW \
--L$$LIB_DIR_QWT
+-L$$LIB_DIR_BOOST \
+-L../$$LIB_DIR_BOOST

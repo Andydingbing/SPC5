@@ -163,10 +163,10 @@ public:
 
 public:
     bool is_connected();
-    int32_t open_board();
-    int32_t close_board();
+    virtual int32_t open_board();
+    virtual int32_t close_board();
 
-    int32_t hw_ver() const { return ns_sp1403::hw_ver_t::R1A; }
+    virtual int32_t hw_ver() const { return ns_sp1403::hw_ver_t::R1A; }
 
     int32_t set_io_mode(const io_mode_t mode);
     int32_t set_io_mode(const ns_sp1403::port_t port,const io_mode_t mode);
@@ -174,12 +174,12 @@ public:
     int32_t set_led(const port_t port,const led_t &led) const;
     int32_t get_led(const port_t port,led_t &led) const;
 
-    int32_t set_tx_freq(const uint64_t freq);
+    virtual int32_t set_tx_freq(const uint64_t freq);
 
     int32_t set_att(const att_t att,const double value) const;
     int32_t get_att(const att_t att,double &value) const;
 
-    int32_t set_rx_freq(const uint64_t freq);
+    virtual int32_t set_rx_freq(const uint64_t freq);
     int32_t set_rx_lna_att_sw(const rx_lna_att_t sw) const;
 
     int32_t set_rx_bw(const rx_bw_t bw) const { return set_rx_sw4(bw); }
@@ -253,8 +253,8 @@ public:
     DECL_SW(rx_sw4,rx_sw4_t)
 
 public:
-    void tx_freq_to_lo(const uint64_t freq);
-    void rx_freq_to_lo(const uint64_t freq);
+    virtual void tx_freq_to_lo(const uint64_t freq);
+    virtual void rx_freq_to_lo(const uint64_t freq);
 
 protected:
     common_lo_t *_tx_lmx2594_0;

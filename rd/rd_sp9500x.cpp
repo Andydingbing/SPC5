@@ -199,9 +199,11 @@ int32_t SP9500X_RF_SetIQCaptureParams(const uint32_t RFIndex,const RD_SP9500X_IQ
 
     iq_cap_src_ddc_t cap_src = iq_cap_src_ddc_t::CF;
     iq_cap_trig_src_t trig_src = iq_cap_trig_src_t::Frame;
+    int32_t trig_offset = Param.TriggerOffset;
 
     if (Param.SampleRate == SP9500X_UL_SR_98304) {
         cap_src = iq_cap_src_ddc_t::CF;
+        trig_offset /= 2;
     } else if (Param.SampleRate == SP9500X_UL_SR_49152) {
         cap_src = iq_cap_src_ddc_t::HBF0;
     } else if (Param.SampleRate == SP9500X_UL_SR_24576) {
@@ -226,7 +228,7 @@ int32_t SP9500X_RF_SetIQCaptureParams(const uint32_t RFIndex,const RD_SP9500X_IQ
 
     INT_CHECK(SP2406->set_iq_cap_samples(uint32_t(Param.MeasLength)));
     INT_CHECK(SP2406->set_iq_cap_trig_src(trig_src));
-    INT_CHECK(SP2406->set_iq_cap_trig_offset(Param.TriggerOffset));
+    INT_CHECK(SP2406->set_iq_cap_trig_offset(trig_offset));
     return 0;
 }
 
@@ -235,7 +237,8 @@ int32_t SP9500X_RF_SetIQCaptureStart(const uint32_t RFIndex)
     DECL_DYNAMIC_SP3103;
     DECL_DYNAMIC_SP2406;
 
-    return SP2406->set_iq_cap_start();
+    SP2406->set_iq_cap_start();
+    return 0;
 }
 
 int32_t SP9500X_RF_SetIQCaptureAbort(const uint32_t RFIndex)

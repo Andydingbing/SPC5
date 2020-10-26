@@ -502,7 +502,7 @@ int32_t sp3103::get_temp(uint32_t rf_idx,double &tx_temp,double &rx_temp)
 int32_t sp3103::instance_sp1403(uint32_t rf_idx)
 {
     bool is_connected = false;
-    char sn[24] = {0};
+    string sn;
     hw_ver_t ver = hw_ver_t::HW_ERROR;
 
     INT_CHECK(_sp1403.at(rf_idx)->get_sn_major(sn));

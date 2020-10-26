@@ -224,8 +224,8 @@ int32_t sp1403_r1a::set_tx_freq(const uint64_t freq)
     }
 
     if (reset_dac) {
-//        INT_CHECK(_ad908x.set_dac_duc_nco_ftw(_rf_idx,freq_dac));
-//        INT_CHECK(_ad908x.set_dac_duc_nco_ftw(_rf_idx + 1,freq_dac));
+        _ad908x.set_dac_duc_nco_ftw(_rf_idx,freq_dac);
+        _ad908x.set_dac_duc_nco_ftw(_rf_idx + 1,freq_dac);
     }
 
     _tx_freq = freq;
@@ -298,8 +298,8 @@ int32_t sp1403_r1a::set_rx_freq(const uint64_t freq)
     }
 
     if (reset_dac) {
-//        INT_CHECK(_ad908x.set_adc_ddc_coarse_nco_ftw(_rf_idx,freq_dac));
-//        INT_CHECK(_ad908x.set_adc_ddc_coarse_nco_ftw(_rf_idx + 1,freq_dac));
+        _ad908x.set_adc_ddc_coarse_nco_ftw(_rf_idx,freq_dac);
+        _ad908x.set_adc_ddc_coarse_nco_ftw(_rf_idx + 1,freq_dac);
     }
 
     _rx_freq = freq;

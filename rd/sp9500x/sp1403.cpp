@@ -64,6 +64,11 @@ int32_t sp1403::close_board()
     return 0;
 }
 
+int32_t sp1403::get_sn_major(std::string &sn)
+{
+    return 0;
+}
+
 ns_sp1403::hw_ver_t sp1403::parse_hw_ver(const string &sn)
 {
      return hw_ver_t::R1A;
@@ -88,7 +93,7 @@ uint32_t sp1403::ass_ordinal(uint32_t ordinal)
     return assed_ordinal;
 }
 
-int32_t sp1403::is_valid_sn(const char *sn)
+int32_t sp1403::is_valid_sn(const string &sn)
 {
 //    int32_t i = 0;
 

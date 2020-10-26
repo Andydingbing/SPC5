@@ -21,38 +21,85 @@ sp1403_r1b::sp1403_r1b(uint32_t rf_idx,uint32_t rfu_idx) :
 
 int32_t sp1403_r1b::open_board()
 {
-    INT_CHECK(sp1403::open_board());
-    INT_CHECK(init_lo(TX_LMX2594_0));
-    INT_CHECK(init_lo(TX_LMX2594_1));
-    INT_CHECK(init_lo(RX_LMX2594_0));
-    INT_CHECK(set_lo(TX_LMX2594_0,FREQ_M(10300)));
+    INT_CHECK(sp1403_r1a::open_board());
 
+    INT_CHECK(set_lo(TX_LMX2594_0,FREQ_M(9700)));
     INT_CHECK(set_tx_freq(FREQ_M(7500)));
     INT_CHECK(set_rx_freq(FREQ_M(7500)));
-
-    INT_CHECK(set_att(TX0_ATT0,5.0));
-    INT_CHECK(set_att(TX0_ATT1,5.0));
-    INT_CHECK(set_att(TX0_ATT2,10.0));
-    INT_CHECK(set_att(TX0_ATT3,8.0));
-
-    INT_CHECK(set_att(TX1_ATT0,5.0));
-    INT_CHECK(set_att(TX1_ATT1,5.0));
-    INT_CHECK(set_att(TX1_ATT2,10.0));
-    INT_CHECK(set_att(TX1_ATT3,8.0));
-
-    INT_CHECK(set_rx_lna_att_sw(rx_lna_att_t::RX_LNA));
-    INT_CHECK(set_att(RX_ATT0,0));
-    INT_CHECK(set_att(RX_ATT1,0));
-    INT_CHECK(set_rx_bw(rx_bw_t::_800M));
-
-    INT_CHECK(set_io_mode(TX0,OUTPUT));
-    INT_CHECK(set_io_mode(TX1,OUTPUT));
-    INT_CHECK(set_io_mode(RX,INPUT));
     return 0;
 }
 
 int32_t sp1403_r1b::close_board()
 {
+    return 0;
+}
+
+int32_t sp1403_r1b::set_tx_freq(const uint64_t freq)
+{
+    if (freq == _tx_freq) {
+        return 0;
+    }
+
+    tx_freq_to_lo(freq);
+
+    INT_CHECK(set_lo(TX_LMX2594_1,_tx_lmx2594_1->freq));
+
+    bool reset_dac = false;
+    double freq_dac = 0.0;
+    uint8_t inversion = (freq <= FREQ_M(3000) ? 0 : 1);
+    SP9500X_RFU_V9_REG_DECL(0x0462);
+    SP9500X_RFU_V9_R(0x0462);
+    SP9500X_RFU_V9_REG(0x0462).tx_0 = inversion;
+    SP9500X_RFU_V9_REG(0x0462).tx_1 = inversion;
+    SP9500X_RFU_V9_W(0x0462);
+
+    if (freq <= FREQ_M(3000)) {
+        reset_dac = true;
+        freq_dac = freq;
+        INT_CHECK(set_tx0_sw1(tx_sw1_t::TX_SW1_300_3000));
+        INT_CHECK(set_tx0_sw2(tx_sw2_t::TX_SW2_300_3000));
+        INT_CHECK(set_tx1_sw1(tx_sw1_t::TX_SW1_300_3000));
+        INT_CHECK(set_tx1_sw2(tx_sw2_t::TX_SW2_300_3000));
+    } else {
+        if (_tx_freq < FREQ_M(3000)) {
+            reset_dac = true;
+            freq_dac = FREQ_M(1800);
+        }
+
+        if (freq <= FREQ_M(4800)) {
+            INT_CHECK(set_tx0_sw1(tx_sw1_t::TX_SW1_3000_8000));
+            INT_CHECK(set_tx0_sw2(tx_sw2_t::TX_SW2_3000_8000));
+            INT_CHECK(set_tx0_sw3(tx_sw3_t::TX_SW3_3000_6000));
+            INT_CHECK(set_tx0_sw4(tx_sw4_t::TX_SW4_3000_4800));
+            INT_CHECK(set_tx1_sw1(tx_sw1_t::TX_SW1_3000_8000));
+            INT_CHECK(set_tx1_sw2(tx_sw2_t::TX_SW2_3000_8000));
+            INT_CHECK(set_tx1_sw3(tx_sw3_t::TX_SW3_3000_6000));
+            INT_CHECK(set_tx1_sw4(tx_sw4_t::TX_SW4_3000_4800));
+        } else if (freq <= FREQ_M(6000)) {
+            INT_CHECK(set_tx0_sw1(tx_sw1_t::TX_SW1_3000_8000));
+            INT_CHECK(set_tx0_sw2(tx_sw2_t::TX_SW2_3000_8000));
+            INT_CHECK(set_tx0_sw3(tx_sw3_t::TX_SW3_3000_6000));
+            INT_CHECK(set_tx0_sw4(tx_sw4_t::TX_SW4_4800_6000));
+            INT_CHECK(set_tx1_sw1(tx_sw1_t::TX_SW1_3000_8000));
+            INT_CHECK(set_tx1_sw2(tx_sw2_t::TX_SW2_3000_8000));
+            INT_CHECK(set_tx1_sw3(tx_sw3_t::TX_SW3_3000_6000));
+            INT_CHECK(set_tx1_sw4(tx_sw4_t::TX_SW4_4800_6000));
+        } else {
+            INT_CHECK(set_tx0_sw1(tx_sw1_t::TX_SW1_3000_8000));
+            INT_CHECK(set_tx0_sw2(tx_sw2_t::TX_SW2_3000_8000));
+            INT_CHECK(set_tx0_sw3(tx_sw3_t::TX_SW3_6000_8000));
+            INT_CHECK(set_tx1_sw1(tx_sw1_t::TX_SW1_3000_8000));
+            INT_CHECK(set_tx1_sw2(tx_sw2_t::TX_SW2_3000_8000));
+            INT_CHECK(set_tx1_sw3(tx_sw3_t::TX_SW3_6000_8000));
+        }
+    }
+
+    if (reset_dac) {
+        _ad908x.set_dac_duc_nco_ftw(_rf_idx,freq_dac);
+        _ad908x.set_dac_duc_nco_ftw(_rf_idx + 1,freq_dac);
+    }
+
+    _tx_freq = freq;
     return 0;
 }
 
@@ -95,8 +142,8 @@ int32_t sp1403_r1b::set_rx_freq(const uint64_t freq)
     }
 
     if (reset_dac) {
-//        INT_CHECK(_ad908x.set_adc_ddc_coarse_nco_ftw(_rf_idx,freq_dac));
-//        INT_CHECK(_ad908x.set_adc_ddc_coarse_nco_ftw(_rf_idx + 1,freq_dac));
+        _ad908x.set_adc_ddc_coarse_nco_ftw(_rf_idx,freq_dac);
+        _ad908x.set_adc_ddc_coarse_nco_ftw(_rf_idx + 1,freq_dac);
     }
 
     _rx_freq = freq;
@@ -196,6 +243,16 @@ int32_t sp1403_r1b::get_ad7680(uint16_t &det) const
     SP9500X_RFU_V9_R_2(0x0115,0x0135);
     det = SP9500X_RFU_V9_REG_2(0x0115,0x0135).det;
     return 0;
+}
+
+void sp1403_r1b::tx_freq_to_lo(const uint64_t freq)
+{
+    if (freq <= FREQ_G(3)) {
+        return;
+    }
+
+    _tx_lmx2594_0->freq = FREQ_M(9700);
+    _tx_lmx2594_1->freq = (freq + FREQ_M(11500)) / 2;
 }
 
 void sp1403_r1b::rx_freq_to_lo(const uint64_t freq)

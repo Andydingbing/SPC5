@@ -43,6 +43,7 @@ public:
 
     int32_t hw_ver() const { return ns_sp1403::hw_ver_t::R1A; }
 
+    int32_t set_tx_freq(const uint64_t freq);
     int32_t set_rx_freq(const uint64_t freq);
 
     int32_t set_rx_bw(const rx_bw_t bw) const;
@@ -55,6 +56,7 @@ public:
     int32_t get_ad7680(uint16_t &det) const;
 
 public:
+    void tx_freq_to_lo(const uint64_t freq);
     void rx_freq_to_lo(const uint64_t freq);
 };
 

@@ -39,7 +39,7 @@ public:
 
     virtual int32_t hw_ver() const { return -1; }
 
-    virtual int32_t get_sn_major(char *) { return 0; }
+    virtual int32_t get_sn_major(std::string &) { return 0; }
     virtual int32_t set_io_mode(const io_mode_t) { return 0; }
     virtual io_mode_t io_mode() const { return OUTPUT; }
 

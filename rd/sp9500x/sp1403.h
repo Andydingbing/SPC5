@@ -48,8 +48,8 @@ public:
 
     bool connect(const std::list<pci_dev *> &ctrller);
 
-    int32_t open_board();
-    int32_t close_board();
+    virtual int32_t open_board();
+    virtual int32_t close_board();
 
     int32_t get_ctrller_ver(const std::string &des,uint32_t &ver);
 
@@ -57,10 +57,11 @@ public:
     ns_sp9500x::cal_file *cal_file() const { return _cal_file; }
 
     static uint32_t ass_ordinal(uint32_t ordinal);
-    static int32_t is_valid_sn(const char *sn);
+    static int32_t is_valid_sn(const std::string &sn);
 
     static ns_sp1403::hw_ver_t parse_hw_ver(const std::string &sn);
 
+    int32_t get_sn_major(std::string &sn);
     virtual int32_t set_io_mode(const io_mode_t) = 0;
     virtual int32_t set_io_mode(const ns_sp1403::port_t port,const io_mode_t mode) = 0;
 

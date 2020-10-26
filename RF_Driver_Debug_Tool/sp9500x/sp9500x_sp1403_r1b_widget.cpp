@@ -20,8 +20,8 @@ Q_SP1403_R1B_Widget::Q_SP1403_R1B_Widget(QWidget *parent) :
     dlg_RX_LMX2594_0 = nullptr;
 
     QString att;
-    for (quint8 i = 0;i < SERIE_SIZE(0,31.75,0.25);i ++) {
-        att = QString("%1").arg(i * 0.25);
+    for (quint8 i = 0;i < SERIE_SIZE(0,31.5,0.5);i ++) {
+        att = QString("%1").arg(i * 0.5);
         ui->comboBoxTX0Att0->addItem(att);
         ui->comboBoxTX0Att1->addItem(att);
         ui->comboBoxTX0Att2->addItem(att);
