@@ -85,7 +85,7 @@ public:
     }data_f_t;
 
     STRUCT_ALIGN_API_S(data_m_t,4)
-        ns_sp1401::coef_complex_t coef[ns_sp2401::dl_filter_tap_2i];
+        coef_complex_t coef[ns_sp2401::dl_filter_tap_2i];
     public:
         void _2double(double *real,double *imag);
     STRUCT_ALIGN_API_E(data_m_t,4)
@@ -94,11 +94,11 @@ public:
     virtual void get(uint64_t freq,data_f_t *data) = 0;
 };
 
-#define DECLARE_TX_FILTER_TABLE                 \
-public:                                         \
+#define DECLARE_TX_FILTER_TABLE \
+public: \
     typedef tx_filter_table::data_f_t data_f_t; \
     typedef tx_filter_table::data_m_t data_m_t; \
-    void get(uint64_t freq,data_m_t *data);     \
+    void get(uint64_t freq,data_m_t *data); \
     void get(uint64_t freq,data_f_t *data);
 
 class RD_API tx_filter_80m_table : public tx_filter_table

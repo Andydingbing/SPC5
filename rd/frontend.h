@@ -76,8 +76,8 @@ public:
     uint32_t _rf_idx;
     uint32_t _rfu_idx;
     std::list<pci_dev *> _ctrller_pci;
-    std::list<common_lo_t> _lo_tx;
-    std::list<common_lo_t> _lo_rx;
+    std::list<common_lo_t *> _lo_tx;
+    std::list<common_lo_t *> _lo_rx;
     std::list<uint64_t> _tx_freqs;
     std::list<uint64_t> _rx_freqs;
 

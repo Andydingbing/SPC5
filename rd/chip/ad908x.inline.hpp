@@ -8,7 +8,7 @@
 #include "reg_def_ad908x.h"
 #include "algo_chip.hpp"
 
-int32_t ad908x::set_adc_cddc_page(const uint32_t cddc) const
+AD908X_FUNC::set_adc_cddc_page(const uint32_t cddc) const
 {
     AD908X_REG_DECL(0x0018,0x00);
 
@@ -18,7 +18,7 @@ int32_t ad908x::set_adc_cddc_page(const uint32_t cddc) const
     return 0;
 }
 
-int32_t ad908x::set_adc_ddc_coarse_nco_ftw(const uint32_t cddc,const double freq) const
+AD908X_FUNC::set_adc_ddc_coarse_nco_ftw(const uint32_t cddc,const double freq) const
 {
     AD908X_REG_DECL(0x0a05,0x00);
     AD908X_REG_DECL(0x0a06,0x00);
@@ -45,7 +45,7 @@ int32_t ad908x::set_adc_ddc_coarse_nco_ftw(const uint32_t cddc,const double freq
     return 0;
 }
 
-int32_t ad908x::get_adc_ddc_coarse_nco_ftw(const uint32_t cddc,double &freq) const
+AD908X_FUNC::get_adc_ddc_coarse_nco_ftw(const uint32_t cddc,double &freq) const
 {
     AD908X_REG_DECL(0x0a26,0x00);
     AD908X_REG_DECL(0x0a27,0x00);
@@ -75,7 +75,7 @@ int32_t ad908x::get_adc_ddc_coarse_nco_ftw(const uint32_t cddc,double &freq) con
     return 0;
 }
 
-int32_t ad908x::set_dac_duc_nco_ftw(const uint32_t dac,const double freq) const
+AD908X_FUNC::set_dac_duc_nco_ftw(const uint32_t dac,const double freq) const
 {
     AD908X_REG_DECL(0x001b,0x00);
     AD908X_REG_DECL(0x01c9,0x00);

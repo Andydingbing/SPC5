@@ -30,7 +30,7 @@ sp3103::sp3103(uint32_t rfu_idx):
         _sp1403_r1b.push_back(boost::make_shared<sp1403_r1b>(rf_idx,rfu_idx));
         _rrh.push_back(boost::make_shared<rrh>(rf_idx,rfu_idx));
         _sp1403.push_back(nullptr);
-        _sp1403.at(i) = _sp1403_r1a.at(i);
+        _sp1403.at(i) = _sp1403_r1b.at(i);
 
         _sp2406.push_back(boost::make_shared<sp2406>(rf_idx));
     }
@@ -83,13 +83,12 @@ int32_t sp3103::boot(const bool silent)
 
         if (!silent) {
 //            if (is_connected) {
-                INT_CHECK(_sp1403_r1a.at(i)->open_board());
+                INT_CHECK(_sp1403_r1b.at(i)->open_board());
 //            }
             INT_CHECK(_sp2406.at(i)->open_board());
             INT_CHECK(_rrh.at(i)->open_board());
         }
     }
-
 
     return 0;
 }

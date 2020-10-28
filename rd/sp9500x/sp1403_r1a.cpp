@@ -16,10 +16,10 @@ typedef int32_t (sp1403_r1a::*fp_get_lo_reg)(const uint8_t addr,uint16_t &data);
 sp1403_r1a::sp1403_r1a(uint32_t rf_idx,uint32_t rfu_idx) :
     sp1403(rf_idx,rfu_idx)
 {
-    _lo_tx.push_back(common_lo_t()); _tx_lmx2594_0 = &(_lo_tx.back());
-    _lo_tx.push_back(common_lo_t()); _tx_lmx2594_1 = &(_lo_tx.back());
+    _lo_tx.push_back(new common_lo_t()); _tx_lmx2594_0 = _lo_tx.back();
+    _lo_tx.push_back(new common_lo_t()); _tx_lmx2594_1 = _lo_tx.back();
     _lo_tx.resize(2);
-    _lo_rx.push_back(common_lo_t()); _rx_lmx2594_0 = &(_lo_rx.back());
+    _lo_rx.push_back(new common_lo_t()); _rx_lmx2594_0 = _lo_rx.back();
     _lo_rx.resize(1);
 
     _tx_lmx2594_0->type = common_lo_t::HIGH;

@@ -39,16 +39,16 @@ bool frontend::connect(const list<pci_dev *> &ctrller)
 
 int32_t frontend::open_board()
 {
-    list<common_lo_t>::iterator iter_lo;
+    list<common_lo_t *>::iterator iter_lo;
     list<uint64_t>::iterator iter_freq;
 
     for (iter_lo = _lo_tx.begin();iter_lo != _lo_tx.end();++iter_lo) {
-        iter_lo->freq = 0;
-        iter_lo->is_opened = false;
+        (*iter_lo)->freq = 0;
+        (*iter_lo)->is_opened = false;
     }
     for (iter_lo = _lo_rx.begin();iter_lo != _lo_rx.end();++iter_lo) {
-        iter_lo->freq = 0;
-        iter_lo->is_opened = false;
+        (*iter_lo)->freq = 0;
+        (*iter_lo)->is_opened = false;
     }
     for (iter_freq = _tx_freqs.begin();iter_freq != _tx_freqs.end();++iter_freq) {
         *iter_freq = 0;

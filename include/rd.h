@@ -111,6 +111,22 @@
             }__attribute((aligned(x)));
 #endif
 
+#define FAKE_TEMPLATE_CLASS_PREFIX(name) \
+template<int T = 0> class name##_t { public :
+
+#define FAKE_TEMPLATE_CLASS_INHERIT_PREFIX(name,parent) \
+template<int T = 0> class name##_t : public parent { public :
+
+#define FAKE_TEMPLATE_CLASS_SUFFIX(name) \
+};typedef name##_t<> name;
+
+#define FAKE_TEMPLATE_CLASS_FUNC(name) \
+template<int T> int32_t name##_t<T>
+
+#define AD908X_FUNC  FAKE_TEMPLATE_CLASS_FUNC(ad908x)
+#define ADF5355_FUNC FAKE_TEMPLATE_CLASS_FUNC(adf5355)
+#define LMX2594_FUNC FAKE_TEMPLATE_CLASS_FUNC(lmx2594)
+
 #define SAFE_NEW(ptr,t)         { if (ptr == nullptr) ptr = new t; }
 #define SAFE_DEL(ptr)           { if (ptr != nullptr) {delete ptr;ptr = nullptr;} }
 #define SAFE_NEW_ARRAY(a,t,n)   { if (a == nullptr) a = new t[n]; }

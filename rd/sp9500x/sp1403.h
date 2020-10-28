@@ -11,25 +11,27 @@
 #include <iostream>
 #include "enum.h"
 #include "ad908x.hpp"
+#include "lmx2594.hpp"
 
-namespace rd { namespace ns_sp1403 {
-    BETTER_ENUM(hw_ver_t, int32_t,
-                HW_ERROR = -1,
-                R1A = 0,
-                R1B = 1,
-                HW_VER_MAX)
+namespace rd {
+namespace ns_sp1403 {
+BETTER_ENUM(hw_ver_t, int32_t,
+            HW_ERROR = -1,
+            R1A = 0,
+            R1B = 1,
+            HW_VER_MAX)
 
-    typedef enum path_t { TX0, TX1, RX } port_t;
+typedef enum path_t { TX0, TX1, RX } port_t;
 
-    BETTER_ENUM(led_t, uint8_t, Red, Green)
+BETTER_ENUM(led_t, uint8_t, Red, Green)
 
-    enum lo_t {
-        LO_BEGIN = 0,
-        TX_LMX2594_0 = LO_BEGIN,
-        TX_LMX2594_1,
-        RX_LMX2594_0,
-        LO_MAX
-    };
+enum lo_t {
+    LO_BEGIN = 0,
+    TX_LMX2594_0 = LO_BEGIN,
+    TX_LMX2594_1,
+    RX_LMX2594_0,
+    LO_MAX
+};
 } // namespace sp1403
 
 class RD_API sp1403 : public frontend

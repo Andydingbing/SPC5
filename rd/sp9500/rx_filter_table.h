@@ -61,7 +61,7 @@ public:
     };
 
     STRUCT_ALIGN_API_S(data_m_t,4)
-        ns_sp1401::coef_complex_t coef[ns_sp2401::ul_filter_tap];
+        coef_complex_t coef[ns_sp2401::ul_filter_tap];
     public:
         void _2double(double *real,double *imag);
     STRUCT_ALIGN_API_E(data_m_t,4)
@@ -77,7 +77,7 @@ class RD_API rx_filter_160m_table
 public:
     struct RD_API data_f_t {
         uint64_t freq;
-        int16_t  coef_real[ns_sp2401::ul_filter_tap_2i3d];	//order 144 in file,maybe reserved for later change,but only 96 in memory
+        int16_t  coef_real[ns_sp2401::ul_filter_tap_2i3d]; // order 144 in file
         int16_t  coef_imag[ns_sp2401::ul_filter_tap_2i3d];
         double   temp[4];
         tm       time;
@@ -87,7 +87,7 @@ public:
     };
 
     STRUCT_ALIGN_API_S(data_m_t,4)
-        ns_sp1401::coef_complex_t coef[ns_sp2401::ul_filter_tap]; // order 96 in memory
+        coef_complex_t coef[ns_sp2401::ul_filter_tap]; // order 96 in memory
     public:
         void _2double(double *real,double *imag);
     STRUCT_ALIGN_API_E(data_m_t,4)

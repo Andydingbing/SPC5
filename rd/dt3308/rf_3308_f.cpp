@@ -20,11 +20,11 @@ using namespace ns_dt3308::f;
 
 rf_dt3308_f::rf_dt3308_f()
 {
-    _lo_tx.push_back(common_lo_t()); _tx_hmc832 = &(_lo_tx.back());
-    _lo_tx.push_back(common_lo_t()); _tx_hmc833 = &(_lo_tx.back());
+    _lo_tx.push_back(new common_lo_t()); _tx_hmc832 = _lo_tx.back();
+    _lo_tx.push_back(new common_lo_t()); _tx_hmc833 = _lo_tx.back();
     _lo_tx.resize(2);
-    _lo_rx.push_back(common_lo_t()); _rx_hmc832 = &(_lo_rx.back());
-    _lo_rx.push_back(common_lo_t()); _rx_hmc833 = &(_lo_rx.back());
+    _lo_rx.push_back(new common_lo_t()); _rx_hmc832 = _lo_rx.back();
+    _lo_rx.push_back(new common_lo_t()); _rx_hmc833 = _lo_rx.back();
     _lo_rx.resize(2);
 }
 
