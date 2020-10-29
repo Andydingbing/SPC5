@@ -15,9 +15,9 @@ sp9500pro
 
 DEFINES += RD_EXCEPTION
 
-TARGET = RF_Driver_Debug_Tool
+TARGET = RDDT
 TEMPLATE = app
-RC_ICONS = RF_Driver_Debug_Tool.ico
+RC_ICONS = RDDT.ico
 
 INCLUDEPATH += \
 chip \
