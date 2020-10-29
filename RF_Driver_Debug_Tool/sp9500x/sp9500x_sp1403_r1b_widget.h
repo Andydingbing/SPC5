@@ -70,10 +70,10 @@ private slots:
     { SP1403_R1B->set_tx1_sw1(ns_sp1403::r1a::tx_sw1_t::_from_index(index)); }
 
     void on_comboBoxTX0Sw2_activated(int index)
-    { SP1403_R1B->set_tx0_sw2(ns_sp1403::r1a::tx_sw2_t::_from_index(index)); }
+    { SP1403_R1B->set_tx0_sw2(ns_sp1403::r1b::tx_sw2_t::_from_index(index)); }
 
     void on_comboBoxTX1Sw2_activated(int index)
-    { SP1403_R1B->set_tx1_sw2(ns_sp1403::r1a::tx_sw2_t::_from_index(index)); }
+    { SP1403_R1B->set_tx1_sw2(ns_sp1403::r1b::tx_sw2_t::_from_index(index)); }
 
     void on_comboBoxTX0Sw3_activated(int index)
     { SP1403_R1B->set_tx0_sw3(ns_sp1403::r1a::tx_sw3_t::_from_index(index)); }

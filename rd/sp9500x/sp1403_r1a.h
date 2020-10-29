@@ -29,20 +29,20 @@ namespace ns_sp1403 {
 namespace r1a {
 // tx
 BETTER_ENUM(tx_sw1_t, uint32_t,
-            TX_SW1_300_3000,
-            TX_SW1_3000_8000)
+            _300_3000,
+            _3000_8000)
 
 BETTER_ENUM(tx_sw2_t, uint32_t,
-            TX_SW2_300_3000,
-            TX_SW2_3000_8000)
+            _300_3000,
+            _3000_8000)
 
 BETTER_ENUM(tx_sw3_t, uint32_t,
-            TX_SW3_6000_8000,
-            TX_SW3_3000_6000)
+            _6000_8000,
+            _3000_6000)
 
 BETTER_ENUM(tx_sw4_t, uint32_t,
-            TX_SW4_4800_6000,
-            TX_SW4_3000_4800)
+            _4800_6000,
+            _3000_4800)
 
 BETTER_ENUM(tx0_sw5_t, uint32_t,
             TO_OUT,

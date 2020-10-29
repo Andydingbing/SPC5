@@ -185,10 +185,10 @@ int32_t sp1403_r1a::set_tx_freq(const uint64_t freq)
     if (freq <= FREQ_M(3000)) {
         reset_dac = true;
         freq_dac = freq;
-        INT_CHECK(set_tx0_sw1(tx_sw1_t::TX_SW1_300_3000));
-        INT_CHECK(set_tx0_sw2(tx_sw2_t::TX_SW2_300_3000));
-        INT_CHECK(set_tx1_sw1(tx_sw1_t::TX_SW1_300_3000));
-        INT_CHECK(set_tx1_sw2(tx_sw2_t::TX_SW2_300_3000));
+        INT_CHECK(set_tx0_sw1(tx_sw1_t::_300_3000));
+        INT_CHECK(set_tx0_sw2(tx_sw2_t::_300_3000));
+        INT_CHECK(set_tx1_sw1(tx_sw1_t::_300_3000));
+        INT_CHECK(set_tx1_sw2(tx_sw2_t::_300_3000));
     } else {
         if (_tx_freq < FREQ_M(3000)) {
             reset_dac = true;
@@ -196,30 +196,30 @@ int32_t sp1403_r1a::set_tx_freq(const uint64_t freq)
         }
 
         if (freq <= FREQ_M(4800)) {
-            INT_CHECK(set_tx0_sw1(tx_sw1_t::TX_SW1_3000_8000));
-            INT_CHECK(set_tx0_sw2(tx_sw2_t::TX_SW2_3000_8000));
-            INT_CHECK(set_tx0_sw3(tx_sw3_t::TX_SW3_3000_6000));
-            INT_CHECK(set_tx0_sw4(tx_sw4_t::TX_SW4_3000_4800));
-            INT_CHECK(set_tx1_sw1(tx_sw1_t::TX_SW1_3000_8000));
-            INT_CHECK(set_tx1_sw2(tx_sw2_t::TX_SW2_3000_8000));
-            INT_CHECK(set_tx1_sw3(tx_sw3_t::TX_SW3_3000_6000));
-            INT_CHECK(set_tx1_sw4(tx_sw4_t::TX_SW4_3000_4800));
+            INT_CHECK(set_tx0_sw1(tx_sw1_t::_3000_8000));
+            INT_CHECK(set_tx0_sw2(tx_sw2_t::_3000_8000));
+            INT_CHECK(set_tx0_sw3(tx_sw3_t::_3000_6000));
+            INT_CHECK(set_tx0_sw4(tx_sw4_t::_3000_4800));
+            INT_CHECK(set_tx1_sw1(tx_sw1_t::_3000_8000));
+            INT_CHECK(set_tx1_sw2(tx_sw2_t::_3000_8000));
+            INT_CHECK(set_tx1_sw3(tx_sw3_t::_3000_6000));
+            INT_CHECK(set_tx1_sw4(tx_sw4_t::_3000_4800));
         } else if (freq <= FREQ_M(6000)) {
-            INT_CHECK(set_tx0_sw1(tx_sw1_t::TX_SW1_3000_8000));
-            INT_CHECK(set_tx0_sw2(tx_sw2_t::TX_SW2_3000_8000));
-            INT_CHECK(set_tx0_sw3(tx_sw3_t::TX_SW3_3000_6000));
-            INT_CHECK(set_tx0_sw4(tx_sw4_t::TX_SW4_4800_6000));
-            INT_CHECK(set_tx1_sw1(tx_sw1_t::TX_SW1_3000_8000));
-            INT_CHECK(set_tx1_sw2(tx_sw2_t::TX_SW2_3000_8000));
-            INT_CHECK(set_tx1_sw3(tx_sw3_t::TX_SW3_3000_6000));
-            INT_CHECK(set_tx1_sw4(tx_sw4_t::TX_SW4_4800_6000));
+            INT_CHECK(set_tx0_sw1(tx_sw1_t::_3000_8000));
+            INT_CHECK(set_tx0_sw2(tx_sw2_t::_3000_8000));
+            INT_CHECK(set_tx0_sw3(tx_sw3_t::_3000_6000));
+            INT_CHECK(set_tx0_sw4(tx_sw4_t::_4800_6000));
+            INT_CHECK(set_tx1_sw1(tx_sw1_t::_3000_8000));
+            INT_CHECK(set_tx1_sw2(tx_sw2_t::_3000_8000));
+            INT_CHECK(set_tx1_sw3(tx_sw3_t::_3000_6000));
+            INT_CHECK(set_tx1_sw4(tx_sw4_t::_4800_6000));
         } else {
-            INT_CHECK(set_tx0_sw1(tx_sw1_t::TX_SW1_3000_8000));
-            INT_CHECK(set_tx0_sw2(tx_sw2_t::TX_SW2_3000_8000));
-            INT_CHECK(set_tx0_sw3(tx_sw3_t::TX_SW3_6000_8000));
-            INT_CHECK(set_tx1_sw1(tx_sw1_t::TX_SW1_3000_8000));
-            INT_CHECK(set_tx1_sw2(tx_sw2_t::TX_SW2_3000_8000));
-            INT_CHECK(set_tx1_sw3(tx_sw3_t::TX_SW3_6000_8000));
+            INT_CHECK(set_tx0_sw1(tx_sw1_t::_3000_8000));
+            INT_CHECK(set_tx0_sw2(tx_sw2_t::_3000_8000));
+            INT_CHECK(set_tx0_sw3(tx_sw3_t::_6000_8000));
+            INT_CHECK(set_tx1_sw1(tx_sw1_t::_3000_8000));
+            INT_CHECK(set_tx1_sw2(tx_sw2_t::_3000_8000));
+            INT_CHECK(set_tx1_sw3(tx_sw3_t::_6000_8000));
         }
     }
 

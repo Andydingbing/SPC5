@@ -6,6 +6,10 @@
 namespace rd {
 namespace ns_sp1403 {
 namespace r1b {
+BETTER_ENUM(tx_sw2_t, uint32_t,
+            _3000_6000,
+            _6000_8000)
+
 BETTER_ENUM(rx_bw_t, uint32_t,
             _100M,
             _200M,
@@ -30,6 +34,7 @@ class RD_API sp1403_r1b : public sp1403_r1a
 public:
     typedef boost::shared_ptr<sp1403_r1b> sptr;
 
+    typedef ns_sp1403::r1b::tx_sw2_t tx_sw2_t;
     typedef ns_sp1403::r1b::rx_bw_t  rx_bw_t;
     typedef ns_sp1403::r1b::rx_sw7_t rx_sw7_t;
     typedef ns_sp1403::r1b::det_sw_t det_sw_t;
@@ -49,6 +54,8 @@ public:
     int32_t set_rx_bw(const rx_bw_t bw) const;
     int32_t get_rx_bw(rx_bw_t &bw) const;
 
+    DECL_SW(tx0_sw2,tx_sw2_t)
+    DECL_SW(tx1_sw2,tx_sw2_t)
     DECL_SW(rx_sw7,rx_sw7_t)
 
     int32_t set_det_sw(const det_sw_t &sw) const;
