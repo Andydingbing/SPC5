@@ -64,6 +64,13 @@ int32_t SP9500X_RF_GetSerialNumber(const uint32_t RFIndex,char *SerialNumber)
     return 0;
 }
 
+int32_t SP9500X_RF_IsRRHConnected(const uint32_t RFIndex,bool &Status)
+{
+    DECL_DYNAMIC_SP3103;
+    Status = SP3103_0.working_rrh(rf_idx)->is_connected();
+    return 0;
+}
+
 int32_t SP9500X_RF_SetConnector(const uint32_t RFIndex,const RD_IO_Mode Connector)
 {
     DECL_DYNAMIC_SP3103;

@@ -60,6 +60,7 @@ RD_API int32_t SP9500X_RF_SetBitPath(const char *Path);
 RD_API int32_t SP9500X_RF_Boot();
 RD_API int32_t SP9500X_RF_GetPortNumber(uint32_t &Ports);
 RD_API int32_t SP9500X_RF_GetSerialNumber(const uint32_t RFIndex,char *SerialNumber);
+RD_API int32_t SP9500X_RF_IsRRHConnected(const uint32_t RFIndex,bool &Status);
 
 RD_API int32_t SP9500X_RF_SetConnector(const uint32_t RFIndex,const RD_IO_Mode Connector);
 
