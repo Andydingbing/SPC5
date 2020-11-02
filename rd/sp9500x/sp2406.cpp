@@ -2320,7 +2320,7 @@ int32_t sp2406::program(const v9_t fpga,const char *path)
     uint32_t cnt = 0;
     uint32_t to_cnt = 0;
 
-    const uint32_t block_size = 500; // * 32bit
+    const uint32_t block_size = 4000; // * 32bit
 
     FILE *fp = fopen(path,"rb");
     if (fp == nullptr) {
@@ -2416,6 +2416,15 @@ int32_t sp2406::program(const v9_t fpga,const char *path)
         }
         Log.stdprintf("%-5d Done\r",i);
     }
+
+
+    // test
+    memset(buf,0xffffffff,file_size / 4);
+    for (uint32_t i = 0;i < 100;++i) {
+        _s6->w32(pci_dev::AS_BAR0,0x0200 << 2,block_size,buf);
+    }
+    // test
+
 
     sleep_ms(1000);
     SP9500PRO_S6_R(0x0104);

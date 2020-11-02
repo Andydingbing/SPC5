@@ -96,7 +96,7 @@ class Q_ARB_Config_Widget_Helper;
 
 extern ns_sp9500x::sp3103 *SP3103;
 
-extern sp1403 *SP1403;
+extern ns_sp9500x::sp1403 *SP1403;
 extern ns_sp9500x::sp1403_r1a *SP1403_R1A;
 extern ns_sp9500x::sp1403_r1b *SP1403_R1B;
 extern ns_sp9500x::rrh    *SP9500X_RRH;

@@ -1,8 +1,8 @@
 #ifndef SP3103_H
 #define SP3103_H
 
-#include "sp1403_r1a.h"
-#include "sp1403_r1b.h"
+#include "sp9500x_sp1403_r1a.h"
+#include "sp9500x_sp1403_r1b.h"
 #include "rrh.h"
 #include "sp2406.h"
 #include "traits.hpp"
@@ -30,7 +30,7 @@ public:
     vi_pci_dev *s6() { return _s6; }
 
     template<typename int_t,typename data_type = traits_int<int_t>>
-    sp1403 *working_sp1403(int_t rf_idx) const
+    /*ns_sp9500x::*/sp1403 *working_sp1403(int_t rf_idx) const
     { return _sp1403.at(size_t(rf_idx)).get(); }
 
     template<typename int_t,typename data_type = traits_int<int_t>>
@@ -99,11 +99,11 @@ private:
     vi_pci_dev *_v9;
     vi_pci_dev *_s6;
 
-    std::vector<sp1403::sptr> _sp1403;
-    std::vector<sp1403_r1a::sptr> _sp1403_r1a;
-    std::vector<sp1403_r1b::sptr> _sp1403_r1b;
+    std::vector<ns_sp9500x::sp1403::sptr> _sp1403;
+    std::vector<ns_sp9500x::sp1403_r1a::sptr> _sp1403_r1a;
+    std::vector<ns_sp9500x::sp1403_r1b::sptr> _sp1403_r1b;
     std::vector<ns_sp9500x::rrh::sptr> _rrh;
-    std::vector<sp2406::sptr> _sp2406;
+    std::vector<ns_sp9500x::sp2406::sptr> _sp2406;
 
     double m_tx_pwr[ns_sp3103::g_max_rf];
     double m_ref[ns_sp3103::g_max_rf];

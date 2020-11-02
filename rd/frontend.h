@@ -34,8 +34,7 @@ public:
     virtual int32_t open_board();
     virtual int32_t close_board() { return 0; }
 
-    virtual int32_t get_ctrller_ver(const std::string &des,uint32_t &ver)
-    { boost::ignore_unused(des,ver); return 0; }
+    virtual int32_t get_ctrller_ver(const std::string &/*des*/,uint32_t &/*ver*/) { return 0; }
 
     virtual int32_t hw_ver() const { return -1; }
 

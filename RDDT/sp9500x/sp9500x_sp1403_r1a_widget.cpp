@@ -101,34 +101,34 @@ void Q_SP1403_R1A_Widget::updateIOMode()
 void Q_SP1403_R1A_Widget::updateAtt()
 {
     double att = 0.0;
-    INT_CHECKV(SP1403_R1A->get_att(sp1403_r1a::TX0_ATT0,att));
+    INT_CHECKV(SP1403_R1A->get_att(att_t::TX0_ATT0,att));
     ui->comboBoxTX0Att0->setCurrentIndex(int(att * 4));
 
-    INT_CHECKV(SP1403_R1A->get_att(sp1403_r1a::TX0_ATT1,att));
+    INT_CHECKV(SP1403_R1A->get_att(att_t::TX0_ATT1,att));
     ui->comboBoxTX0Att1->setCurrentIndex(int(att * 4));
 
-    INT_CHECKV(SP1403_R1A->get_att(sp1403_r1a::TX0_ATT2,att));
+    INT_CHECKV(SP1403_R1A->get_att(att_t::TX0_ATT2,att));
     ui->comboBoxTX0Att2->setCurrentIndex(int(att * 4));
 
-    INT_CHECKV(SP1403_R1A->get_att(sp1403_r1a::TX0_ATT3,att));
+    INT_CHECKV(SP1403_R1A->get_att(att_t::TX0_ATT3,att));
     ui->comboBoxTX0Att3->setCurrentIndex(int(att * 4));
 
-    INT_CHECKV(SP1403_R1A->get_att(sp1403_r1a::TX1_ATT0,att));
+    INT_CHECKV(SP1403_R1A->get_att(att_t::TX1_ATT0,att));
     ui->comboBoxTX1Att0->setCurrentIndex(int(att * 4));
 
-    INT_CHECKV(SP1403_R1A->get_att(sp1403_r1a::TX1_ATT1,att));
+    INT_CHECKV(SP1403_R1A->get_att(att_t::TX1_ATT1,att));
     ui->comboBoxTX1Att1->setCurrentIndex(int(att * 4));
 
-    INT_CHECKV(SP1403_R1A->get_att(sp1403_r1a::TX1_ATT2,att));
+    INT_CHECKV(SP1403_R1A->get_att(att_t::TX1_ATT2,att));
     ui->comboBoxTX1Att2->setCurrentIndex(int(att * 4));
 
-    INT_CHECKV(SP1403_R1A->get_att(sp1403_r1a::TX1_ATT3,att));
+    INT_CHECKV(SP1403_R1A->get_att(att_t::TX1_ATT3,att));
     ui->comboBoxTX1Att3->setCurrentIndex(int(att * 4));
 
-    INT_CHECKV(SP1403_R1A->get_att(sp1403_r1a::RX_ATT0,att));
+    INT_CHECKV(SP1403_R1A->get_att(att_t::RX_ATT0,att));
     ui->comboBoxRXAtt0->setCurrentIndex(int(att * 4));
 
-    INT_CHECKV(SP1403_R1A->get_att(sp1403_r1a::RX_ATT1,att));
+    INT_CHECKV(SP1403_R1A->get_att(att_t::RX_ATT1,att));
     ui->comboBoxRXAtt1->setCurrentIndex(int(att * 4));
 }
 
@@ -254,12 +254,12 @@ void Q_SP1403_R1A_Widget::on_comboBoxRXLNAAttSw_activated(int index)
 
 void Q_SP1403_R1A_Widget::on_comboBoxRXAtt0_activated(int index)
 {
-    SP1403_R1A->set_att(sp1403_r1a::RX_ATT0,index / 4.0);
+    SP1403_R1A->set_att(att_t::RX_ATT0,index / 4.0);
 }
 
 void Q_SP1403_R1A_Widget::on_comboBoxRXAtt1_activated(int index)
 {
-    SP1403_R1A->set_att(sp1403_r1a::RX_ATT1,index / 4.0);
+    SP1403_R1A->set_att(att_t::RX_ATT1,index / 4.0);
 }
 
 void Q_SP1403_R1A_Widget::on_comboBoxBWSw_activated(int index)

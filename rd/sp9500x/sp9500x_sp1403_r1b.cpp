@@ -1,4 +1,4 @@
-#include "sp1403_r1b.h"
+#include "sp9500x_sp1403_r1b.h"
 #include "sleep_common.h"
 #include "reg_def_sp9500x.h"
 #include "reg_def_lmx2594.h"
@@ -8,18 +8,16 @@ using namespace std;
 using namespace rd;
 using namespace rd::ns_sp1403;
 using namespace rd::ns_sp1403::r1b;
-using namespace rd::ns_sp9500x;
 
-typedef int32_t (sp1403_r1b::*fp_set_lo_reg)(const uint8_t addr,const uint16_t data);
-typedef int32_t (sp1403_r1b::*fp_get_lo_reg)(const uint8_t addr,uint16_t &data);
-
-sp1403_r1b::sp1403_r1b(uint32_t rf_idx,uint32_t rfu_idx) :
-    sp1403_r1a(rf_idx,rfu_idx)
+ns_sp9500x::sp1403_r1b::sp1403_r1b(uint32_t rf_idx,uint32_t rfu_idx) :
+    rd::sp1403(rf_idx,rfu_idx),
+    rd::sp1403_r1a(rf_idx,rfu_idx),
+    ns_sp9500x::sp1403_r1a(rf_idx,rfu_idx)
 {
 
 }
 
-int32_t sp1403_r1b::open_board()
+int32_t ns_sp9500x::sp1403_r1b::open_board()
 {
     INT_CHECK(sp1403_r1a::open_board());
 
@@ -29,12 +27,51 @@ int32_t sp1403_r1b::open_board()
     return 0;
 }
 
-int32_t sp1403_r1b::close_board()
+int32_t ns_sp9500x::sp1403_r1b::close_board()
 {
     return 0;
 }
 
-int32_t sp1403_r1b::set_tx_freq(const uint64_t freq)
+int32_t ns_sp9500x::sp1403_r1b::set_io_mode(const port_t port,const io_mode_t mode)
+{
+    if (mode == io_mode(port)) {
+        return 0;
+    }
+
+    if (port == TX0) {
+        SP1403_S6_REG_DECL(0x1);
+        INT_CHECK(get_s6_reg(0x1,SP1403_S6_REG_DATA(0x1)));
+        SP1403_S6_REG(0x1).tx0_sw5 = (mode == OUTPUT ? tx0_sw5_t::TO_IO   : tx0_sw5_t::TO_OUT);
+        SP1403_S6_REG(0x1).tx0_sw6 = (mode == IO     ? tx0_sw6_t::TO_LOOP : tx0_sw6_t::TO_OUT);
+        SP1403_S6_REG(0x1).tx0_sw7 = (mode == CLOSE  ? tx0_sw7_t::TO_OFF  : tx0_sw7_t::TO_OUT);
+        SP1403_S6_REG(0x1).tx0_sw8 = (mode == LOOP   ? tx0_sw8_t::TO_LOOP : tx0_sw8_t::TO_OFF);
+        INT_CHECK(set_s6_reg(0x1,SP1403_S6_REG_DATA(0x1)));
+        INT_CHECK(set_led(port,(mode == OUTPUT) ? led_t::Green : led_t::Red));
+        _io_mode_tx0 = mode;
+    } else if (port == TX1) {
+        SP1403_S6_REG_DECL(0x2);
+        INT_CHECK(get_s6_reg(0x2,SP1403_S6_REG_DATA(0x2)));
+        SP1403_S6_REG(0x2).tx1_sw5 = (mode == OUTPUT ? tx1_sw5_t::TO_OUT : tx1_sw5_t::TO_LOOP);
+        SP1403_S6_REG(0x2).tx1_sw6 = (mode == OUTPUT ? tx1_sw6_t::TO_OUT : tx1_sw6_t::TO_OFF);
+        INT_CHECK(set_s6_reg(0x2,SP1403_S6_REG_DATA(0x2)));
+        INT_CHECK(set_led(port,(mode == OUTPUT) ? led_t::Green : led_t::Red));
+        _io_mode_tx1 = mode;
+    } else {
+        SP1403_S6_REG_DECL(0x1);
+        INT_CHECK(get_s6_reg(0x1,SP1403_S6_REG_DATA(0x1)));
+        SP1403_S6_REG(0x1).tx0_sw9  = (mode == INPUT ? tx0_sw9_t::TO_TX1_LOOP : tx0_sw9_t::TO_TX0_IN);
+        SP1403_S6_REG(0x1).tx0_sw10 = (mode == INPUT ? tx0_sw10_t::TO_RX    : tx0_sw10_t::TO_TX0_LOOP);
+        SP1403_S6_REG(0x1).tx0_sw11 = (mode == CLOSE ? tx0_sw11_t::TO_OFF   : tx0_sw11_t::TO_RX);
+        SP1403_S6_REG(0x1).tx0_sw12 = (mode == CLOSE ? tx0_sw12_t::TO_OFF   : tx0_sw12_t::TO_RX);
+        INT_CHECK(set_s6_reg(0x1,SP1403_S6_REG_DATA(0x1)));
+        INT_CHECK(set_led(port,(mode == CLOSE || mode == LOOP) ? led_t::Red : led_t::Green));
+        _io_mode_rx = mode;
+    }
+
+    return 0;
+}
+
+int32_t ns_sp9500x::sp1403_r1b::set_tx_freq(const uint64_t freq)
 {
     if (freq == _tx_freq) {
         return 0;
@@ -113,7 +150,7 @@ int32_t sp1403_r1b::set_tx_freq(const uint64_t freq)
     return 0;
 }
 
-int32_t sp1403_r1b::set_rx_freq(const uint64_t freq)
+int32_t ns_sp9500x::sp1403_r1b::set_rx_freq(const uint64_t freq)
 {
     if (freq == _rx_freq) {
         return 0;
@@ -160,7 +197,7 @@ int32_t sp1403_r1b::set_rx_freq(const uint64_t freq)
     return 0;
 }
 
-int32_t sp1403_r1b::set_rx_bw(const rx_bw_t bw) const
+int32_t ns_sp9500x::sp1403_r1b::set_rx_bw(const rx_bw_t bw) const
 {
     SP1403_S6_REG_DECL(0x3);
     uint32_t bw_integral = bw._to_integral();
@@ -188,7 +225,7 @@ int32_t sp1403_r1b::set_rx_bw(const rx_bw_t bw) const
     return set_s6_reg(0x3,SP1403_S6_REG_DATA(0x3));
 }
 
-int32_t sp1403_r1b::get_rx_bw(rx_bw_t &bw) const
+int32_t ns_sp9500x::sp1403_r1b::get_rx_bw(rx_bw_t &bw) const
 {
     SP1403_S6_REG_DECL(0x3);
 
@@ -220,11 +257,11 @@ int32_t sp1403_r1b::get_rx_bw(rx_bw_t &bw) const
     return 0;
 }
 
-IMPL_SW(sp1403_r1b,0x1,tx0_sw2,tx_sw2_t)
-IMPL_SW(sp1403_r1b,0x2,tx1_sw2,tx_sw2_t)
-IMPL_SW(sp1403_r1b,0x3,rx_sw7,rx_sw7_t)
+IMPL_SW(ns_sp9500x::sp1403_r1b,0x1,tx0_sw2,tx_sw2_t)
+IMPL_SW(ns_sp9500x::sp1403_r1b,0x2,tx1_sw2,tx_sw2_t)
+IMPL_SW(ns_sp9500x::sp1403_r1b,0x3,rx_sw7,rx_sw7_t)
 
-int32_t sp1403_r1b::set_det_sw(const det_sw_t &sw) const
+int32_t ns_sp9500x::sp1403_r1b::set_det_sw(const det_sw_t &sw) const
 {
     SP1403_S6_REG_DECL(0x4);
 
@@ -235,7 +272,7 @@ int32_t sp1403_r1b::set_det_sw(const det_sw_t &sw) const
     return 0;
 }
 
-int32_t sp1403_r1b::get_det_sw(det_sw_t &sw) const
+int32_t ns_sp9500x::sp1403_r1b::get_det_sw(det_sw_t &sw) const
 {
     SP1403_S6_REG_DECL(0x4);
 
@@ -244,7 +281,7 @@ int32_t sp1403_r1b::get_det_sw(det_sw_t &sw) const
     return 0;
 }
 
-int32_t sp1403_r1b::get_ad7680(uint16_t &det) const
+int32_t ns_sp9500x::sp1403_r1b::get_ad7680(uint16_t &det) const
 {
     SP9500X_RFU_V9_REG_DECL_2(0x0114,0x0134);
     SP9500X_RFU_V9_REG_DECL_2(0x0115,0x0135);
@@ -257,7 +294,7 @@ int32_t sp1403_r1b::get_ad7680(uint16_t &det) const
     return 0;
 }
 
-void sp1403_r1b::tx_freq_to_lo(const uint64_t freq)
+void ns_sp9500x::sp1403_r1b::tx_freq_to_lo(const uint64_t freq)
 {
     if (freq <= FREQ_G(3)) {
         return;
@@ -267,13 +304,13 @@ void sp1403_r1b::tx_freq_to_lo(const uint64_t freq)
     _tx_lmx2594_1->freq = (freq + FREQ_M(11500)) / 2;
 }
 
-void sp1403_r1b::rx_freq_to_lo(const uint64_t freq)
+void ns_sp9500x::sp1403_r1b::rx_freq_to_lo(const uint64_t freq)
 {
     if (freq <= FREQ_G(1)) {
         return;
     }
 
-    _rx_lmx2594_0->freq = FREQ_M(10800) + freq;
+    _rx_lmx2594_0->freq = FREQ_M(10200) + freq;
 
     if (_rx_lmx2594_0->freq > FREQ_M(14500)) {
         _rx_lmx2594_0->freq /= 2;

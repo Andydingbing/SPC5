@@ -1,39 +1,19 @@
-#ifndef SP1403_R1B_H
-#define SP1403_R1B_H
+#ifndef SP9500X_SP1403_R1B_H
+#define SP9500X_SP1403_R1B_H
 
-#include "sp1403_r1a.h"
+#include "sp1403_r1b.h"
+#include "sp9500x_sp1403_r1a.h"
 
 namespace rd {
-namespace ns_sp1403 {
-namespace r1b {
-BETTER_ENUM(tx_sw2_t, uint32_t,
-            _3000_6000,
-            _6000_8000)
-
-BETTER_ENUM(rx_bw_t, uint32_t,
-            _100M,
-            _200M,
-            _400M,
-            _800M)
-
-BETTER_ENUM(rx_sw7_t, uint32_t,
-            _300_1000,
-            _5100)
-
-BETTER_ENUM(det_sw_t, uint32_t,
-            TX,
-            RX)
-
-} // namespace r1b
-} // namespace ns_sp1403
-
 namespace ns_sp9500x {
 
-class RD_API sp1403_r1b : public sp1403_r1a
+class RD_API sp1403_r1b : public ns_sp9500x::sp1403_r1a
 {
 public:
     typedef boost::shared_ptr<sp1403_r1b> sptr;
 
+    typedef ns_sp1403::lo_t          lo_t;
+    typedef ns_sp1403::r1a::att_t    att_t;
     typedef ns_sp1403::r1b::tx_sw2_t tx_sw2_t;
     typedef ns_sp1403::r1b::rx_bw_t  rx_bw_t;
     typedef ns_sp1403::r1b::rx_sw7_t rx_sw7_t;
@@ -47,6 +27,8 @@ public:
     int32_t close_board();
 
     int32_t hw_ver() const { return ns_sp1403::hw_ver_t::R1A; }
+
+    int32_t set_io_mode(const ns_sp1403::port_t port,const io_mode_t mode);
 
     int32_t set_tx_freq(const uint64_t freq);
     int32_t set_rx_freq(const uint64_t freq);
@@ -70,4 +52,4 @@ public:
 } // namespace ns_sp9500x
 } // namespace rd
 
-#endif // SP1403_R1A_H
+#endif // SP9500X_SP1403_R1B_H

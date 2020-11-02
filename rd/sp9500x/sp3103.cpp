@@ -11,9 +11,9 @@ using namespace rd::ns_sp9500x;
 using namespace rd::ns_sp1403;
 using namespace rd::ns_sp3103;
 
-#define DECL_DYNAMIC_SP1403 sp1403 *SP1403 = _sp1403.at(rf_idx).get();
-#define DECL_DYNAMIC_RRH    rrh    *RRH    = _rrh.at(rf_idx).get();
-#define DECL_DYNAMIC_SP2406 sp2406 *SP2406 = _sp2406.at(rf_idx).get();
+#define DECL_DYNAMIC_SP1403 ns_sp9500x::sp1403 *SP1403 = _sp1403.at(rf_idx).get();
+#define DECL_DYNAMIC_RRH    ns_sp9500x::rrh    *RRH    = _rrh.at(rf_idx).get();
+#define DECL_DYNAMIC_SP2406 ns_sp9500x::sp2406 *SP2406 = _sp2406.at(rf_idx).get();
 
 sp3103::sp3103(uint32_t rfu_idx):
     _rfu_idx(rfu_idx),
@@ -505,7 +505,7 @@ int32_t sp3103::instance_sp1403(uint32_t rf_idx)
     hw_ver_t ver = hw_ver_t::HW_ERROR;
 
     INT_CHECK(_sp1403.at(rf_idx)->get_sn_major(sn));
-    if (sp1403::is_valid_sn(sn)) {
+    if (true/*sp1403::is_valid_sn(sn)*/) {
         is_connected = true;
 //        sp1403::get_hw_ver(sn,ver);
         switch (ver) {

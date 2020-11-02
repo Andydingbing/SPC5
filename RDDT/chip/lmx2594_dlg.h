@@ -2,7 +2,7 @@
 #define Q_LMX2594_DLG_H
 
 #include <QDialog>
-#include "sp1403_r1a.h"
+#include "sp9500x_sp1403_r1a.h"
 
 namespace Ui {
 class Q_LMX2594_Dlg;
