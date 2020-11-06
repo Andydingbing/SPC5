@@ -3,9 +3,8 @@
 #include "adf5355_dlg.h"
 #include "freq_string.hpp"
 
-using namespace rd;
-using namespace rd::ns_sp1401;
-using namespace rd::ns_sp1401::r1f;
+using namespace ns_sp1401;
+using namespace ns_sp1401::r1f;
 
 Q_SP1401_R1F_Adv_Widget::Q_SP1401_R1F_Adv_Widget(QWidget *parent) :
     Q_RD_Widget(parent),

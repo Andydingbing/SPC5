@@ -12,6 +12,7 @@ using namespace rd::ns_sp1403::r1b;
 ns_sp9500x::sp1403_r1b::sp1403_r1b(uint32_t rf_idx,uint32_t rfu_idx) :
     rd::sp1403(rf_idx,rfu_idx),
     rd::sp1403_r1a(rf_idx,rfu_idx),
+    rd::sp1403_r1b(rf_idx,rfu_idx),
     ns_sp9500x::sp1403_r1a(rf_idx,rfu_idx)
 {
 
@@ -19,7 +20,7 @@ ns_sp9500x::sp1403_r1b::sp1403_r1b(uint32_t rf_idx,uint32_t rfu_idx) :
 
 int32_t ns_sp9500x::sp1403_r1b::open_board()
 {
-    INT_CHECK(sp1403_r1a::open_board());
+    INT_CHECK(ns_sp9500x::sp1403_r1a::open_board());
 
     INT_CHECK(set_lo(TX_LMX2594_0,FREQ_M(9700)));
     INT_CHECK(set_tx_freq(FREQ_M(7500)));

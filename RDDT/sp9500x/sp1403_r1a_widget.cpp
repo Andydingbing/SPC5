@@ -1,13 +1,10 @@
-#include "sp9500x_sp1403_r1a_widget.h"
+#include "sp1403_r1a_widget.h"
 #include "ui_sp1403_r1a.h"
 #include "lmx2594_dlg.h"
 #include "reg_def_sp9500x.h"
 
-using namespace rd;
-using namespace rd::ns_sp1403;
-using namespace rd::ns_sp1403::r1a;
-using namespace rd::ns_sp9500x;
-using namespace NS_SP9500X;
+using namespace ns_sp1403;
+using namespace ns_sp1403::r1a;
 
 Q_SP1403_R1A_Widget::Q_SP1403_R1A_Widget(QWidget *parent) :
     Q_RD_Widget(parent),
@@ -38,26 +35,26 @@ Q_SP1403_R1A_Widget::Q_SP1403_R1A_Widget(QWidget *parent) :
     COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX1IOMode,io_mode);
     COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0LED,led_t);
     COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX1LED,led_t);
-    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw1,sp1403_r1b::tx_sw1_t);
-    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX1Sw1,sp1403_r1b::tx_sw1_t);
-    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw2,sp1403_r1b::tx_sw2_t);
-    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX1Sw2,sp1403_r1b::tx_sw2_t);
-    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw3,sp1403_r1b::tx_sw3_t);
-    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX1Sw3,sp1403_r1b::tx_sw3_t);
-    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw4,sp1403_r1b::tx_sw4_t);
-    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX1Sw4,sp1403_r1b::tx_sw4_t);
-    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw5,sp1403_r1b::tx0_sw5_t);
-    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX1Sw5,sp1403_r1b::tx1_sw5_t);
-    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw6,sp1403_r1b::tx0_sw6_t);
-    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX1Sw6,sp1403_r1b::tx1_sw6_t);
-    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw7,sp1403_r1b::tx0_sw7_t);
-    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw8,sp1403_r1b::tx0_sw8_t);
-    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw9,sp1403_r1b::tx0_sw9_t);
-    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw10,sp1403_r1b::tx0_sw10_t);
-    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw11,sp1403_r1b::tx0_sw11_t);
-    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw12,sp1403_r1b::tx0_sw12_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw1,tx_sw1_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX1Sw1,tx_sw1_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw2,tx_sw2_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX1Sw2,tx_sw2_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw3,tx_sw3_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX1Sw3,tx_sw3_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw4,tx_sw4_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX1Sw4,tx_sw4_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw5,tx0_sw5_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX1Sw5,tx1_sw5_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw6,tx0_sw6_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX1Sw6,tx1_sw6_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw7,tx0_sw7_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw8,tx0_sw8_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw9,tx0_sw9_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw10,tx0_sw10_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw11,tx0_sw11_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw12,tx0_sw12_t);
 
-    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxRXLNAAttSw,sp1403_r1b::rx_lna_att_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxRXLNAAttSw,rx_lna_att_t);
     COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxBWSw,rx_bw_t);
 
     ui->lineEditS6_Addr->setText("0x0");

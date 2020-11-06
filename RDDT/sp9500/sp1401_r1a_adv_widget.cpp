@@ -2,9 +2,8 @@
 #include "ui_sp1401_r1a_adv.h"
 #include "adf5355_dlg.h"
 
-using namespace rd;
-using namespace rd::ns_sp1401;
-using namespace rd::ns_sp1401::r1a;
+using namespace ns_sp1401;
+using namespace ns_sp1401::r1a;
 
 Q_SP1401_R1A_Adv_Widget::Q_SP1401_R1A_Adv_Widget(QWidget *parent) :
     Q_RD_Widget(parent),

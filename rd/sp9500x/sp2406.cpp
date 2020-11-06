@@ -334,6 +334,10 @@ int32_t sp2406::get_v9_ver(uint32_t &ver)
 
 int32_t sp2406::get_s6_ver(uint32_t &ver)
 {
+    SP9500PRO_S6_REG_DECL(0x0000);
+
+    SP9500PRO_S6_R(0x0000);
+    ver = SP9500PRO_S6_REG(0x0000).ver;
     return 0;
 }
 
@@ -2319,8 +2323,15 @@ int32_t sp2406::program(const v9_t fpga,const char *path)
     uint32_t file_size = 0;
     uint32_t cnt = 0;
     uint32_t to_cnt = 0;
+    uint32_t ver_s6 = 0;
 
-    const uint32_t block_size = 4000; // * 32bit
+    INT_CHECK(get_s6_ver(ver_s6));
+
+    uint32_t block_size = 500; // * 32bit
+
+    if (is_after(ver_s6,0x01211032)) {
+        block_size = 4000;
+    }
 
     FILE *fp = fopen(path,"rb");
     if (fp == nullptr) {
@@ -2418,13 +2429,12 @@ int32_t sp2406::program(const v9_t fpga,const char *path)
     }
 
 
-    // test
-    memset(buf,0xffffffff,file_size / 4);
-    for (uint32_t i = 0;i < 100;++i) {
-        _s6->w32(pci_dev::AS_BAR0,0x0200 << 2,block_size,buf);
+    if (is_after(ver_s6,0x01211032)) {
+        memset(buf,0xffffffff,file_size / 4);
+        for (uint32_t i = 0;i < 100;++i) {
+            _s6->w32(pci_dev::AS_BAR0,0x0200 << 2,block_size,buf);
+        }
     }
-    // test
-
 
     sleep_ms(1000);
     SP9500PRO_S6_R(0x0104);

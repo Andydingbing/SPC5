@@ -1,13 +1,10 @@
-#include "sp9500x_sp1403_r1b_widget.h"
+#include "sp1403_r1b_widget.h"
 #include "ui_sp1403_r1b.h"
 #include "lmx2594_dlg.h"
 #include "reg_def_sp9500x.h"
 
-using namespace rd;
-using namespace rd::ns_sp1403;
-using namespace rd::ns_sp1403::r1b;
-using namespace rd::ns_sp9500x;
-using namespace NS_SP9500X;
+using namespace ns_sp1403;
+using namespace ns_sp1403::r1b;
 
 Q_SP1403_R1B_Widget::Q_SP1403_R1B_Widget(QWidget *parent) :
     Q_RD_Widget(parent),
@@ -58,11 +55,12 @@ Q_SP1403_R1B_Widget::Q_SP1403_R1B_Widget(QWidget *parent) :
     COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxTX0Sw12,sp1403_r1b::tx0_sw12_t);
 
     COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxRXLNAAttSw,sp1403_r1b::rx_lna_att_t);
-    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxBWSw,rx_bw_t);
-    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxDet,det_sw_t);
     COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxRXSw1,sp1403_r1b::rx_sw1_t);
     COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxRXSw2,sp1403_r1b::rx_sw2_t);
     COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxRXSw3,sp1403_r1b::rx_sw3_t);
+
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxBWSw,sp1403_r1b::rx_bw_t);
+    COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxDet,sp1403_r1b::det_sw_t);
     COMBOBOX_MAP_FROM_BETTER_ENUM(ui->comboBoxRXSw7,sp1403_r1b::rx_sw7_t);
 
     ui->lineEditS6_Addr->setText("0x0");
@@ -90,7 +88,7 @@ void Q_SP1403_R1B_Widget::init()
     updateRXSw();
     updateRXLO();
 
-    det_sw_t detSw = det_sw_t::TX;
+    r1b::det_sw_t detSw = r1b::det_sw_t::TX;
     INT_CHECKV(SP1403_R1B->get_det_sw(detSw));
     ui->comboBoxDet->setCurrentIndex(detSw);
 }
@@ -180,7 +178,7 @@ void Q_SP1403_R1B_Widget::updateTXLO()
 void Q_SP1403_R1B_Widget::updateRXSw()
 {
     sp1403_r1b::rx_lna_att_t RX_LNAAttSw = sp1403_r1b::rx_lna_att_t::RX_ATT_0;
-    rx_bw_t RX_BW = rx_bw_t::_800M;
+    r1b::rx_bw_t RX_BW = r1b::rx_bw_t::_800M;
     sp1403_r1b::rx_sw1_t RX_Sw1 = sp1403_r1b::rx_sw1_t::TO_ATT;
     sp1403_r1b::rx_sw2_t RX_Sw2 = sp1403_r1b::rx_sw2_t::TO_ATT_0;
     sp1403_r1b::rx_sw3_t RX_Sw3 = sp1403_r1b::rx_sw3_t::_300_1000;
@@ -221,7 +219,7 @@ void Q_SP1403_R1B_Widget::on_lineEditTXFreq_textEdited(const QString &arg1)
 void Q_SP1403_R1B_Widget::on_lineEditTXLMX2594_0_Freq_textEdited(const QString &arg1)
 {
     RD_TRY
-    SP1403_R1B->set_lo(sp1403_r1b::lo_t::TX_LMX2594_0,freq_string_to<quint64>(arg1.toStdString()));
+    SP1403_R1B->set_lo(TX_LMX2594_0,freq_string_to<quint64>(arg1.toStdString()));
     RD_LOG_ALL_EXCEPTION
 }
 
@@ -230,7 +228,7 @@ void Q_SP1403_R1B_Widget::on_pushButtonTXLMX2594_0_Adv_clicked()
     if (dlg_TX_LMX2594_0 == nullptr) {
         dlg_TX_LMX2594_0 = new Q_LMX2594_Dlg();
         dlg_TX_LMX2594_0->RF = SP1403_R1B;
-        dlg_TX_LMX2594_0->LO = sp1403_r1b::lo_t::TX_LMX2594_0;
+        dlg_TX_LMX2594_0->LO = TX_LMX2594_0;
         dlg_TX_LMX2594_0->setWindowTitle(QString(""));
     }
     dlg_TX_LMX2594_0->setVisible(true);
@@ -241,7 +239,7 @@ void Q_SP1403_R1B_Widget::on_pushButtonTXLMX2594_0_Adv_clicked()
 void Q_SP1403_R1B_Widget::on_lineEditTXLMX2594_1_Freq_textEdited(const QString &arg1)
 {
     RD_TRY
-    SP1403_R1B->set_lo(sp1403_r1b::lo_t::TX_LMX2594_1,freq_string_to<quint64>(arg1.toStdString()));
+    SP1403_R1B->set_lo(TX_LMX2594_1,freq_string_to<quint64>(arg1.toStdString()));
     RD_LOG_ALL_EXCEPTION
 }
 
@@ -250,7 +248,7 @@ void Q_SP1403_R1B_Widget::on_pushButtonTXLMX2594_1_Adv_clicked()
     if (dlg_TX_LMX2594_1 == nullptr) {
         dlg_TX_LMX2594_1 = new Q_LMX2594_Dlg();
         dlg_TX_LMX2594_1->RF = SP1403_R1B;
-        dlg_TX_LMX2594_1->LO = sp1403_r1b::lo_t::TX_LMX2594_1;
+        dlg_TX_LMX2594_1->LO = TX_LMX2594_1;
         dlg_TX_LMX2594_1->setWindowTitle(QString(""));
     }
     dlg_TX_LMX2594_1->setVisible(true);
@@ -285,13 +283,13 @@ void Q_SP1403_R1B_Widget::on_comboBoxRXAtt1_activated(int index)
 
 void Q_SP1403_R1B_Widget::on_comboBoxBWSw_activated(int index)
 {
-    SP1403_R1B->set_rx_bw(rx_bw_t::_from_integral(index));
+    SP1403_R1B->set_rx_bw(sp1403_r1b::rx_bw_t::_from_integral(index));
 }
 
 void Q_SP1403_R1B_Widget::on_lineEditRXLMX2594_0_Freq_textEdited(const QString &arg1)
 {
     RD_TRY
-    SP1403_R1B->set_lo(sp1403_r1b::lo_t::RX_LMX2594_0,freq_string_to<quint64>(arg1.toStdString()));
+    SP1403_R1B->set_lo(RX_LMX2594_0,freq_string_to<quint64>(arg1.toStdString()));
     RD_LOG_ALL_EXCEPTION
 }
 
@@ -300,7 +298,7 @@ void Q_SP1403_R1B_Widget::on_pushButtonRXLMX2594_0_Adv_clicked()
     if (dlg_RX_LMX2594_0 == nullptr) {
         dlg_RX_LMX2594_0 = new Q_LMX2594_Dlg();
         dlg_RX_LMX2594_0->RF = SP1403_R1B;
-        dlg_RX_LMX2594_0->LO = sp1403_r1b::lo_t::RX_LMX2594_0;
+        dlg_RX_LMX2594_0->LO = RX_LMX2594_0;
         dlg_RX_LMX2594_0->setWindowTitle(QString(""));
     }
     dlg_RX_LMX2594_0->setVisible(true);
@@ -308,9 +306,9 @@ void Q_SP1403_R1B_Widget::on_pushButtonRXLMX2594_0_Adv_clicked()
     dlg_RX_LMX2594_0->activateWindow();
 }
 
-void NS_SP9500X::Q_SP1403_R1B_Widget::on_comboBoxDet_activated(int index)
+void Q_SP1403_R1B_Widget::on_comboBoxDet_activated(int index)
 {
-    SP1403_R1B->set_det_sw(det_sw_t::_from_index(index));
+    SP1403_R1B->set_det_sw(r1b::det_sw_t::_from_index(index));
 }
 
 void Q_SP1403_R1B_Widget::on_pushButtonGetDet_clicked()

@@ -6,8 +6,7 @@
 #include "q_model_rx_filter_offset.h"
 #include "q_winthread.h"
 
-using namespace rd;
-using namespace rd::ns_sp1401;
+using namespace ns_sp1401;
 
 QCalRXFilterOffsetWidget::QCalRXFilterOffsetWidget(QWidget *parent) :
     QWidget(parent)

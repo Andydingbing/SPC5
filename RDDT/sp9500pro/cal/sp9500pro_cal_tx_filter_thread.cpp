@@ -3,10 +3,9 @@
 #include "test_data.hpp"
 #include <QFile>
 
-using namespace rd;
-using namespace rd::ns_sp1403;
-using namespace rd::ns_sp2406;
-using namespace rd::ns_sp9500x;
+using namespace ns_sp1403;
+using namespace ns_sp2406;
+using namespace ns_sp9500x;
 using namespace NS_SP9500Pro;
 
 void Q_Cal_TXFilter_Thread::cal()

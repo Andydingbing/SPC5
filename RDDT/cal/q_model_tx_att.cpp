@@ -1,8 +1,7 @@
 #include "q_model_tx_att.h"
 #include <QPointF>
 
-using namespace rd;
-using namespace rd::ns_sp1401;
+using namespace ns_sp1401;
 
 QVariant QR1CTXAttOPModel::data(const QModelIndex &index, int role) const
 {

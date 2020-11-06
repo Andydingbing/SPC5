@@ -4,9 +4,8 @@
 #include "qwt_plot_curve.h"
 #include <QVBoxLayout>
 
-using namespace rd;
-using namespace rd::ns_sp1401;
-using namespace rd::ns_sp2401;
+using namespace ns_sp1401;
+using namespace ns_sp2401;
 
 QCalR1CRXFilterTabWidget::QCalR1CRXFilterTabWidget(QWidget *parent) :
     QTabWidget(parent),

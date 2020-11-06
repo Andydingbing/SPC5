@@ -3,8 +3,7 @@
 #include "q_test_freq_res_widget.h"
 #include "q_plot.hpp"
 
-using namespace rd;
-using namespace rd::ns_sp1401;
+using namespace ns_sp1401;
 
 void QTestR1CFreqResDlg::init()
 {

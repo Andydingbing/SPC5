@@ -2,9 +2,8 @@
 #include <QPointF>
 #include "algo_math.hpp"
 
-using namespace rd;
-using namespace rd::ns_sp9500;
-using namespace rd::ns_sp1401;
+using namespace ns_sp9500;
+using namespace ns_sp1401;
 
 // QwtRxAttOPData
 QwtRxAttOPData::QwtRxAttOPData() :

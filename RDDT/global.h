@@ -97,12 +97,18 @@ class Q_ARB_Config_Widget_Helper;
 extern ns_sp9500x::sp3103 *SP3103;
 
 extern ns_sp9500x::sp1403 *SP1403;
+
 extern ns_sp9500x::sp1403_r1a *SP1403_R1A;
 extern ns_sp9500x::sp1403_r1b *SP1403_R1B;
 extern ns_sp9500x::rrh    *SP9500X_RRH;
 extern ns_sp9500x::sp2406 *SP2406;
 
 } // namespace NS_SP9500X
+
+extern rd::sp1403 *SP1403;
+extern rd::sp1403_r1a *SP1403_R1A;
+extern rd::sp1403_r1b *SP1403_R1B;
+
 
 class Q_RD_Widget : public QWidget
 {

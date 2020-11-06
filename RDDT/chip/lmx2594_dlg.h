@@ -89,7 +89,7 @@ private slots:
     void on_comboBoxCHDIV_activated(int index);
 
 public:
-    rd::ns_sp9500x::sp1403_r1a *RF;
+    rd::sp1403_r1a *RF;
     rd::sp1403::lo_t LO;
 
 private:

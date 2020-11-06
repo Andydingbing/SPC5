@@ -18,8 +18,7 @@
 #include <QtNetwork/QNetworkInterface>
 #include <QList>
 
-using namespace rd;
-using namespace rd::ns_sp1401;
+using namespace ns_sp1401;
 
 QCalR1CDlg::QCalR1CDlg(QWidget *parent) :
     QWidget(parent),

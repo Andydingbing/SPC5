@@ -13,6 +13,29 @@ BETTER_ENUM(det_sw_t, uint32_t, TX, RX)
 
 } // namespace r1b
 } // namespace ns_sp1403
+
+class RD_API sp1403_r1b : virtual public sp1403_r1a
+{
+public:
+    typedef ns_sp1403::r1b::rx_bw_t  rx_bw_t;
+    typedef ns_sp1403::r1b::rx_sw7_t rx_sw7_t;
+    typedef ns_sp1403::r1b::det_sw_t det_sw_t;
+
+    sp1403_r1b(uint32_t rf_idx,uint32_t rfu_idx) :
+        sp1403(rf_idx,rfu_idx),
+        sp1403_r1a(rf_idx,rfu_idx) {}
+
+    virtual int32_t set_rx_sw7(const rx_sw7_t &sw) const = 0;
+    virtual int32_t get_rx_sw7(rx_sw7_t &sw) const = 0;
+
+    virtual int32_t set_rx_bw(const rx_bw_t) const = 0;
+    virtual int32_t get_rx_bw(rx_bw_t &) const = 0;
+
+    virtual int32_t set_det_sw(const det_sw_t &sw) const = 0;
+    virtual int32_t get_det_sw(det_sw_t &sw) const = 0;
+    virtual int32_t get_ad7680(uint16_t &det) const = 0;
+};
+
 } // namespace rd
 
 #endif // SP1403_R1B_H

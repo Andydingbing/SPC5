@@ -4,8 +4,7 @@
 #include "q_model_temp_pwr.hpp"
 #include "algo_fit.hpp"
 
-using namespace rd;
-using namespace rd::ns_sp1401;
+using namespace ns_sp1401;
 
 void QCalR1CTxTempCompThread::cal()
 {

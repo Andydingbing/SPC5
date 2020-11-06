@@ -1,9 +1,8 @@
 #include "sp1401_r1f_widget.h"
 #include "ui_sp1401_r1f.h"
 
-using namespace rd;
-using namespace rd::ns_sp1401;
-using namespace rd::ns_sp1401::r1f;
+using namespace ns_sp1401;
+using namespace ns_sp1401::r1f;
 
 Q_SP1401_R1F_Widget::Q_SP1401_R1F_Widget(QWidget *parent) :
     Q_RD_Widget(parent),

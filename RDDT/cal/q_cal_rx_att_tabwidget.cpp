@@ -7,8 +7,7 @@
 #include "freq_string.hpp"
 #include <QHBoxLayout>
 
-using namespace rd;
-using namespace rd::ns_sp1401;
+using namespace ns_sp1401;
 
 QCalR1CRXAttTabWidget::QCalR1CRXAttTabWidget(QWidget *parent) :
     QTabWidget(parent),

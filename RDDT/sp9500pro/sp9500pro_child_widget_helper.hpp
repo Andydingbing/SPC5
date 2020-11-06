@@ -3,7 +3,6 @@
 
 #include "global.h"
 #include "child_widget_helper.h"
-#include "sp9500pro_sp1403_r1b_widget.h"
 #include "sp9500x_rrh_widget.h"
 #include "sp9500x_sp2406_widget.h"
 #include "arb_widget.h"
@@ -101,7 +100,7 @@ public:
     {
         QStringList str;
 
-        DECL_TREE_ITEM(str,"RF-R1B" << "Overview",widget_SP1403_R1B);
+//        DECL_TREE_ITEM(str,"RF-R1B" << "Overview",widget_SP1403_R1B);
         DECL_TREE_ITEM(str,"RF-R1B" << "Test",widget_Test_R1A);
         DECL_TREE_ITEM(str,"RF-R1B" << "Calibration" << "TX-Filter",widget_Cal_TXFilter);
         DECL_TREE_ITEM(str,"RRH" << "Overview",widget_SP9500X_RRH);
@@ -114,15 +113,6 @@ public:
 //        DECL_TREE_ITEM(str,"RF-R1F" << "Calibration" << "TX-LOLeakage",widget_Cal_R1C_TX_LOLeak);
 //        DECL_TREE_ITEM(str,"RF-R1F" << "Calibration" << "TX-Sideband",widget_Cal_R1C_TX_SB);
 //        DECL_TREE_ITEM(str,"RF-R1F" << "Calibration" << "TX-Filter",widget_Cal_R1C_TX_Filter);
-//        DECL_TREE_ITEM(str,"RF-R1F" << "Calibration" << "TX-BasePower",widget_Cal_R1C_TX_Pwr);
-//        DECL_TREE_ITEM(str,"RF-R1F" << "Calibration" << "TX-Attenuation",widget_Cal_R1C_TX_Att);
-//        DECL_TREE_ITEM(str,"RF-R1F" << "Calibration" << "TX-FilterOffset",widget_Cal_R1C_TX_FilterOffset);
-//        DECL_TREE_ITEM(str,"RF-R1F" << "Calibration" << "RX-Filter",widget_Cal_R1C_RX_Filter);
-//        DECL_TREE_ITEM(str,"RF-R1F" << "Calibration" << "RX-Reference",widget_Cal_R1C_RX_Ref);
-//        DECL_TREE_ITEM(str,"RF-R1F" << "Calibration" << "RX-Attenuation",widget_Cal_R1C_RX_Att);
-//        DECL_TREE_ITEM(str,"RF-R1F" << "Calibration" << "RX-FilterOffset",widget_Cal_R1C_RX_FilterOffset);
-//        DECL_TREE_ITEM(str,"RF-R1F" << "Calibration" << "TX-TempComp",widget_Cal_R1C_TX_TempComp);
-//        DECL_TREE_ITEM(str,"RF-R1F" << "Calibration" << "RX-TempComp",widget_Cal_R1C_RX_TempComp);
 
 //        DECL_TREE_ITEM(str,"BB-Debug" << "OverView",widget_SP2401_R1A);
 
@@ -131,7 +121,7 @@ public:
 
     void addChildWidgets()
     {
-        ADD_CHILD_WIDGET(widget_SP1403_R1B,Q_SP9500PRO_SP1403_R1B_Widget,ns_sp3103::g_max_rf);
+//        ADD_CHILD_WIDGET(widget_SP1403_R1B,Q_SP9500PRO_SP1403_R1B_Widget,ns_sp3103::g_max_rf);
         ADD_CHILD_WIDGET(widget_Cal_TXFilter,Q_Cal_TXFilter_Widget,ns_sp3103::g_max_rf);
         ADD_CHILD_WIDGET(widget_Test_R1A,Q_Test_SP9501_TabWidget,ns_sp3103::g_max_rf);
         ADD_CHILD_WIDGET(widget_SP9500X_RRH,Q_SP9500X_RRH_Widget,ns_sp3103::g_max_rf);
@@ -177,7 +167,7 @@ public slots:
     {
         updatePtr();
         for (int i = 0;i < ns_sp3103::g_max_rf;i ++) {
-            widget_SP1403_R1B[i]->init();
+//            widget_SP1403_R1B[i]->init();
             widget_SP9500X_RRH[i]->init();
 //            widget_SP2406[i]->init();
             widget_ARB[i]->init();
@@ -187,7 +177,7 @@ public slots:
     }
 
 public:
-    QList<Q_SP9500PRO_SP1403_R1B_Widget *> widget_SP1403_R1B;
+//    QList<Q_SP9500PRO_SP1403_R1B_Widget *> widget_SP1403_R1B;
     QList<Q_SP9500X_RRH_Widget *> widget_SP9500X_RRH;
 
 //    QList<Q_SP2406_Widget *> widget_SP2406;

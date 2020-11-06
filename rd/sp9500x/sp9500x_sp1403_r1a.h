@@ -48,13 +48,11 @@ public:
     typedef ns_sp1403::r1a::tx1_sw5_t  tx1_sw5_t;
     typedef ns_sp1403::r1a::tx1_sw6_t  tx1_sw6_t;
 
-    typedef ns_sp1403::r1a::rx_bw_t  rx_bw_t;
-
-    typedef ns_sp1403::r1a::rx_sw1_t rx_sw1_t;
-    typedef ns_sp1403::r1a::rx_sw2_t rx_sw2_t;
-    typedef ns_sp1403::r1a::rx_sw3_t rx_sw3_t;
-    typedef ns_sp1403::r1a::rx_sw4_t rx_sw4_t;
-
+    typedef ns_sp1403::r1a::rx_bw_t      rx_bw_t;
+    typedef ns_sp1403::r1a::rx_sw1_t     rx_sw1_t;
+    typedef ns_sp1403::r1a::rx_sw2_t     rx_sw2_t;
+    typedef ns_sp1403::r1a::rx_sw3_t     rx_sw3_t;
+    typedef ns_sp1403::r1a::rx_sw4_t     rx_sw4_t;
     typedef ns_sp1403::r1a::rx_lna_att_t rx_lna_att_t;
 
     typedef ns_sp1403::r1a::temp_t temp_t;

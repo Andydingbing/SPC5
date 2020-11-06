@@ -7,9 +7,8 @@
     #include <Windows.h>
 #endif
 
-using namespace rd;
-using namespace rd::ns_sp1401;
-using namespace rd::ns_sp2401;
+using namespace ns_sp1401;
+using namespace ns_sp2401;
 
 void QCalR1CTXFilterThread::cal()
 {

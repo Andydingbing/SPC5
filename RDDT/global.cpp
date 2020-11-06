@@ -72,6 +72,7 @@ sp2401_r1a *SP2401 = nullptr;
 
 // SP9500X
 
+
 namespace NS_SP9500X {
 
 ns_sp9500x::sp3103 *SP3103 = nullptr;
@@ -84,4 +85,7 @@ ns_sp9500x::sp2406 *SP2406 = nullptr;
 
 }
 
+rd::sp1403 *SP1403 = nullptr;
+rd::sp1403_r1a *SP1403_R1A = nullptr;
+rd::sp1403_r1b *SP1403_R1B = nullptr;
 

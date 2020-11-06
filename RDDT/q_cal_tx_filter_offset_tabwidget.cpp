@@ -5,8 +5,7 @@
 #include "q_rdt_tableview.h"
 #include "q_winthread.h"
 
-using namespace rd;
-using namespace rd::ns_sp1401;
+using namespace ns_sp1401;
 
 QCalTXFilterOffsetWidget::QCalTXFilterOffsetWidget(QWidget *parent) :
     QWidget(parent)

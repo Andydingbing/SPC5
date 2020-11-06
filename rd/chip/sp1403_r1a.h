@@ -53,31 +53,97 @@ enum att_t {
 class RD_API sp1403_r1a : virtual public sp1403
 {
 public:
-    typedef ns_sp1403::r1a::rx_bw_t      rx_bw_t;
-    typedef ns_sp1403::r1a::att_t        att_t;
+    typedef ns_sp1403::r1a::tx_sw1_t   tx_sw1_t;
+    typedef ns_sp1403::r1a::tx_sw2_t   tx_sw2_t;
+    typedef ns_sp1403::r1a::tx_sw3_t   tx_sw3_t;
+    typedef ns_sp1403::r1a::tx_sw4_t   tx_sw4_t;
+    typedef ns_sp1403::r1a::tx0_sw5_t  tx0_sw5_t;
+    typedef ns_sp1403::r1a::tx0_sw6_t  tx0_sw6_t;
+    typedef ns_sp1403::r1a::tx0_sw7_t  tx0_sw7_t;
+    typedef ns_sp1403::r1a::tx0_sw8_t  tx0_sw8_t;
+    typedef ns_sp1403::r1a::tx0_sw9_t  tx0_sw9_t;
+    typedef ns_sp1403::r1a::tx0_sw10_t tx0_sw10_t;
+    typedef ns_sp1403::r1a::tx0_sw11_t tx0_sw11_t;
+    typedef ns_sp1403::r1a::tx0_sw12_t tx0_sw12_t;
+    typedef ns_sp1403::r1a::tx1_sw5_t  tx1_sw5_t;
+    typedef ns_sp1403::r1a::tx1_sw6_t  tx1_sw6_t;
+
+    typedef ns_sp1403::r1a::rx_bw_t  rx_bw_t;
+    typedef ns_sp1403::r1a::rx_sw1_t rx_sw1_t;
+    typedef ns_sp1403::r1a::rx_sw2_t rx_sw2_t;
+    typedef ns_sp1403::r1a::rx_sw3_t rx_sw3_t;
+    typedef ns_sp1403::r1a::rx_sw4_t rx_sw4_t;
     typedef ns_sp1403::r1a::rx_lna_att_t rx_lna_att_t;
-    typedef ns_sp1403::r1a::temp_t       temp_t;
+
+    typedef ns_sp1403::r1a::att_t  att_t;
+    typedef ns_sp1403::r1a::temp_t temp_t;
 
     sp1403_r1a(uint32_t rf_idx,uint32_t rfu_idx) :
         sp1403(rf_idx,rfu_idx) {}
 
 public:
-    virtual int32_t set_att(const att_t,const double) const { return 0; }
-    virtual int32_t get_att(const att_t,double &) const { return 0; }
+    virtual int32_t set_att(const att_t,const double) const = 0;
+    virtual int32_t get_att(const att_t,double &) const = 0;
 
-    virtual int32_t set_rx_lna_att_sw(const rx_lna_att_t) const { return 0; }
-    virtual int32_t get_rx_lna_att_sw(ns_sp1403::r1a::rx_lna_att_t &) const { return 0; }
+    virtual int32_t set_tx0_sw1(const tx_sw1_t &sw) const = 0;
+    virtual int32_t get_tx0_sw1(tx_sw1_t &sw) const = 0;
+    virtual int32_t set_tx0_sw2(const tx_sw2_t &sw) const = 0;
+    virtual int32_t get_tx0_sw2(tx_sw2_t &sw) const = 0;
+    virtual int32_t set_tx0_sw3(const tx_sw3_t &sw) const = 0;
+    virtual int32_t get_tx0_sw3(tx_sw3_t &sw) const = 0;
+    virtual int32_t set_tx0_sw4(const tx_sw4_t &sw) const = 0;
+    virtual int32_t get_tx0_sw4(tx_sw4_t &sw) const = 0;
+    virtual int32_t set_tx0_sw5(const tx0_sw5_t &sw) const = 0;
+    virtual int32_t get_tx0_sw5(tx0_sw5_t &sw) const = 0;
+    virtual int32_t set_tx0_sw6(const tx0_sw6_t &sw) const = 0;
+    virtual int32_t get_tx0_sw6(tx0_sw6_t &sw) const = 0;
+    virtual int32_t set_tx0_sw7(const tx0_sw7_t &sw) const = 0;
+    virtual int32_t get_tx0_sw7(tx0_sw7_t &sw) const = 0;
+    virtual int32_t set_tx0_sw8(const tx0_sw8_t &sw) const = 0;
+    virtual int32_t get_tx0_sw8(tx0_sw8_t &sw) const = 0;
+    virtual int32_t set_tx0_sw9(const tx0_sw9_t &sw) const = 0;
+    virtual int32_t get_tx0_sw9(tx0_sw9_t &sw) const = 0;
+    virtual int32_t set_tx0_sw10(const tx0_sw10_t &sw) const = 0;
+    virtual int32_t get_tx0_sw10(tx0_sw10_t &sw) const = 0;
+    virtual int32_t set_tx0_sw11(const tx0_sw11_t &sw) const = 0;
+    virtual int32_t get_tx0_sw11(tx0_sw11_t &sw) const = 0;
+    virtual int32_t set_tx0_sw12(const tx0_sw12_t &sw) const = 0;
+    virtual int32_t get_tx0_sw12(tx0_sw12_t &sw) const = 0;
 
-    virtual int32_t set_rx_bw(const rx_bw_t) const { return 0; }
-    virtual int32_t get_rx_bw(rx_bw_t &) const { return 0; }
+    virtual int32_t set_tx1_sw1(const tx_sw1_t &sw) const = 0;
+    virtual int32_t get_tx1_sw1(tx_sw1_t &sw) const = 0;
+    virtual int32_t set_tx1_sw2(const tx_sw2_t &sw) const = 0;
+    virtual int32_t get_tx1_sw2(tx_sw2_t &sw) const = 0;
+    virtual int32_t set_tx1_sw3(const tx_sw3_t &sw) const = 0;
+    virtual int32_t get_tx1_sw3(tx_sw3_t &sw) const = 0;
+    virtual int32_t set_tx1_sw4(const tx_sw4_t &sw) const = 0;
+    virtual int32_t get_tx1_sw4(tx_sw4_t &sw) const = 0;
+    virtual int32_t set_tx1_sw5(const tx1_sw5_t &sw) const = 0;
+    virtual int32_t get_tx1_sw5(tx1_sw5_t &sw) const = 0;
+    virtual int32_t set_tx1_sw6(const tx1_sw6_t &sw) const = 0;
+    virtual int32_t get_tx1_sw6(tx1_sw6_t &sw) const = 0;
 
-    virtual int32_t get_temp(const temp_t &,double &) const { return 0; }
+    virtual int32_t set_rx_lna_att_sw(const rx_lna_att_t) const = 0;
+    virtual int32_t get_rx_lna_att_sw(ns_sp1403::r1a::rx_lna_att_t &) const = 0;
 
-    virtual int32_t init_lo(const lo_t) { return 0; }
-    virtual int32_t set_lo(const lo_t,const uint64_t) { return 0; }
+    virtual int32_t set_rx_bw(const rx_bw_t) const = 0;
+    virtual int32_t get_rx_bw(rx_bw_t &) const = 0;
 
-    virtual int32_t set_lo_reg(const lo_t lo,const uint8_t addr,const uint16_t data) { return 0; }
-    virtual int32_t get_lo_reg(const lo_t lo,const uint8_t addr,uint16_t &data) { return 0; }
+    virtual int32_t set_rx_sw1(const rx_sw1_t &sw) const = 0;
+    virtual int32_t get_rx_sw1(rx_sw1_t &sw) const = 0;
+    virtual int32_t set_rx_sw2(const rx_sw2_t &sw) const = 0;
+    virtual int32_t get_rx_sw2(rx_sw2_t &sw) const = 0;
+    virtual int32_t set_rx_sw3(const rx_sw3_t &sw) const = 0;
+    virtual int32_t get_rx_sw3(rx_sw3_t &sw) const = 0;
+    virtual int32_t set_rx_sw4(const rx_sw4_t &sw) const = 0;
+
+    virtual int32_t get_temp(const temp_t &,double &) const = 0;
+
+    virtual int32_t init_lo(const lo_t) = 0;
+    virtual int32_t set_lo(const lo_t,const uint64_t) = 0;
+
+    virtual int32_t set_lo_reg(const lo_t lo,const uint8_t addr,const uint16_t data) = 0;
+    virtual int32_t get_lo_reg(const lo_t lo,const uint8_t addr,uint16_t &data) = 0;
 
     common_lo_t *lo(const lo_t id) const
     { return (common_lo_t *)(&_tx_lmx2594_0 + id * sizeof(common_lo_t *)); }

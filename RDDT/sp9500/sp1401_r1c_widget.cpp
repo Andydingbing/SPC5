@@ -3,9 +3,8 @@
 #include "exception.hpp"
 #include "freq_string.hpp"
 
-using namespace rd;
-using namespace rd::ns_sp1401;
-using namespace rd::ns_sp1401::r1c;
+using namespace ns_sp1401;
+using namespace ns_sp1401::r1c;
 
 Q_SP1401_R1C_Widget::Q_SP1401_R1C_Widget(QWidget *parent) :
     Q_RD_Widget(parent),

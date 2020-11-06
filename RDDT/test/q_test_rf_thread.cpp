@@ -4,8 +4,7 @@
 #include "mainwindow.h"
 
 using namespace std;
-using namespace rd;
-using namespace rd::ns_sp1401;
+using namespace ns_sp1401;
 
 void QTestR1CRFThread::run()
 {

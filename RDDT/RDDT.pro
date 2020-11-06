@@ -209,8 +209,8 @@ dt3308/dt3308_bb_f.ui
 
 # SP9500X
 HEADERS += \
-sp9500x/sp9500x_sp1403_r1a_widget.h \
-sp9500x/sp9500x_sp1403_r1b_widget.h \
+sp9500x/sp1403_r1a_widget.h \
+sp9500x/sp1403_r1b_widget.h \
 sp9500x/sp9500x_rrh_widget.h \
 sp9500x/sp9500x_sp2406_widget.h \
 sp9500x/sp9500x_child_widget_helper.hpp \
@@ -220,8 +220,8 @@ sp9500x/sp9500x_fpga_widget.h \
 sp9500x/sp9500x_fan_dlg.h
 
 SOURCES += \
-sp9500x/sp9500x_sp1403_r1a_widget.cpp \
-sp9500x/sp9500x_sp1403_r1b_widget.cpp \
+sp9500x/sp1403_r1a_widget.cpp \
+sp9500x/sp1403_r1b_widget.cpp \
 sp9500x/sp9500x_rrh_widget.cpp \
 sp9500x/sp9500x_sp2406_widget.cpp \
 sp9500x/sp9500x_arb_config_widget.cpp \
@@ -240,14 +240,12 @@ INCLUDEPATH += \
 sp9500pro/cal
 
 HEADERS += \
-sp9500pro/sp9500pro_sp1403_r1b_widget.h \
 sp9500pro/sp9500pro_child_widget_helper.hpp \
 sp9500pro/cal/sp9500pro_cal_widget.h \
 sp9500pro/cal/sp9500pro_cal_tx_filter_thread.h \
 sp9500pro/cal/sp9500pro_cal_tx_filter_childwidgets.h
 
 SOURCES += \
-sp9500pro/sp9500pro_sp1403_r1b_widget.cpp \
 sp9500pro/cal/sp9500pro_cal_widget.cpp \
 sp9500pro/cal/sp9500pro_cal_tx_filter_thread.cpp \
 sp9500pro/cal/sp9500pro_cal_tx_filter_childwidgets.cpp

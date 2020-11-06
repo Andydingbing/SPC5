@@ -2,10 +2,9 @@
 #include "ui_sp2401_r1a.h"
 #include "algo_math.hpp"
 
-using namespace rd;
-using namespace rd::ns_sp9500;
-using namespace rd::ns_sp1401;
-using namespace rd::ns_sp2401;
+using namespace ns_sp9500;
+using namespace ns_sp1401;
+using namespace ns_sp2401;
 
 Q_SP2401_R1A_Widget::Q_SP2401_R1A_Widget(QWidget *parent) :
     Q_RD_Widget(parent),

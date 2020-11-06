@@ -7,7 +7,12 @@
 namespace rd {
 namespace ns_sp9500x {
 
-class RD_API sp1403_r1b : public ns_sp9500x::sp1403_r1a
+#ifdef RD_C_MSC
+    #pragma warning( push )
+    #pragma warning( disable : 4250 )
+#endif
+
+class RD_API sp1403_r1b : virtual public rd::sp1403_r1b, public ns_sp9500x::sp1403_r1a
 {
 public:
     typedef boost::shared_ptr<sp1403_r1b> sptr;
@@ -48,6 +53,10 @@ public:
     void tx_freq_to_lo(const uint64_t freq);
     void rx_freq_to_lo(const uint64_t freq);
 };
+
+#ifdef RD_C_MSC
+    #pragma warning( pop )
+#endif
 
 } // namespace ns_sp9500x
 } // namespace rd

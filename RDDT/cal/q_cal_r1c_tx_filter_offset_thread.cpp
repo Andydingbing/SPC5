@@ -1,10 +1,9 @@
 #include "q_cal_r1c_tx_filter_offset_thread.h"
 #include "q_model_filter_offset.h"
 
-using namespace rd;
-using namespace rd::ns_sp1401;
-using namespace rd::ns_sp1401::r1c;
-using namespace rd::ns_sp2401;
+using namespace ns_sp1401;
+using namespace ns_sp1401::r1c;
+using namespace ns_sp2401;
 
 void QCalR1CTXFilterOffsetThread::run()
 {

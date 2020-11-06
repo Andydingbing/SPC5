@@ -69,14 +69,14 @@ public:
         return 0;
     }
 
-    virtual int32_t set_io_mode(const io_mode_t) { return 0; }
-    virtual int32_t set_io_mode(const ns_sp1403::port_t,const io_mode_t) { return 0; }
+    virtual int32_t set_io_mode(const io_mode_t) = 0;
+    virtual int32_t set_io_mode(const ns_sp1403::port_t,const io_mode_t) = 0;
 
-    virtual int32_t set_led(const port_t,const led_t &) { return 0; }
-    virtual int32_t get_led(const port_t,led_t &) { return 0; }
+    virtual int32_t set_led(const port_t,const led_t &) const = 0;
+    virtual int32_t get_led(const port_t,led_t &) const = 0;
 
-    virtual int32_t set_s6_reg(const uint8_t addr,const uint16_t data) { return 0; }
-    virtual int32_t get_s6_reg(const uint8_t addr,uint16_t &data) { return 0; }
+    virtual int32_t set_s6_reg(const uint8_t addr,const uint16_t data) const = 0;
+    virtual int32_t get_s6_reg(const uint8_t addr,uint16_t &data) const = 0;
 
     io_mode_t io_mode() const { return _io_mode_tx0; }
     io_mode_t io_mode(const ns_sp1403::port_t port)

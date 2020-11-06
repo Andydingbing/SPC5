@@ -3,8 +3,8 @@
 
 #include "global.h"
 #include "child_widget_helper.h"
-#include "sp9500x_sp1403_r1a_widget.h"
-#include "sp9500x_sp1403_r1b_widget.h"
+#include "sp1403_r1a_widget.h"
+#include "sp1403_r1b_widget.h"
 #include "sp9500x_rrh_widget.h"
 #include "sp9500x_sp2406_widget.h"
 #include "arb_widget.h"
@@ -143,11 +143,16 @@ public:
     {
         if (SP3103 != nullptr) {
             RFUIdx = SP3103->rfu_idx();
-            SP1403 = SP3103->working_sp1403(RFIdx);
-            SP1403_R1A = SP3103->working_sp1403_r1a(RFIdx);
-            SP1403_R1B = SP3103->working_sp1403_r1b(RFIdx);
+            SP1403      = SP3103->working_sp1403(RFIdx);
+            SP1403_R1A  = SP3103->working_sp1403_r1a(RFIdx);
+            SP1403_R1B  = SP3103->working_sp1403_r1b(RFIdx);
             SP9500X_RRH = SP3103->working_rrh(RFIdx);
-            SP2406 = SP3103->working_sp2406(RFIdx);
+            SP2406      = SP3103->working_sp2406(RFIdx);
+
+            ::SP1403     = SP1403;
+            ::SP1403_R1A = SP1403_R1A;
+            ::SP1403_R1B = SP1403_R1B;
+
             complexSequence = SP2406->ul_sequence();
             widget_SA[RFIdx]->_data_I._sequence = complexSequence;
             widget_SA[RFIdx]->_data_Q._sequence = complexSequence;

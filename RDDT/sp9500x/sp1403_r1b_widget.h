@@ -1,9 +1,7 @@
-#ifndef Q_SP9500X_SP1403_R1B_WIDGET_H
-#define Q_SP9500X_SP1403_R1B_WIDGET_H
+#ifndef Q_SP1403_R1B_WIDGET_H
+#define Q_SP1403_R1B_WIDGET_H
 
 #include "global.h"
-
-namespace NS_SP9500X {
 
 class Q_SP1403_R1B_Widget : public Q_RD_Widget
 {
@@ -32,28 +30,28 @@ private slots:
     { SP1403_R1B->set_led(ns_sp1403::TX1,ns_sp1403::led_t::_from_index(size_t(index))); }
 
     void on_comboBoxTX0Att0_activated(int index)
-    { SP1403_R1B->set_att(ns_sp9500x::sp1403_r1b::att_t::TX0_ATT0,index / 2.0); }
+    { SP1403_R1B->set_att(sp1403_r1b::att_t::TX0_ATT0,index / 2.0); }
 
     void on_comboBoxTX1Att0_activated(int index)
-    { SP1403_R1B->set_att(ns_sp9500x::sp1403_r1b::att_t::TX1_ATT0,index / 2.0); }
+    { SP1403_R1B->set_att(sp1403_r1b::att_t::TX1_ATT0,index / 2.0); }
 
     void on_comboBoxTX0Att1_activated(int index)
-    { SP1403_R1B->set_att(ns_sp9500x::sp1403_r1b::att_t::TX0_ATT1,index / 2.0); }
+    { SP1403_R1B->set_att(sp1403_r1b::att_t::TX0_ATT1,index / 2.0); }
 
     void on_comboBoxTX1Att1_activated(int index)
-    { SP1403_R1B->set_att(ns_sp9500x::sp1403_r1b::att_t::TX1_ATT1,index / 2.0); }
+    { SP1403_R1B->set_att(sp1403_r1b::att_t::TX1_ATT1,index / 2.0); }
 
     void on_comboBoxTX0Att2_activated(int index)
-    { SP1403_R1B->set_att(ns_sp9500x::sp1403_r1b::att_t::TX0_ATT2,index / 2.0); }
+    { SP1403_R1B->set_att(sp1403_r1b::att_t::TX0_ATT2,index / 2.0); }
 
     void on_comboBoxTX1Att2_activated(int index)
-    { SP1403_R1B->set_att(ns_sp9500x::sp1403_r1b::att_t::TX1_ATT2,index / 2.0); }
+    { SP1403_R1B->set_att(sp1403_r1b::att_t::TX1_ATT2,index / 2.0); }
 
     void on_comboBoxTX0Att3_activated(int index)
-    { SP1403_R1B->set_att(ns_sp9500x::sp1403_r1b::att_t::TX0_ATT3,index / 2.0); }
+    { SP1403_R1B->set_att(sp1403_r1b::att_t::TX0_ATT3,index / 2.0); }
 
     void on_comboBoxTX1Att3_activated(int index)
-    { SP1403_R1B->set_att(ns_sp9500x::sp1403_r1b::att_t::TX1_ATT3,index / 2.0); }
+    { SP1403_R1B->set_att(sp1403_r1b::att_t::TX1_ATT3,index / 2.0); }
 
     void on_lineEditTXLMX2594_0_Freq_textEdited(const QString &arg1);
 
@@ -64,58 +62,58 @@ private slots:
     void on_pushButtonTXLMX2594_1_Adv_clicked();
 
     void on_comboBoxTX0Sw1_activated(int index)
-    { SP1403_R1B->set_tx0_sw1(ns_sp1403::r1a::tx_sw1_t::_from_index(index)); }
+    { SP1403_R1B->set_tx0_sw1(sp1403_r1b::tx_sw1_t::_from_index(index)); }
 
     void on_comboBoxTX1Sw1_activated(int index)
-    { SP1403_R1B->set_tx1_sw1(ns_sp1403::r1a::tx_sw1_t::_from_index(index)); }
+    { SP1403_R1B->set_tx1_sw1(sp1403_r1b::tx_sw1_t::_from_index(index)); }
 
     void on_comboBoxTX0Sw2_activated(int index)
-    { SP1403_R1B->set_tx0_sw2(ns_sp1403::r1b::tx_sw2_t::_from_index(index)); }
+    { SP1403_R1B->set_tx0_sw2(sp1403_r1b::tx_sw2_t::_from_index(index)); }
 
     void on_comboBoxTX1Sw2_activated(int index)
-    { SP1403_R1B->set_tx1_sw2(ns_sp1403::r1b::tx_sw2_t::_from_index(index)); }
+    { SP1403_R1B->set_tx1_sw2(sp1403_r1b::tx_sw2_t::_from_index(index)); }
 
     void on_comboBoxTX0Sw3_activated(int index)
-    { SP1403_R1B->set_tx0_sw3(ns_sp1403::r1a::tx_sw3_t::_from_index(index)); }
+    { SP1403_R1B->set_tx0_sw3(sp1403_r1b::tx_sw3_t::_from_index(index)); }
 
     void on_comboBoxTX1Sw3_activated(int index)
-    { SP1403_R1B->set_tx1_sw3(ns_sp1403::r1a::tx_sw3_t::_from_index(index)); }
+    { SP1403_R1B->set_tx1_sw3(sp1403_r1b::tx_sw3_t::_from_index(index)); }
 
     void on_comboBoxTX0Sw4_activated(int index)
-    { SP1403_R1B->set_tx0_sw4(ns_sp1403::r1a::tx_sw4_t::_from_index(index)); }
+    { SP1403_R1B->set_tx0_sw4(sp1403_r1b::tx_sw4_t::_from_index(index)); }
 
     void on_comboBoxTX1Sw4_activated(int index)
-    { SP1403_R1B->set_tx1_sw4(ns_sp1403::r1a::tx_sw4_t::_from_index(index)); }
+    { SP1403_R1B->set_tx1_sw4(sp1403_r1b::tx_sw4_t::_from_index(index)); }
 
     void on_comboBoxTX0Sw5_activated(int index)
-    { SP1403_R1B->set_tx0_sw5(ns_sp1403::r1a::tx0_sw5_t::_from_index(index)); }
+    { SP1403_R1B->set_tx0_sw5(sp1403_r1b::tx0_sw5_t::_from_index(index)); }
 
     void on_comboBoxTX1Sw5_activated(int index)
-    { SP1403_R1B->set_tx1_sw5(ns_sp1403::r1a::tx1_sw5_t::_from_index(index)); }
+    { SP1403_R1B->set_tx1_sw5(sp1403_r1b::tx1_sw5_t::_from_index(index)); }
 
     void on_comboBoxTX0Sw6_activated(int index)
-    { SP1403_R1B->set_tx0_sw6(ns_sp1403::r1a::tx0_sw6_t::_from_index(index)); }
+    { SP1403_R1B->set_tx0_sw6(sp1403_r1b::tx0_sw6_t::_from_index(index)); }
 
     void on_comboBoxTX1Sw6_activated(int index)
-    { SP1403_R1B->set_tx1_sw6(ns_sp1403::r1a::tx1_sw6_t::_from_index(index)); }
+    { SP1403_R1B->set_tx1_sw6(sp1403_r1b::tx1_sw6_t::_from_index(index)); }
 
     void on_comboBoxTX0Sw7_activated(int index)
-    { SP1403_R1B->set_tx0_sw7(ns_sp1403::r1a::tx0_sw7_t::_from_index(index)); }
+    { SP1403_R1B->set_tx0_sw7(sp1403_r1b::tx0_sw7_t::_from_index(index)); }
 
     void on_comboBoxTX0Sw8_activated(int index)
-    { SP1403_R1B->set_tx0_sw8(ns_sp1403::r1a::tx0_sw8_t::_from_index(index)); }
+    { SP1403_R1B->set_tx0_sw8(sp1403_r1b::tx0_sw8_t::_from_index(index)); }
 
     void on_comboBoxTX0Sw9_activated(int index)
-    { SP1403_R1B->set_tx0_sw9(ns_sp1403::r1a::tx0_sw9_t::_from_index(index)); }
+    { SP1403_R1B->set_tx0_sw9(sp1403_r1b::tx0_sw9_t::_from_index(index)); }
 
     void on_comboBoxTX0Sw10_activated(int index)
-    { SP1403_R1B->set_tx0_sw10(ns_sp1403::r1a::tx0_sw10_t::_from_index(index)); }
+    { SP1403_R1B->set_tx0_sw10(sp1403_r1b::tx0_sw10_t::_from_index(index)); }
 
     void on_comboBoxTX0Sw11_activated(int index)
-    { SP1403_R1B->set_tx0_sw11(ns_sp1403::r1a::tx0_sw11_t::_from_index(index)); }
+    { SP1403_R1B->set_tx0_sw11(sp1403_r1b::tx0_sw11_t::_from_index(index)); }
 
     void on_comboBoxTX0Sw12_activated(int index)
-    { SP1403_R1B->set_tx0_sw12(ns_sp1403::r1a::tx0_sw12_t::_from_index(index)); }
+    { SP1403_R1B->set_tx0_sw12(sp1403_r1b::tx0_sw12_t::_from_index(index)); }
 
     void on_lineEditRXFreq_textEdited(const QString &arg1);
 
@@ -159,7 +157,5 @@ private:
     Q_LMX2594_Dlg *dlg_TX_LMX2594_1;
     Q_LMX2594_Dlg *dlg_RX_LMX2594_0;
 };
-
-} // namespace NS_SP9500X
 
 #endif // Q_SP1403_R1A_WIDGET_H

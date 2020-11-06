@@ -3,9 +3,8 @@
 #include "algo_math.hpp"
 #include "spec.h"
 
-using namespace rd;
-using namespace rd::ns_sp9500;
-using namespace rd::ns_sp1401;
+using namespace ns_sp9500;
+using namespace ns_sp1401;
 
 void QCalR1CTXLOLeakThread::run()
 {
