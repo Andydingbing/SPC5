@@ -1,8 +1,5 @@
 #include "q_cal_tx_filter_offset_tabwidget.h"
 #include <QHBoxLayout>
-#include "q_plot.hpp"
-#include "qwt_plot_curve.h"
-#include "q_rdt_tableview.h"
 #include "q_winthread.h"
 
 using namespace ns_sp1401;
@@ -12,7 +9,7 @@ QCalTXFilterOffsetWidget::QCalTXFilterOffsetWidget(QWidget *parent) :
 {
     model = nullptr;
 
-    plot = new QCalPlot(this);
+    plot = new Q_RDDT_CalPlot(this);
     plot->init(tx_freq_star/1000000.0,tx_freq_stop/1000000.0,-1.0,1.0);
     QwtText textTitle = plot->title();
     textTitle.setText(tr("Filter Offset Curve(X:Freq(MHz) Y:Offset(dB))"));
@@ -20,7 +17,7 @@ QCalTXFilterOffsetWidget::QCalTXFilterOffsetWidget(QWidget *parent) :
     plot->setTitle(textTitle);
     plot->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
-    tableView = new QRDTTableView(this);
+    tableView = new Q_RDDT_TableView(this);
     tableView->setColumnWidth(0,80);
     tableView->setColumnWidth(1,70);
     tableView->setColumnWidth(2,100);
@@ -98,5 +95,5 @@ void QCalTXFilterOffsetTabWidget::resetShowWidget(CalParam *param)
 {
     quint32 pts = parseRangeFreqStringFrom<quint64>(param);
     quint32 sec = set_helper::sections(param->rfFreqStar.toStdString());
-    widget_80->resetShowWidget(pts, sec);
+    widget_80->resetShowWidget(pts,sec);
 }

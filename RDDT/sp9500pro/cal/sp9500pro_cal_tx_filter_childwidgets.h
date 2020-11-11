@@ -1,12 +1,12 @@
 #ifndef SP9500PRO_CAL_TX_FILTER_CHILDWIDGETS_H
 #define SP9500PRO_CAL_TX_FILTER_CHILDWIDGETS_H
 
+#include "rddt_plot.hpp"
+#include "rddt_tableview.hpp"
 #include "q_model_tx_filter.h"
 
 class QWidget;
-class QCalPlot;
 class QwtPlotCurve;
-class QRDTTableView;
 
 namespace NS_SP9500Pro {
 
@@ -58,8 +58,8 @@ public:
     QWidget *_parent;
 
     // The 2(RF & IF) plots.
-    QCalPlot *plotRF;
-    QCalPlot *plotIF;
+    Q_RDDT_CalPlot *plotRF;
+    Q_RDDT_CalPlot *plotIF;
 
     // The curves in particular plot.
     QwtPlotCurve *curveRF_FR_0;
@@ -72,8 +72,8 @@ public:
     Qwt_TX_IF_FR_Data *dataIF_FR;
 
     // The filter coef View/Model.
-    QRDTTableView *tableView_80;
-    QRDTTableView *tableView_160;
+    Q_RDDT_TableView *tableView_80;
+    Q_RDDT_TableView *tableView_160;
     Q_TXFilter_Model *model_80;
     Q_TXFilter_Model *model_160;
 

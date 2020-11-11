@@ -4,7 +4,6 @@
 #include "dt3308_iq_cap_config_widget.h"
 #include "sp9500x_iq_cap_config_widget.h"
 #include "signal_analyzer_freq_widget.h"
-#include "qwt_plot_curve.h"
 #include "qwt_plot_canvas.h"
 #include "qwt_plot_grid.h"
 #include "qwt_plot_picker.h"

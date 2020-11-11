@@ -1,12 +1,12 @@
 #ifndef Q_CAL_RX_FILTER_TABWIDGET_H
 #define Q_CAL_RX_FILTER_TABWIDGET_H
 
+#include "rddt_plot.hpp"
+#include "rddt_tableview.hpp"
 #include "q_model_rx_filter.h"
 #include <QTabWidget>
 
-class QCalPlot;
 class QwtPlotCurve;
-class QRDTTableView;
 
 class QCalR1CRXFilterTabWidget : public QTabWidget
 {
@@ -17,8 +17,8 @@ public:
 
 public:
     // The 2(RF & IF) plots.
-    QCalPlot *plotRF;
-    QCalPlot *plotIF;
+    Q_RDDT_CalPlot *plotRF;
+    Q_RDDT_CalPlot *plotIF;
 
     // The curves in particular plot.
     QwtPlotCurve *curveRfFr;
@@ -29,8 +29,8 @@ public:
     Qwt_RX_IF_FR_Data *dataIF_FR;
 
     // The filter coef View/Model.
-    QRDTTableView *tableView_80;
-    QRDTTableView *tableView_160;
+    Q_RDDT_TableView *tableView_80;
+    Q_RDDT_TableView *tableView_160;
     QRXFilterModel_80M *model_80;
     QRXFilterModel_160M *model_160;
 };

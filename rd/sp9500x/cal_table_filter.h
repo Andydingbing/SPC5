@@ -32,7 +32,7 @@ public:
     typedef data_f_fr data_f_t;
     typedef data_m_fr data_m_t;
 
-    void map_from(void *data,uint32_t pts) {}
+    void map_from(void *data,uint32_t pts);
 };
 
 class tx_filter_table_t : public cal_table_data<data_f_tx_filter,data_m_tx_filter>

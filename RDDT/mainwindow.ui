@@ -101,7 +101,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QRDTTableView" name="msgTableView">
+       <widget class="Q_RDDT_TableView" name="msgTableView">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
           <horstretch>1</horstretch>
@@ -111,7 +111,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QRDTTableView" name="regTableView">
+       <widget class="Q_RDDT_TableView" name="regTableView">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
           <horstretch>0</horstretch>
@@ -145,9 +145,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>QRDTTableView</class>
+   <class>Q_RDDT_TableView</class>
    <extends>QTableView</extends>
-   <header>q_rdt_tableview.h</header>
+   <header location="global">rddt_tableview.hpp</header>
   </customwidget>
  </customwidgets>
  <resources/>

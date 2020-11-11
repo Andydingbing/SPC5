@@ -1,10 +1,7 @@
 #include "sp9500pro_cal_tx_filter_childwidgets.h"
 #include "global.h"
 #include "q_base_model.h"
-#include "q_plot.hpp"
-#include "q_rdt_tableview.h"
-#include "qwt_plot_curve.h"
-#include "sp9500pro_cal_widget.h"
+#include "cal_widget.h"
 #include <QVBoxLayout>
 #include "utilities.hpp"
 
@@ -73,12 +70,12 @@ Cal_TXFilter_ChildWidgets::Cal_TXFilter_ChildWidgets(QWidget *parent)
 
     QWidget *plotWidget = new QWidget;
 
-    plotRF = new QCalPlot(plotWidget);
+    plotRF = new Q_RDDT_CalPlot(plotWidget);
     plotRF->init(tx_freq_star/1e6,tx_freq_stop/1e6,-20.0,10.0);
     plotRF->setTitle("RF Freq Response(dBm/MHz)");
     plotRF->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
-    plotIF = new QCalPlot(plotWidget);
+    plotIF = new Q_RDDT_CalPlot(plotWidget);
 //    plotIF->init(-/1e6,dl_filter_160M_freq_stop/1e6,-20.0,4.0);
     plotIF->setTitle("IF Freq Response(@RF 2GHz)(dBm/MHz)");
     plotIF->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
@@ -116,10 +113,10 @@ Cal_TXFilter_ChildWidgets::Cal_TXFilter_ChildWidgets(QWidget *parent)
     model_80  = new Q_TXFilter_Model;
     model_160 = new Q_TXFilter_Model;
 
-    tableView_80 = new QRDTTableView(p->ui->tabWidget);
+    tableView_80  = new Q_RDDT_TableView(p->ui->tabWidget);
     tableView_80->setModel(model_80);
 
-    tableView_160 = new QRDTTableView(p->ui->tabWidget);
+    tableView_160 = new Q_RDDT_TableView(p->ui->tabWidget);
     tableView_160->setModel(model_160);
 
     p->ui->tabWidget->clear();

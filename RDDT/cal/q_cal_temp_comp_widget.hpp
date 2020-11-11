@@ -1,13 +1,12 @@
 #ifndef Q_CAL_TEMP_COMP_WIDGET_HPP
 #define Q_CAL_TEMP_COMP_WIDGET_HPP
 
-#include <QWidget>
+#include "rddt_plot.hpp"
 
 struct CalParam;
 class QwtTXTempPropertyData;
 class QwtTempCompData;
 class QwtPlotCurve;
-class QCalPlot;
 class QLineEdit;
 
 typedef class QCalTxTempCompWidget : public QWidget
@@ -19,14 +18,14 @@ public:
     void updateCoef();
     QwtTXTempPropertyData *dataProperty() { return _dataProperty; }
     QwtTempCompData *dataComp() { return _dataComp; }
-    QCalPlot *plot() { return _plot; }
+    Q_RDDT_CalPlot *plot() { return _plot; }
 
 private:
     QwtTXTempPropertyData *_dataProperty;
     QwtTempCompData *_dataComp;
     QwtPlotCurve *_curveProperty;
     QwtPlotCurve *_curveComp;
-    QCalPlot *_plot;
+    Q_RDDT_CalPlot *_plot;
     QLineEdit *_lineEditPolynomail;
 } QCalRXTempCompWidget;
 

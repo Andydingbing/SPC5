@@ -1,8 +1,7 @@
 #ifndef Q_TEST_FREQ_RES_WIDGET_H
 #define Q_TEST_FREQ_RES_WIDGET_H
 
-#include <QWidget>
-#include "q_plot.hpp"
+#include "rddt_plot.hpp"
 #include "q_model_freq_res.h"
 #include "q_model_temp_pwr.hpp"
 
@@ -12,7 +11,7 @@ class QwtPlotCurve;
 class QTestFreqResWidget : public QWidget
 {
 public:
-    explicit QTestFreqResWidget(QWidget *parent = nullptr);
+    QTestFreqResWidget(QWidget *parent = nullptr);
     void resetShowWidget(TestBaseParam *param);
 
 public:
@@ -24,21 +23,21 @@ public:
     QwtPlotCurve *curveIF_TX;
     QwtPlotCurve *curveRF_RX;
     QwtPlotCurve *curveIF_RX;
-    QTestPlot *plotRF;
-    QTestPlot *plotIF;
+    Q_RDDT_TestPlot *plotRF;
+    Q_RDDT_TestPlot *plotIF;
 };
 
 
 class QTestTempPwrWidget :public QWidget
 {
 public:
-    explicit QTestTempPwrWidget(QWidget *parent = nullptr);
+    QTestTempPwrWidget(QWidget *parent = nullptr);
     void resetShowWidget(TestBaseParam *param);
 
 public:
     QVector<QwtTempPwrData *> data;
     QVector<QwtPlotCurve *> curve;
-    QTestPlot *plot;
+    Q_RDDT_TestPlot *plot;
 };
 
 #endif // Q_TEST_FREQ_RES_WIDGET_H

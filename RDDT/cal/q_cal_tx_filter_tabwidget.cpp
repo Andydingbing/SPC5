@@ -1,7 +1,4 @@
 #include "q_cal_tx_filter_tabwidget.h"
-#include "q_plot.hpp"
-#include "q_rdt_tableview.h"
-#include "qwt_plot_curve.h"
 #include <QVBoxLayout>
 
 using namespace rd::ns_sp1401;
@@ -14,7 +11,7 @@ QCalR1CTXFilterTabWidget::QCalR1CTXFilterTabWidget(QWidget *parent) :
 {
     QWidget *plotWidget = new QWidget;
 
-    plotRF = new QCalPlot(plotWidget);
+    plotRF = new Q_RDDT_CalPlot(plotWidget);
     plotRF->init(tx_filter_freq_star_0/1e6,tx_filter_freq_stop_1/1e6,-20.0,10.0);
     QwtText titleplotRF = plotRF->title();
     titleplotRF.setText(tr("RF Freq Response Curve(X:Freq(MHz) Y:Power(dBm))"));
@@ -22,7 +19,7 @@ QCalR1CTXFilterTabWidget::QCalR1CTXFilterTabWidget(QWidget *parent) :
     plotRF->setTitle(titleplotRF);
     plotRF->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
-    plotIF = new QCalPlot(plotWidget);
+    plotIF = new Q_RDDT_CalPlot(plotWidget);
     plotIF->init(dl_filter_160M_freq_star/1e6,dl_filter_160M_freq_stop/1e6,-20.0,4.0);
     QwtText titleplotIF = plotIF->title();
     titleplotIF.setText(tr("IF Freq Response(@RF 2GHz) Curve(X:Freq(MHz) Y:Power(dBm))"));
@@ -58,8 +55,8 @@ QCalR1CTXFilterTabWidget::QCalR1CTXFilterTabWidget(QWidget *parent) :
     curveIF_FR->attach(plotIF);
     curveIF_FR->setSamples(dataIF_FR);
 
-    tableView_80 = new QRDTTableView(this);
-    tableView_160 = new QRDTTableView(this);
+    tableView_80  = new Q_RDDT_TableView(this);
+    tableView_160 = new Q_RDDT_TableView(this);
 
     clear();
     addTab(plotWidget,QString("Freq Response"));

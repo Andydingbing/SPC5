@@ -15,7 +15,7 @@ typedef int32_t (ns_sp9500x::sp1403_r1a::*fp_get_lo_reg)(const uint8_t addr,uint
 ns_sp9500x::sp1403_r1a::sp1403_r1a(uint32_t rf_idx,uint32_t rfu_idx) :
     rd::sp1403(rf_idx,rfu_idx),
     rd::sp1403_r1a(rf_idx,rfu_idx),
-    ns_sp9500x::sp1403(rf_idx,rfu_idx)
+    ns_sp9500x::sp1403(/*rf_idx,rfu_idx*/)
 {
     _ad908x.set_reg = boost::bind(&sp1403_r1a::set_ad998x_reg,this,_1,_2);
     _ad908x.get_reg = boost::bind(&sp1403_r1a::get_ad998x_reg,this,_1,_2);
@@ -52,7 +52,7 @@ bool ns_sp9500x::sp1403_r1a::is_connected()
 
 int32_t ns_sp9500x::sp1403_r1a::open_board()
 {
-    INT_CHECK(rd::sp1403::open_board());
+    INT_CHECK(ns_sp9500x::sp1403::open_board());
     INT_CHECK(init_lo(TX_LMX2594_0));
     INT_CHECK(init_lo(TX_LMX2594_1));
     INT_CHECK(init_lo(RX_LMX2594_0));

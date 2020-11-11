@@ -41,7 +41,7 @@ enum lo_t {
 
 } // namespace sp1403
 
-class RD_API sp1403 : /*virtual*/ public frontend
+class RD_API sp1403 : public frontend
 {
 public:
     typedef boost::shared_ptr<sp1403> sptr;

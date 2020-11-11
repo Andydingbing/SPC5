@@ -1,10 +1,7 @@
 #include "q_cal_tx_pwr_widget.h"
 #include "q_cal_dlg.h"
 #include "q_model_tx_pwr.h"
-#include "q_plot.hpp"
-#include "q_rdt_tableview.h"
 #include "q_winthread.h"
-#include "qwt_plot_curve.h"
 #include "freq_string.hpp"
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -19,8 +16,8 @@ QCalR1CTXPwrWidget::QCalR1CTXPwrWidget(QWidget *parent) :
     QVBoxLayout *layout = new QVBoxLayout(this);
     QHBoxLayout *tableViewLayout = new QHBoxLayout();
 
-    tableViewOP = new QRDTTableView(this);
-    tableViewIO = new QRDTTableView(this);
+    tableViewOP = new Q_RDDT_TableView(this);
+    tableViewIO = new Q_RDDT_TableView(this);
 
     tableViewLayout->addWidget(tableViewOP);
     tableViewLayout->addWidget(tableViewIO);
@@ -29,7 +26,7 @@ QCalR1CTXPwrWidget::QCalR1CTXPwrWidget(QWidget *parent) :
 
     layout->addLayout(tableViewLayout);
 
-    plotDGain = new QCalPlot(this);
+    plotDGain = new Q_RDDT_CalPlot(this);
     plotDGain->init(tx_freq_star / 1e6,tx_freq_stop / 1e6,R1C_DGAIN_MIN + 2.0,R1C_DGAIN_MAX - 5.0);
     QwtText titleplotDGain = plotDGain->title();
     titleplotDGain.setText(tr("Base Power's Digital Gain Curve(X:Freq(MHz) Y:Digital Gain(dB))"));

@@ -3,8 +3,7 @@
 #include <QAbstractItemModel>
 #include "q_attach_thread_dlg.hpp"
 #include "q_r1c_temp_ctrl_model.h"
-#include "q_plot.hpp"
-#include "qwt_plot_curve.h"
+#include "rddt_plot.hpp"
 #include "qwt_legend.h"
 #include "qwt_plot_legenditem.h"
 #include "q_r1c_temp_ctrl_model.h"

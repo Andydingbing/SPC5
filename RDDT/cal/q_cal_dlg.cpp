@@ -1,5 +1,4 @@
 #include "q_cal_dlg.h"
-#include "q_plot.hpp"
 #include "q_model_tx_loleak.h"
 #include "q_model_tx_sb.h"
 #include "q_model_tx_pwr.h"
@@ -724,8 +723,7 @@ void QCalR1CRXRefDlg::update(const QModelIndex &tl,const QModelIndex &br,cal_fil
     if (cal_file::RX_REF_OP == item) {
         ui->widgetData->tableViewOP->selectRow(tl.row());
         ui->widgetData->plotDGain->replot();
-    }
-    else {
+    } else {
         ui->widgetData->tableViewIO->selectRow(tl.row());
         ui->widgetData->plotDGain->replot();
     }

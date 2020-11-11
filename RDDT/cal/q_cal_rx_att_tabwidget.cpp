@@ -1,9 +1,6 @@
 #include "q_cal_rx_att_tabwidget.h"
-#include "q_plot.hpp"
-#include "q_rdt_tableview.h"
 #include "q_model_rx_att.h"
 #include "q_winthread.h"
-#include "qwt_plot_curve.h"
 #include "freq_string.hpp"
 #include <QHBoxLayout>
 
@@ -17,8 +14,8 @@ QCalR1CRXAttTabWidget::QCalR1CRXAttTabWidget(QWidget *parent) :
     QWidget *plotWidget = new QWidget;
     QWidget *sheetWidget = new QWidget;
 
-    plotOP = new QCalPlot(plotWidget);
-    plotIO = new QCalPlot(plotWidget);
+    plotOP = new Q_RDDT_CalPlot(plotWidget);
+    plotIO = new Q_RDDT_CalPlot(plotWidget);
     plotOP->init(rx_freq_star/1000000.0,rx_freq_stop/1000000.0,-2.0,1.5);
     plotIO->init(rx_freq_star/1000000.0,rx_freq_stop/1000000.0,-2.0,1.5);
     QwtText titlePlotOP = plotOP->title();
@@ -38,8 +35,8 @@ QCalR1CRXAttTabWidget::QCalR1CRXAttTabWidget(QWidget *parent) :
     plotLayout->setStretch(0,1);
     plotLayout->setStretch(1,1);
 
-    tableViewOP = new QRDTTableView(this);
-    tableViewIO = new QRDTTableView(this);
+    tableViewOP = new Q_RDDT_TableView(this);
+    tableViewIO = new Q_RDDT_TableView(this);
     QHBoxLayout *sheetLayout = new QHBoxLayout(sheetWidget);
     sheetLayout->addWidget(tableViewOP);
     sheetLayout->addWidget(tableViewIO);

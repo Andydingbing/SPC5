@@ -1,7 +1,5 @@
 #include "q_cal_temp_comp_widget.hpp"
-#include "qwt_plot_curve.h"
 #include "q_model_temp_pwr.hpp"
-#include "q_plot.hpp"
 #include <QLineEdit>
 #include <algo_fit.hpp>
 
@@ -13,7 +11,7 @@ QCalTxTempCompWidget::QCalTxTempCompWidget(QWidget *parent) :
     _curveComp(nullptr)
 {
     _lineEditPolynomail = new QLineEdit(this);
-    _plot = new QCalPlot(this);
+    _plot = new Q_RDDT_CalPlot(this);
     _plot->init<float,double>(sp1401::temperature_min(),
                               sp1401::temperature_max(),
                               -40.0,-10.0);

@@ -5,12 +5,13 @@
 #include "cal_table_tx_lol.h"
 #include "cal_table_filter.h"
 
-namespace rd { namespace ns_sp9500x {
+namespace rd {
+namespace ns_sp9500x {
 
 class cal_file : public basic_cal_file<cal_table_t>
 {
 public:
-    cal_file(const std::string &path) : basic_cal_file<cal_table_t>(path) {}
+    cal_file() : basic_cal_file<cal_table_t>(path()) {}
     virtual ~cal_file() {}
 
     int32_t open()
@@ -25,6 +26,8 @@ public:
         make_sure_has(cal_table_t::TX_Filter,&_tx_filter);
         return 0;
     }
+
+    std::string path() const;
 
     tx_filter_table_t *tx_filter_table() { return &_tx_filter; }
 

@@ -1,13 +1,12 @@
 #ifndef Q_CAL_RX_REF_WIDGET_H
 #define Q_CAL_RX_REF_WIDGET_H
 
-#include <QWidget>
+#include "rddt_plot.hpp"
+#include "rddt_tableview.hpp"
 
 struct CalParam;
 
-class QCalPlot;
 class QwtPlotCurve;
-class QRDTTableView;
 class QR1CRXRefModel;
 
 class QCalR1CRXRefWidget : public QWidget
@@ -25,13 +24,13 @@ private:
                     QColor color);
 
 public:
-    QCalPlot *plotDGain;
+    Q_RDDT_CalPlot *plotDGain;
 
     QVector<QwtPlotCurve *> *curveOP;
     QVector<QwtPlotCurve *> *curveIO;
 
-    QRDTTableView *tableViewOP;
-    QRDTTableView *tableViewIO;
+    Q_RDDT_TableView *tableViewOP;
+    Q_RDDT_TableView *tableViewIO;
     QR1CRXRefModel *modelOP;
     QR1CRXRefModel *modelIO;
 };

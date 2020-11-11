@@ -2,7 +2,6 @@
 #include "q_test_freq_res_widget.h"
 #include "q_test_freq_res_thread.h"
 #include "q_model_temp_pwr.hpp"
-#include "qwt_plot_curve.h"
 #include "global.h"
 #include <QVBoxLayout>
 
@@ -13,7 +12,7 @@ using namespace std;
 QTestFreqResWidget::QTestFreqResWidget(QWidget *parent) :
     QWidget(parent)
 {
-    plotRF = new QTestPlot(this);
+    plotRF = new Q_RDDT_TestPlot(this);
     plotRF->init(tx_freq_star / 1e6,tx_freq_stop / 1e6, -15.0,5.0);
 
     QwtText title = plotRF->title();
@@ -21,7 +20,7 @@ QTestFreqResWidget::QTestFreqResWidget(QWidget *parent) :
     plotRF->setTitle(title);
     plotRF->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
 
-    plotIF = new QTestPlot(this);
+    plotIF = new Q_RDDT_TestPlot(this);
     plotIF->init(dl_filter_160M_freq_star/1e6,dl_filter_160M_freq_stop/1e6,-15.0,5.0);
     title = plotIF->title();
     title.setText(tr("IF T/RX Freq Response(X:Freq(MHz) Y:Power(dBm))"));
@@ -92,7 +91,7 @@ void QTestFreqResWidget::resetShowWidget(TestBaseParam *param)
 QTestTempPwrWidget::QTestTempPwrWidget(QWidget *parent) :
     QWidget(parent)
 {
-    plot = new QTestPlot(this);
+    plot = new Q_RDDT_TestPlot(this);
     plot->init(double(g_temp_star),double(g_temp_stop), -95.0,20.0);
 
     QwtText title = plot->title();

@@ -1,9 +1,6 @@
 #include "q_cal_rx_ref_widget.h"
 #include "q_model_rx_ref.h"
-#include "q_plot.hpp"
-#include "q_rdt_tableview.h"
 #include "q_winthread.h"
-#include "qwt_plot_curve.h"
 #include "freq_string.hpp"
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -18,8 +15,8 @@ QCalR1CRXRefWidget::QCalR1CRXRefWidget(QWidget *parent) :
     QVBoxLayout *layout = new QVBoxLayout(this);
     QHBoxLayout *tableViewLayout = new QHBoxLayout();
 
-    tableViewOP = new QRDTTableView(this);
-    tableViewIO = new QRDTTableView(this);
+    tableViewOP = new Q_RDDT_TableView(this);
+    tableViewIO = new Q_RDDT_TableView(this);
 
     tableViewLayout->addWidget(tableViewOP);
     tableViewLayout->addWidget(tableViewIO);
@@ -28,7 +25,7 @@ QCalR1CRXRefWidget::QCalR1CRXRefWidget(QWidget *parent) :
 
     layout->addLayout(tableViewLayout);
 
-    plotDGain = new QCalPlot(this);
+    plotDGain = new Q_RDDT_CalPlot(this);
     plotDGain->init(rx_freq_star / 1e6,rx_freq_stop / 1e6,-1.0,2.2);
     QwtText titleplotDGain = plotDGain->title();
     titleplotDGain.setText(tr("Ref's Digital Gain Curve(X:Freq(MHz) Y:Digital Gain(dB))"));

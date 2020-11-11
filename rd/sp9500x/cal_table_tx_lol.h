@@ -3,7 +3,8 @@
 
 #include "cal_table.hpp"
 
-namespace rd { namespace ns_sp9500x {
+namespace rd {
+namespace ns_sp9500x {
 
 struct data_f_tx_sb : cal_table::basic_data_f_t
 {

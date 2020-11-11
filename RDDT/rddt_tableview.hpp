@@ -1,15 +1,13 @@
-#ifndef Q_RDT_TABLE_VIEW_H
-#define Q_RDT_TABLE_VIEW_H
+#ifndef Q_RDDT_TABLEVIEW_HPP
+#define Q_RDDT_TABLEVIEW_HPP
 
 #include <QHeaderView>
 #include <QTableView>
 
-class QRDTTableView : public QTableView
+class Q_RDDT_TableView : public QTableView
 {
-    Q_OBJECT
-
 public:
-    explicit QRDTTableView(QWidget *parent = nullptr) :
+    Q_RDDT_TableView(QWidget *parent = nullptr) :
         QTableView(parent)
     {
         horizontalHeader()->setHighlightSections(false);
@@ -20,15 +18,6 @@ public:
         setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
         setStyleSheet("QTableView{selection-background-color:rgb(0,162,232);selection-color:white}");
     }
-
-//protected:
-//    void resizeEvent(QResizeEvent *event)
-//    {
-//        if (event->type() == QEvent::Resize)
-//            scrollToBottom();
-
-//        QWidget::resizeEvent(event);
-//    }
 };
 
-#endif // Q_RDT_TABLE_VIEW_H
+#endif // Q_RDDT_TABLEVIEW_HPP

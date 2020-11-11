@@ -158,7 +158,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QRDTTableView" name="tableViewAtt">
+        <widget class="Q_RDDT_TableView" name="tableViewAtt">
          <attribute name="horizontalHeaderHighlightSections">
           <bool>false</bool>
          </attribute>
@@ -181,9 +181,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QRDTTableView</class>
+   <class>Q_RDDT_TableView</class>
    <extends>QTableView</extends>
-   <header location="global">q_rdt_tableview.h</header>
+   <header location="global">rddt_tableview.hpp</header>
   </customwidget>
  </customwidgets>
  <resources/>

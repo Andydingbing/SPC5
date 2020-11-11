@@ -4,7 +4,7 @@
 #include <QStyle>
 #include "algo_chip_pll.inl.hpp"
 
-#include "q_plot.inline.hpp"
+#include "rddt_plot.inline.hpp"
 
 void addMsgListCallback() {g_MainW->addMsgListCallback();}
 void addRegListCallback() {g_MainW->addRegListCallback();}
@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
     Log.init(addMsgListCallback, addRegListCallback);
     g_MainW = new MainWindow;
-    g_MainW->setWindowTitle(QString("RF_Driver_Debug_Tool"));
+    g_MainW->setWindowTitle(QString("RDDT"));
     g_MainW->setWindowState(Qt::WindowMaximized);
     g_MainW->show();
 

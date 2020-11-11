@@ -104,9 +104,7 @@ void Q_FPGA_Widget::on_pushButtonSetPathRFU_V9_clicked()
 
 void Q_FPGA_Widget::on_pushButtonProgramRFU_V9_clicked()
 {
-    while (1) {
-        SP2406->program(sp2406::RFU,ui->lineEditPathRFU_V9->toPlainText().toStdString().c_str());
-    }
+    SP2406->program(sp2406::RFU,ui->lineEditPathRFU_V9->toPlainText().toStdString().c_str());
 }
 
 void Q_FPGA_Widget::on_pushButtonSetPathBBU_V9_clicked()
@@ -119,11 +117,7 @@ void Q_FPGA_Widget::on_pushButtonSetPathBBU_V9_clicked()
 
 void Q_FPGA_Widget::on_pushButtonProgramBBU_V9_clicked()
 {
-    while (1) {
-        if (SP2406->program(sp2406::BBU,ui->lineEditPathBBU_V9->toPlainText().toStdString().c_str())) {
-            return;
-        }
-    }
+    SP2406->program(sp2406::BBU,ui->lineEditPathBBU_V9->toPlainText().toStdString().c_str());
 }
 
 void NS_SP9500X::Q_FPGA_Widget::on_pushButtonWriteAD998X_clicked()

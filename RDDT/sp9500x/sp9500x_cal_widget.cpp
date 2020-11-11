@@ -1,10 +1,10 @@
 #include "cal_widget.h"
-#include "sp9500pro_cal_tx_filter_childwidgets.h"
+#include "sp9500x_cal_tx_filter_childwidgets.h"
 #include "spec.h"
 
 using namespace ns_sp1403;
 using namespace ns_sp9500x;
-using namespace NS_SP9500Pro;
+using namespace NS_SP9500X;
 
 void Q_Cal_TXFilter_Widget::init()
 {

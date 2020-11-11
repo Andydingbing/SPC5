@@ -475,7 +475,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QRDTTableView" name="tableViewData"/>
+      <widget class="Q_RDDT_TableView" name="tableViewData"/>
      </item>
     </layout>
    </item>
@@ -483,9 +483,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QRDTTableView</class>
+   <class>Q_RDDT_TableView</class>
    <extends>QTableView</extends>
-   <header>q_rdt_tableview.h</header>
+   <header location="global">rddt_tableview.hpp</header>
   </customwidget>
  </customwidgets>
  <resources/>

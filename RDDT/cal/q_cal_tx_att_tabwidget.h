@@ -1,13 +1,12 @@
 #ifndef Q_CAL_TX_ATT_TABWIDGET_H
 #define Q_CAL_TX_ATT_TABWIDGET_H
 
-#include <QTabWidget>
+#include "rddt_plot.hpp"
+#include "rddt_tableview.hpp"
 
 struct CalParam;
 
-class QCalPlot;
 class QwtPlotCurve;
-class QRDTTableView;
 class QR1CTXAttOPModel;
 class QR1CTXAttIOModel;
 
@@ -19,12 +18,12 @@ public:
     void resetShowWidget(CalParam *param);
 
 public:
-    QCalPlot *plotOP;
-    QCalPlot *plotIO;
+    Q_RDDT_CalPlot *plotOP;
+    Q_RDDT_CalPlot *plotIO;
     QVector<QwtPlotCurve *> *curveOP;
     QVector<QwtPlotCurve *> *curveIO;
-    QRDTTableView *tableViewOP;
-    QRDTTableView *tableViewIO;
+    Q_RDDT_TableView *tableViewOP;
+    Q_RDDT_TableView *tableViewIO;
     QR1CTXAttOPModel *modelOP;
     QR1CTXAttIOModel *modelIO;
 };

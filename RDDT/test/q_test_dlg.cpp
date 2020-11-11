@@ -1,7 +1,6 @@
 #include "q_test_dlg.h"
-#include "q_rdt_tableview.h"
 #include "q_test_freq_res_widget.h"
-#include "q_plot.hpp"
+#include "rddt_plot.hpp"
 
 using namespace ns_sp1401;
 

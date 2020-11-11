@@ -38,6 +38,7 @@ unix  { LIBS += -lrsnrpz -lfftw3 -lqwt}
 
 HEADERS += \
 global.h \
+cal_widget.h \
 cal/q_cal_dlg.h \
 cal/q_model_filter_offset.h \
 cal/q_model_tx_filter.h \
@@ -123,7 +124,6 @@ q_device_init_thread.h \
 q_iq_cap_thread.h \
 q_r1c_temp_ctrl_model.h \
 q_r1c_temp_ctrl_thread.h \
-q_rdt_tableview.h \
 q_temp_ctrl_dlg.h \
 q_winthread.h \
 cal/q_cal_tx_filter_tabwidget.h \
@@ -217,7 +217,8 @@ sp9500x/sp9500x_child_widget_helper.hpp \
 sp9500x/sp9500x_arb_config_widget.h \
 sp9500x/sp9500x_iq_cap_config_widget.h \
 sp9500x/sp9500x_fpga_widget.h \
-sp9500x/sp9500x_fan_dlg.h
+sp9500x/sp9500x_fan_dlg.h \
+sp9500x/sp9500x_cal_tx_filter_thread.h
 
 SOURCES += \
 sp9500x/sp1403_r1a_widget.cpp \
@@ -227,7 +228,9 @@ sp9500x/sp9500x_sp2406_widget.cpp \
 sp9500x/sp9500x_arb_config_widget.cpp \
 sp9500x/sp9500x_iq_cap_config_widget.cpp \
 sp9500x/sp9500x_fpga_widget.cpp \
-sp9500x/sp9500x_fan_dlg.cpp
+sp9500x/sp9500x_fan_dlg.cpp \
+sp9500x/sp9500x_cal_widget.cpp \
+sp9500x/sp9500x_cal_tx_filter_thread.cpp
 
 FORMS += \
 sp9500x/sp9500x_rrh.ui \
@@ -241,7 +244,6 @@ sp9500pro/cal
 
 HEADERS += \
 sp9500pro/sp9500pro_child_widget_helper.hpp \
-sp9500pro/cal/sp9500pro_cal_widget.h \
 sp9500pro/cal/sp9500pro_cal_tx_filter_thread.h \
 sp9500pro/cal/sp9500pro_cal_tx_filter_childwidgets.h
 

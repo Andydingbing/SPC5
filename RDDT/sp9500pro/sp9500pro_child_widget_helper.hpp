@@ -10,7 +10,7 @@
 #include "signal_analyzer_widget.h"
 #include "sp9500x_fpga_widget.h"
 #include "sp9500x_fan_dlg.h"
-#include "sp9500pro_cal_widget.h"
+#include "cal_widget.h"
 #include "q_test_dlg.h"
 
 namespace NS_SP9500Pro {

@@ -2,16 +2,15 @@
 #define Q_CAL_TX_FILTER_OFFSET_TABWIDGET_H
 
 #include "q_model_filter_offset.h"
+#include "rddt_plot.hpp"
+#include "rddt_tableview.hpp"
 #include <QTabWidget>
 
 struct CalParam;
-class QCalPlot;
 class QwtPlotCurve;
-class QRDTTableView;
 
 class QCalTXFilterOffsetWidget : public QWidget
 {
-    Q_OBJECT
     friend class QCalTXFilterOffsetTabWidget;
     friend class QCalR1CTXFilterOffsetDlg;
 
@@ -21,16 +20,15 @@ public:
     void resetShowWidget(qint32 pts, qint32 sec);
 
 private:
-    QCalPlot *plot;
+    Q_RDDT_CalPlot *plot;
     QVector<QwtPlotCurve *> *curve;
-    QRDTTableView *tableView;
+    Q_RDDT_TableView *tableView;
     QTXFilterOffsetModel *model;
 };
 
 
 class QCalTXFilterOffsetTabWidget : public QTabWidget
 {
-    Q_OBJECT
     friend class QCalR1CTXFilterOffsetDlg;
 
 public:
