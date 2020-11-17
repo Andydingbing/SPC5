@@ -14,6 +14,7 @@ $$UTILITIES_DIR/spec.h \
 rf_driver.h \
 frontend.h \
 baseband.h \
+./chip/sp1403.h \
 ./common/ftplib.h \
 ./common/arb_reader.h
 
@@ -22,6 +23,7 @@ $$UTILITIES_DIR/spec.cpp \
 rf_driver.cpp \
 frontend.cpp \
 baseband.cpp \
+./chip/sp1403.cpp  \
 ./common/ftplib.c \
 ./common/arb_reader.cpp
 

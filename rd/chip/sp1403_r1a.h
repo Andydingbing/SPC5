@@ -78,10 +78,8 @@ public:
     typedef ns_sp1403::r1a::att_t  att_t;
     typedef ns_sp1403::r1a::temp_t temp_t;
 
-    sp1403_r1a(uint32_t rf_idx,uint32_t rfu_idx) :
-        sp1403(rf_idx,rfu_idx) {}
+    sp1403_r1a();
 
-public:
     virtual int32_t set_att(const att_t,const double) const = 0;
     virtual int32_t get_att(const att_t,double &) const = 0;
 
@@ -152,8 +150,8 @@ public:
     common_lo_t *tx_lmx2594_1() const { return _tx_lmx2594_1; }
     common_lo_t *rx_lmx2594_0() const { return _rx_lmx2594_0; }
 
-    std::string lo_freq_string(const lo_t id)
-    const { return freq_string_from_uint64_t(lo(id)->freq); }
+    std::string lo_freq_string(const lo_t id) const
+    { return freq_string_from_uint64_t(lo(id)->freq); }
 
     std::string tx_lmx2594_0_freq_string() const
     { return _tx_lmx2594_0 == nullptr ? "" : freq_string_from_uint64_t(_tx_lmx2594_0->freq); }
@@ -164,13 +162,13 @@ public:
     std::string rx_lmx2594_0_freq_string() const
     { return _rx_lmx2594_0 == nullptr ? "" : freq_string_from_uint64_t(_rx_lmx2594_0->freq); }
 
-    virtual int32_t set_tx_lmx2594_0_reg(const uint8_t addr,const uint16_t data) { return 0; }
-    virtual int32_t get_tx_lmx2594_0_reg(const uint8_t addr,uint16_t &data) { return 0; }
-    virtual int32_t set_tx_lmx2594_1_reg(const uint8_t addr,const uint16_t data) { return 0; }
-    virtual int32_t get_tx_lmx2594_1_reg(const uint8_t addr,uint16_t &data) { return 0; }
+    virtual int32_t set_tx_lmx2594_0_reg(const uint8_t addr,const uint16_t data) = 0;
+    virtual int32_t get_tx_lmx2594_0_reg(const uint8_t addr,uint16_t &data) = 0;
+    virtual int32_t set_tx_lmx2594_1_reg(const uint8_t addr,const uint16_t data) = 0;
+    virtual int32_t get_tx_lmx2594_1_reg(const uint8_t addr,uint16_t &data) = 0;
 
-    virtual int32_t set_rx_lmx2594_0_reg(const uint8_t addr,const uint16_t data) { return 0; }
-    virtual int32_t get_rx_lmx2594_0_reg(const uint8_t addr,uint16_t &data) { return 0; }
+    virtual int32_t set_rx_lmx2594_0_reg(const uint8_t addr,const uint16_t data) = 0;
+    virtual int32_t get_rx_lmx2594_0_reg(const uint8_t addr,uint16_t &data) = 0;
 
     virtual void tx_freq_to_lo(const uint64_t freq)
     {

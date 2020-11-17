@@ -38,11 +38,18 @@ public:
     int32_t set_tx_freq(const uint64_t freq);
     int32_t set_rx_freq(const uint64_t freq);
 
+    using sp1403_r1a::set_rx_bw;
+    using sp1403_r1a::get_rx_bw;
     int32_t set_rx_bw(const rx_bw_t bw) const;
     int32_t get_rx_bw(rx_bw_t &bw) const;
 
+    using sp1403_r1a::set_tx0_sw2;
+    using sp1403_r1a::get_tx0_sw2;
+    using sp1403_r1a::set_tx1_sw2;
+    using sp1403_r1a::get_tx1_sw2;
     DECL_SW(tx0_sw2,tx_sw2_t)
     DECL_SW(tx1_sw2,tx_sw2_t)
+
     DECL_SW(rx_sw7,rx_sw7_t)
 
     int32_t set_det_sw(const det_sw_t &sw) const;

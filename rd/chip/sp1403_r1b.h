@@ -21,9 +21,7 @@ public:
     typedef ns_sp1403::r1b::rx_sw7_t rx_sw7_t;
     typedef ns_sp1403::r1b::det_sw_t det_sw_t;
 
-    sp1403_r1b(uint32_t rf_idx,uint32_t rfu_idx) :
-        sp1403(rf_idx,rfu_idx),
-        sp1403_r1a(rf_idx,rfu_idx) {}
+    sp1403_r1b();
 
     virtual int32_t set_rx_sw7(const rx_sw7_t &sw) const = 0;
     virtual int32_t get_rx_sw7(rx_sw7_t &sw) const = 0;

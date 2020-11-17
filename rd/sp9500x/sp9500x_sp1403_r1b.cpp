@@ -11,8 +11,6 @@ using namespace rd::ns_sp1403::r1b;
 
 ns_sp9500x::sp1403_r1b::sp1403_r1b(uint32_t rf_idx,uint32_t rfu_idx) :
     rd::sp1403(rf_idx,rfu_idx),
-    rd::sp1403_r1a(rf_idx,rfu_idx),
-    rd::sp1403_r1b(rf_idx,rfu_idx),
     ns_sp9500x::sp1403_r1a(rf_idx,rfu_idx)
 {
 

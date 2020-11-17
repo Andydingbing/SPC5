@@ -51,23 +51,9 @@ public:
     typedef ns_sp1403::lo_t   lo_t;
 
 public:
-    sp1403(uint32_t rf_idx,uint32_t rfu_idx) :
-        frontend(rf_idx,rfu_idx),
-        _io_mode_tx0(CLOSE),
-        _io_mode_tx1(CLOSE),
-        _io_mode_rx(CLOSE),
-        _tx_freq(*(_tx_freqs.begin())),
-        _rx_freq(*(_rx_freqs.begin())) {}
+    sp1403(uint32_t rf_idx,uint32_t rfu_idx);
 
-    virtual int32_t open_board()
-    {
-        _io_mode_tx0 = CLOSE;
-        _io_mode_tx1 = CLOSE;
-        _io_mode_rx  = CLOSE;
-        _tx_freq = 0;
-        _rx_freq = 0;
-        return 0;
-    }
+    virtual int32_t open_board();
 
     virtual int32_t set_io_mode(const io_mode_t) = 0;
     virtual int32_t set_io_mode(const ns_sp1403::port_t,const io_mode_t) = 0;
