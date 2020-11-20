@@ -964,7 +964,7 @@ int32_t sp2406::set_dl_cf_coef(const std::vector<iq_data_t> &coef) const
     SP9500PRO_RFU_V9_REG_DECL_2(0x042a,0x04ea);
     SP9500PRO_RFU_V9_REG_DECL_2(0x042b,0x04eb);
 
-    SP9500PRO_RFU_V9_REG_2(0x0429,0x04e9).tap = unsigned(coef.size() / 2) - 1;
+    SP9500PRO_RFU_V9_REG_2(0x0429,0x04e9).tap = unsigned(coef.size()) - 1;
     SP9500PRO_RFU_V9_W_2(0x0429,0x04e9);
 
     for (size_t i = 0;i <= SP9500PRO_RFU_V9_REG_2(0x0429,0x04e9).tap;++i) {
@@ -993,18 +993,6 @@ int32_t sp2406::set_dl_cf_coef(const std::vector<int16_t> &real,const std::vecto
     SP9500PRO_RFU_V9_REG_DECL_2(0x042a,0x04ea);
     SP9500PRO_RFU_V9_REG_DECL_2(0x042b,0x04eb);
 
-//    SP9500PRO_RFU_V9_REG_2(0x0429,0x04e9).tap = unsigned(real.size() / 2) - 1;
-//    SP9500PRO_RFU_V9_W_2(0x0429,0x04e9);
-
-//    for (size_t i = 0;i <= SP9500PRO_RFU_V9_REG_2(0x0429,0x04e9).tap;++i) {
-//        SP9500PRO_RFU_V9_REG_2(0x042a,0x04ea).idx = unsigned(i);
-//        SP9500PRO_RFU_V9_REG_2(0x042b,0x04eb).real = unsigned(real.at(i));
-//        SP9500PRO_RFU_V9_REG_2(0x042b,0x04eb).imag = unsigned(imag.at(i));
-//        SP9500PRO_RFU_V9_W_2(0x042a,0x04ea);
-//        SP9500PRO_RFU_V9_W_2(0x042b,0x04eb);
-//        SP9500PRO_RFU_V9_OP_2(0x0428,0x04e8);
-//    }
-
     SP9500PRO_RFU_V9_REG_2(0x0429,0x04e9).tap = unsigned(real.size()) - 1;
     SP9500PRO_RFU_V9_W_2(0x0429,0x04e9);
 
@@ -1020,7 +1008,7 @@ int32_t sp2406::set_dl_cf_coef(const std::vector<int16_t> &real,const std::vecto
     return 0;
 }
 
-int32_t sp2406::get_dl_cf_coef(std::vector<iq_data_t> &coef) const
+int32_t sp2406::get_dl_cf_coef(vector<iq_data_t> &coef) const
 {
     SP9500PRO_RFU_V9_REG_DECL_2(0x0429,0x04e9);
     SP9500PRO_RFU_V9_REG_DECL_2(0x042a,0x04ea);
@@ -1038,34 +1026,24 @@ int32_t sp2406::get_dl_cf_coef(std::vector<iq_data_t> &coef) const
         iq.q = int16_t(SP9500PRO_RFU_V9_REG_2(0x042c,0x04ec).imag);
         coef.push_back(iq);
     }
-    for (size_t i = 0;i <= SP9500PRO_RFU_V9_REG_2(0x0429,0x04e9).tap;++i) {
-        coef.push_back(coef.at(SP9500PRO_RFU_V9_REG_2(0x0429,0x04e9).tap - i));
-    }
+
     return 0;
 }
 
 int32_t sp2406::get_dl_cf_coef(std::vector<int16_t> &i,std::vector<int16_t> &q) const
 {
-    SP9500PRO_RFU_V9_REG_DECL_2(0x0429,0x04e9);
-    SP9500PRO_RFU_V9_REG_DECL_2(0x042a,0x04ea);
-    SP9500PRO_RFU_V9_REG_DECL_2(0x042c,0x04ec);
+    vector<iq_data_t> coef;
 
-    size_t tap = 97;
     i.clear();
     q.clear();
-    SP9500PRO_RFU_V9_R_2(0x0429,0x04e9);
 
-    for (size_t x = 0;x <= tap/*SP9500PRO_RFU_V9_REG(0x0429).tap*/;++x) {
-        SP9500PRO_RFU_V9_REG_2(0x042a,0x04ea).idx = unsigned(x);
-        SP9500PRO_RFU_V9_W_2(0x042a,0x04ea);
-        SP9500PRO_RFU_V9_R_2(0x042c,0x04ec);
-        i.push_back(int16_t(SP9500PRO_RFU_V9_REG_2(0x042c,0x04ec).real));
-        q.push_back(int16_t(SP9500PRO_RFU_V9_REG_2(0x042c,0x04ec).imag));
+    INT_CHECK(get_dl_cf_coef(coef));
+
+    for (size_t n = 0;n < coef.size();++n) {
+        i.push_back(coef[n].i);
+        q.push_back(coef[n].q);
     }
-    for (size_t x = 0;x <= tap/*SP9500PRO_RFU_V9_REG(0x0429).tap*/;++x) {
-        i.push_back(i.at(tap/*SP9500PRO_RFU_V9_REG(0x0429).tap*/ - x));
-        q.push_back(q.at(tap/*SP9500PRO_RFU_V9_REG(0x0429).tap*/ - x));
-    }
+
     return 0;
 }
 
