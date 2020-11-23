@@ -9,132 +9,84 @@ if (_v9 == nullptr) { \
     return -1; \
 }
 
-#define SP9500X_RFU_S6_CHECK \
+#define SP9500X_S6_CHECK \
 if (_s6 == nullptr) { \
     Log.set_last_err("Device:S6 disconnected"); \
     return -1; \
 }
-
-#define SP9500PRO_RFU_V9_CHECK \
-if (_v9 == nullptr) { \
-    Log.set_last_err("Device:V9 disconnected"); \
-    return -1; \
-}
-
-#define SP9500PRO_S6_CHECK \
-if (_s6 == nullptr) { \
-    Log.set_last_err("Device:S6 disconnected"); \
-    return -1; \
-}
-
-#define SP9500X_RFU_V9_REG_DECL(addr) REG_DECL(ns_reg_sp9500pro_rfu_v9,addr)
-#define SP9500X_RFU_V9_REG_DATA(addr) REG_DATA(ns_reg_sp9500pro_rfu_v9,addr)
-#define SP9500X_RFU_V9_REG_CLER(addr) REG_CLER(ns_reg_sp9500pro_rfu_v9,addr)
-#define SP9500X_RFU_V9_REG(addr)      REG(ns_reg_sp9500pro_rfu_v9,addr)
-
-#define SP9500X_RFU_V9_REG_DECL_2(addr0,addr1) REG_DECL_2(ns_reg_sp9500pro_rfu_v9,addr0,addr1)
-#define SP9500X_RFU_V9_REG_DATA_2(addr0,addr1) REG_DATA_2(ns_reg_sp9500pro_rfu_v9,addr0,addr1)
-#define SP9500X_RFU_V9_REG_CLER_2(addr0,addr1) REG_CLER_2(ns_reg_sp9500pro_rfu_v9,addr0,addr1)
-#define SP9500X_RFU_V9_REG_2(addr0,addr1)      REG_2(ns_reg_sp9500pro_rfu_v9,addr0,addr1)
-
-#define SP9500X_RFU_V9_W(addr) \
-    SP9500X_RFU_V9_CHECK PCIE_DEV_W(_v9,pci_dev::AS_BAR0,ns_reg_sp9500pro_rfu_v9,addr)
-
-#define SP9500X_RFU_V9_R(addr) \
-    SP9500X_RFU_V9_CHECK PCIE_DEV_R(_v9,pci_dev::AS_BAR0,ns_reg_sp9500pro_rfu_v9,addr)
-
-#define SP9500X_RFU_V9_W_2(addr0,addr1) \
-    SP9500X_RFU_V9_CHECK PCIE_DEV_W_2(_v9,pci_dev::AS_BAR0,ns_reg_sp9500pro_rfu_v9,addr0,addr1)
-
-#define SP9500X_RFU_V9_R_2(addr0,addr1) \
-    SP9500X_RFU_V9_CHECK PCIE_DEV_R_2(_v9,pci_dev::AS_BAR0,ns_reg_sp9500pro_rfu_v9,addr0,addr1)
-
-#define SP9500X_RFU_V9_RE(addr,bit) CTRLLER_RE(SP9500X_RFU_V9,addr,bit)
-#define SP9500X_RFU_V9_OP(addr) SP9500X_RFU_V9_RE(addr,op)
-
-#define SP9500X_RFU_V9_RE_2(addr0,addr1,bit) CTRLLER_RE_2(SP9500X_RFU_V9,addr0,addr1,bit)
-#define SP9500X_RFU_V9_OP_2(addr0,addr1) SP9500X_RFU_V9_RE_2(addr0,addr1,op)
-
-#define SP9500X_RFU_V9_WAIT_IDLE(addr,flag,times) \
-    CTRLLER_WAIT_IDLE(SP9500X_RFU_V9,addr,busy,flag,times)
-
-#define SP9500X_RFU_V9_WAIT_IDLE_2(addr0,addr1,flag,times) \
-    CTRLLER_WAIT_IDLE_2(SP9500X_RFU_V9,addr0,addr1,busy,flag,times)
 
 // Register
-#define SP9500PRO_RFU_V9_REG_DECL(addr) REG_DECL(ns_reg_sp9500pro_rfu_v9,addr)
-#define SP9500PRO_RFU_V9_REG_DATA(addr) REG_DATA(ns_reg_sp9500pro_rfu_v9,addr)
-#define SP9500PRO_RFU_V9_REG_CLER(addr) REG_CLER(ns_reg_sp9500pro_rfu_v9,addr)
-#define SP9500PRO_RFU_V9_REG(addr)      REG(ns_reg_sp9500pro_rfu_v9,addr)
+#define SP9500X_RFU_V9_REG_DECL(addr) REG_DECL(ns_reg_sp9500x_rfu_v9,addr)
+#define SP9500X_RFU_V9_REG_DATA(addr) REG_DATA(ns_reg_sp9500x_rfu_v9,addr)
+#define SP9500X_RFU_V9_REG_CLER(addr) REG_CLER(ns_reg_sp9500x_rfu_v9,addr)
+#define SP9500X_RFU_V9_REG(addr)      REG(ns_reg_sp9500x_rfu_v9,addr)
 
-#define SP9500PRO_RFU_V9_REG_DECL_2(addr0,addr1) REG_DECL_2(ns_reg_sp9500pro_rfu_v9,addr0,addr1)
-#define SP9500PRO_RFU_V9_REG_DATA_2(addr0,addr1) REG_DATA_2(ns_reg_sp9500pro_rfu_v9,addr0,addr1)
-#define SP9500PRO_RFU_V9_REG_CLER_2(addr0,addr1) REG_CLER_2(ns_reg_sp9500pro_rfu_v9,addr0,addr1)
-#define SP9500PRO_RFU_V9_REG_2(addr0,addr1)      REG_2(ns_reg_sp9500pro_rfu_v9,addr0,addr1)
+#define SP9500X_RFU_V9_REG_DECL_2(addr0,addr1) REG_DECL_2(ns_reg_sp9500x_rfu_v9,addr0,addr1)
+#define SP9500X_RFU_V9_REG_DATA_2(addr0,addr1) REG_DATA_2(ns_reg_sp9500x_rfu_v9,addr0,addr1)
+#define SP9500X_RFU_V9_REG_CLER_2(addr0,addr1) REG_CLER_2(ns_reg_sp9500x_rfu_v9,addr0,addr1)
+#define SP9500X_RFU_V9_REG_2(addr0,addr1)      REG_2(ns_reg_sp9500x_rfu_v9,addr0,addr1)
 
-#define SP9500PRO_S6_REG_DECL(addr) REG_DECL(ns_reg_sp9500pro_s6,addr)
-#define SP9500PRO_S6_REG_DATA(addr) REG_DATA(ns_reg_sp9500pro_s6,addr)
-#define SP9500PRO_S6_REG_CLER(addr) REG_CLER(ns_reg_sp9500pro_s6,addr)
-#define SP9500PRO_S6_REG(addr)      REG(ns_reg_sp9500pro_s6,addr)
+#define SP9500X_S6_REG_DECL(addr) REG_DECL(ns_reg_sp9500x_s6,addr)
+#define SP9500X_S6_REG_DATA(addr) REG_DATA(ns_reg_sp9500x_s6,addr)
+#define SP9500X_S6_REG_CLER(addr) REG_CLER(ns_reg_sp9500x_s6,addr)
+#define SP9500X_S6_REG(addr)      REG(ns_reg_sp9500x_s6,addr)
+
+#define SP9500X_RRH_REG_DECL(addr) REG_DECL(ns_reg_sp9500x_rrh,addr)
+#define SP9500X_RRH_REG_DATA(addr) REG_DATA(ns_reg_sp9500x_rrh,addr)
+#define SP9500X_RRH_REG_CLER(addr) REG_CLER(ns_reg_sp9500x_rrh,addr)
+#define SP9500X_RRH_REG(addr)      REG(ns_reg_sp9500x_rrh,addr)
 
 #define SP1403_S6_REG_DECL(addr) REG_DECL(ns_reg_sp1403_s6,addr)
 #define SP1403_S6_REG_DATA(addr) REG_DATA(ns_reg_sp1403_s6,addr)
 #define SP1403_S6_REG_CLER(addr) REG_CLER(ns_reg_sp1403_s6,addr)
 #define SP1403_S6_REG(addr)      REG(ns_reg_sp1403_s6,addr)
 
-#define SP9500PRO_RRH_REG_DECL(addr) REG_DECL(ns_reg_sp9500pro_rrh,addr)
-#define SP9500PRO_RRH_REG_DATA(addr) REG_DATA(ns_reg_sp9500pro_rrh,addr)
-#define SP9500PRO_RRH_REG_CLER(addr) REG_CLER(ns_reg_sp9500pro_rrh,addr)
-#define SP9500PRO_RRH_REG(addr)      REG(ns_reg_sp9500pro_rrh,addr)
-
 // IO
-#define SP9500PRO_RFU_V9_W(addr) \
-    SP9500PRO_RFU_V9_CHECK PCIE_DEV_W(_v9,pci_dev::AS_BAR0,ns_reg_sp9500pro_rfu_v9,addr)
+#define SP9500X_RFU_V9_W(addr) \
+    SP9500X_RFU_V9_CHECK PCIE_DEV_W(_v9,pci_dev::AS_BAR0,ns_reg_sp9500x_rfu_v9,addr)
 
-#define SP9500PRO_RFU_V9_R(addr) \
-    SP9500PRO_RFU_V9_CHECK PCIE_DEV_R(_v9,pci_dev::AS_BAR0,ns_reg_sp9500pro_rfu_v9,addr)
+#define SP9500X_RFU_V9_R(addr) \
+    SP9500X_RFU_V9_CHECK PCIE_DEV_R(_v9,pci_dev::AS_BAR0,ns_reg_sp9500x_rfu_v9,addr)
 
-#define SP9500PRO_RFU_V9_W_2(addr0,addr1) \
-    SP9500PRO_RFU_V9_CHECK PCIE_DEV_W_2(_v9,pci_dev::AS_BAR0,ns_reg_sp9500pro_rfu_v9,addr0,addr1)
+#define SP9500X_RFU_V9_W_2(addr0,addr1) \
+    SP9500X_RFU_V9_CHECK PCIE_DEV_W_2(_v9,pci_dev::AS_BAR0,ns_reg_sp9500x_rfu_v9,addr0,addr1)
 
-#define SP9500PRO_RFU_V9_R_2(addr0,addr1) \
-    SP9500PRO_RFU_V9_CHECK PCIE_DEV_R_2(_v9,pci_dev::AS_BAR0,ns_reg_sp9500pro_rfu_v9,addr0,addr1)
+#define SP9500X_RFU_V9_R_2(addr0,addr1) \
+    SP9500X_RFU_V9_CHECK PCIE_DEV_R_2(_v9,pci_dev::AS_BAR0,ns_reg_sp9500x_rfu_v9,addr0,addr1)
 
-#define SP9500PRO_S6_W(addr) \
-    SP9500PRO_S6_CHECK PCIE_DEV_W(_s6,pci_dev::AS_BAR0,ns_reg_sp9500pro_s6,addr)
+#define SP9500X_S6_W(addr) \
+    SP9500X_S6_CHECK PCIE_DEV_W(_s6,pci_dev::AS_BAR0,ns_reg_sp9500x_s6,addr)
 
-#define SP9500PRO_S6_R(addr) \
-    SP9500PRO_S6_CHECK PCIE_DEV_R(_s6,pci_dev::AS_BAR0,ns_reg_sp9500pro_s6,addr)
+#define SP9500X_S6_R(addr) \
+    SP9500X_S6_CHECK PCIE_DEV_R(_s6,pci_dev::AS_BAR0,ns_reg_sp9500x_s6,addr)
 
-#define SP9500PRO_RFU_V9_SET_BITS(addr,bits,data) \
-    PCIE_DEV_SET_BITS(SP9500PRO_RFU_V9,addr,bits,data)
+#define SP9500X_RFU_V9_SET_BITS(addr,bits,data) \
+    PCIE_DEV_SET_BITS(SP9500X_RFU_V9,addr,bits,data)
 
-#define SP9500PRO_RFU_V9_SET_BITS_2(addr0,addr1,bits,data) \
-    PCIE_DEV_SET_BITS_2(SP9500PRO_RFU_V9,addr0,addr1,bits,data)
+#define SP9500X_RFU_V9_SET_BITS_2(addr0,addr1,bits,data) \
+    PCIE_DEV_SET_BITS_2(SP9500X_RFU_V9,addr0,addr1,bits,data)
 
 // Rising edge
-#define SP9500PRO_RFU_V9_RE(addr,bit) CTRLLER_RE(SP9500PRO_RFU_V9,addr,bit)
-#define SP9500PRO_RFU_V9_OP(addr) SP9500PRO_RFU_V9_RE(addr,op)
+#define SP9500X_RFU_V9_RE(addr,bit) CTRLLER_RE(SP9500X_RFU_V9,addr,bit)
+#define SP9500X_RFU_V9_OP(addr) SP9500X_RFU_V9_RE(addr,op)
 
-#define SP9500PRO_RFU_V9_RE_2(addr0,addr1,bit) CTRLLER_RE_2(SP9500PRO_RFU_V9,addr0,addr1,bit)
-#define SP9500PRO_RFU_V9_OP_2(addr0,addr1) SP9500PRO_RFU_V9_RE_2(addr0,addr1,op)
+#define SP9500X_RFU_V9_RE_2(addr0,addr1,bit) CTRLLER_RE_2(SP9500X_RFU_V9,addr0,addr1,bit)
+#define SP9500X_RFU_V9_OP_2(addr0,addr1) SP9500X_RFU_V9_RE_2(addr0,addr1,op)
 
-#define SP9500PRO_S6_RE(addr,bit) CTRLLER_RE(SP9500PRO_S6,addr,bit)
-#define SP9500PRO_S6_OP(addr) SP9500PRO_S6_RE(addr,op)
+#define SP9500X_S6_RE(addr,bit) CTRLLER_RE(SP9500X_S6,addr,bit)
+#define SP9500X_S6_OP(addr) SP9500X_S6_RE(addr,op)
 
 // State machine
-#define SP9500PRO_RFU_V9_WAIT_IDLE(addr,flag,times) \
-    CTRLLER_WAIT_IDLE(SP9500PRO_RFU_V9,addr,busy,flag,times)
+#define SP9500X_RFU_V9_WAIT_IDLE(addr,flag,times) \
+    CTRLLER_WAIT_IDLE(SP9500X_RFU_V9,addr,busy,flag,times)
 
-#define SP9500PRO_RFU_V9_WAIT_IDLE_2(addr0,addr1,flag,times) \
-    CTRLLER_WAIT_IDLE_2(SP9500PRO_RFU_V9,addr0,addr1,busy,flag,times)
+#define SP9500X_RFU_V9_WAIT_IDLE_2(addr0,addr1,flag,times) \
+    CTRLLER_WAIT_IDLE_2(SP9500X_RFU_V9,addr0,addr1,busy,flag,times)
 
-#define SP2406_S6_WAIT_IDLE(addr,flag,times) \
-    CTRLLER_WAIT_IDLE(SP2406_S6,addr,busy,flag,times)
 
 // Register Define
 
-namespace ns_reg_sp9500pro_rfu_v9 {
+namespace ns_reg_sp9500x_rfu_v9 {
 
 REG_DEF_CPT_PREFIX_32(0x0000)
     unsigned op : 1;  // DMA state-machine reset signal
@@ -1327,9 +1279,10 @@ REG_DEF_CPT_PREFIX_32(0x103a)
     unsigned rsv0 : 28;
 REG_DEF_CPT_SUFFIX_32
 
-} // namespace ns_reg_sp9500pro_rfu_v9
+} // namespace ns_reg_sp9500x_rfu_v9
 
-namespace ns_reg_sp9500pro_rrh {
+
+namespace ns_reg_sp9500x_rrh {
 
 REG_DEF_CPT_PREFIX_32(0x03)
     unsigned rx_ref : 15;
@@ -1346,7 +1299,7 @@ REG_DEF_CPT_PREFIX_32(0x07)
     unsigned rsv0 : 12;
 REG_DEF_CPT_SUFFIX_32
 
-} // ns_reg_sp9500pro_rrh
+} // ns_reg_sp9500x_rrh
 
 
 namespace ns_reg_sp1403_s6 {
@@ -1410,7 +1363,7 @@ REG_DEF_CPT_SUFFIX_16
 } // namespace ns_reg_sp1403_s6
 
 
-namespace ns_reg_sp9500pro_s6 {
+namespace ns_reg_sp9500x_s6 {
 
 REG_DEF_CPT_PREFIX_32(0x0000)
     unsigned ver : 32;
@@ -1467,6 +1420,6 @@ REG_DEF_CPT_PREFIX_32(0x0120)
     unsigned rsv0 : 31;
 REG_DEF_CPT_SUFFIX_32
 
-} // namespace ns_reg_sp9500pro_s6
+} // namespace ns_reg_sp9500x_s6
 
 #endif // REG_DEF_SP9500X_H

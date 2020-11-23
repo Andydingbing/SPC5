@@ -165,11 +165,11 @@ int32_t ns_sp9500x::sp1403_r1b::set_rx_freq(const uint64_t freq)
     bool reset_dac = false;
     double freq_dac = 0.0;
     uint8_t inversion = (freq <= FREQ_M(1000) ? 0 : 1);
-    SP9500PRO_RFU_V9_REG_DECL(0x0462);
-    SP9500PRO_RFU_V9_R(0x0462);
-    SP9500PRO_RFU_V9_REG(0x0462).rx_0 = inversion;
-    SP9500PRO_RFU_V9_REG(0x0462).rx_1 = inversion;
-    SP9500PRO_RFU_V9_W(0x0462);
+    SP9500X_RFU_V9_REG_DECL(0x0462);
+    SP9500X_RFU_V9_R(0x0462);
+    SP9500X_RFU_V9_REG(0x0462).rx_0 = inversion;
+    SP9500X_RFU_V9_REG(0x0462).rx_1 = inversion;
+    SP9500X_RFU_V9_W(0x0462);
 
     SP1403_S6_REG(0x4).lo_sw1 = _rx_lmx2594_0->freq < FREQ_M(9750) ? 1 : 0;
     SP1403_S6_REG(0x4).lo_sw2 = !SP1403_S6_REG(0x4).lo_sw1;
