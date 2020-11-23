@@ -73,7 +73,7 @@ RD_API int32_t SP9500X_RF_SetRxLevel(const uint32_t RFIndex,const double Level);
 RD_API int32_t SP9500X_RF_GetRxLevel(const uint32_t RFIndex,double &Level);
 RD_API int32_t SP9500X_RF_SetRxFrequency(const uint32_t RFIndex,const uint64_t Freq);
 RD_API int32_t SP9500X_RF_GetRxFrequency(const uint32_t RFIndex,uint64_t &Freq);
-RD_API int32_t SP9500X_RF_SetRxFrequencyShift(const uint32_t RFIndex,const uint64_t Freq);
+RD_API int32_t SP9500X_RF_SetRxFrequencyShift(const uint32_t RFIndex,const int64_t Freq);
 
 RD_API int32_t SP9500X_RF_SetTxCAMap(const uint32_t RFIndex,const RD_SP9500X_CA_Map &Map);
 RD_API int32_t SP9500X_RF_SetRxCAMap(const uint32_t RFIndex,const RD_SP9500X_CA_Map &Map);

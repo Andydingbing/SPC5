@@ -127,7 +127,7 @@ int32_t SP9500X_RF_GetRxFrequency(const uint32_t RFIndex,uint64_t &Freq)
     return SP3103_0.get_rx_freq(rf_idx,Freq);
 }
 
-int32_t SP9500X_RF_SetRxFrequencyShift(const uint32_t RFIndex,const uint64_t Freq)
+int32_t SP9500X_RF_SetRxFrequencyShift(const uint32_t RFIndex,const int64_t Freq)
 {
     DECL_DYNAMIC_SP3103;
     DECL_DYNAMIC_SP1403;
@@ -137,7 +137,7 @@ int32_t SP9500X_RF_SetRxFrequencyShift(const uint32_t RFIndex,const uint64_t Fre
 
     SP9500X_RFU_V9_REG_DECL(0x0462);
     SP9500X_RFU_V9_R(0x0462);
-    INT_CHECK(SP1403->set_rx_freq(freq_sub8_cur + Freq));
+    INT_CHECK(SP1403->set_rx_freq(uint64_t(int64_t(freq_sub8_cur) + Freq)));
     SP9500X_RFU_V9_W(0x0462);
     return 0;
 }
