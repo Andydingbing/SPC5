@@ -296,7 +296,7 @@ void QCalR1CRXFilterThread::generateCoef()
 
     ::GetModuleFileNameA(nullptr,firExePath,MAX_PATH);
     *strrchr(firExePath,'\\') = 0;
-    strcat(firExePath,"\\rx_filter.exe");
+    strcat(firExePath,"\\SP9500\\rx_filter.exe");
 
     if (exeFirProcess(firExePath)) {
         QString msg = QString("%1").arg(Log.last_err());
