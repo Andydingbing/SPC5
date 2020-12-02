@@ -243,9 +243,11 @@ public:
     int32_t set_dl_cpri_map(const uint8_t ch,const uint8_t cpri) const;
     int32_t get_dl_cpri_map(const uint8_t ch,uint8_t &cpri) const;
 
+    int32_t set_dl_cpri_sr(const dl_cpri_sr_t &sr) const;
     int32_t set_dl_cpri_sr(const uint8_t ch,const dl_cpri_sr_t &sr) const;
     int32_t get_dl_cpri_sr(const uint8_t ch,dl_cpri_sr_t &sr) const;
 
+    int32_t set_dl_src(const dl_src_t &src) const;
     int32_t set_dl_src(const uint8_t ch,const dl_src_t &src) const;
     int32_t get_dl_src(const uint8_t ch,dl_src_t &src) const;
 
@@ -348,6 +350,7 @@ public:
     int32_t get_dl_cf_coef(std::vector<iq_data_t> &coef) const;
     int32_t get_dl_cf_coef(std::vector<int16_t> &i,std::vector<int16_t> &q) const;
 
+    int32_t set_dl_jesd_src(const dl_jesd_src_t &src) const;
     int32_t set_dl_jesd_src(const path_t path,const dl_jesd_src_t &src) const;
     int32_t get_dl_jesd_src(const path_t path,dl_jesd_src_t &src) const;
 

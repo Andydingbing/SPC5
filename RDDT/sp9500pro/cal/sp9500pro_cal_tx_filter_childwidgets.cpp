@@ -86,27 +86,27 @@ Cal_TXFilter_ChildWidgets::Cal_TXFilter_ChildWidgets(QWidget *parent)
     plotLayout->setStretch(0,1);
     plotLayout->setStretch(1,1);
 
-    dataRF_FR_0 = new Qwt_TX_RF_FR_Data;
-    dataRF_FR_1 = new Qwt_TX_RF_FR_Data;
-    dataIF_FR = new Qwt_TX_IF_FR_Data;
+//    dataRF_FR_0 = new Qwt_TX_RF_FR_Data;
+//    dataRF_FR_1 = new Qwt_TX_RF_FR_Data;
+//    dataIF_FR = new Qwt_TX_IF_FR_Data;
 
     curveRF_FR_0 = new QwtPlotCurve("RF Freq Response 0");
     curveRF_FR_0->setPen(QColor(Qt::red));
     curveRF_FR_0->setVisible(true);
     curveRF_FR_0->attach(plotRF);
-    curveRF_FR_0->setSamples(dataRF_FR_0);
+//    curveRF_FR_0->setSamples(dataRF_FR_0);
 
     curveRF_FR_1 = new QwtPlotCurve("RF Freq Response 1");
     curveRF_FR_1->setPen(QColor(Qt::green));
     curveRF_FR_1->setVisible(true);
     curveRF_FR_1->attach(plotRF);
-    curveRF_FR_1->setSamples(dataRF_FR_1);
+//    curveRF_FR_1->setSamples(dataRF_FR_1);
 
     curveIF_FR = new QwtPlotCurve("IF Freq Response");
     curveIF_FR->setPen(QColor(Qt::red));
     curveIF_FR->setVisible(true);
     curveIF_FR->attach(plotIF);
-    curveIF_FR->setSamples(dataIF_FR);
+//    curveIF_FR->setSamples(dataIF_FR);
 
     Q_Cal_TXFilter_Widget *p = dynamic_cast<Q_Cal_TXFilter_Widget *>(_parent);
 

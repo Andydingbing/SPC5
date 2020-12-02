@@ -25,9 +25,9 @@ void Q_Cal_TXFilter_Thread::cal()
 
         init();
         THREAD_TEST_CANCEL;
-        sweepRF(tx_freq_star,tx_freq_sec0,freq_step,cal_table_t::TX_RF_FR_0);
+//        sweepRF(tx_freq_star,tx_freq_sec0,freq_step,cal_table_t::TX_RF_FR_0);
         THREAD_TEST_CANCEL;
-        sweepRF(tx_freq_sec0,tx_freq_sec1,freq_step,cal_table_t::TX_RF_FR_1);
+//        sweepRF(tx_freq_sec0,tx_freq_sec1,freq_step,cal_table_t::TX_RF_FR_1);
         THREAD_TEST_CANCEL;
         sweepIF();
     }
@@ -76,7 +76,7 @@ void Q_Cal_TXFilter_Thread::sweepRF(const uint64_t star,
                                     const uint64_t step,
                                     const int32_t table)
 {
-    fr_table_t::data_f_t data;
+//    fr_table_t::data_f_t data;
     uint64_t freq = 0;
 
     for (freq = star - BW_Max;freq < stop + BW_Max;freq += step) {
@@ -86,12 +86,12 @@ void Q_Cal_TXFilter_Thread::sweepRF(const uint64_t star,
 //        SP1403->set_tx_freq(freq);
         msleep(10);
 
-        Instr.pm_get_pwr(freq,data.pwr);
+//        Instr.pm_get_pwr(freq,data.pwr);
 
 //        SP1403->get_tx_avg_temp(tempCur);
 //        THREAD_CHECK_TEMP;
 
-        data.freq = freq;
+//        data.freq = freq;
 //        SP1403->cal_file()->add(table,&data);
 
         emit uiUpdate(0,0,table);

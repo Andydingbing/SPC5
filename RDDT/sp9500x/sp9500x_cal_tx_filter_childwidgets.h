@@ -11,8 +11,8 @@
 
 namespace NS_SP9500X {
 
-typedef Qwt_FR_Data<std::vector<ns_sp9500x::fr_table_t::data_f_t>> Qwt_TX_RF_FR_Data;
-typedef Qwt_FR_Data<std::vector<ns_sp9500x::fr_table_t::data_f_t>> Qwt_TX_IF_FR_Data;
+//typedef Qwt_FR_Data<std::vector<ns_sp9500x::tx_rf_fr_3000_4800_table_t::data_f_t>> Qwt_TX_RF_FR_Data;
+//typedef Qwt_FR_Data<std::vector<ns_sp9500x::fr_table_t::data_f_t>> Qwt_TX_IF_FR_Data;
 
 class Q_TXFilter_Config_Model : public Q_Config_Table_Model
 {
@@ -111,7 +111,7 @@ public:
         plotRF->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
         plotIF = new Q_RDDT_CalPlot(plotWidget);
-        //    plotIF->init(-/1e6,dl_filter_160M_freq_stop/1e6,-20.0,4.0);
+//        plotIF->init(-/1e6,dl_filter_160M_freq_stop/1e6,-20.0,4.0);
         plotIF->setTitle("IF Freq Response(@RF 2GHz)(dBm/MHz)");
         plotIF->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
@@ -121,27 +121,27 @@ public:
         plotLayout->setStretch(0,1);
         plotLayout->setStretch(1,1);
 
-        dataRF_FR_0 = new Qwt_TX_RF_FR_Data;
-        dataRF_FR_1 = new Qwt_TX_RF_FR_Data;
-        dataIF_FR = new Qwt_TX_IF_FR_Data;
+//        dataRF_FR_0 = new Qwt_TX_RF_FR_Data;
+//        dataRF_FR_1 = new Qwt_TX_RF_FR_Data;
+//        dataIF_FR = new Qwt_TX_IF_FR_Data;
 
         curveRF_FR_0 = new QwtPlotCurve("RF Freq Response 0");
         curveRF_FR_0->setPen(QColor(Qt::red));
         curveRF_FR_0->setVisible(true);
         curveRF_FR_0->attach(plotRF);
-        curveRF_FR_0->setSamples(dataRF_FR_0);
+//        curveRF_FR_0->setSamples(dataRF_FR_0);
 
         curveRF_FR_1 = new QwtPlotCurve("RF Freq Response 1");
         curveRF_FR_1->setPen(QColor(Qt::green));
         curveRF_FR_1->setVisible(true);
         curveRF_FR_1->attach(plotRF);
-        curveRF_FR_1->setSamples(dataRF_FR_1);
+//        curveRF_FR_1->setSamples(dataRF_FR_1);
 
         curveIF_FR = new QwtPlotCurve("IF Freq Response");
         curveIF_FR->setPen(QColor(Qt::red));
         curveIF_FR->setVisible(true);
         curveIF_FR->attach(plotIF);
-        curveIF_FR->setSamples(dataIF_FR);
+//        curveIF_FR->setSamples(dataIF_FR);
 
         Q_Cal_TXFilter_Widget *p = dynamic_cast<Q_Cal_TXFilter_Widget *>(_parent);
 
@@ -185,9 +185,9 @@ public:
     QwtPlotCurve *curveIF_FR;
 
     // The curve data.
-    Qwt_TX_RF_FR_Data *dataRF_FR_0;
-    Qwt_TX_RF_FR_Data *dataRF_FR_1;
-    Qwt_TX_IF_FR_Data *dataIF_FR;
+//    Qwt_TX_RF_FR_Data *dataRF_FR_0;
+//    Qwt_TX_RF_FR_Data *dataRF_FR_1;
+//    Qwt_TX_IF_FR_Data *dataIF_FR;
 
     // The filter coef View/Model.
     Q_RDDT_TableView *tableView_80;

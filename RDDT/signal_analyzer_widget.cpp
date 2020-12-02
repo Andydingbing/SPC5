@@ -130,7 +130,7 @@ void Q_SA_Widget::on_pushButtonCap_clicked()
     } else if (project == SP9500X) {
         INT_CHECKV(NS_SP9500X::SP2406->set_iq_cap_abort());
         INT_CHECKV(NS_SP9500X::SP2406->set_iq_cap_start());
-        INT_CHECKV(NS_SP9500X::SP2406->ddr()->dump("c:\\iq.txt"));
+//        INT_CHECKV(NS_SP9500X::SP2406->ddr()->dump("c:\\iq.txt"));
     }
     updatePlotFromBuf();
 }

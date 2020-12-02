@@ -469,6 +469,19 @@ int32_t sp2406::get_dl_cpri_map(const uint8_t ch,uint8_t &cpri) const
     return func[ch](cpri);
 }
 
+int32_t sp2406::set_dl_cpri_sr(const dl_cpri_sr_t &sr) const
+{
+    INT_CHECK(set_dl_cpri_sr_ch0(sr));
+    INT_CHECK(set_dl_cpri_sr_ch1(sr));
+    INT_CHECK(set_dl_cpri_sr_ch2(sr));
+    INT_CHECK(set_dl_cpri_sr_ch3(sr));
+    INT_CHECK(set_dl_cpri_sr_ch4(sr));
+    INT_CHECK(set_dl_cpri_sr_ch5(sr));
+    INT_CHECK(set_dl_cpri_sr_ch6(sr));
+    INT_CHECK(set_dl_cpri_sr_ch7(sr));
+    return 0;
+}
+
 int32_t sp2406::set_dl_cpri_sr(const uint8_t ch,const dl_cpri_sr_t &sr) const
 {
     boost::function<int32_t(const dl_cpri_sr_t &)> func[8];
@@ -499,6 +512,19 @@ int32_t sp2406::get_dl_cpri_sr(const uint8_t ch,dl_cpri_sr_t &sr) const
     func[7] = boost::bind(&sp2406::get_dl_cpri_sr_ch7,this,_1);
 
     return func[ch](sr);
+}
+
+int32_t sp2406::set_dl_src(const dl_src_t &src) const
+{
+    INT_CHECK(set_dl_src_ch0(src));
+    INT_CHECK(set_dl_src_ch1(src));
+    INT_CHECK(set_dl_src_ch2(src));
+    INT_CHECK(set_dl_src_ch3(src));
+    INT_CHECK(set_dl_src_ch4(src));
+    INT_CHECK(set_dl_src_ch5(src));
+    INT_CHECK(set_dl_src_ch6(src));
+    INT_CHECK(set_dl_src_ch7(src));
+    return 0;
 }
 
 int32_t sp2406::set_dl_src(const uint8_t ch,const dl_src_t &src) const
@@ -1044,6 +1070,16 @@ int32_t sp2406::get_dl_cf_coef(std::vector<int16_t> &i,std::vector<int16_t> &q) 
         q.push_back(coef[n].q);
     }
 
+    return 0;
+}
+
+int32_t sp2406::set_dl_jesd_src(const dl_jesd_src_t &src) const
+{
+    SP9500X_RFU_V9_REG_DECL(0x0450);
+
+    SP9500X_RFU_V9_REG(0x0450).src0 = src;
+    SP9500X_RFU_V9_REG(0x0450).src1 = src;
+    SP9500X_RFU_V9_W(0x0450);
     return 0;
 }
 

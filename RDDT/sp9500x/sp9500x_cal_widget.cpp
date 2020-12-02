@@ -67,13 +67,13 @@ void Q_Cal_TXFilter_Widget::uiInsert(const int first,const int last,const int ca
 
 void Q_Cal_TXFilter_Widget::uiUpdate(const int first,const int last,const int cal_table)
 {
-    if (cal_table == cal_table_t::TX_RF_FR_0) {
-        childs->plotRF->replot();
-    } else if (cal_table == cal_table_t::TX_RF_FR_1) {
-        childs->plotRF->replot();
-    } else if (cal_table == cal_table_t::TX_IF_FR) {
-        childs->plotIF->replot();
-    }
+//    if (cal_table == cal_table_t::TX_RF_FR_0) {
+//        childs->plotRF->replot();
+//    } else if (cal_table == cal_table_t::TX_RF_FR_1) {
+//        childs->plotRF->replot();
+//    } else if (cal_table == cal_table_t::TX_IF_FR) {
+//        childs->plotIF->replot();
+//    }
 }
 
 void Q_Cal_TXFilter_Widget::getset()

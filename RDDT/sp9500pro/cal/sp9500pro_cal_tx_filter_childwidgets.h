@@ -10,8 +10,8 @@ class QwtPlotCurve;
 
 namespace NS_SP9500Pro {
 
-typedef Qwt_FR_Data<std::vector<ns_sp9500x::fr_table_t::data_f_t>> Qwt_TX_RF_FR_Data;
-typedef Qwt_FR_Data<std::vector<ns_sp9500x::fr_table_t::data_f_t>> Qwt_TX_IF_FR_Data;
+//typedef Qwt_FR_Data<std::vector<ns_sp9500x::fr_table_t::data_f_t>> Qwt_TX_RF_FR_Data;
+//typedef Qwt_FR_Data<std::vector<ns_sp9500x::fr_table_t::data_f_t>> Qwt_TX_IF_FR_Data;
 
 class Q_TXFilter_Config_Model : public Q_Config_Table_Model
 {
@@ -67,9 +67,9 @@ public:
     QwtPlotCurve *curveIF_FR;
 
     // The curve data.
-    Qwt_TX_RF_FR_Data *dataRF_FR_0;
-    Qwt_TX_RF_FR_Data *dataRF_FR_1;
-    Qwt_TX_IF_FR_Data *dataIF_FR;
+//    Qwt_TX_RF_FR_Data *dataRF_FR_0;
+//    Qwt_TX_RF_FR_Data *dataRF_FR_1;
+//    Qwt_TX_IF_FR_Data *dataIF_FR;
 
     // The filter coef View/Model.
     Q_RDDT_TableView *tableView_80;

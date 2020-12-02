@@ -20,9 +20,10 @@ int32_t ns_sp9500x::sp1403_r1b::open_board()
 {
     INT_CHECK(ns_sp9500x::sp1403_r1a::open_board());
 
-    INT_CHECK(set_lo(TX_LMX2594_0,FREQ_M(9700)));
+    INT_CHECK(set_lo(TX_LMX2594_0,FREQ_M(9500)));
     INT_CHECK(set_tx_freq(FREQ_M(7500)));
     INT_CHECK(set_rx_freq(FREQ_M(7500)));
+    INT_CHECK(set_rx_sw7(rx_sw7_t::_5100));
     return 0;
 }
 
@@ -102,9 +103,9 @@ int32_t ns_sp9500x::sp1403_r1b::set_tx_freq(const uint64_t freq)
         INT_CHECK(set_tx1_sw3(tx_sw3_t::_6000_8000));
         INT_CHECK(set_tx1_sw4(tx_sw4_t::_3000_4800));
     } else {
-        if (_tx_freq < FREQ_M(3000)) {
+        if (_tx_freq <= FREQ_M(3000)) {
             reset_dac = true;
-            freq_dac = FREQ_M(1800);
+            freq_dac = FREQ_M(2000);
         }
 
         if (freq <= FREQ_M(4800)) {
@@ -141,8 +142,8 @@ int32_t ns_sp9500x::sp1403_r1b::set_tx_freq(const uint64_t freq)
     }
 
     if (reset_dac) {
-        _ad908x.set_dac_duc_nco_ftw(_rf_idx,freq_dac);
-        _ad908x.set_dac_duc_nco_ftw(_rf_idx + 1,freq_dac);
+        _ad908x.set_dac_duc_nco_ftw(_rf_idx * 2,freq_dac);
+        _ad908x.set_dac_duc_nco_ftw(_rf_idx * 2 + 1,freq_dac);
     }
 
     _tx_freq = freq;
@@ -188,8 +189,8 @@ int32_t ns_sp9500x::sp1403_r1b::set_rx_freq(const uint64_t freq)
     }
 
     if (reset_dac) {
-        _ad908x.set_adc_ddc_coarse_nco_ftw(_rf_idx,freq_dac);
-        _ad908x.set_adc_ddc_coarse_nco_ftw(_rf_idx + 1,freq_dac);
+        _ad908x.set_adc_ddc_coarse_nco_ftw(_rf_idx * 2,freq_dac);
+        _ad908x.set_adc_ddc_coarse_nco_ftw(_rf_idx * 2 + 1,freq_dac);
     }
 
     _rx_freq = freq;
@@ -299,7 +300,7 @@ void ns_sp9500x::sp1403_r1b::tx_freq_to_lo(const uint64_t freq)
         return;
     }
 
-    _tx_lmx2594_0->freq = FREQ_M(9700);
+    _tx_lmx2594_0->freq = FREQ_M(9500);
     _tx_lmx2594_1->freq = (freq + FREQ_M(11500)) / 2;
 }
 
@@ -309,7 +310,7 @@ void ns_sp9500x::sp1403_r1b::rx_freq_to_lo(const uint64_t freq)
         return;
     }
 
-    _rx_lmx2594_0->freq = FREQ_M(10200) + freq;
+    _rx_lmx2594_0->freq = FREQ_M(10000) + freq;
 
     if (_rx_lmx2594_0->freq > FREQ_M(14500)) {
         _rx_lmx2594_0->freq /= 2;

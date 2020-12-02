@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1100</width>
-    <height>614</height>
+    <height>618</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -154,7 +154,7 @@ QGroupBox::title { subcontrol-origin:margin; subcontrol-position:top left; top:-
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEditDL_DDS0">
+              <widget class="QFreqScrollLineEdit" name="lineEditDL_DDS0">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -164,7 +164,7 @@ QGroupBox::title { subcontrol-origin:margin; subcontrol-position:top left; top:-
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEditDL_DDS1">
+              <widget class="QFreqScrollLineEdit" name="lineEditDL_DDS1">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -200,7 +200,7 @@ QGroupBox::title { subcontrol-origin:margin; subcontrol-position:top left; top:-
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEditDL_Source_CW_Freq">
+              <widget class="QFreqScrollLineEdit" name="lineEditDL_Source_CW_Freq">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -944,7 +944,7 @@ QGroupBox::title { subcontrol-origin:margin; subcontrol-position:top left; top:-
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEditDL_JESD_DDS_Freq">
+            <widget class="QFreqScrollLineEdit" name="lineEditDL_JESD_DDS_Freq">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                <horstretch>5</horstretch>
@@ -1307,10 +1307,10 @@ QGroupBox::title { subcontrol-origin:margin; subcontrol-position:top left; top:-
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEditUL_DDC0"/>
+            <widget class="QFreqScrollLineEdit" name="lineEditUL_DDC0"/>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEditUL_DDC1"/>
+            <widget class="QFreqScrollLineEdit" name="lineEditUL_DDC1"/>
            </item>
            <item>
             <widget class="QPushButton" name="pushButtonSetUL_DDC">
@@ -1505,6 +1505,13 @@ QGroupBox::title { subcontrol-origin:margin; subcontrol-position:top left; top:-
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QFreqScrollLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>scroll_lineedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

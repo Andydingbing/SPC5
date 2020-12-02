@@ -216,7 +216,7 @@ int32_t ns_sp9500x::sp1403_r1a::set_tx_freq(const uint64_t freq)
         INT_CHECK(set_tx1_sw1(tx_sw1_t::_300_3000));
         INT_CHECK(set_tx1_sw2(tx_sw2_t::_300_3000));
     } else {
-        if (_tx_freq < FREQ_M(3000)) {
+        if (_tx_freq <= FREQ_M(3000)) {
             reset_dac = true;
             freq_dac = FREQ_M(1200);
         }

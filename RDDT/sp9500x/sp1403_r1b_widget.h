@@ -135,6 +135,18 @@ private slots:
 
     void on_pushButtonGetSN_clicked();
 
+    void on_comboBoxRXSw1_activated(int index)
+    { SP1403_R1B->set_rx_sw1(sp1403_r1b::rx_sw1_t::_from_index(index)); }
+
+    void on_comboBoxRXSw2_activated(int index)
+    { SP1403_R1B->set_rx_sw2(sp1403_r1b::rx_sw2_t::_from_index(index)); }
+
+    void on_comboBoxRXSw3_activated(int index)
+    { SP1403_R1B->set_rx_sw3(sp1403_r1b::rx_sw3_t::_from_index(index)); }
+
+    void on_comboBoxRXSw7_activated(int index)
+    { SP1403_R1B->set_rx_sw7(sp1403_r1b::rx_sw7_t::_from_index(index)); }
+
     void on_pushButtonGetTemp0_clicked();
 
     void on_pushButtonGetTemp1_clicked();

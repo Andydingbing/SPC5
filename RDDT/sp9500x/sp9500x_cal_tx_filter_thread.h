@@ -15,11 +15,11 @@ public:
     void check();
 
     void init();
-    void sweepRF(const uint64_t star,
-                 const uint64_t stop,
-                 const uint64_t step,
-                 const int32_t table);
-    void sweepIF();
+    void sweepRF_IF_0000_3000(const uint64_t step);
+    void sweepRF_3000_4800(const uint64_t step);
+    void sweepRF_4800_6000(const uint64_t step);
+    void sweepRF_6000_7500(const uint64_t step);
+    void sweepIF_3000_7500(const uint64_t step);
     void generateFreqResponse();
     void generateCoef();
     void updateCalFile();
