@@ -84,6 +84,10 @@ win32-g++ { make_spec = win32-g++
 win32-msvc { make_spec = win32-msvc
     # Multi-Processor
     QMAKE_CFLAGS += /MP
+    QMAKE_CFLAGS_DEBUG += /MP
+    QMAKE_CXXFLAGS += /MP
+    QMAKE_CXXFLAGS_DEBUG += /MP
+
 #    QMAKE_LFLAGS_DEBUG -= /DEBUG
 }
 linux-g++ { make_spec = linux-g++

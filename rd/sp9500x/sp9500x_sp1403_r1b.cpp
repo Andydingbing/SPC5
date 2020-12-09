@@ -24,6 +24,8 @@ int32_t ns_sp9500x::sp1403_r1b::open_board()
     INT_CHECK(set_tx_freq(FREQ_M(7500)));
     INT_CHECK(set_rx_freq(FREQ_M(7500)));
     INT_CHECK(set_rx_sw7(rx_sw7_t::_5100));
+    INT_CHECK(set_rx_bw(rx_bw_t::_800M));
+
     return 0;
 }
 

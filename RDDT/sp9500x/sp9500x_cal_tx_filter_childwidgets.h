@@ -11,8 +11,13 @@
 
 namespace NS_SP9500X {
 
-//typedef Qwt_FR_Data<std::vector<ns_sp9500x::tx_rf_fr_3000_4800_table_t::data_f_t>> Qwt_TX_RF_FR_Data;
-//typedef Qwt_FR_Data<std::vector<ns_sp9500x::fr_table_t::data_f_t>> Qwt_TX_IF_FR_Data;
+using namespace ns_sp9500x;
+
+typedef Qwt_FR_BW_Data<tx_rf_if_fr_0000_3000_table_t::data_f_t,204> Qwt_TX_RF_IF_FR_0000_3000_Data;
+typedef Qwt_FR_CW_Data      Qwt_TX_RF_FR_3000_4800_Data;
+typedef Qwt_FR_CW_Data      Qwt_TX_RF_FR_4800_6000_Data;
+typedef Qwt_FR_CW_Data      Qwt_TX_RF_FR_6000_7500_Data;
+typedef Qwt_FR_BW_Data<tx_if_fr_3000_7500_table_t::data_f_t,403> Qwt_TX_IF_FR_3000_7500_Data;
 
 class Q_TXFilter_Config_Model : public Q_Config_Table_Model
 {
@@ -21,7 +26,9 @@ public:
         Q_Config_Table_Model(parent)
     {
         _item.clear();
-        _item << "JustRebuildCoef";
+        _item << "RebuildCoef";
+        _item << "TX-0";
+        _item << "TX-1";
 
         setRowCount(rowCount(QModelIndex()));
         setColumnCount(columnCount(QModelIndex()));
@@ -34,12 +41,18 @@ class Q_TXFilter_Config_Delegate : public Q_Config_Table_Delegate
 public:
     Q_TXFilter_Config_Delegate(QObject *parent = nullptr) :
         Q_Config_Table_Delegate(parent)
-    { checkBoxJustRebuildCoef = new QCheckBox; }
+    {
+        checkBoxRebuildCoef = new QCheckBox;
+        checkBoxTX0 = new QCheckBox;
+        checkBoxTX1 = new QCheckBox;
+    }
 
-    QWidget **first() const { return (QWidget **)(&checkBoxJustRebuildCoef); }
+    QWidget **first() const { return (QWidget **)(&checkBoxRebuildCoef); }
 
 public:
-    QCheckBox *checkBoxJustRebuildCoef;
+    QCheckBox *checkBoxRebuildCoef;
+    QCheckBox *checkBoxTX0;
+    QCheckBox *checkBoxTX1;
 };
 
 
@@ -85,8 +98,8 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const
     {
         if (Qt::DisplayRole == role && Qt::Horizontal == orientation) {
-            QString strHeader[8] = { "Freq(MHz)","Real","Imag","Temp4","Temp5","Temp6","Temp7","Time" };
-            return strHeader[section];
+            QString header[8] = { "Freq(MHz)","Real","Imag","Temp4","Temp5","Temp6","Temp7","Time" };
+            return header[section];
         }
         return QVariant();
     }
@@ -106,12 +119,12 @@ public:
         QWidget *plotWidget = new QWidget;
 
         plotRF = new Q_RDDT_CalPlot(plotWidget);
-        plotRF->init(ns_sp1403::tx_freq_star/1e6,ns_sp1403::tx_freq_stop/1e6,-20.0,10.0);
+        plotRF->init(ns_sp1403::tx_freq_star/1e6,ns_sp1403::tx_freq_stop/1e6,-200.0,100.0);
         plotRF->setTitle("RF Freq Response(dBm/MHz)");
         plotRF->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
         plotIF = new Q_RDDT_CalPlot(plotWidget);
-//        plotIF->init(-/1e6,dl_filter_160M_freq_stop/1e6,-20.0,4.0);
+        plotIF->init(-491.52e6,491.52e6,-20.0,4.0);
         plotIF->setTitle("IF Freq Response(@RF 2GHz)(dBm/MHz)");
         plotIF->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
@@ -121,43 +134,42 @@ public:
         plotLayout->setStretch(0,1);
         plotLayout->setStretch(1,1);
 
-//        dataRF_FR_0 = new Qwt_TX_RF_FR_Data;
-//        dataRF_FR_1 = new Qwt_TX_RF_FR_Data;
-//        dataIF_FR = new Qwt_TX_IF_FR_Data;
+        curveRF_FR_3000_4800.setTitle("RF Freq Response 3000M~4800M");
+        curveRF_FR_3000_4800.setPen(QColor(Qt::red));
+        curveRF_FR_3000_4800.setVisible(true);
+        curveRF_FR_3000_4800.attach(plotRF);
+        curveRF_FR_3000_4800.setSamples(&dataRF_FR_3000_4800);
 
-        curveRF_FR_0 = new QwtPlotCurve("RF Freq Response 0");
-        curveRF_FR_0->setPen(QColor(Qt::red));
-        curveRF_FR_0->setVisible(true);
-        curveRF_FR_0->attach(plotRF);
-//        curveRF_FR_0->setSamples(dataRF_FR_0);
+        curveRF_FR_4800_6000.setTitle("RF Freq Response 4800M~6000M");
+        curveRF_FR_4800_6000.setPen(QColor(Qt::green));
+        curveRF_FR_4800_6000.setVisible(true);
+        curveRF_FR_4800_6000.attach(plotRF);
+        curveRF_FR_4800_6000.setSamples(&dataRF_FR_4800_6000);
 
-        curveRF_FR_1 = new QwtPlotCurve("RF Freq Response 1");
-        curveRF_FR_1->setPen(QColor(Qt::green));
-        curveRF_FR_1->setVisible(true);
-        curveRF_FR_1->attach(plotRF);
-//        curveRF_FR_1->setSamples(dataRF_FR_1);
-
-        curveIF_FR = new QwtPlotCurve("IF Freq Response");
-        curveIF_FR->setPen(QColor(Qt::red));
-        curveIF_FR->setVisible(true);
-        curveIF_FR->attach(plotIF);
-//        curveIF_FR->setSamples(dataIF_FR);
+        curveRF_FR_6000_7500.setTitle("RF Freq Response 6000M~7500M");
+        curveRF_FR_6000_7500.setPen(QColor(Qt::blue));
+        curveRF_FR_6000_7500.setVisible(true);
+        curveRF_FR_6000_7500.attach(plotRF);
+        curveRF_FR_6000_7500.setSamples(&dataRF_FR_6000_7500);
 
         Q_Cal_TXFilter_Widget *p = dynamic_cast<Q_Cal_TXFilter_Widget *>(_parent);
 
-        model_80  = new Q_TXFilter_Model;
-        model_160 = new Q_TXFilter_Model;
+        tableView_100 = new Q_RDDT_TableView(p->ui->tabWidget);
+        tableView_200 = new Q_RDDT_TableView(p->ui->tabWidget);
+        tableView_400 = new Q_RDDT_TableView(p->ui->tabWidget);
+        tableView_800 = new Q_RDDT_TableView(p->ui->tabWidget);
 
-        tableView_80 = new Q_RDDT_TableView(p->ui->tabWidget);
-        tableView_80->setModel(model_80);
-
-        tableView_160 = new Q_RDDT_TableView(p->ui->tabWidget);
-        tableView_160->setModel(model_160);
+        tableView_100->setModel(model_100 = new Q_TXFilter_Model);
+        tableView_200->setModel(model_200 = new Q_TXFilter_Model);
+        tableView_400->setModel(model_400 = new Q_TXFilter_Model);
+        tableView_800->setModel(model_800 = new Q_TXFilter_Model);
 
         p->ui->tabWidget->clear();
         p->ui->tabWidget->addTab(plotWidget,QString("Freq Response"));
-        p->ui->tabWidget->addTab(tableView_80, QString("Coef_80M"));
-        p->ui->tabWidget->addTab(tableView_160,QString("Coef_160M"));
+        p->ui->tabWidget->addTab(tableView_100,QString("Coef_100M"));
+        p->ui->tabWidget->addTab(tableView_200,QString("Coef_200M"));
+        p->ui->tabWidget->addTab(tableView_400,QString("Coef_400M"));
+        p->ui->tabWidget->addTab(tableView_800,QString("Coef_800M"));
 
         configModel = new Q_TXFilter_Config_Model(p->ui->tableViewConfig);
         configDelegate = new Q_TXFilter_Config_Delegate(p->ui->tableViewConfig);
@@ -173,31 +185,65 @@ public:
         }
     }
 
+    void resetShowWidget()
+    {
+        Q_Cal_TXFilter_Widget *p = dynamic_cast<Q_Cal_TXFilter_Widget *>(_parent);
+        set_helper::range_freq<uint64_t> freqs;
+
+        set_helper::parse(p->ui->lineEditRFFreqs->text().toStdString(),freqs);
+
+        for (int i = 0;i < curveRF_IF_FR_0000_3000.size();++i) {
+            curveRF_IF_FR_0000_3000[i]->detach();
+        }
+
+        for (int i = 0;i < dataRF_IF_FR_0000_3000.size();++i) {
+            delete dataRF_IF_FR_0000_3000[i];
+        }
+
+        dataRF_IF_FR_0000_3000.clear();
+        curveRF_IF_FR_0000_3000.clear();
+
+        for (int i = 0;i < freqs.pts_before(ns_sp1403::tx_freq_sec0);++i) {
+            dataRF_IF_FR_0000_3000.append(new Qwt_TX_RF_IF_FR_0000_3000_Data());
+            curveRF_IF_FR_0000_3000.append(new QwtPlotCurve());
+            curveRF_IF_FR_0000_3000[i]->setVisible(true);
+            curveRF_IF_FR_0000_3000[i]->attach(plotRF);
+            curveRF_IF_FR_0000_3000[i]->setSamples(dataRF_IF_FR_0000_3000[i]);
+        }
+    }
+
     QWidget *_parent;
 
-    // The 2(RF & IF) plots.
     Q_RDDT_CalPlot *plotRF;
     Q_RDDT_CalPlot *plotIF;
 
-    // The curves in particular plot.
-    QwtPlotCurve *curveRF_FR_0;
-    QwtPlotCurve *curveRF_FR_1;
-    QwtPlotCurve *curveIF_FR;
+    QList<QwtPlotCurve *> curveRF_IF_FR_0000_3000;
+    QwtPlotCurve curveRF_FR_3000_4800;
+    QwtPlotCurve curveRF_FR_4800_6000;
+    QwtPlotCurve curveRF_FR_6000_7500;
+    QwtPlotCurve curveIF_FR_3000_7500;
 
-    // The curve data.
-//    Qwt_TX_RF_FR_Data *dataRF_FR_0;
-//    Qwt_TX_RF_FR_Data *dataRF_FR_1;
-//    Qwt_TX_IF_FR_Data *dataIF_FR;
+    QList<Qwt_TX_RF_IF_FR_0000_3000_Data *> dataRF_IF_FR_0000_3000;
+    Qwt_TX_RF_FR_3000_4800_Data dataRF_FR_3000_4800;
+    Qwt_TX_RF_FR_4800_6000_Data dataRF_FR_4800_6000;
+    Qwt_TX_RF_FR_6000_7500_Data dataRF_FR_6000_7500;
+    Qwt_TX_IF_FR_3000_7500_Data dataIF_FR_3000_7500;
 
     // The filter coef View/Model.
-    Q_RDDT_TableView *tableView_80;
-    Q_RDDT_TableView *tableView_160;
-    Q_TXFilter_Model *model_80;
-    Q_TXFilter_Model *model_160;
+    Q_RDDT_TableView *tableView_100;
+    Q_RDDT_TableView *tableView_200;
+    Q_RDDT_TableView *tableView_400;
+    Q_RDDT_TableView *tableView_800;
+
+    Q_TXFilter_Model *model_100;
+    Q_TXFilter_Model *model_200;
+    Q_TXFilter_Model *model_400;
+    Q_TXFilter_Model *model_800;
 
     Q_TXFilter_Config_Model *configModel;
     Q_TXFilter_Config_Delegate *configDelegate;
 };
+
 } // namespace NS_SP9500X
 
 #endif // SP9500X_CAL_TX_FILTER_CHILDWIDGETS_

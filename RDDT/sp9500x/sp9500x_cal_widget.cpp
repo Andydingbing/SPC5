@@ -9,8 +9,10 @@ using namespace NS_SP9500X;
 void Q_Cal_TXFilter_Widget::init()
 {
     childs = new Cal_TXFilter_ChildWidgets(this);
-    model->push_back(childs->model_80);
-    model->push_back(childs->model_160);
+    model->push_back(childs->model_100);
+    model->push_back(childs->model_200);
+    model->push_back(childs->model_400);
+    model->push_back(childs->model_800);
 
     addIdleWidget(ui->pushButtonExport);
     addIdleWidget(ui->pushButtonStar);
@@ -24,11 +26,12 @@ void Q_Cal_TXFilter_Widget::init()
 
 void Q_Cal_TXFilter_Widget::resetShowWidget(CalParam *param)
 {
-//    SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_0);
+    SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_IF_FR_0000_3000);
 //    SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_1);
 //    SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_2);
 //    SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_3);
 //    SP1403->cal_file()->prepare_cal(cal_table_t::TX_Filter);
+    childs->resetShowWidget();
     childs->plotRF->replot();
     childs->plotIF->replot();
     emit reset();
@@ -67,13 +70,17 @@ void Q_Cal_TXFilter_Widget::uiInsert(const int first,const int last,const int ca
 
 void Q_Cal_TXFilter_Widget::uiUpdate(const int first,const int last,const int cal_table)
 {
-//    if (cal_table == cal_table_t::TX_RF_FR_0) {
-//        childs->plotRF->replot();
-//    } else if (cal_table == cal_table_t::TX_RF_FR_1) {
-//        childs->plotRF->replot();
-//    } else if (cal_table == cal_table_t::TX_IF_FR) {
-//        childs->plotIF->replot();
-//    }
+    switch (cal_table) {
+    case cal_table_t::TX_IF_FR_3000_7500 :
+        childs->plotIF->replot();
+        return;
+    case cal_table_t::TX_RF_IF_FR_0000_3000 :
+    case cal_table_t::TX_RF_FR_3000_4800 :
+    case cal_table_t::TX_RF_FR_4800_6000 :
+    case cal_table_t::TX_RF_FR_6000_7500 :
+        childs->plotRF->replot();
+        return;
+    }
 }
 
 void Q_Cal_TXFilter_Widget::getset()

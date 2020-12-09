@@ -910,10 +910,10 @@ REG_DEF_CPT_PREFIX_32(0x0459)
 REG_DEF_CPT_SUFFIX_32
 
 REG_DEF_CPT_PREFIX_32(0x0462)
-    unsigned rx_0 : 1;
-    unsigned rx_1 : 1;
     unsigned tx_0 : 1;
     unsigned tx_1 : 1;
+    unsigned rx_0 : 1;
+    unsigned rx_1 : 1;
     unsigned rsv0 : 28;
 REG_DEF_CPT_SUFFIX_32
 

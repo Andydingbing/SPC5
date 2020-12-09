@@ -353,6 +353,57 @@ uint32_t set_helper::set_helper_t<T,container_t>::parse_from(const std::string &
 }
 
 template<typename T,typename container_t>
+uint32_t set_helper::set_helper_t<T,container_t>::pts_after(const T &lower_bound) const
+{
+    typename container_t::iterator iter = data.begin();
+    uint32_t i = 0;
+
+    for (;iter != data.end();++iter) {
+        if (*iter >= lower_bound) {
+            break;
+        }
+        ++i;
+    }
+    return data.size() - i;
+}
+
+template<typename T,typename container_t>
+uint32_t set_helper::set_helper_t<T,container_t>::pts_before(const T &upper_bound) const
+{
+    typename container_t::iterator iter = data.begin();
+    uint32_t i = 0;
+
+    for (;iter != data.end();++iter) {
+        if (*iter > upper_bound) {
+            break;
+        }
+        ++i;
+    }
+    return i;
+}
+
+template<typename T,typename container_t>
+uint32_t set_helper::set_helper_t<T,container_t>::pts_between(const T &lower_bound,const T &upper_bound) const
+{
+    typename container_t::iterator iter = data.begin();
+    uint32_t i_star = 0;
+    uint32_t i_stop = 0;
+
+    for (;iter != data.end();++iter) {
+        if (*iter < lower_bound) {
+            ++i_star;
+            ++i_stop;
+        } else if (*iter < upper_bound) {
+            ++i_stop;
+        } else {
+            break;
+        }
+    }
+
+    return i_stop - i_star;
+}
+
+template<typename T,typename container_t>
 uint32_t set_helper::set_helper_t<T,container_t>::pts(const std::string &str)
 {
     uint32_t pts = 0;

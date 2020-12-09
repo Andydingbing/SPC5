@@ -133,11 +133,13 @@ int32_t SP9500X_RF_SetRxFrequencyShift(const uint32_t RFIndex,const int64_t Freq
     DECL_DYNAMIC_SP1403;
 
     vi_pci_dev *_v9 = SP3103_0.v9();
-    uint64_t freq_sub8_cur = SP1403->rx_freq();
+//    uint64_t freq_sub8_cur = SP1403->rx_freq();
+
+    Log.stdprintf("freq_shift = %lld\n",Freq);
 
     SP9500X_RFU_V9_REG_DECL(0x0462);
     SP9500X_RFU_V9_R(0x0462);
-    INT_CHECK(SP1403->set_rx_freq(uint64_t(int64_t(freq_sub8_cur) + Freq)));
+    INT_CHECK(SP1403->set_rx_freq(uint64_t(int64_t(FREQ_M(7500)) - Freq)));
     SP9500X_RFU_V9_W(0x0462);
     return 0;
 }

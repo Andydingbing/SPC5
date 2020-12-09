@@ -16,7 +16,9 @@ frontend.h \
 baseband.h \
 ./chip/sp1403.h \
 ./common/ftplib.h \
-./common/arb_reader.h
+./common/arb_reader.h \
+./common/cal_file_memory.h \
+./common/common_cal_file.h
 
 SOURCES += \
 $$UTILITIES_DIR/spec.cpp \
@@ -25,7 +27,8 @@ frontend.cpp \
 baseband.cpp \
 ./chip/sp1403.cpp  \
 ./common/ftplib.c \
-./common/arb_reader.cpp
+./common/arb_reader.cpp \
+./common/cal_file_memory.cpp
 
 # spc5,sp9500
 HEADERS += \

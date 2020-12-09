@@ -146,20 +146,35 @@ private:
     QVector<Data_Type> *table;
 };
 
-
-template<typename container_t>
-class Qwt_FR_Data : public QwtCalData
+// CW Frequency Response Data
+class Qwt_FR_CW_Data : public QwtCalData
 {
 public:
-    Qwt_FR_Data() { table = nullptr; }
+    Qwt_FR_CW_Data() { table = nullptr; }
 
     size_t size() const
     { return table == nullptr ? 0 : table->size(); }
 
     QPointF sample(size_t i) const
-    { return QPointF(table->at(i).freq / 1e6,table->at(i).pwr); }
+    { return QPointF(table->at(i).freq / 1e6,table->at(i).pts[0].y); }
 
-    container_t *table;
+    std::vector<fr_table_t<1>::data_f_t> *table;
+};
+
+// BW Frequency Response Data
+template<typename data_f_t,uint32_t n = 1>
+class Qwt_FR_BW_Data : public QwtCalData
+{
+public:
+    Qwt_FR_BW_Data() { table = nullptr; }
+
+    size_t size() const
+    { return table == nullptr ? 0 : n; }
+
+    QPointF sample(size_t i) const
+    { return QPointF(table->pts[i].x / 1e6,table->pts[i].y); }
+
+    data_f_t *table;
 };
 
 #endif // Q_CAL_BASE_MODEL_H

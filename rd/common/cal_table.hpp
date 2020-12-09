@@ -120,14 +120,31 @@ public:
         SAFE_NEW(_data_calibrating,std::vector<data_f_t>);
 
         _data_f->clear();
-        _data_f->resize(data_f_before_size / size_of_data_f());
-        memcpy(data_f(0),data_f_before,data_f_before_size);
+        _data_f->assign(data_f_before_size / size_of_data_f(),data_f_t());
+//        _data_f->resize(data_f_before_size / size_of_data_f());
+
+        if (data_f_before != nullptr && data_f_before_size != 0) {
+            memcpy(data_f(0),data_f_before,data_f_before_size);
+        }
 
         _data_calibrating->clear();
     }
 
     void add(void *data)
-    { _data_calibrating->push_back(*static_cast<data_f_t *>(data)); }
+    {
+        data_f_t *d = static_cast<data_f_t *>(data);
+
+        if (_data_calibrating->empty()) {
+            _data_calibrating->push_back(*d);
+            return;
+        }
+
+        if (_data_calibrating->back().key() == d->key()) {
+            (*_data_calibrating)[size_data_calibrating() - 1] = *d;
+        } else {
+            _data_calibrating->push_back(*d);
+        }
+    }
 
     void combine()
     {
@@ -138,6 +155,7 @@ public:
             return;
         }
         for (size_t i = 0;i < _data_calibrating->size();++i) {
+            is_new_element = true;
             for (size_t j = last_idx;j < _data_f->size();++j) {
                 if (_data_f->at(j).key() == _data_calibrating->at(i).key()) {
                     (*_data_f)[j] = (*_data_calibrating)[i];
@@ -156,6 +174,41 @@ protected:
     std::vector<data_f_t> *_data_calibrating;
     std::vector<data_f_t> *_data_f;
     std::vector<data_m_t> _data_m;
+};
+
+template<typename x_t,typename y_t>
+struct point_2d { x_t x;y_t y; };
+
+typedef point_2d<uint64_t,double> fr_point;
+
+template<uint32_t n = 1>
+struct data_f_fr : cal_table::basic_data_f_t
+{ fr_point pts[n]; };
+
+template<uint32_t n = 1>
+struct data_m_fr
+{ double pwr[n]; };
+
+template<uint32_t n = 1>
+class fr_table_t : public cal_table_data<data_f_fr<n>,data_m_fr<n>>
+{
+public:
+    typedef data_f_fr<n> data_f_t;
+    typedef data_m_fr<n> data_m_t;
+
+    void map_from(void *data,uint32_t pts)
+    {
+        data_f_t *d_f = static_cast<data_f_t *>(data);
+        data_m_t d_m;
+
+        this->_data_m.clear();
+        for (uint32_t i = 0;i < pts;++i) {
+            for (uint32_t j = 0;j < n;++j) {
+                d_m.pwr[j] = d_f[i].pts[j].y;
+            }
+            this->_data_m.push_back(d_m);
+        }
+    }
 };
 
 } // namespace rd

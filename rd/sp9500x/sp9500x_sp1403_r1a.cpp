@@ -16,6 +16,7 @@ ns_sp9500x::sp1403_r1a::sp1403_r1a(uint32_t rf_idx,uint32_t rfu_idx) :
     rd::sp1403(rf_idx,rfu_idx),
     ns_sp9500x::sp1403()
 {
+    _cal_file = nullptr;
     _ad908x.set_reg = boost::bind(&sp1403_r1a::set_ad998x_reg,this,_1,_2);
     _ad908x.get_reg = boost::bind(&sp1403_r1a::get_ad998x_reg,this,_1,_2);
 

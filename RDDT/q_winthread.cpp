@@ -61,6 +61,9 @@ QCalBaseThread::QCalBaseThread(const CalParam &param) :
         connect(this,SIGNAL(update(QModelIndex,QModelIndex,cal_file::cal_item_t,int)),
         this->parent(),SLOT(update(QModelIndex,QModelIndex,cal_file::cal_item_t,int)));
 
+        connect(this,SIGNAL(uiUpdate(const int,const int,const int)),
+        this->parent(),SLOT(uiUpdate(const int,const int,const int)));
+
         connect(this,SIGNAL(done(bool)),this->parent(),SLOT(done()));
     }
     if (calParam.model_0 != nullptr) {
