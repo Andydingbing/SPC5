@@ -166,6 +166,10 @@ public:
 
     void mainTabCurrentChanged(int index)
     {
+        if (complexSequence == nullptr) {
+            return;
+        }
+
         complexSequence->_new(widget_SA[index]->widget_Config[project]->samples());
     }
 

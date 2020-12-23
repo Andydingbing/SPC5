@@ -21,6 +21,12 @@ public:
 
     virtual int32_t open_board();
 
+    int32_t prepare_cal(const cal_table_t table)
+    { return _cal_file->prepare_cal(table); }
+
+    int32_t prepare_cal(const cal_table_t table,const std::set<uint64_t> &freqs)
+    { return _cal_file->prepare_cal(table,freqs); }
+
     int32_t set_ad998x_reg(const uint16_t addr,const uint8_t data);
     int32_t get_ad998x_reg(const uint16_t addr,uint8_t &data);
 

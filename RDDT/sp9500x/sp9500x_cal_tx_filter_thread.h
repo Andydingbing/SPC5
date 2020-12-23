@@ -15,11 +15,12 @@ public:
     void check();
 
     void init();
-    void sweepRF_IF_0000_3000(const uint64_t step);
-    void sweepRF_3000_4800(const uint64_t step);
-    void sweepRF_4800_6000(const uint64_t step);
-    void sweepRF_6000_7500(const uint64_t step);
-    void sweepIF_3000_7500(const uint64_t step);
+    void sweepRF_IF_0000_3000();
+    void sweepRF_0000_3000();
+    void sweepRF_3000_4800();
+    void sweepRF_4800_6000();
+    void sweepRF_6000_7500();
+    void sweepIF_3000_7500();
     void generateFreqResponse();
     void generateCoef();
     void updateCalFile();
@@ -27,7 +28,15 @@ public:
 public:
     uint64_t BW_Max;
     ns_sp1403::port_t port;
+    bool cal_TX0;
+    bool cal_TX1;
     bool justRebuildCoef;
+    bool cal_RF_IF_FR_0000_3000;
+    bool cal_RF_FR_0000_3000;
+    bool cal_RF_FR_3000_4800;
+    bool cal_RF_FR_4800_6000;
+    bool cal_RF_FR_6000_7500;
+    bool cal_IF_FR_3000_7500;
 };
 
 

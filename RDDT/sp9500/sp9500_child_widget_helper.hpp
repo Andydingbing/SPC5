@@ -224,6 +224,10 @@ public:
 
     void mainTabCurrentChanged(int index)
     {
+        if (complexSequence == nullptr) {
+            return;
+        }
+
         complexSequence->_new(widget_IQ_Cap[index]->widget_Config[project]->samples());
 
         for (quint8 i = 0;i < ns_sp9500::g_max_rf;++i) {

@@ -7,10 +7,10 @@
 #include "../dt3308/dma_mgr.inline.hpp"
 #include "../sp9500x/dma_mgr.inline.hpp"
 
-static const char *ver = "1.1.15329";
+static const char *ver = "1.1.15330";
 
-int32_t RF_DriverVersion(const char *Version)
+int32_t RF_DriverVersion(char **Version)
 {
-    Version = ver;
+    *Version = const_cast<char *>(ver);
     return 0;
 }

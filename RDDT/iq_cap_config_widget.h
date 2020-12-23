@@ -8,8 +8,7 @@ class Q_IQ_Cap_Config_Delegate : public Q_Config_Table_Delegate
 public:
     Q_IQ_Cap_Config_Delegate(QObject *parent = nullptr) :
         Q_Config_Table_Delegate(parent) {}
-
-    QWidget **first() const { return (QWidget **)(&lineEditSamples); }
+    CONFIG_TABLE_FIRST_WIDGET(QLineEdit,lineEditSamples)
 
 public:
     QLineEdit *lineEditSamples;

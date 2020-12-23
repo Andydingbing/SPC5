@@ -38,6 +38,9 @@ bool QDeviceInitThread::initSP9500()
     INT_CHECKB(SP3301->set_program_bit(nullptr,false,false));
     INT_CHECKB(SP3301->program_bit());
     INT_CHECKB(SP3301->boot());
+
+    emit swhwVerReady(SP3301->get_info());
+
     SET_PROG_POS(90);
 
     return true;

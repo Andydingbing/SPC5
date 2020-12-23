@@ -2,6 +2,8 @@
 #define MAIN_WINDOW_H
 
 #include <QMainWindow>
+#include <QTreeWidget>
+#include <QTabWidget>
 #include "ui_mainwindow.h"
 #include "rf_container_widget.h"
 #include "q_cal_dlg.h"
@@ -85,7 +87,7 @@ public slots:
     void exit();
     void starAllIQCapture();
     void stopAllIQCapture();
-    void showSwHwVer(const sp3301::rfu_info_t &info, const char *driver);
+    void showSwHwVer(const sp3301::rfu_info_t &info);
 
     void initProg(const QString name);
     void initProg(const QString name,quint32 pts);
@@ -123,8 +125,13 @@ private slots:
 
     void on_mainTab_currentChanged(int index);
 
-private:
+public:
     Ui::MainWindow *ui;
+
+    QTreeWidget *mainTree;
+    QTabWidget  *mainTab;
+    Q_RDDT_TableView *msgTableView;
+    Q_RDDT_TableView *regTableView;
 
     QMenu *menuProject;
     QAction *actionSP9500;

@@ -13,7 +13,7 @@ namespace Ui { class MainWindow; }
 #define ADD_CHILD_WIDGET(widget_list,class_name,n) \
     if (widget_list.empty()) { \
         for (int i = 0;i < n;i ++) { \
-            widget_list.push_back(new  class_name(ui->mainTab)); \
+            widget_list.push_back(new  class_name(parent->mainTab)); \
             widget_list[i]->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding); \
             widget_list[i]->setVisible(false); \
             MainWindow::childDlgLayout.addWidget(widget_list[i]); \

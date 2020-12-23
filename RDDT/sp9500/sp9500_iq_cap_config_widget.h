@@ -1,6 +1,7 @@
 #ifndef Q_SP9500_IQ_CAP_CONFIG_WIDGET_H
 #define Q_SP9500_IQ_CAP_CONFIG_WIDGET_H
 
+#include "global.h"
 #include "iq_cap_config_widget.h"
 #include <QStyledItemDelegate>
 #include <QLineEdit>

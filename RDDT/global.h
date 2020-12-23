@@ -13,7 +13,6 @@
 #include "sp3103.h"
 #include "freq_string.hpp"
 #include "qwt_series_data.h"
-#include <QWidget>
 #include <QPointF>
 #include <QTabWidget>
 #include <QTableView>
@@ -22,13 +21,13 @@
 #include <QColor>
 #include <QAbstractItemModel>
 #include <QDialog>
-#include <QStandardItemModel>
-#include <QStyledItemDelegate>
 
 class QLineEdit;
 class QComboBox;
 class QCheckBox;
 class QPushButton;
+
+#include "config_table.h"
 
 using namespace rd;
 
@@ -121,46 +120,6 @@ public:
 public slots:
     // Init child widgets
     virtual void init() {}
-};
-
-
-class Q_Config_Table_View : public QTableView
-{
-public:
-    Q_Config_Table_View(QWidget *parent = nullptr);
-};
-
-
-class Q_Config_Table_Model : public QStandardItemModel
-{
-public:
-    Q_Config_Table_Model(QObject *parent = nullptr) : QStandardItemModel(parent) {}
-
-    int rowCount(const QModelIndex &) const { return _item.size(); }
-
-    int columnCount(const QModelIndex &) const { return 2; }
-
-    QVariant data(const QModelIndex &index, int role) const;
-
-protected:
-    QStringList _item;
-};
-
-
-class Q_Config_Table_Delegate : public QStyledItemDelegate
-{
-public:
-    Q_Config_Table_Delegate(QObject *parent = nullptr) : QStyledItemDelegate(parent) {}
-
-    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-
-    void setEditorData(QWidget *editor, const QModelIndex &index) const {}
-
-    void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const {}
-
-    void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &) const;
-
-    virtual QWidget **first() const = 0;
 };
 
 

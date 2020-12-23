@@ -48,6 +48,10 @@ struct set_helper_t
     int32_t section(const T &element);
     uint32_t parse_from(const std::string &str);
 
+    container_t after(const T &lower_bound) const;
+    container_t before(const T &upper_bound) const;
+    container_t between(const T &lower_bound,const T &upper_bound) const;
+
     uint32_t pts_after(const T &lower_bound) const;
     uint32_t pts_before(const T &upper_bound) const;
     uint32_t pts_between(const T &lower_bound,const T &upper_bound) const;

@@ -353,6 +353,58 @@ uint32_t set_helper::set_helper_t<T,container_t>::parse_from(const std::string &
 }
 
 template<typename T,typename container_t>
+container_t set_helper::set_helper_t<T,container_t>::after(const T &lower_bound) const
+{
+    container_t subset;
+    typename container_t::iterator iter = data.begin();
+
+    for (;iter != data.end();++iter) {
+        if (*iter >= lower_bound) {
+            break;
+        }
+    }
+
+    for (;iter != data.end();++iter) {
+        subset.insert(*iter);
+    }
+    return subset;
+}
+
+template<typename T,typename container_t>
+container_t set_helper::set_helper_t<T,container_t>::before(const T &upper_bound) const
+{
+    container_t subset;
+    typename container_t::iterator iter = data.begin();
+
+    for (;iter != data.end();++iter) {
+        if (*iter > upper_bound) {
+            break;
+        } else {
+            subset.insert(*iter);
+        }
+    }
+    return subset;
+}
+
+template<typename T,typename container_t>
+container_t set_helper::set_helper_t<T,container_t>::between(const T &lower_bound,const T &upper_bound) const
+{
+    container_t subset;
+    typename container_t::iterator iter = data.begin();
+
+    for (;iter != data.end();++iter) {
+        if (*iter < lower_bound) {
+            continue;
+        } else if (*iter > upper_bound) {
+            break;
+        } else {
+            subset.insert(*iter);
+        }
+    }
+    return subset;
+}
+
+template<typename T,typename container_t>
 uint32_t set_helper::set_helper_t<T,container_t>::pts_after(const T &lower_bound) const
 {
     typename container_t::iterator iter = data.begin();

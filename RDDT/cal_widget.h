@@ -6,6 +6,7 @@
 #include "sp9500pro_cal_tx_filter_thread.h"
 
 #include "sp9500x_cal_tx_filter_thread.h"
+
 namespace Ui {
 typedef class Q_Cal_Filter_Widget Q_Cal_SP9500X_TXFilter_Widget;
 }

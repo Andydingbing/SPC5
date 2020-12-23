@@ -206,6 +206,9 @@ NS_SP9500::Q_ARB_Config_Delegate::Q_ARB_Config_Delegate(QObject *parent) :
     connect(lineEditTriggerSlot,SIGNAL(textEdited(QString)),this,SLOT(setTriggerSlot()));
     connect(lineEditX,SIGNAL(textEdited(QString)),this,SLOT(setFrameTriggerModXY()));
     connect(lineEditY,SIGNAL(textEdited(QString)),this,SLOT(setFrameTriggerModXY()));
+    connect(pushButtonManualTrigger,SIGNAL(clickd(bool)),this,SLOT(setManualTrigger()));
+    connect(pushButtonARBStart,SIGNAL(clicked(bool)),this,SLOT(setARBStart()));
+    connect(pushButtonARBStop,SIGNAL(clicked(bool)),this,SLOT(setARBStop()));
 }
 
 void NS_SP9500::Q_ARB_Config_Delegate::setARBTrigger()

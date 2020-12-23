@@ -42,6 +42,7 @@ void Q_SP9500X_RRH_Widget::init()
     ui->lineEditRXRef->setText(QString("%1").arg(RXRef));
     ui->comboBoxTX0IOMode->setCurrentIndex(modeTRX0);
     ui->comboBoxTX1IOMode->setCurrentIndex(modeTRX1);
+    ui->lineEditRegAddr->setText("0x00");
 }
 
 void Q_SP9500X_RRH_Widget::on_lineEditTXFreq_textEdited(const QString &arg1)
@@ -78,4 +79,19 @@ void Q_SP9500X_RRH_Widget::on_lineEditRXRef_textEdited(const QString &arg1)
 {
     Q_UNUSED(arg1);
     on_pushButtonSetRXRef_clicked();
+}
+
+void Q_SP9500X_RRH_Widget::on_pushButtonRegWrite_clicked()
+{
+    uint8_t addr = quint8(ui->lineEditRegAddr->text().toUShort(nullptr,16));
+    uint32_t data = ui->lineEditRegData->text().toULong(nullptr,16);
+    SP9500X_RRH->set_reg(addr,data);
+}
+
+void Q_SP9500X_RRH_Widget::on_pushButtonRegRead_clicked()
+{
+    uint32_t data = 0;
+    uint8_t addr = quint8(ui->lineEditRegAddr->text().toUShort(nullptr,16));
+    SP9500X_RRH->get_reg(addr,data);
+    ui->lineEditRegData->setText(DecimalToHexString(data));
 }

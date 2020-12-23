@@ -183,12 +183,13 @@ namespace rd {
 
 enum link_t { UL,DL };
 
-enum rf_ch_t { Tx,Rx };
-
 struct iq_data_t {
     int16_t i : 16;
     int16_t q : 16;
 };
+
+template<typename x_t,typename y_t>
+struct point_2d { x_t x; y_t y; };
 
 } // namespace rd
 

@@ -18,8 +18,8 @@ int32_t ns_sp9500x::sp1403::open_board()
 
     string sn;
     INT_CHECK(get_sn_major(sn));
-//    _cal_file->set_name("0001");
-//    INT_CHECK(_cal_file->open());
+    _cal_file->set_name("0001");
+    INT_CHECK(_cal_file->open());
 
     return rd::sp1403::open_board();
 }

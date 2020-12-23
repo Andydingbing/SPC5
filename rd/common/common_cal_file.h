@@ -139,14 +139,23 @@ public:
     {
         std::map<int32_t,cal_table *>::const_iterator iter;
 
-        convert_buf_t *cb = &convert_buf;
-        Log.stdprintf("%x\n",&convert_buf);
-        Log.stdprintf("%x\n",cb);
-
         load_to_buf(table);
 
         if ((iter = _tables.find(table._to_integral())) != _tables.end()) {
             iter->second->prepare_cal(convert_buf.buf,convert_buf.size_table);
+            return 0;
+        }
+        return -1;
+    }
+
+    int32_t prepare_cal(const cal_table_t table,const std::set<uint64_t> &freqs)
+    {
+        std::map<int32_t,cal_table *>::const_iterator iter;
+
+        load_to_buf(table);
+
+        if ((iter = _tables.find(table._to_integral())) != _tables.end()) {
+            iter->second->prepare_cal(convert_buf.buf,convert_buf.size_table,&freqs);
             return 0;
         }
         return -1;
@@ -354,10 +363,6 @@ private:
 
         table_pos_size(table,pos,size);
 
-        convert_buf_t *cb = &convert_buf;
-        Log.stdprintf("%x\n",&convert_buf);
-        Log.stdprintf("%x\n",cb);
-        Log.stdprintf("%x\n",convert_buf.buf);
         r_from_pos(pos,size,convert_buf.buf);
 
         convert_buf.table = table;

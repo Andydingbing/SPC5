@@ -1,6 +1,7 @@
 #ifndef SP9500PRO_CAL_TX_FILTER_CHILDWIDGETS_H
 #define SP9500PRO_CAL_TX_FILTER_CHILDWIDGETS_H
 
+#include "global.h"
 #include "rddt_plot.hpp"
 #include "rddt_tableview.hpp"
 #include "q_model_tx_filter.h"
@@ -23,8 +24,7 @@ class Q_TXFilter_Config_Delegate : public Q_Config_Table_Delegate
 {
 public:
     Q_TXFilter_Config_Delegate(QObject *parent = nullptr);
-
-    QWidget **first() const { return (QWidget **)(&checkBoxJustRebuildCoef); }
+    CONFIG_TABLE_FIRST_WIDGET(QCheckBox,checkBoxJustRebuildCoef)
 
 public:
     QCheckBox *checkBoxJustRebuildCoef;

@@ -9,6 +9,10 @@
 #include <boost/cstdint.hpp>
 #include <boost/format.hpp>
 #include <vector>
+#include <set>
+#include <fstream>
+
+#include "liblog.h"
 
 namespace rd {
 
@@ -26,10 +30,11 @@ DECL_CAL_TABLE(sp9500x,
     TX_Att_Output,
     TX_Att_IO,
     TX_RF_IF_FR_0000_3000,
+    TX_RF_FR_0000_3000,
     TX_RF_FR_3000_4800,
     TX_RF_FR_4800_6000,
     TX_RF_FR_6000_7500,
-    TX_IF_FR_3000_7500,
+    TX_IF_FR_0000_7500,
     TX_Filter,
     RX_Ref_Output,
     RX_Ref_IO,
@@ -64,6 +69,14 @@ public:
         uint64_t freq;
 
         uint64_t key() const { return freq; }
+        void set_key(const uint64_t key) { freq = key; }
+
+        // can not be virtual
+        RD_INLINE uint64_t key_lower_bound() { return 0; }
+        RD_INLINE uint64_t key_upper_bound() { return UINT64_MAX; }
+
+#define DATA_F_KEY_MIN(min) RD_INLINE uint64_t key_lower_bound() { return uint64_t(min); }
+#define DATA_F_KEY_MAX(max) RD_INLINE uint64_t key_upper_bound() { return uint64_t(max); }
     };
 
     virtual ~cal_table() {}
@@ -72,7 +85,7 @@ public:
     virtual uint32_t size_data_f() = 0;
     virtual uint32_t size_of_data_f() = 0;
     virtual uint32_t size_of_data_m() = 0;
-    virtual void prepare_cal(void *data_f_before,uint32_t data_f_before_size) = 0;
+    virtual void prepare_cal(void *data_f_before,uint32_t data_f_before_size,const std::set<uint64_t> *keys = nullptr) = 0;
     virtual void map_from(void *data,uint32_t pts) = 0;
     virtual void add(void *data) = 0;
     virtual void combine() = 0;
@@ -114,7 +127,7 @@ public:
     uint32_t size_of_data_f() { return sizeof(data_f_t); }
     uint32_t size_of_data_m() { return sizeof(data_m_t); }
 
-    void prepare_cal(void *data_f_before,uint32_t data_f_before_size)
+    void prepare_cal(void *data_f_before,uint32_t data_f_before_size,const std::set<uint64_t> *keys = nullptr)
     {
         SAFE_NEW(_data_f,std::vector<data_f_t>);
         SAFE_NEW(_data_calibrating,std::vector<data_f_t>);
@@ -128,6 +141,18 @@ public:
         }
 
         _data_calibrating->clear();
+
+        if (keys == nullptr) {
+            return;
+        }
+
+        std::set<uint64_t>::iterator iter_keys;
+        data_f_t data;
+
+        for (iter_keys = keys->begin();iter_keys != keys->end();++iter_keys) {
+            data.set_key(*iter_keys);
+            _data_calibrating->push_back(data);
+        }
     }
 
     void add(void *data)
@@ -139,11 +164,23 @@ public:
             return;
         }
 
+        // Speed up
         if (_data_calibrating->back().key() == d->key()) {
             (*_data_calibrating)[size_data_calibrating() - 1] = *d;
-        } else {
-            _data_calibrating->push_back(*d);
+            return;
         }
+
+        typename std::vector<data_f_t>::iterator iter;
+
+        for (iter = _data_calibrating->begin();iter != _data_calibrating->end();++iter) {
+            if (iter->key() == d->key()) {
+                *iter = *d;
+                return;
+            }
+        }
+
+        Log.stdprintf("wtf!!!\n");
+        _data_calibrating->push_back(*d);
     }
 
     void combine()
@@ -176,25 +213,51 @@ protected:
     std::vector<data_m_t> _data_m;
 };
 
-template<typename x_t,typename y_t>
-struct point_2d { x_t x;y_t y; };
 
 typedef point_2d<uint64_t,double> fr_point;
 
 template<uint32_t n = 1>
 struct data_f_fr : cal_table::basic_data_f_t
-{ fr_point pts[n]; };
+{
+    static BOOST_CONSTEXPR_OR_CONST uint32_t size = n;
+    fr_point pts[n];
+};
+
+template<typename data_f_t = data_f_fr<1>>
+int32_t save_as(const std::vector<data_f_t> *data,const std::string &path)
+{
+    std::ofstream stream(path);
+
+    if (stream.bad()) {
+        Log.set_last_err("%s:%s:%d",__FILE__,BOOST_CURRENT_FUNCTION,__LINE__);
+        return -1;
+    }
+
+    if (data == nullptr) {
+        return 0;
+    }
+
+    boost::format fmt("%.6f,");
+    typename std::vector<data_f_t>::const_iterator iter = data->cbegin();
+
+    for (;iter != data->cend();++iter) {
+        for (uint32_t i = 0;i < data_f_t::size;++i) {
+            stream << ((fmt % iter->pts[i].y).str());
+        }
+        stream << "\n";
+    }
+}
 
 template<uint32_t n = 1>
 struct data_m_fr
 { double pwr[n]; };
 
-template<uint32_t n = 1>
-class fr_table_t : public cal_table_data<data_f_fr<n>,data_m_fr<n>>
+template<typename data_f_t = data_f_fr<1>,typename data_m_t = data_m_fr<data_f_t::size>>
+class fr_table_t : public cal_table_data<data_f_t,data_m_t>
 {
 public:
-    typedef data_f_fr<n> data_f_t;
-    typedef data_m_fr<n> data_m_t;
+    typedef data_f_t data_f_t;
+    typedef data_m_t data_m_t;
 
     void map_from(void *data,uint32_t pts)
     {
@@ -203,12 +266,15 @@ public:
 
         this->_data_m.clear();
         for (uint32_t i = 0;i < pts;++i) {
-            for (uint32_t j = 0;j < n;++j) {
+            for (uint32_t j = 0;j < data_f_t::size;++j) {
                 d_m.pwr[j] = d_f[i].pts[j].y;
             }
             this->_data_m.push_back(d_m);
         }
     }
+
+    int32_t save_as(const std::string &path)
+    { return rd::save_as<data_f_t>(this->_data_calibrating,path); }
 };
 
 } // namespace rd

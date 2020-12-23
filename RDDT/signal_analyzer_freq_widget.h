@@ -7,14 +7,9 @@ class Q_SA_Freq_Model;
 
 class Q_SA_Freq_Delegate : public Q_Config_Table_Delegate
 {
-    Q_OBJECT
-
 public:
     Q_SA_Freq_Delegate(QObject *parent = nullptr);
-
-    QWidget **first() const { return (QWidget **)(&lineEditCenter); }
-
-public slots:
+    CONFIG_TABLE_FIRST_WIDGET(QLineEdit,lineEditCenter)
 
 public:
     QLineEdit *lineEditCenter;

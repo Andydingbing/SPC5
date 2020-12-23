@@ -1,6 +1,7 @@
 #ifndef Q_SP9500X_ARB_CONFIG_WIDGET_H
 #define Q_SP9500X_ARB_CONFIG_WIDGET_H
 
+#include "global.h"
 #include "arb_config_widget.h"
 #include <QStyledItemDelegate>
 #include <QLineEdit>
@@ -12,11 +13,10 @@ class Q_ARB_Config_Model;
 class Q_ARB_Config_Delegate : public ::Q_Config_Table_Delegate
 {
     Q_OBJECT
+    CONFIG_TABLE_FIRST_WIDGET(QComboBox,comboBoxSource)
 
 public:
     Q_ARB_Config_Delegate(QObject *parent = nullptr);
-
-    QWidget **first() const { return (QWidget **)(&comboBoxSource); }
 
 public slots:
     void setFreqOffset();

@@ -14,6 +14,9 @@ void Q_Cal_TXFilter_Widget::init()
     model->push_back(childs->model_400);
     model->push_back(childs->model_800);
 
+    ui->lineEditRFFreqs->setText("250M:10M:3G");
+    ui->lineEditIFFreqs->setText("100M,200M,400M,800M");
+
     addIdleWidget(ui->pushButtonExport);
     addIdleWidget(ui->pushButtonStar);
     addIdleWidget(ui->pushButtonGetSet);
@@ -26,10 +29,8 @@ void Q_Cal_TXFilter_Widget::init()
 
 void Q_Cal_TXFilter_Widget::resetShowWidget(CalParam *param)
 {
-    SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_IF_FR_0000_3000);
-//    SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_1);
-//    SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_2);
-//    SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_3);
+    SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_0000_3000);
+
 //    SP1403->cal_file()->prepare_cal(cal_table_t::TX_Filter);
     childs->resetShowWidget();
     childs->plotRF->replot();
@@ -71,10 +72,11 @@ void Q_Cal_TXFilter_Widget::uiInsert(const int first,const int last,const int ca
 void Q_Cal_TXFilter_Widget::uiUpdate(const int first,const int last,const int cal_table)
 {
     switch (cal_table) {
-    case cal_table_t::TX_IF_FR_3000_7500 :
+    case cal_table_t::TX_IF_FR_0000_7500 :
         childs->plotIF->replot();
         return;
     case cal_table_t::TX_RF_IF_FR_0000_3000 :
+    case cal_table_t::TX_RF_FR_0000_3000 :
     case cal_table_t::TX_RF_FR_3000_4800 :
     case cal_table_t::TX_RF_FR_4800_6000 :
     case cal_table_t::TX_RF_FR_6000_7500 :

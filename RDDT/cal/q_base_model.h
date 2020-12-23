@@ -147,6 +147,7 @@ private:
 };
 
 // CW Frequency Response Data
+template<typename data_f_t = data_f_fr<1>>
 class Qwt_FR_CW_Data : public QwtCalData
 {
 public:
@@ -158,11 +159,11 @@ public:
     QPointF sample(size_t i) const
     { return QPointF(table->at(i).freq / 1e6,table->at(i).pts[0].y); }
 
-    std::vector<fr_table_t<1>::data_f_t> *table;
+    std::vector<data_f_t> *table;
 };
 
 // BW Frequency Response Data
-template<typename data_f_t,uint32_t n = 1>
+template<uint32_t n = 1>
 class Qwt_FR_BW_Data : public QwtCalData
 {
 public:
@@ -174,7 +175,7 @@ public:
     QPointF sample(size_t i) const
     { return QPointF(table->pts[i].x / 1e6,table->pts[i].y); }
 
-    data_f_t *table;
+    data_f_fr<n> *table;
 };
 
 #endif // Q_CAL_BASE_MODEL_H

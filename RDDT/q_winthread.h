@@ -39,11 +39,8 @@
 }
 
 // Thread pause/continue support.
-#define THREAD_TEST_PAUSE_S \
-{   threadLock.lock();
-
-#define THREAD_TEST_PAUSE_E \
-    threadLock.unlock(); }
+#define THREAD_TEST_PAUSE_S { threadLock.lock();
+#define THREAD_TEST_PAUSE_E   threadLock.unlock(); }
 
 
 #define CAL_THREAD_START(name,pts) \
@@ -323,6 +320,9 @@ protected:
     range_freq<quint64> freqRangeCal;
     range_freq_string freqStringCheck;
     range_freq<quint64> freqRangeCheck;
+
+    std::string freqString;
+    set_helper::range_freq<uint64_t> freqRange;
 } QCalBaseThread, QExportBaseThread, QExpBaseThread;
 
 typedef class QCalR1CBaseThread : public QCalBaseThread

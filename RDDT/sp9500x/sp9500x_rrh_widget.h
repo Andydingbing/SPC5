@@ -31,6 +31,10 @@ private slots:
 
     void on_lineEditRXRef_textEdited(const QString &arg1);
 
+    void on_pushButtonRegWrite_clicked();
+
+    void on_pushButtonRegRead_clicked();
+
 private:
     Ui::Q_SP9500X_RRH_Widget *ui;
 };

@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QSplitter>
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QMetaType>
@@ -8,6 +9,7 @@
 #include <QProgressBar>
 #include <QAction>
 #include <QMenu>
+#include "rf_driver.h"
 #include "sp9500_child_widget_helper.hpp"
 #include "dt3308_child_widget_helper.hpp"
 #include "sp9500x_child_widget_helper.hpp"
@@ -38,6 +40,8 @@ MainWindow::MainWindow(QWidget *parent) :
     NS_SP9500X::SP3103 = &SP3103_0;
 
     ui->setupUi(this);
+
+    setWindowState(Qt::WindowMaximized);
 
     actionSP9500 = new QAction("SP9500(&0)",this);
     actionSP9500->setCheckable(true);
@@ -76,6 +80,28 @@ MainWindow::MainWindow(QWidget *parent) :
     initStatusBar();
     initMainTreeWidget();
     initMainTabWidget();
+
+    QSplitter *mainSplitter   = new QSplitter(Qt::Vertical,ui->centralWidget);
+    QSplitter *topSplitter    = new QSplitter(Qt::Horizontal,mainSplitter);
+    QSplitter *bottomSplitter = new QSplitter(Qt::Horizontal,mainSplitter);
+
+    topSplitter->addWidget(mainTree);
+    topSplitter->addWidget(mainTab);
+    topSplitter->setStretchFactor(0,0);
+    topSplitter->setStretchFactor(1,1);
+
+    bottomSplitter->addWidget(msgTableView);
+    bottomSplitter->addWidget(regTableView);
+    bottomSplitter->setStretchFactor(0,1);
+    bottomSplitter->setStretchFactor(1,0);
+
+    mainSplitter->setStretchFactor(0,5);
+    mainSplitter->setStretchFactor(1,1);
+
+    QHBoxLayout *mainLayout = new QHBoxLayout(ui->centralWidget);
+    mainLayout->addWidget(mainSplitter);
+    ui->centralWidget->setLayout(mainLayout);
+
     switchToSP9500();
     Log.set_default();
 }
@@ -130,8 +156,8 @@ void MainWindow::switchProject()
     ui->menuBar->clear();
     ui->menuBar->addAction(menuProject->menuAction());
 
-    ui->mainTree->clear();
-    ui->mainTab->clear();
+    mainTree->clear();
+    mainTab->clear();
 
     currentWidgets = childWidgets.at(project);
     currentWidgets->initMenu();
@@ -194,12 +220,11 @@ void MainWindow::stopAllIQCapture()
     QWinThread::g_threadStop = true;
 }
 
-void MainWindow::showSwHwVer(const sp3301::rfu_info_t &info, const char *driver)
+void MainWindow::showSwHwVer(const sp3301::rfu_info_t &info)
 {
     labelVerK7_0->setText(QString("K7_0:0x%1").arg(info.k7_0_ver,8,16));
     labelVerK7_1->setText(QString("K7_1:0x%1").arg(info.k7_1_ver,8,16));
     labelVerS6->setText(QString("S6:0x%1").arg(info.s6_ver,8,16));
-    labelVerDriver->setText(QString("Driver:%1").arg(driver));
 }
 
 void MainWindow::registerMetaType()
@@ -214,6 +239,10 @@ void MainWindow::registerMetaType()
 
 void MainWindow::initStatusBar()
 {
+    char *driverVer = nullptr;
+
+    RF_DriverVersion(&driverVer);
+
     mainProgressBar = new QProgressBar(ui->statusBar);
     mainProgressBar->setFixedHeight(15);
     mainProgressBar->setStyleSheet("QProgressBar{text-align:center;}");
@@ -224,7 +253,7 @@ void MainWindow::initStatusBar()
     labelVerK7_0 = new QLabel(QString("K7_0:0x00000000"));
     labelVerK7_1 = new QLabel(QString("K7_1:0x00000000"));
     labelVerS6 = new QLabel(QString("S6:0x00000000"));
-    labelVerDriver = new QLabel(QString("Driver:0.0.00000"));
+    labelVerDriver = new QLabel(QString("Driver:%1").arg(driverVer));
 
     ui->statusBar->clearMessage();
     ui->statusBar->addWidget(labelProgressName);
@@ -238,43 +267,66 @@ void MainWindow::initStatusBar()
 
 void MainWindow::initMainTreeWidget()
 {
-    ui->mainTree->setHeaderHidden(true);
-    ui->mainTree->setRootIsDecorated(true);
-    ui->mainTree->clear();
-    ui->mainTree->setColumnCount(1);
-    ui->mainTree->setStyleSheet(
+    QFont font;
+    font.setPointSize(10);
+    font.setBold(true);
+    font.setWeight(75);
+
+    mainTree = new QTreeWidget;
+    mainTree->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Expanding);
+    mainTree->setHeaderHidden(true);
+    mainTree->setRootIsDecorated(true);
+    mainTree->clear();
+    mainTree->setColumnCount(1);
+    mainTree->setFont(font);
+    mainTree->setSelectionMode(QAbstractItemView::SingleSelection);
+    mainTree->setStyleSheet(
                 "QTreeWidget {background:rgb(179,217,255)}"
                 "QTreeWidget::item:selected {background:rgb(0,255,0);color:black;}");
+
+    connect(mainTree,&QTreeWidget::itemClicked,this,&MainWindow::on_mainTree_itemClicked);
 }
 
 void MainWindow::initMainTabWidget()
 {
-    ui->mainTab->setStyleSheet(
+    QFont font;
+    font.setPointSize(10);
+    font.setBold(true);
+    font.setWeight(75);
+
+    mainTab = new QTabWidget;
+    mainTab->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    mainTab->setFont(font);
+    mainTab->setStyleSheet(
                 "QTabBar::tab {height:20px; width:120px;}"
                 "QTabBar::tab:selected {background:rgb(0,255,0)}");
 
     QHBoxLayout *mainTabLayout = new QHBoxLayout;
     mainTabLayout->addLayout(&childDlgLayout);
-    ui->mainTab->setLayout(mainTabLayout);
+    mainTab->setLayout(mainTabLayout);
+
+    connect(mainTab,&QTabWidget::currentChanged,this,&MainWindow::on_mainTab_currentChanged);
 }
 
 void MainWindow::initMsgLogDlg()
 {
     msgLogModel = new QMsgLogModel;
-    ui->msgTableView->setModel(msgLogModel);
-    ui->msgTableView->setColumnWidth(0,50);
-    ui->msgTableView->setColumnWidth(1,125);
-    ui->msgTableView->setColumnWidth(2,350);
-    ui->msgTableView->setColumnWidth(3,50);
-    ui->msgTableView->setColumnWidth(4,80);
-    ui->msgTableView->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
-    ui->msgTableView->verticalHeader()->setDefaultSectionSize(18);
 
-    ui->msgTableView->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
-    ui->msgTableView->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
-    ui->msgTableView->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Stretch);
-    ui->msgTableView->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
-    ui->msgTableView->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Fixed);
+    msgTableView = new Q_RDDT_TableView;
+    msgTableView->setModel(msgLogModel);
+    msgTableView->setColumnWidth(0,50);
+    msgTableView->setColumnWidth(1,125);
+    msgTableView->setColumnWidth(2,350);
+    msgTableView->setColumnWidth(3,50);
+    msgTableView->setColumnWidth(4,80);
+    msgTableView->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
+    msgTableView->verticalHeader()->setDefaultSectionSize(18);
+
+    msgTableView->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
+    msgTableView->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
+    msgTableView->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Stretch);
+    msgTableView->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
+    msgTableView->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Fixed);
 
     connect(this,SIGNAL(addMsgList(int)),msgLogModel,SLOT(update(int)));
     connect(this,SIGNAL(addMsgList(int)),this,SLOT(updateMsgTable(int)));
@@ -283,21 +335,24 @@ void MainWindow::initMsgLogDlg()
 void MainWindow::initRegLogDlg()
 {
     regLogModel = new QRegLogModel;
-    ui->regTableView->setModel(regLogModel);
-    ui->regTableView->setColumnWidth(0,68);
-    ui->regTableView->setColumnWidth(1,68);
-    ui->regTableView->setColumnWidth(2,60);
-    ui->regTableView->setColumnWidth(3,85);
-    ui->regTableView->setColumnWidth(4,85);
-    ui->regTableView->setColumnWidth(5,50);
-    ui->regTableView->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
-    ui->regTableView->verticalHeader()->setDefaultSectionSize(18);
-    ui->regTableView->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
-    ui->regTableView->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
-    ui->regTableView->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
-    ui->regTableView->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
-    ui->regTableView->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Fixed);
-    ui->regTableView->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Stretch);
+
+    regTableView = new Q_RDDT_TableView;
+    regTableView->setMinimumSize(QSize(440, 0));
+    regTableView->setModel(regLogModel);
+    regTableView->setColumnWidth(0,68);
+    regTableView->setColumnWidth(1,68);
+    regTableView->setColumnWidth(2,60);
+    regTableView->setColumnWidth(3,85);
+    regTableView->setColumnWidth(4,85);
+    regTableView->setColumnWidth(5,50);
+    regTableView->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
+    regTableView->verticalHeader()->setDefaultSectionSize(18);
+    regTableView->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
+    regTableView->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
+    regTableView->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
+    regTableView->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
+    regTableView->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Fixed);
+    regTableView->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Stretch);
 
     connect(this,SIGNAL(addRegList(int)),regLogModel,SLOT(update(int)));
     connect(this,SIGNAL(addRegList(int)),this,SLOT(updateRegTable(int)));
@@ -346,35 +401,36 @@ void MainWindow::setProgClr(const QColor clr)
 
 void MainWindow::updateMsgTable(int row)
 {
-    ui->msgTableView->scrollToBottom();
-    ui->msgTableView->selectRow(row - 1);
+    msgTableView->scrollToBottom();
+    msgTableView->selectRow(row - 1);
 }
 
 void MainWindow::updateRegTable(int row)
 {
-    ui->regTableView->scrollToBottom();
-    ui->regTableView->selectRow(row - 1);
+    regTableView->scrollToBottom();
+    regTableView->selectRow(row - 1);
 }
 
 void MainWindow::threadProcess(const QWinThread::Process p)
 {
-    if (p == QWinThread::PREPARE) {
-        setProgClr(Qt::darkGreen);
-    } else if (p == QWinThread::STARTED) {
-        setProgClr(Qt::green);
-    } else if (p == QWinThread::RUNNING_EXCEPT || p == QWinThread::END_EXCEPT) {
-        setProgClr(Qt::red);
-    } else if (p == QWinThread::PAUSED) {
-        setProgClr(Qt::yellow);
+    switch (p) {
+    case QWinThread::PREPARE : return setProgClr(Qt::darkGreen);
+    case QWinThread::STARTED : return setProgClr(Qt::green);
+    case QWinThread::RUNNING_EXCEPT :
+    case QWinThread::END_EXCEPT : return setProgClr(Qt::red);
+    case QWinThread::PAUSED : return setProgClr(Qt::yellow);
+    default : return;
     }
 }
 
 void MainWindow::on_mainTree_itemClicked(QTreeWidgetItem *item, int column)
 {
-    disconnect(ui->mainTab,SIGNAL(currentChanged(int)),this,SLOT(on_mainTab_currentChanged(int)));
+    Q_UNUSED(column);
+
+    disconnect(mainTab,&QTabWidget::currentChanged,this,&MainWindow::on_mainTab_currentChanged);
     currentWidgets->mainTreeItemClicked(item);
-    connect(ui->mainTab,SIGNAL(currentChanged(int)),this,SLOT(on_mainTab_currentChanged(int)));
-    ui->mainTab->setCurrentIndex(RFIdx);
+    connect(mainTab,&QTabWidget::currentChanged,this,&MainWindow::on_mainTab_currentChanged);
+    mainTab->setCurrentIndex(int(RFIdx));
 }
 
 void MainWindow::on_mainTab_currentChanged(int index)
@@ -383,7 +439,7 @@ void MainWindow::on_mainTab_currentChanged(int index)
         return;
     }
 
-    RFIdx = index;
+    RFIdx = quint32(index);
 
     currentWidgets->updatePtr();
     currentWidgets->mainTabCurrentChanged(index);

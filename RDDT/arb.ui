@@ -108,7 +108,7 @@
   <customwidget>
    <class>Q_Config_Table_View</class>
    <extends>QTableView</extends>
-   <header>global.h</header>
+   <header>config_table.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

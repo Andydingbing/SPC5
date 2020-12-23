@@ -7,6 +7,44 @@
 namespace rd {
 namespace ns_sp9500x {
 
+struct data_f_fr_tx_rf_if_0000_3000_t : public data_f_fr<200>
+{
+    DATA_F_KEY_MIN(ns_sp1403::tx_freq_star)
+    DATA_F_KEY_MAX(ns_sp1403::tx_freq_sec0)
+};
+
+struct data_f_fr_tx_rf_0000_3000_t : public data_f_fr<1>
+{
+    DATA_F_KEY_MIN(ns_sp1403::tx_freq_star)
+    DATA_F_KEY_MAX(ns_sp1403::tx_freq_sec0)
+};
+
+struct data_f_fr_tx_rf_3000_4800_t : public data_f_fr<1>
+{
+    DATA_F_KEY_MIN(ns_sp1403::tx_freq_sec0 - FREQ_M(400))
+    DATA_F_KEY_MAX(ns_sp1403::tx_freq_sec1 + FREQ_M(400))
+};
+
+struct data_f_fr_tx_rf_4800_6000_t : public data_f_fr<1>
+{
+    DATA_F_KEY_MIN(ns_sp1403::tx_freq_sec1 - FREQ_M(400))
+    DATA_F_KEY_MAX(ns_sp1403::tx_freq_sec2 + FREQ_M(400))
+};
+
+struct data_f_fr_tx_rf_6000_7500_t : public data_f_fr<1>
+{
+    DATA_F_KEY_MIN(ns_sp1403::tx_freq_sec2 - FREQ_M(400))
+    DATA_F_KEY_MAX(ns_sp1403::tx_freq_sec3 + FREQ_M(400))
+};
+
+typedef fr_table_t<data_f_fr_tx_rf_if_0000_3000_t>  tx_rf_if_fr_0000_3000_table_t;
+typedef fr_table_t<data_f_fr_tx_rf_0000_3000_t>     tx_rf_fr_0000_3000_table_t;
+typedef fr_table_t<data_f_fr_tx_rf_3000_4800_t>     tx_rf_fr_3000_4800_table_t;
+typedef fr_table_t<data_f_fr_tx_rf_4800_6000_t>     tx_rf_fr_4800_6000_table_t;
+typedef fr_table_t<data_f_fr_tx_rf_6000_7500_t>     tx_rf_fr_6000_7500_table_t;
+typedef fr_table_t<data_f_fr<400>>                  tx_if_fr_3000_7500_table_t;
+
+
 struct data_f_tx_filter : cal_table::basic_data_f_t
 {
     int16_t coef_real[ns_sp2406::dl_cf_tap];

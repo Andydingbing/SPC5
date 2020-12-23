@@ -16,7 +16,7 @@ public:
     bool initSP9500X();
 
 signals:
-    void swhwVerReady(const sp3301::rfu_info_t &info,const char *driver);
+    void swhwVerReady(const sp3301::rfu_info_t &info);
 
 public:
     bool silent;

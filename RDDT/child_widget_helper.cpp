@@ -91,7 +91,7 @@ void ChildWidgetHelper::setMainTree(const QList<TreeChildItem *> childItems)
             }
         }
         if (iterItem == rootItems.end()) {
-            rootItems.append(new QTreeWidgetItem(ui->mainTree,QStringList(*((*iterCI)->stringList.begin()))));
+            rootItems.append(new QTreeWidgetItem(parent->mainTree,QStringList(*((*iterCI)->stringList.begin()))));
         }
     }
 
@@ -102,7 +102,7 @@ void ChildWidgetHelper::setMainTree(const QList<TreeChildItem *> childItems)
         }
     }
 
-    ui->mainTree->expandAll();
+    parent->mainTree->expandAll();
     for (int i = 0;i < rootItems.size();i ++) {
         if (i >= 2) {
             rootItems.at(i)->setExpanded(false);
@@ -114,12 +114,12 @@ void ChildWidgetHelper::mainTreeItemClicked(QTreeWidgetItem *item)
 {
     QList<TreeChildItem *>::const_iterator iterItems;
 
-    ui->mainTab->clear();
+    parent->mainTab->clear();
 
     for (iterItems = _items.constBegin();iterItems != _items.constEnd();++iterItems) {
         if (compare((*iterItems)->stringList,item)) {
             for (int i = 0;i < (*iterItems)->tabWidgets.size();++i) {
-                ui->mainTab->addTab((*iterItems)->tabWidgets.at(i),tabName(i));
+                parent->mainTab->addTab((*iterItems)->tabWidgets.at(i),tabName(i));
             }
             return;
         }
