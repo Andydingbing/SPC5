@@ -160,7 +160,7 @@ freq_formula_in::freq_formula_in()
 void freq_formula(const freq_formula_in &in,freq_formula_out &out)
 {
     const uint16_t div[18] = { 2,4,6,8,12,16,24,32,48,64,72,96,128,192,256,384,512,768 };
-    const uint64_t step = FREQ_K(500);
+    const uint64_t step = FREQ_K(1000);
     uint64_t freq_vco = in.freq_rf;
     uint16_t div_idx = 0;
 

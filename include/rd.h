@@ -155,9 +155,10 @@ template<int T> int32_t name##_t<T>
 #define FREQ_G(freq) freq##000000000ll
 
 #ifdef RD_C_MSC
-    #pragma warning ( disable : 4996 )
-    #pragma warning ( disable : 4100 )
-    #pragma warning ( disable : 4251 )
+    #pragma warning(disable : 4996)
+    #pragma warning(disable : 4100)
+    #pragma warning(disable : 4251)
+    #pragma warning(disable : 4275)
 #elif defined RD_C_GNUC
     #pragma GCC diagnostic ignored "-Wunused-parameter"
     #pragma GCC diagnostic ignored "-Wunused-variable"

@@ -85,16 +85,19 @@ MainWindow::MainWindow(QWidget *parent) :
     QSplitter *topSplitter    = new QSplitter(Qt::Horizontal,mainSplitter);
     QSplitter *bottomSplitter = new QSplitter(Qt::Horizontal,mainSplitter);
 
+    topSplitter->setHandleWidth(0);
     topSplitter->addWidget(mainTree);
     topSplitter->addWidget(mainTab);
     topSplitter->setStretchFactor(0,0);
     topSplitter->setStretchFactor(1,1);
 
+    bottomSplitter->setHandleWidth(0);
     bottomSplitter->addWidget(msgTableView);
     bottomSplitter->addWidget(regTableView);
     bottomSplitter->setStretchFactor(0,1);
     bottomSplitter->setStretchFactor(1,0);
 
+    mainSplitter->setHandleWidth(0);
     mainSplitter->setStretchFactor(0,5);
     mainSplitter->setStretchFactor(1,1);
 
@@ -284,7 +287,7 @@ void MainWindow::initMainTreeWidget()
                 "QTreeWidget {background:rgb(179,217,255)}"
                 "QTreeWidget::item:selected {background:rgb(0,255,0);color:black;}");
 
-    connect(mainTree,&QTreeWidget::itemClicked,this,&MainWindow::on_mainTree_itemClicked);
+    connect(mainTree,&QTreeWidget::itemClicked,this,&MainWindow::mainTree_itemClicked);
 }
 
 void MainWindow::initMainTabWidget()
@@ -305,7 +308,7 @@ void MainWindow::initMainTabWidget()
     mainTabLayout->addLayout(&childDlgLayout);
     mainTab->setLayout(mainTabLayout);
 
-    connect(mainTab,&QTabWidget::currentChanged,this,&MainWindow::on_mainTab_currentChanged);
+    connect(mainTab,&QTabWidget::currentChanged,this,&MainWindow::mainTab_currentChanged);
 }
 
 void MainWindow::initMsgLogDlg()
@@ -423,17 +426,17 @@ void MainWindow::threadProcess(const QWinThread::Process p)
     }
 }
 
-void MainWindow::on_mainTree_itemClicked(QTreeWidgetItem *item, int column)
+void MainWindow::mainTree_itemClicked(QTreeWidgetItem *item, int column)
 {
     Q_UNUSED(column);
 
-    disconnect(mainTab,&QTabWidget::currentChanged,this,&MainWindow::on_mainTab_currentChanged);
+    disconnect(mainTab,&QTabWidget::currentChanged,this,&MainWindow::mainTab_currentChanged);
     currentWidgets->mainTreeItemClicked(item);
-    connect(mainTab,&QTabWidget::currentChanged,this,&MainWindow::on_mainTab_currentChanged);
+    connect(mainTab,&QTabWidget::currentChanged,this,&MainWindow::mainTab_currentChanged);
     mainTab->setCurrentIndex(int(RFIdx));
 }
 
-void MainWindow::on_mainTab_currentChanged(int index)
+void MainWindow::mainTab_currentChanged(int index)
 {
     if (index == -1) {
         return;

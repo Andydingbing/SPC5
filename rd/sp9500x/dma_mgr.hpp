@@ -13,6 +13,8 @@ class RD_API dma_mgr : boost::noncopyable
 {
 public:
     typedef boost::shared_ptr<dma_mgr> sptr;
+    dma_mgr() : _rf_idx(1),_v9(nullptr) {}
+    dma_mgr(uint32_t rf_idx) : _rf_idx(rf_idx),_v9(nullptr) {}
     ~dma_mgr();
 
     void set_ctrller(pci_dev *ctrller) { _v9 = ctrller; }
@@ -56,6 +58,7 @@ public:
     int32_t test_case(const uint64_t samples);
 
 private:
+    uint32_t _rf_idx;
     pci_dev *_v9;
     memory_allocator _memory_dl;
     memory_allocator _memory_ul;

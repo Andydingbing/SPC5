@@ -1,5 +1,6 @@
 #include "lmx2594_dlg.h"
 #include "ui_lmx2594.h"
+#include "global.h"
 #include "reg_def_lmx2594.h"
 #include "algo_chip_pll.hpp"
 
@@ -66,6 +67,9 @@ Q_LMX2594_Dlg::Q_LMX2594_Dlg(QWidget *parent) :
         ui->lineEditRFFreq->setText(QString::fromStdString(RF->lo_freq_string(LO)));
         updateFreq();
     }
+
+    ui->lineEditAddr->setText("0x00");
+    ui->lineEditData->setText("0x0000");
 }
 
 Q_LMX2594_Dlg::~Q_LMX2594_Dlg()
@@ -387,4 +391,19 @@ void Q_LMX2594_Dlg::on_checkBoxSEG1_clicked(bool checked)
 void Q_LMX2594_Dlg::on_comboBoxCHDIV_activated(int index)
 {
     updateReg0x4b();
+}
+
+void Q_LMX2594_Dlg::on_pushButtonWrite_clicked()
+{
+    quint8 addr = quint8(ui->lineEditAddr->text().toUShort(nullptr,16));
+    quint16 data = ui->lineEditData->text().toUShort(nullptr,16);
+    RF->set_lo_reg(LO,addr,data);
+}
+
+void Q_LMX2594_Dlg::on_pushButtonRead_clicked()
+{
+    quint16 data = 0;
+    quint8 addr = quint8(ui->lineEditAddr->text().toUShort(nullptr,16));
+    RF->get_lo_reg(LO,addr,data);
+    ui->lineEditData->setText(DecimalToHexString(data));
 }

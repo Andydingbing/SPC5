@@ -31,7 +31,7 @@ RD_SP9500X_IQ_Capture_Param::RD_SP9500X_IQ_Capture_Param()
 
 RD_SP9500X_CA_Map::RD_SP9500X_CA_Map()
 {
-
+    memset(this,0,sizeof(*this));
 }
 
 int32_t SP9500X_RF_SetBitPath(const char *Path)
@@ -133,9 +133,6 @@ int32_t SP9500X_RF_SetRxFrequencyShift(const uint32_t RFIndex,const int64_t Freq
     DECL_DYNAMIC_SP1403;
 
     vi_pci_dev *_v9 = SP3103_0.v9();
-//    uint64_t freq_sub8_cur = SP1403->rx_freq();
-
-    Log.stdprintf("freq_shift = %lld\n",Freq);
 
     SP9500X_RFU_V9_REG_DECL(0x0462);
     SP9500X_RFU_V9_R(0x0462);
@@ -144,26 +141,102 @@ int32_t SP9500X_RF_SetRxFrequencyShift(const uint32_t RFIndex,const int64_t Freq
     return 0;
 }
 
+RD_INLINE bool is_ca_carrier_valid(const RD_SP9500X_CA_Carrier &carrier)
+{
+    if (carrier.Channel % 2 == 1) {
+        if (carrier.Bandwidth > SP9500X_CA_100M) {
+            return false;
+        }
+    }
+
+    if (carrier.Channel == 2 || carrier.Channel == 6) {
+        if (carrier.Bandwidth > SP9500X_CA_200M) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool is_ca_map_valid(const RD_SP9500X_CA_Map &map)
+{
+    for (uint8_t i = 0;i < ARRAY_SIZE(map.Carrier);++i) {
+        if (map.Carrier[i].Bandwidth == SP9500X_CA_Invalid) {
+            continue;
+        }
+
+        if (is_ca_carrier_valid(map.Carrier[i]) == false) {
+            return false;
+        }
+    }
+    return true;
+}
+
 int32_t SP9500X_RF_SetTxCAMap(const uint32_t RFIndex,const RD_SP9500X_CA_Map &Map)
 {
     DECL_DYNAMIC_SP3103;
     DECL_DYNAMIC_SP2406;
 
     uint8_t ch = 0;
-    dl_src_t src = dl_src_t::CPRI;
-    double freq = 0.0;
+    int64_t freq = 0;
+    double freq_min_ch_0_3 =  400.0 + 1;
+    double freq_max_ch_0_3 = -400.0 - 1;
+    double freq_min_ch_4_7 =  400.0 + 1;
+    double freq_max_ch_4_7 = -400.0 - 1;
+    double freq_dds1 = 0.0;
+
+    vector<const RD_SP9500X_CA_Carrier *> carrier_ch_0_3;
+    vector<const RD_SP9500X_CA_Carrier *> carrier_ch_4_7;
+    vector<const RD_SP9500X_CA_Carrier *>::iterator iter;
 
     for (uint8_t i = 0;i < ARRAY_SIZE(Map.Carrier);++i) {
-        ch = Map.Carrier[i].Index;
-        src = Map.Carrier[i].Bandwidth == SP9500X_CA_Invalid ? dl_src_t::Disable : dl_src_t::CPRI;
-        freq = Map.Carrier[i].Freq /*+ FREQ_M(200) * (ch < 4 ? 1 : -1)*/;
+        if (Map.Carrier[i].Bandwidth == SP9500X_CA_Invalid) {
+//            INT_CHECK(SP2406->set_dl_src(Map.Carrier[i].Channel,dl_src_t::Disable));
+            continue;
+        }
 
-        INT_CHECK(SP2406->set_dl_src(ch,src));
-        INT_CHECK(SP2406->set_dl_dds0(ch,freq));
-        INT_CHECK(SP2406->set_dl_cpri_map(ch,i));
-        INT_CHECK(SP2406->set_dl_hbf0_en(ch,Map.Carrier[i].Bandwidth == SP9500X_CA_100M));
-        INT_CHECK(SP2406->set_dl_hbf1_en(ch,Map.Carrier[i].Bandwidth <= SP9500X_CA_200M));
+        INT_CHECK(SP2406->set_dl_src(Map.Carrier[i].Channel,dl_src_t::CPRI));
+//        INT_CHECK(SP2406->set_dl_cpri_map(Map.Carrier[i].Channel,i));
+
+        freq = Map.Carrier[i].Freq;
+        if (Map.Carrier[i].Channel < 4) {
+            freq_min_ch_0_3 = freq < freq_min_ch_0_3 ? freq : freq_min_ch_0_3;
+            freq_max_ch_0_3 = freq > freq_max_ch_0_3 ? freq : freq_max_ch_0_3;
+            carrier_ch_0_3.push_back(&Map.Carrier[i]);
+        } else {
+            freq_min_ch_4_7 = freq < freq_min_ch_4_7 ? freq : freq_min_ch_4_7;
+            freq_max_ch_4_7 = freq > freq_max_ch_4_7 ? freq : freq_max_ch_4_7;
+            carrier_ch_4_7.push_back(&Map.Carrier[i]);
+        }
     }
+
+    if (carrier_ch_0_3.size() > 0) {
+        freq_dds1 = (freq_min_ch_0_3 + freq_max_ch_0_3) / 2.0;
+        INT_CHECK(SP2406->set_dl_dds1_ch0_3(freq_dds1));
+
+        for (iter = carrier_ch_0_3.begin();iter != carrier_ch_0_3.end();++iter) {
+            ch = (*iter)->Channel;
+
+            INT_CHECK(SP2406->set_dl_cpri_sr(ch,dl_cpri_sr_t::_from_index((*iter)->Bandwidth - 1)));
+            INT_CHECK(SP2406->set_dl_hbf0_en(ch,(*iter)->Bandwidth == SP9500X_CA_100M));
+            INT_CHECK(SP2406->set_dl_hbf1_en(ch,(*iter)->Bandwidth <= SP9500X_CA_200M));
+            INT_CHECK(SP2406->set_dl_dds0(ch,(*iter)->Freq - freq_dds1));
+        }
+    }
+
+    if (carrier_ch_4_7.size() > 0) {
+        freq_dds1 = (freq_min_ch_4_7 + freq_max_ch_4_7) / 2.0;
+        INT_CHECK(SP2406->set_dl_dds1_ch4_7(freq_dds1));
+
+        for (iter = carrier_ch_4_7.begin();iter != carrier_ch_4_7.end();++iter) {
+            ch = (*iter)->Channel;
+
+            INT_CHECK(SP2406->set_dl_cpri_sr(ch,dl_cpri_sr_t::_from_index((*iter)->Bandwidth - 1)));
+            INT_CHECK(SP2406->set_dl_hbf0_en(ch,(*iter)->Bandwidth == SP9500X_CA_100M));
+            INT_CHECK(SP2406->set_dl_hbf1_en(ch,(*iter)->Bandwidth <= SP9500X_CA_200M));
+            INT_CHECK(SP2406->set_dl_dds0(ch,(*iter)->Freq - freq_dds1));
+        }
+    }
+
     return 0;
 }
 
@@ -173,17 +246,62 @@ int32_t SP9500X_RF_SetRxCAMap(const uint32_t RFIndex,const RD_SP9500X_CA_Map &Ma
     DECL_DYNAMIC_SP2406;
 
     uint8_t ch = 0;
-    double freq = 0.0;
+    int64_t freq = 0;
+    double freq_min_ch_0_3 =  400.0 + 1;
+    double freq_max_ch_0_3 = -400.0 - 1;
+    double freq_min_ch_4_7 =  400.0 + 1;
+    double freq_max_ch_4_7 = -400.0 - 1;
+    double freq_ddc1 = 0.0;
+
+    vector<const RD_SP9500X_CA_Carrier *> carrier_ch_0_3;
+    vector<const RD_SP9500X_CA_Carrier *> carrier_ch_4_7;
+    vector<const RD_SP9500X_CA_Carrier *>::iterator iter;
 
     for (uint8_t i = 0;i < ARRAY_SIZE(Map.Carrier);++i) {
-        ch = Map.Carrier[i].Index;
-        freq = Map.Carrier[i].Freq /*+ FREQ_M(200) * (ch < 4 ? 1 : -1)*/;
+        if (Map.Carrier[i].Bandwidth == SP9500X_CA_Invalid) {
+            continue;
+        }
 
-        INT_CHECK(SP2406->set_ul_hbf1_en(ch,Map.Carrier[i].Bandwidth <= SP9500X_CA_200M));
-        INT_CHECK(SP2406->set_ul_hbf2_en(ch,Map.Carrier[i].Bandwidth == SP9500X_CA_100M));
-        INT_CHECK(SP2406->set_ul_ddc1(ch,freq));
-        INT_CHECK(SP2406->set_ul_cpri_map(ch,i));
+//        INT_CHECK(SP2406->set_ul_cpri_map(Map.Carrier[i].Channel,i));
+
+        freq = Map.Carrier[i].Freq;
+        if (Map.Carrier[i].Channel < 4) {
+            freq_min_ch_0_3 = freq < freq_min_ch_0_3 ? freq : freq_min_ch_0_3;
+            freq_max_ch_0_3 = freq > freq_max_ch_0_3 ? freq : freq_max_ch_0_3;
+            carrier_ch_0_3.push_back(&Map.Carrier[i]);
+        } else {
+            freq_min_ch_4_7 = freq < freq_min_ch_4_7 ? freq : freq_min_ch_4_7;
+            freq_max_ch_4_7 = freq > freq_max_ch_4_7 ? freq : freq_max_ch_4_7;
+            carrier_ch_4_7.push_back(&Map.Carrier[i]);
+        }
     }
+
+    if (carrier_ch_0_3.size() > 0) {
+        freq_ddc1 = (freq_min_ch_0_3 + freq_max_ch_0_3) / 2.0;
+        INT_CHECK(SP2406->set_ul_ddc0_ch0_3(freq_ddc1));
+
+        for (iter = carrier_ch_0_3.begin();iter != carrier_ch_0_3.end();++iter) {
+            ch = (*iter)->Channel;
+
+            INT_CHECK(SP2406->set_ul_hbf1_en(ch,(*iter)->Bandwidth <= SP9500X_CA_200M));
+            INT_CHECK(SP2406->set_ul_hbf2_en(ch,(*iter)->Bandwidth == SP9500X_CA_100M));
+            INT_CHECK(SP2406->set_ul_ddc1(ch,(*iter)->Freq - freq_ddc1));
+        }
+    }
+
+    if (carrier_ch_4_7.size() > 0) {
+        freq_ddc1 = (freq_min_ch_4_7 + freq_max_ch_4_7) / 2.0;
+        INT_CHECK(SP2406->set_ul_ddc0_ch4_7(freq_ddc1));
+
+        for (iter = carrier_ch_4_7.begin();iter != carrier_ch_4_7.end();++iter) {
+            ch = (*iter)->Channel;
+
+            INT_CHECK(SP2406->set_ul_hbf1_en(ch,(*iter)->Bandwidth <= SP9500X_CA_200M));
+            INT_CHECK(SP2406->set_ul_hbf2_en(ch,(*iter)->Bandwidth == SP9500X_CA_100M));
+            INT_CHECK(SP2406->set_ul_ddc1(ch,(*iter)->Freq - freq_ddc1));
+        }
+    }
+
     return 0;
 }
 

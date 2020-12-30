@@ -84,6 +84,8 @@ public slots:
 private slots:
     void on_pushButtonCap_clicked();
 
+    void on_pushButtonAbort_clicked();
+
     void on_pushButtonShowTD_clicked();
 
     void on_pushButtonShowDFT_clicked();

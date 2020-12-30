@@ -1,7 +1,7 @@
 # Thrid party libraries
 QWT_VER   = 6.1.3
 FFTW_VER  = 3.3.8
-BOOST_VER = 1_67_0
+BOOST_VER = 1_75_0
 
 # Directory defination
 UTILITIES_DIR = ../utilities

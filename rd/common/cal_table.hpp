@@ -11,6 +11,7 @@
 #include <vector>
 #include <set>
 #include <fstream>
+#include "algo_math.hpp"
 
 #include "liblog.h"
 
@@ -134,7 +135,7 @@ public:
 
         _data_f->clear();
         _data_f->assign(data_f_before_size / size_of_data_f(),data_f_t());
-//        _data_f->resize(data_f_before_size / size_of_data_f());
+        // _data_f->resize(data_f_before_size / size_of_data_f());
 
         if (data_f_before != nullptr && data_f_before_size != 0) {
             memcpy(data_f(0),data_f_before,data_f_before_size);
@@ -150,8 +151,10 @@ public:
         data_f_t data;
 
         for (iter_keys = keys->begin();iter_keys != keys->end();++iter_keys) {
-            data.set_key(*iter_keys);
-            _data_calibrating->push_back(data);
+           if (is_between(*iter_keys, data.key_lower_bound(),data.key_upper_bound())) {
+                data.set_key(*iter_keys);
+                _data_calibrating->push_back(data);
+           }
         }
     }
 
@@ -246,18 +249,19 @@ int32_t save_as(const std::vector<data_f_t> *data,const std::string &path)
         }
         stream << "\n";
     }
+    return 0;
 }
 
 template<uint32_t n = 1>
 struct data_m_fr
 { double pwr[n]; };
 
-template<typename data_f_t = data_f_fr<1>,typename data_m_t = data_m_fr<data_f_t::size>>
-class fr_table_t : public cal_table_data<data_f_t,data_m_t>
+template<typename data_f_fr_t = data_f_fr<1>,typename data_m_fr_t = data_m_fr<data_f_fr_t::size>>
+class fr_table_t : public cal_table_data<data_f_fr_t,data_m_fr_t>
 {
 public:
-    typedef data_f_t data_f_t;
-    typedef data_m_t data_m_t;
+    using data_f_t = data_f_fr_t;
+    using data_m_t = data_m_fr_t;
 
     void map_from(void *data,uint32_t pts)
     {

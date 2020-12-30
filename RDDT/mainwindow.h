@@ -121,9 +121,9 @@ signals:
     void addRegList(int row);
 
 private slots:
-    void on_mainTree_itemClicked(QTreeWidgetItem *item, int column);
+    void mainTree_itemClicked(QTreeWidgetItem *item, int column);
 
-    void on_mainTab_currentChanged(int index);
+    void mainTab_currentChanged(int index);
 
 public:
     Ui::MainWindow *ui;

@@ -135,6 +135,14 @@ void Q_SA_Widget::on_pushButtonCap_clicked()
     updatePlotFromBuf();
 }
 
+
+void Q_SA_Widget::on_pushButtonAbort_clicked()
+{
+    if (project == SP9500X) {
+        NS_SP9500X::SP2406->set_iq_cap_abort();
+    }
+}
+
 //void Q_SA_Widget::on_pushButtonSetPath_clicked()
 //{
 //    QString path = QFileDialog::getOpenFileName(this,tr("Select Target File"),"","");

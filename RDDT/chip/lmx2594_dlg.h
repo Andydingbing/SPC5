@@ -88,6 +88,10 @@ private slots:
 
     void on_comboBoxCHDIV_activated(int index);
 
+    void on_pushButtonWrite_clicked();
+
+    void on_pushButtonRead_clicked();
+
 public:
     rd::sp1403_r1a *RF;
     rd::sp1403::lo_t LO;

@@ -47,7 +47,7 @@ enum RD_SP9500X_JESD {
 
 struct RD_API RD_SP9500X_CA_Carrier {
     int64_t Freq;
-    uint8_t Index;
+    uint8_t Channel;
     RD_SP9500X_CA_Bandwidth Bandwidth;
 };
 

@@ -229,7 +229,7 @@ public:
         quint32 pts = set_helper::parse(p->ui->lineEditRFFreqs->text().toStdString(),freqs);
 
         if (configDelegate->checkBoxCal_RF_IF_FR_0000_3000->isChecked()) {
-            SP1403->prepare_cal(cal_table_t::TX_RF_IF_FR_0000_3000,freqs.before(ns_sp1403::tx_freq_sec0));
+            SP1403->prepare_cal(cal_table_t::TX_RF_IF_FR_0000_3000,freqs.freq);
 
             for (int i = 0;i < curveRF_IF_FR_0000_3000.size();++i) {
                 curveRF_IF_FR_0000_3000[i]->detach();

@@ -2149,48 +2149,48 @@ int32_t sp2406::get_iq_cap_src_duc_ch(uint8_t &ch) const
 
 int32_t sp2406::set_iq_cap_sr(const iq_cap_sr_t &sr)
 {
-    SP9500X_RFU_V9_REG_DECL(0x0249);
+    SP9500X_RFU_V9_REG_DECL_2(0x0249,0x0269);
 
-    SP9500X_RFU_V9_REG(0x0249).sr = sr;
-    SP9500X_RFU_V9_W(0x0249);
+    SP9500X_RFU_V9_REG_2(0x0249,0x0269).sr = sr;
+    SP9500X_RFU_V9_W_2(0x0249,0x0269);
     _ul_sequence.set_sr(122880000 * 8 / sr);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_sr(iq_cap_sr_t &sr) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0249);
+    SP9500X_RFU_V9_REG_DECL_2(0x0249,0x0269);
 
-    SP9500X_RFU_V9_R(0x0249);
-    sr = iq_cap_sr_t::_from_integral_unchecked(SP9500X_RFU_V9_REG(0x0249).sr);
+    SP9500X_RFU_V9_R_2(0x0249,0x0269);
+    sr = iq_cap_sr_t::_from_integral_unchecked(SP9500X_RFU_V9_REG_2(0x0249,0x0269).sr);
     return 0;
 }
 
 int32_t sp2406::set_iq_cap_mode(const iq_cap_mode_t mode) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0242);
+    SP9500X_RFU_V9_REG_DECL_2(0x0242,0x0262);
 
-    SP9500X_RFU_V9_REG(0x0242).mode = mode;
-    SP9500X_RFU_V9_W(0x0242);
+    SP9500X_RFU_V9_REG_2(0x0242,0x0262).mode = mode;
+    SP9500X_RFU_V9_W_2(0x0242,0x0262);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_mode(iq_cap_mode_t &mode) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0242);
+    SP9500X_RFU_V9_REG_DECL_2(0x0242,0x0262);
 
-    SP9500X_RFU_V9_R(0x0242);
-    mode = iq_cap_mode_t::_from_integral_unchecked(SP9500X_RFU_V9_REG(0x0242).mode);
+    SP9500X_RFU_V9_R_2(0x0242,0x0262);
+    mode = iq_cap_mode_t::_from_integral_unchecked(SP9500X_RFU_V9_REG_2(0x0242,0x0262).mode);
     return 0;
 }
 
 int32_t sp2406::set_iq_cap_samples(const uint32_t samples)
 {
-    SP9500X_RFU_V9_REG_DECL(0x024f);
+    SP9500X_RFU_V9_REG_DECL_2(0x024f,0x026f);
 
     _ul_sequence._new(samples);
-    SP9500X_RFU_V9_REG(0x024f).samples = samples;
-    SP9500X_RFU_V9_W(0x024f);
+    SP9500X_RFU_V9_REG_2(0x024f,0x026f).samples = samples;
+    SP9500X_RFU_V9_W_2(0x024f,0x026f);
 
     return _dma_mgr.set_fpga_w_samples(samples);
 }
@@ -2202,145 +2202,145 @@ int32_t sp2406::get_iq_cap_samples(uint32_t &samples) const
 
 int32_t sp2406::set_iq_cap_trig_src(const iq_cap_trig_src_t src) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0243);
+    SP9500X_RFU_V9_REG_DECL_2(0x0243,0x0263);
 
-    SP9500X_RFU_V9_REG(0x0243).trig_src = src;
-    SP9500X_RFU_V9_W(0x0243);
+    SP9500X_RFU_V9_REG_2(0x0243,0x0263).trig_src = src;
+    SP9500X_RFU_V9_W_2(0x0243,0x0263);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_trig_src(iq_cap_trig_src_t &src) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0243);
+    SP9500X_RFU_V9_REG_DECL_2(0x0243,0x0263);
 
-    SP9500X_RFU_V9_R(0x0243);
-    src = iq_cap_trig_src_t::_from_integral_unchecked(SP9500X_RFU_V9_REG(0x0243).trig_src);
+    SP9500X_RFU_V9_R_2(0x0243,0x0263);
+    src = iq_cap_trig_src_t::_from_integral_unchecked(SP9500X_RFU_V9_REG_2(0x0243,0x0263).trig_src);
     return 0;
 }
 
 int32_t sp2406::set_iq_cap_trig_edge(const iq_cap_trig_edge_t edge) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0244);
+    SP9500X_RFU_V9_REG_DECL_2(0x0244,0x0264);
 
-    SP9500X_RFU_V9_REG(0x0244).trig_edge = edge;
-    SP9500X_RFU_V9_W(0x0244);
+    SP9500X_RFU_V9_REG_2(0x0244,0x0264).trig_edge = edge;
+    SP9500X_RFU_V9_W_2(0x0244,0x0264);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_trig_edge(iq_cap_trig_edge_t &edge) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0244);
+    SP9500X_RFU_V9_REG_DECL_2(0x0244,0x0264);
 
-    SP9500X_RFU_V9_R(0x0244);
-    edge = iq_cap_trig_edge_t::_from_integral_unchecked(SP9500X_RFU_V9_REG(0x0244).trig_edge);
+    SP9500X_RFU_V9_R_2(0x0244,0x0264);
+    edge = iq_cap_trig_edge_t::_from_integral_unchecked(SP9500X_RFU_V9_REG_2(0x0244,0x0264).trig_edge);
     return 0;
 }
 
 int32_t sp2406::set_iq_cap_trig_threshold(const uint32_t threshold) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0245);
+    SP9500X_RFU_V9_REG_DECL_2(0x0245,0x0265);
 
-    SP9500X_RFU_V9_REG(0x0245).threshold = threshold;
-    SP9500X_RFU_V9_W(0x0245);
+    SP9500X_RFU_V9_REG_2(0x0245,0x0265).threshold = threshold;
+    SP9500X_RFU_V9_W_2(0x0245,0x0265);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_trig_threshold(uint32_t &threshold) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0245);
+    SP9500X_RFU_V9_REG_DECL_2(0x0245,0x0265);
 
-    SP9500X_RFU_V9_R(0x0245);
-    threshold = SP9500X_RFU_V9_REG(0x0245).threshold;
+    SP9500X_RFU_V9_R_2(0x0245,0x0265);
+    threshold = SP9500X_RFU_V9_REG_2(0x0245,0x0265).threshold;
     return 0;
 }
 
 int32_t sp2406::set_iq_cap_trig_offset(const int32_t offset) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0246);
+    SP9500X_RFU_V9_REG_DECL_2(0x0246,0x0266);
 
-    SP9500X_RFU_V9_REG(0x0246).trig_offset = offset;
-    SP9500X_RFU_V9_W(0x0246);
+    SP9500X_RFU_V9_REG_2(0x0246,0x0266).trig_offset = unsigned(offset);
+    SP9500X_RFU_V9_W_2(0x0246,0x0266);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_trig_offset(int32_t &offset) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0246);
+    SP9500X_RFU_V9_REG_DECL_2(0x0246,0x0266);
 
-    SP9500X_RFU_V9_R(0x0246);
-    offset = SP9500X_RFU_V9_REG(0x0246).trig_offset;
+    SP9500X_RFU_V9_R_2(0x0246,0x0266);
+    offset = int32_t(SP9500X_RFU_V9_REG_2(0x0246,0x0266).trig_offset);
     return 0;
 }
 
 int32_t sp2406::set_iq_cap_trig_gap(const uint32_t gap) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0248);
+    SP9500X_RFU_V9_REG_DECL_2(0x0248,0x0268);
 
-    SP9500X_RFU_V9_REG(0x0248).trig_gap = gap;
-    SP9500X_RFU_V9_W(0x0248);
+    SP9500X_RFU_V9_REG_2(0x0248,0x0268).trig_gap = gap;
+    SP9500X_RFU_V9_W_2(0x0248,0x0268);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_trig_gap(uint32_t &gap) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0248);
+    SP9500X_RFU_V9_REG_DECL_2(0x0248,0x0268);
 
-    SP9500X_RFU_V9_R(0x0248);
-    gap = SP9500X_RFU_V9_REG(0x0248).trig_gap;
+    SP9500X_RFU_V9_R_2(0x0248,0x0268);
+    gap = SP9500X_RFU_V9_REG_2(0x0248,0x0268).trig_gap;
     return 0;
 }
 
 int32_t sp2406::set_iq_cap_trig_frame(const uint16_t frame) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x024a);
+    SP9500X_RFU_V9_REG_DECL_2(0x024a,0x026a);
 
-    SP9500X_RFU_V9_REG(0x024a).frame = frame;
-    SP9500X_RFU_V9_W(0x024a);
+    SP9500X_RFU_V9_REG_2(0x024a,0x026a).frame = frame;
+    SP9500X_RFU_V9_W_2(0x024a,0x026a);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_trig_frame(uint16_t &frame) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x024a);
+    SP9500X_RFU_V9_REG_DECL_2(0x024a,0x026a);
 
-    SP9500X_RFU_V9_R(0x024a);
-    frame = SP9500X_RFU_V9_REG(0x024a).frame;
+    SP9500X_RFU_V9_R_2(0x024a,0x026a);
+    frame = SP9500X_RFU_V9_REG_2(0x024a,0x026a).frame;
     return 0;
 }
 
 int32_t sp2406::set_iq_cap_trig_frame_x(const uint16_t x) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x024b);
+    SP9500X_RFU_V9_REG_DECL_2(0x024b,0x026b);
 
-    SP9500X_RFU_V9_REG(0x024b).x = x;
-    SP9500X_RFU_V9_W(0x024b);
+    SP9500X_RFU_V9_REG_2(0x024b,0x026b).x = x;
+    SP9500X_RFU_V9_W_2(0x024b,0x026b);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_trig_frame_x(uint16_t &x) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x024b);
+    SP9500X_RFU_V9_REG_DECL_2(0x024b,0x026b);
 
-    SP9500X_RFU_V9_R(0x024b);
-    x = SP9500X_RFU_V9_REG(0x024b).x;
+    SP9500X_RFU_V9_R_2(0x024b,0x026b);
+    x = SP9500X_RFU_V9_REG_2(0x024b,0x026b).x;
     return 0;
 }
 
 int32_t sp2406::set_iq_cap_trig_frame_y(const uint16_t y) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x024c);
+    SP9500X_RFU_V9_REG_DECL_2(0x024c,0x026c);
 
-    SP9500X_RFU_V9_REG(0x024c).y = y;
-    SP9500X_RFU_V9_W(0x024c);
+    SP9500X_RFU_V9_REG_2(0x024c,0x026c).y = y;
+    SP9500X_RFU_V9_W_2(0x024c,0x026c);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_trig_frame_y(uint16_t &y) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x024c);
+    SP9500X_RFU_V9_REG_DECL_2(0x024c,0x026c);
 
-    SP9500X_RFU_V9_R(0x024c);
-    y = SP9500X_RFU_V9_REG(0x024c).y;
+    SP9500X_RFU_V9_R_2(0x024c,0x026c);
+    y = SP9500X_RFU_V9_REG_2(0x024c,0x026c).y;
     return 0;
 }
 

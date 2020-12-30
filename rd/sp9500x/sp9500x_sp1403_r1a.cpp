@@ -1,10 +1,12 @@
 #include "sp9500x_sp1403_r1a.h"
+#include <boost/bind/bind.hpp>
 #include "sleep_common.h"
 #include "reg_def_sp9500x.h"
 #include "reg_def_lmx2594.h"
 #include "algo_chip.hpp"
 
 using namespace std;
+using namespace boost::placeholders;
 using namespace rd;
 using namespace rd::ns_sp1403;
 using namespace rd::ns_sp1403::r1a;

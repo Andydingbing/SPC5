@@ -238,14 +238,14 @@ protected:
         open_to_wr(stream);
         stream.seekp(0,std::ios::end);
         stream.seekg(0,std::ios::end);
-        size = stream.tellp();
+        size = uint32_t(stream.tellp());
 
         if (pos > size) {
             return 0;
         }
 
         if (pos == size) {
-            left = offset;
+            left = int32_t(offset);
             while (left > size_granularity) {
                 assert_fs(stream.write(buf,size_granularity));
                 left -= size_granularity;
@@ -254,7 +254,7 @@ protected:
             return 0;
         }
 
-        left = size - pos;
+        left = int32_t(size - pos);
 
         while(1) {
             if (left <= 0) {
@@ -262,7 +262,7 @@ protected:
             }
 
             move_block_size = left < size_granularity ? left : size_granularity;
-            move_block_size = offset < move_block_size ? offset : move_block_size;
+            move_block_size = int32_t(offset) < move_block_size ? int32_t(offset) : move_block_size;
 
             assert_fs(stream.seekg(move_block_size * -1,std::ios::cur));
             assert_fs(stream.read(buf,move_block_size));
@@ -272,7 +272,7 @@ protected:
 
             left -= move_block_size;
 
-            assert_fs(stream.seekg(pos + left,std::ios::beg));
+            assert_fs(stream.seekg(pos + uint32_t(left),std::ios::beg));
         }
         return 0;
     }
@@ -394,7 +394,7 @@ private:
             }
         }
 
-        pos += stream.tellg();
+        pos += uint32_t(stream.tellg());
         return 0;
     }
 
