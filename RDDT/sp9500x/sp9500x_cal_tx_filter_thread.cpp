@@ -386,5 +386,7 @@ void Q_Cal_TXFilter_Thread::check()
 
 void Q_Exp_TXFilter_Thread::run()
 {
-
+    initProgress("Exporting TX Filter",100);
+    addProgressPos(100);
+    THREAD_ENDED
 }

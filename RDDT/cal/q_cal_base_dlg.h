@@ -132,6 +132,8 @@ public:
     virtual void resetShowWidget(CalParam *) = 0;
     virtual void uiToCalParam(CalParam *) = 0;
 
+    virtual void prepare(const bool is_exp = false) { Q_UNUSED(is_exp) }
+
     void star() // Start
     {
         CAL_THREAD_EXISTED_CHK();
@@ -139,6 +141,7 @@ public:
         CalParam param;
         uiToCalParam(&param);
         resetShowWidget(&param);
+        prepare(false);
         QWinThread::g_threadThread = new Cal_Thread_T(param);
         QWinThread::g_threadThread->start();
     }
@@ -150,6 +153,7 @@ public:
         CalParam param;
         uiToCalParam(&param);
         resetShowWidget(&param);
+        prepare(true);
         QWinThread::g_threadThread = new Exp_Thread_T(param);
         QWinThread::g_threadThread->start();
     }
@@ -254,6 +258,7 @@ public slots: \
     void uiUpdate(const int first,const int last,const int cal_table); \
     void init(); \
     void resetShowWidget(CalParam *param); \
+    void prepare(const bool is_exp = false); \
     void uiToCalParam(CalParam *param); \
     void getset(); \
 public: \

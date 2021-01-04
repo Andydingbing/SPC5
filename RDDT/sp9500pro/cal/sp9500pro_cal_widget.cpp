@@ -22,6 +22,11 @@ void Q_Cal_TXFilter_Widget::init()
     QCalBaseDlg::init();
 }
 
+void Q_Cal_TXFilter_Widget::prepare(const bool is_exp)
+{
+
+}
+
 void Q_Cal_TXFilter_Widget::resetShowWidget(CalParam *param)
 {
 //    SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_0);

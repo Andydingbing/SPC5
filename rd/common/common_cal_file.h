@@ -148,14 +148,14 @@ public:
         return -1;
     }
 
-    int32_t prepare_cal(const cal_table_t table,const std::set<uint64_t> &freqs)
+    int32_t prepare_cal(const cal_table_t table,const std::set<uint64_t> &freqs,const bool exp = false)
     {
         std::map<int32_t,cal_table *>::const_iterator iter;
 
         load_to_buf(table);
 
         if ((iter = _tables.find(table._to_integral())) != _tables.end()) {
-            iter->second->prepare_cal(convert_buf.buf,convert_buf.size_table,&freqs);
+            iter->second->prepare_cal(convert_buf.buf,convert_buf.size_table,&freqs,exp);
             return 0;
         }
         return -1;

@@ -8,14 +8,14 @@ using namespace NS_SP9500X;
 
 void Q_Cal_TXFilter_Widget::init()
 {
+    ui->lineEditRFFreqs->setText("250M:10M:3G");
+    ui->lineEditIFFreqs->setText("100M,200M,400M,800M");
+
     childs = new Cal_TXFilter_ChildWidgets(this);
     model->push_back(childs->model_100);
     model->push_back(childs->model_200);
     model->push_back(childs->model_400);
     model->push_back(childs->model_800);
-
-    ui->lineEditRFFreqs->setText("250M:10M:3G");
-    ui->lineEditIFFreqs->setText("100M,200M,400M,800M");
 
     addIdleWidget(ui->pushButtonExport);
     addIdleWidget(ui->pushButtonStar);
@@ -27,15 +27,24 @@ void Q_Cal_TXFilter_Widget::init()
     QCalBaseDlg::init();
 }
 
-void Q_Cal_TXFilter_Widget::resetShowWidget(CalParam *param)
+void Q_Cal_TXFilter_Widget::prepare(const bool is_exp)
 {
     SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_0000_3000);
 
-//    SP1403->cal_file()->prepare_cal(cal_table_t::TX_Filter);
-    childs->resetShowWidget();
+    childs->prepare(is_exp);
     childs->plotRF->replot();
     childs->plotIF->replot();
     emit reset();
+}
+
+void Q_Cal_TXFilter_Widget::resetShowWidget(CalParam *param)
+{
+//    SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_0000_3000);
+
+//    childs->prepare(false);
+//    childs->plotRF->replot();
+//    childs->plotIF->replot();
+//    emit reset();
 }
 
 void Q_Cal_TXFilter_Widget::uiToCalParam(CalParam *param)

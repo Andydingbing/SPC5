@@ -86,7 +86,9 @@ public:
     virtual uint32_t size_data_f() = 0;
     virtual uint32_t size_of_data_f() = 0;
     virtual uint32_t size_of_data_m() = 0;
-    virtual void prepare_cal(void *data_f_before,uint32_t data_f_before_size,const std::set<uint64_t> *keys = nullptr) = 0;
+    virtual void prepare_cal(void *data_f_before,uint32_t data_f_before_size,
+                             const std::set<uint64_t> *keys = nullptr,
+                             const bool update_data_calibrating = false) = 0;
     virtual void map_from(void *data,uint32_t pts) = 0;
     virtual void add(void *data) = 0;
     virtual void combine() = 0;
@@ -128,7 +130,57 @@ public:
     uint32_t size_of_data_f() { return sizeof(data_f_t); }
     uint32_t size_of_data_m() { return sizeof(data_m_t); }
 
-    void prepare_cal(void *data_f_before,uint32_t data_f_before_size,const std::set<uint64_t> *keys = nullptr)
+    virtual int32_t get(const uint64_t &key,data_f_t &data) const
+    {
+        typename std::vector<data_f_t>::iterator iter = _data_f->begin();
+
+        for (;iter != _data_f->end();++iter) {
+            if (iter->key() >= key) {
+                data = *iter;
+                return 0;
+            }
+        }
+        return -1;
+    }
+
+    virtual int32_t get(const uint64_t &key,data_m_t &data) const
+    {
+//        typename std::vector<data_m_t>::iterator iter = _data_m.begin();
+
+//        for (;iter != _data_m.end();++iter) {
+//            if (iter->key() >= key) {
+//                data = *iter;
+//                return 0;
+//            }
+//        }
+        return 0;
+    }
+
+    void update_data_calibrating_from_data_f(const std::set<uint64_t> *keys)
+    {
+        if (_data_calibrating->size() == 0) {
+            return;
+        }
+
+        size_t i = 0;
+        data_f_t data;
+        std::set<uint64_t>::iterator iter_key = keys->begin();
+        typename std::vector<data_f_t>::iterator iter_data = _data_calibrating->begin();
+
+        for (;iter_key != keys->end();++iter_key,++iter_data) {
+            INT_CHECKV(get(*iter_key,data));
+
+            *iter_data = data;
+
+            if (++i == _data_calibrating->size()) {
+                return;
+            }
+        }
+    }
+
+    void prepare_cal(void *data_f_before,uint32_t data_f_before_size,
+                     const std::set<uint64_t> *keys = nullptr,
+                     const bool update_data_calibrating = false)
     {
         SAFE_NEW(_data_f,std::vector<data_f_t>);
         SAFE_NEW(_data_calibrating,std::vector<data_f_t>);
@@ -155,6 +207,10 @@ public:
                 data.set_key(*iter_keys);
                 _data_calibrating->push_back(data);
            }
+        }
+
+        if (update_data_calibrating) {
+            update_data_calibrating_from_data_f(keys);
         }
     }
 
@@ -276,6 +332,16 @@ public:
             this->_data_m.push_back(d_m);
         }
     }
+
+//    int32_t get(const uint64_t &freq,data_f_t &data) const
+//    {
+
+//    }
+
+//    int32_t get(const uint64_t &freq,data_m_t &data) const
+//    {
+
+//    }
 
     int32_t save_as(const std::string &path)
     { return rd::save_as<data_f_t>(this->_data_calibrating,path); }

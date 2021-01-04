@@ -27,7 +27,7 @@ public:
         _item << "TX-1";
         _item << "RebuildCoef";
         _item << "RF&IF(0~3G)";
-        _item << "RF   (0~3G)";
+        _item << "RF(0~3G)";
         _item << "RF(3G~4.8G)";
         _item << "RF(4.8G~6G)";
         _item << "RF(6G~7.5G)";
@@ -190,6 +190,18 @@ public:
 
         Q_Cal_TXFilter_Widget *p = dynamic_cast<Q_Cal_TXFilter_Widget *>(_parent);
 
+        set_helper::range_freq<uint64_t> freqs;
+        set_helper::parse(p->ui->lineEditRFFreqs->text().toStdString(),freqs);
+
+        for (uint32_t i = 0;i < freqs.pts_before(ns_sp1403::tx_freq_sec0);++i) {
+            dataRF_IF_FR_0000_3000.append(new Qwt_TX_RF_IF_FR_0000_3000_Data());
+            curveRF_IF_FR_0000_3000.append(new QwtPlotCurve());
+            curveRF_IF_FR_0000_3000[i]->setVisible(true);
+            curveRF_IF_FR_0000_3000[i]->attach(plotRF);
+            curveRF_IF_FR_0000_3000[i]->setSamples(dataRF_IF_FR_0000_3000[i]);
+        }
+
+
         tableView_100 = new Q_RDDT_TableView(p->ui->tabWidget);
         tableView_200 = new Q_RDDT_TableView(p->ui->tabWidget);
         tableView_400 = new Q_RDDT_TableView(p->ui->tabWidget);
@@ -221,7 +233,7 @@ public:
         }
     }
 
-    void resetShowWidget()
+    void prepare(const bool exp)
     {
         Q_Cal_TXFilter_Widget *p = dynamic_cast<Q_Cal_TXFilter_Widget *>(_parent);
         set_helper::range_freq<uint64_t> freqs;
@@ -229,49 +241,35 @@ public:
         quint32 pts = set_helper::parse(p->ui->lineEditRFFreqs->text().toStdString(),freqs);
 
         if (configDelegate->checkBoxCal_RF_IF_FR_0000_3000->isChecked()) {
-            SP1403->prepare_cal(cal_table_t::TX_RF_IF_FR_0000_3000,freqs.freq);
+            SP1403->prepare_cal(cal_table_t::TX_RF_IF_FR_0000_3000,freqs.freq,exp);
 
-            for (int i = 0;i < curveRF_IF_FR_0000_3000.size();++i) {
-                curveRF_IF_FR_0000_3000[i]->detach();
-                delete curveRF_IF_FR_0000_3000[i];
-            }
-
-            dataRF_IF_FR_0000_3000.clear();
-            curveRF_IF_FR_0000_3000.clear();
-
-            for (int i = 0;i < freqs.pts_before(ns_sp1403::tx_freq_sec0);++i) {
-                dataRF_IF_FR_0000_3000.append(new Qwt_TX_RF_IF_FR_0000_3000_Data());
+            for (int i = 0;i < dataRF_IF_FR_0000_3000.size();++i) {
                 dataRF_IF_FR_0000_3000[i]->table = &(SP1403->cal_file()->tx_rf_if_fr_0000_3000_table()->data_calibrating()->at(i));
-                curveRF_IF_FR_0000_3000.append(new QwtPlotCurve());
-                curveRF_IF_FR_0000_3000[i]->setVisible(true);
-                curveRF_IF_FR_0000_3000[i]->attach(plotRF);
-                curveRF_IF_FR_0000_3000[i]->setSamples(dataRF_IF_FR_0000_3000[i]);
             }
         }
 
-
         if (configDelegate->checkBoxCal_RF_FR_0000_3000->isChecked()) {
-            SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_0000_3000);
+            SP1403->prepare_cal(cal_table_t::TX_RF_FR_0000_3000,freqs.freq,exp);
             dataRF_FR_0000_3000->table = SP1403->cal_file()->tx_rf_fr_0000_3000()->data_calibrating();
         }
 
         if (configDelegate->checkBoxCal_RF_FR_3000_4800->isChecked()) {
-            SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_3000_4800);
+            SP1403->prepare_cal(cal_table_t::TX_RF_FR_3000_4800,freqs.freq,exp);
             dataRF_FR_3000_4800->table = SP1403->cal_file()->tx_rf_fr_3000_4800()->data_calibrating();
         }
 
         if (configDelegate->checkBoxCal_RF_FR_4800_6000->isChecked()) {
-            SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_4800_6000);
+            SP1403->prepare_cal(cal_table_t::TX_RF_FR_4800_6000,freqs.freq,exp);
             dataRF_FR_4800_6000->table = SP1403->cal_file()->tx_rf_fr_4800_6000()->data_calibrating();
         }
 
         if (configDelegate->checkBoxCal_RF_FR_6000_7500->isChecked()) {
-            SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_6000_7500);
+            SP1403->prepare_cal(cal_table_t::TX_RF_FR_6000_7500,freqs.freq,exp);
             dataRF_FR_6000_7500->table = SP1403->cal_file()->tx_rf_fr_6000_7500()->data_calibrating();
         }
 
         if (configDelegate->checkBoxCal_IF_FR_3000_7500->isChecked()) {
-            SP1403->cal_file()->prepare_cal(cal_table_t::TX_IF_FR_0000_7500);
+            SP1403->prepare_cal(cal_table_t::TX_IF_FR_0000_7500,freqs.freq,exp);
         }
     }
 
