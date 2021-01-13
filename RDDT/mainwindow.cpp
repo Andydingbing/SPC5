@@ -102,6 +102,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mainSplitter->setStretchFactor(1,1);
 
     QHBoxLayout *mainLayout = new QHBoxLayout(ui->centralWidget);
+    mainLayout->setMargin(0);
     mainLayout->addWidget(mainSplitter);
     ui->centralWidget->setLayout(mainLayout);
 

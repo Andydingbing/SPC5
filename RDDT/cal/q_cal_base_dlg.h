@@ -304,7 +304,7 @@ public: \
     namespace NS_##project { \
     class Cal_##name##_ChildWidgets; \
     CAL_WIDGET(Q_Cal_##name##_Widget, \
-               Q_Cal_##project##_##name##_Widget, \
+               Q_##project##_Cal_##name##_Widget, \
                Cal_##name##_ChildWidgets, \
                Q_Cal_##name##_Thread, \
                Q_Exp_##name##_Thread) \

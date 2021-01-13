@@ -22,8 +22,8 @@ class ChildWidgets : public ChildWidgetHelper
     Q_OBJECT
 
 public:
-    explicit ChildWidgets(MainWindow *parent) :
-        ChildWidgetHelper(parent) {}
+    explicit ChildWidgets(MainWindow *_parent) :
+        ChildWidgetHelper(_parent) {}
 
     void initMenu()
     {
@@ -106,6 +106,7 @@ public:
         DECL_TREE_ITEM(str,"RF-R1A" << "Test",widget_Test_R1A);
         DECL_TREE_ITEM(str,"RF-R1B" << "Overview",widget_SP1403_R1B);
         DECL_TREE_ITEM(str,"RF-R1B" << "Calibration" << "TX-Filter",widget_Cal_R1B_TXFilter);
+        DECL_TREE_ITEM(str,"RF-R1B" << "Calibration" << "TX-Power",widget_Cal_R1B_TX_Pwr);
         DECL_TREE_ITEM(str,"RRH" << "Overview",widget_SP9500X_RRH);
         DECL_TREE_ITEM(str,"BB-Debug" << "Overview",widget_SP2406);
         DECL_TREE_ITEM(str,"BB-Debug" << "ARB",widget_ARB);
@@ -141,6 +142,7 @@ public:
         ADD_CHILD_WIDGET(widget_FPGA,NS_SP9500X::Q_FPGA_Widget,1);
 
         ADD_CHILD_WIDGET(widget_Cal_R1B_TXFilter,Q_Cal_TXFilter_Widget,ns_sp3103::g_max_rf);
+        ADD_CHILD_WIDGET(widget_Cal_R1B_TX_Pwr,Q_Cal_TX_Pwr_Widget,ns_sp3103::g_max_rf);
     }
 
     void updatePtr()
@@ -214,6 +216,7 @@ public:
     QList<Q_FPGA_Widget *> widget_FPGA;
 
     QList<Q_Cal_TXFilter_Widget *> widget_Cal_R1B_TXFilter;
+    QList<Q_Cal_TX_Pwr_Widget *> widget_Cal_R1B_TX_Pwr;
 
     QList<Q_Test_SP9501_TabWidget *> widget_Test_R1A;
 

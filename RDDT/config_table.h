@@ -9,6 +9,8 @@ class Q_Config_Table_View : public QTableView
 {
 public:
     Q_Config_Table_View(QWidget *parent = nullptr);
+
+    void setModel(QAbstractItemModel *model);
 };
 
 
@@ -17,14 +19,26 @@ class Q_Config_Table_Model : public QStandardItemModel
 public:
     Q_Config_Table_Model(QObject *parent = nullptr) : QStandardItemModel(parent) {}
 
-    int rowCount(const QModelIndex &) const { return _item.size(); }
+    int rowCount(const QModelIndex & = QModelIndex()) const { return _item.size(); }
 
-    int columnCount(const QModelIndex &) const { return 2; }
+    int columnCount(const QModelIndex & = QModelIndex()) const { return 2; }
 
     QVariant data(const QModelIndex &index, int role) const;
 
 protected:
     QStringList _item;
+};
+
+#define CONFIG_MODEL(name,...) \
+class name : public Q_Config_Table_Model { \
+public: \
+    name(QObject *parent = nullptr) : Q_Config_Table_Model(parent) \
+    { \
+        _item.clear(); \
+        _item = QStringList{__VA_ARGS__}; \
+        setRowCount(rowCount(QModelIndex())); \
+        setColumnCount(columnCount(QModelIndex())); \
+    } \
 };
 
 
@@ -43,8 +57,9 @@ public:
 
     virtual QWidget **first() const = 0;
 
-#define CONFIG_TABLE_FIRST_WIDGET(type,widget) \
-    public: QWidget **first() const { return reinterpret_cast<QWidget **>(const_cast<type **>(&widget)); }
+#define FIRST_CONFIG_WIDGET(type,widget) \
+    type *widget; \
+    QWidget **first() const { return reinterpret_cast<QWidget **>(const_cast<type **>(&widget)); }
 };
 
 #endif // Q_CONFIG_TABLE_H

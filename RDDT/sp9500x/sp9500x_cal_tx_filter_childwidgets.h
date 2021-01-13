@@ -14,29 +14,18 @@ namespace NS_SP9500X {
 using namespace ns_sp9500x;
 
 typedef Qwt_FR_BW_Data<200> Qwt_TX_RF_IF_FR_0000_3000_Data;
-typedef Qwt_FR_BW_Data<403> Qwt_TX_IF_FR_0000_7500_Data;
+typedef Qwt_FR_BW_Data<400> Qwt_TX_IF_FR_0000_7500_Data;
 
-class Q_TXFilter_Config_Model : public Q_Config_Table_Model
-{
-public:
-    Q_TXFilter_Config_Model(QObject *parent = nullptr) :
-        Q_Config_Table_Model(parent)
-    {
-        _item.clear();
-        _item << "TX-0";
-        _item << "TX-1";
-        _item << "RebuildCoef";
-        _item << "RF&IF(0~3G)";
-        _item << "RF(0~3G)";
-        _item << "RF(3G~4.8G)";
-        _item << "RF(4.8G~6G)";
-        _item << "RF(6G~7.5G)";
-        _item << "IF(3G~7.5G)";
-
-        setRowCount(rowCount(QModelIndex()));
-        setColumnCount(columnCount(QModelIndex()));
-    }
-};
+CONFIG_MODEL(Q_TXFilter_Config_Model,
+             "TX-0",
+             "TX-1",
+             "RebuildCoef",
+             "RF&IF(0~3G)",
+             "RF(0~3G)",
+             "RF(3G~4.8G)",
+             "RF(4.8G~6G)",
+             "RF(6G~7.5G)",
+             "IF(3G~7.5G)")
 
 class Q_TXFilter_Config_Delegate : public Q_Config_Table_Delegate
 {
@@ -66,10 +55,8 @@ public:
         checkBoxCal_IF_FR_3000_7500->setChecked(true);
     }
 
-    CONFIG_TABLE_FIRST_WIDGET(QCheckBox,checkBoxTX0)
-
 public:
-    QCheckBox *checkBoxTX0;
+    FIRST_CONFIG_WIDGET(QCheckBox,checkBoxTX0)
     QCheckBox *checkBoxTX1;
     QCheckBox *checkBoxRebuildCoef;
     QCheckBox *checkBoxCal_RF_IF_FR_0000_3000;
@@ -149,7 +136,7 @@ public:
         plotRF->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
         plotIF = new Q_RDDT_CalPlot(plotWidget);
-        plotIF->init(-491.52,491.52,-20.0,4.0);
+        plotIF->init(-491.52,491.52,-70.0,4.0);
         plotIF->setTitle("IF Freq Response(@RF 2GHz)(dBm/MHz)");
         plotIF->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
@@ -163,6 +150,7 @@ public:
         dataRF_FR_3000_4800 = new Qwt_FR_CW_Data<data_f_fr_tx_rf_3000_4800_t>;
         dataRF_FR_4800_6000 = new Qwt_FR_CW_Data<data_f_fr_tx_rf_4800_6000_t>;
         dataRF_FR_6000_7500 = new Qwt_FR_CW_Data<data_f_fr_tx_rf_6000_7500_t>;
+        dataIF_FR_3000_7500 = new Qwt_TX_IF_FR_0000_7500_Data;
 
         curveRF_FR_0000_3000 = new QwtPlotCurve("RF Freq Response 0000M~3000M");
         curveRF_FR_0000_3000->setPen(QColor(Qt::red));
@@ -187,6 +175,11 @@ public:
         curveRF_FR_6000_7500->setVisible(true);
         curveRF_FR_6000_7500->attach(plotRF);
         curveRF_FR_6000_7500->setSamples(dataRF_FR_6000_7500);
+
+        curveIF_FR_3000_7500 = new QwtPlotCurve("IF Freq Response 3000M~7500M");
+        curveIF_FR_3000_7500->setVisible(true);
+        curveIF_FR_3000_7500->attach(plotIF);
+        curveIF_FR_3000_7500->setSamples(dataIF_FR_3000_7500);
 
         Q_Cal_TXFilter_Widget *p = dynamic_cast<Q_Cal_TXFilter_Widget *>(_parent);
 
@@ -219,18 +212,11 @@ public:
         p->ui->tabWidget->addTab(tableView_400,QString("Coef_400M"));
         p->ui->tabWidget->addTab(tableView_800,QString("Coef_800M"));
 
-        configModel = new Q_TXFilter_Config_Model(p->ui->tableViewConfig);
-        configDelegate = new Q_TXFilter_Config_Delegate(p->ui->tableViewConfig);
+        configModel = new Q_TXFilter_Config_Model;
+        configDelegate = new Q_TXFilter_Config_Delegate;
 
-        p->ui->tableViewConfig->setModel(configModel);
         p->ui->tableViewConfig->setItemDelegate(configDelegate);
-        p->ui->tableViewConfig->resizeColumnsToContents();
-        p->ui->tableViewConfig->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
-        p->ui->tableViewConfig->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Stretch);
-
-        for (int i = 0;i < configModel->rowCount(QModelIndex());++i) {
-            p->ui->tableViewConfig->openPersistentEditor(configModel->index(i,1));
-        }
+        p->ui->tableViewConfig->setModel(configModel);
     }
 
     void prepare(const bool exp)
@@ -269,7 +255,10 @@ public:
         }
 
         if (configDelegate->checkBoxCal_IF_FR_3000_7500->isChecked()) {
-            SP1403->prepare_cal(cal_table_t::TX_IF_FR_0000_7500,freqs.freq,exp);
+            freqs.freq.clear();
+            freqs.freq.insert(0);
+            SP1403->prepare_cal(cal_table_t::TX_IF_FR_3000_7500,freqs.freq,exp);
+            dataIF_FR_3000_7500->table = &SP1403->cal_file()->tx_if_fr_3000_7500()->data_calibrating()->at(0);
         }
     }
 
@@ -309,4 +298,4 @@ public:
 
 } // namespace NS_SP9500X
 
-#endif // SP9500X_CAL_TX_FILTER_CHILDWIDGETS_
+#endif // SP9500X_CAL_TX_FILTER_CHILDWIDGETS_H

@@ -143,7 +143,7 @@ void Q_Cal_TXFilter_Thread::sweepRF_IF_0000_3000()
                 Instr.pm_get_pwr(data.pts[idx_freq_if].y);
                 Log.stdprintf("%d freq : %lld\n",idx_freq_if,data.pts[idx_freq_if].x);
 
-                ++idx_freq_if;
+                idx_freq_if ++;
 
                 THREAD_TEST_PAUSE_E
             }
@@ -302,20 +302,23 @@ void Q_Cal_TXFilter_Thread::sweepRF_6000_7500()
 
 void Q_Cal_TXFilter_Thread::sweepIF_3000_7500()
 {
-    cal_table_t table = cal_table_t::TX_IF_FR_0000_7500;
+    cal_table_t table = cal_table_t::TX_IF_FR_3000_7500;
     tx_if_fr_3000_7500_table_t::data_f_t data;
-    uint64_t freq_rf = FREQ_G(2);
+    uint64_t freq_rf = FREQ_M(7500);
     int64_t  freq_dds0[4]  = {FREQ_M(-150),FREQ_M(-50),FREQ_M(50),FREQ_M(150)};
     int64_t  freq_dds0_cur = 0;
     int64_t  freq_dds1[2]  = {FREQ_M(-200),FREQ_M(200)};
     int64_t  freq_dds1_cur = 0;
 
     int64_t  freq_if = 0;
-    int64_t  freq_if_star = 0;
-    int64_t  freq_if_stop = 0;
+    int64_t  freq_if_star = FREQ_M(-49);
+    int64_t  freq_if_stop = FREQ_M(49);
+
+    quint32 idx_freq_if = 0;
 
     BW_Max = FREQ_M(800);
 
+    data.freq = 0;
     SP1403->set_tx_freq(freq_rf);
     msleep(10);
 
@@ -328,26 +331,18 @@ void Q_Cal_TXFilter_Thread::sweepIF_3000_7500()
             freq_dds0_cur = freq_dds0[j];
             SP2406->set_dl_dds0(0,freq_dds0_cur);
 
-            if (freq_dds1_cur == FREQ_M(-200) && freq_dds0_cur == FREQ_M(-150)) {
-                freq_if_star = FREQ_M(-53);
-            } else {
-                freq_if_star = FREQ_M(-50);
-            }
-
-            if (freq_dds1_cur == FREQ_M(200)  && freq_dds0_cur == FREQ_M(150)) {
-                freq_if_stop = FREQ_M(53);
-            } else {
-                freq_if_stop = FREQ_M(50);
-            }
-
             for (freq_if = freq_if_star;freq_if <= freq_if_stop;freq_if += FREQ_M(2)) {
                 THREAD_TEST_PAUSE_S
                 THREAD_TEST_CANCEL
                 SP2406->set_dl_src_dds0_freq(freq_if);
 
-                data.freq = freq_dds0_cur + freq_dds1_cur + freq_if;
-                Instr.pm_get_pwr(freq_rf + data.freq,data.pts[0].y);
+                data.pts[idx_freq_if].x = freq_dds0_cur + freq_dds1_cur + freq_if;
+                Instr.pm_set_freq(data.pts[idx_freq_if].x);
+                Instr.pm_get_pwr(data.pts[idx_freq_if].y);
+                Log.stdprintf("%d %lld %f\n",idx_freq_if,data.pts[idx_freq_if].x,data.pts[idx_freq_if].y);
                 SP1403->cal_file()->add(table,&data);
+
+                idx_freq_if ++;
 
                 emit uiUpdate(0,0,table);
                 ADD_PROG_POS(1);
@@ -356,6 +351,7 @@ void Q_Cal_TXFilter_Thread::sweepIF_3000_7500()
         }
     }
     SP1403->cal_file()->persistence(table);
+    SP1403->cal_file()->tx_if_fr_3000_7500()->save_as("c:\\if_fr_3000_7500.txt");
 }
 
 void Q_Cal_TXFilter_Thread::generateFreqResponse()

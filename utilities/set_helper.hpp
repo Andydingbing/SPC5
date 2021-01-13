@@ -146,7 +146,23 @@ RD_INLINE uint32_t pts(const std::string &str)
 
 #include "set_helper.inl"
 
-template <typename T>
+
+template<typename T,typename container_t = std::set<T>>
+void sequence_string_of(const container_t &data,std::string &str);
+
+template<typename T,typename container_t = std::set<T>>
+RD_INLINE std::string sequence_string_of(const container_t &data)
+{ std::string str; sequence_string_of<T,container_t>(data,str); return str; }
+
+template<typename T,typename container_t = std::set<T>>
+RD_INLINE void sequence_string_of(const set_helper::set_helper_t<T> &set,std::string &str)
+{ sequence_string_of<T,container_t>(set.data,str); }
+
+template<typename T,typename container_t = std::set<T>>
+RD_INLINE std::string sequence_string_of(const set_helper::set_helper_t<T> &set)
+{ std::string str; sequence_string_of<T,container_t>(set,str); return str; }
+
+template<typename T>
 uint32_t parse_range_freq_string(const range_freq_string &freq_string, range_freq<T> &freq_out)
 {
     uint32_t section_star = set_helper::sections(freq_string.star);

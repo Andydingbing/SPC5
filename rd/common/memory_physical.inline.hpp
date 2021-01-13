@@ -1,10 +1,13 @@
 #include "memory_physical.hpp"
 #include "visa.h"
-#include "log.h"
+#include "algo_math.hpp"
+#include "../../log/log.h"
 
 #ifndef NIVISA_PXI
 #define NIVISA_PXI
 #endif
+
+using namespace rd;
 
 static ViSession g_vi_drm = 0;
 
@@ -34,19 +37,21 @@ int32_t memory_physical::allocate(const uint32_t size,uint32_t **logic_suggest,c
 
     ViStatus status = VI_SUCCESS;
     ViAddr addr = nullptr;
-    uint32_t actual_size = 0;
+    uint32_t actual_size = size;
     uint32_t retry = 0;
     bool is_alloced = false;
 
-    actual_size = size > _size_granularity_min ? size : _size_granularity_min;
-    actual_size = size < _size_granularity_max ? size : _size_granularity_max;
+    limit_between(_size_granularity_min,_size_granularity_max,actual_size);
+//    actual_size = actual_size > _size_granularity_min ? actual_size : _size_granularity_min;
+//    actual_size = actual_size < _size_granularity_max ? actual_size : _size_granularity_max;
 
     if (g_vi_drm == 0) {
         VI_CHECK(viOpenDefaultRM(&g_vi_drm))
     }
 
     if (_session == 0) {
-        if ((status = viOpen(g_vi_drm,ViRsrc("PXI::MEMACC"),VI_NULL,VI_NULL,ViPSession(&_session))) < VI_SUCCESS) {
+        status = viOpen(g_vi_drm,ViRsrc("PXI::MEMACC"),VI_NULL,VI_NULL,ViPSession(&_session));
+        if (status < VI_SUCCESS) {
             _session = 0;
             return status;
         }
@@ -79,6 +84,7 @@ int32_t memory_physical::allocate(const uint32_t size,uint32_t **logic_suggest,c
     }
 
     if (is_alloced == false) {
+        Log.set_last_err("alloc %d(actual %d)",size,actual_size);
         return -1;
     }
 
@@ -97,6 +103,7 @@ int32_t memory_physical::allocate(const uint32_t size,uint32_t **logic_suggest,c
         return status;
     }
     if (*logic_suggest != nullptr && *logic_suggest != _logic) {
+        Log.set_last_err("logic mismatch");
         return -1;
     } else {
         *logic_suggest = _logic;

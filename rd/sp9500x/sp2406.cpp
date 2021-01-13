@@ -5,7 +5,7 @@
 #include "gen_int.hpp"
 #include "sleep_common.h"
 #include <boost/function.hpp>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 
 #define IMPL_CPRI_MAP(link,channel,address) \
 int32_t sp2406::set_##link##_cpri_map_ch##channel(const uint8_t cpri) const \
@@ -184,6 +184,7 @@ int32_t sp2406::get_##link##_##dds##_ch##channel(double &freq) const \
     return 0; \
 }
 
+using namespace boost::placeholders;
 using namespace rd;
 using namespace ns_sp9500x;
 
@@ -2351,11 +2352,13 @@ int32_t sp2406::program(const v9_t fpga,const char *path)
     uint32_t to_cnt = 0;
     uint32_t ver_s6 = 0;
 
+    const uint32_t ver_support_fast_program = uint32_t(0x01211032);
+
     INT_CHECK(get_s6_ver(ver_s6));
 
     uint32_t block_size = 500; // * 32bit
 
-    if (is_after(ver_s6,0x01211032)) {
+    if (is_after(ver_s6,ver_support_fast_program)) {
         block_size = 4000;
     }
 
@@ -2455,7 +2458,7 @@ int32_t sp2406::program(const v9_t fpga,const char *path)
     }
 
 
-    if (is_after(ver_s6,0x01211032)) {
+    if (is_after(ver_s6,ver_support_fast_program)) {
         memset(buf,0xffffffff,file_size / 4);
         for (uint32_t i = 0;i < 100;++i) {
             _s6->w32(pci_dev::AS_BAR0,0x0200 << 2,block_size,buf);

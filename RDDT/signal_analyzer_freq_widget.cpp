@@ -56,13 +56,6 @@ void Q_SA_Freq_Widget_Helper::init()
 {
     Q_SA_Widget *p = dynamic_cast<Q_SA_Widget *>(parent);
 
-    p->tableView_Freq->setModel(model);
     p->tableView_Freq->setItemDelegate(delegate);
-    p->tableView_Freq->resizeColumnsToContents();
-    p->tableView_Freq->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
-    p->tableView_Freq->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Stretch);
-
-    for (int i = 0;i < model->rowCount(QModelIndex());++i) {
-        p->tableView_Freq->openPersistentEditor(model->index(i,1));
-    }
+    p->tableView_Freq->setModel(model);
 }

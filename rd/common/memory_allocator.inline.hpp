@@ -66,23 +66,13 @@ int32_t memory_allocator::allocate(const uint32_t size,uint32_t **logic_suggest,
         _memory.push_back(memory);
     }
 
-//    size_t usr_space_offset = 0;
-//    for (size_t i = 0;i < _memory.size() - 1;++i) {
-//        if ((_memory[i + 1]->logic() - _memory[i]->logic()) * 4 != int(_memory[i]->size())) {
-//            std::cout << "flitted!" << std::endl;
-//            INT_CHECK(release());
-//            return -1;
-//        }
-//    }
-
-    std::cout << "finish" << std::endl;
     return 0;
 }
 
 int32_t memory_allocator::release()
 {
     for (size_t i = 0;i < _memory.size();++i) {
-        INT_CHECK(_memory[i]->release());
+        delete _memory[i];
     }
     _memory.clear();
     return 0;

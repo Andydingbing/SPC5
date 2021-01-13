@@ -11,6 +11,8 @@
 #include <vector>
 #include <set>
 #include <fstream>
+#include "sequence.hpp"
+#include "set_helper.hpp"
 #include "algo_math.hpp"
 
 #include "liblog.h"
@@ -26,8 +28,9 @@ DECL_CAL_TABLE(sp9500x,
     OCXO = 0,
     TX_Sideband,
     TX_LO_Leakage,
-    TX_Pwr_Output,
-    TX_Pwr_IO,
+    TX0_Pwr_Output,
+    TX0_Pwr_IO,
+    TX1_Pwr,
     TX_Att_Output,
     TX_Att_IO,
     TX_RF_IF_FR_0000_3000,
@@ -35,7 +38,7 @@ DECL_CAL_TABLE(sp9500x,
     TX_RF_FR_3000_4800,
     TX_RF_FR_4800_6000,
     TX_RF_FR_6000_7500,
-    TX_IF_FR_0000_7500,
+    TX_IF_FR_3000_7500,
     TX_Filter,
     RX_Ref_Output,
     RX_Ref_IO,
@@ -49,6 +52,8 @@ DECL_CAL_TABLE(sp9500x,
 class cal_table
 {
 public:
+    typedef sequence::arithmetic_sequence_t<int64_t> sequence_t;
+
     struct time_t {
         uint16_t year;
         uint8_t month;
@@ -67,20 +72,25 @@ public:
         uint8_t  method;
         uint16_t station;
         uint32_t staff;
-        uint64_t freq;
+        int64_t  freq;
 
-        uint64_t key() const { return freq; }
-        void set_key(const uint64_t key) { freq = key; }
+        int64_t  key() const { return freq; }
+
+        void set_key(const int64_t key)  { freq = key; }
+        void set_key(const uint64_t key) { freq = int64_t(key); }
 
         // can not be virtual
-        RD_INLINE uint64_t key_lower_bound() { return 0; }
-        RD_INLINE uint64_t key_upper_bound() { return UINT64_MAX; }
+        RD_INLINE int64_t key_lower_bound() { return INT64_MIN; }
+        RD_INLINE int64_t key_upper_bound() { return INT64_MAX; }
 
-#define DATA_F_KEY_MIN(min) RD_INLINE uint64_t key_lower_bound() { return uint64_t(min); }
-#define DATA_F_KEY_MAX(max) RD_INLINE uint64_t key_upper_bound() { return uint64_t(max); }
+#define DATA_F_KEY_MIN(min) RD_INLINE int64_t key_lower_bound() { return int64_t(min); }
+#define DATA_F_KEY_MAX(max) RD_INLINE int64_t key_upper_bound() { return int64_t(max); }
     };
 
     virtual ~cal_table() {}
+    std::vector<sequence_t> *freq_sequence() { return &_freq_sequence; }
+    std::string freq_sequence_string() { return sequence::parse(_freq_sequence); }
+
     virtual char *data_f(uint32_t idx) = 0;
 
     virtual uint32_t size_data_f() = 0;
@@ -91,7 +101,10 @@ public:
                              const bool update_data_calibrating = false) = 0;
     virtual void map_from(void *data,uint32_t pts) = 0;
     virtual void add(void *data) = 0;
-    virtual void combine() = 0;
+    virtual void combine(std::string &freq_str) = 0;
+
+protected:
+    std::vector<sequence_t> _freq_sequence;
 };
 
 template<typename str_t>
@@ -135,7 +148,7 @@ public:
         typename std::vector<data_f_t>::iterator iter = _data_f->begin();
 
         for (;iter != _data_f->end();++iter) {
-            if (iter->key() >= key) {
+            if (iter->key() >= int64_t(key)) {
                 data = *iter;
                 return 0;
             }
@@ -145,14 +158,14 @@ public:
 
     virtual int32_t get(const uint64_t &key,data_m_t &data) const
     {
-//        typename std::vector<data_m_t>::iterator iter = _data_m.begin();
+        typename std::vector<data_m_t>::const_iterator iter = _data_m.cbegin();
 
-//        for (;iter != _data_m.end();++iter) {
-//            if (iter->key() >= key) {
+        for (;iter != _data_m.cend();++iter) {
+//            if (iter->key() >= int64_t(key)) {
 //                data = *iter;
 //                return 0;
 //            }
-//        }
+        }
         return 0;
     }
 
@@ -203,7 +216,7 @@ public:
         data_f_t data;
 
         for (iter_keys = keys->begin();iter_keys != keys->end();++iter_keys) {
-           if (is_between(*iter_keys, data.key_lower_bound(),data.key_upper_bound())) {
+           if (is_between(int64_t(*iter_keys),data.key_lower_bound(),data.key_upper_bound())) {
                 data.set_key(*iter_keys);
                 _data_calibrating->push_back(data);
            }
@@ -242,10 +255,12 @@ public:
         _data_calibrating->push_back(*d);
     }
 
-    void combine()
+    void combine(std::string &freq_str)
     {
         size_t last_idx = 0;
         bool is_new_element = true;
+        std::set<int64_t> freq;
+        typename std::vector<data_f_t>::const_iterator iter_data_f;
 
         if (_data_calibrating == nullptr || _data_f == nullptr) {
             return;
@@ -264,16 +279,22 @@ public:
                 _data_f->push_back(_data_calibrating->at(i));
             }
         }
+
+        for (iter_data_f = _data_f->cbegin();iter_data_f != _data_f->cend();++iter_data_f) {
+            freq.insert(freq.begin(),iter_data_f->freq);
+        }
+        sequence_string_of<int64_t>(freq,freq_str);
     }
 
 protected:
     std::vector<data_f_t> *_data_calibrating;
     std::vector<data_f_t> *_data_f;
     std::vector<data_m_t> _data_m;
+//    std::array<data_m_t,5> _cache;
 };
 
 
-typedef point_2d<uint64_t,double> fr_point;
+typedef point_2d<int64_t,double> fr_point;
 
 template<uint32_t n = 1>
 struct data_f_fr : cal_table::basic_data_f_t

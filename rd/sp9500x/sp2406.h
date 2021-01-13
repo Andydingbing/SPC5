@@ -235,6 +235,7 @@ public:
 public:
     int32_t set_dl_pwr_comp(int32_t offset) { return 0; }
     int32_t set_dl_pwr_comp(double offset);
+    int32_t set_dl_pwr_comp(float offset) { return set_dl_pwr_comp(double(offset)); }
     int32_t get_dl_pwr_comp(double &offset);
     int32_t set_dl_dc_offset(uint16_t i,uint16_t q);
     int32_t set_dl_phase_adj(double,double) { return 0; }

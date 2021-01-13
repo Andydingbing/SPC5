@@ -13,7 +13,6 @@ class Q_ARB_Config_Model;
 class Q_ARB_Config_Delegate : public ::Q_Config_Table_Delegate
 {
     Q_OBJECT
-    CONFIG_TABLE_FIRST_WIDGET(QComboBox,comboBoxSource)
 
 public:
     Q_ARB_Config_Delegate(QObject *parent = nullptr);
@@ -43,7 +42,7 @@ public slots:
     void setAbort();
 
 public:
-    QComboBox *comboBoxSource;
+    FIRST_CONFIG_WIDGET(QComboBox,comboBoxSource)
     QLineEdit *lineEditFreqOffset;
     QComboBox *comboBoxRepetition;
     QLineEdit *lineEditCycles;

@@ -27,6 +27,7 @@
 #include "stdint_common.h"
 #include <boost/noncopyable.hpp>
 #include <boost/thread.hpp>
+#include <boost/core/ignore_unused.hpp>
 
 /*
  * nullptr_t & nullptr for compiler not support C++11 and later.
@@ -126,6 +127,8 @@ template<int T> int32_t name##_t<T>
 #define AD908X_FUNC  FAKE_TEMPLATE_CLASS_FUNC(ad908x)
 #define ADF5355_FUNC FAKE_TEMPLATE_CLASS_FUNC(adf5355)
 #define LMX2594_FUNC FAKE_TEMPLATE_CLASS_FUNC(lmx2594)
+
+using boost::ignore_unused;
 
 #define SAFE_NEW(ptr,t)         { if (ptr == nullptr) ptr = new t; }
 #define SAFE_DEL(ptr)           { if (ptr != nullptr) {delete ptr;ptr = nullptr;} }

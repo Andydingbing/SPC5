@@ -132,6 +132,15 @@ public:
     DECL_SW(rx_sw2,rx_sw2_t)
     DECL_SW(rx_sw3,rx_sw3_t)
     DECL_SW(rx_sw4,rx_sw4_t)
+
+public:
+    virtual int32_t set_tx_state(const port_t port,const data_f_tx_pwr &data) const;
+
+    virtual double tx_base_pwr(const uint64_t freq,const io_mode_t mode) const;
+
+    virtual void tx_state(const uint64_t freq,const io_mode_t mode,data_f_tx_pwr &state) const;
+
+    virtual void tx_state(const uint64_t freq,const io_mode_t mode,const data_f_tx_pwr &base_state,data_f_tx_pwr &state) const;
 };
 
 } // namespace ns_sp9500x

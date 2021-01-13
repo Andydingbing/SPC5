@@ -75,6 +75,12 @@ QCalBaseThread::QCalBaseThread(const CalParam &param) :
       calParam.model_1,SLOT(update(QModelIndex,QModelIndex,cal_file::cal_item_t,int)));
     }
 
+    QCalBaseDlg *p = dynamic_cast<QCalBaseDlg *>(parent());
+
+    for (int i = 0;i < p->model->size();++i) {
+        connect(this,&QCalBaseThread::uiUpdate,p->model->at(i),&QCalBaseModel::uiUpdate);
+    }
+
     connect(this,&QCalBaseThread::threadProcess,g_MainW,&MainWindow::threadProcess);
 }
 

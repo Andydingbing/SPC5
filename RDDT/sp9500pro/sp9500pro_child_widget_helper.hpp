@@ -102,7 +102,7 @@ public:
 
 //        DECL_TREE_ITEM(str,"RF-R1B" << "Overview",widget_SP1403_R1B);
         DECL_TREE_ITEM(str,"RF-R1B" << "Test",widget_Test_R1A);
-        DECL_TREE_ITEM(str,"RF-R1B" << "Calibration" << "TX-Filter",widget_Cal_TXFilter);
+//        DECL_TREE_ITEM(str,"RF-R1B" << "Calibration" << "TX-Filter",widget_Cal_TXFilter);
         DECL_TREE_ITEM(str,"RRH" << "Overview",widget_SP9500X_RRH);
 //        DECL_TREE_ITEM(str,"BB-Debug" << "Overview",widget_SP2406);
         DECL_TREE_ITEM(str,"BB-Debug" << "ARB",widget_ARB);
@@ -122,7 +122,7 @@ public:
     void addChildWidgets()
     {
 //        ADD_CHILD_WIDGET(widget_SP1403_R1B,Q_SP9500PRO_SP1403_R1B_Widget,ns_sp3103::g_max_rf);
-        ADD_CHILD_WIDGET(widget_Cal_TXFilter,Q_Cal_TXFilter_Widget,ns_sp3103::g_max_rf);
+//        ADD_CHILD_WIDGET(widget_Cal_TXFilter,Q_Cal_TXFilter_Widget,ns_sp3103::g_max_rf);
         ADD_CHILD_WIDGET(widget_Test_R1A,Q_Test_SP9501_TabWidget,ns_sp3103::g_max_rf);
         ADD_CHILD_WIDGET(widget_SP9500X_RRH,Q_SP9500X_RRH_Widget,ns_sp3103::g_max_rf);
 //        ADD_CHILD_WIDGET(widget_SP2406,Q_SP2406_Widget,ns_sp3103::g_max_rf);
@@ -185,7 +185,6 @@ public:
     QList<Q_SA_Widget *> widget_SA;
     QList<NS_SP9500X::Q_FPGA_Widget *> widget_FPGA;
 
-    QList<Q_Cal_TXFilter_Widget *> widget_Cal_TXFilter;
     QList<Q_Test_SP9501_TabWidget *> widget_Test_R1A;
 
     NS_SP9500X::Q_Fan_Dlg *dlg_Fan;

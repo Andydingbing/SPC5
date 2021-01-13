@@ -128,6 +128,94 @@ uint32_t set_helper::set_helper_t<T,container_t>::sections(const char *str)
     return sections;
 }
 
+
+template<typename T,typename container_t>
+void sequence_string_of(const container_t &data,std::string &str)
+{
+    T t_star = 0;
+    T t_stop = 0;
+    T t_step = 0;
+    T t_step_before = 0;
+    uint32_t sec_pts = 1;
+
+    typename container_t::iterator iter;
+    typename container_t::iterator iter_next;
+
+    str.clear();
+
+    if (data.size() == 0) {
+        return;
+    }
+
+    iter = data.begin();
+    t_star = *iter;
+
+    if (data.size() == 1) {
+        str = freq_string_from<T>(t_star);
+        return;
+    }
+
+    iter ++;
+    t_stop = *iter;
+
+    if (data.size() == 2) {
+        str = freq_string_from<T>(t_star) + ";" + freq_string_from<T>(t_stop);
+        return;
+    }
+
+    t_step_before = t_stop - t_star;
+
+    iter = data.begin();
+    iter ++;
+    iter_next = data.begin();
+    iter_next ++;
+    iter_next ++;
+    for (;iter_next != data.end(); ++iter,++iter_next) {
+        t_step = *iter_next - *iter;
+        if (t_step == t_step_before) {
+            ++sec_pts;
+            continue;
+        } else {
+            t_stop = *iter;
+            if (sec_pts == 1) {
+                str += freq_string_from<T>(t_star) + ";";
+                t_star = *iter;
+                t_stop = *iter_next;
+                t_step_before = t_stop - t_star;
+            } else {
+                str += freq_string_from<T>(t_star) + ":";
+                str += freq_string_from<T>(t_step_before) + ":";
+                str += freq_string_from<T>(t_stop) + ";";
+                ++iter;
+                ++iter_next;
+
+                t_star = *iter;
+                if (iter_next != data.end()) {
+                    t_stop = *iter_next;
+                    t_step_before = t_stop - t_star;
+                } else {
+                    str += freq_string_from<T>(t_star) + ";";
+                    return;
+                }
+            }
+
+            sec_pts = 1;
+        }
+    }
+
+    t_stop = *iter;
+    if (sec_pts == 1) {
+        str += freq_string_from<T>(t_star) + ";";
+        if (t_stop != t_star) {
+            str += freq_string_from<T>(t_stop) + ";";
+        }
+    } else {
+        str += freq_string_from<T>(t_star) + ":";
+        str += freq_string_from<T>(t_step_before) + ":";
+        str += freq_string_from<T>(t_stop) + ";";
+    }
+}
+
 template<typename T,typename container_t>
 std::string set_helper::set_helper_t<T,container_t>::add_as_freq_string(const std::string &str1,const std::string &str2)
 {

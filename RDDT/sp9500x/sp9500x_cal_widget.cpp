@@ -1,5 +1,6 @@
 #include "cal_widget.h"
 #include "sp9500x_cal_tx_filter_childwidgets.h"
+#include "sp9500x_cal_tx_pwr_childwidgets.h"
 #include "spec.h"
 
 using namespace ns_sp1403;
@@ -8,6 +9,7 @@ using namespace NS_SP9500X;
 
 void Q_Cal_TXFilter_Widget::init()
 {
+//    ui->lineEditRFFreqs->setText(QString::fromStdString(SP1403->cal_file()->tx_rf_if_fr_0000_3000_table()->freq_sequence_string()));
     ui->lineEditRFFreqs->setText("250M:10M:3G");
     ui->lineEditIFFreqs->setText("100M,200M,400M,800M");
 
@@ -37,15 +39,7 @@ void Q_Cal_TXFilter_Widget::prepare(const bool is_exp)
     emit reset();
 }
 
-void Q_Cal_TXFilter_Widget::resetShowWidget(CalParam *param)
-{
-//    SP1403->cal_file()->prepare_cal(cal_table_t::TX_RF_FR_0000_3000);
-
-//    childs->prepare(false);
-//    childs->plotRF->replot();
-//    childs->plotIF->replot();
-//    emit reset();
-}
+void Q_Cal_TXFilter_Widget::resetShowWidget(CalParam *param) {}
 
 void Q_Cal_TXFilter_Widget::uiToCalParam(CalParam *param)
 {
@@ -59,29 +53,12 @@ void Q_Cal_TXFilter_Widget::updateFromParam(const CalR1CParam &param)
 //    ui->checkBoxRebuildCoef->setChecked(false);
 }
 
-
-//    if (cal_file::TX_RF_FR_0 == item) {
-//        ui->tabWidget->plotRF->replot();
-//    } else if (cal_file::TX_RF_FR_1 == item) {
-//        ui->tabWidget->plotRF->replot();
-//    } else if (cal_file::TX_IF_FR == item) {
-//        ui->tabWidget->plotIF->replot();
-//    } else if (cal_file::TX_FILTER_80 == item) {
-//        ui->tabWidget->tableView_80->selectRow(tl.row());
-//    } else if (cal_file::TX_FILTER_160 == item) {
-//        ui->tabWidget->tableView_160->selectRow(tl.row());
-//    }
-
-
-void Q_Cal_TXFilter_Widget::uiInsert(const int first,const int last,const int cal_table)
-{
-
-}
+void Q_Cal_TXFilter_Widget::uiInsert(const int first,const int last,const int cal_table) {}
 
 void Q_Cal_TXFilter_Widget::uiUpdate(const int first,const int last,const int cal_table)
 {
     switch (cal_table) {
-    case cal_table_t::TX_IF_FR_0000_7500 :
+    case cal_table_t::TX_IF_FR_3000_7500 :
         childs->plotIF->replot();
         return;
     case cal_table_t::TX_RF_IF_FR_0000_3000 :
@@ -95,5 +72,68 @@ void Q_Cal_TXFilter_Widget::uiUpdate(const int first,const int last,const int ca
 }
 
 void Q_Cal_TXFilter_Widget::getset()
+{
+}
+
+void Q_Cal_TX_Pwr_Widget::init()
+{
+    ui->textEditRFFreqs->setText("250M:10M:3G");
+
+    childs = new Cal_TX_Pwr_ChildWidgets(this);
+
+    model->push_back(&childs->modelTX0_Output);
+    model->push_back(&childs->modelTX0_IO);
+    model->push_back(&childs->modelTX1);
+
+    addIdleWidget(ui->pushButtonExport);
+    addIdleWidget(ui->pushButtonStar);
+    addIdleWidget(ui->pushButtonGetSet);
+    addRunningWidget(ui->pushButtonStop);
+    addToPauseWidget(ui->pushButtonPaus);
+    addToRunningWidget(ui->pushButtonCont);
+    widgetResume();
+    QCalBaseDlg::init();
+}
+
+void Q_Cal_TX_Pwr_Widget::prepare(const bool is_exp)
+{
+    childs->prepare(is_exp);
+    ui->plot->replot();
+    emit reset();
+}
+
+void Q_Cal_TX_Pwr_Widget::resetShowWidget(CalParam *param) {}
+
+void Q_Cal_TX_Pwr_Widget::uiToCalParam(CalParam *param)
+{
+    param->parent = this;
+    param->cal = ui->checkBoxCal->isChecked();
+    param->check = ui->checkBoxCheck->isChecked();
+}
+
+void Q_Cal_TX_Pwr_Widget::updateFromParam(const CalR1CParam &param)
+{
+//    ui->checkBoxRebuildCoef->setChecked(false);
+}
+
+void Q_Cal_TX_Pwr_Widget::uiInsert(const int first,const int last,const int cal_table) {}
+
+void Q_Cal_TX_Pwr_Widget::uiUpdate(const int first,const int last,const int cal_table)
+{
+    ignore_unused(last);
+    if (cal_table == cal_table_t::TX0_Pwr_Output) {
+        ui->tabWidget->setCurrentIndex(0);
+        ui->tableViewTX0_Output->selectRow(first);
+    } else if (cal_table == cal_table_t::TX0_Pwr_IO) {
+        ui->tabWidget->setCurrentIndex(1);
+        ui->tableViewTX0_IO->selectRow(first);
+    } else {
+        ui->tabWidget->setCurrentIndex(2);
+        ui->tableViewTX1->selectRow(first);
+    }
+    ui->plot->replot();
+}
+
+void Q_Cal_TX_Pwr_Widget::getset()
 {
 }

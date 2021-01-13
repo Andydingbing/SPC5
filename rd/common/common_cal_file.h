@@ -56,12 +56,29 @@ struct cal_file_header_t {
 };
 
 struct cal_table_header_t {
-    int32_t  id;         // <cal_table_t>
-    uint32_t pts;        // Total points
-    uint32_t per_size;   // Size(bype) of each <data_f_t> type point
+    int32_t  id;       // <cal_table_t>
+    uint32_t pts;      // Total points
+    uint32_t per_size; // Size(byte) of each <data_f_t> type point
     uint32_t rsv0;
+    char freq_str[512];
 
-    cal_table_header_t() : id(-1),pts(0),per_size(0),rsv0(0) {}
+    cal_table_header_t() : id(-1),pts(0),per_size(0),rsv0(0) { clr_freq_str(); }
+    int32_t set_freq_str(const std::string &str)
+    {
+        std::size_t length = str.length();
+
+        if (length > ARRAY_SIZE(freq_str) - 1) {
+            return -1;
+        }
+
+        clr_freq_str();
+        str.copy(freq_str,str.length());
+        freq_str[length] = '\0';
+        return 0;
+    }
+
+private:
+    void clr_freq_str() { memset(freq_str,0,sizeof(freq_str)); }
 };
 
 template<typename cal_table_t>
@@ -94,14 +111,15 @@ public:
 public:
     int32_t make_sure_has(const cal_table_t table,cal_table *t)
     {
-        cal_table_header_t table_header;
-        table_header.id = table._to_integral();
-        table_header.per_size = t->size_of_data_f();
-
         int32_t data_start_pos = 0;
-        cal_file_header_t header;
+
+        cal_file_header_t  header;
+        cal_table_header_t table_header;
         std::list<cal_table_header_t> table_headers;
         typename std::list<cal_table_header_t>::const_iterator iter_th;
+
+        table_header.id = table._to_integral();
+        table_header.per_size = t->size_of_data_f();
 
         if ((data_start_pos = get_header(header,table_headers)) < 0) {
             return 0;
@@ -184,6 +202,9 @@ public:
         uint32_t per_size = 0;
         cal_table_header_t table_header;
         cal_table *t = nullptr;
+        std::string freq_str;
+
+        set_helper::set_helper_t<int64_t,std::vector<int64_t>> freq;
 
         std::map<int32_t,cal_table *>::const_iterator iter;
 
@@ -194,7 +215,7 @@ public:
         INT_CHECK(table_pos_size(table,pos,cur_size));
 
         t = iter->second;
-        t->combine();
+        t->combine(freq_str);
         per_size = t->size_of_data_f();
         new_size = t->size_data_f() * per_size;
         table_header.id = table._to_integral();
@@ -203,6 +224,7 @@ public:
             INT_CHECK(get_header(table_header));
             table_header.pts = t->size_data_f();
             table_header.per_size = t->size_of_data_f();
+            table_header.set_freq_str(freq_str);
             INT_CHECK(set_header(table_header));
             INT_CHECK(slice_and_move(pos + cur_size,new_size - cur_size));
         }
@@ -340,7 +362,12 @@ private:
                 if (iter_tables->second->size_of_data_f() != iter_th->per_size) {
                     continue;
                 }
+
+                iter_tables->second->freq_sequence()->clear();
                 iter_tables->second->map_from(convert_buf.buf,(*iter_th).pts);
+                sequence::parse(iter_th->freq_str,iter_tables->second->freq_sequence());
+
+                Log.stdprintf("freq string %s : \n",iter_th->freq_str);
             }
         }
         return 0;

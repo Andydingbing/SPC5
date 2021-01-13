@@ -1,8 +1,4 @@
 include(../include/config.pri)
-#include(sp9500.pri)
-#include(dt3308.pri)
-#include(sp9500x.pri)
-#include(sp9500pro.pri)
 
 QT += core gui network svg
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -218,7 +214,8 @@ sp9500x/sp9500x_arb_config_widget.h \
 sp9500x/sp9500x_iq_cap_config_widget.h \
 sp9500x/sp9500x_fpga_widget.h \
 sp9500x/sp9500x_fan_dlg.h \
-sp9500x/sp9500x_cal_tx_filter_thread.h
+sp9500x/sp9500x_cal_tx_filter_thread.h \
+sp9500x/sp9500x_cal_tx_pwr_thread.h
 
 SOURCES += \
 sp9500x/sp1403_r1a_widget.cpp \
@@ -230,27 +227,24 @@ sp9500x/sp9500x_iq_cap_config_widget.cpp \
 sp9500x/sp9500x_fpga_widget.cpp \
 sp9500x/sp9500x_fan_dlg.cpp \
 sp9500x/sp9500x_cal_widget.cpp \
-sp9500x/sp9500x_cal_tx_filter_thread.cpp
+sp9500x/sp9500x_cal_tx_filter_thread.cpp \
+sp9500x/sp9500x_cal_tx_pwr_thread.cpp
 
 FORMS += \
 sp9500x/sp9500x_rrh.ui \
 sp9500x/sp9500x_sp2406.ui \
 sp9500x/sp9500x_fpga.ui \
-sp9500x/sp9500x_fan.ui
+sp9500x/sp9500x_fan.ui \
+sp9500x/sp9500x_cal_tx_pwr.ui
 
 # SP9500Pro
 INCLUDEPATH += \
 sp9500pro/cal
 
 HEADERS += \
-sp9500pro/sp9500pro_child_widget_helper.hpp \
-sp9500pro/cal/sp9500pro_cal_tx_filter_thread.h \
-sp9500pro/cal/sp9500pro_cal_tx_filter_childwidgets.h
+sp9500pro/sp9500pro_child_widget_helper.hpp
 
 SOURCES += \
-sp9500pro/cal/sp9500pro_cal_widget.cpp \
-sp9500pro/cal/sp9500pro_cal_tx_filter_thread.cpp \
-sp9500pro/cal/sp9500pro_cal_tx_filter_childwidgets.cpp
 
 # ARB
 # IQ Capture

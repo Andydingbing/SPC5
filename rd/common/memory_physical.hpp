@@ -23,10 +23,10 @@ public:
     uint32_t *logic() const { return _logic; }
     uint32_t size() const { return _size; }
 
-    int32_t w8(const uint8_t *buf,const uint32_t size,const uint64_t offset = 0) const;
+    int32_t w8 (const uint8_t  *buf,const uint32_t size,const uint64_t offset = 0) const;
     int32_t w16(const uint16_t *buf,const uint32_t size,const uint64_t offset = 0) const;
     int32_t w32(const uint32_t *buf,const uint32_t size,const uint64_t offset = 0) const;
-    int32_t r8(const uint8_t *buf,const uint32_t size,const uint64_t offset = 0) const;
+    int32_t r8 (const uint8_t  *buf,const uint32_t size,const uint64_t offset = 0) const;
     int32_t r16(const uint16_t *buf,const uint32_t size,const uint64_t offset = 0) const;
     int32_t r32(const uint32_t *buf,const uint32_t size,const uint64_t offset = 0) const;
 

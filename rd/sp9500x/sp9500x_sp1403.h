@@ -30,6 +30,19 @@ public:
     int32_t set_ad998x_reg(const uint16_t addr,const uint8_t data);
     int32_t get_ad998x_reg(const uint16_t addr,uint8_t &data);
 
+public:
+    virtual int32_t set_tx_state(const port_t port,const data_f_tx_pwr &data) const
+    { ignore_unused(port,data); return 0; }
+
+    virtual double tx_base_pwr(const uint64_t freq,const io_mode_t mode) const
+    { ignore_unused(freq,mode); return -10.0; }
+
+    virtual void tx_state(const uint64_t freq,const io_mode_t mode,data_f_tx_pwr &state) const
+    { ignore_unused(freq,mode,state); }
+
+    virtual void tx_state(const uint64_t freq,const io_mode_t mode,const data_f_tx_pwr &base_state,data_f_tx_pwr &state) const
+    { ignore_unused(freq,mode,base_state,state); }
+
 protected:
     ns_sp9500x::cal_file *_cal_file;
     pci_dev *_v9;

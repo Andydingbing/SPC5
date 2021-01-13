@@ -12,6 +12,18 @@ Q_Config_Table_View::Q_Config_Table_View(QWidget *parent) :
     verticalHeader()->setDefaultSectionSize(30);
 }
 
+void Q_Config_Table_View::setModel(QAbstractItemModel *model)
+{
+    QTableView::setModel(model);
+
+    for (int i = 0;i < model->rowCount();++i) {
+        openPersistentEditor(model->index(i,1));
+    }
+
+    resizeColumnsToContents();
+    horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
+    horizontalHeader()->setSectionResizeMode(1,QHeaderView::Stretch);
+}
 
 QVariant Q_Config_Table_Model::data(const QModelIndex &index, int role) const
 {

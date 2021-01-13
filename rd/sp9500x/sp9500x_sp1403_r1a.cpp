@@ -617,3 +617,50 @@ IMPL_SW(ns_sp9500x::sp1403_r1a,0x3,rx_sw1,rx_sw1_t)
 IMPL_SW(ns_sp9500x::sp1403_r1a,0x3,rx_sw2,rx_sw2_t)
 IMPL_SW(ns_sp9500x::sp1403_r1a,0x3,rx_sw3,rx_sw3_t)
 IMPL_SW(ns_sp9500x::sp1403_r1a,0x3,rx_sw4,rx_sw4_t)
+
+int32_t ns_sp9500x::sp1403_r1a::set_tx_state(const port_t port,const data_f_tx_pwr &data) const
+{
+    if (port == TX0) {
+        INT_CHECK(set_att(TX0_ATT0,data_f_tx_pwr::att_double(data.att[0])));
+        INT_CHECK(set_att(TX0_ATT1,data_f_tx_pwr::att_double(data.att[1])));
+        INT_CHECK(set_att(TX0_ATT2,data_f_tx_pwr::att_double(data.att[2])));
+        INT_CHECK(set_att(TX0_ATT3,data_f_tx_pwr::att_double(data.att[3])));
+    } else if (port == TX1) {
+        INT_CHECK(set_att(TX1_ATT0,data_f_tx_pwr::att_double(data.att[0])));
+        INT_CHECK(set_att(TX1_ATT1,data_f_tx_pwr::att_double(data.att[1])));
+        INT_CHECK(set_att(TX1_ATT2,data_f_tx_pwr::att_double(data.att[2])));
+        INT_CHECK(set_att(TX1_ATT3,data_f_tx_pwr::att_double(data.att[3])));
+    }
+
+    return 0;
+}
+
+double ns_sp9500x::sp1403_r1a::tx_base_pwr(const uint64_t freq,const io_mode_t mode) const
+{
+    if (is_between(freq,FREQ_M(0),FREQ_M(6500))) {
+        return mode == OUTPUT ? 0.0 : -6.0;
+    } else if (is_before(freq,FREQ_M(7900))) {
+        return mode == OUTPUT ? -8.0 : -14.0;
+    } else {
+        return mode == OUTPUT ? -15.0 : -21.0;
+    }
+}
+
+void ns_sp9500x::sp1403_r1a::tx_state(const uint64_t freq,const io_mode_t mode,data_f_tx_pwr &state) const
+{
+    boost::ignore_unused(freq,mode);
+
+    const double att[4] = { 0.0,0.0,0.0,5.0 };
+    const float d_gain = -10.0;
+
+    state.set_att(att);
+    state.d_gain = d_gain;
+}
+
+void ns_sp9500x::sp1403_r1a::tx_state(const uint64_t freq,
+                                      const io_mode_t mode,
+                                      const data_f_tx_pwr &base_state,
+                                      data_f_tx_pwr &state) const
+{
+
+}

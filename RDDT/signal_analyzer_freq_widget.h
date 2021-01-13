@@ -9,10 +9,9 @@ class Q_SA_Freq_Delegate : public Q_Config_Table_Delegate
 {
 public:
     Q_SA_Freq_Delegate(QObject *parent = nullptr);
-    CONFIG_TABLE_FIRST_WIDGET(QLineEdit,lineEditCenter)
 
 public:
-    QLineEdit *lineEditCenter;
+    FIRST_CONFIG_WIDGET(QLineEdit,lineEditCenter)
     QLineEdit *lineEditStar;
     QLineEdit *lineEditStop;
     QLineEdit *lineEditCenterStep;
