@@ -28,20 +28,21 @@ public:
     virtual ~sp1403_r1b() {}
 
 public:
-    int32_t open_board();
-    int32_t close_board();
+    int32_t open_board() OVERRIDE;
+    int32_t close_board() OVERRIDE;
 
-    int32_t hw_ver() const { return ns_sp1403::hw_ver_t::R1A; }
+    int32_t hw_ver() const  OVERRIDE
+    { return ns_sp1403::hw_ver_t::R1B; }
 
-    int32_t set_io_mode(const ns_sp1403::port_t port,const io_mode_t mode);
+    int32_t set_io_mode(const ns_sp1403::port_t port,const io_mode_t mode) OVERRIDE;
 
-    int32_t set_tx_freq(const uint64_t freq);
-    int32_t set_rx_freq(const uint64_t freq);
+    int32_t set_tx_freq(const uint64_t freq) OVERRIDE;
+    int32_t set_rx_freq(const uint64_t freq) OVERRIDE;
 
     using sp1403_r1a::set_rx_bw;
     using sp1403_r1a::get_rx_bw;
-    int32_t set_rx_bw(const rx_bw_t bw) const;
-    int32_t get_rx_bw(rx_bw_t &bw) const;
+    int32_t set_rx_bw(const rx_bw_t bw) const OVERRIDE;
+    int32_t get_rx_bw(rx_bw_t &bw) const OVERRIDE;
 
     using sp1403_r1a::set_tx0_sw2;
     using sp1403_r1a::get_tx0_sw2;
@@ -50,15 +51,15 @@ public:
     DECL_SW(tx0_sw2,tx_sw2_t)
     DECL_SW(tx1_sw2,tx_sw2_t)
 
-    DECL_SW(rx_sw7,rx_sw7_t)
+    DECL_SW_OVERRIDE(rx_sw7,rx_sw7_t)
 
-    int32_t set_det_sw(const det_sw_t &sw) const;
-    int32_t get_det_sw(det_sw_t &sw) const;
-    int32_t get_ad7680(uint16_t &det) const;
+    int32_t set_det_sw(const det_sw_t &sw) const OVERRIDE;
+    int32_t get_det_sw(det_sw_t &sw) const OVERRIDE;
+    int32_t get_ad7680(uint16_t &det) const OVERRIDE;
 
 public:
-    void tx_freq_to_lo(const uint64_t freq);
-    void rx_freq_to_lo(const uint64_t freq);
+    void tx_freq_to_lo(const uint64_t freq) OVERRIDE;
+    void rx_freq_to_lo(const uint64_t freq) OVERRIDE;
 };
 
 #ifdef RD_C_MSC

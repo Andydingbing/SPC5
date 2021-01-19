@@ -11,16 +11,18 @@ class Q_Cal_TX_Pwr_Thread : public QCalBaseThread
 public:
     explicit Q_Cal_TX_Pwr_Thread(const CalParam &param) :
         QCalBaseThread(param) { }
-    void cal();
+    void cal() OVERRIDE;
+    void calIt();
     void check();
 
     void init();
 
-    void coarseTuning(const uint64_t freq,data_f_tx_pwr &data);
-    void fineTuning(const uint64_t freq,data_f_tx_pwr &data);
+    void coarseTuning(const uint64_t freq, data_f_tx_pwr &data);
+    void fineTuning(const uint64_t freq, data_f_tx_pwr &data);
 
 public:
     ns_sp1403::port_t port;
+    io_mode_t mode;
 };
 
 

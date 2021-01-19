@@ -311,6 +311,7 @@ signals:
 protected:
     sp3301 *SP3301;
     quint32 RFIdx;
+    int32_t HWVer;
     double tempCur;
     double tempMin;
     double tempMax;

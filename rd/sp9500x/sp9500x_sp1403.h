@@ -19,7 +19,7 @@ public:
     pci_dev *v9() const { return _v9; }
     ns_sp9500x::cal_file *cal_file() const { return _cal_file; }
 
-    virtual int32_t open_board();
+    virtual int32_t open_board() OVERRIDE;
 
     int32_t prepare_cal(const cal_table_t table)
     { return _cal_file->prepare_cal(table); }
@@ -33,9 +33,6 @@ public:
 public:
     virtual int32_t set_tx_state(const port_t port,const data_f_tx_pwr &data) const
     { ignore_unused(port,data); return 0; }
-
-    virtual double tx_base_pwr(const uint64_t freq,const io_mode_t mode) const
-    { ignore_unused(freq,mode); return -10.0; }
 
     virtual void tx_state(const uint64_t freq,const io_mode_t mode,data_f_tx_pwr &state) const
     { ignore_unused(freq,mode,state); }

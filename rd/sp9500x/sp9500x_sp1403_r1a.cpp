@@ -651,7 +651,7 @@ void ns_sp9500x::sp1403_r1a::tx_state(const uint64_t freq,const io_mode_t mode,d
     boost::ignore_unused(freq,mode);
 
     const double att[4] = { 0.0,0.0,0.0,5.0 };
-    const float d_gain = -10.0;
+    const float d_gain = 0.0;
 
     state.set_att(att);
     state.d_gain = d_gain;

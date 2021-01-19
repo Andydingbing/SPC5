@@ -53,7 +53,10 @@ public:
 public:
     sp1403(uint32_t rf_idx,uint32_t rfu_idx);
 
-    virtual int32_t open_board();
+    virtual int32_t open_board() OVERRIDE;
+
+    virtual int32_t set_att(const uint8_t idx,const double &att) const = 0;
+    virtual int32_t get_att(const uint8_t idx,double &att) const = 0;
 
     virtual int32_t set_io_mode(const io_mode_t) = 0;
     virtual int32_t set_io_mode(const ns_sp1403::port_t,const io_mode_t) = 0;
@@ -67,6 +70,9 @@ public:
     io_mode_t io_mode() const { return _io_mode_tx0; }
     io_mode_t io_mode(const ns_sp1403::port_t port)
     { return *(static_cast<io_mode_t *>(&_io_mode_tx0 + port)); }
+
+    static port_t tx_another_port(const port_t &port)
+    { return port == port_t::TX0 ? port_t::TX1 : port_t::TX0; }
 
 public:
     io_mode_t _io_mode_tx0;

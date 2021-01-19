@@ -142,7 +142,7 @@ public:
 
         Q_Cal_TX_Pwr_Widget *p = dynamic_cast<Q_Cal_TX_Pwr_Widget *>(_parent);
 
-        init(p->ui->plot,ns_sp1403::tx_freq_star/1e6,ns_sp1403::tx_freq_sec3/1e6,-11.0,-9.0);
+        init(p->ui->plot,ns_sp1403::tx_freq_star/1e6,ns_sp1403::tx_freq_sec3/1e6,-1.0,1.0);
 
         p->ui->plot->setTitle("RF Freq Response(dBm/MHz)");
 

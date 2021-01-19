@@ -134,6 +134,7 @@ public:
     virtual int32_t set_rx_sw3(const rx_sw3_t &sw) const = 0;
     virtual int32_t get_rx_sw3(rx_sw3_t &sw) const = 0;
     virtual int32_t set_rx_sw4(const rx_sw4_t &sw) const = 0;
+    virtual int32_t get_rx_sw4(rx_sw4_t &sw) const = 0;
 
     virtual int32_t get_temp(const temp_t &,double &) const = 0;
 

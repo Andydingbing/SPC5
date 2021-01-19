@@ -184,6 +184,7 @@ public:
             INT_CHECKV(get(*iter_key,data));
 
             *iter_data = data;
+            iter_data->set_key(*iter_key);
 
             if (++i == _data_calibrating->size()) {
                 return;

@@ -48,6 +48,10 @@ QCalBaseThread::QCalBaseThread(const CalParam &param) :
     parse_range_freq_string(freqStringCal,freqRangeCal);
     parse_range_freq_string(freqStringCheck,freqRangeCheck);
 
+    if (SP1403 != nullptr) {
+        HWVer = SP1403->hw_ver();
+    }
+
     if (calOP(calParam.mode)) {
         if (calParam.cal) { totalPts += freqRangeCal.freqs.size(); }
         if (calParam.check) { totalPts += freqRangeCheck.freqs.size(); }

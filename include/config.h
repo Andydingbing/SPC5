@@ -16,6 +16,8 @@
 #ifndef INCLUDE_CONFIG_H
 #define INCLUDE_CONFIG_H
 
+#include "config/suffix.h"
+
 // Define cross-platform macros,taken from uhd(USRP Hardware Driver) library.
 #if defined(_MSC_VER)
     #define RD_EXPORT       __declspec(dllexport)
