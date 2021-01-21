@@ -151,6 +151,12 @@ using boost::ignore_unused;
 
 #define ZERO_ARRAY(array) { memset(array,0,sizeof(array)); }
 
+#define INIT_ARRAY(array,value) \
+{   for (uint32_t i = 0;i < ARRAY_SIZE(array);++i) { \
+        array[i] = (value); \
+    } \
+}
+
 #define BOOST_SPTR_SAFE_MAKE(type,sptr) { if (!sptr) sptr = boost::make_shared<type>(); }
 
 #define FREQ_K(freq) freq##000ll

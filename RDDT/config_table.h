@@ -59,7 +59,7 @@ public:
 
 #define FIRST_CONFIG_WIDGET(type,widget) \
     type *widget; \
-    QWidget **first() const { return reinterpret_cast<QWidget **>(const_cast<type **>(&widget)); }
+    QWidget **first() const OVERRIDE { return reinterpret_cast<QWidget **>(const_cast<type **>(&widget)); }
 };
 
 #endif // Q_CONFIG_TABLE_H

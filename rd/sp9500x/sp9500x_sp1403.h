@@ -37,8 +37,8 @@ public:
     virtual void tx_state(const uint64_t freq,const io_mode_t mode,data_f_tx_pwr &state) const
     { ignore_unused(freq,mode,state); }
 
-    virtual void tx_state(const uint64_t freq,const io_mode_t mode,const data_f_tx_pwr &base_state,data_f_tx_pwr &state) const
-    { ignore_unused(freq,mode,base_state,state); }
+    virtual void tx_state(const double att,const data_f_tx_pwr &base_state,data_f_tx_pwr &state) const
+    { ignore_unused(att,base_state,state); }
 
 protected:
     ns_sp9500x::cal_file *_cal_file;

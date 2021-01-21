@@ -91,10 +91,18 @@ bool rs_fsup::set_marker(marker_type_t type)
 
 bool rs_fsup::set_en_preamp(bool en)
 {
-    if (en)
-        return w("INP:GAIN:STAT ON;*WAI");
-	else
-        return w("INP:GAIN:STAT OFF;*WAI");
+    return w((boost::format("INP:GAIN:STAT %s;*WAI") % (en ? "ON" : "OFF")).str());
+}
+
+bool rs_fsup::is_en_preamp(bool &en)
+{
+    string buf;
+
+    BOOL_CHECK(w("INP:GAIN:STAT?;*WAI"));
+    BOOL_CHECK(r(buf,256));
+
+    en = atoi(buf.c_str()) == 1;
+    return true;
 }
 
 bool rs_fsup::get_marker_pwr(double &pwr)
@@ -161,6 +169,28 @@ bool rs_fsup::set_avg_trace(bool en,uint32_t cnt)
         BOOL_CHECK(w("AVER:STAT OFF;*WAI"));
 	}
 	return true;
+}
+
+bool rs_fsup::get_trace_avg_cnt(uint32_t &cnt)
+{
+    string buf;
+
+    BOOL_CHECK(w("AVER:COUN?;*WAI"));
+    BOOL_CHECK(r(buf,256));
+
+    cnt = uint32_t(atol(buf.c_str()));
+    return true;
+}
+
+bool rs_fsup::is_en_avg_trace(bool &en)
+{
+    string buf;
+
+    BOOL_CHECK(w("AVER:STAT?;*WAI"));
+    BOOL_CHECK(r(buf,256));
+
+    en = atoi(buf.c_str()) == 1;
+    return true;
 }
 
 bool rs_fsup::set_avg_trace_get_data(uint32_t avg_cnt,uint32_t pt_cnt,double *data)

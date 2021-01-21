@@ -83,6 +83,7 @@ public:
     int32_t get_led(const port_t port,led_t &led) const OVERRIDE;
 
     virtual int32_t set_tx_freq(const uint64_t freq) OVERRIDE;
+    virtual int32_t set_tx_att(const double att,const int32_t port = 0) OVERRIDE;
 
     int32_t set_att(const att_t att,const double value) const OVERRIDE;
     int32_t get_att(const att_t att,double &value) const OVERRIDE;
@@ -154,7 +155,7 @@ public:
 
     virtual void tx_state(const uint64_t freq,const io_mode_t mode,data_f_tx_pwr &state) const OVERRIDE;
 
-    virtual void tx_state(const uint64_t freq,const io_mode_t mode,const data_f_tx_pwr &base_state,data_f_tx_pwr &state) const OVERRIDE;
+    virtual void tx_state(const double att,const data_f_tx_pwr &base_state,data_f_tx_pwr &state) const OVERRIDE;
 };
 
 } // namespace ns_sp9500x

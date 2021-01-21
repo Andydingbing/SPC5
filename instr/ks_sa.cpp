@@ -88,11 +88,22 @@ bool ks_n9030a::set_marker(marker_type_t type)
 bool ks_n9030a::set_en_preamp(bool en)
 {
     if (en) {
-        BOOL_CHECK(w(":POW:GAIN:STAT ON;:POW:GAIN:BAND FULL;*WAI"));
+        BOOL_CHECK(w("POW:GAIN:STAT ON;POW:GAIN:BAND FULL;*WAI"));
 	} else {
         BOOL_CHECK(w("POW:GAIN:STAT OFF;*WAI"));
 	}
 	return true;
+}
+
+bool ks_n9030a::is_en_preamp(bool &en)
+{
+    string buf;
+
+    BOOL_CHECK(w("POW:GAIN:STAT?;*WAI"));
+    BOOL_CHECK(r(buf,256));
+
+    en = atoi(buf.c_str()) == 1;
+    return true;
 }
 
 bool ks_n9030a::get_marker_pwr(double &pwr)
@@ -167,6 +178,28 @@ bool ks_n9030a::set_avg_trace(bool en, uint32_t cnt)
         BOOL_CHECK(w("AVER OFF;*WAI"));
 	}
 	return true;
+}
+
+bool ks_n9030a::get_trace_avg_cnt(uint32_t &cnt)
+{
+    string buf;
+
+    BOOL_CHECK(w("AVER:COUN?;*WAI"));
+    BOOL_CHECK(r(buf,256));
+
+    cnt = uint32_t(atol(buf.c_str()));
+    return true;
+}
+
+bool ks_n9030a::is_en_avg_trace(bool &en)
+{
+    string buf;
+
+    BOOL_CHECK(w("AVER?;*WAI"));
+    BOOL_CHECK(r(buf,256));
+
+    en = atoi(buf.c_str()) == 1;
+    return true;
 }
 
 bool ks_n9030a::set_avg_trace_get_data(uint32_t avg_cnt, uint32_t pt_cnt, double *data)

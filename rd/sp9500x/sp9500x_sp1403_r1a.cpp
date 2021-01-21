@@ -261,6 +261,11 @@ int32_t ns_sp9500x::sp1403_r1a::set_tx_freq(const uint64_t freq)
     return 0;
 }
 
+int32_t ns_sp9500x::sp1403_r1a::set_tx_att(const double att,const int32_t port)
+{
+    return 0;
+}
+
 int32_t ns_sp9500x::sp1403_r1a::set_att(const att_t att,const double value) const
 {
     SP9500X_RFU_V9_REG_DECL_2(0x0103,0x0123);
@@ -400,15 +405,15 @@ int32_t ns_sp9500x::sp1403_r1a::get_temp(const temp_t &idx,double &temp) const
 
 int32_t ns_sp9500x::sp1403_r1a::init_lo(const lo_t lo)
 {
+    uint16_t read_data = 0;
     LMX2594_ALL_REG_ARRAY_DECL(reg);
 
+    LMX2594_REG(0x0e).cpg = (lo == lo_t::TX_LMX2594_0 ? 5 : 1);
     LMX2594_REG(0x2c).outa_pwr = (lo == lo_t::TX_LMX2594_0 ? 27 : 1);
 
     LMX2594_REG(0x00).reset = 1;
     INT_CHECK(set_lo_reg(lo,0x00,LMX2594_REG_DATA(0x00)));
-
-    uint16_t read_data = 0;
-    get_lo_reg(lo,0x00,read_data);
+    INT_CHECK(get_lo_reg(lo,0x00,read_data));
 
     LMX2594_REG(0x00).reset = 0;
     INT_CHECK(set_lo_reg(lo,0x00,LMX2594_REG_DATA(0x00)));
@@ -427,12 +432,15 @@ int32_t ns_sp9500x::sp1403_r1a::set_lo(const lo_t lo,const uint64_t freq)
     LMX2594_REG_DECL_0x00;
     LMX2594_REG_DECL_0x14;
     LMX2594_REG_DECL_0x24;
+    LMX2594_REG_DECL_0x25;
     LMX2594_REG_DECL_0x26;
     LMX2594_REG_DECL_0x27;
     LMX2594_REG_DECL_0x2a;
     LMX2594_REG_DECL_0x2b;
+    LMX2594_REG_DECL_0x2c;
     LMX2594_REG_DECL_0x2d;
 
+    uint32_t pfd_dly_sel = 0;
     ns_lmx2594::freq_formula_in param_in;
     ns_lmx2594::freq_formula_out param_out;
 
@@ -440,14 +448,29 @@ int32_t ns_sp9500x::sp1403_r1a::set_lo(const lo_t lo,const uint64_t freq)
 
     ns_lmx2594::freq_formula(param_in,param_out);
 
+    if (freq < FREQ_M(7500)) {
+        pfd_dly_sel = 3;
+    } else if (freq <= FREQ_M(7900)) {
+        pfd_dly_sel = 2;
+    } else if (freq < FREQ_M(10000)) {
+        pfd_dly_sel = 3;
+    } else {
+        pfd_dly_sel = 4;
+    }
+
     LMX2594_REG(0x00).en_fcal = 1;
     LMX2594_REG(0x14).vco_sel = (freq < FREQ_M(11900) || freq > FREQ_M(12100)) ? 7 : 4;
     LMX2594_REG(0x24).pll_n = param_out.N;
+    LMX2594_REG(0x25).pfd_dly_sel = pfd_dly_sel;
     LMX2594_REG(0x26).pll_den = param_out.DEN >> 16;
     LMX2594_REG(0x27).pll_den = param_out.DEN & 0x0000ffff;
     LMX2594_REG(0x2a).pll_num = param_out.NUM >> 16;
     LMX2594_REG(0x2b).pll_num = param_out.NUM & 0x0000ffff;
+    LMX2594_REG(0x2c).mash_order = freq > FREQ_M(7900) ? 3 : 2;
     LMX2594_REG(0x2d).outa_mux = freq < FREQ_M(7500) ? 0 : 1;
+
+    INT_CHECK(set_lo_reg(lo,0x25,LMX2594_REG_DATA(0x25)));
+    INT_CHECK(set_lo_reg(lo,0x2c,LMX2594_REG_DATA(0x2c)));
 
     INT_CHECK(set_lo_reg(lo,0x14,LMX2594_REG_DATA(0x14)));
     INT_CHECK(set_lo_reg(lo,0x2d,LMX2594_REG_DATA(0x2d)));
@@ -657,10 +680,42 @@ void ns_sp9500x::sp1403_r1a::tx_state(const uint64_t freq,const io_mode_t mode,d
     state.d_gain = d_gain;
 }
 
-void ns_sp9500x::sp1403_r1a::tx_state(const uint64_t freq,
-                                      const io_mode_t mode,
-                                      const data_f_tx_pwr &base_state,
-                                      data_f_tx_pwr &state) const
+void ns_sp9500x::sp1403_r1a::tx_state(const double att,const data_f_tx_pwr &base_state,data_f_tx_pwr &state) const
 {
+    double att0 = data_f_tx_pwr::att_double(base_state.att[0]);
+    double att1 = data_f_tx_pwr::att_double(base_state.att[1]);
+    double att2 = data_f_tx_pwr::att_double(base_state.att[2]);
+    double att3 = data_f_tx_pwr::att_double(base_state.att[3]);
+    float  d_gain = base_state.d_gain;
 
+    if (att < 0.0) {
+        att0 -= att;
+    } else if (att <= 30.0) {
+        att3 = att;
+    } else if (att <= 60.0) {
+        att3 = 30.0;
+        att2 = att - att3;
+    } else if (att <= 90.0) {
+        att3 = 30.0;
+        att2 = 30.0;
+        att1 = att - att3 - att2;
+    } else {
+        att3 = 30.0;
+        att2 = 30.0;
+        att1 = 30.0;
+        att0 = att - att3 - att2 - att1;
+    }
+
+    if (att0 < 0.0) {
+        d_gain -= float(att0);
+        att0 = 0.0;
+    }
+
+    if (att0 > 30.0) {
+        d_gain -= float(att0 - 30.0);
+        att0 = 30.0;
+    }
+
+    state.set_att(att0,att1,att2,att3);
+    state.d_gain = d_gain;
 }

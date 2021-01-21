@@ -111,6 +111,7 @@ HEADERS += \
 ./sp9500x/cal_table_tx_lol.h \
 ./sp9500x/cal_table_filter.h \
 ./sp9500x/cal_table_tx_pwr.h \
+./sp9500x/cal_table_tx_att.h \
 ./sp9500x/cal_file_sp9500x.h \
 ./sp9500x/sp9500x_sp1403.h \
 ./sp9500x/sp9500x_sp1403_r1a.h \
@@ -124,6 +125,7 @@ SOURCES += \
 ./sp9500x/cal_table_tx_lol.cpp \
 ./sp9500x/cal_table_filter.cpp \
 ./sp9500x/cal_table_tx_pwr.cpp \
+./sp9500x/cal_table_tx_att.cpp \
 ./sp9500x/cal_file_sp9500x.cpp \
 ./sp9500x/sp9500x_sp1403.cpp \
 ./sp9500x/sp9500x_sp1403_r1a.cpp \

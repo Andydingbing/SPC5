@@ -50,10 +50,13 @@ public:
     virtual bool set_marker(marker_type_t type) = 0;
     virtual bool set_cal(cal_type_t type) = 0;
     virtual bool set_avg_trace(bool en,uint32_t cnt) = 0;
+    virtual bool get_trace_avg_cnt(uint32_t &cnt) = 0;
     virtual bool set_ref(double ref) = 0;
     virtual bool get_ref(double &ref) = 0;
     virtual bool get_marker_pwr(double &pwr) = 0;
     virtual bool set_en_preamp(bool en) = 0;
+    virtual bool is_en_preamp(bool &en) = 0;
+    virtual bool is_en_avg_trace(bool &en) = 0;
     virtual bool get_marker_freq(double &freq) = 0;
     virtual bool wait_for_continue() = 0;
     virtual bool sweep_once() = 0;
@@ -64,6 +67,8 @@ public:
 
 public:
     bool set_ref_auto();
+    bool set_ref_auto(double pwr,double &ref);
+    bool set_ref_auto(double pwr,double &ref,double &offset);
 };
 
 #endif // INSTR_SA_H

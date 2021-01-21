@@ -10,13 +10,8 @@ data_f_tx_pwr::data_f_tx_pwr()
 
     d_gain = 0.0;
 
-    for (uint32_t i = 0;i < ARRAY_SIZE(temp);++i) {
-        temp[i] = -100.0;
-    }
-
-    for (uint32_t i = 0;i < ARRAY_SIZE(att);++i) {
-        att[i] = 0;
-    }
+    INIT_ARRAY(att,0);
+    INIT_ARRAY(temp,-100.0);
 }
 
 void data_f_tx_pwr::set_att(const double att0,const double att1,const double att2,const double att3)
@@ -49,7 +44,6 @@ void tx_pwr_table_t::map_from(void *data,uint32_t pts)
     for (uint32_t i = 0;i < pts;++i) {
         d_m.d_gain = d_f[i].d_gain;
         for (uint32_t j = 0;j < ARRAY_SIZE(data_f_t::att);++j) {
-            d_m.att[j] = d_f[i].att[j];
             d_m.att[j] = d_f[i].att[j];
         }
         _data_m.push_back(d_m);

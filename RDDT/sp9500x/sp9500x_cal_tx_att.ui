@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Q_SP9500X_Cal_TX_Pwr_Widget</class>
- <widget class="QWidget" name="Q_SP9500X_Cal_TX_Pwr_Widget">
+ <class>Q_SP9500X_Cal_TX_Att_Widget</class>
+ <widget class="QWidget" name="Q_SP9500X_Cal_TX_Att_Widget">
   <property name="geometry">
    <rect>
     <x>0</x>

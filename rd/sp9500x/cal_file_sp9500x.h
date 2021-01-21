@@ -5,6 +5,7 @@
 #include "cal_table_tx_lol.h"
 #include "cal_table_filter.h"
 #include "cal_table_tx_pwr.h"
+#include "cal_table_tx_att.h"
 
 namespace rd {
 namespace ns_sp9500x {
@@ -30,6 +31,9 @@ public:
         make_sure_has(cal_table_t::TX0_Pwr_Output,&_tx0_pwr_output);
         make_sure_has(cal_table_t::TX0_Pwr_IO,&_tx0_pwr_io);
         make_sure_has(cal_table_t::TX1_Pwr,&_tx1_pwr);
+        make_sure_has(cal_table_t::TX0_Att_Output,&_tx0_att_output);
+        make_sure_has(cal_table_t::TX0_Att_IO,&_tx0_att_io);
+        make_sure_has(cal_table_t::TX1_Att,&_tx1_att);
         return 0;
     }
 
@@ -48,6 +52,10 @@ public:
     tx_pwr_table_t *tx0_pwr_io() { return &_tx0_pwr_io; }
     tx_pwr_table_t *tx1_pwr() { return &_tx1_pwr; }
 
+    tx_att_table_t *tx0_att_output() { return &_tx0_att_output; }
+    tx_att_table_t *tx0_att_io() { return &_tx0_att_io; }
+    tx_att_table_t *tx1_att() { return &_tx1_att; }
+
 private:
     tx_lol_t _tx_lol;
     tx_sb_t  _tx_sb;
@@ -62,6 +70,9 @@ private:
     tx_pwr_table_t _tx0_pwr_output;
     tx_pwr_table_t _tx0_pwr_io;
     tx_pwr_table_t _tx1_pwr;
+    tx_att_table_t _tx0_att_output;
+    tx_att_table_t _tx0_att_io;
+    tx_att_table_t _tx1_att;
 };
 
 } // namespace ns_sp9500x

@@ -35,6 +35,7 @@ public:
     void set_sa(std::string des);
     void set_sg(std::string des);
     void set_pm(std::string des);
+
 public:  
     bool sa_reset();
     bool sa_set_cf(double freq);
@@ -58,6 +59,9 @@ public:
     bool sa_set_avg_trace_get_data(uint32_t avg_cnt,uint32_t pt_cnt,double *data);
     bool sa_set_mech_att(bool is_auto,int32_t att = 0);
     bool sa_set_ref_auto();
+    bool sa_set_ref_auto(double pwr,double &ref);
+    bool sa_set_ref_auto(double pwr,double &ref,double &offset);
+
 public:
     bool sg_reset();
     bool sg_set_cw(double freq);
@@ -66,13 +70,16 @@ public:
     bool sg_get_pl(double &pwr);
     bool sg_set_en_output(bool en);
     bool sg_set_en_mod(bool en);
+
 public:
     bool pm_reset();
     bool pm_set_freq(double freq);
     bool pm_get_pwr(double &pwr);
     bool pm_get_pwr(double freq,double &pwr);
+
 private:
     bool ins_instr(const std::string &idn, ViRsrc des);
+
 private:
     bool m_en_expt;
     std::string m_des_sa;

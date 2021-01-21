@@ -48,7 +48,8 @@ public:
     virtual uint64_t tx_freq() { return *(_tx_freqs.begin()); }
     virtual std::string tx_freq_string() { return freq_string_from_uint64_t(tx_freq()); }
 
-    virtual int32_t set_tx_att(const double att) { boost::ignore_unused(att); return 0; }
+    virtual int32_t set_tx_att(const double att,const int32_t port = 0)
+    { boost::ignore_unused(att,port); return 0; }
 
     virtual int32_t set_tx_mod_en(bool en) { boost::ignore_unused(en); return 0; }
 

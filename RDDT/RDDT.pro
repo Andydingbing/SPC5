@@ -215,7 +215,8 @@ sp9500x/sp9500x_iq_cap_config_widget.h \
 sp9500x/sp9500x_fpga_widget.h \
 sp9500x/sp9500x_fan_dlg.h \
 sp9500x/sp9500x_cal_tx_filter_thread.h \
-sp9500x/sp9500x_cal_tx_pwr_thread.h
+sp9500x/sp9500x_cal_tx_pwr_thread.h \
+sp9500x/sp9500x_cal_tx_att_thread.h
 
 SOURCES += \
 sp9500x/sp1403_r1a_widget.cpp \
@@ -228,14 +229,16 @@ sp9500x/sp9500x_fpga_widget.cpp \
 sp9500x/sp9500x_fan_dlg.cpp \
 sp9500x/sp9500x_cal_widget.cpp \
 sp9500x/sp9500x_cal_tx_filter_thread.cpp \
-sp9500x/sp9500x_cal_tx_pwr_thread.cpp
+sp9500x/sp9500x_cal_tx_pwr_thread.cpp \
+sp9500x/sp9500x_cal_tx_att_thread.cpp
 
 FORMS += \
 sp9500x/sp9500x_rrh.ui \
 sp9500x/sp9500x_sp2406.ui \
 sp9500x/sp9500x_fpga.ui \
 sp9500x/sp9500x_fan.ui \
-sp9500x/sp9500x_cal_tx_pwr.ui
+sp9500x/sp9500x_cal_tx_pwr.ui \
+sp9500x/sp9500x_cal_tx_att.ui
 
 # SP9500Pro
 INCLUDEPATH += \

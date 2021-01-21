@@ -334,6 +334,20 @@ bool instr::sa_set_ref_auto()
 	return true;
 }
 
+bool instr::sa_set_ref_auto(double pwr,double &ref)
+{
+    BOOL_CHECK(has_sa());
+    INSTR_CHECK(m_sa->set_ref_auto(pwr,ref));
+    return true;
+}
+
+bool instr::sa_set_ref_auto(double pwr,double &ref,double &offset)
+{
+    BOOL_CHECK(has_sa());
+    INSTR_CHECK(m_sa->set_ref_auto(pwr,ref,offset));
+    return true;
+}
+
 bool instr::sa_set_marker(sa::marker_type_t type)
 {
     BOOL_CHECK(has_sa());
