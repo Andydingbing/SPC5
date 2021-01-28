@@ -78,7 +78,7 @@
 #define DECLARE_CAL_ITEM_TABLE(class_name,pt) \
     public: \
         class_name() { m_data_m = new data_m_t[pt]; } \
-        virtual ~class_name() SAFE_DEL_ARRAY(m_data_m) \
+        virtual ~class_name() { SAFE_DEL_ARRAY(m_data_m); } \
         void virtual add(data_f_t *data); \
         void map2mem(); \
         void map2buf(data_f_t *buf){ m_data_f = buf; } \

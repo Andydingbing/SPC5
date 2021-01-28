@@ -130,32 +130,34 @@ template<int T> int32_t name##_t<T>
 
 using boost::ignore_unused;
 
-#define SAFE_NEW(ptr,t)         { if (ptr == nullptr) ptr = new t; }
-#define SAFE_DEL(ptr)           { if (ptr != nullptr) {delete ptr;ptr = nullptr;} }
-#define SAFE_NEW_ARRAY(a,t,n)   { if (a == nullptr) a = new t[n]; }
-#define SAFE_DEL_ARRAY(a)       { if (a != nullptr) {delete []a;a = nullptr;} }
+#define NEED_SEMICOLON ignore_unused()
+
+#define SAFE_NEW(ptr,t)         { if ((ptr) == nullptr) (ptr) = new (t); }  NEED_SEMICOLON
+#define SAFE_NEW_ARRAY(ptr,t,n) { if ((ptr) == nullptr) (ptr) = new t[n]; } NEED_SEMICOLON
+#define SAFE_DEL(ptr)           { if ((ptr) != nullptr) { delete (ptr);(ptr) = nullptr; } } NEED_SEMICOLON
+#define SAFE_DEL_ARRAY(ptr)     { if ((ptr) != nullptr) { delete []ptr;(ptr) = nullptr; } } NEED_SEMICOLON
 #define SAFE_CLOSE_FP(fp)       { if (fp != nullptr) {fclose(fp);fp = nullptr;} }
 
-#define BOOL_CHECK(func)        { if(!(func)) {return false;} }
-#define BOOL_CHECK_S(func,post) { if(!(func)) {post;return false;} }
-#define INT_CHECK(func)         { if (int ret = func) {return ret;} }
-#define INT_CHECKB(func)        { if (int ret = func) {return false;} }
-#define INT_CHECKV(func)        { if (int ret = func) {return;} }
-#define PTR_CHECKV(ptr)         { if (ptr == nullptr) {return;} }
-#define VI_CHECK(func)          { if ((status = func) < VI_SUCCESS) { return status; }}
+#define BOOL_CHECK(func) { if (         !(func)) { return false; } } NEED_SEMICOLON
+#define INT_CHECK(func)  { if (int ret = (func)) { return ret;   } } NEED_SEMICOLON
+#define INT_CHECKB(func) { if (int ret = (func)) { return false; } } NEED_SEMICOLON
+#define INT_CHECKV(func) { if (int ret = (func)) { return;       } } NEED_SEMICOLON
+#define PTR_CHECKV(ptr)  { if ((ptr) == nullptr) { return;       } } NEED_SEMICOLON
 
-#define ARRAY_SIZE(array)          (uint32_t(sizeof(array) / sizeof(array[0])))
-#define SERIE_SIZE(star,stop,step) (uint32_t((stop - star) / step + 1))
-#define SERIE_INDEX(num,star,step) (uint32_t((num - star) / step))
-#define SERIE_VALUE(star,step,i)   (star + step * i)
+#define VI_CHECK(func) { if ((status = (func)) < VI_SUCCESS) { return status; } } NEED_SEMICOLON
 
-#define ZERO_ARRAY(array) { memset(array,0,sizeof(array)); }
+#define ZERO_ARRAY(array) { memset(array,0,sizeof(array)); } NEED_SEMICOLON
+#define ARRAY_SIZE(array) (uint32_t(sizeof(array) / sizeof(array[0])))
 
 #define INIT_ARRAY(array,value) \
 {   for (uint32_t i = 0;i < ARRAY_SIZE(array);++i) { \
         array[i] = (value); \
     } \
-}
+} NEED_SEMICOLON
+
+#define SERIE_SIZE(star,stop,step)  (uint32_t(((stop) - (star)) / (step) + 1))
+#define SERIE_INDEX(data,star,step) (uint32_t(((data) - (star)) / (step)))
+#define SERIE_VALUE(star,step,i)    ((star) + (step) * i)
 
 #define BOOST_SPTR_SAFE_MAKE(type,sptr) { if (!sptr) sptr = boost::make_shared<type>(); }
 
@@ -202,5 +204,6 @@ template<typename x_t,typename y_t>
 struct point_2d { x_t x; y_t y; };
 
 } // namespace rd
+
 
 #endif // INCLUDE_RD_H

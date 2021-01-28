@@ -106,7 +106,7 @@
 #define REG_DEF_CPT_PREFIX_64_2(addr0,addr1) REG_DEF_PREFIX_64_2(addr0,addr1) REG_PREFIX
 #define REG_DEF_CPT_SUFFIX_64_2              REG_SUFFIX REG_DEF_SUFFIX_64_2
 
-#define REG_DECL_INIT(ns,addr,init) union ns::reg##addr ns##r##addr; ns##r##addr.data = init;
+#define REG_DECL_INIT(ns,addr,init) union ns::reg##addr ns##r##addr; ns##r##addr.data = init; NEED_SEMICOLON
 #define REG_DECL(ns,addr) REG_DECL_INIT(ns,addr,0)
 #define REG_DATA(ns,addr) ns##r##addr.data
 #define REG_CLER(ns,addr) REG_DATA(ns,addr) = 0;
@@ -119,7 +119,7 @@
     ns##r##addr0##addr1.addr[1] = addr0; \
     ns##r##addr0##addr1.addr[2] = addr1; \
     ns##r##addr0##addr1.addr[3] = addr0; \
-    ns##r##addr0##addr1.u_data.data = init;
+    ns##r##addr0##addr1.u_data.data = init; NEED_SEMICOLON
 
 #define REG_DECL_2(ns,addr0,addr1) REG_DECL_INIT_2(ns,addr0,addr1,0)
 #define REG_DATA_2(ns,addr0,addr1) ns##r##addr0##addr1.u_data.data
@@ -135,7 +135,7 @@
             return ret; \
         } \
         Log.add_reg(ret,dev->descriptor(),addr,REG_DATA(ns,addr)); \
-    } while (0);
+    } while (0); NEED_SEMICOLON
 
 #define PCIE_DEV_R(dev,bar,ns,addr) \
     do {int32_t ret = 0; \
@@ -144,7 +144,7 @@
             return ret; \
         } \
         Log.add_reg(ret,dev->descriptor(),addr,0xffffffff,REG_DATA(ns,addr)); \
-    } while (0);
+    } while (0); NEED_SEMICOLON
 
 #define PCIE_DEV_W_2(dev,bar,ns,addr0,addr1) \
     do {int32_t ret = 0; \
@@ -154,7 +154,7 @@
             return ret; \
         } \
         Log.add_reg(ret,dev->descriptor(),addr,REG_DATA_2(ns,addr0,addr1)); \
-    }while (0);
+    }while (0); NEED_SEMICOLON
 
 #define PCIE_DEV_R_2(dev,bar,ns,addr0,addr1) \
     do {int32_t ret = 0; \
@@ -164,7 +164,7 @@
             return ret; \
         } \
         Log.add_reg(ret,dev->descriptor(),addr,0xffffffff,REG_DATA_2(ns,addr0,addr1)); \
-    }while (0);
+    }while (0); NEED_SEMICOLON
 
 #define PCIE_DEV_SET_BITS(dev,addr,bits,data) \
     dev##_R(addr); \
@@ -182,14 +182,14 @@
         ctrller##_W(addr); \
         ctrller##_REG(addr).bit = 1; \
         ctrller##_W(addr); \
-    } while (0);
+    } while (0); NEED_SEMICOLON
 
 #define CTRLLER_RE_2(ctrller,addr0,addr1,bit) \
     do {ctrller##_REG_2(addr0,addr1).bit = 0; \
         ctrller##_W_2(addr0,addr1); \
         ctrller##_REG_2(addr0,addr1).bit = 1; \
         ctrller##_W_2(addr0,addr1); \
-    } while (0);
+    } while (0); NEED_SEMICOLON
 
 // State machine
 #define CTRLLER_WAIT_IDLE(ctrller,addr,bit,flag,times) \
@@ -206,7 +206,7 @@
             Log.set_last_err("Reg%#06x wait idle timeout",addr); \
             return -1; \
         } \
-    } while (0);
+    } while (0); NEED_SEMICOLON
 
 #define CTRLLER_WAIT_IDLE_2(ctrller,addr0,addr1,bit,flag,times) \
     do {bool idle = false; \
@@ -222,6 +222,6 @@
             Log.set_last_err("Reg%#06x%#06x wait idle timeout",addr0,addr1); \
             return -1; \
         } \
-    } while (0);
+    } while (0); NEED_SEMICOLON
 
 #endif // INCLUDE_REG_DEF_H

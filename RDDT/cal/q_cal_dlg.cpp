@@ -101,7 +101,7 @@ void QCalR1CTXLOLeakDlg::getset()
     ui->lineEditDC_Q->setText(QString("%1").arg(data.dc_q));
 
     SP1401->set_tx_freq(freq);
-    SP2401->set_tx_dc_offset(quint16(data.dc_i),quint16(data.dc_q));
+    SP2401->set_tx_dc_offset(data.dc_i,data.dc_q);
 }
 
 

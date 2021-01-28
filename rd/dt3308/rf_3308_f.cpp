@@ -121,7 +121,7 @@ int32_t rf_dt3308_f::set_io_mode(const port_t port,const io_mode_t mode)
 
 int32_t rf_dt3308_f::set_tx_att0(const double att)
 {
-    EPLD_REG_DECL(0x13)
+    EPLD_REG_DECL(0x13);
 
     EPLD_REG(0x13).att = unsigned(att);
     return set_epld_reg(0x13,EPLD_REG_DATA(0x13));
@@ -129,7 +129,7 @@ int32_t rf_dt3308_f::set_tx_att0(const double att)
 
 int32_t rf_dt3308_f::set_tx_att1(const double att)
 {
-    EPLD_REG_DECL(0x14)
+    EPLD_REG_DECL(0x14);
 
     EPLD_REG(0x14).att = unsigned(att);
     return set_epld_reg(0x14,EPLD_REG_DATA(0x14));
@@ -137,7 +137,7 @@ int32_t rf_dt3308_f::set_tx_att1(const double att)
 
 int32_t rf_dt3308_f::set_tx_att2(const double att)
 {
-    EPLD_REG_DECL(0x15)
+    EPLD_REG_DECL(0x15);
 
     EPLD_REG(0x15).att = unsigned(att);
     return set_epld_reg(0x15,EPLD_REG_DATA(0x15));
@@ -145,7 +145,7 @@ int32_t rf_dt3308_f::set_tx_att2(const double att)
 
 int32_t rf_dt3308_f::set_tx_att3(const double att)
 {
-    EPLD_REG_DECL(0x16)
+    EPLD_REG_DECL(0x16);
 
     EPLD_REG(0x16).att = unsigned(att);
     return set_epld_reg(0x16,EPLD_REG_DATA(0x16));
@@ -153,7 +153,7 @@ int32_t rf_dt3308_f::set_tx_att3(const double att)
 
 int32_t rf_dt3308_f::set_tx_att4(const double att)
 {
-    EPLD_REG_DECL(0x17)
+    EPLD_REG_DECL(0x17);
 
     EPLD_REG(0x17).att = unsigned(att);
     return set_epld_reg(0x17,EPLD_REG_DATA(0x17));
@@ -161,7 +161,7 @@ int32_t rf_dt3308_f::set_tx_att4(const double att)
 
 int32_t rf_dt3308_f::set_tx_att5(const double att)
 {
-    EPLD_REG_DECL(0x18)
+    EPLD_REG_DECL(0x18);
 
     EPLD_REG(0x18).att = unsigned(att);
     return set_epld_reg(0x18,EPLD_REG_DATA(0x18));
@@ -169,7 +169,7 @@ int32_t rf_dt3308_f::set_tx_att5(const double att)
 
 int32_t rf_dt3308_f::set_tx_main_pa_sw(const port_t port,const bool en_0,const bool en_1)
 {
-    EPLD_REG_DECL(0x51)
+    EPLD_REG_DECL(0x51);
 
     INT_CHECK(get_epld_reg(0x51,EPLD_REG_DATA(0x51)));
 
@@ -185,7 +185,7 @@ int32_t rf_dt3308_f::set_tx_main_pa_sw(const port_t port,const bool en_0,const b
 
 int32_t rf_dt3308_f::set_rx_att0(const double att)
 {
-    EPLD_REG_DECL(0x23)
+    EPLD_REG_DECL(0x23);
 
     EPLD_REG(0x23).att = unsigned(att);
     return set_epld_reg(0x23,EPLD_REG_DATA(0x23));
@@ -193,7 +193,7 @@ int32_t rf_dt3308_f::set_rx_att0(const double att)
 
 int32_t rf_dt3308_f::set_rx_att1(const double att)
 {
-    EPLD_REG_DECL(0x24)
+    EPLD_REG_DECL(0x24);
 
     EPLD_REG(0x24).att = unsigned(att);
     return set_epld_reg(0x24,EPLD_REG_DATA(0x24));
@@ -201,7 +201,7 @@ int32_t rf_dt3308_f::set_rx_att1(const double att)
 
 int32_t rf_dt3308_f::set_rx_lna_att_0_sw(const rx_lna_att_0_t sw)
 {
-    EPLD_REG_DECL(0x25)
+    EPLD_REG_DECL(0x25);
 
     EPLD_REG(0x25).lna = (sw == RX_LNA_0 ? 1 : 0);
     EPLD_REG(0x25).att = (sw == RX_ATT_0 ? 1 : 0);
@@ -210,7 +210,7 @@ int32_t rf_dt3308_f::set_rx_lna_att_0_sw(const rx_lna_att_0_t sw)
 
 int32_t rf_dt3308_f::set_rx_lna_att_1_sw(const rx_lna_att_1_t sw)
 {
-    EPLD_REG_DECL(0x56)
+    EPLD_REG_DECL(0x56);
 
     EPLD_REG(0x56).lna = (sw == RX_LNA_1 ? 1 : 0);
     EPLD_REG(0x56).att = (sw == RX_ATT_1 ? 1 : 0);
@@ -219,7 +219,7 @@ int32_t rf_dt3308_f::set_rx_lna_att_1_sw(const rx_lna_att_1_t sw)
 
 int32_t rf_dt3308_f::set_rx_if_filter_sw(const rx_if_filter_t sw)
 {
-    EPLD_REG_DECL(0x3e)
+    EPLD_REG_DECL(0x3e);
 
     EPLD_REG(0x3e).sw = sw;
     return set_epld_reg(0x3e,EPLD_REG_DATA(0x3e));
@@ -227,7 +227,7 @@ int32_t rf_dt3308_f::set_rx_if_filter_sw(const rx_if_filter_t sw)
 
 int32_t rf_dt3308_f::set_tx_main_pa_sw_0(const port_t port,const bool en)
 {
-    EPLD_REG_DECL(0x51)
+    EPLD_REG_DECL(0x51);
 
     INT_CHECK(get_epld_reg(0x51,EPLD_REG_DATA(0x51)));
 
@@ -241,7 +241,7 @@ int32_t rf_dt3308_f::set_tx_main_pa_sw_0(const port_t port,const bool en)
 
 int32_t rf_dt3308_f::set_tx_main_pa_sw_1(const port_t port,const bool en)
 {
-    EPLD_REG_DECL(0x51)
+    EPLD_REG_DECL(0x51);
 
     INT_CHECK(get_epld_reg(0x51,EPLD_REG_DATA(0x51)));
 
@@ -255,7 +255,7 @@ int32_t rf_dt3308_f::set_tx_main_pa_sw_1(const port_t port,const bool en)
 
 #define IMPL_FUNC_RF_DT3308_F_SET_TX_PORT_ATT(port,epld_reg) \
     int32_t rf_dt3308_f::set_tx_port_att##port(const double att) { \
-        EPLD_REG_DECL(epld_reg) \
+        EPLD_REG_DECL(epld_reg); \
         EPLD_REG(epld_reg).att = ns_pe43704::att_to_bit_0_25(att); \
         return set_epld_reg(epld_reg,EPLD_REG_DATA(epld_reg)); \
     }
@@ -271,7 +271,7 @@ IMPL_FUNC_RF_DT3308_F_SET_TX_PORT_ATT(7,0x26)
 
 int32_t rf_dt3308_f::set_tx_en(const bool en)
 {
-    EPLD_REG_DECL(0x53)
+    EPLD_REG_DECL(0x53);
 
     INT_CHECK(get_epld_reg(0x53,EPLD_REG_DATA(0x53)));
     EPLD_REG(0x53).en_tx = en ? 1 : 0;
@@ -280,7 +280,7 @@ int32_t rf_dt3308_f::set_tx_en(const bool en)
 
 int32_t rf_dt3308_f::set_tx_main_aux_sw(const tx_main_aux_sw_t sw)
 {
-    EPLD_REG_DECL(0x53)
+    EPLD_REG_DECL(0x53);
 
     INT_CHECK(get_epld_reg(0x53,EPLD_REG_DATA(0x53)));
     EPLD_REG(0x53).sw_tx_main_aux = (sw == TX_MAIN ? 1 : 0);
@@ -296,7 +296,7 @@ int32_t rf_dt3308_f::set_tx_port_en(const bool en)
 
 int32_t rf_dt3308_f::set_tx_port_en(const port_t port,const bool en)
 {
-    EPLD_REG_DECL(0x54)
+    EPLD_REG_DECL(0x54);
 
     INT_CHECK(get_epld_reg(0X54,EPLD_REG_DATA(0x54)));
     EPLD_REG_DATA(0x54) |= (1 << port);
@@ -306,7 +306,7 @@ int32_t rf_dt3308_f::set_tx_port_en(const port_t port,const bool en)
 
 int32_t rf_dt3308_f::set_tx_port_en(const main_ports_t ports)
 {
-    EPLD_REG_DECL(0x54)
+    EPLD_REG_DECL(0x54);
 
     INT_CHECK(get_epld_reg(0X54,EPLD_REG_DATA(0x54)));
     EPLD_REG_DATA(0x54) = ports.data;
@@ -315,7 +315,7 @@ int32_t rf_dt3308_f::set_tx_port_en(const main_ports_t ports)
 
 int32_t rf_dt3308_f::set_rx_en(const bool en)
 {
-    EPLD_REG_DECL(0x50)
+    EPLD_REG_DECL(0x50);
 
     EPLD_REG(0x50).en = en ? 1 : 0;
     return set_epld_reg(0x50,EPLD_REG_DATA(0x50));
@@ -323,7 +323,7 @@ int32_t rf_dt3308_f::set_rx_en(const bool en)
 
 int32_t rf_dt3308_f::set_rx_port_en(const port_t port,const bool en)
 {
-    EPLD_REG_DECL(0x52)
+    EPLD_REG_DECL(0x52);
 
     INT_CHECK(get_epld_reg(0x52,EPLD_REG_DATA(0x52)));
     EPLD_REG_DATA(0x52) |= (1 << port);
@@ -333,7 +333,7 @@ int32_t rf_dt3308_f::set_rx_port_en(const port_t port,const bool en)
 
 int32_t rf_dt3308_f::set_rx_port_en(const main_ports_t ports)
 {
-    EPLD_REG_DECL(0x52)
+    EPLD_REG_DECL(0x52);
 
     INT_CHECK(get_epld_reg(0x52,EPLD_REG_DATA(0x52)));
     EPLD_REG_DATA(0x52) = ports.data;
@@ -384,7 +384,7 @@ int32_t rf_dt3308_f::set_rx_filter_sw(const rx_filter_t filter)
 
 int32_t rf_dt3308_f::init_tx_hmc832()
 {
-    HMC83X_ALL_REG_DECL
+    HMC83X_ALL_REG_DECL;
 
     INT_CHECK(set_tx_hmc832_reg_pll(0x01,HMC83X_PLL_REG_DATA(0x01)));
     INT_CHECK(set_tx_hmc832_reg_pll(0x02,HMC83X_PLL_REG_DATA(0x02)));
@@ -420,7 +420,7 @@ int32_t rf_dt3308_f::init_tx_hmc832()
 
 int32_t rf_dt3308_f::init_tx_hmc833()
 {
-    HMC83X_ALL_REG_DECL
+    HMC83X_ALL_REG_DECL;
 
     HMC833_REG_INIT
 
@@ -457,7 +457,7 @@ int32_t rf_dt3308_f::init_tx_hmc833()
 
 int32_t rf_dt3308_f::init_rx_hmc832()
 {
-    HMC83X_ALL_REG_DECL
+    HMC83X_ALL_REG_DECL;
 
     INT_CHECK(set_rx_hmc832_reg_pll(0x01,HMC83X_PLL_REG_DATA(0x01)));
     INT_CHECK(set_rx_hmc832_reg_pll(0x02,HMC83X_PLL_REG_DATA(0x02)));
@@ -493,7 +493,7 @@ int32_t rf_dt3308_f::init_rx_hmc832()
 
 int32_t rf_dt3308_f::init_rx_hmc833()
 {
-    HMC83X_ALL_REG_DECL
+    HMC83X_ALL_REG_DECL;
 
     HMC833_REG_INIT
 

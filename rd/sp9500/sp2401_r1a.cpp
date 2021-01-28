@@ -310,7 +310,7 @@ int32_t sp2401_r1a::set_tx_filter_truncation(uint32_t digit)
 
 int32_t sp2401_r1a::set_tx_filter_sw(bool en)
 {
-    RFU_K7_REG_DECLARE_2(0x00fa,0x20fa)
+    RFU_K7_REG_DECLARE_2(0x00fa,0x20fa);
     RFU_K7_R_2(0x00fa,0x20fa);
     RFU_K7_REG_2(0x00fa,0x20fa).en = en ? 1 : 0;
     RFU_K7_W_2(0x00fa,0x20fa);

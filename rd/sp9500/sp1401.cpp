@@ -40,13 +40,13 @@ int32_t sp1401::open_board()
 int32_t sp1401::get_hw_ver(const char *sn,hw_ver_t &ver)
 {
     if (sn[6] == 'R' && sn[7] == '1') {
-        if (sn[8] == 'A') { ver = R1A; }
+        if      (sn[8] == 'A') { ver = R1A; }
         else if (sn[8] == 'B') { ver = R1B; }
         else if (sn[8] == 'C') { ver = R1C; }
         else if (sn[8] == 'D') { ver = R1D; }
         else if (sn[8] == 'E') { ver = R1E; }
         else if (sn[8] == 'F') { ver = R1F; }
-        else { ver = HW_ERROR; return -1; }
+        else                   { ver = HW_ERROR; return -1; }
     } else {
         ver = HW_ERROR;
         return -1;

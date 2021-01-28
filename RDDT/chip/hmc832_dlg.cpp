@@ -15,7 +15,7 @@ Q_HMC832_Dlg::Q_HMC832_Dlg(rf_dt3308_f::lo_t lo, QWidget *parent) :
     setWindowFlags(Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
     setFixedSize(width(),height());
 
-    HMC83X_ALL_REG_DECL
+    HMC83X_ALL_REG_DECL;
 
     hmc83x_t LOType = rf_dt3308_f::lo_type(LO);
     if (LOType == HMC832) {
@@ -124,7 +124,7 @@ Q_HMC832_Dlg::~Q_HMC832_Dlg()
 
 void Q_HMC832_Dlg::paramToReg()
 {
-    HMC83X_ALL_REG_DECL
+    HMC83X_ALL_REG_DECL;
 
     quint64 RFFreq = 0;
     quint64 refFreq = 0;

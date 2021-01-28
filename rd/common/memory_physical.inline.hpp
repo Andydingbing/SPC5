@@ -46,7 +46,7 @@ int32_t memory_physical::allocate(const uint32_t size,uint32_t **logic_suggest,c
 //    actual_size = actual_size < _size_granularity_max ? actual_size : _size_granularity_max;
 
     if (g_vi_drm == 0) {
-        VI_CHECK(viOpenDefaultRM(&g_vi_drm))
+        VI_CHECK(viOpenDefaultRM(&g_vi_drm));
     }
 
     if (_session == 0) {
