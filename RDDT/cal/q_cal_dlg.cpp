@@ -72,6 +72,7 @@ void QCalR1CTXLOLeakDlg::uiToCalParam(CalParam *param)
     param->model_0 = model->at(0);
     param->SP1401 = SP1401;
     param->SP2401 = SP2401;
+    param->SP3301 = SP3301;
     param->rfFreqStar = ui->lineEditFreqStar->text();
     param->rfFreqStop = ui->lineEditFreqStop->text();
     param->rfFreqStep = ui->lineEditFreqStep->text();
@@ -162,6 +163,7 @@ void QCalR1CTXSBDlg::uiToCalParam(CalParam *param)
     param->model_0 = model->at(0);
     param->SP1401 = SP1401;
     param->SP2401 = SP2401;
+    param->SP3301 = SP3301;
     param->rfFreqStar = ui->lineEditFreqStar->text();
     param->rfFreqStop = ui->lineEditFreqStop->text();
     param->rfFreqStep = ui->lineEditFreqStep->text();

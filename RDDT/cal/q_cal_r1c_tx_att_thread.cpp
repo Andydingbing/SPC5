@@ -53,7 +53,7 @@ void QCalR1CTXAttThread::run()
     SP1401->cf()->m_tx_lol->get(2000000000,&dataLOL);
     SP2401->set_tx_phase_rotate_I(double(dataSB.th));
     SP2401->set_tx_amplitude_balance(dataSB.am_i,dataSB.am_q);
-    SP2401->set_tx_dc_offset(quint16(dataLOL.dc_i),quint16(dataLOL.dc_q));
+    SP2401->set_tx_dc_offset(dataLOL.dc_i,dataLOL.dc_q);
 
     if (calOP(calMode)) {
         THREAD_TEST_CANCEL

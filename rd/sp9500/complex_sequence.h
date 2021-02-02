@@ -45,6 +45,7 @@ public:
     { return const_cast<double *>(magnitude()) + uint32_t(samples() * (freq + _sr / 2) / _sr); }
 
     double pwr_total() const;
+    double pwr(const double freq_star,const double freq_stop) const;
 
     void dft();
 

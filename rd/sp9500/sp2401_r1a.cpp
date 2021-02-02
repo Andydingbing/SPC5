@@ -484,25 +484,6 @@ int32_t sp2401_r1a::set_rx_filter(const rx_filter_80m_table::data_m_t &data) con
 int32_t sp2401_r1a::set_rx_filter(const rx_filter_160m_table::data_m_t &data) const
 { return set_rx_filter<rx_filter_160m_table::data_m_t>(data); }
 
-int32_t sp2401_r1a::set_rx_filter_nb()
-{
-    double real[ul_filter_tap] = {
-        55,-74,-117,-42,61,25,-84,-55,80,73,-86,-104,80,133,-73,-171,
-        53,208,-26,-249,-16,285,69,-320,-139,345,223,-362,-326,362,446,
-        -345,-589,300,755,-222,-956,95,1205,106,-1539,-440,2044,1061,
-        -3021,-2633,6360,16383,16383,6360,-2633,-3021,1061,2044,-440,
-        -1539,106,1205,95,-956,-222,755,300,-589,-345,446,362,-326,-362,
-        223,345,-139,-320,69,285,-16,-249,-26,208,53,-171,-73,133,80,-104,
-        -86,73,80,-55,-84,25,61,-42,-117,-74,55};
-
-    double imag[ul_filter_tap] = {
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-
-    return set_rx_filter(real,imag);
-}
-
 int32_t sp2401_r1a::set_rx_filter_default()
 {
     double real[ul_filter_tap] = {0.0};
@@ -523,11 +504,11 @@ int32_t sp2401_r1a::set_rx_pwr_comp(int32_t offset)
 	return 0;
 }
 
-int32_t sp2401_r1a::set_tx_dc_offset(uint16_t I,uint16_t Q)
+int32_t sp2401_r1a::set_tx_dc_offset(uint16_t i,uint16_t q)
 {
     RFU_K7_REG_DECLARE_2(0x0061,0x2061);
-    RFU_K7_REG_2(0x0061,0x2061).i = I;
-    RFU_K7_REG_2(0x0061,0x2061).q = Q;
+    RFU_K7_REG_2(0x0061,0x2061).i = i;
+    RFU_K7_REG_2(0x0061,0x2061).q = q;
     RFU_K7_W_2(0x0061,0x2061);
 	return 0;
 }

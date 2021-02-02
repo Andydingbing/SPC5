@@ -2,6 +2,7 @@
 #define SP2401_R1A_H
 
 #include "libbd.h"
+#include "traits.hpp"
 #include "rx_filter_table.h"
 #include <boost/smart_ptr.hpp>
 
@@ -109,12 +110,13 @@ public:
     int32_t set_rx_filter(const rx_filter_160m_table::data_m_t &data) const;
 
     int32_t set_rx_filter_default();
-    int32_t set_rx_filter_nb();
     int32_t set_rx_pwr_comp(int32_t offset);
 
-    int32_t set_tx_dc_offset(uint16_t I,uint16_t Q);
-    int32_t set_tx_dc_offset(int16_t i,int16_t q)
+    template<typename int_t,typename trait_t = traits_int<int_t>>
+    RD_INLINE int32_t set_tx_dc_offset(int_t i,int_t q)
     { return set_tx_dc_offset(uint16_t(i),uint16_t(q)); }
+
+    int32_t set_tx_dc_offset(uint16_t i,uint16_t q);
 
     int32_t set_tx_phase_rotate_I(double th);
     int32_t set_tx_amplitude_balance(uint16_t I,uint16_t Q);

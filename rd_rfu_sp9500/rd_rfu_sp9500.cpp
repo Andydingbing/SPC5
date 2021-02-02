@@ -512,11 +512,16 @@ int32_t RF_SetFans(uint32_t Speed)
     return 0;
 }
 
-int32_t RF_CarrierLeakLoopCal(uint32_t RFIndex)
+int32_t RF_SelfCalTxLOLeakage(uint32_t RFIndex)
 {
-    DECL_DYNAMIC_SP3301
+    DECL_DYNAMIC_SP3301;
 
-    SP3301->boot();
-    INT_CHECK(SP3301->rf_carrierleak_loop_cal(rf_idx));
-    return 0;
+    return SP3301->self_cal_tx_lol(rf_idx);
+}
+
+int32_t RF_SelfCalTxSideband(uint32_t RFIndex)
+{
+    DECL_DYNAMIC_SP3301;
+
+    return SP3301->self_cal_tx_sb(rf_idx);
 }

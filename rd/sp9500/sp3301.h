@@ -140,7 +140,8 @@ public:
     int32_t iq_cap_iq2buf(uint32_t rf_idx);
     int32_t iq_cap_iq2buf(uint32_t rf_idx,uint32_t samples);
 
-    int32_t rf_carrierleak_loop_cal(uint32_t rf_idx);
+    int32_t self_cal_tx_lol(uint32_t rf_idx);
+    int32_t self_cal_tx_sb(uint32_t rf_idx);
 
 public:
     sp1401 *get_sp1401(uint32_t rf_idx) { return m_sp1401->at(rf_idx).get(); }
@@ -194,6 +195,43 @@ private:
     static double temp_cal_stop;
     static double tx_tc_coef[12][6];
     static double rx_tc_coef[12][6];
+};
+
+class RD_API self_cal_tx_sb_helper
+{
+public:
+    self_cal_tx_sb_helper(sp3301 *SP3301,uint32_t rf_idx);
+
+    int32_t run(tx_sb_table_r1cd::data_f_t *data);
+
+private:
+    int32_t init();
+    int32_t get_min_th(double step,double coef);
+    int32_t get_min_am_i(uint16_t step,uint16_t coef);
+    int32_t get_min_am_q(uint16_t step,uint16_t coef);
+    int32_t meas_once(double *pwr);
+
+public:
+    complex_sequence _sequence;
+    sp3301 *_sp3301;
+    sp1401_r1f *_sp1401;
+    sp2401_r1a *_sp2401;
+
+    uint32_t _rf_idx;
+
+    double pwr_sb;
+
+    double th_l;
+    double th_m;
+    double th_r;
+
+    uint16_t am_i_l;
+    uint16_t am_i_m;
+    uint16_t am_i_r;
+
+    uint16_t am_q_l;
+    uint16_t am_q_m;
+    uint16_t am_q_r;
 };
 
 } //namespace sp_rd

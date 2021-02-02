@@ -112,6 +112,10 @@ RD_INLINE T magnitude(T i,T q,T full_scale)
 { return ad_to_dBc(full_scale,i * i + q * q); }
 
 template<typename T,typename data_type = float_traits<T>>
+RD_INLINE T magnitude(T v,T full_scale)
+{ return ad_to_dBc(full_scale,v); }
+
+template<typename T,typename data_type = float_traits<T>>
 RD_INLINE T angle_to_radian(const T angle)
 { return angle / T(180.0) * boost::math::constants::pi<T>(); }
 
