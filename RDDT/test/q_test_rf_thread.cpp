@@ -2,6 +2,7 @@
 #include "q_model_freq_res.h"
 #include "spec.h"
 #include "mainwindow.h"
+#include <QDialog>
 
 using namespace std;
 using namespace ns_sp1401;

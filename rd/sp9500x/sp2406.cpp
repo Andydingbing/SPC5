@@ -2474,6 +2474,8 @@ int32_t sp2406::program(const v9_t fpga,const char *path)
     if ((fpga == BBU ? SP9500X_S6_REG(0x0104).cfg_done_0 : SP9500X_S6_REG(0x0104).cfg_done_1) == 1) {
 #ifdef RD_PLATFORM_WIN32
         sleep_ms(10);
+        Log.stdprintf("Rescanning...\n");
+        system("devcon_x64.exe Rescan");
         Log.stdprintf("Restarting...\n");
         system("devcon_x64.exe Restart \"PCI\\VEN_10EE&DEV_9038\"");
         sleep_ms(1000);

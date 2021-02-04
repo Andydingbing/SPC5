@@ -4,29 +4,16 @@
 #include "libbd.h"
 #include "liblog.h"
 #include "libinstr.h"
-#include "sp3301.h"
-#include "sp3501.h"
 #include "bb_3308_f.h"
 #include "rf_3308_f.h"
 #include "rd_dt3308.h"
 #include "rd_sp9500x.h"
-#include "sp3103.h"
+#include "sp3301.h"
+#include "sp3501.h"
+#include "sp9500x_sp3103.h"
+
 #include "freq_string.hpp"
 #include "qwt_series_data.h"
-#include <QPointF>
-#include <QTabWidget>
-#include <QTableView>
-#include <QString>
-#include <QStringList>
-#include <QColor>
-#include <QAbstractItemModel>
-#include <QDialog>
-
-class QLineEdit;
-class QComboBox;
-class QCheckBox;
-class QPushButton;
-
 #include "config_table.h"
 
 using namespace rd;
@@ -93,18 +80,17 @@ using namespace ns_sp9500x;
 class ChildWidgets;
 class Q_ARB_Config_Widget_Helper;
 
-extern ns_sp9500x::sp3103 *SP3103;
-
-extern ns_sp9500x::sp1403 *SP1403;
-
+extern ns_sp9500x::sp3103     *SP3103;
+extern ns_sp9500x::sp1403     *SP1403;
 extern ns_sp9500x::sp1403_r1a *SP1403_R1A;
 extern ns_sp9500x::sp1403_r1b *SP1403_R1B;
-extern ns_sp9500x::rrh    *SP9500X_RRH;
-extern ns_sp9500x::sp2406 *SP2406;
+extern ns_sp9500x::rrh        *SP9500X_RRH;
+extern ns_sp9500x::sp2406     *SP2406;
 
 } // namespace NS_SP9500X
 
-extern rd::sp1403 *SP1403;
+extern rd::sp3103     *SP3103;
+extern rd::sp1403     *SP1403;
 extern rd::sp1403_r1a *SP1403_R1A;
 extern rd::sp1403_r1b *SP1403_R1B;
 
@@ -118,8 +104,7 @@ public:
         QWidget(parent) {}
 
 public slots:
-    // Init child widgets
-    virtual void init() {}
+    virtual void init() {} // Init child widgets
 };
 
 
@@ -128,7 +113,7 @@ class Qwt_Data : public QwtSeriesData<QPointF>
 public:
     Qwt_Data() : QwtSeriesData<QPointF>() {}
 
-    QRectF boundingRect() const;
+    QRectF boundingRect() const OVERRIDE;
 };
 
 

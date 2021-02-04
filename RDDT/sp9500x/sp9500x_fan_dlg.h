@@ -5,6 +5,7 @@
     void on_horizontalSlider##idx##_sliderMoved(int position)
 
 #include "global.h"
+#include <QDialog>
 
 namespace Ui {
 class Q_SP9500X_Fan_Dlg;

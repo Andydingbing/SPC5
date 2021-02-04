@@ -2,7 +2,7 @@
 #include "liblog.h"
 #include "global.hpp"
 #include "reg_def_sp9500x.h"
-#include "sp3103.h"
+#include "sp9500x_sp3103.h"
 #include "sleep_common.h"
 #include <vector>
 
@@ -53,11 +53,6 @@ int32_t SP9500X_RF_Boot()
 
     SP9500X_SetFans(120);
     return 0;
-}
-
-int32_t SP9500X_RF_GetPortNumber(uint32_t &Ports)
-{
-    return SP3103_0.get_rf_port(Ports);
 }
 
 int32_t SP9500X_RF_GetSerialNumber(const uint32_t RFIndex,char *SerialNumber)

@@ -1087,6 +1087,16 @@ int32_t sp3301::self_cal_tx_lol(uint32_t rf_idx)
 
     calUseLoop(sp1401,sp2401,dc_i_m,dc_q_m,data.pwr);
 
+
+    // Log
+    Log.en(log_t::RD_LOG_MESSAGE_F,true);
+    Log.add_msg("%s:i : %6d \t q : %6d \t lo_leakage : %8.3f",
+                BOOST_CURRENT_FUNCTION,
+                dc_i_m,
+                dc_q_m,
+                data.pwr);
+    Log.en(log_t::RD_LOG_MESSAGE_F,false);
+
     if(dc_i_m >= 10000 || dc_q_m >= 10000) {
         return -1;
     }
@@ -1195,6 +1205,16 @@ int32_t self_cal_tx_sb_helper::run(tx_sb_table_r1cd::data_f_t *data)
         get_min_am_i(stepAm,2);
         get_min_am_q(stepAm,2);
     }
+
+    // Log
+    Log.en(log_t::RD_LOG_MESSAGE_F,true);
+    Log.add_msg("%s:angle : %8.3f i : %6d \t q : %6d \t sideband : %8.3f",
+                BOOST_CURRENT_FUNCTION,
+                th_m,
+                am_i_m,
+                am_q_m,
+                pwr_sb);
+    Log.en(log_t::RD_LOG_MESSAGE_F,false);
 
     if (pwr_sb > -60.0) {
         _sp2401->set_tx_phase_rotate_I(data->th);

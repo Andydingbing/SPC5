@@ -116,6 +116,7 @@ HEADERS += \
 ./sp9500x/sp9500x_sp1403.h \
 ./sp9500x/sp9500x_sp1403_r1a.h \
 ./sp9500x/sp9500x_sp1403_r1b.h \
+./sp9500x/sp9500x_sp3103.h \
 ./sp9500x/sp3103.h \
 ./sp9500x/rrh.h \
 ./sp9500x/sp2406.h \
@@ -130,7 +131,18 @@ SOURCES += \
 ./sp9500x/sp9500x_sp1403.cpp \
 ./sp9500x/sp9500x_sp1403_r1a.cpp \
 ./sp9500x/sp9500x_sp1403_r1b.cpp \
+./sp9500x/sp9500x_sp3103.cpp \
 ./sp9500x/sp3103.cpp \
 ./sp9500x/rrh.cpp \
 ./sp9500x/sp2406.cpp \
 rd_sp9500x.cpp
+
+
+# sp9500pro
+HEADERS += \
+./sp9500pro/sp9500pro_sp1403.h \
+./sp9500pro/sp9500pro_sp1403_r1a.h \
+./sp9500pro/sp9500pro_sp1403_r1b.h
+
+SOURCES += \
+./sp9500pro/sp9500pro_sp1403.cpp

@@ -5,6 +5,8 @@
 #include "arb_config_widget.h"
 #include <QStyledItemDelegate>
 #include <QLineEdit>
+#include <QCheckBox>
+#include <QPushButton>
 
 namespace NS_SP9500 {
 

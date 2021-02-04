@@ -132,6 +132,8 @@ using boost::ignore_unused;
 
 #define NEED_SEMICOLON ignore_unused()
 
+#define DECL_SPTR(class_name) typedef boost::shared_ptr<class_name> sptr;
+
 #define SAFE_NEW(ptr,t)         { if ((ptr) == nullptr) (ptr) = new (t); }  NEED_SEMICOLON
 #define SAFE_NEW_ARRAY(ptr,t,n) { if ((ptr) == nullptr) (ptr) = new t[n]; } NEED_SEMICOLON
 #define SAFE_DEL(ptr)           { if ((ptr) != nullptr) { delete (ptr);(ptr) = nullptr; } } NEED_SEMICOLON
