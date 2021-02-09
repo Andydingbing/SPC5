@@ -41,15 +41,15 @@ void QCalR1CTxTempCompThread::cal()
 
     Instr.init();
     Instr.has_pm();
-    SP3301->rf_set_io_mode(RFIdx,OUTPUT);
+    SP3301->set_io_mode(RFIdx,OUTPUT);
     SP2401->set_duc_dds(0.0);
     SP3301->set_tx_en_tc(RFIdx,false);
-    SP3301->rf_set_tx_freq(RFIdx,2000000000);
-    SP3301->rf_set_tx_pwr(RFIdx,-15.0);
-    SP3301->rf_set_tx_src(RFIdx,sp2401_r1a::SINGLE_TONE);
-    SP3301->rf_set_src_freq(RFIdx,0);
-    SP3301->rf_set_rx_freq(RFIdx,6000000000);
-    SP3301->rf_set_rx_level(RFIdx,10.0);
+    SP3301->set_tx_freq(RFIdx,2000000000);
+    SP3301->set_tx_pwr(RFIdx,-15.0);
+    SP3301->set_tx_src(RFIdx,sp2401_r1a::SINGLE_TONE);
+    SP3301->set_src_freq(RFIdx,0);
+    SP3301->set_rx_freq(RFIdx,6000000000);
+    SP3301->set_rx_level(RFIdx,10.0);
 
     while (1) {
         THREAD_TEST_CANCEL
@@ -78,7 +78,7 @@ void QCalR1CTxTempCompThread::cal()
                 (*iterAllPwrs).fill(Point(),ARRAY_SIZE(tx_tp_table::data_f_t::pwr));
             }
 
-            SP3301->rf_set_tx_freq(RFIdx,freq);
+            SP3301->set_tx_freq(RFIdx,freq);
             msleep(10);
 
             Instr.pm_get_pwr(freq,pwr);
@@ -247,13 +247,13 @@ void QCalR1CRXTempCompThread::cal()
     Instr.sg_set_en_mod(false);
     Instr.sg_set_en_output(true);
 
-    SP3301->rf_set_io_mode(RFIdx,OUTPUT);
+    SP3301->set_io_mode(RFIdx,OUTPUT);
     SP2401->set_ddc(-92.64e6);
     SP3301->set_rx_en_tc(RFIdx,false);
-    SP3301->rf_set_tx_freq(RFIdx,6000000000);
-    SP3301->rf_set_tx_pwr(RFIdx,-120.0);
-    SP3301->rf_set_rx_freq(RFIdx,2000000000);
-    SP3301->rf_set_rx_level(RFIdx,10.0);
+    SP3301->set_tx_freq(RFIdx,6000000000);
+    SP3301->set_tx_pwr(RFIdx,-120.0);
+    SP3301->set_rx_freq(RFIdx,2000000000);
+    SP3301->set_rx_level(RFIdx,10.0);
     SP1401->set_pwr_meas_src(sp1401::PWR_MEAS_FREE_RUN,false);
     SP1401->set_pwr_meas_timeout(6553600);
     SP1401->set_pwr_meas_samples(102400);
@@ -283,12 +283,12 @@ void QCalR1CRXTempCompThread::cal()
                 (*iterAllPwrs).fill(Point(),ARRAY_SIZE(rx_tp_table::data_f_t::pwr));
             }
 
-            SP3301->rf_set_rx_freq(RFIdx,freq);
+            SP3301->set_rx_freq(RFIdx,freq);
             msleep(10);
 
             Instr.sg_set_cw(freq);
 
-            SP3301->rf_set_rx_level(RFIdx,-10.0);
+            SP3301->set_rx_level(RFIdx,-10.0);
             Instr.sg_set_pl(-25.0);
             msleep(100);
 

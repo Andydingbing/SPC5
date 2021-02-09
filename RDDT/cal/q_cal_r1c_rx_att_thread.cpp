@@ -222,18 +222,18 @@ void QCalR1CRXAttThread::checkIt(io_mode_t mode)
     }
 
     SP1401->set_io_mode(mode);
-    SP3301->rf_set_io_mode(SP1401->get_rf_idx(),mode);
+    SP3301->set_io_mode(SP1401->get_rf_idx(),mode);
 
     for (quint32 i = 0;i < freqRangeCheck.freqs.size();i ++) {
         THREAD_TEST_CANCEL
         freq = freqRangeCheck.freqs.at(i);
 
-        SP3301->rf_set_rx_freq(SP1401->get_rf_idx(),freq);
+        SP3301->set_rx_freq(SP1401->get_rf_idx(),freq);
         for (quint32 j = 0;j < pwrRange.pwrs.size();j ++) {
             THREAD_TEST_PAUSE_S
             THREAD_TEST_CANCEL
             ref = pwrRange.pwrs.at(j);
-            SP3301->rf_set_rx_level(SP1401->get_rf_idx(),ref);
+            SP3301->set_rx_level(SP1401->get_rf_idx(),ref);
 
             pwrIn = linear_quantify<double>(-80.0,10.0,ref);
             pwrIn = pwrIn > 10.0 ? 10.0 : pwrIn;

@@ -151,14 +151,14 @@ int32_t SPC5_RF_GetRFUVersion(char *version)
 int32_t SPC5_RF_SetTxPower(uint32_t RFIndex,float Power)
 {
     DECLARE_DYNAMIC_SP3301;
-    INT_CHECK(pSP3301->rf_set_tx_pwr(uiRfIdx,Power));
+    INT_CHECK(pSP3301->set_tx_pwr(uiRfIdx,Power));
     return 0;
 }
 
 int32_t SPC5_RF_SetTxFrequency(uint32_t RFIndex,uint64_t Freq)
 {
     DECLARE_DYNAMIC_SP3301;
-    INT_CHECK(pSP3301->rf_set_tx_freq(uiRfIdx,Freq));
+    INT_CHECK(pSP3301->set_tx_freq(uiRfIdx,Freq));
     return 0;
 }
 
@@ -172,28 +172,28 @@ int32_t SPC5_RF_SetTxSource(uint32_t RFIndex,RD_TX_Source Source)
         case RD_Phy : { TxSrc = sp2401_r1a::INTER_FILTER; break; }
         case RD_CW  : { TxSrc = sp2401_r1a::SINGLE_TONE;  break; }
     }
-    INT_CHECK(pSP3301->rf_set_tx_src(uiRfIdx,TxSrc));
+    INT_CHECK(pSP3301->set_tx_src(uiRfIdx,TxSrc));
     return 0;
 }
 
 int32_t SPC5_RF_SetSourceFrequency(uint32_t RFIndex,uint64_t Freq)
 {
     DECLARE_DYNAMIC_SP3301;
-    INT_CHECK(pSP3301->rf_set_src_freq(uiRfIdx,Freq));
+    INT_CHECK(pSP3301->set_src_freq(uiRfIdx,Freq));
     return 0;
 }
 
 int32_t SPC5_RF_SetRxLevel(uint32_t RFIndex,double Level)
 {
     DECLARE_DYNAMIC_SP3301;
-    INT_CHECK(pSP3301->rf_set_rx_level(uiRfIdx,Level));
+    INT_CHECK(pSP3301->set_rx_level(uiRfIdx,Level));
     return 0;
 }
 
 int32_t SPC5_RF_SetRxFrequency(uint32_t RFIndex,uint64_t Freq)
 {
     DECLARE_DYNAMIC_SP3301;
-    INT_CHECK(pSP3301->rf_set_rx_freq(uiRfIdx,Freq));
+    INT_CHECK(pSP3301->set_rx_freq(uiRfIdx,Freq));
     return 0;
 }
 
@@ -206,7 +206,7 @@ int32_t SPC5_RF_SetConnector(uint32_t RFIndex,RD_IO_Mode Connector)
         case ::RD_Output : {Mode = rd::OUTPUT;break;}
         case ::RD_Loop   : {Mode = rd::LOOP;break;}
     }
-    INT_CHECK(pSP3301->rf_set_io_mode(uiRfIdx,Mode));
+    INT_CHECK(pSP3301->set_io_mode(uiRfIdx,Mode));
     return 0;
 }
 
@@ -277,6 +277,6 @@ int32_t SPC5_RF_GetMeasResult(uint32_t RFIndex,float &Power,float &Crest)
 int32_t SPC5_RF_GetTemperature(uint32_t RFIndex,double &TxTemperature,double &RxTemperature)
 {
     DECLARE_DYNAMIC_SP3301;
-    INT_CHECK(pSP3301->rf_get_temp(uiRfIdx,TxTemperature,RxTemperature));
+    INT_CHECK(pSP3301->get_temp(uiRfIdx,TxTemperature,RxTemperature));
     return 0;
 }

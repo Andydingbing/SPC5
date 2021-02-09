@@ -517,7 +517,7 @@ void QCalR1CTXFilterThread::check()
     for (quint32 i = 0;i < freqRangeCheck.freqs.size();i ++) {
         freqRF = freqRangeCheck.freqs.at(i);
 
-        SP3301->rf_set_tx_freq(RFIdx,freqRF);
+        SP3301->set_tx_freq(RFIdx,freqRF);
 
         quint32 j = 0;
         for (freqIF = freqStarIF;freqIF <= freqStopIF;freqIF += freqStepIF) {

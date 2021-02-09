@@ -170,7 +170,7 @@ void QCalR1CTXPwrThread::checkIt(io_mode_t mode)
     bool res = true;
 
     SP3301->set_tx_en_tc(RFIdx,true);
-    SP3301->rf_set_io_mode(RFIdx,mode);
+    SP3301->set_io_mode(RFIdx,mode);
     SP1401->prepare_cr_tx_base_pwr_cal();
 
     for (quint32 i = 0;i < freqRangeCheck.freqs.size();i ++) {
@@ -180,8 +180,8 @@ void QCalR1CTXPwrThread::checkIt(io_mode_t mode)
         data = SP1401->cr_tx_base_pwr_cal()->data(freq);
         res = data.result();
 
-        SP3301->rf_set_tx_freq(RFIdx,freq);
-        SP3301->rf_set_tx_pwr(RFIdx,pwrBase);
+        SP3301->set_tx_freq(RFIdx,freq);
+        SP3301->set_tx_pwr(RFIdx,pwrBase);
         msleep(20);
 
         Instr.pm_get_pwr(double(freq),pwr);

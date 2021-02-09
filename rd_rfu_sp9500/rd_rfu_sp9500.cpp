@@ -190,28 +190,28 @@ int32_t RF_GetRFUVersion(char *version)
 int32_t RF_SetTxState(uint32_t RFIndex,bool State)
 {
     DECL_DYNAMIC_SP3301;
-    INT_CHECK(SP3301->rf_set_tx_state(rf_idx, State));
+    INT_CHECK(SP3301->set_tx_state(rf_idx, State));
     return 0;
 }
 
 int32_t RF_SetTxPower(uint32_t RFIndex,float Power)
 {
     DECL_DYNAMIC_SP3301;
-    INT_CHECK(SP3301->rf_set_tx_pwr(rf_idx,Power));
+    INT_CHECK(SP3301->set_tx_pwr(rf_idx,Power));
     return 0;
 }
 
 int32_t RF_SetTxFrequency(uint32_t RFIndex,uint64_t Freq)
 {
     DECL_DYNAMIC_SP3301;
-    INT_CHECK(SP3301->rf_set_tx_freq(rf_idx,Freq));
+    INT_CHECK(SP3301->set_tx_freq(rf_idx,Freq));
     return 0;
 }
 
 int32_t RF_GetTxFrequency(uint32_t RFIndex,uint64_t &Freq)
 {
     DECL_DYNAMIC_SP3301;
-    INT_CHECK(SP3301->rf_get_tx_freq(rf_idx,Freq));
+    INT_CHECK(SP3301->get_tx_freq(rf_idx,Freq));
     return 0;
 }
 
@@ -232,14 +232,14 @@ int32_t RF_SetTxSource(uint32_t RFIndex,SOURCE Source)
         case FPGA : {TxSrc = sp2401_r1a::INTER_FILTER;break;}
         case CW   : {TxSrc = sp2401_r1a::SINGLE_TONE;break;}
     }
-    INT_CHECK(SP3301->rf_set_tx_src(rf_idx,TxSrc));
+    INT_CHECK(SP3301->set_tx_src(rf_idx,TxSrc));
     return 0;
 }
 
 int32_t RF_SetSourceFrequency(uint32_t RFIndex,uint64_t Freq)
 {
     DECL_DYNAMIC_SP3301;
-    INT_CHECK(SP3301->rf_set_src_freq(rf_idx,Freq));
+    INT_CHECK(SP3301->set_src_freq(rf_idx,Freq));
     return 0;
 }
 
@@ -275,7 +275,7 @@ int32_t RF_SetARBCount(uint32_t RFIndex,int iCnt)
 int32_t RF_SetRxLevel(uint32_t RFIndex,double Level)
 {
     DECL_DYNAMIC_SP3301;
-    INT_CHECK(SP3301->rf_set_rx_level(rf_idx,Level));
+    INT_CHECK(SP3301->set_rx_level(rf_idx,Level));
     g_RxLevel[RFIndex]=Level;
     return 0;
 }
@@ -289,14 +289,14 @@ int32_t RF_GetRxLevel(uint32_t RFIndex,double &Level)
 int32_t RF_SetRxFrequency(uint32_t RFIndex,uint64_t Freq)
 {
     DECL_DYNAMIC_SP3301;
-    INT_CHECK(SP3301->rf_set_rx_freq(rf_idx,Freq));
+    INT_CHECK(SP3301->set_rx_freq(rf_idx,Freq));
     return 0;
 }
 
 int32_t RF_GetRxFrequency(uint32_t RFIndex,uint64_t &Freq)
 {
     DECL_DYNAMIC_SP3301;
-    INT_CHECK(SP3301->rf_get_rx_freq(rf_idx,Freq));
+    INT_CHECK(SP3301->get_rx_freq(rf_idx,Freq));
     return 0;
 }
 
@@ -310,7 +310,7 @@ int32_t RF_SetConnector(uint32_t RFIndex,CONNECTOR Connector)
         case ::LOOP   : {Mode = rd::LOOP;break;}
         default:break;
     }
-    INT_CHECK(SP3301->rf_set_io_mode(rf_idx,Mode));
+    INT_CHECK(SP3301->set_io_mode(rf_idx,Mode));
     return 0;
 }
 
@@ -480,7 +480,7 @@ int32_t RF_WarningInfo(uint32_t RFIndex,uint32_t &State)
 int32_t RF_GetTemperature(uint32_t RFIndex,double &TxTemperature,double &RxTemperature)
 {
     DECL_DYNAMIC_SP3301;
-    INT_CHECK(SP3301->rf_get_temp(rf_idx,TxTemperature,RxTemperature));
+    INT_CHECK(SP3301->get_temp(rf_idx,TxTemperature,RxTemperature));
     return 0;
 }
 
@@ -488,7 +488,7 @@ int32_t RF_GetCalTemperature(uint32_t RFIndex,double &Temperature)
 {
     DECL_DYNAMIC_SP3301
 
-    SP3301->rf_get_cal_temp(rf_idx,Temperature);
+    SP3301->get_cal_temp(rf_idx,Temperature);
     return 0;
 }
 

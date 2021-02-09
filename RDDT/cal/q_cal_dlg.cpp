@@ -389,9 +389,9 @@ void QCalR1CTXPwrDlg::getset()
 
     quint32 RFIdx = SP1401->get_rf_idx();
     SP3301->set_tx_en_tc(RFIdx,ui->checkBoxTC->isChecked());
-    SP3301->rf_set_io_mode(RFIdx,mode);
-    SP3301->rf_set_tx_freq(RFIdx,freq);
-    SP3301->rf_set_tx_pwr(RFIdx,pwr);
+    SP3301->set_io_mode(RFIdx,mode);
+    SP3301->set_tx_freq(RFIdx,freq);
+    SP3301->set_tx_pwr(RFIdx,pwr);
 
     if (mode == OUTPUT) {
         tx_pwr_op_table_r1c::data_m_t dataPwr;
@@ -745,9 +745,9 @@ void QCalR1CRXRefDlg::getset()
 
     quint32 RFIdx = SP1401->get_rf_idx();
     SP3301->set_rx_en_tc(RFIdx,ui->checkBoxTC->isChecked());
-    SP3301->rf_set_io_mode(RFIdx,mode);
-    SP3301->rf_set_rx_freq(RFIdx,freq);
-    SP3301->rf_set_rx_level(RFIdx,ref);
+    SP3301->set_io_mode(RFIdx,mode);
+    SP3301->set_rx_freq(RFIdx,freq);
+    SP3301->set_rx_level(RFIdx,ref);
 
     if (mode == OUTPUT) {
         ((cal_file_r1cd *)(SP1401->cf()))->m_rx_ref_op->get(SP1401->get_hw_ver(),freq,ref,&rxState);

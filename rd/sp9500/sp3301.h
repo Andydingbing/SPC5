@@ -98,28 +98,28 @@ public:
     rfu_info_t get_info() { return m_rfu_info; }
 
 public:
-    void set_tx_en_tc(const uint32_t rf_idx,const bool en);
-    int32_t rf_set_tx_state(uint32_t rf_idx,bool state);
-    int32_t rf_set_tx_pwr(uint32_t rf_idx,float pwr);
-    int32_t rf_set_tx_freq(uint32_t rf_idx,uint64_t freq);
-    int32_t rf_get_tx_freq(uint32_t rf_idx,uint64_t &freq);
-    int32_t rf_set_tx_bw(uint32_t rf_idx,ns_sp1401::bw_t bw);
-    int32_t rf_set_tx_src(uint32_t rf_idx,sp2401_r1a::da_src_t src);
-    int32_t rf_set_src_freq(uint32_t rf_idx,uint64_t freq);
+    int32_t set_tx_en_tc(const uint32_t rf_idx,const bool en);
+    int32_t set_tx_state(uint32_t rf_idx,bool state);
+    int32_t set_tx_pwr(uint32_t rf_idx,float pwr);
+    int32_t set_tx_freq(uint32_t rf_idx,uint64_t freq);
+    int32_t get_tx_freq(uint32_t rf_idx,uint64_t &freq);
+    int32_t set_tx_bw(uint32_t rf_idx,ns_sp1401::bw_t bw);
+    int32_t set_tx_src(uint32_t rf_idx,sp2401_r1a::da_src_t src);
+    int32_t set_src_freq(uint32_t rf_idx,uint64_t freq);
 
     int32_t arb_load(uint32_t rf_idx,const char *path);
     int32_t set_arb_en(uint32_t rf_idx,bool en);
     int32_t set_arb_cnt(uint32_t rf_idx,int cnt);
 
-    void set_rx_en_tc(const uint32_t rf_idx,const bool en);
-    int32_t rf_set_rx_level(uint32_t rf_idx,double level);
-    int32_t rf_set_rx_freq(uint32_t rf_idx,uint64_t freq);
-    int32_t rf_get_rx_freq(uint32_t rf_idx,uint64_t &freq);
-    int32_t rf_set_rx_bw(uint32_t rf_idx,ns_sp1401::bw_t bw);
+    int32_t set_rx_en_tc(const uint32_t rf_idx,const bool en);
+    int32_t set_rx_level(uint32_t rf_idx,double level);
+    int32_t set_rx_freq(uint32_t rf_idx,uint64_t freq);
+    int32_t get_rx_freq(uint32_t rf_idx,uint64_t &freq);
+    int32_t set_rx_bw(uint32_t rf_idx,ns_sp1401::bw_t bw);
 
-    int32_t rf_set_io_mode(uint32_t rf_idx,io_mode_t mode);
-    int32_t rf_get_temp(uint32_t rf_idx,double &tx_temp,double &rx_temp);
-    int32_t rf_get_cal_temp(uint32_t rf_idx,double &temp);
+    int32_t set_io_mode(uint32_t rf_idx,io_mode_t mode);
+    int32_t get_temp(uint32_t rf_idx,double &tx_temp,double &rx_temp);
+    int32_t get_cal_temp(uint32_t rf_idx,double &temp);
 
     int32_t rf_init_pwr_meas(uint32_t rf_idx);
     int32_t rf_abort_pwr_meas(uint32_t rf_idx);
@@ -129,6 +129,7 @@ public:
     int32_t set_iq_cap_samples(uint32_t rf_idx,uint32_t samples);
     int32_t get_iq_cap_samples(const uint32_t rf_idx,uint32_t &samples) const;
     int32_t set_iq_cap_buffer(uint32_t rf_idx,int16_t *I,int16_t *Q);
+    int32_t get_iq_cap_buffer(uint32_t rf_idx,int16_t **I,int16_t **Q);
     int32_t set_iq_cap_trig_src(uint32_t rf_idx,sp1401::iq_cap_src_t src);
     int32_t set_iq_cap_trig_level(uint32_t rf_idx,float level);
     int32_t set_iq_cap_frame_trig_src(uint32_t rf_idx,sp2401_r1a::frame_trig_src_t src);

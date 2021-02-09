@@ -183,7 +183,7 @@ void QCalR1CRXRefThread::checkIt(io_mode_t mode)
     bool res = true;
 
     SP3301->set_rx_en_tc(RFIdx,true);
-    SP3301->rf_set_io_mode(RFIdx,mode);
+    SP3301->set_io_mode(RFIdx,mode);
     SP1401->prepare_cr_rx_ref_cal();
 
     for (quint32 i = 0;i < freqRangeCheck.freqs.size();i ++) {
@@ -192,7 +192,7 @@ void QCalR1CRXRefThread::checkIt(io_mode_t mode)
         data = SP1401->cr_rx_ref_cal()->data(freq);
         res = data.result();;
 
-        SP3301->rf_set_rx_freq(RFIdx,freq);
+        SP3301->set_rx_freq(RFIdx,freq);
 
         for (quint32 j = 0;j < ARRAY_SIZE(dataRef.state);j ++) {
             THREAD_TEST_PAUSE_S
@@ -204,7 +204,7 @@ void QCalR1CRXRefThread::checkIt(io_mode_t mode)
                 SP1401->cf()->m_rx_ref_io->guess_base(RFVer,j,ref);
             }
 
-            SP3301->rf_set_rx_level(RFIdx,ref);
+            SP3301->set_rx_level(RFIdx,ref);
             msleep(10);
 
             ajustSG(freq,ref - rx_ref_table_r1cd::cal_rollback(RFVer));

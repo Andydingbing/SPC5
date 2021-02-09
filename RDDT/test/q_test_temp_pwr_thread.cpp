@@ -122,7 +122,7 @@ void QTestR1CTempPwrThread::Rx()
     SP1401->set_pwr_meas_timeout(6553600);
     SP1401->set_pwr_meas_samples(102400);
     SP2401->set_ddc(-92.64e6);
-    SP3301->rf_set_rx_level(RFIdx,-5.0);
+    SP3301->set_rx_level(RFIdx,-5.0);
 
     QwtTempPwrData *data;
     QwtTempPwrData::Point point;

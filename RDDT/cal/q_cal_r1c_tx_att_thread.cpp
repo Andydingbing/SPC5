@@ -203,7 +203,7 @@ void QCalR1CTXAttThread::checkIt(io_mode_t mode)
     }
 
     SP3301->set_tx_en_tc(RFIdx,true);
-    SP3301->rf_set_io_mode(RFIdx,mode);
+    SP3301->set_io_mode(RFIdx,mode);
 
     for (quint32 i = 0;i < freqRangeCheck.freqs.size();i ++) {
         THREAD_TEST_CANCEL
@@ -216,15 +216,15 @@ void QCalR1CTXAttThread::checkIt(io_mode_t mode)
         Instr.sa_set_avg_trace(false,0);
         Instr.sa_set_ref(refCur);
         Instr.sa_sweep_once();
-        SP3301->rf_set_tx_freq(RFIdx,freq);
-        SP3301->rf_set_tx_pwr(RFIdx,-12.0);
+        SP3301->set_tx_freq(RFIdx,freq);
+        SP3301->set_tx_pwr(RFIdx,-12.0);
         msleep(500);
         Instr.sa_sweep_once();
         Instr.sa_set_peak_search(sa::PEAK_HIGHEST);
         Instr.sa_get_marker_pwr(SAPeakPwr[0]);
         lineLoss = -12.0 - SAPeakPwr[0];
 
-        SP3301->rf_set_tx_pwr(RFIdx,-15.0);
+        SP3301->set_tx_pwr(RFIdx,-15.0);
         msleep(500);
         Instr.sa_sweep_once();
         Instr.sa_get_marker_pwr(SAPeakPwr[0]);
@@ -245,7 +245,7 @@ void QCalR1CTXAttThread::checkIt(io_mode_t mode)
                 refOffset += SAPeakPwr[0] - SAPeakPwr[1];
                 refBfr = refCur;
             }
-            SP3301->rf_set_tx_pwr(RFIdx,float(targetPwr));
+            SP3301->set_tx_pwr(RFIdx,float(targetPwr));
             Instr.sa_sweep_once();
             Instr.sa_get_marker_pwr(SAPeakPwr[0]);
             actualPwr = SAPeakPwr[0] + lineLoss + refOffset;
