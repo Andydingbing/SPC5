@@ -45,6 +45,7 @@ $$SRC_DIR/sp1401_r1f.h \
 $$SRC_DIR/sp2401_r1a.h \
 $$SRC_DIR/sp3301.h \
 $$SRC_DIR/sp3501.h \
+$$SRC_DIR/self_cal_helper.h \
 rd_rfu_sp9500.h
 
 SOURCES += \
@@ -77,4 +78,5 @@ $$SRC_DIR/sp1401_r1f.cpp \
 $$SRC_DIR/sp2401_r1a.cpp \
 $$SRC_DIR/sp3301.cpp \
 $$SRC_DIR/sp3501.cpp \
+$$SRC_DIR/self_cal_helper.cpp \
 rd_rfu_sp9500.cpp

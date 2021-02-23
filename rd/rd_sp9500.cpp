@@ -352,14 +352,14 @@ int32_t RF_SetTriggerOffset(uint32_t RFIndex,uint32_t Offset)
 int32_t RF_InitPowerMeasure(uint32_t RFIndex)
 {
     DECL_DYNAMIC_SP3301;
-    INT_CHECK(SP3301->rf_init_pwr_meas(rf_idx));
+    INT_CHECK(SP3301->init_pwr_meas(rf_idx));
     return 0;
 }
 
 int32_t RF_AbortPowerMeasure(uint32_t RFIndex)
 {
     DECL_DYNAMIC_SP3301;
-    INT_CHECK(SP3301->rf_abort_pwr_meas(rf_idx));
+    INT_CHECK(SP3301->abort_pwr_meas(rf_idx));
     return 0;
 }
 
@@ -368,7 +368,7 @@ int32_t RF_GetMeasProcess(uint32_t RFIndex,PROCESS &Process)
     DECL_DYNAMIC_SP3301;
     Process = IDLE_Driver;
     sp1401::pwr_meas_state_t MeasState = sp1401::PMS_IDLE;
-    INT_CHECK(SP3301->rf_get_pwr_meas_proc(rf_idx,MeasState));
+    INT_CHECK(SP3301->get_pwr_meas_proc(rf_idx,MeasState));
     switch (MeasState) {
         case sp1401::PMS_IDLE     : {Process = IDLE_Driver;break;}
         case sp1401::PMS_WFT      : {Process = WFTrigger_Driver;break;}
@@ -383,7 +383,7 @@ int32_t RF_GetMeasProcess(uint32_t RFIndex,PROCESS &Process)
 int32_t RF_GetMeasResult(uint32_t RFIndex,float &Power,float &Crest)
 {
     DECL_DYNAMIC_SP3301
-    INT_CHECK(SP3301->rf_get_pwr_meas_result(rf_idx,Power,Crest));
+    INT_CHECK(SP3301->get_pwr_meas_result(rf_idx,Power,Crest));
     return 0;
 }
 

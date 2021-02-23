@@ -1,5 +1,6 @@
 #include "q_cal_r1c_tx_sb_thread.h"
 #include "q_model_tx_sb.h"
+#include "self_cal_helper.h"
 #include "algo_math.hpp"
 #include "spec.h"
 

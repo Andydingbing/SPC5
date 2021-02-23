@@ -208,7 +208,7 @@ public:
     {
         if (SP3301 != nullptr) {
             RFUIdx = SP3301->get_rfu_idx();
-            SP1401 = SP3301->get_sp1401(RFIdx);
+            SP1401 = SP3301->working_sp1401(RFIdx);
             SP1401_R1A = SP3301->get_sp1401_r1a(RFIdx);
             SP1401_R1B = SP3301->get_sp1401_r1b(RFIdx);
             SP1401_R1C = SP3301->get_sp1401_r1c(RFIdx);

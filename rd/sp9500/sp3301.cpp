@@ -3,6 +3,7 @@
 #include "algo_fit.hpp"
 #include "gen_ini_file.hpp"
 #include "sleep_common.h"
+#include "self_cal_helper.h"
 #include <string>
 
 using namespace std;
@@ -896,7 +897,7 @@ int32_t sp3301::iq_cap_iq2buf(uint32_t rf_idx,uint32_t samples)
     return 0;
 }
 
-int32_t sp3301::rf_init_pwr_meas(uint32_t rf_idx)
+int32_t sp3301::init_pwr_meas(uint32_t rf_idx)
 {
     DECL_DYNAMIC_SP1401
     INT_CHECK(sp1401->pwr_meas_abort());
@@ -904,26 +905,29 @@ int32_t sp3301::rf_init_pwr_meas(uint32_t rf_idx)
     return 0;
 }
 
-int32_t sp3301::rf_abort_pwr_meas(uint32_t rf_idx)
+int32_t sp3301::abort_pwr_meas(uint32_t rf_idx)
 {
     DECL_DYNAMIC_SP1401
     INT_CHECK(sp1401->pwr_meas_abort());
     return 0;
 }
 
-int32_t sp3301::rf_get_pwr_meas_proc(uint32_t rf_idx,sp1401::pwr_meas_state_t &proc)
+int32_t sp3301::get_pwr_meas_proc(uint32_t rf_idx,sp1401::pwr_meas_state_t &proc)
 {
     DECL_DYNAMIC_SP1401
     INT_CHECK(sp1401->get_pwr_meas_state(proc));
     return 0;
 }
 
-int32_t sp3301::rf_get_pwr_meas_result(uint32_t rf_idx,float &pwr,float &crest)
+int32_t sp3301::get_pwr_meas_result(uint32_t rf_idx,float &pwr,float &crest)
 {
     DECL_DYNAMIC_SP1401
-    double pwr_avg = 0.0,pwr_peak = 0.0;
+
+    double pwr_avg = 0.0;
+    double pwr_peak = 0.0;
     pwr = -100.0;
     crest = 0.0;
+
     INT_CHECK(sp1401->get_pwr_meas_pwr(pwr_avg));
     INT_CHECK(sp1401->get_pwr_meas_peak(pwr_peak));
     pwr = float(pwr_avg);
@@ -937,6 +941,7 @@ int32_t sp3301::get_temp(uint32_t rf_idx,double &tx_temp,double &rx_temp)
 
     tx_temp = 0.0;
     rx_temp = 0.0;
+
     switch (sp1401->get_hw_ver()) {
         case R1A : case R1B : {
             INT_CHECK(SP1401_R1A->get_tx_temp(tx_temp));
@@ -1075,272 +1080,23 @@ int32_t sp3301::instance_sp1401(uint32_t rf_idx)
 
 int32_t sp3301::self_cal_tx_lol(uint32_t rf_idx)
 {
-    sp1401_r1c *sp1401 = dynamic_cast<sp1401_r1c *>(m_sp1401->at(rf_idx).get());
-    sp2401_r1a *sp2401 = m_sp2401_r1a->at(rf_idx).get();
+    uint64_t rx_freq = 0;
+    uint64_t tx_freq = 0;
 
-    uint64_t freq = 2400000000;
-    int16_t dc_i_m = 0;
-    int16_t dc_q_m = 0;
-    tx_lol_table_r1cd::data_f_t data;
-    time_t curTime;
+    INT_CHECK(get_rx_freq(rf_idx,rx_freq));
+    INT_CHECK(get_tx_freq(rf_idx,tx_freq));
 
-    //init tx
-    set_tx_state(rf_idx,true);
-    sp1401->set_tx_att(10.0,10.0,10.0,0.0);
-    sp1401->set_io_mode(LOOP);
-    sp2401->set_da_sw(sp2401_r1a::FROM_TO_RF);
-    sp2401->set_ad_sw(sp2401_r1a::FROM_TO_RF);
-    sp2401->set_dds_src(sp2401_r1a::ALL_0);
-    sp2401->set_tx_pwr_comp(0.0);
-    sp2401->set_tx_dc_offset(0,0);
-    sp2401->set_tx_filter_sw(false);
+    self_cal_tx_lol_helper caller(this,rf_idx);
 
-    calUseLoop(sp1401,sp2401,dc_i_m,dc_q_m,data.pwr);
+    INT_CHECK(caller.run());
 
-    // Log
-    Log.en(log_t::RD_LOG_MESSAGE_F,true);
-    Log.add_msg("RFU : %d RF : %d i : %6d \t q : %6d \t lo_leakage : %8.3f",
-                m_rfu_idx,
-                rf_idx,
-                dc_i_m,
-                dc_q_m,
-                data.pwr);
-    Log.en(log_t::RD_LOG_MESSAGE_F,false);
-
-    if(dc_i_m >= 10000 || dc_q_m >= 10000) {
-        return -1;
-    }
-
-    data.freq = freq;
-    data.use_sa = 0;
-    data.dc_i = dc_i_m;
-    data.dc_q = dc_q_m;
-    sp1401->get_temp(4,data.temp[0]);
-    sp1401->get_temp(5,data.temp[1]);
-    sp1401->get_temp(6,data.temp[2]);
-    sp1401->get_temp(7,data.temp[3]);
-    time(&curTime);
-    data.time = *localtime(&curTime);
-    sp1401->cf()->add(cal_file::TX_LOL,&data);
-    sp1401->cf()->w(cal_file::TX_LOL);
+    INT_CHECK(set_rx_freq(rf_idx,rx_freq));
+    INT_CHECK(set_rx_level(rf_idx,0.0));
+    INT_CHECK(set_tx_freq(rf_idx,tx_freq));
+    INT_CHECK(set_tx_pwr(rf_idx,-60.0));
+    INT_CHECK(set_io_mode(rf_idx,IO));
     return 0;
 }
-
-
-self_cal_tx_sb_helper::self_cal_tx_sb_helper(sp3301 *SP3301,uint32_t rf_idx)
-{
-    _rf_idx = rf_idx;
-    _sp3301 = SP3301;
-    _sp1401 = _sp3301->get_sp1401_r1f(_rf_idx);
-    _sp2401 = _sp3301->get_sp2401(_rf_idx);
-    init();
-}
-
-int32_t self_cal_tx_sb_helper::init()
-{
-    th_l = -10.0;
-    th_m = 0.0;
-    th_r = +10.0;
-
-    am_i_l = 8192 - 500;
-    am_i_m = 8192;
-    am_i_r = 8192 + 500;
-
-    am_q_l = 8192 - 500;
-    am_q_m = 8192;
-    am_q_r = 8192 + 500;
-    return 0;
-}
-
-int32_t self_cal_tx_sb_helper::run(tx_sb_table_r1cd::data_f_t *data)
-{
-    if (is_rf_ver_before(_sp1401->get_hw_ver(),R1B)) {
-        return 0;
-    }
-
-    const uint32_t samples = 245760;
-    const uint64_t freq = FREQ_M(2400);
-    int16_t *I = nullptr;
-    int16_t *Q = nullptr;
-    int16_t *I_brother = nullptr;
-    int16_t *Q_brother = nullptr;
-
-    double stepTh = 0.0;
-    uint16_t stepAm = 0;
-
-    _sp3301->get_sp1401_r1f(_rf_idx)->cf()->m_tx_sb->get(freq,data);
-
-    _sp3301->set_io_mode(_rf_idx,OUTPUT);
-
-    _sp3301->set_tx_freq(_rf_idx,freq);
-    _sp3301->set_tx_pwr(_rf_idx,-20.0);
-    _sp3301->set_tx_state(_rf_idx,true);
-
-    _sp3301->set_rx_freq(_rf_idx,freq - FREQ_M(20));
-    _sp3301->set_rx_level(_rf_idx,0.0);
-
-    _sp3301->set_io_mode(_rf_idx,LOOP);
-
-    _sp2401->set_ddc(-92640000.0);
-    _sp2401->set_da_sw(sp2401_r1a::FROM_TO_RF);
-    _sp2401->set_ad_sw(sp2401_r1a::FROM_TO_RF);
-    _sp2401->set_dds_src(sp2401_r1a::SINGLE_TONE);
-    _sp2401->set_dds1(20000000.0);
-    _sp2401->set_tx_phase_rotate_I(0.0);
-    _sp2401->set_tx_amplitude_balance(8192,8192);
-
-    _sequence._new(samples);
-    _sp3301->set_iq_cap_samples(_rf_idx,samples);
-    _sp3301->get_iq_cap_buffer(_rf_idx,&I,&Q);
-    _sp3301->get_iq_cap_buffer(brother_idx(_rf_idx),&I_brother,&Q_brother);
-    _sp3301->set_iq_cap_buffer(_rf_idx,_sequence.i(),_sequence.q());
-    _sp3301->set_iq_cap_buffer(brother_idx(_rf_idx),nullptr,nullptr);
-
-    init();
-
-    stepTh = 2.0;
-    get_min_th(stepTh,0.5);
-
-    stepTh = 0.5;
-    get_min_th(stepTh,0.4);
-
-    stepTh = 0.1;
-    get_min_th(stepTh,1.0);
-
-    stepAm = 20;
-    get_min_am_i(stepAm,1);
-    get_min_am_q(stepAm,1);
-
-    stepAm = 5;
-    get_min_am_i(stepAm,1);
-    get_min_am_q(stepAm,1);
-
-    get_min_th(stepTh,1.0);
-
-    stepAm = 1;
-    for (int32_t retry = 0;retry < 3;retry ++) {
-        get_min_am_i(stepAm,2);
-        get_min_am_q(stepAm,2);
-    }
-
-    // Log
-    Log.en(log_t::RD_LOG_MESSAGE_F,true);
-    Log.add_msg("RFU : %d RF : %d angle : %8.3f i : %6d \t q : %6d \t sideband : %8.3f",
-                _sp3301->get_rfu_idx(),
-                _rf_idx,
-                th_m,
-                am_i_m,
-                am_q_m,
-                pwr_sb);
-    Log.en(log_t::RD_LOG_MESSAGE_F,false);
-
-    if (pwr_sb > -60.0) {
-        _sp2401->set_tx_phase_rotate_I(data->th);
-        _sp2401->set_tx_amplitude_balance(data->am_i,data->am_q);
-        _sp3301->set_iq_cap_buffer(_rf_idx,I,Q);
-        _sp3301->set_iq_cap_buffer(brother_idx(_rf_idx),I_brother,Q_brother);
-        return -1;
-    }
-
-    data->th   = th_m;
-    data->am_i = am_i_m;
-    data->am_q = am_q_m;
-    data->pwr  = pwr_sb;
-    data->use_sa = false;
-    _sp1401->get_temp(4,data->temp[0]);
-    _sp1401->get_temp(5,data->temp[1]);
-    _sp1401->get_temp(6,data->temp[2]);
-    _sp1401->get_temp(7,data->temp[3]);
-
-    time_t cur_time;
-    time(&cur_time);
-    data->time = *localtime(&cur_time);
-
-    _sp1401->cf()->add(cal_file::TX_SB,data);
-    _sp1401->cf()->w(cal_file::TX_SB);
-
-    _sp3301->set_iq_cap_buffer(_rf_idx,I,Q);
-    _sp3301->set_iq_cap_buffer(brother_idx(_rf_idx),I_brother,Q_brother);
-    return 0;
-}
-
-int32_t self_cal_tx_sb_helper::get_min_th(double step,double coef)
-{
-    double pwr[512] = {0.0};
-    pwr_sb = double(LONG_MAX);
-    int16_t idx = 0;
-    int16_t idx_min = 0;
-
-    for (th_m = th_l;th_m <= th_r;th_m += step) {
-        INT_CHECK(_sp2401->set_tx_phase_rotate_I(th_m));
-        meas_once(&pwr[idx]);
-        if (pwr[idx] < pwr_sb) {
-            pwr_sb = pwr[idx];
-            idx_min = idx;
-        }
-        idx ++;
-    }
-    th_m = th_l + idx_min * step;
-    th_l = th_m - step * coef;
-    th_r = th_m + step * coef;
-    return 0;
-}
-
-int32_t self_cal_tx_sb_helper::get_min_am_i(uint16_t step,uint16_t coef)
-{
-    double pwr[512] = {0.0};
-    pwr_sb = double(LONG_MAX);
-    int16_t idx = 0;
-    int16_t idx_min = 0;
-
-    for (am_i_m = am_i_l;am_i_m <= am_i_r;am_i_m += step) {
-        INT_CHECK(_sp2401->set_tx_amplitude_balance(am_i_m,am_q_m));
-        meas_once(&pwr[idx]);
-        if (pwr[idx] < pwr_sb) {
-            pwr_sb = pwr[idx];
-            idx_min = idx;
-        }
-        idx ++;
-    }
-    am_i_m = am_i_l + idx_min * step;
-    am_i_l = am_i_m - step * coef;
-    am_i_r = am_i_m + step * coef;
-    return 0;
-}
-
-int32_t self_cal_tx_sb_helper::get_min_am_q(uint16_t step,uint16_t coef)
-{
-    double pwr[512] = {0.0};
-    pwr_sb = double(LONG_MAX);
-    int16_t idx = 0;
-    int16_t idx_min = 0;
-
-    for (am_q_m = am_q_l;am_q_m <= am_q_r;am_q_m += step) {
-        INT_CHECK(_sp2401->set_tx_amplitude_balance(am_i_m,am_q_m));
-        meas_once(&pwr[idx]);
-        if (pwr[idx] < pwr_sb) {
-            pwr_sb = pwr[idx];
-            idx_min = idx;
-        }
-        idx ++;
-    }
-    am_q_m = am_q_l + idx_min * step;
-    am_q_l = am_q_m - step * coef;
-    am_q_r = am_q_m + step * coef;
-    return 0;
-}
-
-int32_t self_cal_tx_sb_helper::meas_once(double *pwr)
-{
-    INT_CHECK(_sp3301->iq_cap(_rf_idx));
-    INT_CHECK(_sp3301->iq_cap_iq2buf(_rf_idx));
-    INT_CHECK(_sp3301->iq_cap_abort(_rf_idx));
-
-    _sequence.dft();
-    *pwr = _sequence.pwr(FREQ_M(-1),FREQ_M(1));
-    return 0;
-}
-
 
 int32_t sp3301::self_cal_tx_sb(uint32_t rf_idx)
 {
@@ -1361,93 +1117,4 @@ int32_t sp3301::self_cal_tx_sb(uint32_t rf_idx)
     INT_CHECK(set_tx_pwr(rf_idx,-60.0));
     INT_CHECK(set_io_mode(rf_idx,IO));
     return 0;
-}
-
-void sp3301::calUseLoop(sp1401_r1c *sp1401, sp2401_r1a *sp2401, int16_t &dc_i_m, int16_t &dc_q_m,double &pwrLOL)
-{
-    sp1401->set_io_mode(LOOP);
-    sp1401->set_rx_lna_att_sw(r1c::RX_ATT);
-    sp1401->set_rx_att_019_sw(r1c::RX_ATT_0);
-    sp2401->set_ddc(-92640000.0);
-
-    uint64_t freq = 2400000000;
-    int16_t dc_i_l = -10000,dc_i_r = 10000;
-    int16_t dc_q_l = -10000,dc_q_r = 10000;
-    int16_t step = 0;
-    int64_t adLOL[512] = {0},adMin = LONG_MAX;
-
-    sp1401->set_rx_freq(freq);
-    sp1401->set_rx_att1(10.0);
-    sp1401->set_rx_att2(0.0);
-    sp1401->set_rx_att3(0.0);
-    sp1401->set_tx_freq(freq);
-    sp2401->set_tx_dc_offset(dc_i_m,dc_q_m);
-    sleep_ms(50);
-
-    step = 100;
-    memset(adLOL,0,sizeof(adLOL));
-    adMin = getMinDCOffsetI_Rx(sp1401,sp2401,step,1,&dc_i_l,&dc_i_r,&dc_i_m,&dc_q_m,adLOL);
-    memset(adLOL,0,sizeof(adLOL));
-    adMin = getMinDCOffsetQ_Rx(sp1401,sp2401,step,1,&dc_q_l,&dc_q_r,&dc_i_m,&dc_q_m,adLOL);
-
-    step = 10;
-    memset(adLOL,0,sizeof(adLOL));
-    adMin = getMinDCOffsetI_Rx(sp1401,sp2401,step,1,&dc_i_l,&dc_i_r,&dc_i_m,&dc_q_m,adLOL);
-    memset(adLOL,0,sizeof(adLOL));
-    adMin = getMinDCOffsetQ_Rx(sp1401,sp2401,step,1,&dc_q_l,&dc_q_r,&dc_i_m,&dc_q_m,adLOL);
-
-    step = 5;
-    memset(adLOL,0,sizeof(adLOL));
-    adMin = getMinDCOffsetI_Rx(sp1401,sp2401,step,2,&dc_i_l,&dc_i_r,&dc_i_m,&dc_q_m,adLOL);
-    memset(adLOL,0,sizeof(adLOL));
-    adMin = getMinDCOffsetQ_Rx(sp1401,sp2401,step,2,&dc_q_l,&dc_q_r,&dc_i_m,&dc_q_m,adLOL);
-
-    step = 1;
-    for (int32_t retry = 0;retry < 3;retry ++) {
-        memset(adLOL,0,sizeof(adLOL));
-        adMin = getMinDCOffsetI_Rx(sp1401,sp2401,step,5,&dc_i_l,&dc_i_r,&dc_i_m,&dc_q_m,adLOL);
-        memset(adLOL,0,sizeof(adLOL));
-        adMin = getMinDCOffsetQ_Rx(sp1401,sp2401,step,5,&dc_q_l,&dc_q_r,&dc_i_m,&dc_q_m,adLOL);
-    }
-    pwrLOL = ad_to_dBc(g_0dBFS,adMin);
-}
-
-int64_t sp3301::getMinDCOffsetI_Rx(sp1401_r1c *sp1401, sp2401_r1a *sp2401, int16_t step, int16_t lr_coef, int16_t *dc_i_l, int16_t *dc_i_r, int16_t *dc_i_m, int16_t *dc_q_m, int64_t *ad)
-{
-    int64_t adMin = LONG_MAX;
-    int16_t idx = 0,idxMin = 0;
-    for (*dc_i_m = *dc_i_l;*dc_i_m <= *dc_i_r;*dc_i_m += step) {
-        sp2401->set_tx_dc_offset(*dc_i_m,*dc_q_m);
-        sleep_ms(10);
-        sp1401->get_ads5474(ad[idx]);
-        if (ad[idx] < adMin) {
-            adMin = ad[idx];
-            idxMin = idx;
-        }
-        idx ++;
-    }
-    *dc_i_m = *dc_i_l + idxMin * step;
-    *dc_i_l = *dc_i_m - step * lr_coef;
-    *dc_i_r = *dc_i_m + step * lr_coef;
-    return adMin;
-}
-
-int64_t sp3301::getMinDCOffsetQ_Rx(sp1401_r1c *sp1401, sp2401_r1a *sp2401, int16_t step, int16_t lr_coef, int16_t *dc_q_l, int16_t *dc_q_r, int16_t *dc_i_m, int16_t *dc_q_m, int64_t *ad)
-{
-    int64_t adMin = LONG_MAX;
-    int16_t idx = 0,idxMin = 0;
-    for (*dc_q_m = *dc_q_l;*dc_q_m <= *dc_q_r;*dc_q_m += step) {
-        sp2401->set_tx_dc_offset(*dc_i_m,*dc_q_m);
-        sleep_ms(10);
-        sp1401->get_ads5474(ad[idx]);
-        if (ad[idx] < adMin) {
-            adMin = ad[idx];
-            idxMin = idx;
-        }
-        idx ++;
-    }
-    *dc_q_m = *dc_q_l + idxMin * step;
-    *dc_q_l = *dc_q_m - step * lr_coef;
-    *dc_q_r = *dc_q_m + step * lr_coef;
-    return adMin;
 }

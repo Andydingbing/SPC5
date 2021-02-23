@@ -112,10 +112,13 @@ int32_t sp1401::set_sn_redundant(const sn_redundant_t &info,
                                        const vector<rx_trouble_shoot_t> &rx_ts,
                                        const string &remark)
 {
-    if (info.tx_ts_num != tx_ts.size())
+    if (info.tx_ts_num != tx_ts.size()) {
         return -1;
-    if (info.rx_ts_num != rx_ts.size())
+    }
+
+    if (info.rx_ts_num != rx_ts.size()) {
         return -1;
+    }
 
     uint16_t cur_pos = 0x0000 + g_sn_length;
     INT_CHECK(w_eeprom(cur_pos,sizeof(info),(char*)(&info)));

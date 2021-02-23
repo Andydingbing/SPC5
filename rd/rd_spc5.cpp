@@ -240,14 +240,14 @@ int32_t SPC5_RF_SetCaptureLength(uint32_t RFIndex,uint32_t MLength)
 int32_t SPC5_RF_InitPowerMeasure(uint32_t RFIndex)
 {
     DECLARE_DYNAMIC_SP3301;
-    INT_CHECK(pSP3301->rf_init_pwr_meas(uiRfIdx));
+    INT_CHECK(pSP3301->init_pwr_meas(uiRfIdx));
     return 0;
 }
 
 int32_t SPC5_RF_AbortPowerMeasure(uint32_t RFIndex)
 {
     DECLARE_DYNAMIC_SP3301;
-    INT_CHECK(pSP3301->rf_abort_pwr_meas(uiRfIdx));
+    INT_CHECK(pSP3301->abort_pwr_meas(uiRfIdx));
     return 0;
 }
 
@@ -256,7 +256,7 @@ int32_t SPC5_RF_GetMeasProcess(uint32_t RFIndex, RD_SPC5_Power_Meas_Process &Pro
     DECLARE_DYNAMIC_SP3301;
     Process = SPC5_PM_Idle;
     sp1401::pwr_meas_state_t MeasState = sp1401::PMS_IDLE;
-    INT_CHECK(pSP3301->rf_get_pwr_meas_proc(uiRfIdx,MeasState));
+    INT_CHECK(pSP3301->get_pwr_meas_proc(uiRfIdx,MeasState));
     switch (MeasState) {
         case sp1401::PMS_IDLE    : {Process = SPC5_PM_Idle;break;}
         case sp1401::PMS_WFT     : {Process = SPC5_PM_Wait;break;}
@@ -270,7 +270,7 @@ int32_t SPC5_RF_GetMeasProcess(uint32_t RFIndex, RD_SPC5_Power_Meas_Process &Pro
 int32_t SPC5_RF_GetMeasResult(uint32_t RFIndex,float &Power,float &Crest)
 {
     DECLARE_DYNAMIC_SP3301;
-    INT_CHECK(pSP3301->rf_get_pwr_meas_result(uiRfIdx,Power,Crest));
+    INT_CHECK(pSP3301->get_pwr_meas_result(uiRfIdx,Power,Crest));
     return 0;
 }
 

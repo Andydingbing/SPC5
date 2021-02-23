@@ -121,10 +121,10 @@ public:
     int32_t get_temp(uint32_t rf_idx,double &tx_temp,double &rx_temp);
     int32_t get_cal_temp(uint32_t rf_idx,double &temp);
 
-    int32_t rf_init_pwr_meas(uint32_t rf_idx);
-    int32_t rf_abort_pwr_meas(uint32_t rf_idx);
-    int32_t rf_get_pwr_meas_proc(uint32_t rf_idx,sp1401::pwr_meas_state_t &proc);
-    int32_t rf_get_pwr_meas_result(uint32_t rf_idx,float &pwr,float &crest);
+    int32_t init_pwr_meas(uint32_t rf_idx);
+    int32_t abort_pwr_meas(uint32_t rf_idx);
+    int32_t get_pwr_meas_proc(uint32_t rf_idx,sp1401::pwr_meas_state_t &proc);
+    int32_t get_pwr_meas_result(uint32_t rf_idx,float &pwr,float &crest);
 
     int32_t set_iq_cap_samples(uint32_t rf_idx,uint32_t samples);
     int32_t get_iq_cap_samples(const uint32_t rf_idx,uint32_t &samples) const;
@@ -145,7 +145,9 @@ public:
     int32_t self_cal_tx_sb(uint32_t rf_idx);
 
 public:
-    sp1401 *get_sp1401(uint32_t rf_idx) { return m_sp1401->at(rf_idx).get(); }
+    template<typename int_t,typename data_type = traits_int<int_t>>
+    sp1401 *working_sp1401(int_t rf_idx) { return m_sp1401->at(size_t(rf_idx)).get(); }
+
     sp1401_r1a *get_sp1401_r1a(uint32_t rf_idx) { return m_sp1401_r1a->at(rf_idx).get(); }
     sp1401_r1b *get_sp1401_r1b(uint32_t rf_idx) { return m_sp1401_r1a->at(rf_idx).get(); }
     sp1401_r1c *get_sp1401_r1c(uint32_t rf_idx) { return m_sp1401_r1c->at(rf_idx).get(); }
@@ -158,10 +160,6 @@ public:
 
 private:
     int32_t instance_sp1401(uint32_t rf_idx);
-
-    void    calUseLoop(sp1401_r1c *sp1401, sp2401_r1a *sp2401, int16_t &dc_i_m, int16_t &dc_q_m,double &pwrLOL);
-    int64_t getMinDCOffsetI_Rx(sp1401_r1c *sp1401, sp2401_r1a *sp2401, int16_t step, int16_t lr_coef, int16_t *dc_i_l, int16_t *dc_i_r, int16_t *dc_i_m, int16_t *dc_q_m, int64_t *ad);
-    int64_t getMinDCOffsetQ_Rx(sp1401_r1c *sp1401, sp2401_r1a *sp2401, int16_t step, int16_t lr_coef, int16_t *dc_q_l, int16_t *dc_q_r, int16_t *dc_i_m, int16_t *dc_q_m, int64_t *ad);
 
 private:
     sp1401_vector_sptr m_sp1401;
@@ -196,43 +194,6 @@ private:
     static double temp_cal_stop;
     static double tx_tc_coef[12][6];
     static double rx_tc_coef[12][6];
-};
-
-class RD_API self_cal_tx_sb_helper
-{
-public:
-    self_cal_tx_sb_helper(sp3301 *SP3301,uint32_t rf_idx);
-
-    int32_t run(tx_sb_table_r1cd::data_f_t *data);
-
-private:
-    int32_t init();
-    int32_t get_min_th(double step,double coef);
-    int32_t get_min_am_i(uint16_t step,uint16_t coef);
-    int32_t get_min_am_q(uint16_t step,uint16_t coef);
-    int32_t meas_once(double *pwr);
-
-public:
-    complex_sequence _sequence;
-    sp3301 *_sp3301;
-    sp1401_r1f *_sp1401;
-    sp2401_r1a *_sp2401;
-
-    uint32_t _rf_idx;
-
-    double pwr_sb;
-
-    double th_l;
-    double th_m;
-    double th_r;
-
-    uint16_t am_i_l;
-    uint16_t am_i_m;
-    uint16_t am_i_r;
-
-    uint16_t am_q_l;
-    uint16_t am_q_m;
-    uint16_t am_q_r;
 };
 
 } //namespace sp_rd

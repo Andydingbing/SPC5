@@ -61,6 +61,7 @@ HEADERS += \
 ./sp9500/sp2401_r1a.h \
 ./sp9500/sp3301.h \
 ./sp9500/sp3501.h \
+./sp9500/self_cal_helper.h \
 rd_spc5.h \
 rd_sp9500.h
 
@@ -90,6 +91,7 @@ SOURCES += \
 ./sp9500/sp2401_r1a.cpp \
 ./sp9500/sp3301.cpp \
 ./sp9500/sp3501.cpp \
+./sp9500/self_cal_helper.cpp \
 rd_spc5.cpp \
 rd_sp9500.cpp
 
