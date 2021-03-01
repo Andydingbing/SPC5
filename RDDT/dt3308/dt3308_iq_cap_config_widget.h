@@ -4,6 +4,7 @@
 #include "global.h"
 #include "iq_cap_config_widget.h"
 #include <QStyledItemDelegate>
+#include <QComboBox>
 #include <QLineEdit>
 
 namespace NS_DT3308 {

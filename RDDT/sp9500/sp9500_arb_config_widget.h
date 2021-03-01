@@ -4,6 +4,7 @@
 #include "global.h"
 #include "arb_config_widget.h"
 #include <QStyledItemDelegate>
+#include <QComboBox>
 #include <QLineEdit>
 #include <QCheckBox>
 #include <QPushButton>

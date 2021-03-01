@@ -1,6 +1,4 @@
 #include "dt3308_iq_cap_config_widget.h"
-#include <QLineEdit>
-#include <QComboBox>
 
 namespace NS_DT3308 {
 

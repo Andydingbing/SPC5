@@ -1,6 +1,4 @@
 #include "sp9500_iq_cap_config_widget.h"
-#include <QLineEdit>
-#include <QComboBox>
 
 namespace NS_SP9500 {
 

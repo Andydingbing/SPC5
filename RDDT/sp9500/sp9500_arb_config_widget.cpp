@@ -1,10 +1,6 @@
 #include "sp9500_arb_config_widget.h"
 #include "arb_widget.h"
 #include "ui_arb.h"
-#include <QLineEdit>
-#include <QComboBox>
-#include <QCheckBox>
-#include <QPushButton>
 
 namespace NS_SP9500 {
 
