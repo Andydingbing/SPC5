@@ -93,9 +93,9 @@ int32_t ns_sp9500x::sp1403_r1a::get_ctrller_ver(const std::string &des,uint32_t 
 {
     boost::ignore_unused(des);
 
-    SP9500X_RFU_V9_REG_DECL(0x0000);
-    SP9500X_RFU_V9_R(0x0000);
-    ver = SP9500X_RFU_V9_REG_DATA(0x0000);
+    RFU_V9_REG_DECL(ver);
+    SP9500X_RFU_V9_R(ver);
+    ver = SP9500X_RFU_V9_REG_DATA(ver);
     return 0;
 }
 
