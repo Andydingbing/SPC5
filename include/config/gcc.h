@@ -18,10 +18,6 @@
 
 #define GCC_VERSION (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__)
 
-#if !defined(__CUDACC__)
-    #define BOOST_GCC GCC_VERSION
-#endif
-
 #if defined(__GXX_EXPERIMENTAL_CXX0X__) || (__cplusplus >= 201103L)
     #define GCC_CXX11
 #endif

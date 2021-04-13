@@ -8,7 +8,7 @@
 
 namespace rd {
 
-class convert_buf_t : boost::noncopyable
+class RD_API convert_buf_t : boost::noncopyable
 {
 public:
     void     *buf;
