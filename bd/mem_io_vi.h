@@ -49,34 +49,4 @@ private:
     ViStatus(*m_intr_entry)(ViSession,ViEventType,ViEvent,ViAddr);
 };
 
-namespace sp_rd {
-
-typedef ::mem_io mem_io;
-
-class RD_API vi_mem_io : public noncopyable
-{
-public:
-    vi_mem_io() { _mem = new ::vi_mem_io; }
-    vi_mem_io & operator = (vi_mem_io &mem) { return mem; }
-    virtual ~vi_mem_io() { SAFE_DEL(_mem); }
-
-public:
-    int32_t alloc(uint32_t size) { return _mem->allocate(size); }
-    int32_t release() { return _mem->release(); }
-    void releases() { return _mem->releases(); }
-    uint64_t phy_addr() { return _mem->phy_addr(); }
-
-    virtual int32_t w8(uint8_t *buf,uint32_t size)   { return _mem->w8(buf,size);  }
-    virtual int32_t w16(uint16_t *buf,uint32_t size) { return _mem->w16(buf,size); }
-    virtual int32_t w32(uint32_t *buf,uint32_t size) { return _mem->w32(buf,size); }
-    virtual int32_t r8(uint8_t *buf,uint32_t size)   { return _mem->r8(buf,size);  }
-    virtual int32_t r16(uint16_t *buf,uint32_t size) { return _mem->r16(buf,size); }
-    virtual int32_t r32(uint32_t *buf,uint32_t size) { return _mem->r32(buf,size); }
-
-private:
-    ::vi_mem_io *_mem;
-};
-
-} // namespace sp_rd
-
 #endif // RD_MEM_IO_VI_H

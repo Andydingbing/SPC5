@@ -1,8 +1,6 @@
 #include "mem_io_udp.h"
 #include "string.h"
 
-using namespace sp_rd;
-
 int32_t mem_io_udp::allocate(uint32_t size)
 {
     if (_addr != nullptr) {

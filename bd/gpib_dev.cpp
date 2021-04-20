@@ -3,7 +3,6 @@
 #include "visa.h"
 
 using namespace std;
-//using namespace sp_rd;
 
 gpib_dev::gpib_dev() :
     _session(0)

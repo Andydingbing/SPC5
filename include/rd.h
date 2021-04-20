@@ -180,19 +180,6 @@ using boost::ignore_unused;
     #pragma GCC diagnostic ignored "-Wunused-but-set-parameter"
 #endif
 
-namespace sp_rd {
-
-class noncopyable
-{
-protected:
-    constexpr noncopyable() = default;
-    ~noncopyable() = default;
-    noncopyable( const noncopyable& ) = delete;
-    noncopyable& operator=( const noncopyable& ) = delete;
-};
-
-}
-
 namespace rd {
 
 enum link_t { UL,DL };

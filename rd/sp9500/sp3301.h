@@ -196,6 +196,6 @@ private:
     static double rx_tc_coef[12][6];
 };
 
-} //namespace sp_rd
+} // namespace rd
 
 #endif // SP3301_H

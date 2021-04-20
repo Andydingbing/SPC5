@@ -74,8 +74,8 @@ public:
     int32_t get_s6_ver(uint32_t &ver);
     uint32_t get_rf_idx() const { return m_rf_idx; }
     int32_t fpga_reset();
-    sp_rd::pci_dev* k7();
-    sp_rd::pci_dev* s6();
+    pci_dev* k7();
+    pci_dev* s6();
 
 public:
     int32_t clock_of_da_ld(bool &lock);

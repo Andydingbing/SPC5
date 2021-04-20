@@ -3,7 +3,7 @@
 
 #include "rd.h"
 
-namespace sp_rd {
+namespace rd {
 
 class RD_API fraction_float
 {
@@ -42,6 +42,6 @@ private:
     signed long long m_denominator;
 };
 
-} //namespace sp_rd
+} //namespace rd
 
 #endif // FRACTION_FLOAT_H

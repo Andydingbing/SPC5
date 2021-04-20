@@ -16,7 +16,6 @@
 #include "pci_dev_udp.h"
 
 using namespace std;
-using namespace sp_rd;
 
 pci_dev_udp::pci_dev_udp() :
     pci_dev()

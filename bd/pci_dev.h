@@ -27,7 +27,7 @@
  * 2. Call init() to init the specific device.
  * 3. Then operate I/O from/to the device.
  */
-class RD_API pci_dev : sp_rd::noncopyable
+class RD_API pci_dev : boost::noncopyable
 {
 public:
     enum addr_space_t {
@@ -81,7 +81,7 @@ protected:
 /*
  * The pure virtual class of memory IO with PCI/PCIe device.
  */
-class RD_API mem_io : public sp_rd::noncopyable
+class RD_API mem_io : public boost::noncopyable
 {
 public:
     mem_io() { _addr = nullptr; }

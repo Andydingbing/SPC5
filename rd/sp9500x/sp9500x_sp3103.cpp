@@ -69,12 +69,8 @@ int32_t ns_sp9500x::sp3103::boot(const bool silent)
         BOOL_CHECK(_sp1403_r1b.at(i)->connect(sp1403_ctrller));
         BOOL_CHECK(_rrh.at(i)->connect(sp1403_ctrller));
 
-//        instance_sp1403(i);
-
         if (!silent) {
-//            if (is_connected) {
-                INT_CHECK(_sp1403_r1a.at(i)->open_board());
-//            }
+            INT_CHECK(_sp1403_r1a.at(i)->open_board());
             INT_CHECK(_sp2406.at(i)->open_board());
             INT_CHECK(_rrh.at(i)->open_board());
         }
@@ -126,8 +122,6 @@ int32_t ns_sp9500x::sp3103::set_tx_en_tc(const uint32_t rf_idx,const bool en)
 
 int32_t ns_sp9500x::sp3103::set_tx_state(const uint32_t rf_idx,const bool state)
 {
-//    DECL_DYNAMIC_SP1403
-//    SP1403->set_tx_modulator_en(state);
     return 0;
 }
 
@@ -136,10 +130,6 @@ int32_t ns_sp9500x::sp3103::set_tx_pwr(const uint32_t rf_idx,const double pwr)
     DECL_DYNAMIC_RRH;
 
     RRH->set_tx_pwr(pwr);
-
-//    uint64_t freq = m_tx_freq[rf_idx];
-//    io_mode_t mode = m_io_mode[rf_idx];
-//    m_tx_pwr[rf_idx] = double(pwr);
     return 0;
 }
 
@@ -168,18 +158,6 @@ int32_t ns_sp9500x::sp3103::get_tx_freq(uint32_t rf_idx,uint64_t &freq)
     freq = (freq_rrh == 0 ? freq_sub8 : freq_rrh);
     return 0;
 }
-
-//int32_t ns_sp9500x::sp3103::set_tx_bw(uint32_t rf_idx,bw_t bw)
-//{
-//    return 0;
-//}
-
-//int32_t ns_sp9500x::sp3103::set_tx_src(uint32_t rf_idx,sp2401_r1a::da_src_t src)
-//{
-////    DECL_DYNAMIC_SP2401
-////    INT_CHECK(sp2401->set_dds_src(src));
-//    return 0;
-//}
 
 int32_t ns_sp9500x::sp3103::arb_load(const uint32_t rf_idx,const ns_arb::src_t &src,const string &arg)
 {
@@ -264,68 +242,6 @@ int32_t ns_sp9500x::sp3103::set_rx_ref(const uint32_t rf_idx,const double ref)
     DECL_DYNAMIC_RRH;
 
     RRH->set_rx_ref(ref);
-//    DECL_DYNAMIC_SP2401
-//    DECL_RF_VER
-
-//    uint64_t freq = m_rx_freq[rf_idx];
-//    io_mode_t mode = m_io_mode[rf_idx];
-
-//    switch (RF_VER) {
-//        case R1A : case R1B : {
-//            r1a::rx_lna_att_t lna_att = r1a::RX_ATT;
-//            double att1 = 0.0;
-//            int32_t att2 = 0;
-//            int64_t ad_0dbfs = g_0dBFS;
-
-//            CAL_FILE_R1A->m_rx_ref->get(freq,level,mode,ad_0dbfs,lna_att,att1,att2);
-//            INT_CHECK(SP1401_R1A->set_rx_lna_att_sw(lna_att));
-//            INT_CHECK(SP1401_R1A->set_rx_att(att1,att2));
-//            INT_CHECK(sp2401->set_rx_pwr_comp(int32_t(g_0dBFS - ad_0dbfs)));
-//            break;
-//        }
-//        case R1C : case R1D : case R1E : case R1F : {
-//            rx_ref_op_table_r1cd::rx_state_m_t rx_state;
-//            int32_t offset = 0;
-//            const bool en_tc = sp1401->is_rx_en_tc();
-//            double temp_call = 0.0;
-//            double temp_curr = 0.0;
-//            double temp_comp = 0.0;
-
-//            rx_tc_table::data_m_t data_tc;
-
-//            if (mode == OUTPUT) {
-//                CAL_FILE_R1C->m_rx_ref_op->get(RF_VER,freq,level,&rx_state);
-//                offset = CAL_FILE_R1C->m_rx_att_op->get(RF_VER,freq,level);
-//                offset += rx_state.ad_offset;
-//            } else if (mode == IO) {
-//                CAL_FILE_R1C->m_rx_ref_io->get(RF_VER,freq,level,&rx_state);
-//                offset = CAL_FILE_R1C->m_rx_att_io->get(RF_VER,freq,level);
-//                offset += rx_state.ad_offset;
-//            }
-
-//            if (en_tc && rx_state.lna_att == r1c::RX_LNA) {
-//                if (((sp1401_r1c *)sp1401)->get_rx_avg_temp(temp_curr) == true) {
-//                    CAL_FILE_R1C->m_rx_tc->get(freq,data_tc);
-//                    if (data_tc.order > 0) {
-//                        temp_call = rx_state.temp;
-//                        temp_curr = temp_curr >= data_tc.temp_star ? temp_curr : data_tc.temp_star;
-//                        temp_curr = temp_curr <= data_tc.temp_stop ? temp_curr : data_tc.temp_stop;
-//                        temp_comp = polynomial<double>(data_tc.coef,data_tc.order,temp_call) -
-//                                    polynomial<double>(data_tc.coef,data_tc.order,temp_curr);
-//                        offset = g_0dBFS - dBc_to_ad(g_0dBFS,temp_comp - ad_to_dBc(g_0dBFS,g_0dBFS - offset));
-//                    }
-//                }
-//            }
-
-//            INT_CHECK(SP1401_R1C->set_rx_lna_att_sw(r1c::rx_lna_att_t(rx_state.lna_att)));
-//            INT_CHECK(SP1401_R1C->set_rx_att_019_sw(r1c::rx_att_019_t(rx_state.att_019)));
-//            INT_CHECK(SP1401_R1C->set_rx_att(rx_state.att1,rx_state.att2,rx_state.att3));
-//            INT_CHECK(sp2401->set_rx_pwr_comp(offset));
-//            break;
-//        }
-//        default:break;
-//    }
-//    m_ref[rf_idx] = level;
     return 0;
 }
 
@@ -341,15 +257,6 @@ int32_t ns_sp9500x::sp3103::set_rx_freq(uint32_t rf_idx,uint64_t freq)
 
     INT_CHECK(SP1403->set_rx_freq(freq_sub8));
     INT_CHECK(RRH->set_rx_freq(freq_rrh));
-
-//    uint64_t freq_rf = freq / g_rf_freq_space * g_rf_freq_space;
-//    double freq_ddc = -92640000.0 - double(freq - freq_rf);
-
-//    INT_CHECK(SP1403->set_rx_freq(freq_rf));
-//    INT_CHECK(sp2401->set_ddc(freq_ddc));
-//    m_rx_freq[rf_idx] = freq;
-//    INT_CHECK(rf_set_rx_level(rf_idx,m_ref[rf_idx]));
-//    INT_CHECK(rf_set_rx_bw(rf_idx,sp1401->get_bw()));
     return 0;
 }
 
@@ -363,37 +270,6 @@ int32_t ns_sp9500x::sp3103::get_rx_freq(uint32_t rf_idx,uint64_t &freq)
     freq = (freq_rrh == 0 ? freq_sub8 : (freq_rrh + freq_sub8 - FREQ_M(7500)));
     return 0;
 }
-
-//int32_t ns_sp9500x::sp3103::rf_set_rx_bw(uint32_t rf_idx,bw_t bw)
-//{
-//    DECL_DYNAMIC_SP1403
-//    DECL_DYNAMIC_SP2401
-
-//    switch (sp1401->get_hw_ver()) {
-//        case R1C : case R1D : case R1E : case R1F : {
-//            CAL_FILE_R1C->set_bw(bw);
-//            double real[ul_filter_tap] = {0.0};
-//            double imag[ul_filter_tap] = {0.0};
-
-//            if (_80M == bw) {
-//                rx_filter_80m_table::data_m_t data;
-
-//                CAL_FILE_R1C->m_rx_filter_80m->get(m_rx_freq[rf_idx],&data);
-//                data._2double(real,imag);
-//                sp2401->set_rx_filter(real,imag);
-//            } else if (_160M == bw) {
-//                rx_filter_160m_table::data_m_t data;
-
-//                CAL_FILE_R1C->m_rx_filter_160m->get(m_rx_freq[rf_idx],&data);
-//                data._2double(real,imag);
-//                sp2401->set_rx_filter(real,imag);
-//            }
-//            return 0;
-//        }
-//        default:return 0;
-//    }
-//    return 0;
-//}
 
 int32_t ns_sp9500x::sp3103::set_io_mode(uint32_t rf_idx,io_mode_t mode)
 {
@@ -409,9 +285,9 @@ int32_t ns_sp9500x::sp3103::instance_sp1403(uint32_t rf_idx)
     hw_ver_t ver = hw_ver_t::HW_ERROR;
 
     INT_CHECK(_sp1403.at(rf_idx)->get_sn_major(sn));
-    if (true/*sp1403::is_valid_sn(sn)*/) {
+    if (true) {
         is_connected = true;
-//        sp1403::get_hw_ver(sn,ver);
+
         switch (ver) {
             case hw_ver_t::R1A : {
                 _sp1403.at(rf_idx) = _sp1403_r1a.at(rf_idx);
@@ -421,11 +297,11 @@ int32_t ns_sp9500x::sp3103::instance_sp1403(uint32_t rf_idx)
                 _sp1403.at(rf_idx) = _sp1403_r1b.at(rf_idx);
                 break;
             }
-
-//            case R1F : case HW_VER_SP9500_MAX : case HW_ERROR : {
-//                m_sp1401->at(rf_idx) = m_sp1401_r1f->at(rf_idx);
-//                break;
-//            }
+            case hw_ver_t::HW_ERROR :
+            case hw_ver_t::HW_VER_MAX : {
+                _sp1403.at(rf_idx) = _sp1403_r1b.at(rf_idx);
+                break;
+            }
         }
     } else {
         if ((is_connected = _sp1403_r1a.at(rf_idx)->is_connected())) {

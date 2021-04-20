@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 
-using namespace sp_rd;
+using namespace rd;
 
 fraction_float::fraction_float(signed long long numerator,signed long long denominator)
 {
