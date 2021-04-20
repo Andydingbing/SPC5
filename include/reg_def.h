@@ -10,7 +10,7 @@
 /*
  * 1 address
  *
- * union reg0x... {
+ * union reg_0x... {
  *     struct reg_1_t {
  *         a : x;
  *         b : x; field(some_chip)
@@ -85,29 +85,29 @@
 #define REG_3_SUFFIX(chip_or_field) } r_##chip_or_field;
 
 // compatible registers or chips
-#define REG_DEF_CPT_PREFIX_8_PARAM_1(addr,...)  REG_DEF_PREFIX_8(addr)  REG_PREFIX
-#define REG_DEF_CPT_PREFIX_16_PARAM_1(addr,...) REG_DEF_PREFIX_16(addr) REG_PREFIX
-#define REG_DEF_CPT_PREFIX_32_PARAM_1(addr,...) REG_DEF_PREFIX_32(addr) REG_PREFIX
-#define REG_DEF_CPT_PREFIX_64_PARAM_1(addr,...) REG_DEF_PREFIX_64(addr) REG_PREFIX
+#define REG_DEF_CPT_PREFIX_8_PARAM_1(addr)  REG_DEF_PREFIX_8(addr)  REG_PREFIX
+#define REG_DEF_CPT_PREFIX_16_PARAM_1(addr) REG_DEF_PREFIX_16(addr) REG_PREFIX
+#define REG_DEF_CPT_PREFIX_32_PARAM_1(addr) REG_DEF_PREFIX_32(addr) REG_PREFIX
+#define REG_DEF_CPT_PREFIX_64_PARAM_1(addr) REG_DEF_PREFIX_64(addr) REG_PREFIX
 
-#define REG_DEF_CPT_PREFIX_8_PARAM_2(addr,...)  \
-    REG_DEF_PREFIX_8(__VA_ARGS__)  \
-    static CONSTEXPR_OR_CONST uint8_t offset___VA_ARGS__ = addr; \
+#define REG_DEF_CPT_PREFIX_8_PARAM_2(addr,name)  \
+    REG_DEF_PREFIX_8(name)  \
+    static CONSTEXPR_OR_CONST uint8_t offset_##name = addr; \
     REG_PREFIX
 
-#define REG_DEF_CPT_PREFIX_16_PARAM_2(addr,...)  \
-    REG_DEF_PREFIX_16(__VA_ARGS__)  \
-    static CONSTEXPR_OR_CONST uint16_t offset___VA_ARGS__ = addr; \
+#define REG_DEF_CPT_PREFIX_16_PARAM_2(addr,name)  \
+    REG_DEF_PREFIX_16(name)  \
+    static CONSTEXPR_OR_CONST uint16_t offset_##name = addr; \
     REG_PREFIX
 
-#define REG_DEF_CPT_PREFIX_32_PARAM_2(addr,...)  \
-    REG_DEF_PREFIX_32(__VA_ARGS__)  \
-    static CONSTEXPR_OR_CONST uint32_t offset___VA_ARGS__ = addr; \
+#define REG_DEF_CPT_PREFIX_32_PARAM_2(addr,name)  \
+    REG_DEF_PREFIX_32(name)  \
+    static CONSTEXPR_OR_CONST uint32_t offset_##name = addr; \
     REG_PREFIX
 
-#define REG_DEF_CPT_PREFIX_64_PARAM_2(addr,...)  \
-    REG_DEF_PREFIX_64(__VA_ARGS__)  \
-    static CONSTEXPR_OR_CONST uint64_t offset___VA_ARGS__ = addr; \
+#define REG_DEF_CPT_PREFIX_64_PARAM_2(addr,name)  \
+    REG_DEF_PREFIX_64(name)  \
+    static CONSTEXPR_OR_CONST uint64_t offset_##name = addr; \
     REG_PREFIX
 
 #define REG_DEF_CPT_PREFIX_8_VAR_COUNT(count)  REG_DEF_CPT_PREFIX_8_PARAM_##count
@@ -118,16 +118,16 @@
 #define REG_DEF_APPLY(prefix,param_num) MACRO_ID(prefix(param_num))
 
 #define REG_DEF_CPT_PREFIX_8(...) \
-    MACRO_ID(REG_DEF_APPLY(REG_DEF_CPT_PREFIX_8_VAR_COUNT,PP_COUNT(__VA_ARGS__)))(REG_DEF_PREFIX_ARG_1(__VA_ARGS__),REG_DEF_PREFIX_ARG_2(__VA_ARGS__))
+    MACRO_ID(REG_DEF_APPLY(REG_DEF_CPT_PREFIX_8_VAR_COUNT,PP_COUNT(__VA_ARGS__)))(__VA_ARGS__)
 
 #define REG_DEF_CPT_PREFIX_16(...) \
-    MACRO_ID(REG_DEF_APPLY(REG_DEF_CPT_PREFIX_16_VAR_COUNT,PP_COUNT(__VA_ARGS__)))(REG_DEF_PREFIX_ARG_1(__VA_ARGS__),REG_DEF_PREFIX_ARG_2(__VA_ARGS__))
+    MACRO_ID(REG_DEF_APPLY(REG_DEF_CPT_PREFIX_16_VAR_COUNT,PP_COUNT(__VA_ARGS__)))(__VA_ARGS__)
 
 #define REG_DEF_CPT_PREFIX_32(...) \
-    MACRO_ID(REG_DEF_APPLY(REG_DEF_CPT_PREFIX_32_VAR_COUNT,PP_COUNT(__VA_ARGS__)))(REG_DEF_PREFIX_ARG_1(__VA_ARGS__),REG_DEF_PREFIX_ARG_2(__VA_ARGS__))
+    MACRO_ID(REG_DEF_APPLY(REG_DEF_CPT_PREFIX_32_VAR_COUNT,PP_COUNT(__VA_ARGS__)))(__VA_ARGS__)
 
 #define REG_DEF_CPT_PREFIX_64(...) \
-    MACRO_ID(REG_DEF_APPLY(REG_DEF_CPT_PREFIX_64_VAR_COUNT,PP_COUNT(__VA_ARGS__)))(REG_DEF_PREFIX_ARG_1(__VA_ARGS__),REG_DEF_PREFIX_ARG_2(__VA_ARGS__))
+    MACRO_ID(REG_DEF_APPLY(REG_DEF_CPT_PREFIX_64_VAR_COUNT,PP_COUNT(__VA_ARGS__)))(__VA_ARGS__)
 
 #define REG_DEF_CPT_SUFFIX_8  REG_SUFFIX REG_DEF_SUFFIX_8
 #define REG_DEF_CPT_SUFFIX_16 REG_SUFFIX REG_DEF_SUFFIX_16

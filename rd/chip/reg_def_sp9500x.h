@@ -90,13 +90,6 @@ if (_s6 == nullptr) { \
 namespace ns_reg_sp9500x_rfu_v9 {
 
 REG_DEF_CPT_PREFIX_32(0x0000,ver)
-    unsigned op : 1;
-    unsigned rsv : 7;
-    unsigned ver : 8;
-    unsigned cdw : 4;
-REG_DEF_CPT_SUFFIX_32
-
-REG_DEF_CPT_PREFIX_32(0x0000)
     unsigned op : 1;  // DMA state-machine reset signal
     unsigned rsv : 7;
     unsigned ver : 8; // firmware version
