@@ -5,7 +5,6 @@
 #include "frontend.h"
 #include "cal_table.h"
 #include "reg_def_hmc832.h"
-#include "reg_def_sp9500.h"
 
 namespace rd {
 

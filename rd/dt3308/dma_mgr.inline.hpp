@@ -45,15 +45,10 @@ int32_t ns_dt3308::dma_mgr::fpga_w_trans()
 {
     KUS_REG_DECLARE(0x80000c);
 
-    KUS_REG_DECLARE(0x80000b);
     KUS_REG_DECLARE(0x800008);
 
     KUS_REG(0x800008).op = 0;
     KUS_W(0x800008);
-
-//    KUS_REG(0x80000b).src = 0;
-//    KUS_REG(0x80000b).trig = 0;
-//    KUS_W(0x80000b);
 
     KUS_REG(0x800008).op = 1;
     KUS_W(0x800008);

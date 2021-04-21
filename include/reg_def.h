@@ -8,9 +8,68 @@
 #include <boost/current_function.hpp>
 
 /*
+ * Usage :
+ *
+ * 1, Define Register
+ *
+ *    REG_DEF_PREFIX_32(0x0000)
+ *        unsigned x : 16;
+ *        unsigned y : 16;
+ *    REG_DEF_SUFFIX_32
+ *
+ *    REG_DEF_PREFIX_32(0x0001,name)
+ *        unsigned x : 16;
+ *        unsigned y : 16;
+ *    REG_DEF_SUFFIX_32
+ *
+ *    REG_DEF_PREFIX_32_2(0x0002,0x0003)
+ *        unsigned x : 16;
+ *        unsigned y : 16;
+ *    REG_DEF_SUFFIX_32_2
+ *
+ *    REG_DEF_PREFIX_32_2(0x0004,0x0005,name)
+ *        unsigned x : 16;
+ *        unsigned y : 16;
+ *    REG_DEF_SUFFIX_32_2
+ *
+ * 2, Reference
+ *
+ *    REG_DECL(0x0000);
+ *    REG_DECL(name);
+ *
+ *    REG(0x0000).x = 1;
+ *    REG(0x0000).y = 2;
+ *
+ *    REG(name).x = 3;
+ *    REG(name).y = 4;
+ *
+ *    REG_2(0x0002,0x0003).x = 5;
+ *    REG_2(0x0002,0x0003).y = 6;
+ *
+ *    REG_2(name).x = 7;
+ *    REG_2(name).y = 8;
+ *    ...
+ *    ...
+ *
+ * Details :
+ *
  * 1 address
  *
- * union reg_0x... {
+ * union reg_addr {
+ *     struct reg_1_t {
+ *         a : x;
+ *         b : x; field(some_chip)
+ *     } r1;
+ *     struct reg_2_t {
+ *         a : x;
+ *         b : x;
+ *     } r2;
+ *     ...
+ *     uintx_t data;
+ * };
+ *
+ * union reg_name {
+ *     static CONSTEXPR_OR_CONST uintx_t offset_name = addr;
  *     struct reg_1_t {
  *         a : x;
  *         b : x; field(some_chip)
@@ -26,7 +85,23 @@
  *
  * 2 addresses
  *
- * struct reg0x...0x..._t {
+ * struct reg_0x..._0x..._t {
+ *     uintx_t addr[4];
+ *     union reg {
+ *         struct reg_1_t {
+ *             a : x;
+ *             b : x; field(some_chip)
+ *         } r1;
+ *         struct reg_2_t {
+ *             a : x;
+ *             b : x;
+ *         } r2;
+ *         ...
+ *         uintx_t data;
+ *     } u_data;
+ * };
+ *
+ * struct reg_name_t {
  *     uintx_t addr[4];
  *     union reg {
  *         struct reg_1_t {
@@ -44,33 +119,16 @@
  *
  */
 
+
 #define field(chips)
+
+#define REG_DEF_APPLY(prefix,param_num) MACRO_ID(prefix(param_num))
 
 #define REG_DEF_ARG_1(arg,...) arg
 #define REG_DEF_ARG_2(_1,...) __VA_ARGS__
 
 #define REG_DEF_PREFIX_ARG_1(...) MACRO_ID(REG_DEF_ARG_1(__VA_ARGS__))
 #define REG_DEF_PREFIX_ARG_2(...) MACRO_ID(REG_DEF_ARG_2(__VA_ARGS__))
-
-#define REG_DEF_PREFIX_8(addr_or_name)  union reg_##addr_or_name {
-#define REG_DEF_PREFIX_16(addr_or_name) union reg_##addr_or_name {
-#define REG_DEF_PREFIX_32(addr_or_name) union reg_##addr_or_name {
-#define REG_DEF_PREFIX_64(addr_or_name) union reg_##addr_or_name {
-
-#define REG_DEF_SUFFIX_8  uint8_t  data; };
-#define REG_DEF_SUFFIX_16 uint16_t data; };
-#define REG_DEF_SUFFIX_32 uint32_t data; };
-#define REG_DEF_SUFFIX_64 uint64_t data; };
-
-#define REG_DEF_PREFIX_8_2(addr0,addr1)  struct reg##addr0##addr1##_t { uint8_t  addr[4]; union reg {
-#define REG_DEF_PREFIX_16_2(addr0,addr1) struct reg##addr0##addr1##_t { uint16_t addr[4]; union reg {
-#define REG_DEF_PREFIX_32_2(addr0,addr1) struct reg##addr0##addr1##_t { uint32_t addr[4]; union reg {
-#define REG_DEF_PREFIX_64_2(addr0,addr1) struct reg##addr0##addr1##_t { uint64_t addr[4]; union reg {
-
-#define REG_DEF_SUFFIX_8_2  uint8_t data;  } u_data; };
-#define REG_DEF_SUFFIX_16_2 uint16_t data; } u_data; };
-#define REG_DEF_SUFFIX_32_2 uint32_t data; } u_data; };
-#define REG_DEF_SUFFIX_64_2 uint64_t data; } u_data; };
 
 #define REG_PREFIX struct reg_t {
 #define REG_SUFFIX } r;
@@ -84,7 +142,18 @@
 #define REG_3_PREFIX(chip_or_field) struct reg_3_t {
 #define REG_3_SUFFIX(chip_or_field) } r_##chip_or_field;
 
-// compatible registers or chips
+
+#define REG_DEF_PREFIX_8(addr_or_name)  union reg_##addr_or_name {
+#define REG_DEF_PREFIX_16(addr_or_name) union reg_##addr_or_name {
+#define REG_DEF_PREFIX_32(addr_or_name) union reg_##addr_or_name {
+#define REG_DEF_PREFIX_64(addr_or_name) union reg_##addr_or_name {
+
+#define REG_DEF_SUFFIX_8  uint8_t  data; };
+#define REG_DEF_SUFFIX_16 uint16_t data; };
+#define REG_DEF_SUFFIX_32 uint32_t data; };
+#define REG_DEF_SUFFIX_64 uint64_t data; };
+
+// compatible
 #define REG_DEF_CPT_PREFIX_8_PARAM_1(addr)  REG_DEF_PREFIX_8(addr)  REG_PREFIX
 #define REG_DEF_CPT_PREFIX_16_PARAM_1(addr) REG_DEF_PREFIX_16(addr) REG_PREFIX
 #define REG_DEF_CPT_PREFIX_32_PARAM_1(addr) REG_DEF_PREFIX_32(addr) REG_PREFIX
@@ -115,8 +184,6 @@
 #define REG_DEF_CPT_PREFIX_32_VAR_COUNT(count) REG_DEF_CPT_PREFIX_32_PARAM_##count
 #define REG_DEF_CPT_PREFIX_64_VAR_COUNT(count) REG_DEF_CPT_PREFIX_64_PARAM_##count
 
-#define REG_DEF_APPLY(prefix,param_num) MACRO_ID(prefix(param_num))
-
 #define REG_DEF_CPT_PREFIX_8(...) \
     MACRO_ID(REG_DEF_APPLY(REG_DEF_CPT_PREFIX_8_VAR_COUNT,PP_COUNT(__VA_ARGS__)))(__VA_ARGS__)
 
@@ -134,19 +201,6 @@
 #define REG_DEF_CPT_SUFFIX_32 REG_SUFFIX REG_DEF_SUFFIX_32
 #define REG_DEF_CPT_SUFFIX_64 REG_SUFFIX REG_DEF_SUFFIX_64
 
-#define REG_DEF_CPT_PREFIX_8_2(addr0,addr1)  REG_DEF_PREFIX_8_2(addr0,addr1)  REG_PREFIX
-#define REG_DEF_CPT_SUFFIX_8_2               REG_SUFFIX REG_DEF_SUFFIX_8_2
-
-#define REG_DEF_CPT_PREFIX_16_2(addr0,addr1) REG_DEF_PREFIX_16_2(addr0,addr1) REG_PREFIX
-#define REG_DEF_CPT_SUFFIX_16_2              REG_SUFFIX REG_DEF_SUFFIX_16_2
-
-#define REG_DEF_CPT_PREFIX_32_2(addr0,addr1) REG_DEF_PREFIX_32_2(addr0,addr1) REG_PREFIX
-#define REG_DEF_CPT_SUFFIX_32_2              REG_SUFFIX REG_DEF_SUFFIX_32_2
-
-#define REG_DEF_CPT_PREFIX_64_2(addr0,addr1) REG_DEF_PREFIX_64_2(addr0,addr1) REG_PREFIX
-#define REG_DEF_CPT_SUFFIX_64_2              REG_SUFFIX REG_DEF_SUFFIX_64_2
-
-
 #define REG_DECL_INIT(ns,addr_or_name,init) \
     union ns::reg_##addr_or_name ns##r##addr_or_name; \
     ns##r##addr_or_name.data = init; NEED_SEMICOLON
@@ -157,19 +211,127 @@
 #define REG(ns,addr_or_name)  ns##r##addr_or_name.r
 #define REG_OF(ns,addr_or_name,chip_or_field) ns##r##addr_or_name.r_##chip_or_field
 
-#define REG_DECL_INIT_2(ns,addr0,addr1,init) \
-    struct ns::reg##addr0##addr1##_t ns##r##addr0##addr1; \
-    ns##r##addr0##addr1.addr[0] = addr1; \
-    ns##r##addr0##addr1.addr[1] = addr0; \
-    ns##r##addr0##addr1.addr[2] = addr1; \
-    ns##r##addr0##addr1.addr[3] = addr0; \
+
+#define REG_DEF_PREFIX_8_2_PARAM_2(addr0,addr1)  struct reg_##addr0##_##addr1##_t {
+#define REG_DEF_PREFIX_16_2_PARAM_2(addr0,addr1) struct reg_##addr0##_##addr1##_t {
+#define REG_DEF_PREFIX_32_2_PARAM_2(addr0,addr1) struct reg_##addr0##_##addr1##_t {
+#define REG_DEF_PREFIX_64_2_PARAM_2(addr0,addr1) struct reg_##addr0##_##addr1##_t {
+
+#define REG_DEF_PREFIX_8_2_PARAM_3(addr0,addr1,name)   struct reg_##name##_t {
+#define REG_DEF_PREFIX_16_2_PARAM_3(addr0,addr1,name)  struct reg_##name##_t {
+#define REG_DEF_PREFIX_32_2_PARAM_3(addr0,addr1,name)  struct reg_##name##_t {
+#define REG_DEF_PREFIX_64_2_PARAM_3(addr0,addr1,name)  struct reg_##name##_t {
+
+#define REG_DEF_SUFFIX_8_2  uint8_t data;  } u_data; };
+#define REG_DEF_SUFFIX_16_2 uint16_t data; } u_data; };
+#define REG_DEF_SUFFIX_32_2 uint32_t data; } u_data; };
+#define REG_DEF_SUFFIX_64_2 uint64_t data; } u_data; };
+
+// compatible
+#define REG_DEF_CPT_PREFIX_8_2_PARAM_2(addr0,addr1)  \
+    REG_DEF_PREFIX_8_2_PARAM_2(addr0,addr1) \
+        uint8_t  addr[4] = {addr1,addr0,addr1,addr0}; \
+        union reg { REG_PREFIX
+
+#define REG_DEF_CPT_PREFIX_16_2_PARAM_2(addr0,addr1) \
+    REG_DEF_PREFIX_16_2_PARAM_2(addr0,addr1) \
+        uint16_t addr[4] = {addr1,addr0,addr1,addr0}; \
+        union reg { REG_PREFIX
+
+#define REG_DEF_CPT_PREFIX_32_2_PARAM_2(addr0,addr1) \
+    REG_DEF_PREFIX_32_2_PARAM_2(addr0,addr1) \
+        uint32_t addr[4] = {addr1,addr0,addr1,addr0}; \
+        union reg { REG_PREFIX
+
+#define REG_DEF_CPT_PREFIX_64_2_PARAM_2(addr0,addr1) \
+    REG_DEF_PREFIX_64_2_PARAM_2(addr0,addr1) \
+        uint64_t addr[4] = {addr1,addr0,addr1,addr0}; \
+        union reg { REG_PREFIX
+
+
+#define REG_DEF_CPT_PREFIX_8_2_PARAM_3(addr0,addr1,name)  \
+    REG_DEF_PREFIX_8_2_PARAM_3(addr0,addr1,name) \
+        uint8_t  addr[4] = {addr1,addr0,addr1,addr0}; \
+        union reg { REG_PREFIX
+
+#define REG_DEF_CPT_PREFIX_16_2_PARAM_3(addr0,addr1,name) \
+    REG_DEF_PREFIX_16_2_PARAM_3(addr0,addr1,name) \
+        uint16_t addr[4] = {addr1,addr0,addr1,addr0}; \
+        union reg { REG_PREFIX
+
+#define REG_DEF_CPT_PREFIX_32_2_PARAM_3(addr0,addr1,name) \
+    REG_DEF_PREFIX_32_2_PARAM_3(addr0,addr1,name) \
+        uint32_t addr[4] = {addr1,addr0,addr1,addr0}; \
+        union reg { REG_PREFIX
+
+#define REG_DEF_CPT_PREFIX_64_2_PARAM_3(addr0,addr1,name) \
+    REG_DEF_PREFIX_64_2_PARAM_3(addr0,addr1,name) \
+        uint64_t addr[4] = {addr1,addr0,addr1,addr0}; \
+        union reg { REG_PREFIX
+
+#define REG_DEF_CPT_PREFIX_8_2_VAR_COUNT(count)  REG_DEF_CPT_PREFIX_8_2_PARAM_##count
+#define REG_DEF_CPT_PREFIX_16_2_VAR_COUNT(count) REG_DEF_CPT_PREFIX_16_2_PARAM_##count
+#define REG_DEF_CPT_PREFIX_32_2_VAR_COUNT(count) REG_DEF_CPT_PREFIX_32_2_PARAM_##count
+#define REG_DEF_CPT_PREFIX_64_2_VAR_COUNT(count) REG_DEF_CPT_PREFIX_64_2_PARAM_##count
+
+#define REG_DEF_CPT_PREFIX_8_2(...)  \
+    MACRO_ID(REG_DEF_APPLY(REG_DEF_CPT_PREFIX_8_2_VAR_COUNT,PP_COUNT(__VA_ARGS__)))(__VA_ARGS__)
+
+#define REG_DEF_CPT_PREFIX_16_2(...) \
+    MACRO_ID(REG_DEF_APPLY(REG_DEF_CPT_PREFIX_16_2_VAR_COUNT,PP_COUNT(__VA_ARGS__)))(__VA_ARGS__)
+
+#define REG_DEF_CPT_PREFIX_32_2(...) \
+    MACRO_ID(REG_DEF_APPLY(REG_DEF_CPT_PREFIX_32_2_VAR_COUNT,PP_COUNT(__VA_ARGS__)))(__VA_ARGS__)
+
+#define REG_DEF_CPT_PREFIX_64_2(...) \
+    MACRO_ID(REG_DEF_APPLY(REG_DEF_CPT_PREFIX_64_2_VAR_COUNT,PP_COUNT(__VA_ARGS__)))(__VA_ARGS__)
+
+#define REG_DEF_CPT_SUFFIX_8_2  REG_SUFFIX REG_DEF_SUFFIX_8_2
+#define REG_DEF_CPT_SUFFIX_16_2 REG_SUFFIX REG_DEF_SUFFIX_16_2
+#define REG_DEF_CPT_SUFFIX_32_2 REG_SUFFIX REG_DEF_SUFFIX_32_2
+#define REG_DEF_CPT_SUFFIX_64_2 REG_SUFFIX REG_DEF_SUFFIX_64_2
+
+#define REG_DECL_INIT_2_VAR_COUNT(count) REG_DECL_INIT_2_PARAM_##count
+#define REG_DECL_2_VAR_COUNT(count) REG_DECL_2_PARAM_##count
+#define REG_DATA_2_VAR_COUNT(count) REG_DATA_2_PARAM_##count
+#define REG_CLER_2_VAR_COUNT(count) REG_CLER_2_PARAM_##count
+#define REG_2_VAR_COUNT(count) REG_2_PARAM_##count
+
+#define REG_DECL_INIT_2_PARAM_2(ns,name,init) \
+    struct ns::reg_##name##_t ns##r##name; \
+    ns##r##name.u_data.data = init; NEED_SEMICOLON
+
+#define REG_DECL_INIT_2_PARAM_3(ns,addr0,addr1,init) \
+    struct ns::reg_##addr0##_##addr1##_t ns##r##addr0##addr1; \
     ns##r##addr0##addr1.u_data.data = init; NEED_SEMICOLON
 
-#define REG_DECL_2(ns,addr0,addr1) REG_DECL_INIT_2(ns,addr0,addr1,0)
-#define REG_DATA_2(ns,addr0,addr1) ns##r##addr0##addr1.u_data.data
-#define REG_CLER_2(ns,addr0,addr1) REG_DATA_2(ns,addr0,addr1) = 0;
-#define REG_2(ns,addr0,addr1) ns##r##addr0##addr1.u_data.r
+#define REG_DECL_2_PARAM_1(ns,name) REG_DECL_INIT_2_PARAM_2(ns,name,0)
+#define REG_DATA_2_PARAM_1(ns,name) ns##r##name.u_data.data
+#define REG_CLER_2_PARAM_1(ns,name) ns##r##name.u_data.data = 0;
+#define REG_2_PARAM_1(ns,name)      ns##r##name.u_data.r
+
+#define REG_DECL_2_PARAM_2(ns,addr0,addr1) REG_DECL_INIT_2_PARAM_3(ns,addr0,addr1,0)
+#define REG_DATA_2_PARAM_2(ns,addr0,addr1) ns##r##addr0##addr1.u_data.data
+#define REG_CLER_2_PARAM_2(ns,addr0,addr1) ns##r##addr0##addr1.u_data.data = 0;
+#define REG_2_PARAM_2(ns,addr0,addr1)      ns##r##addr0##addr1.u_data.r
+
+#define REG_DECL_INIT_2(ns,...) \
+    MACRO_ID(REG_DEF_APPLY(REG_DECL_INIT_2_VAR_COUNT,PP_COUNT(__VA_ARGS__))(ns,__VA_ARGS__))
+
+#define REG_DECL_2(ns,...) \
+    MACRO_ID(REG_DEF_APPLY(REG_DECL_2_VAR_COUNT,PP_COUNT(__VA_ARGS__))(ns,__VA_ARGS__))
+
+#define REG_DATA_2(ns,...) \
+    MACRO_ID(REG_DEF_APPLY(REG_DATA_2_VAR_COUNT,PP_COUNT(__VA_ARGS__))(ns,__VA_ARGS__))
+
+#define REG_CLER_2(ns,...) \
+    MACRO_ID(REG_DEF_APPLY(REG_CLER_2_VAR_COUNT,PP_COUNT(__VA_ARGS__))(ns,__VA_ARGS__))
+
+#define REG_2(ns,...) \
+    MACRO_ID(REG_DEF_APPLY(REG_2_VAR_COUNT,PP_COUNT(__VA_ARGS__))(ns,__VA_ARGS__))
+
 #define REG_OF_2(ns,addr0,addr1,chip_or_field) ns##r##addr0##addr1.r_##chip_or_field
+
 
 // IO
 #define PCIE_DEV_W(dev,bar,ns,addr) \

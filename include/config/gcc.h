@@ -38,4 +38,10 @@
     #define NO_CXX14_CONSTEXPR
 #endif
 
+#if (GCC_VERSION < 80000)
+    #define ZERO_OBJ(obj) { memset(&obj,0,sizeof(obj)); } NEED_SEMICOLON
+#else
+    #define ZERO_OBJ(obj) { memset(static_cast<void *>(&obj),0,sizeof(obj)); } NEED_SEMICOLON
+#endif
+
 #endif // INCLUDE_CONFIG_GCC_H

@@ -53,8 +53,9 @@ void QCalR1CThread::waitSubThread(int timeout)
 
     subThreadRunning = true;
     for (;timer.elapsed() < timeout ? timeout : int(0x7FFFFFFF);) {
-        if (subThreadRunning == false)
+        if (subThreadRunning == false) {
             return;
+        }
         msleep(2);
     }
 }

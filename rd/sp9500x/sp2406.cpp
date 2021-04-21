@@ -10,18 +10,18 @@
 #define IMPL_CPRI_MAP(link,channel,address) \
 int32_t sp2406::set_##link##_cpri_map_ch##channel(const uint8_t cpri) const \
 { \
-    SP9500X_RFU_V9_REG_DECL(address); \
+    RFU_V9_REG_DECL(address); \
     bitset_dl_cpri bs_cpri; \
     bs_cpri.set(cpri,true); \
-    SP9500X_RFU_V9_REG(address).cpri = bs_cpri.to_ulong(); \
-    SP9500X_RFU_V9_W(address); \
+    RFU_V9_REG(address).cpri = bs_cpri.to_ulong(); \
+    RFU_V9_W(address); \
     return 0; \
 } \
 int32_t sp2406::get_##link##_cpri_map_ch##channel(uint8_t &cpri) const \
 { \
-    SP9500X_RFU_V9_REG_DECL(address); \
-    SP9500X_RFU_V9_R(address); \
-    bitset_dl_cpri bs_cpri = SP9500X_RFU_V9_REG(address).cpri; \
+    RFU_V9_REG_DECL(address); \
+    RFU_V9_R(address); \
+    bitset_dl_cpri bs_cpri = RFU_V9_REG(address).cpri; \
     for (size_t i = 0;i < bs_cpri.size();++i) { \
         if (bs_cpri[i] == true) { \
             cpri = uint8_t(i); \
@@ -34,87 +34,87 @@ int32_t sp2406::get_##link##_cpri_map_ch##channel(uint8_t &cpri) const \
 #define IMPL_DL_CPRI_SR(channel) \
 int32_t sp2406::set_dl_cpri_sr_ch##channel(const dl_cpri_sr_t &sr) const \
 { \
-    SP9500X_RFU_V9_REG_DECL(0x00d0); \
-    SP9500X_RFU_V9_R(0x00d0); \
-    SP9500X_RFU_V9_REG(0x00d0).sr##channel = sr; \
-    SP9500X_RFU_V9_W(0x00d0); \
+    RFU_V9_REG_DECL(0x00d0); \
+    RFU_V9_R(0x00d0); \
+    RFU_V9_REG(0x00d0).sr##channel = sr; \
+    RFU_V9_W(0x00d0); \
     return 0; \
 } \
 int32_t sp2406::get_dl_cpri_sr_ch##channel(dl_cpri_sr_t &sr) const \
 { \
-    SP9500X_RFU_V9_REG_DECL(0x00d0); \
-    SP9500X_RFU_V9_R(0x00d0); \
-    sr = dl_cpri_sr_t::_from_integral_unchecked(SP9500X_RFU_V9_REG(0x00d0).sr##channel); \
+    RFU_V9_REG_DECL(0x00d0); \
+    RFU_V9_R(0x00d0); \
+    sr = dl_cpri_sr_t::_from_integral_unchecked(RFU_V9_REG(0x00d0).sr##channel); \
     return 0; \
 }
 
 #define IMPL_DL_CPRI_SR_2(channel) \
 int32_t sp2406::set_dl_cpri_sr_ch##channel(const dl_cpri_sr_t &sr) const \
 { \
-    SP9500X_RFU_V9_REG_DECL_2(0x00d0,0x00db); \
-    SP9500X_RFU_V9_R_2(0x00d0,0x00db); \
-    SP9500X_RFU_V9_REG_2(0x00d0,0x00db).sr##channel = sr; \
-    SP9500X_RFU_V9_W_2(0x00d0,0x00db); \
+    RFU_V9_REG_DECL_2(0x00d0,0x00db); \
+    RFU_V9_R_2(0x00d0,0x00db); \
+    RFU_V9_REG_2(0x00d0,0x00db).sr##channel = sr; \
+    RFU_V9_W_2(0x00d0,0x00db); \
     return 0; \
 } \
 int32_t sp2406::get_dl_cpri_sr_ch##channel(dl_cpri_sr_t &sr) const \
 { \
-    SP9500X_RFU_V9_REG_DECL_2(0x00d0,0x00db); \
-    SP9500X_RFU_V9_R_2(0x00d0,0x00db); \
-    sr = dl_cpri_sr_t::_from_integral_unchecked(SP9500X_RFU_V9_REG_2(0x00d0,0x00db).sr##channel); \
+    RFU_V9_REG_DECL_2(0x00d0,0x00db); \
+    RFU_V9_R_2(0x00d0,0x00db); \
+    sr = dl_cpri_sr_t::_from_integral_unchecked(RFU_V9_REG_2(0x00d0,0x00db).sr##channel); \
     return 0; \
 }
 
 #define IMPL_DL_SRC(channel) \
 int32_t sp2406::set_dl_src_ch##channel(const dl_src_t &src) const \
 { \
-    SP9500X_RFU_V9_REG_DECL(0x00d1); \
-    SP9500X_RFU_V9_R(0x00d1); \
-    SP9500X_RFU_V9_REG(0x00d1).src##channel = src; \
-    SP9500X_RFU_V9_W(0x00d1); \
+    RFU_V9_REG_DECL(0x00d1); \
+    RFU_V9_R(0x00d1); \
+    RFU_V9_REG(0x00d1).src##channel = src; \
+    RFU_V9_W(0x00d1); \
     return 0; \
 } \
 int32_t sp2406::get_dl_src_ch##channel(dl_src_t &src) const \
 { \
-    SP9500X_RFU_V9_REG_DECL(0x00d1); \
-    SP9500X_RFU_V9_R(0x00d1); \
-    src = dl_src_t::_from_integral_unchecked(SP9500X_RFU_V9_REG(0x00d1).src##channel); \
+    RFU_V9_REG_DECL(0x00d1); \
+    RFU_V9_R(0x00d1); \
+    src = dl_src_t::_from_integral_unchecked(RFU_V9_REG(0x00d1).src##channel); \
     return 0; \
 }
 
 #define IMPL_DL_SRC_2(channel) \
 int32_t sp2406::set_dl_src_ch##channel(const dl_src_t &src) const \
 { \
-    SP9500X_RFU_V9_REG_DECL_2(0x00d1,0x00dc); \
-    SP9500X_RFU_V9_R_2(0x00d1,0x00dc); \
-    SP9500X_RFU_V9_REG_2(0x00d1,0x00dc).src##channel = src; \
-    SP9500X_RFU_V9_W_2(0x00d1,0x00dc); \
+    RFU_V9_REG_DECL_2(0x00d1,0x00dc); \
+    RFU_V9_R_2(0x00d1,0x00dc); \
+    RFU_V9_REG_2(0x00d1,0x00dc).src##channel = src; \
+    RFU_V9_W_2(0x00d1,0x00dc); \
     return 0; \
 } \
 int32_t sp2406::get_dl_src_ch##channel(dl_src_t &src) const \
 { \
-    SP9500X_RFU_V9_REG_DECL_2(0x00d1,0x00dc); \
-    SP9500X_RFU_V9_R_2(0x00d1,0x00dc); \
-    src = dl_src_t::_from_integral_unchecked(SP9500X_RFU_V9_REG_2(0x00d1,0x00dc).src##channel); \
+    RFU_V9_REG_DECL_2(0x00d1,0x00dc); \
+    RFU_V9_R_2(0x00d1,0x00dc); \
+    src = dl_src_t::_from_integral_unchecked(RFU_V9_REG_2(0x00d1,0x00dc).src##channel); \
     return 0; \
 }
 
 #define IMPL_GET_LPF_COEF(link,channel,addr_tap,addr_idx,address) \
 int32_t sp2406::get_##link##_lpf_coef_ch##channel(std::vector<int16_t> &coef) const \
 { \
-    SP9500X_RFU_V9_REG_DECL(addr_tap); \
-    SP9500X_RFU_V9_REG_DECL(addr_idx); \
-    SP9500X_RFU_V9_REG_DECL(address); \
+    RFU_V9_REG_DECL(addr_tap); \
+    RFU_V9_REG_DECL(addr_idx); \
+    RFU_V9_REG_DECL(address); \
     coef.clear(); \
-    SP9500X_RFU_V9_R(addr_tap); \
-    for (size_t i = 0;i <= SP9500X_RFU_V9_REG(addr_tap).tap;++i) { \
-        SP9500X_RFU_V9_REG(addr_idx).idx = unsigned(i); \
-        SP9500X_RFU_V9_W(addr_idx); \
-        SP9500X_RFU_V9_R(address); \
-        coef.push_back(int16_t(SP9500X_RFU_V9_REG(address).coef)); \
+    RFU_V9_R(addr_tap); \
+    for (size_t i = 0;i <= RFU_V9_REG(addr_tap).tap;++i) { \
+        RFU_V9_REG(addr_idx).idx = unsigned(i); \
+        RFU_V9_W(addr_idx); \
+        RFU_V9_R(address); \
+        coef.push_back(int16_t(RFU_V9_REG(address).coef)); \
     } \
-    for (size_t i = 0;i <= SP9500X_RFU_V9_REG(addr_tap).tap;++i) { \
-        coef.push_back(coef.at(SP9500X_RFU_V9_REG(addr_tap).tap - i)); \
+    for (size_t i = 0;i <= RFU_V9_REG(addr_tap).tap;++i) { \
+        coef.push_back(coef.at(RFU_V9_REG(addr_tap).tap - i)); \
     } \
     return 0; \
 }
@@ -122,19 +122,19 @@ int32_t sp2406::get_##link##_lpf_coef_ch##channel(std::vector<int16_t> &coef) co
 #define IMPL_GET_LPF_COEF_2(link,channel,addr0_tap,addr1_tap,addr0_idx,addr1_idx,addr0,addr1) \
 int32_t sp2406::get_##link##_lpf_coef_ch##channel(std::vector<int16_t> &coef) const \
 { \
-    SP9500X_RFU_V9_REG_DECL_2(addr0_tap,addr1_tap); \
-    SP9500X_RFU_V9_REG_DECL_2(addr0_idx,addr1_idx); \
-    SP9500X_RFU_V9_REG_DECL_2(addr0,addr1); \
+    RFU_V9_REG_DECL_2(addr0_tap,addr1_tap); \
+    RFU_V9_REG_DECL_2(addr0_idx,addr1_idx); \
+    RFU_V9_REG_DECL_2(addr0,addr1); \
     coef.clear(); \
-    SP9500X_RFU_V9_R_2(addr0_tap,addr1_tap); \
-    for (size_t i = 0;i <= SP9500X_RFU_V9_REG_2(addr0_tap,addr1_tap).tap;++i) { \
-        SP9500X_RFU_V9_REG_2(addr0_idx,addr1_idx).idx = unsigned(i); \
-        SP9500X_RFU_V9_W_2(addr0_idx,addr1_idx); \
-        SP9500X_RFU_V9_R_2(addr0,addr1); \
-        coef.push_back(int16_t(SP9500X_RFU_V9_REG_2(addr0,addr1).coef)); \
+    RFU_V9_R_2(addr0_tap,addr1_tap); \
+    for (size_t i = 0;i <= RFU_V9_REG_2(addr0_tap,addr1_tap).tap;++i) { \
+        RFU_V9_REG_2(addr0_idx,addr1_idx).idx = unsigned(i); \
+        RFU_V9_W_2(addr0_idx,addr1_idx); \
+        RFU_V9_R_2(addr0,addr1); \
+        coef.push_back(int16_t(RFU_V9_REG_2(addr0,addr1).coef)); \
     } \
-    for (size_t i = 0;i <= SP9500X_RFU_V9_REG_2(addr0_tap,addr1_tap).tap;++i) { \
-        coef.push_back(coef.at(SP9500X_RFU_V9_REG_2(addr0_tap,addr1_tap).tap - i)); \
+    for (size_t i = 0;i <= RFU_V9_REG_2(addr0_tap,addr1_tap).tap;++i) { \
+        coef.push_back(coef.at(RFU_V9_REG_2(addr0_tap,addr1_tap).tap - i)); \
     } \
     return 0; \
 }
@@ -143,44 +143,44 @@ int32_t sp2406::get_##link##_lpf_coef_ch##channel(std::vector<int16_t> &coef) co
 #define IMPL_DDS(link,dds,channels,channel,addr_op,addr) \
 int32_t sp2406::set_##link##_##dds##_ch##channel(const double freq) const \
 { \
-    SP9500X_RFU_V9_REG_DECL(addr_op); \
-    SP9500X_RFU_V9_REG_DECL(addr); \
-    SP9500X_RFU_V9_REG(addr).freq = unsigned(4294967296.0 / 491520000.0 * freq); \
-    SP9500X_RFU_V9_W(addr); \
+    RFU_V9_REG_DECL(addr_op); \
+    RFU_V9_REG_DECL(addr); \
+    RFU_V9_REG(addr).freq = unsigned(4294967296.0 / 491520000.0 * freq); \
+    RFU_V9_W(addr); \
     bitset<channels> bs; \
-    SP9500X_RFU_V9_W(addr_op); \
+    RFU_V9_W(addr_op); \
     bs.set(channel,true); \
-    SP9500X_RFU_V9_REG(addr_op).op = bs.to_ulong(); \
-    SP9500X_RFU_V9_W(addr_op); \
+    RFU_V9_REG(addr_op).op = bs.to_ulong(); \
+    RFU_V9_W(addr_op); \
     return 0; \
 } \
 int32_t sp2406::get_##link##_##dds##_ch##channel(double &freq) const \
 { \
-    SP9500X_RFU_V9_REG_DECL(addr); \
-    SP9500X_RFU_V9_R(addr); \
-    freq = SP9500X_RFU_V9_REG(addr).freq * 491520000.0 / 4294967296.0; \
+    RFU_V9_REG_DECL(addr); \
+    RFU_V9_R(addr); \
+    freq = RFU_V9_REG(addr).freq * 491520000.0 / 4294967296.0; \
     return 0; \
 }
 
 #define IMPL_DDS_2(link,dds,channels,channel,addr0_op,addr1_op,addr0,addr1) \
 int32_t sp2406::set_##link##_##dds##_ch##channel(const double freq) const \
 { \
-    SP9500X_RFU_V9_REG_DECL_2(addr0_op,addr1_op); \
-    SP9500X_RFU_V9_REG_DECL_2(addr0,addr1); \
-    SP9500X_RFU_V9_REG_2(addr0,addr1).freq = unsigned(4294967296.0 / 491520000.0 * freq); \
-    SP9500X_RFU_V9_W_2(addr0,addr1); \
+    RFU_V9_REG_DECL_2(addr0_op,addr1_op); \
+    RFU_V9_REG_DECL_2(addr0,addr1); \
+    RFU_V9_REG_2(addr0,addr1).freq = unsigned(4294967296.0 / 491520000.0 * freq); \
+    RFU_V9_W_2(addr0,addr1); \
     bitset<channels> bs; \
-    SP9500X_RFU_V9_W_2(addr0_op,addr1_op); \
+    RFU_V9_W_2(addr0_op,addr1_op); \
     bs.set(channel,true); \
-    SP9500X_RFU_V9_REG_2(addr0_op,addr1_op).op = bs.to_ulong(); \
-    SP9500X_RFU_V9_W_2(addr0_op,addr1_op); \
+    RFU_V9_REG_2(addr0_op,addr1_op).op = bs.to_ulong(); \
+    RFU_V9_W_2(addr0_op,addr1_op); \
     return 0; \
 } \
 int32_t sp2406::get_##link##_##dds##_ch##channel(double &freq) const \
 { \
-    SP9500X_RFU_V9_REG_DECL_2(addr0,addr1); \
-    SP9500X_RFU_V9_R_2(addr0,addr1); \
-    freq = SP9500X_RFU_V9_REG_2(addr0,addr1).freq * 491520000.0 / 4294967296.0; \
+    RFU_V9_REG_DECL_2(addr0,addr1); \
+    RFU_V9_R_2(addr0,addr1); \
+    freq = RFU_V9_REG_2(addr0,addr1).freq * 491520000.0 / 4294967296.0; \
     return 0; \
 }
 
@@ -313,13 +313,13 @@ int32_t sp2406::open_board()
     INT_CHECK(set_ul_ddc1_ch0(0.0));
     INT_CHECK(set_ul_hbf2_en(0,false));
 
-    SP9500X_RFU_V9_REG_DECL(0x004d);
-    SP9500X_RFU_V9_REG_DECL(0x004e);
+    RFU_V9_REG_DECL(0x004d);
+    RFU_V9_REG_DECL(0x004e);
 
-    SP9500X_RFU_V9_REG(0x004d).ul = 0x385c4;
-    SP9500X_RFU_V9_REG(0x004e).dl = 0x4a943;
-    SP9500X_RFU_V9_W(0x004d);
-    SP9500X_RFU_V9_W(0x004e);
+    RFU_V9_REG(0x004d).ul = 0x385c4;
+    RFU_V9_REG(0x004e).dl = 0x4a943;
+    RFU_V9_W(0x004d);
+    RFU_V9_W(0x004e);
 	return 0;
 }
 
@@ -335,23 +335,23 @@ int32_t sp2406::get_v9_ver(uint32_t &ver)
 
 int32_t sp2406::get_s6_ver(uint32_t &ver)
 {
-    SP9500X_S6_REG_DECL(0x0000);
+    RFU_S6_REG_DECL(0x0000);
 
-    SP9500X_S6_R(0x0000);
-    ver = SP9500X_S6_REG(0x0000).ver;
+    RFU_S6_R(0x0000);
+    ver = RFU_S6_REG(0x0000).ver;
     return 0;
 }
 
 int32_t sp2406::jesd_reset() const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0440);
+    RFU_V9_REG_DECL(0x0440);
 
-    SP9500X_RFU_V9_REG(0x0440).reset_dl = 1;
-    SP9500X_RFU_V9_REG(0x0440).reset_ul = 1;
-    SP9500X_RFU_V9_W(0x0440);
-    SP9500X_RFU_V9_REG(0x0440).reset_dl = 0;
-    SP9500X_RFU_V9_REG(0x0440).reset_ul = 0;
-    SP9500X_RFU_V9_W(0x0440);
+    RFU_V9_REG(0x0440).reset_dl = 1;
+    RFU_V9_REG(0x0440).reset_ul = 1;
+    RFU_V9_W(0x0440);
+    RFU_V9_REG(0x0440).reset_dl = 0;
+    RFU_V9_REG(0x0440).reset_ul = 0;
+    RFU_V9_W(0x0440);
 
     bool status = false;
     return jesd_status(status);
@@ -359,8 +359,8 @@ int32_t sp2406::jesd_reset() const
 
 int32_t sp2406::jesd_status(bool &status) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0443);
-    SP9500X_RFU_V9_REG_DECL(0x0444);
+    RFU_V9_REG_DECL(0x0443);
+    RFU_V9_REG_DECL(0x0444);
 
     bool sync = false;
     uint32_t i = 0;
@@ -368,8 +368,8 @@ int32_t sp2406::jesd_status(bool &status) const
     uint16_t unsync_cnt_ul = 0;
 
     for (i = 0;i < 10000;++i) {
-        SP9500X_RFU_V9_R(0x0443);
-        if (SP9500X_RFU_V9_REG(0x0443).sync == 3) {
+        RFU_V9_R(0x0443);
+        if (RFU_V9_REG(0x0443).sync == 3) {
             sync = true;
             break;
         }
@@ -381,18 +381,18 @@ int32_t sp2406::jesd_status(bool &status) const
         return -1;
     }
 
-    SP9500X_RFU_V9_R(0x0444);
-    unsync_cnt_dl = SP9500X_RFU_V9_REG(0x0444).unsync_cnt_dl;
-    unsync_cnt_ul = SP9500X_RFU_V9_REG(0x0444).unsync_cnt_ul;
+    RFU_V9_R(0x0444);
+    unsync_cnt_dl = RFU_V9_REG(0x0444).unsync_cnt_dl;
+    unsync_cnt_ul = RFU_V9_REG(0x0444).unsync_cnt_ul;
 
     for (i = 0;i < 10;++i) {
-        SP9500X_RFU_V9_R(0x0444);
-        if (unsync_cnt_dl != SP9500X_RFU_V9_REG(0x0444).unsync_cnt_dl) {
+        RFU_V9_R(0x0444);
+        if (unsync_cnt_dl != RFU_V9_REG(0x0444).unsync_cnt_dl) {
             Log.set_last_err("JESD unstable.");
             status = false;
             return -1;
         }
-        if (unsync_cnt_ul != SP9500X_RFU_V9_REG(0x0444).unsync_cnt_ul) {
+        if (unsync_cnt_ul != RFU_V9_REG(0x0444).unsync_cnt_ul) {
             Log.set_last_err("JESD unstable.");
             status = false;
             return -1;
@@ -414,21 +414,21 @@ int32_t sp2406::set_ad_freq(double freq)
 
 int32_t sp2406::set_dl_pwr_comp(double offset)
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0401,0x04c1);
+    RFU_V9_REG_DECL_2(0x0401,0x04c1);
 
     unsigned gain_reg = unsigned(sqrt(dBc_to_ad(32768.0 * 32768.0,offset * -1)));
-    SP9500X_RFU_V9_REG_2(0x0401,0x04c1).i = gain_reg;
-    SP9500X_RFU_V9_REG_2(0x0401,0x04c1).q = gain_reg;
-    SP9500X_RFU_V9_W_2(0x0401,0x04c1);
+    RFU_V9_REG_2(0x0401,0x04c1).i = gain_reg;
+    RFU_V9_REG_2(0x0401,0x04c1).q = gain_reg;
+    RFU_V9_W_2(0x0401,0x04c1);
     return 0;
 }
 
 int32_t sp2406::get_dl_pwr_comp(double &offset)
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0401,0x04c1);
-    SP9500X_RFU_V9_R_2(0x0401,0x04c1);
+    RFU_V9_REG_DECL_2(0x0401,0x04c1);
+    RFU_V9_R_2(0x0401,0x04c1);
 
-    unsigned gain_reg = SP9500X_RFU_V9_REG_2(0x0401,0x04c1).i;
+    unsigned gain_reg = RFU_V9_REG_2(0x0401,0x04c1).i;
     offset = ad_to_dBc(32768.0 * 32768.0,gain_reg * gain_reg);
     return 0;
 }
@@ -594,55 +594,55 @@ int32_t sp2406::get_dl_dds0(const uint8_t ch,double &freq) const
 
 int32_t sp2406::set_dl_dds1_ch0_3(const double freq) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0413,0x0213);
-    SP9500X_RFU_V9_REG_DECL_2(0x0414,0x0214);
-    SP9500X_RFU_V9_REG_DECL_2(0x0416,0x0216);
-    SP9500X_RFU_V9_REG_DECL_2(0x0417,0x0217);
+    RFU_V9_REG_DECL_2(0x0413,0x0213);
+    RFU_V9_REG_DECL_2(0x0414,0x0214);
+    RFU_V9_REG_DECL_2(0x0416,0x0216);
+    RFU_V9_REG_DECL_2(0x0417,0x0217);
 
     double f = 4294967296.0 / 491520000.0 * freq;
-    SP9500X_RFU_V9_REG_2(0x0414,0x0214).freq  = unsigned(f);
-    SP9500X_RFU_V9_REG_2(0x0416,0x0216).freq  = unsigned(f);
-    SP9500X_RFU_V9_REG_2(0x0417,0x0217).phase = unsigned(f / 2.0);
-    SP9500X_RFU_V9_W_2(0x0414,0x0214);
-    SP9500X_RFU_V9_W_2(0x0416,0x0216);
-    SP9500X_RFU_V9_W_2(0x0417,0x0217);
-    SP9500X_RFU_V9_RE_2(0x0413,0x0213,op0);
+    RFU_V9_REG_2(0x0414,0x0214).freq  = unsigned(f);
+    RFU_V9_REG_2(0x0416,0x0216).freq  = unsigned(f);
+    RFU_V9_REG_2(0x0417,0x0217).phase = unsigned(f / 2.0);
+    RFU_V9_W_2(0x0414,0x0214);
+    RFU_V9_W_2(0x0416,0x0216);
+    RFU_V9_W_2(0x0417,0x0217);
+    RFU_V9_RE_2(0x0413,0x0213,op0);
     return 0;
 }
 
 int32_t sp2406::get_dl_dds1_ch0_3(double &freq) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0414,0x0214);
+    RFU_V9_REG_DECL_2(0x0414,0x0214);
 
-    SP9500X_RFU_V9_R_2(0x0414,0x0214);
-    freq = SP9500X_RFU_V9_REG_2(0x0414,0x0214).freq * 491520000.0 / 4294967296.0;
+    RFU_V9_R_2(0x0414,0x0214);
+    freq = RFU_V9_REG_2(0x0414,0x0214).freq * 491520000.0 / 4294967296.0;
     return 0;
 }
 
 int32_t sp2406::set_dl_dds1_ch4_7(const double freq) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0413,0x0213);
-    SP9500X_RFU_V9_REG_DECL_2(0x0418,0x0218);
-    SP9500X_RFU_V9_REG_DECL_2(0x041a,0x021a);
-    SP9500X_RFU_V9_REG_DECL_2(0x041b,0x021b);
+    RFU_V9_REG_DECL_2(0x0413,0x0213);
+    RFU_V9_REG_DECL_2(0x0418,0x0218);
+    RFU_V9_REG_DECL_2(0x041a,0x021a);
+    RFU_V9_REG_DECL_2(0x041b,0x021b);
 
     double f = 4294967296.0 / 491520000.0 * freq;
-    SP9500X_RFU_V9_REG_2(0x0418,0x0218).freq  = unsigned(f);
-    SP9500X_RFU_V9_REG_2(0x041a,0x021a).freq  = unsigned(f);
-    SP9500X_RFU_V9_REG_2(0x041b,0x021b).phase = unsigned(f / 2.0);
-    SP9500X_RFU_V9_W_2(0x0418,0x0218);
-    SP9500X_RFU_V9_W_2(0x041a,0x021a);
-    SP9500X_RFU_V9_W_2(0x041b,0x021b);
-    SP9500X_RFU_V9_RE_2(0x0413,0x0213,op1);
+    RFU_V9_REG_2(0x0418,0x0218).freq  = unsigned(f);
+    RFU_V9_REG_2(0x041a,0x021a).freq  = unsigned(f);
+    RFU_V9_REG_2(0x041b,0x021b).phase = unsigned(f / 2.0);
+    RFU_V9_W_2(0x0418,0x0218);
+    RFU_V9_W_2(0x041a,0x021a);
+    RFU_V9_W_2(0x041b,0x021b);
+    RFU_V9_RE_2(0x0413,0x0213,op1);
     return 0;
 }
 
 int32_t sp2406::get_dl_dds1_ch4_7(double &freq) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0418,0x0218);
+    RFU_V9_REG_DECL_2(0x0418,0x0218);
 
-    SP9500X_RFU_V9_R_2(0x0418,0x0218);
-    freq = SP9500X_RFU_V9_REG_2(0x0418,0x0218).freq * 491520000.0 / 4294967296.0;
+    RFU_V9_R_2(0x0418,0x0218);
+    freq = RFU_V9_REG_2(0x0418,0x0218).freq * 491520000.0 / 4294967296.0;
     return 0;
 }
 
@@ -684,45 +684,45 @@ IMPL_DDS_2(dl,dds0,8,7,0x0402,0x0202,0x0411,0x0211)
 
 int32_t sp2406::set_dl_src_const(const int16_t i,const int16_t q) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x00d2);
+    RFU_V9_REG_DECL(0x00d2);
 
-    SP9500X_RFU_V9_REG(0x00d2).i = unsigned(i);
-    SP9500X_RFU_V9_REG(0x00d2).q = unsigned(q);
-    SP9500X_RFU_V9_W(0x00d2);
+    RFU_V9_REG(0x00d2).i = unsigned(i);
+    RFU_V9_REG(0x00d2).q = unsigned(q);
+    RFU_V9_W(0x00d2);
     return 0;
 }
 
 int32_t sp2406::get_dl_src_const(int16_t &i,int16_t &q) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x00d2);
+    RFU_V9_REG_DECL(0x00d2);
 
-    SP9500X_RFU_V9_R(0x00d2);
-    i = int16_t(SP9500X_RFU_V9_REG(0x00d2).i);
-    q = int16_t(SP9500X_RFU_V9_REG(0x00d2).q);
+    RFU_V9_R(0x00d2);
+    i = int16_t(RFU_V9_REG(0x00d2).i);
+    q = int16_t(RFU_V9_REG(0x00d2).q);
     return 0;
 }
 
 int32_t sp2406::set_dl_src_dds0_freq(const double freq) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x00d3);
-    SP9500X_RFU_V9_REG_DECL(0x00d4);
-    SP9500X_RFU_V9_REG_DECL(0x00d5);
+    RFU_V9_REG_DECL(0x00d3);
+    RFU_V9_REG_DECL(0x00d4);
+    RFU_V9_REG_DECL(0x00d5);
 
     double f = 4294967296.0 / 491520000.0 * freq;
-    SP9500X_RFU_V9_REG(0x00d4).freq  = unsigned(f);
-    SP9500X_RFU_V9_REG(0x00d5).phase = unsigned(f / 2.0);
-    SP9500X_RFU_V9_W(0x00d4);
-    SP9500X_RFU_V9_W(0x00d5);
-    SP9500X_RFU_V9_OP(0x00d3);
+    RFU_V9_REG(0x00d4).freq  = unsigned(f);
+    RFU_V9_REG(0x00d5).phase = unsigned(f / 2.0);
+    RFU_V9_W(0x00d4);
+    RFU_V9_W(0x00d5);
+    RFU_V9_OP(0x00d3);
     return 0;
 }
 
 int32_t sp2406::get_dl_src_dds0_freq(double &freq) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x00d4);
+    RFU_V9_REG_DECL(0x00d4);
 
-    SP9500X_RFU_V9_R(0x00d4);
-    freq = SP9500X_RFU_V9_REG(0x00d4).freq * 491520000.0 / 4294967296.0;
+    RFU_V9_R(0x00d4);
+    freq = RFU_V9_REG(0x00d4).freq * 491520000.0 / 4294967296.0;
     return 0;
 }
 
@@ -733,17 +733,17 @@ int32_t sp2406::set_dl_src_dds0_gain(const double gain) const
         return -1;
     }
 
-    SP9500X_RFU_V9_REG_DECL(0x00d6);
-    SP9500X_RFU_V9_REG(0x00d6).gain = unsigned(sqrt(dBc_to_ad(32768.0 * 32768.0,gain * -1)));
-    SP9500X_RFU_V9_W(0x00d6);
+    RFU_V9_REG_DECL(0x00d6);
+    RFU_V9_REG(0x00d6).gain = unsigned(sqrt(dBc_to_ad(32768.0 * 32768.0,gain * -1)));
+    RFU_V9_W(0x00d6);
     return 0;
 }
 
 int32_t sp2406::get_dl_src_dds0_gain(double &gain) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x00d6);
-    SP9500X_RFU_V9_R(0x00d6);
-    gain = ad_to_dBc(32768.0 * 32768.0,SP9500X_RFU_V9_REG(0x00d6).gain * SP9500X_RFU_V9_REG(0x00d6).gain);
+    RFU_V9_REG_DECL(0x00d6);
+    RFU_V9_R(0x00d6);
+    gain = ad_to_dBc(32768.0 * 32768.0,RFU_V9_REG(0x00d6).gain * RFU_V9_REG(0x00d6).gain);
     return 0;
 }
 
@@ -759,8 +759,8 @@ int32_t sp2406::set_dl_lpf_en(const uint8_t ch,const bool en) const
 
 int32_t sp2406::set_dl_lpf_en(const bitset_dl_lpf &en) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0400,0x0200);
-    SP9500X_RFU_V9_SET_BITS_2(0x0400,0x0200,bypass_lpf,(~en).to_ulong());
+    RFU_V9_REG_DECL_2(0x0400,0x0200);
+    RFU_V9_SET_BITS_2(0x0400,0x0200,bypass_lpf,(~en).to_ulong());
     return 0;
 }
 
@@ -784,10 +784,10 @@ int32_t sp2406::get_dl_lpf_en(const uint8_t ch,bool &en) const
 
 int32_t sp2406::get_dl_lpf_en(bitset_dl_lpf &en) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0400,0x0200);
+    RFU_V9_REG_DECL_2(0x0400,0x0200);
 
-    SP9500X_RFU_V9_R_2(0x0400,0x0200);
-    en = SP9500X_RFU_V9_REG_2(0x0400,0x0200).bypass_lpf;
+    RFU_V9_R_2(0x0400,0x0200);
+    en = RFU_V9_REG_2(0x0400,0x0200).bypass_lpf;
     en = ~en;
     return 0;
 }
@@ -798,27 +798,27 @@ int32_t sp2406::set_dl_lpf_coef(const uint8_t ch,const std::vector<int16_t> &coe
         return -1;
     }
 
-    SP9500X_RFU_V9_REG_DECL_2(0x041c,0x021c);
-    SP9500X_RFU_V9_REG_DECL_2(0x041d,0x021d);
-    SP9500X_RFU_V9_REG_DECL_2(0x041e,0x021e);
-    SP9500X_RFU_V9_REG_DECL_2(0x041f,0x021f);
+    RFU_V9_REG_DECL_2(0x041c,0x021c);
+    RFU_V9_REG_DECL_2(0x041d,0x021d);
+    RFU_V9_REG_DECL_2(0x041e,0x021e);
+    RFU_V9_REG_DECL_2(0x041f,0x021f);
 
     bitset<8> bs_filter;
     bs_filter.set(ch,true);
 
-    SP9500X_RFU_V9_REG_2(0x041d,0x021d).tap = unsigned(coef.size() / 2) - 1;
-    SP9500X_RFU_V9_W_2(0x041d,0x021d);
+    RFU_V9_REG_2(0x041d,0x021d).tap = unsigned(coef.size() / 2) - 1;
+    RFU_V9_W_2(0x041d,0x021d);
 
-    for (size_t i = 0;i <= SP9500X_RFU_V9_REG_2(0x041d,0x021d).tap;++i) {
-        SP9500X_RFU_V9_REG_2(0x041e,0x021e).idx  = unsigned(i);
-        SP9500X_RFU_V9_REG_2(0x041f,0x021f).coef = unsigned(coef.at(i));
-        SP9500X_RFU_V9_W_2(0x041e,0x021e);
-        SP9500X_RFU_V9_W_2(0x041f,0x021f);
+    for (size_t i = 0;i <= RFU_V9_REG_2(0x041d,0x021d).tap;++i) {
+        RFU_V9_REG_2(0x041e,0x021e).idx  = unsigned(i);
+        RFU_V9_REG_2(0x041f,0x021f).coef = unsigned(coef.at(i));
+        RFU_V9_W_2(0x041e,0x021e);
+        RFU_V9_W_2(0x041f,0x021f);
 
-        SP9500X_RFU_V9_REG_2(0x041c,0x021c).op = 0;
-        SP9500X_RFU_V9_W_2(0x041c,0x021c);
-        SP9500X_RFU_V9_REG_2(0x041c,0x021c).op = bs_filter.to_ulong();
-        SP9500X_RFU_V9_W_2(0x041c,0x021c);
+        RFU_V9_REG_2(0x041c,0x021c).op = 0;
+        RFU_V9_W_2(0x041c,0x021c);
+        RFU_V9_REG_2(0x041c,0x021c).op = bs_filter.to_ulong();
+        RFU_V9_W_2(0x041c,0x021c);
     }
 
     return 0;
@@ -870,8 +870,8 @@ int32_t sp2406::set_dl_hbf0_en(const uint8_t ch,const bool en) const
 
 int32_t sp2406::set_dl_hbf0_en(const bitset_dl_hbf0 &en) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0400,0x0200);
-    SP9500X_RFU_V9_SET_BITS_2(0x0400,0x0200,bypass_hbf0,(~en).to_ulong());
+    RFU_V9_REG_DECL_2(0x0400,0x0200);
+    RFU_V9_SET_BITS_2(0x0400,0x0200,bypass_hbf0,(~en).to_ulong());
     return 0;
 }
 
@@ -895,10 +895,10 @@ int32_t sp2406::get_dl_hbf0_en(const uint8_t ch,bool &en) const
 
 int32_t sp2406::get_dl_hbf0_en(bitset_dl_hbf0 &en) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0400,0x0200);
+    RFU_V9_REG_DECL_2(0x0400,0x0200);
 
-    SP9500X_RFU_V9_R_2(0x0400,0x0200);
-    en = SP9500X_RFU_V9_REG_2(0x0400,0x0200).bypass_hbf0;
+    RFU_V9_R_2(0x0400,0x0200);
+    en = RFU_V9_REG_2(0x0400,0x0200).bypass_hbf0;
     en = ~en;
     return 0;
 }
@@ -915,8 +915,8 @@ int32_t sp2406::set_dl_hbf1_en(const uint8_t ch,const bool en) const
 
 int32_t sp2406::set_dl_hbf1_en(const bitset_dl_hbf1 &en) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0400,0x0200);
-    SP9500X_RFU_V9_SET_BITS_2(0x0400,0x0200,bypass_hbf1,(~en).to_ulong());
+    RFU_V9_REG_DECL_2(0x0400,0x0200);
+    RFU_V9_SET_BITS_2(0x0400,0x0200,bypass_hbf1,(~en).to_ulong());
     return 0;
 }
 
@@ -940,43 +940,43 @@ int32_t sp2406::get_dl_hbf1_en(const uint8_t ch,bool &en) const
 
 int32_t sp2406::get_dl_hbf1_en(bitset_dl_hbf1 &en) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0400,0x0200);
+    RFU_V9_REG_DECL_2(0x0400,0x0200);
 
-    SP9500X_RFU_V9_R_2(0x0400,0x0200);
-    en = SP9500X_RFU_V9_REG_2(0x0400,0x0200).bypass_hbf1;
+    RFU_V9_R_2(0x0400,0x0200);
+    en = RFU_V9_REG_2(0x0400,0x0200).bypass_hbf1;
     en = ~en;
     return 0;
 }
 
 int32_t sp2406::set_dl_rc_en(const bool en) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0400,0x0200);
-    SP9500X_RFU_V9_SET_BITS_2(0x0400,0x0200,bypass_rc,!en);
+    RFU_V9_REG_DECL_2(0x0400,0x0200);
+    RFU_V9_SET_BITS_2(0x0400,0x0200,bypass_rc,!en);
     return 0;
 }
 
 int32_t sp2406::get_dl_rc_en(bool &en) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0400,0x0200);
+    RFU_V9_REG_DECL_2(0x0400,0x0200);
 
-    SP9500X_RFU_V9_R_2(0x0400,0x0200);
-    en = SP9500X_RFU_V9_REG_2(0x0400,0x0200).bypass_rc == 1 ? false : true;
+    RFU_V9_R_2(0x0400,0x0200);
+    en = RFU_V9_REG_2(0x0400,0x0200).bypass_rc == 1 ? false : true;
     return 0;
 }
 
 int32_t sp2406::set_dl_cf_en(const bool en) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0400,0x0200);
-    SP9500X_RFU_V9_SET_BITS_2(0x0400,0x0200,bypass_cf,!en);
+    RFU_V9_REG_DECL_2(0x0400,0x0200);
+    RFU_V9_SET_BITS_2(0x0400,0x0200,bypass_cf,!en);
     return 0;
 }
 
 int32_t sp2406::get_dl_cf_en(bool &en) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0400,0x0200);
+    RFU_V9_REG_DECL_2(0x0400,0x0200);
 
-    SP9500X_RFU_V9_R_2(0x0400,0x0200);
-    en = SP9500X_RFU_V9_REG_2(0x0400,0x0200).bypass_cf == 1 ? false : true;
+    RFU_V9_R_2(0x0400,0x0200);
+    en = RFU_V9_REG_2(0x0400,0x0200).bypass_cf == 1 ? false : true;
     return 0;
 }
 
@@ -986,21 +986,21 @@ int32_t sp2406::set_dl_cf_coef(const std::vector<iq_data_t> &coef) const
         return -1;
     }
 
-    SP9500X_RFU_V9_REG_DECL_2(0x0428,0x04e8);
-    SP9500X_RFU_V9_REG_DECL_2(0x0429,0x04e9);
-    SP9500X_RFU_V9_REG_DECL_2(0x042a,0x04ea);
-    SP9500X_RFU_V9_REG_DECL_2(0x042b,0x04eb);
+    RFU_V9_REG_DECL_2(0x0428,0x04e8);
+    RFU_V9_REG_DECL_2(0x0429,0x04e9);
+    RFU_V9_REG_DECL_2(0x042a,0x04ea);
+    RFU_V9_REG_DECL_2(0x042b,0x04eb);
 
-    SP9500X_RFU_V9_REG_2(0x0429,0x04e9).tap = unsigned(coef.size()) - 1;
-    SP9500X_RFU_V9_W_2(0x0429,0x04e9);
+    RFU_V9_REG_2(0x0429,0x04e9).tap = unsigned(coef.size()) - 1;
+    RFU_V9_W_2(0x0429,0x04e9);
 
-    for (size_t i = 0;i <= SP9500X_RFU_V9_REG_2(0x0429,0x04e9).tap;++i) {
-        SP9500X_RFU_V9_REG_2(0x042a,0x04ea).idx = unsigned(i);
-        SP9500X_RFU_V9_REG_2(0x042b,0x04eb).real = unsigned(coef.at(i).i);
-        SP9500X_RFU_V9_REG_2(0x042b,0x04eb).imag = unsigned(coef.at(i).q);
-        SP9500X_RFU_V9_W_2(0x042a,0x04ea);
-        SP9500X_RFU_V9_W_2(0x042b,0x04eb);
-        SP9500X_RFU_V9_OP_2(0x0428,0x04e8);
+    for (size_t i = 0;i <= RFU_V9_REG_2(0x0429,0x04e9).tap;++i) {
+        RFU_V9_REG_2(0x042a,0x04ea).idx = unsigned(i);
+        RFU_V9_REG_2(0x042b,0x04eb).real = unsigned(coef.at(i).i);
+        RFU_V9_REG_2(0x042b,0x04eb).imag = unsigned(coef.at(i).q);
+        RFU_V9_W_2(0x042a,0x04ea);
+        RFU_V9_W_2(0x042b,0x04eb);
+        RFU_V9_OP_2(0x0428,0x04e8);
     }
 
     return 0;
@@ -1015,21 +1015,21 @@ int32_t sp2406::set_dl_cf_coef(const std::vector<int16_t> &real,const std::vecto
         return -1;
     }
 
-    SP9500X_RFU_V9_REG_DECL_2(0x0428,0x04e8);
-    SP9500X_RFU_V9_REG_DECL_2(0x0429,0x04e9);
-    SP9500X_RFU_V9_REG_DECL_2(0x042a,0x04ea);
-    SP9500X_RFU_V9_REG_DECL_2(0x042b,0x04eb);
+    RFU_V9_REG_DECL_2(0x0428,0x04e8);
+    RFU_V9_REG_DECL_2(0x0429,0x04e9);
+    RFU_V9_REG_DECL_2(0x042a,0x04ea);
+    RFU_V9_REG_DECL_2(0x042b,0x04eb);
 
-    SP9500X_RFU_V9_REG_2(0x0429,0x04e9).tap = unsigned(real.size()) - 1;
-    SP9500X_RFU_V9_W_2(0x0429,0x04e9);
+    RFU_V9_REG_2(0x0429,0x04e9).tap = unsigned(real.size()) - 1;
+    RFU_V9_W_2(0x0429,0x04e9);
 
-    for (size_t i = 0;i <= SP9500X_RFU_V9_REG_2(0x0429,0x04e9).tap;++i) {
-        SP9500X_RFU_V9_REG_2(0x042a,0x04ea).idx = unsigned(i);
-        SP9500X_RFU_V9_REG_2(0x042b,0x04eb).real = unsigned(real.at(i));
-        SP9500X_RFU_V9_REG_2(0x042b,0x04eb).imag = unsigned(imag.at(i));
-        SP9500X_RFU_V9_W_2(0x042a,0x04ea);
-        SP9500X_RFU_V9_W_2(0x042b,0x04eb);
-        SP9500X_RFU_V9_OP_2(0x0428,0x04e8);
+    for (size_t i = 0;i <= RFU_V9_REG_2(0x0429,0x04e9).tap;++i) {
+        RFU_V9_REG_2(0x042a,0x04ea).idx = unsigned(i);
+        RFU_V9_REG_2(0x042b,0x04eb).real = unsigned(real.at(i));
+        RFU_V9_REG_2(0x042b,0x04eb).imag = unsigned(imag.at(i));
+        RFU_V9_W_2(0x042a,0x04ea);
+        RFU_V9_W_2(0x042b,0x04eb);
+        RFU_V9_OP_2(0x0428,0x04e8);
     }
 
     return 0;
@@ -1037,20 +1037,20 @@ int32_t sp2406::set_dl_cf_coef(const std::vector<int16_t> &real,const std::vecto
 
 int32_t sp2406::get_dl_cf_coef(vector<iq_data_t> &coef) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0429,0x04e9);
-    SP9500X_RFU_V9_REG_DECL_2(0x042a,0x04ea);
-    SP9500X_RFU_V9_REG_DECL_2(0x042c,0x04ec);
+    RFU_V9_REG_DECL_2(0x0429,0x04e9);
+    RFU_V9_REG_DECL_2(0x042a,0x04ea);
+    RFU_V9_REG_DECL_2(0x042c,0x04ec);
 
     iq_data_t iq;
     coef.clear();
-    SP9500X_RFU_V9_R_2(0x0429,0x04e9);
+    RFU_V9_R_2(0x0429,0x04e9);
 
-    for (size_t i = 0;i <= SP9500X_RFU_V9_REG_2(0x0429,0x04e9).tap;++i) {
-        SP9500X_RFU_V9_REG_2(0x042a,0x04ea).idx = unsigned(i);
-        SP9500X_RFU_V9_W_2(0x042a,0x04ea);
-        SP9500X_RFU_V9_R_2(0x042c,0x04ec);
-        iq.i = int16_t(SP9500X_RFU_V9_REG_2(0x042c,0x04ec).real);
-        iq.q = int16_t(SP9500X_RFU_V9_REG_2(0x042c,0x04ec).imag);
+    for (size_t i = 0;i <= RFU_V9_REG_2(0x0429,0x04e9).tap;++i) {
+        RFU_V9_REG_2(0x042a,0x04ea).idx = unsigned(i);
+        RFU_V9_W_2(0x042a,0x04ea);
+        RFU_V9_R_2(0x042c,0x04ec);
+        iq.i = int16_t(RFU_V9_REG_2(0x042c,0x04ec).real);
+        iq.q = int16_t(RFU_V9_REG_2(0x042c,0x04ec).imag);
         coef.push_back(iq);
     }
 
@@ -1076,91 +1076,91 @@ int32_t sp2406::get_dl_cf_coef(std::vector<int16_t> &i,std::vector<int16_t> &q) 
 
 int32_t sp2406::set_dl_jesd_src(const dl_jesd_src_t &src) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0450);
+    RFU_V9_REG_DECL(0x0450);
 
-    SP9500X_RFU_V9_REG(0x0450).src0 = src;
-    SP9500X_RFU_V9_REG(0x0450).src1 = src;
-    SP9500X_RFU_V9_W(0x0450);
+    RFU_V9_REG(0x0450).src0 = src;
+    RFU_V9_REG(0x0450).src1 = src;
+    RFU_V9_W(0x0450);
     return 0;
 }
 
 int32_t sp2406::set_dl_jesd_src(const path_t path,const dl_jesd_src_t &src) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0450);
+    RFU_V9_REG_DECL(0x0450);
 
-    SP9500X_RFU_V9_R(0x0450);
+    RFU_V9_R(0x0450);
     if (path == path_t::TX0) {
-        SP9500X_RFU_V9_REG(0x0450).src0 = src;
+        RFU_V9_REG(0x0450).src0 = src;
     } else if (path == path_t::TX1) {
-        SP9500X_RFU_V9_REG(0x0450).src1 = src;
+        RFU_V9_REG(0x0450).src1 = src;
     }
-    SP9500X_RFU_V9_W(0x0450);
+    RFU_V9_W(0x0450);
     return 0;
 }
 
 int32_t sp2406::get_dl_jesd_src(const path_t path,dl_jesd_src_t &src) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0450);
+    RFU_V9_REG_DECL(0x0450);
 
-    SP9500X_RFU_V9_R(0x0450);
+    RFU_V9_R(0x0450);
     if (path == path_t::TX0) {
-        src = dl_jesd_src_t::_from_integral_unchecked(SP9500X_RFU_V9_REG(0x0450).src0);
+        src = dl_jesd_src_t::_from_integral_unchecked(RFU_V9_REG(0x0450).src0);
     } else if (path == path_t::TX1) {
-        src = dl_jesd_src_t::_from_integral_unchecked(SP9500X_RFU_V9_REG(0x0450).src1);
+        src = dl_jesd_src_t::_from_integral_unchecked(RFU_V9_REG(0x0450).src1);
     }
     return 0;
 }
 
 int32_t sp2406::set_dl_jesd_src_const(const int16_t i,const int16_t q) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0451);
+    RFU_V9_REG_DECL(0x0451);
 
-    SP9500X_RFU_V9_REG(0x0451).i = unsigned(i);
-    SP9500X_RFU_V9_REG(0x0451).q = unsigned(q);
-    SP9500X_RFU_V9_W(0x0451);
+    RFU_V9_REG(0x0451).i = unsigned(i);
+    RFU_V9_REG(0x0451).q = unsigned(q);
+    RFU_V9_W(0x0451);
     return 0;
 }
 
 int32_t sp2406::get_dl_jesd_src_const(int16_t &i,int16_t &q) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0451);
+    RFU_V9_REG_DECL(0x0451);
 
-    SP9500X_RFU_V9_R(0x0451);
-    i = int16_t(SP9500X_RFU_V9_REG(0x0451).i);
-    q = int16_t(SP9500X_RFU_V9_REG(0x0451).q);
+    RFU_V9_R(0x0451);
+    i = int16_t(RFU_V9_REG(0x0451).i);
+    q = int16_t(RFU_V9_REG(0x0451).q);
     return 0;
 }
 
 int32_t sp2406::set_dl_jesd_src_dds(const dl_jesd_src_dds_mode_t &mode) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0452);
-    SP9500X_RFU_V9_REG_DECL(0x0453);
+    RFU_V9_REG_DECL(0x0452);
+    RFU_V9_REG_DECL(0x0453);
 
-    SP9500X_RFU_V9_REG(0x0453).mode = mode;
-    SP9500X_RFU_V9_W(0x0453);
-    SP9500X_RFU_V9_OP(0x0452);
+    RFU_V9_REG(0x0453).mode = mode;
+    RFU_V9_W(0x0453);
+    RFU_V9_OP(0x0452);
     return 0;
 }
 
 int32_t sp2406::set_dl_jesd_src_dds(const dl_jesd_src_dds_auto_period_t &period) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0452);
-    SP9500X_RFU_V9_REG_DECL(0x0454);
+    RFU_V9_REG_DECL(0x0452);
+    RFU_V9_REG_DECL(0x0454);
 
-    SP9500X_RFU_V9_REG(0x0454).period = period;
-    SP9500X_RFU_V9_W(0x0454);
-    SP9500X_RFU_V9_OP(0x0452);
+    RFU_V9_REG(0x0454).period = period;
+    RFU_V9_W(0x0454);
+    RFU_V9_OP(0x0452);
     return 0;
 }
 
 int32_t sp2406::set_dl_jesd_src_dds(const dl_jesd_src_dds_auto_interval_t &interval) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0452);
-    SP9500X_RFU_V9_REG_DECL(0x0455);
+    RFU_V9_REG_DECL(0x0452);
+    RFU_V9_REG_DECL(0x0455);
 
-    SP9500X_RFU_V9_REG(0x0455).interval = interval;
-    SP9500X_RFU_V9_W(0x0455);
-    SP9500X_RFU_V9_OP(0x0452);
+    RFU_V9_REG(0x0455).interval = interval;
+    RFU_V9_W(0x0455);
+    RFU_V9_OP(0x0452);
     return 0;
 }
 
@@ -1170,19 +1170,19 @@ int32_t sp2406::set_dl_jesd_src_dds_coarse(const int16_t freq_mhz) const
         return -1;
     }
 
-    SP9500X_RFU_V9_REG_DECL(0x0456);
+    RFU_V9_REG_DECL(0x0456);
 
-    SP9500X_RFU_V9_REG(0x0456).freq = unsigned(abs(freq_mhz));
-    SP9500X_RFU_V9_W(0x0456);
+    RFU_V9_REG(0x0456).freq = unsigned(abs(freq_mhz));
+    RFU_V9_W(0x0456);
     return 0;
 }
 
 int32_t sp2406::set_dl_jesd_src_dds_fine(const double freq) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0457);
+    RFU_V9_REG_DECL(0x0457);
 
-    SP9500X_RFU_V9_REG(0x0457).freq = unsigned(4294967296.0 / 491520000.0 * freq);
-    SP9500X_RFU_V9_W(0x0457);
+    RFU_V9_REG(0x0457).freq = unsigned(4294967296.0 / 491520000.0 * freq);
+    RFU_V9_W(0x0457);
     return 0;
 }
 
@@ -1193,62 +1193,62 @@ int32_t sp2406::set_dl_jesd_src_dds_gain(const double gain) const
         return -1;
     }
 
-    SP9500X_RFU_V9_REG_DECL(0x0459);
-    SP9500X_RFU_V9_REG(0x0459).gain = unsigned(sqrt(dBc_to_ad(32768.0 * 32768.0,gain * -1)));
-    SP9500X_RFU_V9_W(0x0459);
+    RFU_V9_REG_DECL(0x0459);
+    RFU_V9_REG(0x0459).gain = unsigned(sqrt(dBc_to_ad(32768.0 * 32768.0,gain * -1)));
+    RFU_V9_W(0x0459);
     return 0;
 }
 
 int32_t sp2406::get_dl_jesd_src_dds(dl_jesd_src_dds_mode_t &mode) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0453);
+    RFU_V9_REG_DECL(0x0453);
 
-    SP9500X_RFU_V9_R(0x0453);
-    mode = dl_jesd_src_dds_mode_t::_from_integral_unchecked(SP9500X_RFU_V9_REG(0x0453).mode);
+    RFU_V9_R(0x0453);
+    mode = dl_jesd_src_dds_mode_t::_from_integral_unchecked(RFU_V9_REG(0x0453).mode);
     return 0;
 }
 
 int32_t sp2406::get_dl_jesd_src_dds(dl_jesd_src_dds_auto_period_t &period) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0454);
+    RFU_V9_REG_DECL(0x0454);
 
-    SP9500X_RFU_V9_R(0x0454);
-    period = dl_jesd_src_dds_auto_period_t::_from_integral_unchecked(SP9500X_RFU_V9_REG(0x0454).period);
+    RFU_V9_R(0x0454);
+    period = dl_jesd_src_dds_auto_period_t::_from_integral_unchecked(RFU_V9_REG(0x0454).period);
     return 0;
 }
 
 int32_t sp2406::get_dl_jesd_src_dds(dl_jesd_src_dds_auto_interval_t &interval) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0455);
+    RFU_V9_REG_DECL(0x0455);
 
-    SP9500X_RFU_V9_R(0x0455);
-    interval = dl_jesd_src_dds_auto_interval_t::_from_integral_unchecked(SP9500X_RFU_V9_REG(0x0455).interval);
+    RFU_V9_R(0x0455);
+    interval = dl_jesd_src_dds_auto_interval_t::_from_integral_unchecked(RFU_V9_REG(0x0455).interval);
     return 0;
 }
 
 int32_t sp2406::get_dl_jesd_src_dds_coarse(int16_t &freq_mhz) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0456);
+    RFU_V9_REG_DECL(0x0456);
 
-    SP9500X_RFU_V9_R(0x0456);
-    freq_mhz = int16_t(SP9500X_RFU_V9_REG(0x0456).freq);
+    RFU_V9_R(0x0456);
+    freq_mhz = int16_t(RFU_V9_REG(0x0456).freq);
     return 0;
 }
 
 int32_t sp2406::get_dl_jesd_src_dds_fine(double &freq) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0457);
+    RFU_V9_REG_DECL(0x0457);
 
-    SP9500X_RFU_V9_R(0x0457);
-    freq = SP9500X_RFU_V9_REG(0x0457).freq * 491520000.0 / 4294967296.0;
+    RFU_V9_R(0x0457);
+    freq = RFU_V9_REG(0x0457).freq * 491520000.0 / 4294967296.0;
     return 0;
 }
 
 int32_t sp2406::get_dl_jesd_src_dds_gain(double &gain) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0459);
-    SP9500X_RFU_V9_R(0x0459);
-    gain = ad_to_dBc(32768.0 * 32768.0,SP9500X_RFU_V9_REG(0x0459).gain * SP9500X_RFU_V9_REG(0x0459).gain);
+    RFU_V9_REG_DECL(0x0459);
+    RFU_V9_R(0x0459);
+    gain = ad_to_dBc(32768.0 * 32768.0,RFU_V9_REG(0x0459).gain * RFU_V9_REG(0x0459).gain);
     return 0;
 }
 
@@ -1264,21 +1264,21 @@ int32_t sp2406::set_ul_pwr_comp(int32_t offset)
 
 int32_t sp2406::set_ul_pwr_comp(const double offset)
 {
-    SP9500X_RFU_V9_REG_DECL(0x0801);
+    RFU_V9_REG_DECL(0x0801);
 
     unsigned gain_reg = unsigned(sqrt(dBc_to_ad(32768.0 * 32768.0,offset * -1)));
-    SP9500X_RFU_V9_REG(0x0801).i = gain_reg;
-    SP9500X_RFU_V9_REG(0x0801).q = gain_reg;
-    SP9500X_RFU_V9_W(0x0801);
+    RFU_V9_REG(0x0801).i = gain_reg;
+    RFU_V9_REG(0x0801).q = gain_reg;
+    RFU_V9_W(0x0801);
     return 0;
 }
 
 int32_t sp2406::get_ul_pwr_comp(double &offset)
 {
-    SP9500X_RFU_V9_REG_DECL(0x0801);
-    SP9500X_RFU_V9_R(0x0801);
+    RFU_V9_REG_DECL(0x0801);
+    RFU_V9_R(0x0801);
 
-    unsigned gain_reg = SP9500X_RFU_V9_REG(0x0801).i;
+    unsigned gain_reg = RFU_V9_REG(0x0801).i;
     offset = ad_to_dBc(32768.0 * 32768.0,gain_reg * gain_reg);
     return 0;
 }
@@ -1290,194 +1290,194 @@ int32_t sp2406::set_dl_dc_offset(uint16_t i,uint16_t q)
 
 int32_t sp2406::set_arb_start() const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0280);
-    SP9500X_RFU_V9_REG_DECL(0x0281);
+    RFU_V9_REG_DECL(0x0280);
+    RFU_V9_REG_DECL(0x0281);
 
-    SP9500X_RFU_V9_REG(0x0280).op = 1;
-    SP9500X_RFU_V9_REG(0x0281).op = 0;
-    SP9500X_RFU_V9_W(0x0281);
-    SP9500X_RFU_V9_W(0x0280);
+    RFU_V9_REG(0x0280).op = 1;
+    RFU_V9_REG(0x0281).op = 0;
+    RFU_V9_W(0x0281);
+    RFU_V9_W(0x0280);
     return 0;
 }
 
 int32_t sp2406::set_arb_abort() const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0280);
-    SP9500X_RFU_V9_REG_DECL(0x0281);
+    RFU_V9_REG_DECL(0x0280);
+    RFU_V9_REG_DECL(0x0281);
 
-    SP9500X_RFU_V9_REG(0x0280).op = 0;
-    SP9500X_RFU_V9_REG(0x0281).op = 1;
-    SP9500X_RFU_V9_W(0x0280);
-    SP9500X_RFU_V9_W(0x0281);
+    RFU_V9_REG(0x0280).op = 0;
+    RFU_V9_REG(0x0281).op = 1;
+    RFU_V9_W(0x0280);
+    RFU_V9_W(0x0281);
     return 0;
 }
 
 int32_t sp2406::set_arb_segs(const uint8_t segs) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0291);
+    RFU_V9_REG_DECL(0x0291);
 
-    SP9500X_RFU_V9_REG(0x0291).segs = segs;
-    SP9500X_RFU_V9_W(0x0291);
+    RFU_V9_REG(0x0291).segs = segs;
+    RFU_V9_W(0x0291);
     return 0;
 }
 
 int32_t sp2406::set_arb_repetition(const arb_repetition_t rep) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0284);
+    RFU_V9_REG_DECL(0x0284);
 
-    SP9500X_RFU_V9_REG(0x0284).rep = rep;
-    SP9500X_RFU_V9_W(0x0284);
+    RFU_V9_REG(0x0284).rep = rep;
+    RFU_V9_W(0x0284);
     return 0;
 }
 
 int32_t sp2406::get_arb_repetition(arb_repetition_t &rep) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0284);
+    RFU_V9_REG_DECL(0x0284);
 
-    SP9500X_RFU_V9_R(0x0284);
-    rep = arb_repetition_t::_from_integral_unchecked(SP9500X_RFU_V9_REG(0x0284).rep);
+    RFU_V9_R(0x0284);
+    rep = arb_repetition_t::_from_integral_unchecked(RFU_V9_REG(0x0284).rep);
     return 0;
 }
 
 int32_t sp2406::set_arb_cycles(const uint16_t cycle) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x028f);
+    RFU_V9_REG_DECL(0x028f);
 
-    SP9500X_RFU_V9_REG(0x028f).cycle = cycle;
-    SP9500X_RFU_V9_W(0x028f);
+    RFU_V9_REG(0x028f).cycle = cycle;
+    RFU_V9_W(0x028f);
     return 0;
 }
 
 int32_t sp2406::get_arb_cycles(uint16_t &cycle) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x028f);
+    RFU_V9_REG_DECL(0x028f);
 
-    SP9500X_RFU_V9_R(0x028f);
-    cycle = SP9500X_RFU_V9_REG(0x028f).cycle;
+    RFU_V9_R(0x028f);
+    cycle = RFU_V9_REG(0x028f).cycle;
     return 0;
 }
 
 int32_t sp2406::set_arb_additional_samples(const uint32_t samples) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0290);
+    RFU_V9_REG_DECL(0x0290);
 
-    SP9500X_RFU_V9_REG(0x0290).samples = samples;
-    SP9500X_RFU_V9_W(0x0290);
+    RFU_V9_REG(0x0290).samples = samples;
+    RFU_V9_W(0x0290);
     return 0;
 }
 
 int32_t sp2406::get_arb_additional_samples(uint32_t &samples) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0290);
+    RFU_V9_REG_DECL(0x0290);
 
-    SP9500X_RFU_V9_R(0x0290);
-    samples = SP9500X_RFU_V9_REG(0x0290).samples;
+    RFU_V9_R(0x0290);
+    samples = RFU_V9_REG(0x0290).samples;
     return 0;
 }
 
 int32_t sp2406::set_arb_trig_src(const arb_trig_src_t src) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0285);
+    RFU_V9_REG_DECL(0x0285);
 
-    SP9500X_RFU_V9_REG(0x0285).trig_src = src;
-    SP9500X_RFU_V9_W(0x0285);
+    RFU_V9_REG(0x0285).trig_src = src;
+    RFU_V9_W(0x0285);
     return 0;
 }
 
 int32_t sp2406::get_arb_trig_src(arb_trig_src_t &src) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0285);
+    RFU_V9_REG_DECL(0x0285);
 
-    SP9500X_RFU_V9_R(0x0285);
-    src = arb_trig_src_t::_from_integral_unchecked(SP9500X_RFU_V9_REG(0x0285).trig_src);
+    RFU_V9_R(0x0285);
+    src = arb_trig_src_t::_from_integral_unchecked(RFU_V9_REG(0x0285).trig_src);
     return 0;
 }
 
 int32_t sp2406::set_arb_trig_edge(const arb_trig_edge_t edge) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0286);
+    RFU_V9_REG_DECL(0x0286);
 
-    SP9500X_RFU_V9_REG(0x0286).trig_edge = edge;
-    SP9500X_RFU_V9_W(0x0286);
+    RFU_V9_REG(0x0286).trig_edge = edge;
+    RFU_V9_W(0x0286);
     return 0;
 }
 
 int32_t sp2406::get_arb_trig_edge(arb_trig_edge_t &edge) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0286);
+    RFU_V9_REG_DECL(0x0286);
 
-    SP9500X_RFU_V9_R(0x0286);
-    edge = arb_trig_edge_t::_from_integral_unchecked(SP9500X_RFU_V9_REG(0x0286).trig_edge);
+    RFU_V9_R(0x0286);
+    edge = arb_trig_edge_t::_from_integral_unchecked(RFU_V9_REG(0x0286).trig_edge);
     return 0;
 }
 
 int32_t sp2406::set_arb_manual_trig() const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0282);
+    RFU_V9_REG_DECL(0x0282);
 
-    SP9500X_RFU_V9_OP(0x0282);
+    RFU_V9_OP(0x0282);
     return 0;
 }
 
 int32_t sp2406::set_arb_retrig(const bool en) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0283);
+    RFU_V9_REG_DECL(0x0283);
 
-    SP9500X_RFU_V9_REG(0x0283).retrig = en ? 1 : 0;
-    SP9500X_RFU_V9_W(0x0283);
+    RFU_V9_REG(0x0283).retrig = en ? 1 : 0;
+    RFU_V9_W(0x0283);
     return 0;
 }
 
 int32_t sp2406::get_arb_retrig(bool &en) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0283);
+    RFU_V9_REG_DECL(0x0283);
 
-    SP9500X_RFU_V9_R(0x0283);
-    en = SP9500X_RFU_V9_REG(0x0283).retrig;
+    RFU_V9_R(0x0283);
+    en = RFU_V9_REG(0x0283).retrig;
     return 0;
 }
 
 int32_t sp2406::set_arb_multi_seg_repetition(const arb_multi_seg_repetition_t rep) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0287);
+    RFU_V9_REG_DECL(0x0287);
 
-    SP9500X_RFU_V9_REG(0x0287).rep = rep;
-    SP9500X_RFU_V9_W(0x0287);
+    RFU_V9_REG(0x0287).rep = rep;
+    RFU_V9_W(0x0287);
     return 0;
 }
 
 int32_t sp2406::get_arb_multi_seg_repetition(arb_multi_seg_repetition_t &rep) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0287);
+    RFU_V9_REG_DECL(0x0287);
 
-    SP9500X_RFU_V9_R(0x0287);
-    rep = arb_multi_seg_repetition_t::_from_integral_unchecked(SP9500X_RFU_V9_REG(0x0287).rep);
+    RFU_V9_R(0x0287);
+    rep = arb_multi_seg_repetition_t::_from_integral_unchecked(RFU_V9_REG(0x0287).rep);
     return 0;
 }
 
 int32_t sp2406::set_arb_multi_seg_next_seg(const uint8_t n) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0289);
+    RFU_V9_REG_DECL(0x0289);
 
-    SP9500X_RFU_V9_REG(0x0289).next_seg = n;
-    SP9500X_RFU_V9_W(0x0289);
+    RFU_V9_REG(0x0289).next_seg = n;
+    RFU_V9_W(0x0289);
     return 0;
 }
 
 int32_t sp2406::get_arb_multi_seg_next_seg(uint8_t &n) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0289);
+    RFU_V9_REG_DECL(0x0289);
 
-    SP9500X_RFU_V9_R(0x0289);
-    n = SP9500X_RFU_V9_REG(0x0289).next_seg;
+    RFU_V9_R(0x0289);
+    n = RFU_V9_REG(0x0289).next_seg;
     return 0;
 }
 
 int32_t sp2406::set_arb_multi_seg_manual_trig() const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0288);
+    RFU_V9_REG_DECL(0x0288);
 
-    SP9500X_RFU_V9_OP(0x0288);
+    RFU_V9_OP(0x0288);
     return 0;
 }
 
@@ -1498,28 +1498,28 @@ int32_t sp2406::get_ul_pwr_fpga(double &pwr,const uint32_t samples) const
 {
     boost::ignore_unused(samples);
 
-    SP9500X_RFU_V9_REG_DECL(0x0470);
-    SP9500X_RFU_V9_REG_DECL(0x0472);
+    RFU_V9_REG_DECL(0x0470);
+    RFU_V9_REG_DECL(0x0472);
 
-    SP9500X_RFU_V9_OP(0x0470);
-    SP9500X_RFU_V9_R(0x0472);
-    pwr = ad_to_dBc(_ul_sequence.full_scale(),double(SP9500X_RFU_V9_REG(0x0472).iq));
+    RFU_V9_OP(0x0470);
+    RFU_V9_R(0x0472);
+    pwr = ad_to_dBc(_ul_sequence.full_scale(),double(RFU_V9_REG(0x0472).iq));
     return 0;
 }
 
 int32_t sp2406::set_ul_cf_en(const bool en) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0800);
-    SP9500X_RFU_V9_SET_BITS(0x0800,bypass_cf,!en);
+    RFU_V9_REG_DECL(0x0800);
+    RFU_V9_SET_BITS(0x0800,bypass_cf,!en);
     return 0;
 }
 
 int32_t sp2406::get_ul_cf_en(bool &en) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0800);
+    RFU_V9_REG_DECL(0x0800);
 
-    SP9500X_RFU_V9_R(0x0800);
-    en = SP9500X_RFU_V9_REG(0x0800).bypass_cf == 1 ? false : true;
+    RFU_V9_R(0x0800);
+    en = RFU_V9_REG(0x0800).bypass_cf == 1 ? false : true;
     return 0;
 }
 
@@ -1529,23 +1529,23 @@ int32_t sp2406::set_ul_cf_coef(const std::vector<iq_data_t> &coef) const
         return -1;
     }
 
-    SP9500X_RFU_V9_REG_DECL(0x0828);
-    SP9500X_RFU_V9_REG_DECL(0x0829);
-    SP9500X_RFU_V9_REG_DECL(0x082a);
-    SP9500X_RFU_V9_REG_DECL(0x082b);
+    RFU_V9_REG_DECL(0x0828);
+    RFU_V9_REG_DECL(0x0829);
+    RFU_V9_REG_DECL(0x082a);
+    RFU_V9_REG_DECL(0x082b);
 
-    SP9500X_RFU_V9_REG(0x0829).tap = unsigned(coef.size() / 2) - 1;
-    SP9500X_RFU_V9_W(0x0829);
+    RFU_V9_REG(0x0829).tap = unsigned(coef.size() / 2) - 1;
+    RFU_V9_W(0x0829);
 
-    for (size_t i = 0;i <= SP9500X_RFU_V9_REG(0x0829).tap;++i) {
-        SP9500X_RFU_V9_REG(0x082a).idx = unsigned(i);
-        SP9500X_RFU_V9_REG(0x082b).real = unsigned(coef.at(i).i);
-        SP9500X_RFU_V9_REG(0x082b).imag = unsigned(coef.at(i).q);
-        SP9500X_RFU_V9_W(0x082a);
-        SP9500X_RFU_V9_W(0x082b);
+    for (size_t i = 0;i <= RFU_V9_REG(0x0829).tap;++i) {
+        RFU_V9_REG(0x082a).idx = unsigned(i);
+        RFU_V9_REG(0x082b).real = unsigned(coef.at(i).i);
+        RFU_V9_REG(0x082b).imag = unsigned(coef.at(i).q);
+        RFU_V9_W(0x082a);
+        RFU_V9_W(0x082b);
     }
 
-    SP9500X_RFU_V9_OP(0x0828);
+    RFU_V9_OP(0x0828);
     return 0;
 }
 
@@ -1558,21 +1558,21 @@ int32_t sp2406::set_ul_cf_coef(const std::vector<int16_t> &real,const std::vecto
         return -1;
     }
 
-    SP9500X_RFU_V9_REG_DECL(0x0828);
-    SP9500X_RFU_V9_REG_DECL(0x0829);
-    SP9500X_RFU_V9_REG_DECL(0x082a);
-    SP9500X_RFU_V9_REG_DECL(0x082b);
+    RFU_V9_REG_DECL(0x0828);
+    RFU_V9_REG_DECL(0x0829);
+    RFU_V9_REG_DECL(0x082a);
+    RFU_V9_REG_DECL(0x082b);
 
-    SP9500X_RFU_V9_REG(0x0829).tap = unsigned(real.size() / 2) - 1;
-    SP9500X_RFU_V9_W(0x0829);
+    RFU_V9_REG(0x0829).tap = unsigned(real.size() / 2) - 1;
+    RFU_V9_W(0x0829);
 
-    for (size_t i = 0;i <= SP9500X_RFU_V9_REG(0x0829).tap;++i) {
-        SP9500X_RFU_V9_REG(0x082a).idx = unsigned(i);
-        SP9500X_RFU_V9_REG(0x082b).real = unsigned(real.at(i));
-        SP9500X_RFU_V9_REG(0x082b).imag = unsigned(imag.at(i));
-        SP9500X_RFU_V9_W(0x082a);
-        SP9500X_RFU_V9_W(0x082b);
-        SP9500X_RFU_V9_OP(0x0828);
+    for (size_t i = 0;i <= RFU_V9_REG(0x0829).tap;++i) {
+        RFU_V9_REG(0x082a).idx = unsigned(i);
+        RFU_V9_REG(0x082b).real = unsigned(real.at(i));
+        RFU_V9_REG(0x082b).imag = unsigned(imag.at(i));
+        RFU_V9_W(0x082a);
+        RFU_V9_W(0x082b);
+        RFU_V9_OP(0x0828);
     }
 
     return 0;
@@ -1580,48 +1580,48 @@ int32_t sp2406::set_ul_cf_coef(const std::vector<int16_t> &real,const std::vecto
 
 int32_t sp2406::get_ul_cf_coef(std::vector<iq_data_t> &coef) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0829);
-    SP9500X_RFU_V9_REG_DECL(0x082a);
-    SP9500X_RFU_V9_REG_DECL(0x082c);
+    RFU_V9_REG_DECL(0x0829);
+    RFU_V9_REG_DECL(0x082a);
+    RFU_V9_REG_DECL(0x082c);
 
     iq_data_t iq;
     coef.clear();
-    SP9500X_RFU_V9_R(0x0829);
+    RFU_V9_R(0x0829);
 
-    for (size_t i = 0;i <= SP9500X_RFU_V9_REG(0x0829).tap;++i) {
-        SP9500X_RFU_V9_REG(0x082a).idx = unsigned(i);
-        SP9500X_RFU_V9_W(0x082a);
-        SP9500X_RFU_V9_R(0x082c);
-        iq.i = int16_t(SP9500X_RFU_V9_REG(0x082c).real);
-        iq.q = int16_t(SP9500X_RFU_V9_REG(0x082c).imag);
+    for (size_t i = 0;i <= RFU_V9_REG(0x0829).tap;++i) {
+        RFU_V9_REG(0x082a).idx = unsigned(i);
+        RFU_V9_W(0x082a);
+        RFU_V9_R(0x082c);
+        iq.i = int16_t(RFU_V9_REG(0x082c).real);
+        iq.q = int16_t(RFU_V9_REG(0x082c).imag);
         coef.push_back(iq);
     }
-    for (size_t i = 0;i <= SP9500X_RFU_V9_REG(0x0829).tap;++i) {
-        coef.push_back(coef.at(SP9500X_RFU_V9_REG(0x0829).tap - i));
+    for (size_t i = 0;i <= RFU_V9_REG(0x0829).tap;++i) {
+        coef.push_back(coef.at(RFU_V9_REG(0x0829).tap - i));
     }
     return 0;
 }
 
 int32_t sp2406::get_ul_cf_coef(std::vector<int16_t> &i,std::vector<int16_t> &q) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0829);
-    SP9500X_RFU_V9_REG_DECL(0x082a);
-    SP9500X_RFU_V9_REG_DECL(0x082c);
+    RFU_V9_REG_DECL(0x0829);
+    RFU_V9_REG_DECL(0x082a);
+    RFU_V9_REG_DECL(0x082c);
 
     i.clear();
     q.clear();
-    SP9500X_RFU_V9_R(0x0829);
+    RFU_V9_R(0x0829);
 
-    for (size_t x = 0;x <= 97/*SP9500X_RFU_V9_REG(0x0829).tap*/;++x) {
-        SP9500X_RFU_V9_REG(0x082a).idx = unsigned(x);
-        SP9500X_RFU_V9_W(0x082a);
-        SP9500X_RFU_V9_R(0x082c);
-        i.push_back(int16_t(SP9500X_RFU_V9_REG(0x082c).real));
-        q.push_back(int16_t(SP9500X_RFU_V9_REG(0x082c).imag));
+    for (size_t x = 0;x <= 97/*RFU_V9_REG(0x0829).tap*/;++x) {
+        RFU_V9_REG(0x082a).idx = unsigned(x);
+        RFU_V9_W(0x082a);
+        RFU_V9_R(0x082c);
+        i.push_back(int16_t(RFU_V9_REG(0x082c).real));
+        q.push_back(int16_t(RFU_V9_REG(0x082c).imag));
     }
-    for (size_t x = 0;x <= 97/*SP9500X_RFU_V9_REG(0x0829).tap*/;++x) {
-        i.push_back(i.at(97/*SP9500X_RFU_V9_REG(0x0829).tap*/ - x));
-        q.push_back(q.at(97/*SP9500X_RFU_V9_REG(0x0829).tap*/ - x));
+    for (size_t x = 0;x <= 97/*RFU_V9_REG(0x0829).tap*/;++x) {
+        i.push_back(i.at(97/*RFU_V9_REG(0x0829).tap*/ - x));
+        q.push_back(q.at(97/*RFU_V9_REG(0x0829).tap*/ - x));
     }
     return 0;
 }
@@ -1637,8 +1637,8 @@ int32_t sp2406::set_ul_hbf1_en(const uint8_t ch,const bool en) const
 
 int32_t sp2406::set_ul_hbf1_en(const bitset_ul_hbf1 &en) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0800);
-    SP9500X_RFU_V9_SET_BITS(0x0800,bypass_hbf1,(~en).to_ulong());
+    RFU_V9_REG_DECL(0x0800);
+    RFU_V9_SET_BITS(0x0800,bypass_hbf1,(~en).to_ulong());
     return 0;
 }
 
@@ -1662,10 +1662,10 @@ int32_t sp2406::get_ul_hbf1_en(const uint8_t ch,bool &en) const
 
 int32_t sp2406::get_ul_hbf1_en(bitset_ul_hbf1 &en) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0800);
+    RFU_V9_REG_DECL(0x0800);
 
-    SP9500X_RFU_V9_R(0x0800);
-    en = SP9500X_RFU_V9_REG(0x0800).bypass_hbf1;
+    RFU_V9_R(0x0800);
+    en = RFU_V9_REG(0x0800).bypass_hbf1;
     en = ~en;
     return 0;
 }
@@ -1681,8 +1681,8 @@ int32_t sp2406::set_ul_hbf2_en(const uint8_t ch,const bool en) const
 
 int32_t sp2406::set_ul_hbf2_en(const bitset_ul_hbf2 &en) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0800);
-    SP9500X_RFU_V9_SET_BITS(0x0800,bypass_hbf2,(~en).to_ulong());
+    RFU_V9_REG_DECL(0x0800);
+    RFU_V9_SET_BITS(0x0800,bypass_hbf2,(~en).to_ulong());
     return 0;
 }
 
@@ -1706,10 +1706,10 @@ int32_t sp2406::get_ul_hbf2_en(const uint8_t ch,bool &en) const
 
 int32_t sp2406::get_ul_hbf2_en(bitset_ul_hbf2 &en) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0800);
+    RFU_V9_REG_DECL(0x0800);
 
-    SP9500X_RFU_V9_R(0x0800);
-    en = SP9500X_RFU_V9_REG(0x0800).bypass_hbf2;
+    RFU_V9_R(0x0800);
+    en = RFU_V9_REG(0x0800).bypass_hbf2;
     en = ~en;
     return 0;
 }
@@ -1725,11 +1725,11 @@ int32_t sp2406::set_ul_lpf_en(const uint8_t ch,const bool en) const
 
 int32_t sp2406::set_ul_lpf_en(const bitset_ul_lpf &en) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0800);
+    RFU_V9_REG_DECL(0x0800);
 
-    SP9500X_RFU_V9_R(0x0800);
-    SP9500X_RFU_V9_REG(0x0800).bypass_lpf = (~en).to_ulong();
-    SP9500X_RFU_V9_W(0x0800);
+    RFU_V9_R(0x0800);
+    RFU_V9_REG(0x0800).bypass_lpf = (~en).to_ulong();
+    RFU_V9_W(0x0800);
     return 0;
 }
 
@@ -1753,10 +1753,10 @@ int32_t sp2406::get_ul_lpf_en(const uint8_t ch,bool &en) const
 
 int32_t sp2406::get_ul_lpf_en(bitset_ul_lpf &en) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0800);
+    RFU_V9_REG_DECL(0x0800);
 
-    SP9500X_RFU_V9_R(0x0800);
-    en = SP9500X_RFU_V9_REG(0x0800).bypass_lpf;
+    RFU_V9_R(0x0800);
+    en = RFU_V9_REG(0x0800).bypass_lpf;
     en = ~en;
     return 0;
 }
@@ -1767,27 +1767,27 @@ int32_t sp2406::set_ul_lpf_coef(const uint8_t ch,const std::vector<int16_t> &coe
         return -1;
     }
 
-    SP9500X_RFU_V9_REG_DECL(0x081c);
-    SP9500X_RFU_V9_REG_DECL(0x081d);
-    SP9500X_RFU_V9_REG_DECL(0x081e);
-    SP9500X_RFU_V9_REG_DECL(0x081f);
+    RFU_V9_REG_DECL(0x081c);
+    RFU_V9_REG_DECL(0x081d);
+    RFU_V9_REG_DECL(0x081e);
+    RFU_V9_REG_DECL(0x081f);
 
     bitset<8> bs_filter;
     bs_filter.set(ch,true);
 
-    SP9500X_RFU_V9_REG(0x081d).tap = unsigned(coef.size() / 2) - 1;
-    SP9500X_RFU_V9_W(0x081d);
+    RFU_V9_REG(0x081d).tap = unsigned(coef.size() / 2) - 1;
+    RFU_V9_W(0x081d);
 
-    for (size_t i = 0;i <= SP9500X_RFU_V9_REG(0x081d).tap;++i) {
-        SP9500X_RFU_V9_REG(0x081e).idx  = unsigned(i);
-        SP9500X_RFU_V9_REG(0x081f).coef = unsigned(coef.at(i));
-        SP9500X_RFU_V9_W(0x081e);
-        SP9500X_RFU_V9_W(0x081f);
+    for (size_t i = 0;i <= RFU_V9_REG(0x081d).tap;++i) {
+        RFU_V9_REG(0x081e).idx  = unsigned(i);
+        RFU_V9_REG(0x081f).coef = unsigned(coef.at(i));
+        RFU_V9_W(0x081e);
+        RFU_V9_W(0x081f);
 
-        SP9500X_RFU_V9_REG(0x081c).op = 0;
-        SP9500X_RFU_V9_W(0x081c);
-        SP9500X_RFU_V9_REG(0x081c).op = bs_filter.to_ulong();
-        SP9500X_RFU_V9_W(0x081c);
+        RFU_V9_REG(0x081c).op = 0;
+        RFU_V9_W(0x081c);
+        RFU_V9_REG(0x081c).op = bs_filter.to_ulong();
+        RFU_V9_W(0x081c);
     }
 
     return 0;
@@ -1821,55 +1821,55 @@ int32_t sp2406::get_ul_ddc0(const uint8_t ch,double &freq) const
 
 int32_t sp2406::set_ul_ddc0_ch0_3(const double freq) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0813);
-    SP9500X_RFU_V9_REG_DECL(0x0814);
-    SP9500X_RFU_V9_REG_DECL(0x0816);
-    SP9500X_RFU_V9_REG_DECL(0x0817);
+    RFU_V9_REG_DECL(0x0813);
+    RFU_V9_REG_DECL(0x0814);
+    RFU_V9_REG_DECL(0x0816);
+    RFU_V9_REG_DECL(0x0817);
 
     double f = 4294967296.0 / 491520000.0 * freq;
-    SP9500X_RFU_V9_REG(0x0814).freq  = unsigned(f);
-    SP9500X_RFU_V9_REG(0x0816).freq  = SP9500X_RFU_V9_REG(0x0814).freq;
-    SP9500X_RFU_V9_REG(0x0817).phase = unsigned(f / 2.0);
-    SP9500X_RFU_V9_W(0x0814);
-    SP9500X_RFU_V9_W(0x0816);
-    SP9500X_RFU_V9_W(0x0817);
-    SP9500X_RFU_V9_RE(0x0813,op0);
+    RFU_V9_REG(0x0814).freq  = unsigned(f);
+    RFU_V9_REG(0x0816).freq  = RFU_V9_REG(0x0814).freq;
+    RFU_V9_REG(0x0817).phase = unsigned(f / 2.0);
+    RFU_V9_W(0x0814);
+    RFU_V9_W(0x0816);
+    RFU_V9_W(0x0817);
+    RFU_V9_RE(0x0813,op0);
     return 0;
 }
 
 int32_t sp2406::get_ul_ddc0_ch0_3(double &freq) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0814);
+    RFU_V9_REG_DECL(0x0814);
 
-    SP9500X_RFU_V9_R(0x0814);
-    freq = SP9500X_RFU_V9_REG(0x0814).freq * 491520000.0 / 4294967296.0;
+    RFU_V9_R(0x0814);
+    freq = RFU_V9_REG(0x0814).freq * 491520000.0 / 4294967296.0;
     return 0;
 }
 
 int32_t sp2406::set_ul_ddc0_ch4_7(const double freq) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0813);
-    SP9500X_RFU_V9_REG_DECL(0x0818);
-    SP9500X_RFU_V9_REG_DECL(0x081a);
-    SP9500X_RFU_V9_REG_DECL(0x081b);
+    RFU_V9_REG_DECL(0x0813);
+    RFU_V9_REG_DECL(0x0818);
+    RFU_V9_REG_DECL(0x081a);
+    RFU_V9_REG_DECL(0x081b);
 
     double f = 4294967296.0 / 491520000.0 * freq;
-    SP9500X_RFU_V9_REG(0x0818).freq  = unsigned(f);
-    SP9500X_RFU_V9_REG(0x081a).freq  = SP9500X_RFU_V9_REG(0x0818).freq;
-    SP9500X_RFU_V9_REG(0x081b).phase = unsigned(f / 2.0);
-    SP9500X_RFU_V9_W(0x0818);
-    SP9500X_RFU_V9_W(0x081a);
-    SP9500X_RFU_V9_W(0x081b);
-    SP9500X_RFU_V9_RE(0x0813,op1);
+    RFU_V9_REG(0x0818).freq  = unsigned(f);
+    RFU_V9_REG(0x081a).freq  = RFU_V9_REG(0x0818).freq;
+    RFU_V9_REG(0x081b).phase = unsigned(f / 2.0);
+    RFU_V9_W(0x0818);
+    RFU_V9_W(0x081a);
+    RFU_V9_W(0x081b);
+    RFU_V9_RE(0x0813,op1);
     return 0;
 }
 
 int32_t sp2406::get_ul_ddc0_ch4_7(double &freq) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0818);
+    RFU_V9_REG_DECL(0x0818);
 
-    SP9500X_RFU_V9_R(0x0818);
-    freq = SP9500X_RFU_V9_REG(0x0818).freq * 491520000.0 / 4294967296.0;
+    RFU_V9_R(0x0818);
+    freq = RFU_V9_REG(0x0818).freq * 491520000.0 / 4294967296.0;
     return 0;
 }
 
@@ -1957,14 +1957,14 @@ IMPL_CPRI_MAP(ul,7,0x00cf)
 
 int32_t sp2406::set_iq_cap_start()
 {
-    SP9500X_RFU_V9_REG_DECL(0x0240);
-    SP9500X_RFU_V9_REG_DECL(0x0241);
+    RFU_V9_REG_DECL(0x0240);
+    RFU_V9_REG_DECL(0x0241);
 
-    SP9500X_RFU_V9_REG(0x0241).abort = 0;
-    SP9500X_RFU_V9_W(0x0241);
+    RFU_V9_REG(0x0241).abort = 0;
+    RFU_V9_W(0x0241);
 
-    SP9500X_RFU_V9_REG(0x0240).op = 1;
-    SP9500X_RFU_V9_W(0x0240);
+    RFU_V9_REG(0x0240).op = 1;
+    RFU_V9_W(0x0240);
 
     INT_CHECK(_dma_mgr.fpga_w_trans());
     INT_CHECK(_dma_mgr.dump(_ul_sequence.i(),_ul_sequence.q()));
@@ -1973,72 +1973,72 @@ int32_t sp2406::set_iq_cap_start()
 
 int32_t sp2406::set_iq_cap_abort() const
 {
-    SP9500X_RFU_V9_REG_DECL(0x0240);
-    SP9500X_RFU_V9_REG_DECL(0x0241);
+    RFU_V9_REG_DECL(0x0240);
+    RFU_V9_REG_DECL(0x0241);
 
-    SP9500X_RFU_V9_REG(0x0241).abort = 1;
-    SP9500X_RFU_V9_W(0x0241);
+    RFU_V9_REG(0x0241).abort = 1;
+    RFU_V9_W(0x0241);
 
-    SP9500X_RFU_V9_REG(0x0240).op = 0;
-    SP9500X_RFU_V9_W(0x0240);
+    RFU_V9_REG(0x0240).op = 0;
+    RFU_V9_W(0x0240);
     return 0;
 }
 
 int32_t sp2406::set_iq_cap_src(const iq_cap_src_t &src)
 {
-    SP9500X_RFU_V9_REG_DECL(0x00f1);
+    RFU_V9_REG_DECL(0x00f1);
 
-    SP9500X_RFU_V9_REG(0x00f1).src = src;
-    SP9500X_RFU_V9_W(0x00f1);
+    RFU_V9_REG(0x00f1).src = src;
+    RFU_V9_W(0x00f1);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_src(iq_cap_src_t &src) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x00f1);
+    RFU_V9_REG_DECL(0x00f1);
 
-    SP9500X_RFU_V9_R(0x00f1);
-    src = iq_cap_src_t::_from_integral_unchecked(SP9500X_RFU_V9_REG(0x00f1).src);
+    RFU_V9_R(0x00f1);
+    src = iq_cap_src_t::_from_integral_unchecked(RFU_V9_REG(0x00f1).src);
     return 0;
 }
 
 int32_t sp2406::set_iq_cap_src_ddc(const iq_cap_src_ddc_t &src) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x082d);
+    RFU_V9_REG_DECL(0x082d);
 
-    SP9500X_RFU_V9_REG(0x082d).src = src;
-    SP9500X_RFU_V9_W(0x082d);
+    RFU_V9_REG(0x082d).src = src;
+    RFU_V9_W(0x082d);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_src_ddc(iq_cap_src_ddc_t &src) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x082d);
+    RFU_V9_REG_DECL(0x082d);
 
-    SP9500X_RFU_V9_R(0x082d);
-    src = iq_cap_src_ddc_t::_from_integral_unchecked(SP9500X_RFU_V9_REG(0x082d).src);
+    RFU_V9_R(0x082d);
+    src = iq_cap_src_ddc_t::_from_integral_unchecked(RFU_V9_REG(0x082d).src);
     return 0;
 }
 
 int32_t sp2406::set_iq_cap_src_ddc_ch(const uint8_t ch) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x082e);
+    RFU_V9_REG_DECL(0x082e);
 
     bitset<8> bs;
     bs.set(ch);
-    SP9500X_RFU_V9_REG(0x082e).ch = bs.to_ulong();
-    SP9500X_RFU_V9_W(0x082e);
+    RFU_V9_REG(0x082e).ch = bs.to_ulong();
+    RFU_V9_W(0x082e);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_src_ddc_ch(uint8_t &ch) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x082e);
+    RFU_V9_REG_DECL(0x082e);
 
     ch = 0;
     bitset<8> bs;
-    SP9500X_RFU_V9_R(0x082e);
-    bs = SP9500X_RFU_V9_REG(0x082e).ch;
+    RFU_V9_R(0x082e);
+    bs = RFU_V9_REG(0x082e).ch;
 
     if (bs.count() > 1) {
         return -1;
@@ -2055,33 +2055,33 @@ int32_t sp2406::get_iq_cap_src_ddc_ch(uint8_t &ch) const
 
 int32_t sp2406::set_iq_cap_src_dl_cpri_ch(const uint8_t ch) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x00f0);
+    RFU_V9_REG_DECL(0x00f0);
 
     bitset<8> bs;
     bs.set(ch);
 
     if (_rf_idx == 0) {
-        SP9500X_RFU_V9_REG(0x00f0).cpri0 = bs.to_ulong();
+        RFU_V9_REG(0x00f0).cpri0 = bs.to_ulong();
     } else if (_rf_idx == 1) {
-        SP9500X_RFU_V9_REG(0x00f0).cpri1 = bs.to_ulong();
+        RFU_V9_REG(0x00f0).cpri1 = bs.to_ulong();
     }
 
-    SP9500X_RFU_V9_W(0x00f0);
+    RFU_V9_W(0x00f0);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_src_dl_cpri_ch(uint8_t &ch) const
 {
-    SP9500X_RFU_V9_REG_DECL(0x00f0);
+    RFU_V9_REG_DECL(0x00f0);
 
     ch = 0;
     bitset<8> bs;
-    SP9500X_RFU_V9_R(0x00f0);
+    RFU_V9_R(0x00f0);
 
     if (_rf_idx == 0) {
-        bs = SP9500X_RFU_V9_REG(0x00f0).cpri0;
+        bs = RFU_V9_REG(0x00f0).cpri0;
     } else if (_rf_idx == 1) {
-        bs = SP9500X_RFU_V9_REG(0x00f0).cpri1;
+        bs = RFU_V9_REG(0x00f0).cpri1;
     }
 
     if (bs.count() > 1) {
@@ -2099,41 +2099,41 @@ int32_t sp2406::get_iq_cap_src_dl_cpri_ch(uint8_t &ch) const
 
 int32_t sp2406::set_iq_cap_src_duc(const iq_cap_src_duc_t &src) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x042d,0x022d);
+    RFU_V9_REG_DECL_2(0x042d,0x022d);
 
-    SP9500X_RFU_V9_REG_2(0x042d,0x022d).src = src;
-    SP9500X_RFU_V9_W_2(0x042d,0x022d);
+    RFU_V9_REG_2(0x042d,0x022d).src = src;
+    RFU_V9_W_2(0x042d,0x022d);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_src_duc(iq_cap_src_duc_t &src) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x042d,0x022d);
+    RFU_V9_REG_DECL_2(0x042d,0x022d);
 
-    SP9500X_RFU_V9_R_2(0x042d,0x022d);
-    src = iq_cap_src_duc_t::_from_integral_unchecked(SP9500X_RFU_V9_REG_2(0x042d,0x022d).src);
+    RFU_V9_R_2(0x042d,0x022d);
+    src = iq_cap_src_duc_t::_from_integral_unchecked(RFU_V9_REG_2(0x042d,0x022d).src);
     return 0;
 }
 
 int32_t sp2406::set_iq_cap_src_duc_ch(const uint8_t ch) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x042e,0x022e);
+    RFU_V9_REG_DECL_2(0x042e,0x022e);
 
     bitset<8> bs;
     bs.set(ch);
-    SP9500X_RFU_V9_REG_2(0x042e,0x022e).ch = bs.to_ulong();
-    SP9500X_RFU_V9_W_2(0x042e,0x022e);
+    RFU_V9_REG_2(0x042e,0x022e).ch = bs.to_ulong();
+    RFU_V9_W_2(0x042e,0x022e);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_src_duc_ch(uint8_t &ch) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x042e,0x022e);
+    RFU_V9_REG_DECL_2(0x042e,0x022e);
 
     ch = 0;
     bitset<8> bs;
-    SP9500X_RFU_V9_R_2(0x042e,0x022e);
-    bs = SP9500X_RFU_V9_REG_2(0x042e,0x022e).ch;
+    RFU_V9_R_2(0x042e,0x022e);
+    bs = RFU_V9_REG_2(0x042e,0x022e).ch;
 
     if (bs.count() > 1) {
         return -1;
@@ -2150,48 +2150,48 @@ int32_t sp2406::get_iq_cap_src_duc_ch(uint8_t &ch) const
 
 int32_t sp2406::set_iq_cap_sr(const iq_cap_sr_t &sr)
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0249,0x0269);
+    RFU_V9_REG_DECL_2(0x0249,0x0269);
 
-    SP9500X_RFU_V9_REG_2(0x0249,0x0269).sr = sr;
-    SP9500X_RFU_V9_W_2(0x0249,0x0269);
+    RFU_V9_REG_2(0x0249,0x0269).sr = sr;
+    RFU_V9_W_2(0x0249,0x0269);
     _ul_sequence.set_sr(122880000 * 8 / sr);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_sr(iq_cap_sr_t &sr) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0249,0x0269);
+    RFU_V9_REG_DECL_2(0x0249,0x0269);
 
-    SP9500X_RFU_V9_R_2(0x0249,0x0269);
-    sr = iq_cap_sr_t::_from_integral_unchecked(SP9500X_RFU_V9_REG_2(0x0249,0x0269).sr);
+    RFU_V9_R_2(0x0249,0x0269);
+    sr = iq_cap_sr_t::_from_integral_unchecked(RFU_V9_REG_2(0x0249,0x0269).sr);
     return 0;
 }
 
 int32_t sp2406::set_iq_cap_mode(const iq_cap_mode_t mode) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0242,0x0262);
+    RFU_V9_REG_DECL_2(0x0242,0x0262);
 
-    SP9500X_RFU_V9_REG_2(0x0242,0x0262).mode = mode;
-    SP9500X_RFU_V9_W_2(0x0242,0x0262);
+    RFU_V9_REG_2(0x0242,0x0262).mode = mode;
+    RFU_V9_W_2(0x0242,0x0262);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_mode(iq_cap_mode_t &mode) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0242,0x0262);
+    RFU_V9_REG_DECL_2(0x0242,0x0262);
 
-    SP9500X_RFU_V9_R_2(0x0242,0x0262);
-    mode = iq_cap_mode_t::_from_integral_unchecked(SP9500X_RFU_V9_REG_2(0x0242,0x0262).mode);
+    RFU_V9_R_2(0x0242,0x0262);
+    mode = iq_cap_mode_t::_from_integral_unchecked(RFU_V9_REG_2(0x0242,0x0262).mode);
     return 0;
 }
 
 int32_t sp2406::set_iq_cap_samples(const uint32_t samples)
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x024f,0x026f);
+    RFU_V9_REG_DECL_2(0x024f,0x026f);
 
     _ul_sequence._new(samples);
-    SP9500X_RFU_V9_REG_2(0x024f,0x026f).samples = samples;
-    SP9500X_RFU_V9_W_2(0x024f,0x026f);
+    RFU_V9_REG_2(0x024f,0x026f).samples = samples;
+    RFU_V9_W_2(0x024f,0x026f);
 
     return _dma_mgr.set_fpga_w_samples(samples);
 }
@@ -2203,145 +2203,145 @@ int32_t sp2406::get_iq_cap_samples(uint32_t &samples) const
 
 int32_t sp2406::set_iq_cap_trig_src(const iq_cap_trig_src_t src) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0243,0x0263);
+    RFU_V9_REG_DECL_2(0x0243,0x0263);
 
-    SP9500X_RFU_V9_REG_2(0x0243,0x0263).trig_src = src;
-    SP9500X_RFU_V9_W_2(0x0243,0x0263);
+    RFU_V9_REG_2(0x0243,0x0263).trig_src = src;
+    RFU_V9_W_2(0x0243,0x0263);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_trig_src(iq_cap_trig_src_t &src) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0243,0x0263);
+    RFU_V9_REG_DECL_2(0x0243,0x0263);
 
-    SP9500X_RFU_V9_R_2(0x0243,0x0263);
-    src = iq_cap_trig_src_t::_from_integral_unchecked(SP9500X_RFU_V9_REG_2(0x0243,0x0263).trig_src);
+    RFU_V9_R_2(0x0243,0x0263);
+    src = iq_cap_trig_src_t::_from_integral_unchecked(RFU_V9_REG_2(0x0243,0x0263).trig_src);
     return 0;
 }
 
 int32_t sp2406::set_iq_cap_trig_edge(const iq_cap_trig_edge_t edge) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0244,0x0264);
+    RFU_V9_REG_DECL_2(0x0244,0x0264);
 
-    SP9500X_RFU_V9_REG_2(0x0244,0x0264).trig_edge = edge;
-    SP9500X_RFU_V9_W_2(0x0244,0x0264);
+    RFU_V9_REG_2(0x0244,0x0264).trig_edge = edge;
+    RFU_V9_W_2(0x0244,0x0264);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_trig_edge(iq_cap_trig_edge_t &edge) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0244,0x0264);
+    RFU_V9_REG_DECL_2(0x0244,0x0264);
 
-    SP9500X_RFU_V9_R_2(0x0244,0x0264);
-    edge = iq_cap_trig_edge_t::_from_integral_unchecked(SP9500X_RFU_V9_REG_2(0x0244,0x0264).trig_edge);
+    RFU_V9_R_2(0x0244,0x0264);
+    edge = iq_cap_trig_edge_t::_from_integral_unchecked(RFU_V9_REG_2(0x0244,0x0264).trig_edge);
     return 0;
 }
 
 int32_t sp2406::set_iq_cap_trig_threshold(const uint32_t threshold) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0245,0x0265);
+    RFU_V9_REG_DECL_2(0x0245,0x0265);
 
-    SP9500X_RFU_V9_REG_2(0x0245,0x0265).threshold = threshold;
-    SP9500X_RFU_V9_W_2(0x0245,0x0265);
+    RFU_V9_REG_2(0x0245,0x0265).threshold = threshold;
+    RFU_V9_W_2(0x0245,0x0265);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_trig_threshold(uint32_t &threshold) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0245,0x0265);
+    RFU_V9_REG_DECL_2(0x0245,0x0265);
 
-    SP9500X_RFU_V9_R_2(0x0245,0x0265);
-    threshold = SP9500X_RFU_V9_REG_2(0x0245,0x0265).threshold;
+    RFU_V9_R_2(0x0245,0x0265);
+    threshold = RFU_V9_REG_2(0x0245,0x0265).threshold;
     return 0;
 }
 
 int32_t sp2406::set_iq_cap_trig_offset(const int32_t offset) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0246,0x0266);
+    RFU_V9_REG_DECL_2(0x0246,0x0266);
 
-    SP9500X_RFU_V9_REG_2(0x0246,0x0266).trig_offset = unsigned(offset);
-    SP9500X_RFU_V9_W_2(0x0246,0x0266);
+    RFU_V9_REG_2(0x0246,0x0266).trig_offset = unsigned(offset);
+    RFU_V9_W_2(0x0246,0x0266);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_trig_offset(int32_t &offset) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0246,0x0266);
+    RFU_V9_REG_DECL_2(0x0246,0x0266);
 
-    SP9500X_RFU_V9_R_2(0x0246,0x0266);
-    offset = int32_t(SP9500X_RFU_V9_REG_2(0x0246,0x0266).trig_offset);
+    RFU_V9_R_2(0x0246,0x0266);
+    offset = int32_t(RFU_V9_REG_2(0x0246,0x0266).trig_offset);
     return 0;
 }
 
 int32_t sp2406::set_iq_cap_trig_gap(const uint32_t gap) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0248,0x0268);
+    RFU_V9_REG_DECL_2(0x0248,0x0268);
 
-    SP9500X_RFU_V9_REG_2(0x0248,0x0268).trig_gap = gap;
-    SP9500X_RFU_V9_W_2(0x0248,0x0268);
+    RFU_V9_REG_2(0x0248,0x0268).trig_gap = gap;
+    RFU_V9_W_2(0x0248,0x0268);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_trig_gap(uint32_t &gap) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0248,0x0268);
+    RFU_V9_REG_DECL_2(0x0248,0x0268);
 
-    SP9500X_RFU_V9_R_2(0x0248,0x0268);
-    gap = SP9500X_RFU_V9_REG_2(0x0248,0x0268).trig_gap;
+    RFU_V9_R_2(0x0248,0x0268);
+    gap = RFU_V9_REG_2(0x0248,0x0268).trig_gap;
     return 0;
 }
 
 int32_t sp2406::set_iq_cap_trig_frame(const uint16_t frame) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x024a,0x026a);
+    RFU_V9_REG_DECL_2(0x024a,0x026a);
 
-    SP9500X_RFU_V9_REG_2(0x024a,0x026a).frame = frame;
-    SP9500X_RFU_V9_W_2(0x024a,0x026a);
+    RFU_V9_REG_2(0x024a,0x026a).frame = frame;
+    RFU_V9_W_2(0x024a,0x026a);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_trig_frame(uint16_t &frame) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x024a,0x026a);
+    RFU_V9_REG_DECL_2(0x024a,0x026a);
 
-    SP9500X_RFU_V9_R_2(0x024a,0x026a);
-    frame = SP9500X_RFU_V9_REG_2(0x024a,0x026a).frame;
+    RFU_V9_R_2(0x024a,0x026a);
+    frame = RFU_V9_REG_2(0x024a,0x026a).frame;
     return 0;
 }
 
 int32_t sp2406::set_iq_cap_trig_frame_x(const uint16_t x) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x024b,0x026b);
+    RFU_V9_REG_DECL_2(0x024b,0x026b);
 
-    SP9500X_RFU_V9_REG_2(0x024b,0x026b).x = x;
-    SP9500X_RFU_V9_W_2(0x024b,0x026b);
+    RFU_V9_REG_2(0x024b,0x026b).x = x;
+    RFU_V9_W_2(0x024b,0x026b);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_trig_frame_x(uint16_t &x) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x024b,0x026b);
+    RFU_V9_REG_DECL_2(0x024b,0x026b);
 
-    SP9500X_RFU_V9_R_2(0x024b,0x026b);
-    x = SP9500X_RFU_V9_REG_2(0x024b,0x026b).x;
+    RFU_V9_R_2(0x024b,0x026b);
+    x = RFU_V9_REG_2(0x024b,0x026b).x;
     return 0;
 }
 
 int32_t sp2406::set_iq_cap_trig_frame_y(const uint16_t y) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x024c,0x026c);
+    RFU_V9_REG_DECL_2(0x024c,0x026c);
 
-    SP9500X_RFU_V9_REG_2(0x024c,0x026c).y = y;
-    SP9500X_RFU_V9_W_2(0x024c,0x026c);
+    RFU_V9_REG_2(0x024c,0x026c).y = y;
+    RFU_V9_W_2(0x024c,0x026c);
     return 0;
 }
 
 int32_t sp2406::get_iq_cap_trig_frame_y(uint16_t &y) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x024c,0x026c);
+    RFU_V9_REG_DECL_2(0x024c,0x026c);
 
-    SP9500X_RFU_V9_R_2(0x024c,0x026c);
-    y = SP9500X_RFU_V9_REG_2(0x024c,0x026c).y;
+    RFU_V9_R_2(0x024c,0x026c);
+    y = RFU_V9_REG_2(0x024c,0x026c).y;
     return 0;
 }
 
@@ -2382,37 +2382,37 @@ int32_t sp2406::program(const v9_t fpga,const char *path)
     memset(buf,0,file_size / 4);
     fread(buf,1,file_size,fp);
 
-    SP9500X_S6_REG_DECL(0x0101);
-    SP9500X_S6_REG_DECL(0x0102);
-    SP9500X_S6_REG_DECL(0x0103);
-    SP9500X_S6_REG_DECL(0x0104);
-    SP9500X_S6_REG_DECL(0x0200);
+    RFU_S6_REG_DECL(0x0101);
+    RFU_S6_REG_DECL(0x0102);
+    RFU_S6_REG_DECL(0x0103);
+    RFU_S6_REG_DECL(0x0104);
+    RFU_S6_REG_DECL(0x0200);
 
-    SP9500X_S6_REG(0x0103).fpga = fpga;
-    SP9500X_S6_W(0x0103);
+    RFU_S6_REG(0x0103).fpga = fpga;
+    RFU_S6_W(0x0103);
 
-    SP9500X_S6_REG(0x0102).mode = 1;
-    SP9500X_S6_W(0x0102);
+    RFU_S6_REG(0x0102).mode = 1;
+    RFU_S6_W(0x0102);
 
     Log.stdprintf("Set signal PROGRAM_B ---\\___/---\n");
-    SP9500X_S6_REG(0x0101).program = 0;
-    SP9500X_S6_W(0x0101);
-    SP9500X_S6_W(0x0101);
-    SP9500X_S6_W(0x0101);
-    SP9500X_S6_W(0x0101);
-    SP9500X_S6_W(0x0101);
-    SP9500X_S6_W(0x0101);
-    SP9500X_S6_W(0x0101);
-    SP9500X_S6_W(0x0101);
+    RFU_S6_REG(0x0101).program = 0;
+    RFU_S6_W(0x0101);
+    RFU_S6_W(0x0101);
+    RFU_S6_W(0x0101);
+    RFU_S6_W(0x0101);
+    RFU_S6_W(0x0101);
+    RFU_S6_W(0x0101);
+    RFU_S6_W(0x0101);
+    RFU_S6_W(0x0101);
     sleep_ms(1000);
-    SP9500X_S6_REG(0x0101).program = 1;
-    SP9500X_S6_W(0x0101);
+    RFU_S6_REG(0x0101).program = 1;
+    RFU_S6_W(0x0101);
 
     Log.stdprintf("Waiting signal INIT_B ___/---...\n");
 
-    SP9500X_S6_R(0x0104);
-    while((fpga == BBU ? SP9500X_S6_REG(0x0104).cfg_init_0 : SP9500X_S6_REG(0x0104).cfg_init_1) == 0) {
-        SP9500X_S6_R(0x0104);
+    RFU_S6_R(0x0104);
+    while((fpga == BBU ? RFU_S6_REG(0x0104).cfg_init_0 : RFU_S6_REG(0x0104).cfg_init_1) == 0) {
+        RFU_S6_R(0x0104);
         if (++to_cnt > INT_MAX) {
             Log.stdprintf("Waiting signal INIT_B ___/--- timeout\n");
             break;
@@ -2423,16 +2423,16 @@ int32_t sp2406::program(const v9_t fpga,const char *path)
     Log.stdprintf("Waiting FIFO empty...\n");
 
     if (fpga == BBU) {
-        CTRLLER_WAIT_IDLE(SP9500X_S6,0x0104,fifo_prog_full_0,0,INT_MAX);
+        CTRLLER_WAIT_IDLE(RFU_S6,0x0104,fifo_prog_full_0,0,INT_MAX);
     } else {
-        CTRLLER_WAIT_IDLE(SP9500X_S6,0x0104,fifo_prog_full_1,0,INT_MAX);
+        CTRLLER_WAIT_IDLE(RFU_S6,0x0104,fifo_prog_full_1,0,INT_MAX);
     }
 
     Log.stdprintf("Waiting signal DONE ---\\___...\n");
     to_cnt = 0;
-    SP9500X_S6_R(0x0104);
-    while ((fpga == BBU ? SP9500X_S6_REG(0x0104).cfg_done_0 : SP9500X_S6_REG(0x0104).cfg_done_1) == 1) {
-        SP9500X_S6_R(0x0104);
+    RFU_S6_R(0x0104);
+    while ((fpga == BBU ? RFU_S6_REG(0x0104).cfg_done_0 : RFU_S6_REG(0x0104).cfg_done_1) == 1) {
+        RFU_S6_R(0x0104);
         if (++to_cnt > 100000) {
             Log.stdprintf("Waiting signal DONE ---\\___ timeout\n");
             break;
@@ -2450,9 +2450,9 @@ int32_t sp2406::program(const v9_t fpga,const char *path)
         }
 
         if (fpga == BBU) {
-            CTRLLER_WAIT_IDLE(SP9500X_S6,0x0104,fifo_prog_full_0,0,INT_MAX);
+            CTRLLER_WAIT_IDLE(RFU_S6,0x0104,fifo_prog_full_0,0,INT_MAX);
         } else {
-            CTRLLER_WAIT_IDLE(SP9500X_S6,0x0104,fifo_prog_full_1,0,INT_MAX);
+            CTRLLER_WAIT_IDLE(RFU_S6,0x0104,fifo_prog_full_1,0,INT_MAX);
         }
         Log.stdprintf("%-5d Done\r",i);
     }
@@ -2466,12 +2466,12 @@ int32_t sp2406::program(const v9_t fpga,const char *path)
     }
 
     sleep_ms(1000);
-    SP9500X_S6_R(0x0104);
+    RFU_S6_R(0x0104);
     Log.stdprintf("\n");
     delete []buf;
     fclose(fp);
 
-    if ((fpga == BBU ? SP9500X_S6_REG(0x0104).cfg_done_0 : SP9500X_S6_REG(0x0104).cfg_done_1) == 1) {
+    if ((fpga == BBU ? RFU_S6_REG(0x0104).cfg_done_0 : RFU_S6_REG(0x0104).cfg_done_1) == 1) {
 #ifdef RD_PLATFORM_WIN32
         sleep_ms(10);
         Log.stdprintf("Rescanning...\n");

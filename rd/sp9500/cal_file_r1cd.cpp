@@ -348,7 +348,7 @@ int32_t cal_file_r1cd::update_rx_filter_table()
     }
 
     for (uint64_t freq = rx_freq_star;freq <= rx_freq_stop;freq += r1c::rx_freq_step_called) {
-        memset(&tempData_80,0,sizeof(tempData_80));
+        ZERO_OBJ(tempData_80);
         for (uint32_t i = 0;i < ul_filter_tap;i ++) {
             fscanf(fp_real,"%hd,",&(tempData_80.coef_real[i]));
         }
@@ -393,7 +393,7 @@ int32_t cal_file_r1cd::update_rx_filter_table()
 
     idx = 0;
     for (uint64_t freq = rx_freq_star;freq <= rx_freq_stop;freq += r1c::rx_freq_step_called) {
-        memset(&tempData_160,0,sizeof(tempData_160));
+        ZERO_OBJ(tempData_160);
         for (uint32_t i = 0;i < ul_filter_tap;i ++) {
             fscanf(fp_real,"%hd,",&(tempData_160.coef_real[i]));
         }

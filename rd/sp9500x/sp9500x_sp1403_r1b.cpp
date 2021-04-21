@@ -86,11 +86,11 @@ int32_t ns_sp9500x::sp1403_r1b::set_tx_freq(const uint64_t freq)
     bool reset_dac = false;
     double freq_dac = 0.0;
     uint8_t inversion = (freq <= FREQ_M(3000) ? 0 : 1);
-    SP9500X_RFU_V9_REG_DECL(0x0462);
-    SP9500X_RFU_V9_R(0x0462);
-    SP9500X_RFU_V9_REG(0x0462).tx_0 = inversion;
-    SP9500X_RFU_V9_REG(0x0462).tx_1 = inversion;
-    SP9500X_RFU_V9_W(0x0462);
+    RFU_V9_REG_DECL(0x0462);
+    RFU_V9_R(0x0462);
+    RFU_V9_REG(0x0462).tx_0 = inversion;
+    RFU_V9_REG(0x0462).tx_1 = inversion;
+    RFU_V9_W(0x0462);
 
     if (freq <= FREQ_M(3000)) {
         reset_dac = true;
@@ -168,11 +168,11 @@ int32_t ns_sp9500x::sp1403_r1b::set_rx_freq(const uint64_t freq)
     bool reset_dac = false;
     double freq_dac = 0.0;
     uint8_t inversion = (freq <= FREQ_M(1000) ? 0 : 1);
-    SP9500X_RFU_V9_REG_DECL(0x0462);
-    SP9500X_RFU_V9_R(0x0462);
-    SP9500X_RFU_V9_REG(0x0462).rx_0 = inversion;
-    SP9500X_RFU_V9_REG(0x0462).rx_1 = inversion;
-    SP9500X_RFU_V9_W(0x0462);
+    RFU_V9_REG_DECL(0x0462);
+    RFU_V9_R(0x0462);
+    RFU_V9_REG(0x0462).rx_0 = inversion;
+    RFU_V9_REG(0x0462).rx_1 = inversion;
+    RFU_V9_W(0x0462);
 
     SP1403_S6_REG(0x4).lo_sw1 = _rx_lmx2594_0->freq < FREQ_M(9750) ? 1 : 0;
     SP1403_S6_REG(0x4).lo_sw2 = !SP1403_S6_REG(0x4).lo_sw1;
@@ -285,14 +285,14 @@ int32_t ns_sp9500x::sp1403_r1b::get_det_sw(det_sw_t &sw) const
 
 int32_t ns_sp9500x::sp1403_r1b::get_ad7680(uint16_t &det) const
 {
-    SP9500X_RFU_V9_REG_DECL_2(0x0114,0x0134);
-    SP9500X_RFU_V9_REG_DECL_2(0x0115,0x0135);
-    SP9500X_RFU_V9_REG_DECL_2(0x0117,0x0137);
+    RFU_V9_REG_DECL_2(0x0114,0x0134);
+    RFU_V9_REG_DECL_2(0x0115,0x0135);
+    RFU_V9_REG_DECL_2(0x0117,0x0137);
 
-    SP9500X_RFU_V9_OP_2(0x0114,0x0134);
-    SP9500X_RFU_V9_WAIT_IDLE_2(0x0117,0x0137,0,INT_MAX);
-    SP9500X_RFU_V9_R_2(0x0115,0x0135);
-    det = SP9500X_RFU_V9_REG_2(0x0115,0x0135).det;
+    RFU_V9_OP_2(0x0114,0x0134);
+    RFU_V9_WAIT_IDLE_2(0x0117,0x0137,0,INT_MAX);
+    RFU_V9_R_2(0x0115,0x0135);
+    det = RFU_V9_REG_2(0x0115,0x0135).det;
     return 0;
 }
 

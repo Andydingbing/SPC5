@@ -129,10 +129,10 @@ int32_t SP9500X_RF_SetRxFrequencyShift(const uint32_t RFIndex,const int64_t Freq
 
     vi_pci_dev *_v9 = SP3103_0.v9();
 
-    SP9500X_RFU_V9_REG_DECL(0x0462);
-    SP9500X_RFU_V9_R(0x0462);
+    RFU_V9_REG_DECL(0x0462);
+    RFU_V9_R(0x0462);
     INT_CHECK(SP1403->set_rx_freq(uint64_t(int64_t(FREQ_M(7500)) - Freq)));
-    SP9500X_RFU_V9_W(0x0462);
+    RFU_V9_W(0x0462);
     return 0;
 }
 
@@ -185,12 +185,10 @@ int32_t SP9500X_RF_SetTxCAMap(const uint32_t RFIndex,const RD_SP9500X_CA_Map &Ma
 
     for (uint8_t i = 0;i < ARRAY_SIZE(Map.Carrier);++i) {
         if (Map.Carrier[i].Bandwidth == SP9500X_CA_Invalid) {
-//            INT_CHECK(SP2406->set_dl_src(Map.Carrier[i].Channel,dl_src_t::Disable));
             continue;
         }
 
         INT_CHECK(SP2406->set_dl_src(Map.Carrier[i].Channel,dl_src_t::CPRI));
-//        INT_CHECK(SP2406->set_dl_cpri_map(Map.Carrier[i].Channel,i));
 
         freq = Map.Carrier[i].Freq;
         if (Map.Carrier[i].Channel < 4) {
@@ -257,8 +255,6 @@ int32_t SP9500X_RF_SetRxCAMap(const uint32_t RFIndex,const RD_SP9500X_CA_Map &Ma
             continue;
         }
 
-//        INT_CHECK(SP2406->set_ul_cpri_map(Map.Carrier[i].Channel,i));
-
         freq = Map.Carrier[i].Freq;
         if (Map.Carrier[i].Channel < 4) {
             freq_min_ch_0_3 = freq < freq_min_ch_0_3 ? freq : freq_min_ch_0_3;
@@ -319,12 +315,8 @@ int32_t SP9500X_RF_SetARBCount(const uint32_t RFIndex,const int Count)
 
 int32_t SP9500X_RF_SetIQCaptureBuffer(const uint32_t RFIndex,int16_t **I,int16_t **Q)
 {
-//    if (*I == nullptr || *Q == nullptr) {
-//        Log.set_last_err("IQ Capture buffer null.");
-//        return -1;
-//    }
-
     DECL_DYNAMIC_SP3103;
+
     *I = SP3103_0.working_sp2406(rf_idx)->ul_sequence()->i();
     *Q = SP3103_0.working_sp2406(rf_idx)->ul_sequence()->q();
     return 0;
@@ -389,55 +381,55 @@ int32_t SP9500X_RF_SetIQCaptureAbort(const uint32_t RFIndex)
 
 int32_t SP9500X_HardResetChips()
 {
-    SP9500X_S6_REG_DECL(0x0002);
+    RFU_S6_REG_DECL(0x0002);
 
     vi_pci_dev *_s6 = SP3103_0.s6();
 
-    SP9500X_S6_OP(0x0002);
+    RFU_S6_OP(0x0002);
 
-    SP9500X_S6_REG(0x0002).op = 0;
-    SP9500X_S6_W(0x0002);
-    SP9500X_S6_REG(0x0002).op = 1;
-    SP9500X_S6_W(0x0002);
+    RFU_S6_REG(0x0002).op = 0;
+    RFU_S6_W(0x0002);
+    RFU_S6_REG(0x0002).op = 1;
+    RFU_S6_W(0x0002);
     sleep_ms(2);
-    SP9500X_S6_REG(0x0002).op = 0;
-    SP9500X_S6_W(0x0002);
+    RFU_S6_REG(0x0002).op = 0;
+    RFU_S6_W(0x0002);
     return 0;
 }
 
 int32_t SP9500X_SoftResetChips()
 {
-    SP9500X_S6_REG_DECL(0x0004);
+    RFU_S6_REG_DECL(0x0004);
 
     vi_pci_dev *_s6 = SP3103_0.s6();
 
-    SP9500X_S6_OP(0x0004);
-    SP9500X_S6_REG(0x0004).op = 0;
-    SP9500X_S6_W(0x0004);
+    RFU_S6_OP(0x0004);
+    RFU_S6_REG(0x0004).op = 0;
+    RFU_S6_W(0x0004);
     return 0;
 }
 
 int32_t SP9500X_ZU21_ConfigStatus(bool &done)
 {
-    SP9500X_S6_REG_DECL(0x0120);
+    RFU_S6_REG_DECL(0x0120);
 
     vi_pci_dev *_s6 = SP3103_0.s6();
 
-    SP9500X_S6_R(0x0120);
-    done = SP9500X_S6_REG(0x0120).cfg_done == 1;
+    RFU_S6_R(0x0120);
+    done = RFU_S6_REG(0x0120).cfg_done == 1;
     return 0;
 }
 
 int32_t SP9500X_JESD_Reset(const RD_SP9500X_JESD jesd)
 {
-    SP9500X_RFU_V9_REG_DECL(0x0440);
+    RFU_V9_REG_DECL(0x0440);
 
     vi_pci_dev *_v9 = SP3103_0.v9();
 
-    SP9500X_RFU_V9_REG_DATA(0x0440) = jesd;
-    SP9500X_RFU_V9_W(0x0440);
-    SP9500X_RFU_V9_REG_DATA(0x0440) = 0;
-    SP9500X_RFU_V9_W(0x0440);
+    RFU_V9_REG_DATA(0x0440) = jesd;
+    RFU_V9_W(0x0440);
+    RFU_V9_REG_DATA(0x0440) = 0;
+    RFU_V9_W(0x0440);
     return 0;
 }
 
@@ -449,41 +441,41 @@ int32_t SP9500X_AD998X_Status(bool &status)
 
 int32_t SP9500X_SetFan(const uint32_t FanIndex,const uint32_t Speed)
 {
-    SP9500X_RFU_V9_REG_DECL(0x0480);
-    SP9500X_RFU_V9_REG_DECL(0x0481);
-    SP9500X_RFU_V9_REG_DECL(0x0482);
-    SP9500X_RFU_V9_REG_DECL(0x0485);
-    SP9500X_RFU_V9_REG_DECL(0x0486);
-    SP9500X_RFU_V9_REG_DECL(0x0487);
+    RFU_V9_REG_DECL(0x0480);
+    RFU_V9_REG_DECL(0x0481);
+    RFU_V9_REG_DECL(0x0482);
+    RFU_V9_REG_DECL(0x0485);
+    RFU_V9_REG_DECL(0x0486);
+    RFU_V9_REG_DECL(0x0487);
 
     vi_pci_dev *_v9 = SP3103_0.v9();
 
-    SP9500X_RFU_V9_REG(0x0480).mode = 1;
-    SP9500X_RFU_V9_REG(0x0485).mode = 1;
-    SP9500X_RFU_V9_W(0x0480);
-    SP9500X_RFU_V9_W(0x0485);
+    RFU_V9_REG(0x0480).mode = 1;
+    RFU_V9_REG(0x0485).mode = 1;
+    RFU_V9_W(0x0480);
+    RFU_V9_W(0x0485);
 
     if (FanIndex < 12) {
-        SP9500X_RFU_V9_REG(0x0482).reg = 0x32 + FanIndex % 4;
+        RFU_V9_REG(0x0482).reg = 0x32 + FanIndex % 4;
 
         if (FanIndex < 4) {
-            SP9500X_RFU_V9_REG(0x0482).id = 0x2f;
+            RFU_V9_REG(0x0482).id = 0x2f;
         } else if (FanIndex < 8) {
-            SP9500X_RFU_V9_REG(0x0482).id = 0x2e;
+            RFU_V9_REG(0x0482).id = 0x2e;
         } else {
-            SP9500X_RFU_V9_REG(0x0482).id = 0x2c;
+            RFU_V9_REG(0x0482).id = 0x2c;
         }
 
-        SP9500X_RFU_V9_REG(0x0482).speed = Speed;
-        SP9500X_RFU_V9_W(0x0482);
-        SP9500X_RFU_V9_OP(0x0481);
+        RFU_V9_REG(0x0482).speed = Speed;
+        RFU_V9_W(0x0482);
+        RFU_V9_OP(0x0481);
     } else {
-        SP9500X_RFU_V9_REG(0x0487).reg = 0x32 + FanIndex % 4;
-        SP9500X_RFU_V9_REG(0x0487).id  = 0x2f;
+        RFU_V9_REG(0x0487).reg = 0x32 + FanIndex % 4;
+        RFU_V9_REG(0x0487).id  = 0x2f;
 
-        SP9500X_RFU_V9_REG(0x0487).speed = Speed;
-        SP9500X_RFU_V9_W(0x0487);
-        SP9500X_RFU_V9_OP(0x0486);
+        RFU_V9_REG(0x0487).speed = Speed;
+        RFU_V9_W(0x0487);
+        RFU_V9_OP(0x0486);
     }
     sleep_ms(10);
     return 0;

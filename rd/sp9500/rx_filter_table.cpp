@@ -50,37 +50,18 @@ void rx_if_fr_table::get(double freq,data_f_t *data)
 
 void rx_if_fr_table::save_as(const char *path)
 {
-    FILE *fp = fopen(path,"w");
-    if (nullptr == fp)
-		return;
 
-    data_f_t data;
-    for (double freq = ul_filter_160M_freq_star;freq <= ul_filter_160M_freq_stop;freq += ul_filter_freq_step) {
-        get(freq,&data);
-        fprintf(fp, "freq : %.3f \t power : %.3f\n",freq,data.pwr);
-	}
-	fclose(fp);
 }
 
 // 80m
 rx_filter_80m_table::data_f_t::data_f_t()
 {
     freq = 0;
-    for (uint32_t i = 0;i < ARRAY_SIZE(coef_real);i ++)
-        coef_real[i] = 0;
-    for (uint32_t i = 0;i < ARRAY_SIZE(coef_imag);i ++)
-        coef_imag[i] = 0;
-    for (uint32_t i = 0;i < ARRAY_SIZE(temp);i ++)
-        temp[i] = 0.0;
-    time.tm_sec = 0;
-    time.tm_min = 0;
-    time.tm_hour = 0;
-    time.tm_mday = 0;
-    time.tm_mon = 0;
-    time.tm_year = 0;
-    time.tm_wday = 0;
-    time.tm_yday = 0;
-    time.tm_isdst = 0;
+
+    ZERO_ARRAY(coef_real);
+    ZERO_ARRAY(coef_imag);
+    ZERO_ARRAY(temp);
+    ZERO_OBJ(time);
 }
 
 void rx_filter_80m_table::data_m_t::_2double(double *real,double *imag)
@@ -95,8 +76,9 @@ IMPLEMENT_RX_CAL_ITEM_TABLE(rx_filter_80m_table)
 
 void rx_filter_80m_table::map2mem()
 {
-    if (nullptr == m_data_f)
+    if (m_data_f == nullptr) {
 		return;
+    }
 
     uint32_t idx_f = 0;
     uint32_t idx_m = 0;
@@ -136,25 +118,15 @@ void rx_filter_80m_table::save_as(const char *path)
 
 }
 
-//_160M
+// 160M
 rx_filter_160m_table::data_f_t::data_f_t()
 {
     freq = 0;
-    for (uint32_t i = 0;i < ARRAY_SIZE(coef_real);i ++)
-        coef_real[i] = 0;
-    for (uint32_t i = 0;i < ARRAY_SIZE(coef_imag);i ++)
-        coef_imag[i] = 0;
-    for (uint32_t i = 0;i < ARRAY_SIZE(temp);i ++)
-        temp[i] = 0.0;
-    time.tm_sec = 0;
-    time.tm_min = 0;
-    time.tm_hour = 0;
-    time.tm_mday = 0;
-    time.tm_mon = 0;
-    time.tm_year = 0;
-    time.tm_wday = 0;
-    time.tm_yday = 0;
-    time.tm_isdst = 0;
+
+    ZERO_ARRAY(coef_real);
+    ZERO_ARRAY(coef_imag);
+    ZERO_ARRAY(temp);
+    ZERO_OBJ(time);
 }
 
 void rx_filter_160m_table::data_m_t::_2double(double *real,double *imag)
@@ -169,8 +141,9 @@ IMPLEMENT_RX_CAL_ITEM_TABLE(rx_filter_160m_table)
 
 void rx_filter_160m_table::map2mem()
 {
-    if (nullptr == m_data_f)
+    if (m_data_f == nullptr) {
 		return;
+    }
 
     uint32_t idx_f = 0;
     uint32_t idx_m = 0;
