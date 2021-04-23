@@ -30,14 +30,18 @@ Q_HMC832_Dlg::Q_HMC832_Dlg(rf_dt3308_f::lo_t lo, QWidget *parent) :
     HMC83X_VCO_REG_DECL_0x01;
     HMC83X_VCO_REG_DECL_0x02;
     HMC83X_VCO_REG_DECL_0x03;
-    HMC83X_VCO_REG_DECL_0x05;
     HMC83X_VCO_REG_DECL_0x07;
 
     hmc83x_t LOType = rf_dt3308_f::lo_type(LO);
     if (LOType == HMC832) {
-        HMC832_REG_INIT;
+
     } else if (LOType == HMC833) {
-        HMC833_REG_INIT
+        HMC83X_PLL_REG_DATA(0x09) = 0x547fff;
+        HMC83X_PLL_REG_DATA(0x0a) = 0x002046;
+        HMC83X_PLL_REG_DATA(0x0b) = 0x0fc021;
+        HMC83X_VCO_REG_DATA(0x01) = 0x001f;
+        HMC83X_VCO_REG_DATA(0x02) = 0x00c1;
+        HMC83X_VCO_REG_DATA(0x03) = 0x0051;
     }
 
     ui->lineEditRFFreq->setText("2G");

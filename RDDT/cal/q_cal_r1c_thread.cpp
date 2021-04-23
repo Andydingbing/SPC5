@@ -48,11 +48,17 @@ void QCalR1CThread::run()
 
 void QCalR1CThread::waitSubThread(int timeout)
 {
+#if (QT_VERSION < QT_VERSION_CHECK(4,7,0))
     QTime timer;
+#else
+    QElapsedTimer timer;
+#endif
+
     timer.start();
+    timeout = timeout ? timeout : int(0x7fffffff);
 
     subThreadRunning = true;
-    for (;timer.elapsed() < timeout ? timeout : int(0x7FFFFFFF);) {
+    for (int t = 0;t < timeout;++t) {
         if (subThreadRunning == false) {
             return;
         }

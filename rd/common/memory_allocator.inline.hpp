@@ -90,7 +90,7 @@ int32_t memory_allocator::r32(const uint32_t *buf,const uint32_t size,const uint
     INT_CHECK(memory_idx(offset,idx,offset_phy));
 
     size_read = _memory[idx]->size() - offset_phy;
-    size_read = size_read > size_left ? size_left : size_read;
+    size_read = size_read > uint32_t(size_left) ? uint32_t(size_left) : size_read;
     INT_CHECK(_memory[idx]->r32(buf_cur,size_read,offset_phy));
 
     size_left -= size_read;
@@ -102,7 +102,7 @@ int32_t memory_allocator::r32(const uint32_t *buf,const uint32_t size,const uint
             return 0;
         }
 
-        size_read = size_left > _memory[idx]->size() ? _memory[idx]->size() : size_left;
+        size_read = uint32_t(size_left) > _memory[idx]->size() ? _memory[idx]->size() : uint32_t(size_left);
         INT_CHECK(_memory[idx]->r32(buf_cur,size_read));
 
         ++idx;

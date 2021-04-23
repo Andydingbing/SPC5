@@ -11,34 +11,39 @@
 
 namespace rd {
 
-// A general integer class,support 255 max width of the number part.
+// A general integer class
 class RD_API gen_int
 {
 public:
     gen_int(const char *in = nullptr)
     {
-        memset(m_num,0,sizeof(m_num));
-        m_sign = '+';
+        ZERO_ARRAY(_num);
+        _sign = '+';
+
         if (in == nullptr) {
             return;
         }
 
-        m_sign = (!(in[0] - '-') || !(in - '+') ? in[0] : '+');
+        _sign = (!(in[0] - '-') || !(in - '+') ? in[0] : '+');
+
         int start_pos = (!(in[0] - '-') || !(in - '+') ? 1 : 0);
         int num_idx = 0;
+
         for (int i = int(strlen(in) - 1);i >= start_pos;i --) {
             if (in[i] >= '0' && in[i] <= '9') {
-                m_num[num_idx] = in[i] - '0';
+                _num[num_idx] = in[i] - '0';
                 num_idx ++;
             }
         }
     }
 
+    gen_int(const gen_int &in) { *this = in; }
+
     short get_digit() const
     {
         short i = MAX_DIGIT;
         for (i = MAX_DIGIT;i >= 0;i --) {
-            if (m_num[i]) {
+            if (_num[i]) {
                 break;
             }
         }
@@ -46,13 +51,14 @@ public:
         return i + 1;
     }
 
-    gen_int abs(const gen_int src)
+    gen_int abs(const gen_int& src)
     {
         gen_int res;
+
         for (short i = 0;i < MAX_DIGIT + 1;i ++) {
-            res.m_num[i] = src.m_num[i];
+            res._num[i] = src._num[i];
         }
-        res.m_sign = '+';
+        res._sign = '+';
         return res;
     }
 
@@ -61,10 +67,11 @@ public:
     gen_int operator - ()
     {
         gen_int res;
+
         for (short i = 0;i < MAX_DIGIT + 1;i ++) {
-            res.m_num[i] = m_num[i];
+            res._num[i] = _num[i];
         }
-        res.m_sign = ((0 == m_sign - '+') ? '-' : '+');
+        res._sign = ((0 == _sign - '+') ? '-' : '+');
         return res;
     }
 
@@ -77,38 +84,38 @@ public:
         short smaxDigit = this_digit > add_end_digit ? this_digit : add_end_digit;
         int i = 0;
 
-        if (0 == (m_sign - add_end.m_sign)) {
+        if (0 == (_sign - add_end._sign)) {
             for (i = 0;i < smaxDigit;i ++) {
-                res.m_num[i] = m_num[i] + add_end.m_num[i] + carry;
-                if (res.m_num[i] >= 10) {
+                res._num[i] = _num[i] + add_end._num[i] + carry;
+                if (res._num[i] >= 10) {
                     carry = 1;
-                    res.m_num[i] -= 10;
+                    res._num[i] -= 10;
                 } else {
                     carry = 0;
                 }
             }
-            res.m_num[i] = carry;
+            res._num[i] = carry;
         } else {
             gen_int *max = (abs(*this) >= abs(add_end) ? this : const_cast<gen_int *>(&add_end));
             gen_int *min = (max == this ? const_cast<gen_int *>(&add_end) : this);
 
             for (i = 0;i < smaxDigit;i ++) {
-                max->m_num[i] -= carry;
-                if (max->m_num[i] < 0) {
-                    max->m_num[i] = 9;
+                max->_num[i] -= carry;
+                if (max->_num[i] < 0) {
+                    max->_num[i] = 9;
                     carry = 1;
-                    res.m_num[i] = max->m_num[i] - min->m_num[i];
+                    res._num[i] = max->_num[i] - min->_num[i];
                     continue;
                 }
-                if (max->m_num[i] < min->m_num[i]) {
-                    max->m_num[i] += 10;
+                if (max->_num[i] < min->_num[i]) {
+                    max->_num[i] += 10;
                     carry = 1;
                 } else {
                     carry = 0;
                 }
-                res.m_num[i] = max->m_num[i] - min->m_num[i];
+                res._num[i] = max->_num[i] - min->_num[i];
             }
-            res.m_sign = ((0 == max->m_sign - '+') ? '+' : '-');
+            res._sign = ((0 == max->_sign - '+') ? '+' : '-');
         }
         return res;
     }
@@ -116,7 +123,7 @@ public:
     gen_int operator - (const gen_int minu_end)
     {
         gen_int res = minu_end;
-        res.m_sign = ((0 == res.m_sign - '+') ? '-' : '+');
+        res._sign = ((0 == res._sign - '+') ? '-' : '+');
         return (*this + res);
     }
 
@@ -126,10 +133,11 @@ public:
         short multi_digit = multiplier.get_digit();
         gen_int this_positive = abs(*this);
         gen_int multi_positive = abs(multiplier);
+
         for (short i = 0;i < multi_digit;i ++) {
-            res += (this_positive * multi_positive.m_num[i]) << i;
+            res += (this_positive * multi_positive._num[i]) << i;
         }
-        res.m_sign = (0 == m_sign - multiplier.m_sign ? '+' : '-');
+        res._sign = (0 == _sign - multiplier._sign ? '+' : '-');
         return res;
     }
 
@@ -142,19 +150,20 @@ public:
         short to = this_copy.get_digit() - 1,from = to - div_digit + 1;
         uint64_t div_end = this_copy._2ull(from,to);
         uint64_t remainder = 0;
+
         if (div_end < divider_abs) {
             from --;
             from = from < 0 ? 0 : from;
             div_end = this_copy._2ull(from,to);
         }
         for (short i = from;i >= 0;i --) {
-            res.m_num[i] = short(div_end / divider_abs);
+            res._num[i] = short(div_end / divider_abs);
             remainder = div_end % divider_abs;
             for (short j = 0;j <= div_digit;j ++) {
-                this_copy.m_num[from + j] = short(remainder % uint64_t(pow(10.0,j + 1)) / uint64_t(pow(10.0,j)));
+                this_copy._num[from + j] = short(remainder % uint64_t(pow(10.0,j + 1)) / uint64_t(pow(10.0,j)));
             }
             from --;
-            if (!this_copy.m_num[to]) {
+            if (!this_copy._num[to]) {
                 to --;
             }
             div_end = this_copy._2ull(from,to);
@@ -163,8 +172,8 @@ public:
         if (divider_abs * 5 < remainder) {
             res ++;
         }
-        if ((0 == this_copy.m_sign - '+' && divider < 0) || (0 == this_copy.m_sign - '-' && divider > 0)) {
-            res.m_sign = '-';
+        if ((0 == this_copy._sign - '+' && divider < 0) || (0 == this_copy._sign - '-' && divider > 0)) {
+            res._sign = '-';
         }
         return res;
     }
@@ -178,19 +187,20 @@ public:
         short to = this_copy.get_digit() - 1,from = to - sDivDigit + 1;
         uint64_t div_end = this_copy._2ull(from,to);
         uint64_t remainder = 0;
+
         if (div_end < divider_abs) {
             from --;
             from = from < 0 ? 0 : from;
             div_end = this_copy._2ull(from,to);
         }
         for (short i = from;i >= 0;i --) {
-            Res.m_num[i] = short(div_end / divider_abs);
+            Res._num[i] = short(div_end / divider_abs);
             remainder = div_end % divider_abs;
             for (short j = 0;j <= sDivDigit;j ++) {
-                this_copy.m_num[from + j] = short(remainder % uint64_t(pow(10.0,j + 1)) / uint64_t(pow(10.0,j)));
+                this_copy._num[from + j] = short(remainder % uint64_t(pow(10.0,j + 1)) / uint64_t(pow(10.0,j)));
             }
             from --;
-            if (!this_copy.m_num[to]) {
+            if (!this_copy._num[to]) {
                 to --;
             }
             div_end = this_copy._2ull(from,to);
@@ -198,12 +208,12 @@ public:
         return remainder;
     }
 
-    gen_int operator = (const gen_int src)
+    gen_int& operator = (const gen_int& src)
     {
         for (short i = 0;i < MAX_DIGIT + 1;i ++) {
-            m_num[i] = src.m_num[i];
+            _num[i] = src._num[i];
         }
-        m_sign = src.m_sign;
+        _sign = src._sign;
         return *this;
     }
 
@@ -244,26 +254,35 @@ public:
 
     bool operator == (const gen_int compare)
     {
-        if (m_sign - compare.m_sign)
+        if (_sign - compare._sign) {
             return false;
+        }
+
         for (short i = 0;i < MAX_DIGIT + 1;i ++) {
-            if (m_num[i] != compare.m_num[i])
+            if (_num[i] != compare._num[i]) {
                 return false;
+            }
         }
         return true;
     }
 
     bool operator > (const gen_int compare)
     {
-        if (m_sign < compare.m_sign) return true;
-        if (m_sign > compare.m_sign) return false;
+        if (_sign < compare._sign) {
+            return true;
+        }
+
+        if (_sign > compare._sign) {
+            return false;
+        }
+
         for (short i = MAX_DIGIT;i >= 0;i --) {
-            if ((0 == m_num[i] && 0 == compare.m_num[i]) || (m_num[i] == compare.m_num[i])) {
+            if ((0 == _num[i] && 0 == compare._num[i]) || (_num[i] == compare._num[i])) {
                 continue;
-            } else if (m_num[i] > compare.m_num[i]) {
-                return (0 == m_sign - '+') ?  true : false;
+            } else if (_num[i] > compare._num[i]) {
+                return (0 == _sign - '+') ?  true : false;
             } else {
-                return (0 == m_sign - '+') ? false : true;
+                return (0 == _sign - '+') ? false : true;
             }
         }
         return false;
@@ -281,10 +300,10 @@ public:
         }
         if (digit > 0) {
             for (short i = MAX_DIGIT;i >= digit;i --) {
-                m_num[i] = m_num[i - digit];
+                _num[i] = _num[i - digit];
             }
             for (short i = 0;i < digit;i ++) {
-                m_num[i] = 0;
+                _num[i] = 0;
             }
         }
         return *this;
@@ -298,10 +317,10 @@ public:
         if (digit > 0) {
             short i = 0;
             for (i = 0;i < MAX_DIGIT - digit;i ++) {
-                m_num[i] = m_num[i + digit];
+                _num[i] = _num[i + digit];
             }
             for (;i < MAX_DIGIT;i++) {
-                m_num[i] = 0;
+                _num[i] = 0;
             }
         }
         return *this;
@@ -313,28 +332,30 @@ public:
     {
         short sDigit = to - from + 1;
         unsigned long long res = 0;
+
         for (short i = 0;i < sDigit;i ++) {
-            res += uint64_t(m_num[from + i]) * uint64_t(pow(10.0,i));
+            res += uint64_t(_num[from + i]) * uint64_t(pow(10.0,i));
         }
         return res;
     }
 
-    short odd_part() { return short(m_num[0] % 2); }
+    short odd_part() { return short(_num[0] % 2); }
 
     void _2bin_s(short *bin,short digit)
     {
-        short res[MAX_BINARY_DIGIT];
-        memset(res,0,sizeof(res));
+        short res[MAX_BINARY_DIGIT] = {0};
         gen_int divider = abs(*this);
         gen_int div_res("1");
-        short i = 0,j = 0;
+        short i = 0;
+        short j = 0;
+
         while (gen_int("0") != div_res) {
             div_res = divider / 2;
             res[i] = divider.odd_part();
             divider = div_res;
             i ++;
         }
-        if ((0 == m_sign - '-') && (gen_int("0") != *this)) {
+        if ((0 == _sign - '-') && (gen_int("0") != *this)) {
             short carry = 0;
             for (short i = 0;i < MAX_BINARY_DIGIT;i ++) {
                 res[i] = (0 == res[i] ? 1 : 0);
@@ -359,8 +380,10 @@ public:
     void _2ui64(unsigned int &high,unsigned int &low)
     {
         short bin[64] = {0};
+
         high = low = 0;
         _2bin_s(bin,64);
+
         for (short i = 0;i < 32;i ++) {
             low  += bin[i] << i;
             high += bin[32 + i] << i;
@@ -374,19 +397,21 @@ public:
         short digit = get_digit();
         short carry = 0;
         short i = 0;
+
         for (i = 0;i < digit;i ++) {
-            res.m_num[i] = m_num[i] * multiplier + carry;
-            carry = res.m_num[i] / 10;
-            res.m_num[i] -= carry * 10;
+            res._num[i] = _num[i] * multiplier + carry;
+            carry = res._num[i] / 10;
+            res._num[i] -= carry * 10;
         }
-        res.m_num[i] = carry;
-        res.m_sign = (0 == m_sign - multi_sign ? '+' : '-');
+        res._num[i] = carry;
+        res._sign = (0 == _sign - multi_sign ? '+' : '-');
         return res;
     }
 
     short get_digit(const unsigned long long src)
     {
         short j = 1;
+
         for (unsigned long long i = 10;;i *= 10) {
             if (0 == src / i)
                 break;
@@ -396,10 +421,10 @@ public:
     }
 
 private:
-    short m_num[MAX_DIGIT + 1];
-    char m_sign;
+    short _num[MAX_DIGIT + 1];
+    char _sign;
 };
 
 } //namespace rd
 
-#endif // GEN_INT_H
+#endif // GEN_INT_HPP

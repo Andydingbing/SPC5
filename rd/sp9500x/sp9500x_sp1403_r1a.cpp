@@ -299,7 +299,6 @@ int32_t ns_sp9500x::sp1403_r1a::set_rx_freq(const uint64_t freq)
         return 0;
     }
 
-    SP1403_S6_REG_DECL(0x3);
     SP1403_S6_REG_DECL(0x4);
 
     rx_freq_to_lo(freq);
@@ -660,9 +659,9 @@ int32_t ns_sp9500x::sp1403_r1a::set_tx_state(const port_t port,const data_f_tx_p
 
 double ns_sp9500x::sp1403_r1a::tx_base_pwr(const uint64_t freq,const io_mode_t mode) const
 {
-    if (is_between(freq,FREQ_M(0),FREQ_M(6500))) {
+    if (is_between(freq,uint64_t(FREQ_M(0)),uint64_t(FREQ_M(6500)))) {
         return mode == OUTPUT ? 0.0 : -6.0;
-    } else if (is_before(freq,FREQ_M(7900))) {
+    } else if (is_before(freq,uint64_t(FREQ_M(7900)))) {
         return mode == OUTPUT ? -8.0 : -14.0;
     } else {
         return mode == OUTPUT ? -15.0 : -21.0;

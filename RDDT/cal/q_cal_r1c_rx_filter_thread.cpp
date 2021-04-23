@@ -342,7 +342,7 @@ void QCalR1CRXFilterThread::updateCalFile()
     }
 
     for (quint64 freq = rx_freq_star;freq <= rx_freq_stop;freq += r1c::rx_freq_step_called) {
-        memset(&tempData_80,0,sizeof(tempData_80));
+        ZERO_OBJ(tempData_80);
         for (quint32 i = 0;i < ul_filter_tap;i ++) {
             fscanf(fp_real,"%hd,",&(tempData_80.coef_real[i]));
         }
@@ -390,7 +390,7 @@ void QCalR1CRXFilterThread::updateCalFile()
 
     idx = 0;
     for (quint64 freq = rx_freq_star;freq <= rx_freq_stop;freq += r1c::rx_freq_step_called) {
-        memset(&tempData_160,0,sizeof(tempData_160));
+        ZERO_OBJ(tempData_160);
         for (quint32 i = 0;i < ul_filter_tap;i ++) {
             fscanf(fp_real,"%hd,",&(tempData_160.coef_real[i]));
         }

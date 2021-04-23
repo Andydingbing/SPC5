@@ -81,17 +81,16 @@ private:
     bool ins_instr(const std::string &idn, ViRsrc des);
 
 private:
-    bool m_en_expt;
-    std::string m_des_sa;
-    std::string m_des_sg;
-    std::string m_des_pm;
-    sa* m_sa;
-    sg* m_sg;
-    pm* m_pm;
-    sa_vector_sptr m_all_sa;
-    sg_vector_sptr m_all_sg;
-    pm_vector_sptr m_all_pm;
-
+    bool _en_expt;
+    std::string _des_sa;
+    std::string _des_sg;
+    std::string _des_pm;
+    sa* _sa;
+    sg* _sg;
+    pm* _pm;
+    sa_vector_sptr _all_sa;
+    sg_vector_sptr _all_sg;
+    pm_vector_sptr _all_pm;
 };
 
 #endif // INSTR_INSTR_H

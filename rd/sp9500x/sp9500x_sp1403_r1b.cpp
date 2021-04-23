@@ -158,7 +158,6 @@ int32_t ns_sp9500x::sp1403_r1b::set_rx_freq(const uint64_t freq)
         return 0;
     }
 
-    SP1403_S6_REG_DECL(0x3);
     SP1403_S6_REG_DECL(0x4);
 
     rx_freq_to_lo(freq);

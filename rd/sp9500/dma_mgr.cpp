@@ -51,7 +51,6 @@ int32_t dma_mgr::fpga_r(uint32_t length)
     RFU_K7_REG_DECLARE(0x0001);
     RFU_K7_REG_DECLARE(0x0008);
     RFU_K7_REG_DECLARE(0x0009);
-    RFU_K7_REG_DECLARE(0x0020);
     RFU_K7_REG_DECLARE(0x0021);
 
     bool is_complete = false;
@@ -90,16 +89,15 @@ int32_t dma_mgr::fpga_r(uint32_t length)
 				break;
 			}
 		}
-        if (is_complete)
+        if (is_complete) {
 			break;
-        else if (bytes_cnt[4] == bytes_cnt[3]) {
+        } else if (bytes_cnt[4] == bytes_cnt[3]) {
             Log.set_last_err("stop@sample:%d",bytes_cnt[4]);
             Log.stdprintf("\n%s\n",Log.last_err());
 			return -1;
 		}
 	}
 
-//	CSE_K7_R(0x0020);
 //	Log.stdprintf("timer = %lu\n", REG(0x0020).dma_rd_timer);
 	return 0;
 }

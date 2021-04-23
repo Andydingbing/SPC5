@@ -31,40 +31,33 @@ sp1401_r1e::gpio_b_t::gpio_b_t()
 
 int32_t sp1401_r1e::io_mode2io_sw(io_mode_t mode,tx_io_sw1_t &tx_sw1,tx_io_sw2_t &tx_sw2,rx_io_sw1_t &rx_sw1,rx_io_sw2_t &rx_sw2,rx_io_sw3_t &rx_sw3,loop_sw_t &loop_sw,bool &tx_led,bool &rx_led)
 {
-    switch (mode) {
-        case IO : {
-            tx_sw1 = TX_IO_ON;
-            tx_sw2 = TX_OFF_2;
-            rx_sw1 = RX_IO_ON_1;
-            rx_sw2 = RX_IO_ON_2;
-            rx_sw3 = RX_IO_ON_3;
-            loop_sw  = LOOP_OFF;
-            tx_led = false;
-            rx_led = true;
-            break;
-                  }
-        case OUTPUT : {
-            tx_sw1 = TX_ON_1;
-            tx_sw2 = TX_ON_2;
-            rx_sw1 = RX_IO_ON_1;
-            rx_sw2 = RX_ON_2;
-            rx_sw3 = RX_ON_3;
-            loop_sw  = LOOP_OFF;
-            tx_led = true;
-            rx_led = true;
-            break;
-                      }
-        case LOOP : {
-            tx_sw1 = TX_LOOP_ON;
-            tx_sw2 = TX_OFF_2;
-            rx_sw1 = RX_IO_OFF_1;
-            rx_sw2 = RX_IO_ON_2;
-            rx_sw3 = RX_LOOP_ON;
-            loop_sw  = LOOP_ON;
-            tx_led = false;
-            rx_led = false;
-            break;
-                    }
+    if (mode == IO) {
+        tx_sw1 = TX_IO_ON;
+        tx_sw2 = TX_OFF_2;
+        rx_sw1 = RX_IO_ON_1;
+        rx_sw2 = RX_IO_ON_2;
+        rx_sw3 = RX_IO_ON_3;
+        loop_sw  = LOOP_OFF;
+        tx_led = false;
+        rx_led = true;
+    } else if (mode == OUTPUT) {
+        tx_sw1 = TX_ON_1;
+        tx_sw2 = TX_ON_2;
+        rx_sw1 = RX_IO_ON_1;
+        rx_sw2 = RX_ON_2;
+        rx_sw3 = RX_ON_3;
+        loop_sw  = LOOP_OFF;
+        tx_led = true;
+        rx_led = true;
+    } else if (mode == LOOP ) {
+        tx_sw1 = TX_LOOP_ON;
+        tx_sw2 = TX_OFF_2;
+        rx_sw1 = RX_IO_OFF_1;
+        rx_sw2 = RX_IO_ON_2;
+        rx_sw3 = RX_LOOP_ON;
+        loop_sw  = LOOP_ON;
+        tx_led = false;
+        rx_led = false;
     }
     return 0;
 }

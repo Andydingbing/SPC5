@@ -4,6 +4,7 @@
 #include "sleep_common.h"
 #include "algo_math.hpp"
 #include "gen_int.hpp"
+#include <sstream>
 
 #define NCO_DDS_32 0
 #define NCO_DDS_64 1
@@ -14,6 +15,7 @@
 #define NCO_DDC_32 0
 #define NCO_DDC_64 1
 
+using namespace std;
 using namespace rd;
 using namespace rd::ns_sp9500;
 using namespace rd::ns_sp2401;
@@ -226,19 +228,23 @@ int32_t sp2401_r1a::set_dds1(double freq)
 {
     RFU_K7_REG_DECLARE_2(0x0079,0x2079);
     RFU_K7_REG_DECLARE_2(0x007a,0x207a);
+
 #if (NCO_DDS_32)
     RFU_K7_REG_2(0x007a,0x207a).freq = (unsigned)(4294967296.0 * freq / 1000000.0 / 245.76);
 #elif (NCO_DDS_64)
     RFU_K7_REG_DECLARE_2(0x00e9,0x20e9);
-    unsigned int dds_h = 0,dds_l = 0;
-    char str_freq[16];
-    sprintf(str_freq,"%I64i",int64_t(round(freq,0)));
-    gen_int dds = gen_int("18446744073709551616") * gen_int(str_freq) / 245760000;
+    unsigned int dds_h = 0;
+    unsigned int dds_l = 0;
+    stringstream ss;
+
+    ss << int64_t(round(freq,0));
+    gen_int dds = gen_int("18446744073709551616") * gen_int(ss.str().c_str()) / 245760000;
     dds._2ui64(dds_h,dds_l);
     RFU_K7_REG_2(0x007a,0x207a).freq = dds_l;
     RFU_K7_REG_2(0x00e9,0x20e9).freq = dds_h;
     RFU_K7_W_2(0x00e9,0x20e9);
 #endif
+
     RFU_K7_W_2(0x007a,0x207a);
     RFU_K7OP_2(0x0079,0x2079,dds1_op);
 	return 0;
@@ -247,6 +253,7 @@ int32_t sp2401_r1a::set_dds1(double freq)
 int32_t sp2401_r1a::set_dds2(double freq)
 {
     RFU_K7_REG_DECLARE_2(0x0079,0x2079);
+
 #if (NCO_DDS_32)
     RFU_K7_REG_DECLARE_2(0x007a,0x207a);
     RFU_K7_REG_2(0x007a,0x207a).freq = (unsigned)(4294967296.0 * freq / 1000000.0 / 245.76);
@@ -254,16 +261,19 @@ int32_t sp2401_r1a::set_dds2(double freq)
 #elif (NCO_DDS_64)
     RFU_K7_REG_DECLARE_2(0x00ea,0x20ea);
     RFU_K7_REG_DECLARE_2(0x00eb,0x20eb);
-    unsigned int dds_h = 0,dds_l = 0;
-    char str_freq[16];
-    sprintf(str_freq,"%I64i",int64_t(round(freq,0)));
-    gen_int dds = gen_int("18446744073709551616") * gen_int(str_freq) / 245760000;
+    unsigned int dds_h = 0;
+    unsigned int dds_l = 0;
+    stringstream ss;
+
+    ss << int64_t(round(freq,0));
+    gen_int dds = gen_int("18446744073709551616") * gen_int(ss.str().c_str()) / 245760000;
     dds._2ui64(dds_h,dds_l);
     RFU_K7_REG_2(0x00eb,0x20eb).freq = dds_h;
     RFU_K7_REG_2(0x00ea,0x20ea).freq = dds_l;
     RFU_K7_W_2(0x00eb,0x20eb);
     RFU_K7_W_2(0x00ea,0x20ea);
 #endif
+
     RFU_K7OP_2(0x0079,0x2079,dds2_op);
 	return 0;
 }
@@ -281,19 +291,23 @@ int32_t sp2401_r1a::set_duc_dds(double freq)
 {
     RFU_K7_REG_DECLARE_2(0x007b,0x207b);
     RFU_K7_REG_DECLARE_2(0x007c,0x207c);
+
 #if (NCO_DUC_32)
     RFU_K7_REG_2(0x007c,0x207c).duc = (unsigned)(4294967296.0 * freq / 1000000.0 / 245.76);
 #elif (NCO_DUC_64)
     RFU_K7_REG_DECLARE_2(0x00e8,0x20e8);
-    unsigned int duc_h = 0,duc_l = 0;
-    char str_freq[16];
-    sprintf(str_freq,"%I64i",int64_t(round(freq,0)));
-    gen_int duc = gen_int("18446744073709551616") * gen_int(str_freq) / 245760000;
+    unsigned int duc_h = 0;
+    unsigned int duc_l = 0;
+    stringstream ss;
+
+    ss << int64_t(round(freq,0));
+    gen_int duc = gen_int("18446744073709551616") * gen_int(ss.str().c_str()) / 245760000;
     duc._2ui64(duc_h,duc_l);
     RFU_K7_REG_2(0x007c,0x207c).duc = duc_l;
     RFU_K7_REG_2(0x00e8,0x20e8).duc = duc_h;
     RFU_K7_W_2(0x00e8,0x20e8);
 #endif
+
     RFU_K7_W_2(0x007c,0x207c);
     RFU_K7_OP_2(0x007b,0x207b);
 	return 0;
@@ -345,19 +359,23 @@ int32_t sp2401_r1a::set_ddc(double freq)
 {
     RFU_K7_REG_DECLARE_2(0x007d,0x207d);
     RFU_K7_REG_DECLARE_2(0x007e,0x207e);
+
 #if (NCO_DDC_32)
     RFU_K7_REG_2(0x007e,0x207e).ddc = (unsigned)(freq * 4294967296 / (368.64 * 1e6));
 #elif (NCO_DDC_64)
     RFU_K7_REG_DECLARE_2(0x00e7,0x20e7);
-    unsigned int ddc_h = 0,ddc_l = 0;
-    char str_freq[16];
-    sprintf(str_freq,"%I64i",int64_t(round(freq,0)));
-    gen_int ddc = gen_int("18446744073709551616") * gen_int(str_freq) / 368640000;
+    unsigned int ddc_h = 0;
+    unsigned int ddc_l = 0;
+    stringstream ss;
+
+    ss << int64_t(round(freq,0));
+    gen_int ddc = gen_int("18446744073709551616") * gen_int(ss.str().c_str()) / 368640000;
     ddc._2ui64(ddc_h,ddc_l);
     RFU_K7_REG_2(0x007e,0x207e).ddc = ddc_l;
     RFU_K7_REG_2(0x00e7,0x20e7).ddc = ddc_h;
     RFU_K7_W_2(0x00e7,0x20e7);
 #endif
+
     RFU_K7_W_2(0x007e,0x207e);
     RFU_K7_OP_2(0x007d,0x207d);
 	return 0;
@@ -374,9 +392,6 @@ int32_t sp2401_r1a::set_rx_filter_truncation(uint32_t digit)
 
 int32_t sp2401_r1a::set_rx_filter_sw(rx_filter_t filter)
 {
-// 	RFU_K7_REG_DECLARE_2(0x00f9,0x20f9);
-// 	RFU_K7_REG_2(0x00f9,0x20f9).filter = (_2I3D == filter ? 0 : 1);
-// 	RFU_K7_W_2(0x00f9,0x20f9);
     RFU_K7_REG_DECLARE_2(0x00f8,0x20f8);
     RFU_K7_REG_2(0x00f8,0x20f8).filter = (_2I3D == filter ? 1 : 0);
     RFU_K7_W_2(0x00f8,0x20f8);
@@ -765,7 +780,6 @@ int32_t sp2401_r1a::set_fpga_bit(const char *path)
     RFU_S6_REG_DECLARE_2(0x0002,0x0006);
     RFU_S6_REG_DECLARE_2(0x0003,0x0007);
     RFU_S6_REG_DECLARE_2(0x0004,0x0008);
-//    RFU_S6_REG_DECLARE_2(0x0005,0x0009);
     RFU_S6_REG_2(0x0004,0x0008).load_mode = 1;
     RFU_S6_W_2(0x0004,0x0008);
 

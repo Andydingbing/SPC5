@@ -64,7 +64,7 @@ bool compare(const QStringList &stringList,const QTreeWidgetItem *item)
     const QTreeWidgetItem *parent = item;
     quint32 i = parents(item);
 
-    if (i != stringList.size() - 1) {
+    if (i != quint32(stringList.size() - 1)) {
         return false;
     }
 

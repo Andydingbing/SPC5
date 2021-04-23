@@ -422,10 +422,8 @@ int32_t sp1401::pwr_meas_start()
 {
     RFU_K7_REG_DECLARE_2(0x1064,0x1094);
     RFU_K7_REG_DECLARE_2(0x1065,0x1095);
-    RFU_K7_REG_DECLARE(0x10cf);
 
     RFU_K7OP_2(0x1065,0x1095,abort);
-//	RFU_K7_OP_2(0x1064,0x1094);
 
     RFU_K7_REG_2(0x1064,0x1094).op = 0;
     RFU_K7_W_2(0x1064,0x1094);

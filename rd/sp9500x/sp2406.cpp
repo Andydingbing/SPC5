@@ -2386,7 +2386,6 @@ int32_t sp2406::program(const v9_t fpga,const char *path)
     RFU_S6_REG_DECL(0x0102);
     RFU_S6_REG_DECL(0x0103);
     RFU_S6_REG_DECL(0x0104);
-    RFU_S6_REG_DECL(0x0200);
 
     RFU_S6_REG(0x0103).fpga = fpga;
     RFU_S6_W(0x0103);

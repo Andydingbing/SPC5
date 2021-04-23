@@ -189,9 +189,6 @@ int32_t ns_sp9500x::sp3103::arb_load(const uint32_t rf_idx,const ns_arb::src_t &
     RFU_V9_REG_DECL(0x028a);
     RFU_V9_REG_DECL(0x028b);
     RFU_V9_REG_DECL(0x028c);
-    RFU_V9_REG_DECL(0x028d);
-    RFU_V9_REG_DECL(0x028e);
-    RFU_V9_REG_DECL(0x0291);
     RFU_V9_REG_DECL(0x0292);
 
     for (iter_arb_seg = arb_param.seg.begin();iter_arb_seg != arb_param.seg.end();++iter_arb_seg) {

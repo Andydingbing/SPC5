@@ -202,7 +202,9 @@ int32_t SPC5_RF_SetConnector(uint32_t RFIndex,RD_IO_Mode Connector)
     DECLARE_DYNAMIC_SP3301;
     io_mode_t Mode = rd::OUTPUT;
     switch (Connector) {
-        case ::RD_IO     : {Mode = rd::IO;break;}
+        case ::RD_IO     :
+        case ::RD_Input  :
+        case ::RD_Close  : {Mode = rd::IO;break;}
         case ::RD_Output : {Mode = rd::OUTPUT;break;}
         case ::RD_Loop   : {Mode = rd::LOOP;break;}
     }
