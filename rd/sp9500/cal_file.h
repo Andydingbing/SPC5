@@ -81,27 +81,27 @@ class RD_API cal_file : boost::noncopyable
 public:
     //! List all calibration items,value only allowed to accumulate.
     enum cal_item_t : unsigned {
-        TX_SB         = 0x00,	// R1A/B/C/D/E/F
-        TX_LOL        = 0x01,	// R1A/B/C/D/E/F
-        TX_ATT_OP     = 0x02,	// R1A/B/C/D/E/F
-        TX_PWR_OP     = 0x03,	// R1A/B/C/D/E/F	Default BW 160M
-        TX_PWR_IO     = 0x04,	// R1A/B/C/D/E/F	Default BW 160M
-        RX_REF        = 0x05,	// R1A/B
-        X9119         = 0x06,	// R1A/B/C/D/E/F
-        TX_ATT_IO     = 0x07,	// R1A/B/C/D/E/F
-        RX_REF_OP     = 0x08,	// R1C/D/E/F		Default BW 160M
-        RX_REF_IO     = 0x09,	// R1C/D/E/F		Default BW 160M
-        RX_ATT_OP     = 0x0a,	// R1C/D/E/F
-        RX_ATT_IO     = 0x0b,	// R1C/D/E/F
-        TX_FILTER_80  = 0x0c,	// R1C/D/E/F
-        TX_FILTER_160 = 0x0d,	// R1C/D/E/F
-        TX_RF_FR_0    = 0x0e,	// R1C/D/E/F
-        TX_RF_FR_1    = 0x0f,	// R1C/D/E/F
-        TX_IF_FR      = 0x10,	// R1C/D/E/F
-        RX_FILTER_80  = 0x11,	// R1C/D/E/F
-        RX_FILTER_160 = 0x12,	// R1C/D/E/F
-        RX_RF_FR      = 0x13,	// R1C/D/E/F
-        RX_IF_FR      = 0x14,	// R1C/D/E/F
+        TX_SB         = 0x00, // R1A/B/C/D/E/F
+        TX_LOL        = 0x01, // R1A/B/C/D/E/F
+        TX_ATT_OP     = 0x02, // R1A/B/C/D/E/F
+        TX_PWR_OP     = 0x03, // R1A/B/C/D/E/F  Default BW 160M
+        TX_PWR_IO     = 0x04, // R1A/B/C/D/E/F  Default BW 160M
+        RX_REF        = 0x05, // R1A/B
+        X9119         = 0x06, // R1A/B/C/D/E/F
+        TX_ATT_IO     = 0x07, // R1A/B/C/D/E/F
+        RX_REF_OP     = 0x08, // R1C/D/E/F      Default BW 160M
+        RX_REF_IO     = 0x09, // R1C/D/E/F      Default BW 160M
+        RX_ATT_OP     = 0x0a, // R1C/D/E/F
+        RX_ATT_IO     = 0x0b, // R1C/D/E/F
+        TX_FILTER_80  = 0x0c, // R1C/D/E/F
+        TX_FILTER_160 = 0x0d, // R1C/D/E/F
+        TX_RF_FR_0    = 0x0e, // R1C/D/E/F
+        TX_RF_FR_1    = 0x0f, // R1C/D/E/F
+        TX_IF_FR      = 0x10, // R1C/D/E/F
+        RX_FILTER_80  = 0x11, // R1C/D/E/F
+        RX_FILTER_160 = 0x12, // R1C/D/E/F
+        RX_RF_FR      = 0x13, // R1C/D/E/F
+        RX_IF_FR      = 0x14, // R1C/D/E/F
 
         // TX_FILTER_OFFSET_OP_80 & TX_FILTER_OFFSET_IO_80 still in file!
         // They are used to verify the difference between Output and IO mode.
@@ -134,31 +134,30 @@ public:
 
     struct item_info_t;
     struct file_info_t {
-        uint32_t    head;
-        char        sn[32];
-        uint32_t    items;
+        uint32_t head;
+        char sn[32];
+        uint32_t items;
         item_info_t *item_info;
-        uint32_t    tail;
+        uint32_t tail;
         file_info_t() {item_info = nullptr; SAFE_NEW_ARRAY(item_info,item_info_t,CAL_TOTAL_ITEMS);}
         ~file_info_t(){SAFE_DEL_ARRAY(item_info);}
     };
 
     STRUCT_ALIGN_S(item_info_t,4)
-        uint32_t    head : 32;
-        cal_item_t  item : 32;
-        uint32_t    size : 32;		//each frequency's data type(byte)
-        uint32_t    pt   : 32;		//points
-        uint32_t    tail : 32;
+        uint32_t   head : 32;
+        cal_item_t item : 32;
+        uint32_t   size : 32; //each frequency's data type(byte)
+        uint32_t   pt   : 32; //points
+        uint32_t   tail : 32;
     STRUCT_ALIGN_E(item_info_t,4)
 
     struct RD_API item_buf_t {
-        uint32_t    rf_idx;
-        uint32_t    rfu_idx;
-        void        *buf;			//point to each table dynamically
-        cal_item_t  item;			//point out pointing to which table
+        uint32_t rf_idx;
+        uint32_t rfu_idx;
+        void *buf;
+        cal_item_t item;
         item_buf_t();
         ~item_buf_t();
-        item_buf_t operator = (const item_buf_t &buf);
     };
 
 public:
@@ -198,8 +197,8 @@ protected:
 private:
     bool is_file_valid();
     uint32_t get_file_ver();
-    int32_t w_from_pos(char *path,uint32_t pos,uint32_t size,void *data);
-    int32_t r_from_pos(char *path,uint32_t pos,uint32_t size,void *data);
+    int32_t w_from_pos(const char *path,uint32_t pos,uint32_t size,void *data);
+    int32_t r_from_pos(const char *path,uint32_t pos,uint32_t size,void *data);
 protected:
     static boost::shared_ptr<x9119_table> g_cal_table_x9119;
     static item_buf_t g_cal_item_buf;

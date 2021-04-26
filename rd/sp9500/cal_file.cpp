@@ -6,6 +6,7 @@
 #include <errno.h>
 #include "sp1401.h"
 
+using namespace std;
 using namespace rd;
 using namespace rd::ns_sp9500;
 using namespace rd::ns_sp1401;
@@ -33,14 +34,6 @@ cal_file::item_buf_t::~item_buf_t()
         delete []((char *)buf);
         buf = nullptr;
     }
-}
-
-cal_file::item_buf_t cal_file::item_buf_t::operator = (const cal_file::item_buf_t &buf)
-{
-    item_buf_t res;
-    res.buf = buf.buf;
-    res.item = buf.item;
-    return res;
 }
 
 cal_file::cal_file(hw_ver_t ver, uint32_t rf_idx, uint32_t rfu_idx)
@@ -123,8 +116,9 @@ uint32_t cal_file::get_max_item_byte(item_info_t *info,uint32_t items)
 {
     uint32_t max_byte = 0;
     for (uint32_t i = 0;i < items;i ++) {
-        if (max_byte < info[i].size * info[i].pt)
+        if (max_byte < info[i].size * info[i].pt) {
             max_byte = info[i].size * info[i].pt;
+        }
 	}
     return max_byte;
 }
@@ -155,16 +149,19 @@ bool cal_file::is_file_valid()
 {
     cal_file::file_info_t info;
     int32_t ver = get_file_ver();
-    if (ver < 0)
+
+    if (ver < 0) {
         return false;
-    else if (ver < CAL_FILE_VER) {
+    } else if (ver < CAL_FILE_VER) {
         cfv_ctrl controller;
         controller.target(this);
         controller.for_c(ver);
 	}
+
     if (load(info)) {
 		return false;
     }
+
     for (uint32_t i = 0;i < info.items;i ++) {
         if ((info.item_info[i]).head != 0xaa || (info.item_info[i]).tail != 0xff) {
             Log.set_last_err("invalid data format");
@@ -188,13 +185,14 @@ uint32_t cal_file::get_file_ver()
     CFO_ASSERT(fp,fseek(fp,0,SEEK_SET));
     fclose(fp);
 
-    if ((0x04ABCDEF == ver.head && 0x05ABCDEF == ver.tail) || (CAL_FILE_VER_HEAD == ver.head && CAL_FILE_VER_TAIL == ver.tail)) {
+    if ((0x04ABCDEF == ver.head && 0x05ABCDEF == ver.tail) ||
+        (CAL_FILE_VER_HEAD == ver.head && CAL_FILE_VER_TAIL == ver.tail)) {
         return ver.ver;
     }
     return 0;
 }
 
-int32_t cal_file::w_from_pos(char *path, uint32_t pos, uint32_t size, void *data)
+int32_t cal_file::w_from_pos(const char *path,uint32_t pos,uint32_t size,void *data)
 {
     size_t writed_size = 0;
     FILE *fp = fopen(path,"rb+");
@@ -206,7 +204,7 @@ int32_t cal_file::w_from_pos(char *path, uint32_t pos, uint32_t size, void *data
 	return 0;
 }
 
-int32_t cal_file::r_from_pos(char *path, uint32_t pos, uint32_t size, void *data)
+int32_t cal_file::r_from_pos(const char *path,uint32_t pos,uint32_t size,void *data)
 {
 //in non posix env,the mode "b" of "rb" is must for EOF = 16,and the ASCII in file maybe happen to "EOF",
 //then fread can return 0 for the os think the file has reach the EndOfFile;
@@ -223,16 +221,17 @@ int32_t cal_file::r_from_pos(char *path, uint32_t pos, uint32_t size, void *data
 
 int32_t cal_file::w(cal_file::cal_item_t item)
 {
-    uint32_t pos = 0,size = 0;
-    char path[64] = {0};
-    sprintf(path,"C:\\CSECal\\rfu%drf%d.cal",m_rfu_idx,m_rf_idx);
+    uint32_t pos = 0;
+    uint32_t size = 0;
+    string path = (boost::format("C:\\CSECal\\rfu%drf%d.cal") % m_rfu_idx % m_rf_idx).str();
 
     if (cal_file::X9119 == item) {
-        *strrchr(path,'\\') = 0;
-        strcat(path,"\\cxu.cal");
+        *strrchr(path.c_str(),'\\') = 0;
+        path += "\\cxu.cal";
 	}
+
     INT_CHECK(get_item_size(item,pos,size));
-    INT_CHECK(w_from_pos(path,pos,size,g_cal_item_buf.buf));
+    INT_CHECK(w_from_pos(path.c_str(),pos,size,g_cal_item_buf.buf));
     map2mem();
     map2buf(item);
 	return 0;	
@@ -240,16 +239,18 @@ int32_t cal_file::w(cal_file::cal_item_t item)
 
 int32_t cal_file::r(cal_file::cal_item_t item,void *data)
 {
-    uint32_t pos = 0,size = 0;
-    char path[64] = {0};
-    sprintf(path,"C:\\CSECal\\rfu%drf%d.cal",m_rfu_idx,m_rf_idx);
+    uint32_t pos = 0;
+    uint32_t size = 0;
+    string path = (boost::format("C:\\CSECal\\rfu%drf%d.cal") % m_rfu_idx % m_rf_idx).str();
 
     if (cal_file::X9119 == item) {
-        *strrchr(path,'\\') = 0;
-        strcat(path,"\\cxu.cal");
+        *strrchr(path.c_str(),'\\') = 0;
+        path += "\\cxu.cal";
 	}
+
     INT_CHECK(get_item_size(item,pos,size));
-    INT_CHECK(r_from_pos(path,pos,size,data));
+    INT_CHECK(r_from_pos(path.c_str(),pos,size,data));
+
     for (uint32_t i = 0;i < size;i ++) {
         ((char *)(g_cal_item_buf.buf))[i] = ((char *)data)[i];
     }

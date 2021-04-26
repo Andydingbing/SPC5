@@ -6,19 +6,19 @@
 using namespace std;
 
 #ifdef NRP_DEBUG
-#define NRP_CHECK(func)										\
-	do {													\
-		ViStatus ret;										\
-		char errMsg[256];									\
-		ZeroMemory(errMsg, 256);							\
-		if ((ret = (func)) != 0) {							\
-			FILE *fp;										\
-			fopen_s(&fp, "C:\\nrp.log", "a");				\
-			rsnrp_error_message(m_hVisa, ret, errMsg);		\
-			fprintf(fp, "F : %s\n\t%s\n", #func, errMsg);   \
-		} else {											\
-			printf("T : %s\n", #func);						\
-		}													\
+#define NRP_CHECK(func) \
+    do { \
+        ViStatus ret; \
+        char errMsg[256]; \
+        ZeroMemory(errMsg, 256); \
+        if ((ret = (func)) != 0) { \
+            FILE *fp; \
+            fopen_s(&fp, "C:\\nrp.log", "a"); \
+            rsnrp_error_message(m_hVisa, ret, errMsg); \
+            fprintf(fp, "F : %s\n\t%s\n", #func, errMsg); \
+        } else { \
+            printf("T : %s\n", #func); \
+        } \
 	} while (0);
 #else
 #define NRP_CHECK(func) func;

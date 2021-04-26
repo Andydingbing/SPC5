@@ -54,17 +54,17 @@ bool gpib_dev::r(string &buf,uint32_t length,uint32_t to) const
     }
 
     if (last_to != 3000) {
-        if ((status = viGetAttribute(_session,VI_ATTR_TMO_VALUE,&last_to)) < VI_SUCCESS) {
+        if (viGetAttribute(_session,VI_ATTR_TMO_VALUE,&last_to) < VI_SUCCESS) {
             SAFE_DEL_ARRAY(read_buf);
 			return false;
         }
-        if ((status = viSetAttribute(_session,VI_ATTR_TMO_VALUE,to)) < VI_SUCCESS) {
+        if (viSetAttribute(_session,VI_ATTR_TMO_VALUE,to) < VI_SUCCESS) {
             SAFE_DEL_ARRAY(read_buf);
 			return false;
         }
 	}
 
-    if ((status = viRead(_session,read_buf,length,&ret_cnt)) < VI_SUCCESS) {
+    if (viRead(_session,read_buf,length,&ret_cnt) < VI_SUCCESS) {
         SAFE_DEL_ARRAY(read_buf);
 		return false;
     }
@@ -76,7 +76,7 @@ bool gpib_dev::r(string &buf,uint32_t length,uint32_t to) const
     }
 
     if (to != 3000) {
-        if ((status = viSetAttribute(_session,VI_ATTR_TMO_VALUE,last_to)) < VI_SUCCESS) {
+        if (viSetAttribute(_session,VI_ATTR_TMO_VALUE,last_to) < VI_SUCCESS) {
             SAFE_DEL_ARRAY(read_buf);
 			return false;
         }

@@ -14,6 +14,7 @@ bool sa::set_ref_auto()
     BOOL_CHECK(get_ref(ref));
 
     delta = ref - peak_pwr;
+
     if (delta > 0.0 && delta <= 40.0) {
         return true;
     }
