@@ -33,7 +33,12 @@ public:
 public:
     virtual bool init(const std::string &dev);
     virtual bool w(const std::string &scpi) const;
+    virtual bool w_block(const std::string &scpi) const;
     virtual bool r(std::string &buf,uint32_t length,uint32_t to = 3000) const;
+    virtual bool r_to_bool(bool &result) const;
+    virtual bool r_to_uint8(uint8_t &result) const;
+    virtual bool r_to_uint16(uint16_t &result) const;
+    virtual bool r_to_uint32(uint32_t &result) const;
 
 private:
     unsigned long _session;

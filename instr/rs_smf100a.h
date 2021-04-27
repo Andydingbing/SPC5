@@ -7,13 +7,9 @@ class rs_smf100a : public ks_n5182b
 {
 public:
     std::string get_descriptor() { return std::string("SMF100A"); }
+
     bool set_en_mod(bool en)
-    {
-        if (en)
-            return w("MOD:STAT ON");
-        else
-            return w("MOD:STAT OFF");
-    }
+    { return en ? w("MOD:STAT ON") : w("MOD:STAT OFF"); }
 };
 
 #endif // INSTR_RS_SMF100A_H

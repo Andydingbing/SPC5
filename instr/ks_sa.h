@@ -3,6 +3,13 @@
 
 #include "sa.h"
 
+/*
+ * PXA : N9030A
+ * MXA : N9020A
+ * EXA : N9010A
+ * CXA : N9000A
+ * MXE EMI Receiver : N9038A
+ */
 class ks_n9030a : public sa
 {
 public:

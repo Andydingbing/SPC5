@@ -41,6 +41,12 @@ bool gpib_dev::w(const string &scpi) const
     return true;
 }
 
+bool gpib_dev::w_block(const std::string &scpi) const
+{
+    BOOL_CHECK(w(scpi));
+    return w("*WAI");
+}
+
 bool gpib_dev::r(string &buf,uint32_t length,uint32_t to) const
 {
     ViUInt32 ret_cnt = 0;
@@ -84,4 +90,40 @@ bool gpib_dev::r(string &buf,uint32_t length,uint32_t to) const
 
     SAFE_DEL_ARRAY(read_buf);
 	return true;
+}
+
+bool gpib_dev::r_to_bool(bool &result) const
+{
+    string buf;
+
+    BOOL_CHECK(r(buf,32));
+    result = atoi(buf.c_str()) == 1;
+    return true;
+}
+
+bool gpib_dev::r_to_uint8(uint8_t &result) const
+{
+    string buf;
+
+    BOOL_CHECK(r(buf,32));
+    result = uint8_t(atol(buf.c_str()));
+    return true;
+}
+
+bool gpib_dev::r_to_uint16(uint16_t &result) const
+{
+    string buf;
+
+    BOOL_CHECK(r(buf,32));
+    result = uint16_t(atol(buf.c_str()));
+    return true;
+}
+
+bool gpib_dev::r_to_uint32(uint32_t &result) const
+{
+    string buf;
+
+    BOOL_CHECK(r(buf,32));
+    result = uint32_t(atol(buf.c_str()));
+    return true;
 }

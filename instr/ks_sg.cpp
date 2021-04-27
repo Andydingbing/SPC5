@@ -50,16 +50,10 @@ bool ks_n5182b::get_pl(double &pwr)
 
 bool ks_n5182b::set_en_output(bool en)
 {
-    if (en)
-        return w("OUTP ON");
-	else
-        return w("OUTP OFF");
+    return en ? w("OUTP ON") : w("OUTP OFF");
 }
 
 bool ks_n5182b::set_en_mod(bool en)
 {
-    if (en)
-        return w("OUTP:MOD ON");
-	else
-        return w("OUTP:MOD OFF");
+    return en ? w("OUTP:MOD ON") : w("OUTP:MOD OFF");
 }
