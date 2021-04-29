@@ -223,12 +223,9 @@ int32_t cal_file::w(cal_file::cal_item_t item)
 {
     uint32_t pos = 0;
     uint32_t size = 0;
-    string path = (boost::format("C:\\CSECal\\rfu%drf%d.cal") % m_rfu_idx % m_rf_idx).str();
-
-    if (cal_file::X9119 == item) {
-        *strrchr(path.c_str(),'\\') = 0;
-        path += "\\cxu.cal";
-	}
+    string path = (item == cal_file::X9119 ?
+                "C:\\CSECal\\cxu.cal" :
+                (boost::format("C:\\CSECal\\rfu%drf%d.cal") % m_rfu_idx % m_rf_idx).str());
 
     INT_CHECK(get_item_size(item,pos,size));
     INT_CHECK(w_from_pos(path.c_str(),pos,size,g_cal_item_buf.buf));
@@ -241,12 +238,9 @@ int32_t cal_file::r(cal_file::cal_item_t item,void *data)
 {
     uint32_t pos = 0;
     uint32_t size = 0;
-    string path = (boost::format("C:\\CSECal\\rfu%drf%d.cal") % m_rfu_idx % m_rf_idx).str();
-
-    if (cal_file::X9119 == item) {
-        *strrchr(path.c_str(),'\\') = 0;
-        path += "\\cxu.cal";
-	}
+    string path = (item == cal_file::X9119 ?
+                "C:\\CSECal\\cxu.cal" :
+                (boost::format("C:\\CSECal\\rfu%drf%d.cal") % m_rfu_idx % m_rf_idx).str());
 
     INT_CHECK(get_item_size(item,pos,size));
     INT_CHECK(r_from_pos(path.c_str(),pos,size,data));

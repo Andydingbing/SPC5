@@ -1,6 +1,11 @@
 #include "q_cal_r1c_thread.h"
 #include "q_cal_r1c_dlg.h"
-#include <QTime>
+
+#if (QT_VERSION < QT_VERSION_CHECK(4,7,0))
+    #include <QTime>
+#else
+    #include <QElapsedTimer>
+#endif
 
 QCalR1CThread::QCalR1CThread(QObject *parent, const CalR1CParam &param) :
     QCalBaseThread(CalParam()) ,
