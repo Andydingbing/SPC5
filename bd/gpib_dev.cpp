@@ -50,7 +50,6 @@ bool gpib_dev::w_block(const std::string &scpi) const
 bool gpib_dev::r(string &buf,uint32_t length,uint32_t to) const
 {
     ViUInt32 ret_cnt = 0;
-    ViStatus status = VI_SUCCESS;
     uint32_t last_to = 0;
 
     ViPBuf read_buf = new ViByte[length + 1];
@@ -125,5 +124,23 @@ bool gpib_dev::r_to_uint32(uint32_t &result) const
 
     BOOL_CHECK(r(buf,32));
     result = uint32_t(atol(buf.c_str()));
+    return true;
+}
+
+bool gpib_dev::r_to_float(float &result) const
+{
+    string buf;
+
+    BOOL_CHECK(r(buf,32));
+    result = float(atof(buf.c_str()));
+    return true;
+}
+
+bool gpib_dev::r_to_double(double &result) const
+{
+    string buf;
+
+    BOOL_CHECK(r(buf,32));
+    result = atol(buf.c_str());
     return true;
 }

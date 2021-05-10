@@ -28,6 +28,11 @@ public:
         IO_REF_IN_PULSE
     };
 
+    enum io_ref_ext_bw_t {
+        IO_REF_EXT_BW_WIDE,
+        IO_REF_EXT_BW_NARROW
+    };
+
     enum det_type_t {
         DET_AUTO,
         DET_NORMAL,
@@ -82,6 +87,9 @@ public:
     virtual bool get_io_ref_in(io_ref_in_t &ref) const;
     virtual bool set_io_ref_ext_freq(const double freq) const;
     virtual bool get_io_ref_ext_freq(double &freq) const;
+    virtual bool set_io_ref_ext_freq_default() const;
+    virtual bool set_io_ref_ext_bw(const io_ref_ext_bw_t bw) const;
+    virtual bool get_io_ref_ext_bw(io_ref_ext_bw_t &bw) const;
 
     virtual bool reset() = 0;
     virtual bool set_cf(double freq) = 0;

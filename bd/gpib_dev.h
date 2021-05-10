@@ -39,6 +39,8 @@ public:
     virtual bool r_to_uint8(uint8_t &result) const;
     virtual bool r_to_uint16(uint16_t &result) const;
     virtual bool r_to_uint32(uint32_t &result) const;
+    virtual bool r_to_float(float &result) const;
+    virtual bool r_to_double(double &result) const;
 
 private:
     unsigned long _session;

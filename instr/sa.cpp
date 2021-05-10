@@ -150,6 +150,27 @@ bool sa::set_io_ref_ext_freq(const double freq) const
 
 bool sa::get_io_ref_ext_freq(double &freq) const
 {
+    BOOL_CHECK(w_block("ROSC:EXT:FREQ?"));
+    return r_to_double(freq);
+}
+
+bool sa::set_io_ref_ext_freq_default() const
+{
+    return w_block("ROSC:EXT:FREQ:DEF");
+}
+
+bool sa::set_io_ref_ext_bw(const io_ref_ext_bw_t bw) const
+{
+    return w_block((format("ROSC:BAND %s") % (bw == IO_REF_EXT_BW_WIDE ? "WIDE" : "NARR")).str());
+}
+
+bool sa::get_io_ref_ext_bw(io_ref_ext_bw_t &bw) const
+{
+    string buf;
+
+    BOOL_CHECK(w_block("ROSC:BAND?"));
+    BOOL_CHECK(r(buf,32));
+    bw = (buf == "WIDE" ? IO_REF_EXT_BW_WIDE : IO_REF_EXT_BW_NARROW);
     return true;
 }
 
